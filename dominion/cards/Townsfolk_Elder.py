@@ -34,7 +34,7 @@ class Test_Elder(unittest.TestCase):
         self.plr, self.vic = self.g.player_list()
 
         while True:
-            card = self.g["Townsfolk"].remove()
+            card = self.g.get_card_from_pile("Townsfolk")
             if card.name == "Elder":
                 break
         self.card = card

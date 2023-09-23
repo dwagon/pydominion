@@ -84,17 +84,17 @@ class TestPirateShip(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Pirate Ship"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Pirate Ship"].remove()
+        self.card = self.g.get_card_from_pile("Pirate Ship")
         self.plr.gain_card(new_card=self.card, destination=Piles.HAND)
 
     def test_play_attack(self):
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.vic.piles[Piles.DECK].set("Copper", "Estate")
         self.plr.test_input = ["Each other", "copper"]
         self.plr.play_card(self.card)
         try:
-            self.assertEqual(self.g.trashpile.size(), tsize + 1)
-            self.assertIn("Copper", self.g.trashpile)
+            self.assertEqual(self.g.trash_pile.size(), tsize + 1)
+            self.assertIn("Copper", self.g.trash_pile)
             self.assertEqual(self.plr._pirate_ship, 1)
         except AssertionError:  # pragma: no cover
             self.g.print_state()

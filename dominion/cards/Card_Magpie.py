@@ -40,7 +40,7 @@ class Test_Magpie(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Magpie"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Magpie"].remove()
+        self.card = self.g.get_card_from_pile("Magpie")
 
     def test_treasure(self):
         """Play a magpie with treasure"""

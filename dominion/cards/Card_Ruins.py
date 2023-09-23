@@ -14,9 +14,13 @@ class Card_Ruins(Card.Card):
         self.pile = "Ruins"
         self.base = Card.CardExpansion.DARKAGES
 
-    def setup(self, game):
-        game.cardpiles["Ruins"] = RuinCardPile(game)
-        game.cardpiles["Ruins"].init_cards(min(10, game.numplayers * 10 - 10))
+    @classmethod
+    def cardpile_setup(cls, game):
+        card_pile = RuinCardPile(game)
+        return card_pile
+
+    def calc_numcards(self, game):
+        return max(10, game.numplayers * 10 - 10)
 
 
 ###############################################################################
@@ -28,10 +32,11 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 class RuinCardPile(CardPile.CardPile):
     def __init__(self, game):
         self.mapping = game.get_card_classes("RuinCard", game.paths["cards"], "Card_")
+        for name, class_ in self.mapping.items():
+            game.card_instances[name] = class_()
         super().__init__(game=game)
 
     def init_cards(self, num_cards=0, card_class=None):
-        self.cards = []
         for ruin_card in self.mapping.values():
             for _ in range(10):
                 self.cards.append(ruin_card())

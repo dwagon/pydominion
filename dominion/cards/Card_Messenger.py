@@ -56,7 +56,7 @@ class TestMessenger(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Messenger"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
-        self.card = self.g["Messenger"].remove()
+        self.card = self.g.get_card_from_pile("Messenger")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

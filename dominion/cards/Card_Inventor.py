@@ -34,7 +34,7 @@ class TestInventor(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.inventor = self.g["Inventor"].remove()
+        self.inventor = self.g.get_card_from_pile("Inventor")
         self.plr.add_card(self.inventor, Piles.HAND)
 
     def test_play(self):

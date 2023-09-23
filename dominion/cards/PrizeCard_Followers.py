@@ -35,7 +35,7 @@ class TestFollowers(unittest.TestCase):
         self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Tournament"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g["Followers"].remove()
+        self.card = self.g.get_card_from_pile("Followers")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

@@ -33,7 +33,7 @@ class Test_Dungeon(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Dungeon"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Dungeon"].remove()
+        self.card = self.g.get_card_from_pile("Dungeon")
 
     def test_playcard(self):
         """Play a dungeon"""

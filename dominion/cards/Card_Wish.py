@@ -25,7 +25,7 @@ class Card_Wish(Card.Card):
             ("Keep", False),
         )
         if return_card:
-            game["Wish"].add(self)
+            game.card_piles["Wish"].add(self)
             player.piles[Piles.PLAYED].remove(self)
             player.plr_gain_card(cost=6)
 
@@ -36,17 +36,17 @@ class TestWish(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Wish"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Wish"].remove()
+        self.card = self.g.get_card_from_pile("Wish")
 
     def test_return(self):
-        num_wishes = len(self.g["Wish"])
+        num_wishes = len(self.g.card_piles["Wish"])
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Return", "Get Gold"]
         self.plr.play_card(self.card)
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertNotIn("Wish", self.plr.piles[Piles.PLAYED])
         self.assertNotIn("Wish", self.plr.piles[Piles.DISCARD])
-        self.assertEqual(len(self.g["Wish"]), num_wishes + 1)
+        self.assertEqual(len(self.g.card_piles["Wish"]), num_wishes + 1)
 
     def test_keep(self):
         self.plr.add_card(self.card, Piles.HAND)

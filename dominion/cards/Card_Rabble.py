@@ -49,8 +49,8 @@ class Test_Rabble(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Rabble", "Moat"])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
-        self.rabble = self.g["Rabble"].remove()
-        self.moat = self.g["Moat"].remove()
+        self.rabble = self.g.get_card_from_pile("Rabble")
+        self.moat = self.g.get_card_from_pile("Moat")
         self.attacker.add_card(self.rabble, Piles.HAND)
 
     def test_defended(self):

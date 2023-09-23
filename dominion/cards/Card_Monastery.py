@@ -30,7 +30,7 @@ class Test_Monastery(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Monastery"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.monastery = self.g["Monastery"].remove()
+        self.monastery = self.g.get_card_from_pile("Monastery")
 
     def test_play_card(self):
         """Play Monastery"""
@@ -40,7 +40,7 @@ class Test_Monastery(unittest.TestCase):
         self.plr.gain_card("Silver")
         self.plr.test_input = ["Duchy"]
         self.plr.play_card(self.monastery)
-        self.assertIn("Duchy", self.g.trashpile)
+        self.assertIn("Duchy", self.g.trash_pile)
 
     def test_play_no_gained(self):
         """Play Monastery when you didn't gain a card"""

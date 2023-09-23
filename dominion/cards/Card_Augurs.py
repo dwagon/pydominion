@@ -23,7 +23,9 @@ class Card_Augurs(Card.Card):
 ###############################################################################
 class AugurCardPile(CardPile.CardPile):
     def __init__(self, game):
-        self.mapping = game.get_card_classes("Augurs", game.paths["cards"], "Card_")
+        mapping = game.get_card_classes("Augur", game.paths["cards"])
+        for name, class_ in mapping.items():
+            game.card_instances[name] = class_()
         super().__init__()
 
     def init_cards(self, num_cards=0, card_class=None):
@@ -46,13 +48,13 @@ class TestAugurs(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_augurs(self):
-        card = self.g["Augurs"].remove()
-        self.assertEqual(len(self.g["Augurs"]), 15)
+        card = self.g.get_card_from_pile("Augurs")
+        self.assertEqual(len(self.g.card_piles["Augurs"]), 15)
         self.assertEqual(card.name, "Herb Gatherer")
-        card = self.g["Augurs"].remove()
-        card = self.g["Augurs"].remove()
-        card = self.g["Augurs"].remove()
-        card = self.g["Augurs"].remove()
+        card = self.g.get_card_from_pile("Augurs")
+        card = self.g.get_card_from_pile("Augurs")
+        card = self.g.get_card_from_pile("Augurs")
+        card = self.g.get_card_from_pile("Augurs")
         self.assertEqual(card.name, "Acolyte")
         self.g.print_state()
 

@@ -47,7 +47,7 @@ class Test_Island(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Island"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Island"].remove()
+        self.card = self.g.get_card_from_pile("Island")
 
     def test_play_province(self):
         """Play an island on a province"""

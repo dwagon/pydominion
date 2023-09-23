@@ -33,7 +33,7 @@ class Test_Expand(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Expand"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.expand = self.g["Expand"].remove()
+        self.expand = self.g.get_card_from_pile("Expand")
 
     def test_play(self):
         self.plr.piles[Piles.HAND].set("Copper")

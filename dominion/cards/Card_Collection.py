@@ -32,7 +32,7 @@ class Test_Collection(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Collection", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Collection"].remove()
+        self.card = self.g.get_card_from_pile("Collection")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_card(self):

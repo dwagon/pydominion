@@ -43,7 +43,7 @@ class Test_Counterfiet(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Counterfeit"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Counterfeit"].remove()
+        self.card = self.g.get_card_from_pile("Counterfeit")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
@@ -65,7 +65,7 @@ class Test_Counterfiet(unittest.TestCase):
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)
         self.assertTrue(self.plr.piles[Piles.HAND].is_empty())
-        self.assertIn("Gold", self.g.trashpile)
+        self.assertIn("Gold", self.g.trash_pile)
         # CF + 2 * Gold
         self.assertEqual(self.plr.coins.get(), 7)
 

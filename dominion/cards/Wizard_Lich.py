@@ -28,11 +28,11 @@ class Card_Lich(Card.Card):
         """Discard rather than trash"""
         player.add_card(self, "discard")
         player.piles[Piles.HAND].remove(self)
-        intrash = [_ for _ in game.trashpile if _.cost < self.cost]
+        intrash = [_ for _ in game.trash_pile if _.cost < self.cost]
         if intrash:
             crd = player.plr_pick_card(cardsrc=intrash, force=True, num=1)
             player.gain_card(new_card=crd)
-            game.trashpile.remove(crd)
+            game.trash_pile.remove(crd)
         return {"trash": False}
 
 
@@ -44,7 +44,7 @@ class Test_Lich(unittest.TestCase):
         self.plr, self.vic = self.g.player_list()
 
         while True:
-            card = self.g["Wizards"].remove()
+            card = self.g.get_card_from_pile("Wizards")
             if card.name == "Lich":
                 break
         self.card = card
@@ -65,11 +65,11 @@ class Test_Lich(unittest.TestCase):
         """Trash the lich"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Silver"]
-        self.g.trashpile.set("Silver")
+        self.g.trash_pile.set("Silver")
         self.plr.trash_card(self.card)
         self.g.print_state()
-        self.assertNotIn("Lich", self.g.trashpile)
-        self.assertNotIn("Silver", self.g.trashpile)
+        self.assertNotIn("Lich", self.g.trash_pile)
+        self.assertNotIn("Silver", self.g.trash_pile)
         self.assertIn("Lich", self.plr.piles[Piles.DISCARD])
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 

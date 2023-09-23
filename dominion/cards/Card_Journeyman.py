@@ -20,7 +20,7 @@ class Card_Journeyman(Card.Card):
     def special(self, game, player):
         options = [{"selector": "0", "print": "No guess", "card": None}]
         index = 1
-        for name, card_pile in sorted(game.card_piles()):
+        for name, card_pile in sorted(game.get_card_piles()):
             options.append(
                 {"selector": f"{index}", "print": f"Guess {name}", "card": name}
             )
@@ -51,7 +51,7 @@ class TestJourneyman(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Journeyman"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Journeyman"].remove()
+        self.card = self.g.get_card_from_pile("Journeyman")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_card(self):

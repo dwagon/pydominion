@@ -37,7 +37,7 @@ class Test_MagicLamp(unittest.TestCase):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Secret Cave"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Magic Lamp"].remove()
+        self.card = self.g.get_card_from_pile("Magic Lamp")
 
     def test_play_gain(self):
         """Play a Magic Lamp to gain 3 Wishes"""

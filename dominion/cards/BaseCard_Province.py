@@ -34,13 +34,13 @@ class Test_Province(unittest.TestCase):
     def test_two_player(self):
         self.g = Game.TestGame(quiet=True, numplayers=2)
         self.g.start_game()
-        self.assertEqual(len(self.g["Province"]), 8)
+        self.assertEqual(len(self.g.card_piles["Province"]), 8)
         self.plr = self.g.player_list()[0]
 
     def test_five(self):
         self.g = Game.TestGame(quiet=True, numplayers=5)
         self.g.start_game()
-        self.assertEqual(len(self.g["Province"]), 15)
+        self.assertEqual(len(self.g.card_piles["Province"]), 15)
 
 
 ###############################################################################

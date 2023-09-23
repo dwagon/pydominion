@@ -25,7 +25,7 @@ class Card_BandOfMisfits(Card.Card):
         choice = player.plr_choose_options(
             "What action card do you want to play?", *options
         )
-        action = game.get_card_from_pile(choice)
+        action = game.card_instances[choice]
         player.card_benefits(action)
 
 
@@ -40,7 +40,7 @@ class TestBandOfMisfits(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Band of Misfits"].remove()
+        self.card = self.g.get_card_from_pile("Band of Misfits")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_bureaucrat(self):

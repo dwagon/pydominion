@@ -47,7 +47,7 @@ class Test_Pillage(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Pillage"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g["Pillage"].remove()
+        self.card = self.g.get_card_from_pile("Pillage")
 
     def test_play(self):
         """Play the Pillage"""

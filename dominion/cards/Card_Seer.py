@@ -40,7 +40,7 @@ class Test_Seer(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Seer"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Seer"].remove()
+        self.card = self.g.get_card_from_pile("Seer")
 
     def test_play(self):
         self.plr.piles[Piles.DECK].set("Copper", "Silver", "Estate", "Province")

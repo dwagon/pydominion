@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -42,7 +41,7 @@ class Test_Butcher(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Butcher"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Butcher"].remove()
+        self.card = self.g.get_card_from_pile("Butcher")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
@@ -66,7 +65,7 @@ class Test_Butcher(unittest.TestCase):
         self.assertEqual(self.plr.coffers.get(), 0)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
-        self.assertIn("Gold", self.g.trashpile)
+        self.assertIn("Gold", self.g.trash_pile)
         for m in self.plr.messages:
             if "Province" in m:
                 break

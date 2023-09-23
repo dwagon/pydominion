@@ -58,7 +58,7 @@ class TestWarlord(unittest.TestCase):
     def test_play(self):
         """Play Card"""
         while True:
-            card = self.g["Clashes"].remove()
+            card = self.g.get_card_from_pile("Clashes")
             if card.name == "Warlord":
                 break
         self.plr.add_card(card, Piles.HAND)
@@ -70,12 +70,12 @@ class TestWarlord(unittest.TestCase):
     def test_others_playing(self):
         """Other players playing actions"""
         while True:
-            card = self.g["Clashes"].remove()
+            card = self.g.get_card_from_pile("Clashes")
             if card.name == "Warlord":
                 break
         self.plr.add_card(card, Piles.HAND)
         self.plr.play_card(card)
-        mil = self.g["Militia"].remove()
+        mil = self.g.get_card_from_pile("Militia")
         self.oth.add_card(mil, Piles.HAND)
         self.oth.piles[Piles.PLAYED].set("Militia", "Militia", "Copper")
         self.oth.play_card(mil)

@@ -28,7 +28,7 @@ class Test_Recruiter(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Recruiter"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Recruiter"].remove()
+        self.card = self.g.get_card_from_pile("Recruiter")
 
     def test_play(self):
         self.plr.piles[Piles.HAND].set("Copper", "Silver")
@@ -37,7 +37,7 @@ class Test_Recruiter(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 2 + 1)
         self.assertEqual(self.plr.villagers.get(), 3)
-        self.assertIn("Silver", self.g.trashpile)
+        self.assertIn("Silver", self.g.trash_pile)
 
 
 ###############################################################################

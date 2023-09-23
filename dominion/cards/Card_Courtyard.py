@@ -34,7 +34,7 @@ class Test_Courtyard(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Courtyard"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.cy = self.g["Courtyard"].remove()
+        self.cy = self.g.get_card_from_pile("Courtyard")
 
     def test_play(self):
         """Play courtyard"""

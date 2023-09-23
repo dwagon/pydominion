@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -26,7 +25,7 @@ class Test_Bard(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Bard"], badcards=["Druid"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.bard = self.g["Bard"].remove()
+        self.bard = self.g.get_card_from_pile("Bard")
         for b in self.g.boons[:]:
             if b.name == "The Mountain's Gift":
                 self.g.boons = [b]

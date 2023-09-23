@@ -36,7 +36,7 @@ class Test_Modify(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Modify"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Modify"].remove()
+        self.card = self.g.get_card_from_pile("Modify")
 
     def test_play_action(self):
         """Play the card gaining action"""
@@ -46,7 +46,7 @@ class Test_Modify(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 2 + 1)
-        self.assertIn("Estate", self.g.trashpile)
+        self.assertIn("Estate", self.g.trash_pile)
 
     def test_play_gain(self):
         """Play the card gaining a card"""

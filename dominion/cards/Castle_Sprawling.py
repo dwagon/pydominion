@@ -41,7 +41,7 @@ class Test_SprawlingCastle(unittest.TestCase):
     def test_play(self):
         """Play a sprawling castle"""
         while True:
-            self.card = self.g["Castles"].remove()
+            self.card = self.g.get_card_from_pile("Castles")
             if self.card.name == "Sprawling Castle":
                 break
         self.plr.add_card(self.card, Piles.HAND)
@@ -50,7 +50,7 @@ class Test_SprawlingCastle(unittest.TestCase):
     def test_gain_duchy(self):
         """Gain duchy through Sprawling Castle"""
         while True:
-            self.card = self.g["Castles"].remove()
+            self.card = self.g.get_card_from_pile("Castles")
             if self.card.name == "Opulent Castle":  # One before Sprawling
                 break
         self.plr.test_input = ["duchy"]
@@ -62,7 +62,7 @@ class Test_SprawlingCastle(unittest.TestCase):
     def test_gain_estate(self):
         """Gain estates through Sprawling Castle"""
         while True:
-            self.card = self.g["Castles"].remove()
+            self.card = self.g.get_card_from_pile("Castles")
             if self.card.name == "Opulent Castle":  # One before Sprawling
                 break
         self.plr.test_input = ["estates"]

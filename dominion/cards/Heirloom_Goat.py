@@ -33,7 +33,7 @@ class Test_Goat(unittest.TestCase):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Pixie"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Goat"].remove()
+        self.card = self.g.get_card_from_pile("Goat")
 
     def test_play(self):
         self.plr.piles[Piles.HAND].set("Province", "Estate")
@@ -41,7 +41,7 @@ class Test_Goat(unittest.TestCase):
         self.plr.test_input = ["Province"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)
-        self.assertIn("Province", self.g.trashpile)
+        self.assertIn("Province", self.g.trash_pile)
 
 
 ###############################################################################

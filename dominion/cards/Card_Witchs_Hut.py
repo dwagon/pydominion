@@ -41,7 +41,7 @@ class Test_Witchs_Hut(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Witch's Hut", "Moat", "Chapel"])
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
-        self.card = self.g["Witch's Hut"].remove()
+        self.card = self.g.get_card_from_pile("Witch's Hut")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_curse(self):

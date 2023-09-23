@@ -21,7 +21,7 @@ class Card_Forager(Card.Card):
     def special(self, game, player):
         player.plr_trash_card()
         treas = set()
-        for card in game.trashpile:
+        for card in game.trash_pile:
             if card.isTreasure():
                 treas.add(card.name)
         player.coins.add(len(treas))
@@ -34,19 +34,19 @@ class Test_Forager(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Forager"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Forager"].remove()
+        self.card = self.g.get_card_from_pile("Forager")
 
     def test_play(self):
         """Play a forager"""
-        self.plr.trash_card(self.g["Copper"].remove())
-        self.plr.trash_card(self.g["Silver"].remove())
+        self.plr.trash_card(self.g.get_card_from_pile("Copper"))
+        self.plr.trash_card(self.g.get_card_from_pile("Silver"))
         self.plr.piles[Piles.HAND].set("Province")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["province"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.buys.get(), 2)
-        self.assertIn("Province", self.g.trashpile)
+        self.assertIn("Province", self.g.trash_pile)
         self.assertEqual(self.plr.coins.get(), 2)
 
 

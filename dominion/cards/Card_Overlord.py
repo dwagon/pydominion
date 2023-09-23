@@ -25,14 +25,14 @@ class Card_Overlord(Card.Card):
 
 
 ###############################################################################
-class Test_Overlord(unittest.TestCase):
+class TestOverlord(unittest.TestCase):
     """Test Overlord"""
 
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Overlord", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Overlord"].remove()
+        self.card = self.g.get_card_from_pile("Overlord")
 
     def test_play(self):
         """Play a Overlord"""
@@ -42,7 +42,7 @@ class Test_Overlord(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), hand + 2)
         self.assertNotIn("Moat", self.plr.piles[Piles.PLAYED])
-        self.assertEqual(len(self.g["Moat"]), 10)
+        self.assertEqual(len(self.g.card_piles["Moat"]), 10)
 
 
 ###############################################################################

@@ -44,7 +44,7 @@ class Test_SeaWitch(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Sea Witch"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Sea Witch"].remove()
+        self.card = self.g.get_card_from_pile("Sea Witch")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard(self):

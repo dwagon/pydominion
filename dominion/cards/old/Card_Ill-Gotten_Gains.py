@@ -40,7 +40,7 @@ class Test_IGG(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Ill-Gotten Gains"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Ill-Gotten Gains"].remove()
+        self.card = self.g.get_card_from_pile("Ill-Gotten Gains")
 
     def test_play(self):
         """Play an Ill-Gotten Gains"""

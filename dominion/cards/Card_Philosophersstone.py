@@ -32,7 +32,7 @@ class Test_Philosophersstone(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Philosopher's Stone"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Philosopher's Stone"].remove()
+        self.card = self.g.get_card_from_pile("Philosopher's Stone")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

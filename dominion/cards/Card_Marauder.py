@@ -35,7 +35,7 @@ class TestMarauder(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Marauder"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g["Marauder"].remove()
+        self.card = self.g.get_card_from_pile("Marauder")
 
     def test_play(self):
         """Play a marauder"""

@@ -34,7 +34,7 @@ class TestToken(unittest.TestCase):
         """Ensure we draw less if the -Card token is in place"""
         self.plr.card_token = True
         self.plr.piles[Piles.HAND].set()
-        moat = self.g["Moat"].remove()
+        moat = self.g.get_card_from_pile("Moat")
         self.plr.add_card(moat, Piles.HAND)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
         self.plr.play_card(moat)
@@ -45,7 +45,7 @@ class TestToken(unittest.TestCase):
     def test_action_token(self):
         """Does the +1 Action token work"""
         self.plr.place_token("+1 Action", "Moat")
-        moat = self.g["Moat"].remove()
+        moat = self.g.get_card_from_pile("Moat")
         self.plr.add_card(moat, Piles.HAND)
         self.assertEqual(self.plr.actions.get(), 1)
         self.plr.play_card(moat)
@@ -53,13 +53,13 @@ class TestToken(unittest.TestCase):
 
     def test_trashing_token(self):
         """Does the Trashing token work"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.piles[Piles.HAND].set("Gold", "Province", "Duchy")
         self.plr.place_token("Trashing", "Moat")
         self.plr.test_input = ["trash province"]
         self.plr.coins.set(5)
         self.plr.buy_card("Moat")
-        self.assertEqual(self.g.trashpile.size(), tsize + 1)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 1)
 
     def test_cost_token(self):
         """Does the -Cost token work"""
@@ -72,7 +72,7 @@ class TestToken(unittest.TestCase):
         """Does the +1 Card token work"""
         self.plr.piles[Piles.HAND].set()
         self.plr.place_token("+1 Card", "Moat")
-        moat = self.g["Moat"].remove()
+        moat = self.g.get_card_from_pile("Moat")
         self.plr.add_card(moat, Piles.HAND)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
         self.plr.play_card(moat)
@@ -82,7 +82,7 @@ class TestToken(unittest.TestCase):
     def test_pluscoin_token(self):
         """Does the +1 Coin token work"""
         self.plr.place_token("+1 Coin", "Moat")
-        moat = self.g["Moat"].remove()
+        moat = self.g.get_card_from_pile("Moat")
         self.plr.add_card(moat, Piles.HAND)
         self.assertEqual(self.plr.coins.get(), 0)
         self.plr.play_card(moat)
@@ -91,7 +91,7 @@ class TestToken(unittest.TestCase):
     def test_buy_token(self):
         """Does the +1 Buy token work"""
         self.plr.place_token("+1 Buy", "Moat")
-        moat = self.g["Moat"].remove()
+        moat = self.g.get_card_from_pile("Moat")
         self.plr.add_card(moat, Piles.HAND)
         self.assertEqual(self.plr.buys.get(), 1)
         self.plr.play_card(moat)

@@ -36,7 +36,7 @@ class TestSentinel(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Sentinel"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Sentinel"].remove()
+        self.card = self.g.get_card_from_pile("Sentinel")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
@@ -46,7 +46,7 @@ class TestSentinel(unittest.TestCase):
         )
         self.plr.test_input = ["Trash Copper", "Finish"]
         self.plr.play_card(self.card)
-        self.assertIn("Copper", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
         self.assertIn("Silver", self.plr.piles[Piles.DECK])
         self.assertIn("Gold", self.plr.piles[Piles.DECK])
 

@@ -55,7 +55,7 @@ class TestExorcist(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Exorcist"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Exorcist"].remove()
+        self.card = self.g.get_card_from_pile("Exorcist")
 
     def test_play(self):
         self.plr.phase = Phase.NIGHT
@@ -64,7 +64,7 @@ class TestExorcist(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertIn("Imp", self.plr.piles[Piles.DISCARD])
-        self.assertIn("Silver", self.g.trashpile)
+        self.assertIn("Silver", self.g.trash_pile)
         self.g.print_state()
 
 

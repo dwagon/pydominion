@@ -31,7 +31,7 @@ class TestBountyHunter(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Bounty Hunter"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Bounty Hunter"].remove()
+        self.card = self.g.get_card_from_pile("Bounty Hunter")
 
     def test_play(self):
         self.plr.piles[Piles.EXILE].set("Copper")

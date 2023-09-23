@@ -45,7 +45,7 @@ class Test_Catapult(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Catapult"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g["Catapult"].remove()
+        self.card = self.g.get_card_from_pile("Catapult")
 
     def test_play(self):
         """Play a Catapult with a non-treasure"""
@@ -54,7 +54,7 @@ class Test_Catapult(unittest.TestCase):
         self.plr.test_input = ["Duchy"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)
-        self.assertIn("Duchy", self.g.trashpile)
+        self.assertIn("Duchy", self.g.trash_pile)
         self.assertIn("Curse", self.victim.piles[Piles.DISCARD])
 
     def test_play_treasure(self):
@@ -64,7 +64,7 @@ class Test_Catapult(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Copper"]
         self.plr.play_card(self.card)
-        self.assertIn("Copper", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
         self.assertEqual(self.victim.piles[Piles.HAND].size(), 3)
 
 

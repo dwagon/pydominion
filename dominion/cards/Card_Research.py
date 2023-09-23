@@ -59,17 +59,17 @@ class TestResearch(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Research", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Research"].remove()
+        self.card = self.g.get_card_from_pile("Research")
         self.plr.piles[Piles.HAND].set("Gold", "Silver", "Copper")
         self.plr.add_card(self.card, Piles.HAND)
-        self.moat = self.g["Moat"].remove()
+        self.moat = self.g.get_card_from_pile("Moat")
         self.plr.add_card(self.moat, Piles.HAND)
 
     def test_play_card(self):
         self.plr.test_input = ["Trash Moat", "Set Gold", "Set Silver", "Finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertIn("Moat", self.g.trashpile)
+        self.assertIn("Moat", self.g.trash_pile)
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertIn("Silver", self.plr.piles[Piles.HAND])

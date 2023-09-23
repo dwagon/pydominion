@@ -3,7 +3,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -39,7 +38,7 @@ class Test_Black_Cat(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Black Cat"])
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
-        self.card = self.g["Black Cat"].remove()
+        self.card = self.g.get_card_from_pile("Black Cat")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard(self):

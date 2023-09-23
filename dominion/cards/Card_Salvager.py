@@ -31,7 +31,7 @@ class Test_Salvager(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Salvager"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Salvager"].remove()
+        self.card = self.g.get_card_from_pile("Salvager")
 
     def test_play(self):
         """Play a salvage"""
@@ -40,7 +40,7 @@ class Test_Salvager(unittest.TestCase):
         self.plr.test_input = ["duchy"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.buys.get(), 2)
-        self.assertIn("Duchy", self.g.trashpile)
+        self.assertIn("Duchy", self.g.trash_pile)
         self.assertEqual(self.plr.coins.get(), 5)
 
 

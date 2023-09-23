@@ -44,7 +44,7 @@ class Test_Idol(unittest.TestCase):
                 break
         self.g.boons = [myboon]
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Idol"].remove()
+        self.card = self.g.get_card_from_pile("Idol")
 
     def test_play_even(self):
         """Play an even number of Idol"""

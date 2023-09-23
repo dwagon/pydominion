@@ -28,17 +28,17 @@ class Card_Swap(Card.Card):
         )
         if choice:
             player.piles[Piles.HAND].remove(choice[0])
-            game[choice[0].name].add(choice[0])
+            game.card_piles[choice[0].name].add(choice[0])
             player.plr_gain_card(5, "less")
 
 
 ###############################################################################
-class Test_Swap(unittest.TestCase):
+class TestSwap(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Swap", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Swap"].remove()
+        self.card = self.g.get_card_from_pile("Swap")
 
     def test_play(self):
         """Play the card"""

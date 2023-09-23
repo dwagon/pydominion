@@ -23,7 +23,11 @@ class Card_Hermit(Card.Card):
     def special(self, game, player):
         """Look through your discard pile. You may trash a non-Treasure
         from it or from your hand. Gain a card costing up to $3."""
-        to_trash = [_ for _ in player.piles[Piles.DISCARD] + player.piles[Piles.HAND] if not _.isTreasure()]
+        to_trash = [
+            _
+            for _ in player.piles[Piles.DISCARD] + player.piles[Piles.HAND]
+            if not _.isTreasure()
+        ]
         player.plr_trash_card(cardsrc=to_trash, prompt="Trash one of these?")
         # Gain a card costing up to 3.
         player.plr_gain_card(3)
@@ -34,19 +38,19 @@ class Card_Hermit(Card.Card):
         if player.stats["bought"]:
             return
         card = player.piles[Piles.PLAYED].remove(self)
-        game["Hermit"].add(card)
+        game.card_piles["Hermit"].add(card)
         player.gain_card("Madman")
 
 
 ###############################################################################
-class Test_Hermit(unittest.TestCase):
+class TestHermit(unittest.TestCase):
     """Test Hermit"""
 
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Hermit"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Hermit"].remove()
+        self.card = self.g.get_card_from_pile("Hermit")
 
     def test_play_discard(self):
         """Play a Hermit trashing card from discard"""
@@ -54,7 +58,7 @@ class Test_Hermit(unittest.TestCase):
         self.plr.test_input = ["trash province", "get silver"]
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertIn("Province", self.g.trashpile)
+        self.assertIn("Province", self.g.trash_pile)
         self.assertNotIn("Province", self.plr.piles[Piles.DISCARD])
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
@@ -64,7 +68,7 @@ class Test_Hermit(unittest.TestCase):
         self.plr.test_input = ["trash province", "get silver"]
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertIn("Province", self.g.trashpile)
+        self.assertIn("Province", self.g.trash_pile)
         self.assertNotIn("Province", self.plr.piles[Piles.HAND])
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 

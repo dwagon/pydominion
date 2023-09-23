@@ -49,7 +49,7 @@ class Test_Diplomat(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Diplomat", "Militia"])
         self.g.start_game()
         self.plr, self.att = self.g.player_list()
-        self.card = self.g["Diplomat"].remove()
+        self.card = self.g.get_card_from_pile("Diplomat")
 
     def test_play_small(self):
         """Play the Diplomat with a small hand"""
@@ -71,7 +71,7 @@ class Test_Diplomat(unittest.TestCase):
         """React to an attack"""
         self.plr.piles[Piles.HAND].set("Gold", "Silver", "Province", "Duchy", "Copper")
         self.plr.add_card(self.card, Piles.HAND)
-        militia = self.g["Militia"].remove()
+        militia = self.g.get_card_from_pile("Militia")
         self.att.add_card(militia, Piles.HAND)
         self.plr.test_input = [
             "Reveal",

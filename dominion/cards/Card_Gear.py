@@ -47,7 +47,7 @@ class Test_Gear(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Gear"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Gear"].remove()
+        self.card = self.g.get_card_from_pile("Gear")
 
     def test_playcard(self):
         """Play a gear"""

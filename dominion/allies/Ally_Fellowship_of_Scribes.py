@@ -48,7 +48,7 @@ class Test_Fellowship_of_Scribes(unittest.TestCase):
 
     def test_play(self):
         """Play and gain a card"""
-        self.card = self.g["Festival"].remove()
+        self.card = self.g.get_card_from_pile("Festival")
         self.plr.piles[Piles.HAND].set("Duchy")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.favors.set(2)
@@ -60,7 +60,7 @@ class Test_Fellowship_of_Scribes(unittest.TestCase):
 
     def test_play_no_gain(self):
         """Play and don't gain a card"""
-        self.card = self.g["Festival"].remove()
+        self.card = self.g.get_card_from_pile("Festival")
         self.plr.piles[Piles.HAND].set("Duchy")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.favors.set(2)

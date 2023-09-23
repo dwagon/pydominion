@@ -26,7 +26,7 @@ class TestBagOfGold(unittest.TestCase):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Tournament"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Bag of Gold"].remove()
+        self.card = self.g.get_card_from_pile("Bag of Gold")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

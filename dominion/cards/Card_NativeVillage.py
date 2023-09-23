@@ -57,7 +57,7 @@ class Test_NativeVillage(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Native Village"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Native Village"].remove()
+        self.card = self.g.get_card_from_pile("Native Village")
 
     def test_play(self):
         self.plr.piles[Piles.DECK].set("Gold")

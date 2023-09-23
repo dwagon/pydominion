@@ -31,8 +31,8 @@ class Test_Witch(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Witch", "Moat"])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
-        self.wcard = self.g["Witch"].remove()
-        self.mcard = self.g["Moat"].remove()
+        self.wcard = self.g.get_card_from_pile("Witch")
+        self.mcard = self.g.get_card_from_pile("Moat")
         self.attacker.add_card(self.wcard, Piles.HAND)
 
     def test_defended(self):

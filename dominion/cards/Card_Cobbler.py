@@ -33,7 +33,7 @@ class Test_Cobbler(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Cobbler"].remove()
+        self.card = self.g.get_card_from_pile("Cobbler")
 
     def test_duration(self):
         """Test Playing Cobbler"""

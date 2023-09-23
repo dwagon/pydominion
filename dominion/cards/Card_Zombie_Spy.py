@@ -21,7 +21,7 @@ class Card_Zombie_Spy(Card.Card):
         self.actions = 1
 
     def setup(self, game):
-        game.trashpile.add(self)
+        game.trash_pile.add(self)
 
     def special(self, game, player):
         c = player.next_card()
@@ -43,7 +43,7 @@ class Test_Zombie_Spy(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Zombie Spy"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Zombie Spy"].remove()
+        self.card = self.g.get_card_from_pile("Zombie Spy")
 
     def test_play_keep(self):
         self.plr.test_input = ["Keep"]

@@ -134,7 +134,7 @@ class CardPile:
 
     ###########################################################################
     def __repr__(self):
-        return f"<CardPile {len(self.cards)}>"
+        return f"<CardPile {len(self.cards)} {self.cards}>"
 
 
 ###############################################################################

@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -34,7 +33,7 @@ class Test_Beggar(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Beggar", "Militia"])
         self.g.start_game()
         self.plr, self.attacker = self.g.player_list()
-        self.card = self.g["Beggar"].remove()
+        self.card = self.g.get_card_from_pile("Beggar")
 
     def test_play(self):
         """Play a beggar"""
@@ -48,7 +47,7 @@ class Test_Beggar(unittest.TestCase):
         """React to an attack as a beggar"""
         self.plr.piles[Piles.HAND].set("Beggar", "Estate", "Duchy", "Province", "Gold")
         self.plr.test_input = ["Estate", "Duchy", "Finish"]
-        militia = self.g["Militia"].remove()
+        militia = self.g.get_card_from_pile("Militia")
         self.attacker.add_card(militia, Piles.HAND)
         self.attacker.play_card(militia)
         self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Silver")

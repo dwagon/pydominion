@@ -38,7 +38,7 @@ class Test_Garrison(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         while True:
-            self.card = self.g["Forts"].remove()
+            self.card = self.g.get_card_from_pile("Forts")
             if self.card.name == "Garrison":
                 break
         self.plr.add_card(self.card, Piles.HAND)

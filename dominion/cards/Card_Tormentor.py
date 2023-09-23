@@ -35,7 +35,7 @@ class Test_Tormentor(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Tormentor"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Tormentor"].remove()
+        self.card = self.g.get_card_from_pile("Tormentor")
         for h in self.g.hexes[:]:
             if h.name != "Delusion":
                 self.g.discarded_hexes.append(h)

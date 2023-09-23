@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -32,7 +31,7 @@ class Test_Banditcamp(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_play(self):
-        bc = self.g["Bandit Camp"].remove()
+        bc = self.g.get_card_from_pile("Bandit Camp")
         self.plr.add_card(bc, Piles.HAND)
         self.plr.play_card(bc)
         self.assertEqual(self.plr.actions.get(), 2)

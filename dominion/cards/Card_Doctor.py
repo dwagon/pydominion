@@ -30,7 +30,7 @@ class Card_Doctor(Card.Card):
     def special(self, game, player):
         options = []
         index = 1
-        for name, pile in sorted(game.card_piles()):
+        for name, pile in sorted(game.get_card_piles()):
             sel = f"{index}"
             options.append({"selector": sel, "print": f"Guess {name}", "card": name})
             index += 1
@@ -99,7 +99,7 @@ class TestDoctor(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Doctor"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Doctor"].remove()
+        self.card = self.g.get_card_from_pile("Doctor")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_card(self):
@@ -107,7 +107,7 @@ class TestDoctor(unittest.TestCase):
         self.plr.piles[Piles.DECK].set("Silver", "Province", "Duchy")
         self.plr.test_input = ["Province"]
         self.plr.play_card(self.card)
-        self.assertIn("Province", self.g.trashpile)
+        self.assertIn("Province", self.g.trash_pile)
         self.assertIn("Silver", self.plr.piles[Piles.DECK])
         self.assertIn("Duchy", self.plr.piles[Piles.DECK])
 
@@ -117,7 +117,7 @@ class TestDoctor(unittest.TestCase):
         self.plr.test_input = ["3", "trash", "discard", "back on top"]
         self.plr.piles[Piles.DECK].set("Silver", "Province", "Duchy")
         self.plr.buy_card("Doctor")
-        self.assertIn("Duchy", self.g.trashpile)
+        self.assertIn("Duchy", self.g.trash_pile)
         self.assertIn("Province", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Silver")
 

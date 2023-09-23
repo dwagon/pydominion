@@ -32,11 +32,11 @@ class Test_Smugglers(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Smugglers"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
-        self.card = self.g["Smugglers"].remove()
+        self.card = self.g.get_card_from_pile("Smugglers")
 
     def test_play(self):
         """Play a smugglers"""
-        self.other.stats["bought"] = [self.g["Gold"].remove()]
+        self.other.stats["bought"] = [self.g.get_card_from_pile("Gold")]
         self.plr.test_input = ["gold"]
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)

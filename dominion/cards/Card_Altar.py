@@ -28,7 +28,7 @@ class Test_Altar(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Altar", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Altar"].remove()
+        self.card = self.g.get_card_from_pile("Altar")
 
     def test_play(self):
         """Play an Altar"""
@@ -37,7 +37,7 @@ class Test_Altar(unittest.TestCase):
         self.plr.test_input = ["Province", "Moat"]
         self.plr.play_card(self.card)
         self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
-        self.assertIn("Province", self.g.trashpile)
+        self.assertIn("Province", self.g.trash_pile)
 
 
 ###############################################################################

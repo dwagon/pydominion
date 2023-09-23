@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 class Card_Bank(Card.Card):
@@ -27,7 +26,7 @@ class Test_Bank(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Bank"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Bank"].remove()
+        self.card = self.g.get_card_from_pile("Bank")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_gainnothing(self):

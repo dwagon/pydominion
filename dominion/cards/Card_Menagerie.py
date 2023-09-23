@@ -35,7 +35,7 @@ class Test_Menagerie(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Menagerie"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Menagerie"].remove()
+        self.card = self.g.get_card_from_pile("Menagerie")
 
     def test_play_unique(self):
         self.plr.piles[Piles.HAND].set("Copper", "Estate", "Duchy")

@@ -17,8 +17,7 @@ class Card_Acolyte(Card.Card):
             to gain a Gold.  You may trash this to gain an Augur."""
 
     def special(self, game, player):
-        options = []
-        options.append(("Do nothing", None))
+        options = [("Do nothing", None)]
         for card in player.piles[Piles.HAND]:
             if card.isAction() or card.isVictory():
                 options.append((f"Trash {card.name} to gain a Gold", card))
@@ -34,17 +33,13 @@ class Card_Acolyte(Card.Card):
 
 
 ###############################################################################
-class Test_Acolyte(unittest.TestCase):
+class TestAcolyte(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Augurs"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-        while True:
-            card = self.g["Augurs"].remove()
-            if card.name == "Acolyte":
-                break
-        self.card = card
+        self.card = self.g.get_card_from_pile("Augurs", "Acolyte")
 
     def test_play(self):
         """Play the card"""
@@ -57,12 +52,15 @@ class Test_Acolyte(unittest.TestCase):
 
     def test_trash_self(self):
         """Play the card and trash self"""
-        self.g["Augurs"].rotate()
+        self.g.card_piles["Augurs"].rotate()  # Acolytes top
+        self.g.card_piles["Augurs"].rotate()  # Sorceress top
+
         self.plr.piles[Piles.HAND].set("Estate", "Copper")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash self"]
         self.plr.play_card(self.card)
-        self.assertIn("Acolyte", self.g.trashpile)
+        self.g.print_state()
+        self.assertIn("Acolyte", self.g.trash_pile)
         self.assertIn("Sorceress", self.plr.piles[Piles.DISCARD])
 
 

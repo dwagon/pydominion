@@ -41,7 +41,7 @@ class Test_Miser(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Miser"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Miser"].remove()
+        self.card = self.g.get_card_from_pile("Miser")
 
     def test_put(self):
         """Play a miser with coppers in hand"""

@@ -56,11 +56,11 @@ class Test_Contract(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Contract"].remove()
+        self.card = self.g.get_card_from_pile("Contract")
 
     def test_play_card(self):
         """Play the card"""
-        moat = self.g["Moat"].remove()
+        moat = self.g.get_card_from_pile("Moat")
         self.plr.add_card(moat, Piles.HAND)
         self.plr.add_card(self.card, Piles.HAND)
         favs = self.plr.favors.get()

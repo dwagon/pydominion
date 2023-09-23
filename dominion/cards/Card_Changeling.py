@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
-from dominion.Player import Phase
+from dominion import Card, Game, Piles, Phase
 
 
 ###############################################################################
@@ -19,7 +18,7 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
     def hook_gain_card(self, game, player, card):
         if card.cost < 3:
             return None
-        if game["Changeling"].is_empty():
+        if game.card_piles["Changeling"].is_empty():
             return None
         swap = player.plr_choose_options(
             f"Swap {card.name} for a Changeling?",
@@ -45,12 +44,12 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
 
 
 ###############################################################################
-class Test_Changeling(unittest.TestCase):
+class TestChangeling(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Changeling"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Changeling"].remove()
+        self.card = self.g.get_card_from_pile("Changeling")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_keep(self):
@@ -65,7 +64,7 @@ class Test_Changeling(unittest.TestCase):
         self.plr.test_input = ["Exchange for Gold"]
         self.plr.play_card(self.card)
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
-        self.assertIn("Changeling", self.g.trashpile)
+        self.assertIn("Changeling", self.g.trash_pile)
 
     def test_gain_keep(self):
         self.plr.test_input = ["Keep Silver"]

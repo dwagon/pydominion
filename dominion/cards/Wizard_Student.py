@@ -29,7 +29,7 @@ class Card_Student(Card.Card):
             ("Rotate", True),
         )
         if opt:
-            game["Wizards"].rotate()
+            game.card_piles["Wizards"].rotate()
         trashed = player.plr_trash_card(
             prompt="Pick a card to trash", num=1, force=True
         )
@@ -54,14 +54,14 @@ class TestStudent(unittest.TestCase):
         self.plr.test_input = ["Don't change", "Trash Copper"]
         favors = self.plr.favors.get()
         self.plr.play_card(card)
-        self.assertIn("Copper", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
         self.assertIn("Student", self.plr.piles[Piles.DECK])
         self.assertEqual(self.plr.favors.get(), favors + 1)
 
     def test_play_trash_non_treas(self):
         """Play a student - don't rotate, but trash a non treasure"""
         while True:
-            card = self.g["Wizards"].remove()
+            card = self.g.get_card_from_pile("Wizards")
             if card.name == "Student":
                 break
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate")
@@ -69,21 +69,21 @@ class TestStudent(unittest.TestCase):
         self.plr.test_input = ["Don't change", "Trash Estate"]
         favors = self.plr.favors.get()
         self.plr.play_card(card)
-        self.assertIn("Estate", self.g.trashpile)
+        self.assertIn("Estate", self.g.trash_pile)
         self.assertNotIn("Student", self.plr.piles[Piles.DECK])
         self.assertEqual(self.plr.favors.get(), favors)
 
     def test_play_trash_rotate(self):
         """Play a student - rotate, and trash a non treasure"""
         while True:
-            card = self.g["Wizards"].remove()
+            card = self.g.get_card_from_pile("Wizards")
             if card.name == "Student":
                 break
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate")
         self.plr.add_card(card, Piles.HAND)
         self.plr.test_input = ["Rotate", "Trash Estate"]
         self.plr.play_card(card)
-        card = self.g["Wizards"].remove()
+        card = self.g.get_card_from_pile("Wizards")
         self.assertEqual(card.name, "Conjurer")
 
 

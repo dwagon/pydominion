@@ -44,14 +44,14 @@ class Test_Sentry(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Sentry"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Sentry"].remove()
+        self.card = self.g.get_card_from_pile("Sentry")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_trash_discard(self):
         self.plr.piles[Piles.DECK].set("Copper", "Province", "Duchy")
         self.plr.test_input = ["Trash Copper", "Finish", "Discard Province", "Finish"]
         self.plr.play_card(self.card)
-        self.assertIn("Copper", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
         self.assertIn("Province", self.plr.piles[Piles.DISCARD])
 
     def test_discard_keep(self):

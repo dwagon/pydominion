@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import unittest
-from enum import auto
 from dominion import Card, Game, CardPile
 
 
@@ -23,7 +22,9 @@ class Card_Wizards(Card.Card):
 ###############################################################################
 class WizardCardPile(CardPile.CardPile):
     def __init__(self, game):
-        self.mapping = game.get_card_classes("Wizard", game.paths["cards"], "Card_")
+        mapping = game.get_card_classes("Wizard", game.paths["cards"], "Card_")
+        for name, class_ in mapping.items():
+            game.card_instances[name] = class_()
         super().__init__()
 
     def init_cards(self, num_cards=0, card_class=None):
@@ -46,16 +47,16 @@ class TestWizard(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_wizards(self):
-        card = self.g["Wizards"].remove()
-        self.assertEqual(len(self.g["Wizards"]), 15)
+        card = self.g.get_card_from_pile("Wizards")
+        self.assertEqual(len(self.g.card_piles["Wizards"]), 15)
         self.assertEqual(card.name, "Student")
-        card = self.g["Wizards"].remove()
+        card = self.g.get_card_from_pile("Wizards")
         self.assertEqual(card.name, "Student")
-        card = self.g["Wizards"].remove()
+        card = self.g.get_card_from_pile("Wizards")
         self.assertEqual(card.name, "Student")
-        card = self.g["Wizards"].remove()
+        card = self.g.get_card_from_pile("Wizards")
         self.assertEqual(card.name, "Student")
-        card = self.g["Wizards"].remove()
+        card = self.g.get_card_from_pile("Wizards")
         self.assertEqual(card.name, "Conjurer")
 
 

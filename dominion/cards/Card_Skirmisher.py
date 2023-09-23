@@ -38,7 +38,7 @@ class TestSkirmisher(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Skirmisher"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g["Skirmisher"].remove()
+        self.card = self.g.get_card_from_pile("Skirmisher")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

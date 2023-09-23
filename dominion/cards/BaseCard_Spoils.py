@@ -20,7 +20,7 @@ class Card_Spoils(Card.Card):
 
     def special(self, game, player):
         """When you play this return it to the spoils pile"""
-        game["Spoils"].add(self)
+        game.card_piles["Spoils"].add(self)
         player.remove_card(self)
 
 
@@ -32,13 +32,13 @@ class TestSpoils(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_play(self):
-        num_spoils = len(self.g["Spoils"])
-        spoils = self.g["Spoils"].remove()
+        num_spoils = len(self.g.card_piles["Spoils"])
+        spoils = self.g.get_card_from_pile("Spoils")
         self.plr.add_card(spoils, Piles.HAND)
         self.plr.play_card(spoils)
         self.assertEqual(self.plr.coins.get(), 3)
         self.assertTrue(self.plr.piles[Piles.PLAYED].is_empty())
-        self.assertEqual(len(self.g["Spoils"]), num_spoils)
+        self.assertEqual(len(self.g.card_piles["Spoils"]), num_spoils)
 
 
 ###############################################################################

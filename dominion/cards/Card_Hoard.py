@@ -22,16 +22,17 @@ class Card_Hoard(Card.Card):
         """When this is in play, when you buy a Victory card, gain a Gold"""
         if card.isVictory():
             player.output("Gaining Gold from Hoard")
-            player.add_card(game["Gold"].remove())
+            gold = game.get_card_from_pile("Gold")
+            player.add_card(gold)
 
 
 ###############################################################################
-class Test_Hoard(unittest.TestCase):
+class TestHoard(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Hoard"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Hoard"].remove()
+        self.card = self.g.get_card_from_pile("Hoard")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

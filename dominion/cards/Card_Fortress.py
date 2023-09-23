@@ -25,9 +25,9 @@ class Card_Fortress(Card.Card):
         if self in player.piles[Piles.HAND]:
             player.add_card(self, Piles.HAND)
             player.piles[Piles.HAND].remove(self)
-        if self in game.trashpile:
+        if self in game.trash_pile:
             player.add_card(self, Piles.HAND)
-            game.trashpile.remove(self)
+            game.trash_pile.remove(self)
         return {"trash": False}
 
 
@@ -37,7 +37,7 @@ class Test_Fortress(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Fortress"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Fortress"].remove()
+        self.card = self.g.get_card_from_pile("Fortress")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
@@ -50,7 +50,7 @@ class Test_Fortress(unittest.TestCase):
         self.plr.trash_card(self.card)
         self.g.print_state()
         self.assertIn("Fortress", self.plr.piles[Piles.HAND])
-        self.assertNotIn("Fortress", self.g.trashpile)
+        self.assertNotIn("Fortress", self.g.trash_pile)
 
 
 ###############################################################################

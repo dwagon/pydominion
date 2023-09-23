@@ -47,7 +47,7 @@ class Test_Taxman(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Taxman"], badcards=["Fool's Gold"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g["Taxman"].remove()
+        self.card = self.g.get_card_from_pile("Taxman")
 
     def test_play(self):
         """Play a Taxman"""
@@ -56,7 +56,7 @@ class Test_Taxman(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Silver", "Get Gold"]
         self.plr.play_card(self.card)
-        self.assertIn("Silver", self.g.trashpile)
+        self.assertIn("Silver", self.g.trash_pile)
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertIn("Silver", self.victim.piles[Piles.DISCARD])
 

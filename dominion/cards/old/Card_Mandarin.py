@@ -42,7 +42,7 @@ class Test_Mandarin(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Mandarin"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Mandarin"].remove()
+        self.card = self.g.get_card_from_pile("Mandarin")
 
     def test_play(self):
         """Play the card"""

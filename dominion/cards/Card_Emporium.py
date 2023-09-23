@@ -38,7 +38,7 @@ class Test_Emporium(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Emporium", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Emporium"].remove()
+        self.card = self.g.get_card_from_pile("Emporium")
 
     def test_play(self):
         """Play the Emporium"""

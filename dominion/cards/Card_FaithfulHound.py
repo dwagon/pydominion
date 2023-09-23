@@ -29,7 +29,7 @@ class TestFaithfulHound(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.plr._tracker_dont_boon = True
-        self.card = self.g["Faithful Hound"].remove()
+        self.card = self.g.get_card_from_pile("Faithful Hound")
 
     def test_play(self):
         """Play a Faithful Hound"""

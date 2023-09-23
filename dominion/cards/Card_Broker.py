@@ -54,7 +54,7 @@ class Test_Broker(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Broker"].remove()
+        self.card = self.g.get_card_from_pile("Broker")
 
     def test_play_cards(self):
         """Play the card - gain cards"""
@@ -69,10 +69,10 @@ class Test_Broker(unittest.TestCase):
         self.plr.piles[Piles.HAND].set("Copper", "Estate", "Duchy")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["finish"]
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 0)
-        self.assertEqual(self.g.trashpile.size(), tsize)
+        self.assertEqual(self.g.trash_pile.size(), tsize)
 
     def test_play_action(self):
         """Play the card - gain action"""

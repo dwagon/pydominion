@@ -1,5 +1,6 @@
 -r requirements.txt
 
+icecream
 setuptools~=68.0.0
 pylint
 pytest>=4.4.0

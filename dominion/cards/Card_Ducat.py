@@ -41,7 +41,7 @@ class Test_Ducat(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_play(self):
-        card = self.g["Ducat"].remove()
+        card = self.g.get_card_from_pile("Ducat")
         self.plr.coffers.set(0)
         self.plr.add_card(card, Piles.HAND)
         self.plr.play_card(card)

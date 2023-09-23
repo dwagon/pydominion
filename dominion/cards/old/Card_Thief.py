@@ -83,7 +83,7 @@ class TestThief(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Thief", "Moat"])
         self.g.start_game()
-        self.thief_card = self.g["Thief"].remove()
+        self.thief_card = self.g.get_card_from_pile("Thief")
         self.thief, self.victim = self.g.player_list()
         self.thief.name = "thief"
         self.victim.name = "victim"
@@ -117,18 +117,18 @@ class TestThief(unittest.TestCase):
         self.thief.test_input = ["trash gold"]
         self.thief.play_card(self.thief_card)
         # Make sure the gold ends up in the trashpile and not in the victims deck
-        self.assertIn("Gold", self.g.trashpile)
+        self.assertIn("Gold", self.g.trash_pile)
         for card in self.victim.piles[Piles.DECK]:
             self.assertNotEqual(card.name, "Gold")
         self.assertEqual(self.victim.piles[Piles.DISCARD][0].name, "Silver")
 
     def test_steal_treasure(self):
-        trash_size = self.g.trashpile.size()
+        trash_size = self.g.trash_pile.size()
         self.victim.piles[Piles.HAND].set("Copper", "Copper")
         self.victim.piles[Piles.DECK].set("Copper", "Silver", "Gold")
         self.thief.test_input = ["steal gold"]
         self.thief.play_card(self.thief_card)
-        self.assertEqual(self.g.trashpile.size(), trash_size)
+        self.assertEqual(self.g.trash_pile.size(), trash_size)
         for c in self.victim.piles[Piles.DECK]:
             self.assertNotEqual(c.name, "Gold")
         for c in self.thief.piles[Piles.DISCARD]:

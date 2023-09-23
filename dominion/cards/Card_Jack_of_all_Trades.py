@@ -46,11 +46,11 @@ class Test_Jack_of_all_Trades(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Jack of all Trades"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Jack of all Trades"].remove()
+        self.card = self.g.get_card_from_pile("Jack of all Trades")
 
     def test_play(self):
         """Play a Jack of all Trades"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.piles[Piles.DECK].set("Copper", "Copper", "Copper", "Copper", "Copper", "Gold")
         self.plr.piles[Piles.HAND].set("Duchy")
         self.plr.test_input = ["keep", "duchy"]
@@ -62,8 +62,8 @@ class Test_Jack_of_all_Trades(unittest.TestCase):
         self.assertIn("Gold", self.plr.piles[Piles.HAND])  # Keep on deck, then picked up
 
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 - 1)  # One trashed
-        self.assertEqual(self.g.trashpile.size(), tsize + 1)
-        self.assertIn("Duchy", self.g.trashpile)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 1)
+        self.assertIn("Duchy", self.g.trash_pile)
 
 
 ###############################################################################

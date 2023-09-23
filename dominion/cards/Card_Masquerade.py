@@ -51,11 +51,11 @@ class TestMasquerade(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Masquerade"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
-        self.card = self.g["Masquerade"].remove()
+        self.card = self.g.get_card_from_pile("Masquerade")
 
     def test_play(self):
         """Play a masquerade"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.other.piles[Piles.HAND].set("Copper", "Silver", "Gold")
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
         self.plr.piles[Piles.DECK].set("Estate", "Duchy", "Province")
@@ -66,11 +66,11 @@ class TestMasquerade(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertIn("Gold", self.plr.piles[Piles.HAND])
         self.assertIn("Silver", self.other.piles[Piles.HAND])
-        self.assertEqual(self.g.trashpile.size(), tsize)
+        self.assertEqual(self.g.trash_pile.size(), tsize)
 
     def test_play_with_trash(self):
         """Play a masquerade and trash after"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.other.piles[Piles.HAND].set("Copper", "Silver", "Gold")
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
         self.plr.add_card(self.card, Piles.HAND)
@@ -78,7 +78,7 @@ class TestMasquerade(unittest.TestCase):
         self.other.test_input = ["select gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 - 1)
-        self.assertEqual(self.g.trashpile.size(), tsize + 1)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 1)
 
 
 ###############################################################################

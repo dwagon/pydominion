@@ -36,33 +36,33 @@ class Test_Moneylender(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Money Lender"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Money Lender"].remove()
+        self.card = self.g.get_card_from_pile("Money Lender")
 
     def test_nocopper(self):
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.piles[Piles.HAND].set("Estate", "Estate", "Estate")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashpile.size(), tsize)
+        self.assertEqual(self.g.trash_pile.size(), tsize)
         self.assertEqual(self.plr.coins.get(), 0)
 
     def test_trash_copper(self):
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.test_input = ["1"]
         self.plr.piles[Piles.HAND].set("Copper", "Copper", "Estate")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertIn("Copper", self.g.trashpile)
-        self.assertEqual(self.g.trashpile.size(), tsize + 1)
+        self.assertIn("Copper", self.g.trash_pile)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 1)
         self.assertEqual(self.plr.coins.get(), 3)
 
     def test_dont_trash_copper(self):
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.piles[Piles.HAND].set("Copper", "Copper", "Estate")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashpile.size(), tsize)
+        self.assertEqual(self.g.trash_pile.size(), tsize)
         self.assertEqual(self.plr.coins.get(), 0)
 
 

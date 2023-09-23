@@ -34,7 +34,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Grand Market"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.gm = self.g["Grand Market"].remove()
+        self.gm = self.g.get_card_from_pile("Grand Market")
 
     def test_play(self):
         self.plr.add_card(self.gm, Piles.HAND)

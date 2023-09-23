@@ -22,7 +22,7 @@ class Card_Necromancer(Card.Card):
         ]
 
     def special(self, game, player):
-        act = [_ for _ in game.trashpile if _.isAction() and not _.isDuration() and _ not in game._necromancer]
+        act = [_ for _ in game.trash_pile if _.isAction() and not _.isDuration() and _ not in game._necromancer]
         card = player.card_sel(cardsrc=act, prompt="Select Action card from Trash")
         game._necromancer.add(card[0])
         player.play_card(card[0], discard=False, cost_action=False)
@@ -41,7 +41,7 @@ class Test_Necromancer(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Necromancer", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Necromancer"].remove()
+        self.card = self.g.get_card_from_pile("Necromancer")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

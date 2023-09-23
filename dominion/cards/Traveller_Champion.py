@@ -29,13 +29,13 @@ class Test_Champion(unittest.TestCase):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Page", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Champion"].remove()
+        self.card = self.g.get_card_from_pile("Champion")
 
     def test_champion(self):
         """Play a champion"""
         self.plr.add_card(self.card, "duration")
         self.assertEqual(self.plr.actions.get(), 1)
-        moat = self.g["Moat"].remove()
+        moat = self.g.get_card_from_pile("Moat")
         self.plr.add_card(moat, Piles.HAND)
         self.plr.play_card(moat)
         self.assertEqual(self.plr.actions.get(), 1)

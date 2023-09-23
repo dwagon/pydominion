@@ -52,7 +52,7 @@ class Test_Archive(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Archive"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Archive"].remove()
+        self.card = self.g.get_card_from_pile("Archive")
 
     def test_play(self):
         """Play a Archive"""

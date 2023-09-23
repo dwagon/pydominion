@@ -14,7 +14,7 @@ class Event_Populate(Event.Event):
         self.cost = 10
 
     def special(self, game, player):
-        for card_name, card_pile in game.card_piles():
+        for card_name, card_pile in game.get_card_piles():
             card = game.get_card_from_pile(card_name)
             if not card:
                 continue

@@ -44,7 +44,7 @@ class Test_Capital_City(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Capital City"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Capital City"].remove()
+        self.card = self.g.get_card_from_pile("Capital City")
 
     def test_play(self):
         """Play the card"""

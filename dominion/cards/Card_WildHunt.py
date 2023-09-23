@@ -22,17 +22,17 @@ class Card_WildHunt(Card.Card):
             ("+3 Cards and add 1 VP to the Wild Hunt Supply pile", True),
             (
                 "Gain an Estate, and if you do, take %d VP from the pile."
-                % game["Wild Hunt"].getVP(),
+                % game.card_piles["Wild Hunt"].getVP(),
                 False,
             ),
         )
         if give:
             player.pickup_cards(3)
-            game["Wild Hunt"].addVP()
+            game.card_piles["Wild Hunt"].addVP()
         else:
             player.gain_card("Estate")
-            score = game["Wild Hunt"].drainVP()
-            player.output("Gaining %d VP from Wild Hunt" % score)
+            score = game.card_piles["Wild Hunt"].drainVP()
+            player.output(f"Gaining {score} VP from Wild Hunt")
             player.add_score("Wild Hunt", score)
 
 
@@ -42,7 +42,7 @@ class Test_WildHunt(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Wild Hunt"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Wild Hunt"].remove()
+        self.card = self.g.get_card_from_pile("Wild Hunt")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_give(self):
@@ -50,12 +50,12 @@ class Test_WildHunt(unittest.TestCase):
         self.plr.test_input = ["Cards"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 3)
-        self.assertEqual(self.g["Wild Hunt"].getVP(), 1)
+        self.assertEqual(self.g.card_piles["Wild Hunt"].getVP(), 1)
 
     def test_play_take(self):
         """Play a Wild Hunt and take the score"""
         self.plr.test_input = ["Gain"]
-        self.g["Wild Hunt"].addVP(3)
+        self.g.card_piles["Wild Hunt"].addVP(3)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertIn("Estate", self.plr.piles[Piles.DISCARD])

@@ -29,7 +29,7 @@ class Test_Pooka(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Pooka"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Pooka"].remove()
+        self.card = self.g.get_card_from_pile("Pooka")
 
     def test_play(self):
         """Play a Pooka"""
@@ -38,8 +38,8 @@ class Test_Pooka(unittest.TestCase):
         self.plr.test_input = ["Copper"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
-        self.assertIn("Copper", self.g.trashpile)
-        self.assertNotIn("Gold", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
+        self.assertNotIn("Gold", self.g.trash_pile)
 
 
 ###############################################################################

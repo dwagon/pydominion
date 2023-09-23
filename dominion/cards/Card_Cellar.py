@@ -34,7 +34,7 @@ class TestCellar(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Cellar"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.ccard = self.g["Cellar"].remove()
+        self.ccard = self.g.get_card_from_pile("Cellar")
 
     def test_none(self):
         self.plr.piles[Piles.HAND].set("Estate", "Copper", "Silver")

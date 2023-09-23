@@ -7,6 +7,9 @@ import operator
 import sys
 from collections import defaultdict
 from typing import Optional
+from icecream import ic
+
+ic.configureOutput(includeContext=True)
 
 from dominion import Piles, Phase
 from dominion.Card import Card, CardType
@@ -159,7 +162,7 @@ class Player:
 
         newcard = self.gain_card(card_name=dst, destination=destination, callhook=False)
         if newcard:
-            card_pile = self.game.cardpiles[src.name]
+            card_pile = self.game.card_piles[src.name]
             card_pile.add(src)
             self.piles[Piles.PLAYED].remove(src)
 
@@ -264,7 +267,7 @@ class Player:
         if trash_opts.get("trash", True):
             if card.location and card.location != Piles.TRASH:
                 self.remove_card(card)
-            self.game.trashpile.add(card)
+            self.game.trash_pile.add(card)
             card.player = None
             card.location = Piles.TRASH
         for crd in self.relevant_cards():
@@ -384,8 +387,8 @@ class Player:
             return card
 
         # Return card to a card pile
-        if isinstance(pile, CardPile):
-            self.game[card.pile].add(card)
+        if pile == Piles.CARDPILE or isinstance(pile, CardPile):
+            self.game.card_piles[card.pile].add(card)
             return card
 
         if pile in self.piles:
@@ -641,13 +644,15 @@ class Player:
     def _card_check(self):
         for pile in self.piles:
             for card in self.piles[pile]:
-                assert card.location == pile, f"{self.name=} {pile=} {card.location=}"
+                assert (
+                    card.location == pile
+                ), f"{self.name} {card.name=} {pile=} {card.location=}"
 
     ###########################################################################
     def _get_all_purchasable(self):
         """Return all potentially purchasable cards"""
         all_cards = PlayArea("all_purchasable")
-        for name, pile in self.game.card_piles():
+        for name, pile in self.game.get_card_piles():
             if pile.is_empty():
                 continue
             card = pile.get_top_card()
@@ -683,12 +688,12 @@ class Player:
                 verb = ""
                 action = None
             details = [self._cost_string(card)]
-            if self.game[card.pile].embargo_level:
+            if self.game.card_piles[card.pile].embargo_level:
                 details.append(f"Embargo {card.embargo_level}")
-            if self.game[card.pile].getVP():
-                details.append(f"Gathered {self.game[card.name].getVP()} VP")
+            if self.game.card_piles[card.pile].getVP():
+                details.append(f"Gathered {self.game.card_piles[card.name].getVP()} VP")
             details.append(card.get_cardtype_repr())
-            details.append(f"{len(self.game[card.pile])} left")
+            details.append(f"{len(self.game.card_piles[card.pile])} left")
             for tkn in self.which_token(card.name):
                 details.append(f"[Tkn: {tkn}]")
             o = Option(
@@ -954,7 +959,7 @@ class Player:
             f"| Discard ({len(self.piles[Piles.DISCARD])}): {', '.join([str(_) for _ in self.piles[Piles.DISCARD]])}"
         )  # Debug
         self.output(
-            f"| Trash ({len(self.game.trashpile)}): {', '.join([str(_) for _ in self.game.trashpile])}"
+            f"| Trash ({len(self.game.trash_pile)}): {', '.join([str(_) for _ in self.game.trash_pile])}"
         )  # Debug
         self.output(f"| {self.piles[Piles.DISCARD].size()} cards in discard pile")
         self.output("-" * 50)
@@ -983,16 +988,19 @@ class Player:
     ###########################################################################
     def get_score_details(self) -> dict:
         """Calculate score of the player from all factors"""
-        scr = {}
-        for c in self.all_cards():
-            scr[c.name] = scr.get(c.name, 0) + c.victory
-            scr[c.name] = scr.get(c.name, 0) + c.special_score(self.game, self)
-        for s in self.states:
-            scr[s.name] = scr.get(s.name, 0) + s.victory
+        score = {}
+        for card in self.all_cards():
+            score[card.name] = (
+                score.get(card.name, 0)
+                + card.victory
+                + card.special_score(self.game, self)
+            )
+        for state in self.states:
+            score[state.name] = score.get(state.name, 0) + state.victory
         if self.game.ally:
-            scr[self.game.ally.name] = self.game.ally.special_score(self.game, self)
-        scr.update(self.score)
-        return scr
+            score[self.game.ally.name] = self.game.ally.special_score(self.game, self)
+        score.update(self.score)
+        return score
 
     ###########################################################################
     def get_score(self, verbose=False):
@@ -1340,7 +1348,7 @@ class Player:
 
         # Replace is to gain a different card
         if options.get("replace"):
-            self.game[new_card.name].add(new_card)
+            self.game.card_piles[new_card.name].add(new_card)
             new_card = self.game.get_card_from_pile(options["replace"])
             if not new_card:
                 self.output(f"No more {options['replace']}")
@@ -1407,7 +1415,7 @@ class Player:
             self.output("Must pay off debt first")
             return
         self.buys -= 1
-        card = self.game[card_name].get_top_card()
+        card = self.game.card_instances[card_name]
         cost = self.card_cost(card)
         if card.isDebt():
             self.debt += card.debtcost
@@ -1421,8 +1429,8 @@ class Player:
         if not new_card:
             self.output("Couldn't buy card")
             return
-        if self.game[card.name].embargo_level:
-            for _ in range(self.game[card.name].embargo_level):
+        if self.game.card_piles[card.name].embargo_level:
+            for _ in range(self.game.card_piles[card.name].embargo_level):
                 self.gain_card("Curse")
                 self.output("Gained a Curse from embargo")
         self.stats["bought"].append(new_card)
@@ -1513,7 +1521,7 @@ class Player:
     ###########################################################################
     def gain_prize(self):
         """Pickup a Prize"""
-        prizes = [self.game[_] for _ in self.game.getPrizes()]
+        prizes = [self.game.card_piles[_] for _ in self.game.getPrizes()]
         options = []
         for prize_pile in prizes:
             if prize_pile.is_empty():
@@ -1564,7 +1572,7 @@ class Player:
         if not self.buys:
             self.output("Need a buy to perform an event")
             return False
-        if self.debt != 0:
+        if self.debt:
             self.output("Must pay off debt first")
         if self.coins < event.cost:
             self.output(f"Need {event.cost} coins to perform this event")
@@ -1600,7 +1608,7 @@ class Player:
         {coin} {num_potions} are the resources constraints we have
         """
         affordable = PlayArea("affordable")
-        for name, pile in self.game.card_piles():
+        for name, pile in self.game.get_card_piles():
             if not pile:
                 continue
             card = pile.get_top_card()
@@ -1646,7 +1654,7 @@ class Player:
 
     ###########################################################################
     def get_cards(self):
-        """Return a list of all teh cards owned"""
+        """Return a list of all the cards owned"""
         cards = defaultdict(int)
         for _, stack in self.piles.items():
             for card in stack:
@@ -1902,9 +1910,9 @@ class Player:
         )
         if discard is None:
             return None
-        for c in discard:
-            self.output(f"Discarding {c.name}")
-            self.discard_card(c)
+        for card in discard:
+            self.output(f"Discarding {card.name}")
+            self.discard_card(card)
         return discard
 
     ###########################################################################

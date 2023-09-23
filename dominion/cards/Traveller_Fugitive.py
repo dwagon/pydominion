@@ -33,7 +33,7 @@ class Test_Fugitive(unittest.TestCase):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Page"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Fugitive"].remove()
+        self.card = self.g.get_card_from_pile("Fugitive")
 
     def test_fugitive(self):
         """Play a fugitive"""

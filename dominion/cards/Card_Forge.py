@@ -39,15 +39,15 @@ class TestForge(unittest.TestCase):
 
     def test_play(self):
         """Play the Forge"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.piles[Piles.HAND].set("Estate", "Estate", "Estate")
         self.plr.add_card(self.forge, Piles.HAND)
         # Trash two cards, Finish Trashing, Select another
         self.plr.test_input = ["1", "2", "finish", "Bureaucrat"]
         self.plr.play_card(self.forge)
         self.assertEqual(self.plr.piles[Piles.DISCARD][0].cost, 4)
-        self.assertIn("Estate", self.g.trashpile)
-        self.assertEqual(self.g.trashpile.size(), tsize + 2)
+        self.assertIn("Estate", self.g.trash_pile)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 2)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
 
 

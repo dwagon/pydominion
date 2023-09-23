@@ -35,11 +35,11 @@ class TestMilitia(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Militia", "Moat"])
         self.g.start_game()
         self.attacker, self.defender = self.g.player_list()
-        self.mcard = self.g["Militia"].remove()
+        self.mcard = self.g.get_card_from_pile("Militia")
 
     def test_defense(self):
         self.attacker.add_card(self.mcard, Piles.HAND)
-        self.defender.add_card(self.g["Moat"].remove(), Piles.HAND)
+        self.defender.add_card(self.g.get_card_from_pile("Moat"), Piles.HAND)
         self.attacker.play_card(self.mcard)
         self.assertEqual(self.defender.piles[Piles.HAND].size(), 6)  # Normal + moat
         self.assertEqual(self.attacker.coins.get(), 2)

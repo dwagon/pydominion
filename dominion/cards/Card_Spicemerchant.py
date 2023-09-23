@@ -40,17 +40,17 @@ class Test_SpiceMerchant(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Spice Merchant"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Spice Merchant"].remove()
+        self.card = self.g.get_card_from_pile("Spice Merchant")
 
     def test_play_card(self):
         """Play an Spice Merchant and select cards"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.piles[Piles.HAND].set("Gold")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Gold", "cards"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashpile.size(), tsize + 1)
-        self.assertIn("Gold", self.g.trashpile)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 1)
+        self.assertIn("Gold", self.g.trash_pile)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.buys.get(), 1)
@@ -58,13 +58,13 @@ class Test_SpiceMerchant(unittest.TestCase):
 
     def test_play_coins(self):
         """Play an Spice Merchant and select coins"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.piles[Piles.HAND].set("Gold")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Gold", "coins"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashpile.size(), tsize + 1)
-        self.assertIn("Gold", self.g.trashpile)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 1)
+        self.assertIn("Gold", self.g.trash_pile)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 0)
         self.assertEqual(self.plr.actions.get(), 0)
         self.assertEqual(self.plr.buys.get(), 2)

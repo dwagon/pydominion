@@ -74,7 +74,7 @@ class TestCount(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Count"], badcards=["Duchess"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Count"].remove()
+        self.card = self.g.get_card_from_pile("Count")
         self.plr.piles[Piles.HAND].set("Copper", "Estate", "Silver", "Province", "Gold")
 
     def test_discard(self):
@@ -113,12 +113,12 @@ class TestCount(unittest.TestCase):
         self.assertEqual(self.plr.coins.get(), 3)
 
     def test_trash_hand(self):
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["gain a copper", "trash hand"]
         self.plr.play_card(self.card)
         self.assertTrue(self.plr.piles[Piles.HAND].is_empty())
-        self.assertEqual(self.g.trashpile.size(), tsize + 5)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 5)
 
     def test_gain_duchy(self):
         self.plr.add_card(self.card, Piles.HAND)

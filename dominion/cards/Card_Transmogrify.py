@@ -39,7 +39,7 @@ class Test_Transmogrify(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.trans = self.g["Transmogrify"].remove()
+        self.trans = self.g.get_card_from_pile("Transmogrify")
         self.plr.add_card(self.trans, Piles.HAND)
 
     def test_play(self):
@@ -52,7 +52,7 @@ class Test_Transmogrify(unittest.TestCase):
         self.plr.piles[Piles.RESERVE].set("Transmogrify")
         self.plr.test_input = ["trash duchy", "get gold"]
         self.plr.call_reserve("Transmogrify")
-        self.assertIn("Duchy", self.g.trashpile)
+        self.assertIn("Duchy", self.g.trash_pile)
         self.assertIn("Gold", self.plr.piles[Piles.HAND])
 
 

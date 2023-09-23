@@ -67,7 +67,7 @@ class Test_Secretchamber(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Secret Chamber", "Militia"])
         self.g.start_game()
         self.plr, self.att = self.g.player_list()
-        self.card = self.g["Secret Chamber"].remove()
+        self.card = self.g.get_card_from_pile("Secret Chamber")
 
     def test_play_none(self):
         """Play the Secret Chamber - discard none"""
@@ -93,7 +93,7 @@ class Test_Secretchamber(unittest.TestCase):
 
     def test_underattack(self):
         """Secret chamber is under attack - use it"""
-        mil = self.g["Militia"].remove()
+        mil = self.g.get_card_from_pile("Militia")
         self.plr.piles[Piles.DECK].set("Duchy", "Province")
         self.att.add_card(mil, Piles.HAND)
         self.plr.piles[Piles.HAND].set("Secret Chamber", "Silver", "Gold")
@@ -108,7 +108,7 @@ class Test_Secretchamber(unittest.TestCase):
 
     def test_underattack_pass(self):
         """Secret chamber is under attack - use it"""
-        mil = self.g["Militia"].remove()
+        mil = self.g.get_card_from_pile("Militia")
         self.plr.piles[Piles.DECK].set("Duchy", "Province")
         self.att.add_card(mil, Piles.HAND)
         self.plr.piles[Piles.HAND].set("Secret Chamber", "Silver", "Gold")

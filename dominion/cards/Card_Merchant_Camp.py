@@ -32,7 +32,7 @@ class Test_Merchant_Camp(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Merchant Camp", "moat"], ally="Plateau Shepherds")
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Merchant Camp"].remove()
+        self.card = self.g.get_card_from_pile("Merchant Camp")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

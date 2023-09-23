@@ -11,8 +11,8 @@ class Test_is_card(unittest.TestCase):
         """Test isDuration"""
         g = Game.TestGame(numplayers=1, initcards=["Caravan", "Moat"])
         g.start_game()
-        caravan = g["Caravan"].remove()
-        moat = g["Moat"].remove()
+        caravan = g.get_card_from_pile("Caravan")
+        moat = g.get_card_from_pile("Moat")
         self.assertTrue(caravan.isDuration())
         self.assertFalse(moat.isDuration())
 
@@ -20,8 +20,8 @@ class Test_is_card(unittest.TestCase):
         """Test isTreasure"""
         g = Game.TestGame(numplayers=1, initcards=["Counterfeit", "Moat"])
         g.start_game()
-        counterfeit = g["Counterfeit"].remove()
-        moat = g["Moat"].remove()
+        counterfeit = g.get_card_from_pile("Counterfeit")
+        moat = g.get_card_from_pile("Moat")
         self.assertTrue(counterfeit.isTreasure())
         self.assertFalse(moat.isTreasure())
 
@@ -29,8 +29,8 @@ class Test_is_card(unittest.TestCase):
         """Test isLooter"""
         g = Game.TestGame(numplayers=1, initcards=["Cultist", "Moat"])
         g.start_game()
-        cultist = g["Cultist"].remove()
-        moat = g["Moat"].remove()
+        cultist = g.get_card_from_pile("Cultist")
+        moat = g.get_card_from_pile("Moat")
         self.assertTrue(cultist.isLooter())
         self.assertFalse(moat.isLooter())
 
@@ -38,8 +38,8 @@ class Test_is_card(unittest.TestCase):
         """Test isAction"""
         g = Game.TestGame(numplayers=1, initcards=["Cultist", "Vineyard"])
         g.start_game()
-        cultist = g["Cultist"].remove()
-        vineyard = g["Vineyard"].remove()
+        cultist = g.get_card_from_pile("Cultist")
+        vineyard = g.get_card_from_pile("Vineyard")
         self.assertTrue(cultist.isAction())
         self.assertFalse(vineyard.isAction())
 
@@ -47,8 +47,8 @@ class Test_is_card(unittest.TestCase):
         """Test isTraveller"""
         g = Game.TestGame(numplayers=1, initcards=["Page", "Vineyard"])
         g.start_game()
-        page = g["Page"].remove()
-        vineyard = g["Vineyard"].remove()
+        page = g.get_card_from_pile("Page")
+        vineyard = g.get_card_from_pile("Vineyard")
         self.assertTrue(page.isTraveller())
         self.assertFalse(vineyard.isTraveller())
 
@@ -56,8 +56,8 @@ class Test_is_card(unittest.TestCase):
         """Test isReaction"""
         g = Game.TestGame(numplayers=1, initcards=["Page", "Moat"])
         g.start_game()
-        page = g["Page"].remove()
-        moat = g["Moat"].remove()
+        page = g.get_card_from_pile("Page")
+        moat = g.get_card_from_pile("Moat")
         self.assertTrue(moat.isReaction())
         self.assertFalse(page.isReaction())
 
@@ -65,8 +65,8 @@ class Test_is_card(unittest.TestCase):
         """Test isReaction"""
         g = Game.TestGame(numplayers=1, initcards=["Monastery", "Moat"])
         g.start_game()
-        monastery = g["Monastery"].remove()
-        moat = g["Moat"].remove()
+        monastery = g.get_card_from_pile("Monastery")
+        moat = g.get_card_from_pile("Moat")
         self.assertTrue(monastery.isNight())
         self.assertFalse(moat.isNight())
 
@@ -74,8 +74,8 @@ class Test_is_card(unittest.TestCase):
         """Test isReaction"""
         g = Game.TestGame(numplayers=1, initcards=["Militia", "Moat"])
         g.start_game()
-        militia = g["Militia"].remove()
-        moat = g["Moat"].remove()
+        militia = g.get_card_from_pile("Militia")
+        moat = g.get_card_from_pile("Moat")
         self.assertTrue(militia.isAttack())
         self.assertFalse(moat.isAttack())
 

@@ -40,7 +40,7 @@ class Test_Cartographer(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Cartographer"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Cartographer"].remove()
+        self.card = self.g.get_card_from_pile("Cartographer")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

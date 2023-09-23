@@ -35,7 +35,7 @@ class Test_Improve(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Improve", "Moat", "Guide"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Improve"].remove()
+        self.card = self.g.get_card_from_pile("Improve")
         self.card.player = self.plr
 
     def test_play(self):
@@ -44,7 +44,7 @@ class Test_Improve(unittest.TestCase):
         self.plr.play_card(self.card)
         self.plr.test_input = ["End phase", "End phase", "Trash Moat", "Get Guide"]
         self.plr.turn()
-        self.assertIn("Moat", self.g.trashpile)
+        self.assertIn("Moat", self.g.trash_pile)
         self.assertIn("Guide", self.plr.piles[Piles.DISCARD])
 
 

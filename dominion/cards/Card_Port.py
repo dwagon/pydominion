@@ -36,7 +36,7 @@ class TestPort(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Port"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Port"].remove()
+        self.card = self.g.get_card_from_pile("Port")
 
     def test_play(self):
         """Play a port"""

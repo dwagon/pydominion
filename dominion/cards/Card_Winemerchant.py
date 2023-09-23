@@ -36,7 +36,7 @@ class TestWineMerchant(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Wine Merchant"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Wine Merchant"].remove()
+        self.card = self.g.get_card_from_pile("Wine Merchant")
         self.card.player = self.plr
 
     def test_play(self):

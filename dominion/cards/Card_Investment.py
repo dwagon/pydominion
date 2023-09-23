@@ -45,7 +45,7 @@ class Test_Investment(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Investment"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Investment"].remove()
+        self.card = self.g.get_card_from_pile("Investment")
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Duchy")
         self.plr.add_card(self.card, Piles.HAND)
 
@@ -63,7 +63,7 @@ class Test_Investment(unittest.TestCase):
         self.plr.test_input = ["Trash Copper", "Trash this"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), cash)
-        self.assertIn("Investment", self.g.trashpile)
+        self.assertIn("Investment", self.g.trash_pile)
         self.assertEqual(self.plr.get_score(), score + 2)
 
 

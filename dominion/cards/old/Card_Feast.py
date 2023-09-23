@@ -55,14 +55,14 @@ class TestFeast(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Feast"].remove()
+        self.card = self.g.get_card_from_pile("Feast")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_dontTrash(self):
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.test_input = ["keep this"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashpile.size(), tsize)
+        self.assertEqual(self.g.trash_pile.size(), tsize)
         try:
             self.assertEqual(self.plr.piles[Piles.PLAYED][0].name, "Feast")
         except AssertionError:  # pragma: no cover
@@ -70,24 +70,24 @@ class TestFeast(unittest.TestCase):
             raise
 
     def test_trashForNothing(self):
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         try:
             self.plr.test_input = ["trash", "nothing"]
             self.plr.play_card(self.card)
-            self.assertEqual(self.g.trashpile.size(), tsize + 1)
-            self.assertIn("Feast", self.g.trashpile)
+            self.assertEqual(self.g.trash_pile.size(), tsize + 1)
+            self.assertIn("Feast", self.g.trash_pile)
             self.assertTrue(self.plr.piles[Piles.PLAYED].is_empty())
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
 
     def test_trashForSomething(self):
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.test_input = ["trash", "Get Duchy"]
         self.plr.play_card(self.card)
         try:
-            self.assertEqual(self.g.trashpile.size(), tsize + 1)
-            self.assertIn("Feast", self.g.trashpile)
+            self.assertEqual(self.g.trash_pile.size(), tsize + 1)
+            self.assertIn("Feast", self.g.trash_pile)
             self.assertTrue(self.plr.piles[Piles.PLAYED].is_empty())
             self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
             self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Duchy"])

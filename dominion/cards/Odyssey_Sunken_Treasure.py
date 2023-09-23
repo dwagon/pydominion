@@ -17,7 +17,7 @@ class Card_Sunken_Treasure(Card.Card):
 
     def special(self, game, player):
         options = []
-        for name, pile in game.card_piles():
+        for name, pile in game.get_card_piles():
             card = game.get_card_from_pile(name)
             if not card.isAction():
                 continue

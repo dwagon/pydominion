@@ -30,7 +30,7 @@ class Test_Artisan(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Artisan", "Festival"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Artisan"].remove()
+        self.card = self.g.get_card_from_pile("Artisan")
 
     def test_play(self):
         self.plr.piles[Piles.HAND].set("Copper", "Estate", "Silver", "Gold", "Province")

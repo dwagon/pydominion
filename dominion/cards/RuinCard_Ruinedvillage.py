@@ -25,7 +25,7 @@ class TestRuinedVillage(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         while True:
-            self.card = self.g["Ruins"].remove()
+            self.card = self.g.get_card_from_pile("Ruins")
             if self.card.name == "Ruined Village":
                 break
         self.plr.add_card(self.card, Piles.HAND)

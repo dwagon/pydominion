@@ -36,14 +36,14 @@ class Test_Develop(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Develop", "Smithy"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Develop"].remove()
+        self.card = self.g.get_card_from_pile("Develop")
 
     def test_play(self):
         self.plr.piles[Piles.HAND].set("Duchy")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["trash duchy", "get gold", "smithy"]
         self.plr.play_card(self.card)
-        self.assertIn("Duchy", self.g.trashpile)
+        self.assertIn("Duchy", self.g.trash_pile)
         self.assertIn("Gold", self.plr.piles[Piles.DECK])
         self.assertIn("Smithy", self.plr.piles[Piles.DECK])
 

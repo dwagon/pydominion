@@ -40,7 +40,7 @@ class TestOldWitch(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Old Witch"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Old Witch"].remove()
+        self.card = self.g.get_card_from_pile("Old Witch")
 
     def test_play(self):
         self.plr.piles[Piles.HAND].set()
@@ -55,7 +55,7 @@ class TestOldWitch(unittest.TestCase):
         self.vic.test_input = ["Trash Curse"]
         self.plr.play_card(self.card)
         self.assertNotIn("Curse", self.vic.piles[Piles.HAND])
-        self.assertIn("Curse", self.g.trashpile)
+        self.assertIn("Curse", self.g.trash_pile)
 
 
 ###############################################################################

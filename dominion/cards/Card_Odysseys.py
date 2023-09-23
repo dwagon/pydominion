@@ -24,7 +24,9 @@ class Card_Odysseys(Card.Card):
 ###############################################################################
 class OdysseyCardPile(CardPile.CardPile):
     def __init__(self, game):
-        self.mapping = game.get_card_classes("Odysseys", game.paths["cards"], "Card_")
+        mapping = game.get_card_classes("Odysseys", game.paths["cards"], "Card_")
+        for name, class_ in mapping.items():
+            game.card_instances[name] = class_()
         super().__init__()
 
     def init_cards(self, num_cards=0, card_class=None):
@@ -52,13 +54,13 @@ class TestOdysseys(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_augurs(self):
-        card = self.g["Odysseys"].remove()
-        self.assertEqual(len(self.g["Odysseys"]), 15)
+        card = self.g.get_card_from_pile("Odysseys")
+        self.assertEqual(len(self.g.card_piles["Odysseys"]), 15)
         self.assertEqual(card.name, "Old Map")
-        card = self.g["Odysseys"].remove()
-        card = self.g["Odysseys"].remove()
-        card = self.g["Odysseys"].remove()
-        card = self.g["Odysseys"].remove()
+        card = self.g.get_card_from_pile("Odysseys")
+        card = self.g.get_card_from_pile("Odysseys")
+        card = self.g.get_card_from_pile("Odysseys")
+        card = self.g.get_card_from_pile("Odysseys")
         self.assertEqual(card.name, "Voyage")
         self.g.print_state()
 

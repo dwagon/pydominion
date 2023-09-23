@@ -45,7 +45,7 @@ class TestVault(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Vault"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
-        self.card = self.g["Vault"].remove()
+        self.card = self.g.get_card_from_pile("Vault")
 
     def test_play(self):
         self.other.piles[Piles.HAND].set("Copper", "Silver", "Gold")

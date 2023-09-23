@@ -53,7 +53,7 @@ class TestGrandCastle(unittest.TestCase):
         """Gain Grand Castle"""
         self.plr.piles[Piles.HAND].set("Duchy", "Province")
         while True:
-            self.card = self.g["Castles"].remove()
+            self.card = self.g.get_card_from_pile("Castles")
             if self.card.name == "Sprawling Castle":  # One before Grand
                 break
         self.plr.gain_card("Castles")

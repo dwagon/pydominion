@@ -3,7 +3,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -43,7 +42,7 @@ class Test_Barge(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Barge"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Barge"].remove()
+        self.card = self.g.get_card_from_pile("Barge")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_this_turn(self):

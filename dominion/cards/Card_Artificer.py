@@ -37,7 +37,7 @@ class Test_Artificer(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Artificer"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Artificer"].remove()
+        self.card = self.g.get_card_from_pile("Artificer")
 
     def test_play(self):
         """Play an artificer - discard none and pick up a copper"""

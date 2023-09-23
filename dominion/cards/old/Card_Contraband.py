@@ -25,7 +25,7 @@ class Card_Contraband(Card.Card):
         You can't buy that card this turn."""
         plr = game.player_to_left(player)
         options = []
-        for name, pile in game.card_piles():
+        for name, pile in game.get_card_piles():
             card = game.get_card_from_pile(name)
             if not card.purchasable:
                 continue
@@ -56,7 +56,7 @@ class TestContraband(unittest.TestCase):
         )
         self.g.start_game()
         self.plr, self.nbr = self.g.player_list()
-        self.card = self.g["Contraband"].remove()
+        self.card = self.g.get_card_from_pile("Contraband")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

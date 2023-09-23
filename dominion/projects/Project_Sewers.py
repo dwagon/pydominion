@@ -25,7 +25,7 @@ class TestSewers(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Chapel"].remove()
+        self.card = self.g.get_card_from_pile("Chapel")
 
     def test_play(self):
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
@@ -33,8 +33,8 @@ class TestSewers(unittest.TestCase):
         self.plr.assign_project("Sewers")
         self.plr.test_input = ["Trash Copper", "Finish", "Trash Silver", "Finish"]
         self.plr.play_card(self.card)
-        self.assertIn("Copper", self.g.trashpile)
-        self.assertIn("Silver", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
+        self.assertIn("Silver", self.g.trash_pile)
 
 
 ###############################################################################

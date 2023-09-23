@@ -32,7 +32,7 @@ class TestCouncilRoom(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Council Room"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
-        self.ccard = self.g["Council Room"].remove()
+        self.ccard = self.g.get_card_from_pile("Council Room")
         self.plr.add_card(self.ccard, Piles.HAND)
 
     def test_play(self):

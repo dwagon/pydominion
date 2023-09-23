@@ -18,23 +18,25 @@ class Card_Territory(Card.Card):
         self.base = Card.CardExpansion.ALLIES
         self.cost = 6
         self.name = "Territory"
-        self.desc = """Worth 1 VP per differently named Victory card you have.
+        self.desc = """Worth 1VP per differently named Victory card you have.
             When you gain this, gain a Gold per empty Supply pile."""
 
     def hook_gain_this_card(self, game, player):
         """When you gain this, gain a Gold per empty Supply pile."""
-        empties = sum(1 for st in game.cardpiles if game[st].is_empty())
+        empties = sum(
+            1 for st, _ in game.get_card_piles() if game.card_piles[st].is_empty()
+        )
         for _ in range(empties):
             player.gain_card("Gold")
 
     def special_score(self, game, player):
-        """Worth 1 VP per differently named Victory card you have."""
+        """Worth 1VP per differently named Victory card you have."""
         vict = {_.name for _ in player.all_cards() if _.isVictory()}
         return len(vict)
 
 
 ###############################################################################
-class Test_Territory(unittest.TestCase):
+class TestTerritory(unittest.TestCase):
     """Test Territory"""
 
     def setUp(self):
@@ -45,14 +47,14 @@ class Test_Territory(unittest.TestCase):
     def test_play(self):
         """Play a Territory"""
         while True:
-            card = self.g["Clashes"].remove()
+            card = self.g.get_card_from_pile("Clashes")
             if card.name == "Territory":
                 break
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Estate", "Duchy")
         # Empty Duchy Pile
-        c = self.g["Duchy"].remove()
+        c = self.g.get_card_from_pile("Duchy")
         while c:
-            c = self.g["Duchy"].remove()
+            c = self.g.get_card_from_pile("Duchy")
         self.plr.gain_card("Clashes")
         score = self.plr.get_score_details()
         self.assertEqual(score["Territory"], 3)  # Estate, Duchy, Territory

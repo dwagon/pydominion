@@ -40,7 +40,7 @@ class Test_Sacrifice(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Sacrifice", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Sacrifice"].remove()
+        self.card = self.g.get_card_from_pile("Sacrifice")
 
     def test_play_action(self):
         """Sacrifice an Action"""
@@ -50,7 +50,7 @@ class Test_Sacrifice(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
-        self.assertIn("Moat", self.g.trashpile)
+        self.assertIn("Moat", self.g.trash_pile)
 
     def test_play_treasure(self):
         """Sacrifice a Treasure"""

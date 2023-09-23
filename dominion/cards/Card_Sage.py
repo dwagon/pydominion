@@ -43,7 +43,7 @@ class Test_Sage(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Sage"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Sage"].remove()
+        self.card = self.g.get_card_from_pile("Sage")
 
     def test_play(self):
         """Pick a card out of the pile"""

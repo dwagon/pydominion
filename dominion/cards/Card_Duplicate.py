@@ -49,7 +49,7 @@ class TestDuplicate(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Duplicate"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Duplicate"].remove()
+        self.card = self.g.get_card_from_pile("Duplicate")
 
     def test_buy(self):
         """Call Duplicate from reserve"""

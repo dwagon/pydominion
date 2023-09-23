@@ -18,7 +18,7 @@ class Landmark_DefiledShrine(Landmark.Landmark):
     @classmethod
     def setup(cls, game):
         cls._vp = {}
-        for name, _ in list(game.card_piles()):
+        for name, _ in list(game.get_card_piles()):
             card = game.get_card_from_pile(name)
             if not card.isGathering():
                 cls._vp[name] = 2

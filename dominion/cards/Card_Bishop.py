@@ -68,7 +68,7 @@ class TestBishop(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Bishop"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
-        self.bishop = self.g["Bishop"].remove()
+        self.bishop = self.g.get_card_from_pile("Bishop")
 
     def test_play(self):
         self.plr.add_card(self.bishop, Piles.HAND)
@@ -85,10 +85,10 @@ class TestBishop(unittest.TestCase):
         self.plr.play_card(self.bishop)
         self.assertEqual(self.plr.score["bishop"], 3)
         self.assertTrue(self.plr.piles[Piles.HAND].is_empty())
-        self.assertIn("Gold", self.g.trashpile)
+        self.assertIn("Gold", self.g.trash_pile)
 
     def test_both_trash(self):
-        trash_size = self.g.trashpile.size()
+        trash_size = self.g.trash_pile.size()
         self.plr.piles[Piles.HAND].set("Gold")
         self.other.piles[Piles.HAND].set("Province")
         self.plr.add_card(self.bishop, Piles.HAND)
@@ -98,7 +98,7 @@ class TestBishop(unittest.TestCase):
         self.assertEqual(self.plr.score["bishop"], 3)
         self.assertTrue(self.plr.piles[Piles.HAND].is_empty())
         self.assertTrue(self.other.piles[Piles.HAND].is_empty())
-        self.assertEqual(self.g.trashpile.size(), trash_size + 2)
+        self.assertEqual(self.g.trash_pile.size(), trash_size + 2)
 
 
 ###############################################################################

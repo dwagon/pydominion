@@ -26,7 +26,7 @@ class Card_Old_Map(Card.Card):
             ("Rotate", True),
         )
         if opt:
-            game["Odysseys"].rotate()
+            game.card_piles["Odysseys"].rotate()
 
 
 ###############################################################################
@@ -47,7 +47,7 @@ class Test_Old_Map(unittest.TestCase):
         self.assertIn("Copper", self.plr.piles[Piles.DISCARD])
         self.assertNotIn("Copper", self.plr.piles[Piles.HAND])
         self.assertIn("Province", self.plr.piles[Piles.HAND])
-        self.assertEqual(self.g["Odysseys"].top_card(), "Voyage")
+        self.assertEqual(self.g.card_piles["Odysseys"].top_card(), "Voyage")
 
 
 ###############################################################################

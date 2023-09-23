@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Player, Piles
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -20,15 +20,17 @@ class Card_Mountebank(Card.Card):
         for plr in player.attack_victims():
             for c in plr.piles[Piles.HAND]:
                 if c.name == "Curse":
-                    player.output("Player %s discarded a curse" % plr.name)
-                    plr.output("Discarded a Curse due to %s's Mountebank" % player.name)
+                    player.output(f"Player {plr.name} discarded a curse")
+                    plr.output(f"Discarded a Curse due to {player.name}'s Mountebank")
                     plr.discard_card(c)
                     break
             else:
-                player.output("Player %s gained a curse and a copper" % plr.name)
-                plr.output("Gained a Curse and Copper due to %s's Mountebank" % player.name)
-                plr.add_card(game["Curse"].remove())
-                plr.add_card(game["Copper"].remove())
+                player.output(f"Player {plr.name} gained a curse and a copper")
+                plr.output(
+                    f"Gained a Curse and Copper due to {player.name}'s Mountebank"
+                )
+                plr.add_card(game.get_card_from_pile("Curse"))
+                plr.add_card(game.get_card_from_pile("Copper"))
 
 
 ###############################################################################
@@ -37,8 +39,8 @@ class Test_Mountebank(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Mountebank"])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
-        self.mountebank = self.g["Mountebank"].remove()
-        self.curse = self.g["Curse"].remove()
+        self.mountebank = self.g.get_card_from_pile("Mountebank")
+        self.curse = self.g.get_card_from_pile("Curse")
 
     def test_hascurse(self):
         self.attacker.add_card(self.mountebank, Piles.HAND)

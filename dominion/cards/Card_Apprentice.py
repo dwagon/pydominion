@@ -34,29 +34,29 @@ class Test_Apprentice(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Apprentice", "Familiar"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.apprentice = self.g["Apprentice"].remove()
+        self.apprentice = self.g.get_card_from_pile("Apprentice")
 
     def test_trashNone(self):
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.add_card(self.apprentice, Piles.HAND)
         self.plr.test_input = ["finish"]
         self.plr.play_card(self.apprentice)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
-        self.assertEqual(self.g.trashpile.size(), tsize)
+        self.assertEqual(self.g.trash_pile.size(), tsize)
 
     def test_trash_card(self):
         self.plr.piles[Piles.HAND].set("Silver")
         self.plr.add_card(self.apprentice, Piles.HAND)
         self.plr.test_input = ["silver"]
         self.plr.play_card(self.apprentice)
-        self.assertEqual(self.plr.piles[Piles.HAND].size(), self.g.trashpile[-1].cost)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), self.g.trash_pile[-1].cost)
 
     def test_trashPotion(self):
         self.plr.piles[Piles.HAND].set("Familiar")
         self.plr.add_card(self.apprentice, Piles.HAND)
         self.plr.test_input = ["Familiar"]
         self.plr.play_card(self.apprentice)
-        self.assertEqual(self.plr.piles[Piles.HAND].size(), self.g.trashpile[-1].cost + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), self.g.trash_pile[-1].cost + 2)
 
 
 ###############################################################################

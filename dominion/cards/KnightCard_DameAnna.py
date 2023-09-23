@@ -35,19 +35,19 @@ class TestDameAnna(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         while True:
-            self.card = self.g["Knights"].remove()
+            self.card = self.g.get_card_from_pile("Knights")
             if self.card.name == "Dame Anna":
                 break
 
     def test_score(self):
         """Play the Dame"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.piles[Piles.HAND].set("Duchy", "Province")
         self.plr.test_input = ["duchy", "province", "finish"]
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashpile.size(), tsize + 2)
-        self.assertIn("Province", self.g.trashpile)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 2)
+        self.assertIn("Province", self.g.trash_pile)
 
 
 ###############################################################################

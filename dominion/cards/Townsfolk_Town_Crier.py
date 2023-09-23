@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Town_Crier"""
 import unittest
 from dominion import Game, Card, Piles
 
@@ -36,17 +36,17 @@ class Card_Town_Crier(Card.Card):
             ("Rotate", True),
         )
         if opt:
-            game["Townsfolk"].rotate()
+            game.card_piles["Townsfolk"].rotate()
 
 
 ###############################################################################
-class Test_Town_Crier(unittest.TestCase):
+class TestTownCrier(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Townsfolk"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         while True:
-            self.card = self.g["Townsfolk"].remove()
+            self.card = self.g.get_card_from_pile("Townsfolk")
             if self.card.name == "Town Crier":
                 break
         self.plr.add_card(self.card, Piles.HAND)
@@ -57,7 +57,7 @@ class Test_Town_Crier(unittest.TestCase):
         cns = self.plr.coins.get()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), cns + 2)
-        card = self.g["Townsfolk"].remove()
+        card = self.g.get_card_from_pile("Townsfolk")
         self.assertEqual(card.name, "Blacksmith")
 
     def test_play_retain_silver(self):
@@ -65,7 +65,7 @@ class Test_Town_Crier(unittest.TestCase):
         self.plr.test_input = ["Silver", "Don't"]
         self.plr.play_card(self.card)
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
-        card = self.g["Townsfolk"].remove()
+        card = self.g.get_card_from_pile("Townsfolk")
         self.assertEqual(card.name, "Town Crier")
 
     def test_play_retain_card(self):

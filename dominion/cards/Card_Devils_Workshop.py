@@ -38,7 +38,7 @@ class Test_Devils_Workshop(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Devil's Workshop", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Devil's Workshop"].remove()
+        self.card = self.g.get_card_from_pile("Devil's Workshop")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_0(self):

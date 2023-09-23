@@ -44,7 +44,7 @@ class Test_Kingscourt(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["King's Court", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["King's Court"].remove()
+        self.card = self.g.get_card_from_pile("King's Court")
 
     def test_play(self):
         self.plr.piles[Piles.DECK].set("Estate", "Estate", "Gold", "Gold", "Duchy", "Duchy")

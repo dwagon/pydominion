@@ -36,7 +36,7 @@ class TestGuardDog(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Guard Dog", "Witch"])
         self.g.start_game()
         self.plr, self.att = self.g.player_list()
-        self.card = self.g["Guard Dog"].remove()
+        self.card = self.g.get_card_from_pile("Guard Dog")
 
     def test_play_small_hand(self):
         """Play a card - gain twice"""

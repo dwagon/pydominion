@@ -40,7 +40,7 @@ class Test_parse_args(unittest.TestCase):
         args = rungame.parse_cli_args(["--card", "Moat"])
         g = Game.TestGame(**vars(args))
         g.start_game()
-        self.assertIn("Moat", g.cardpiles)
+        self.assertIn("Moat", g.card_piles)
 
     def test_use_landmark(self):
         """Test specifying a landmark"""

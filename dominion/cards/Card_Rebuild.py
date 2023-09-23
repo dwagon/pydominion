@@ -46,7 +46,7 @@ class Card_Rebuild(Card.Card):
 
     def _pick_victory_card(self, game, player):
         """Get the player to guess the victory card"""
-        stacks = game.getVictoryPiles()
+        stacks = game.get_victory_piles()
         options = []
         for card in stacks:
             options.append((f"{card}", card))
@@ -65,12 +65,12 @@ class TestRebuild(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Rebuild"].remove()
+        self.card = self.g.get_card_from_pile("Rebuild")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a rebuild"""
-        trash_size = self.g.trashpile.size()
+        trash_size = self.g.trash_pile.size()
         self.plr.piles[Piles.DECK].set("Copper", "Copper", "Estate", "Province", "Gold")
         self.plr.test_input = ["Province", "Get Duchy"]
         self.plr.play_card(self.card)
@@ -79,8 +79,8 @@ class TestRebuild(unittest.TestCase):
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertIn("Province", self.plr.piles[Piles.DISCARD])
         self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
-        self.assertEqual(self.g.trashpile.size(), trash_size + 1)
-        self.assertIn("Estate", self.g.trashpile)
+        self.assertEqual(self.g.trash_pile.size(), trash_size + 1)
+        self.assertIn("Estate", self.g.trash_pile)
 
 
 ###############################################################################

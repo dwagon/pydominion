@@ -60,7 +60,7 @@ class TestStoneMason(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Stonemason"].remove()
+        self.card = self.g.get_card_from_pile("Stonemason")
 
     def test_play(self):
         """Play a stonemason"""
@@ -68,7 +68,7 @@ class TestStoneMason(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["trash province", "get gold", "get silver"]
         self.plr.play_card(self.card)
-        self.assertIn("Province", self.g.trashpile)
+        self.assertIn("Province", self.g.trash_pile)
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 

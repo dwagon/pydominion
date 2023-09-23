@@ -36,18 +36,18 @@ class Test_Priest(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Priest", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Priest"].remove()
+        self.card = self.g.get_card_from_pile("Priest")
         self.plr.add_card(self.card, Piles.HAND)
-        self.moat = self.g["Moat"].remove()
+        self.moat = self.g.get_card_from_pile("Moat")
         self.plr.add_card(self.moat, Piles.HAND)
-        self.gold = self.g["Gold"].remove()
+        self.gold = self.g.get_card_from_pile("Gold")
         self.plr.add_card(self.gold, Piles.HAND)
 
     def test_play_card(self):
         self.plr.test_input = ["Trash Moat"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertIn("Moat", self.g.trashpile)
+        self.assertIn("Moat", self.g.trash_pile)
         self.plr.trash_card(self.gold)
         self.assertEqual(self.plr.coins.get(), 4)
 

@@ -38,7 +38,7 @@ class Test_Fortune(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Fortune"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Fortune"].remove()
+        self.card = self.g.get_card_from_pile("Fortune")
 
     def test_play(self):
         """Play a Fortune"""

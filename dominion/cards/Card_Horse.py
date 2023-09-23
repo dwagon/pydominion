@@ -21,7 +21,7 @@ class Card_Horse(Card.Card):
         self.numcards = 30
 
     def special(self, game, player):
-        player.move_card(self, game["Horse"])
+        player.move_card(self, game.card_piles["Horse"])
 
 
 ###############################################################################
@@ -30,7 +30,7 @@ class TestHorse(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Horse"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Horse"].remove()
+        self.card = self.g.get_card_from_pile("Horse")
 
     def test_play(self):
         self.plr.add_card(self.card, Piles.HAND)

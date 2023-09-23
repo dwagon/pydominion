@@ -38,7 +38,7 @@ class Test_Specialist(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Specialist", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Specialist"].remove()
+        self.card = self.g.get_card_from_pile("Specialist")
 
     def test_play_gain(self):
         """Play the card and gain a copy"""

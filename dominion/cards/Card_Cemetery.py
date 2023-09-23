@@ -27,16 +27,16 @@ class Test_Cemetery(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Cemetery"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Cemetery"].remove()
+        self.card = self.g.get_card_from_pile("Cemetery")
 
     def test_gain(self):
         """Gain a Cemetery"""
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
         self.plr.test_input = ["Copper", "Silver", "Gold", "Estate", "Finish"]
         self.plr.gain_card("Cemetery")
-        self.assertIn("Copper", self.g.trashpile)
-        self.assertIn("Gold", self.g.trashpile)
-        self.assertNotIn("Duchy", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
+        self.assertIn("Gold", self.g.trash_pile)
+        self.assertNotIn("Duchy", self.g.trash_pile)
         self.assertEqual(self.plr.get_score_details()["Cemetery"], 2)
 
 

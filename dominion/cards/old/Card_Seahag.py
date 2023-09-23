@@ -36,8 +36,8 @@ class Test_Seahag(unittest.TestCase):
         )
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
-        self.seahag = self.g["Sea Hag"].remove()
-        self.mcard = self.g["Moat"].remove()
+        self.seahag = self.g.get_card_from_pile("Sea Hag")
+        self.mcard = self.g.get_card_from_pile("Moat")
         self.attacker.add_card(self.seahag, Piles.HAND)
 
     def test_defended(self):

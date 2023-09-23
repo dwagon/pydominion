@@ -42,7 +42,7 @@ class TestSkysGift(unittest.TestCase):
                 my_boon = b
                 break
         self.g.boons = [my_boon]
-        self.card = self.g["Bard"].remove()
+        self.card = self.g.get_card_from_pile("Bard")
 
     def test_sky_gift(self):
         """Discard 3 cards to gain a gold"""

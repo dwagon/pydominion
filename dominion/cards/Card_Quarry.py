@@ -27,7 +27,7 @@ class TestQuarry(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Quarry", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Quarry"].remove()
+        self.card = self.g.get_card_from_pile("Quarry")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_card(self):

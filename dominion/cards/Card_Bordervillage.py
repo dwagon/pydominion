@@ -36,7 +36,7 @@ class Test_Bordervillage(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Border Village"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.bv = self.g["Border Village"].remove()
+        self.bv = self.g.get_card_from_pile("Border Village")
         self.plr.add_card(self.bv, Piles.HAND)
 
     def test_play(self):

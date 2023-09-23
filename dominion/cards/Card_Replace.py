@@ -40,7 +40,7 @@ class Test_Replace(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Replace", "Moat"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Replace"].remove()
+        self.card = self.g.get_card_from_pile("Replace")
 
     def test_gain_action(self):
         self.plr.piles[Piles.HAND].set("Estate", "Silver")

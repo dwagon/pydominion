@@ -31,7 +31,7 @@ class Test_Cathedral(unittest.TestCase):
         self.plr.piles[Piles.HAND].set("Copper", "Estate", "Province")
         self.plr.test_input = ["Copper"]
         self.plr.start_turn()
-        self.assertIn("Copper", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
         self.assertNotIn("Copper", self.plr.piles[Piles.HAND])
 
 

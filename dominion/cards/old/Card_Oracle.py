@@ -51,7 +51,7 @@ class TestOracle(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Oracle"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Oracle"].remove()
+        self.card = self.g.get_card_from_pile("Oracle")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_card(self):

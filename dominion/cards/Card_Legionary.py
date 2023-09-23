@@ -39,7 +39,7 @@ class Test_Legionary(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Legionary"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g["Legionary"].remove()
+        self.card = self.g.get_card_from_pile("Legionary")
 
     def test_play(self):
         """Play a Legionary"""

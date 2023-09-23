@@ -45,7 +45,7 @@ class Test_Swindler(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Swindler", "Moat"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g["Swindler"].remove()
+        self.card = self.g.get_card_from_pile("Swindler")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
@@ -56,19 +56,19 @@ class Test_Swindler(unittest.TestCase):
 
     def test_defended(self):
         """Swindle a defended player"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.victim.piles[Piles.HAND].set("Moat")
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashpile.size(), tsize)
+        self.assertEqual(self.g.trash_pile.size(), tsize)
 
     def test_attack(self):
         """Swindle an undefended player"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.victim.piles[Piles.DECK].set("Gold")
         self.plr.test_input = ["Get Gold"]
         self.plr.play_card(self.card)
-        self.assertIn("Gold", self.g.trashpile)
-        self.assertEqual(self.g.trashpile.size(), tsize + 1)
+        self.assertIn("Gold", self.g.trash_pile)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 1)
 
 
 ###############################################################################

@@ -29,7 +29,7 @@ class Test_Ranger(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Ranger"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Ranger"].remove()
+        self.card = self.g.get_card_from_pile("Ranger")
 
     def test_play_first(self):
         """Play a ranger"""

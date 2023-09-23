@@ -44,7 +44,7 @@ class Test_Library(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Library", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Library"].remove()
+        self.card = self.g.get_card_from_pile("Library")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_noactions(self):

@@ -36,7 +36,7 @@ class Test_Venture(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Venture"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Venture"].remove()
+        self.card = self.g.get_card_from_pile("Venture")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

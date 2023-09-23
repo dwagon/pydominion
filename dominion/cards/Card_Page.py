@@ -29,7 +29,7 @@ class Test_Page(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Page"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Page"].remove()
+        self.card = self.g.get_card_from_pile("Page")
 
     def test_page(self):
         """Play a page"""

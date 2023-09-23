@@ -29,7 +29,7 @@ class TestWorkshop(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.workshop = self.g["Workshop"].remove()
+        self.workshop = self.g.get_card_from_pile("Workshop")
         self.plr.add_card(self.workshop, Piles.HAND)
 
     def test_gain_zero(self):

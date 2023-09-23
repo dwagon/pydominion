@@ -44,7 +44,7 @@ class Test_Tracker(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.plr._tracker_dont_boon = True
-        self.card = self.g["Tracker"].remove()
+        self.card = self.g.get_card_from_pile("Tracker")
 
     def test_play(self):
         """Play a Tracker"""

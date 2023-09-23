@@ -31,7 +31,7 @@ class Test_Tragic_Hero(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Tragic Hero"], badcards=["Fool's Gold"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Tragic Hero"].remove()
+        self.card = self.g.get_card_from_pile("Tragic Hero")
 
     def test_play(self):
         """Play a Tragic Hero with less than 8 cards"""

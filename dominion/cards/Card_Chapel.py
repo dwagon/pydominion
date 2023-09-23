@@ -25,23 +25,23 @@ class Test_Chapel(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Chapel"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.ccard = self.g["Chapel"].remove()
+        self.ccard = self.g.get_card_from_pile("Chapel")
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Estate")
         self.plr.add_card(self.ccard, Piles.HAND)
 
     def test_trashnone(self):
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.test_input = ["finish"]
         self.plr.play_card(self.ccard)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
-        self.assertEqual(self.g.trashpile.size(), tsize)
+        self.assertEqual(self.g.trash_pile.size(), tsize)
 
     def test_trashtwo(self):
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.test_input = ["trash copper", "trash silver", "finish"]
         self.plr.play_card(self.ccard)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
-        self.assertEqual(self.g.trashpile.size(), tsize + 2)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 2)
 
 
 ###############################################################################

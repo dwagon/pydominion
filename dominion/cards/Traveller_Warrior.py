@@ -77,11 +77,11 @@ class TestWarrior(unittest.TestCase):
 
     def test_with_trash(self):
         """Play a warrior with something to trash"""
-        trash_size = self.g.trashpile.size()
+        trash_size = self.g.trash_pile.size()
         self.victim.piles[Piles.DECK].set("Silver", "Silver")
         self.plr.piles[Piles.PLAYED].set("Page")
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashpile.size(), trash_size + 2)
+        self.assertEqual(self.g.trash_pile.size(), trash_size + 2)
 
     def test_end_turn(self):
         """End the turn with a played warrior"""

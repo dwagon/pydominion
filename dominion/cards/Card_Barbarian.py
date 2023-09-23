@@ -35,8 +35,8 @@ class Card_Barbarian(Card.Card):
             victim.gain_card("Curse")
             return
         cards = []
-        for name, card_pile in game.card_piles():
-            check_card = game.get_card_from_pile(name)
+        for name, card_pile in game.get_card_piles():
+            check_card = game.card_instances[name]
             if _card_types(check_card).intersection(_card_types(victim_card)):
                 if check_card.cost < victim_card.cost:
                     cards.append(check_card)
@@ -83,14 +83,14 @@ class TestBarbarian(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Barbarian"])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
-        self.card = self.g["Barbarian"].remove()
+        self.card = self.g.get_card_from_pile("Barbarian")
         self.attacker.add_card(self.card, Piles.HAND)
 
     def Xtest_play(self):
         """Test against a low-cost victim card"""
         self.victim.piles[Piles.DECK].set("Estate", "Copper")
         self.attacker.play_card(self.card)
-        self.assertIn("Copper", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
         self.assertIn("Curse", self.victim.piles[Piles.DISCARD])
 
     def test_expense(self):
@@ -98,7 +98,7 @@ class TestBarbarian(unittest.TestCase):
         self.victim.piles[Piles.DECK].set("Estate", "Province")
         self.victim.test_input = ["Select Duchy"]
         self.attacker.play_card(self.card)
-        self.assertIn("Province", self.g.trashpile)
+        self.assertIn("Province", self.g.trash_pile)
         self.assertNotIn("Curse", self.victim.piles[Piles.DISCARD])
         self.assertIn("Duchy", self.victim.piles[Piles.DISCARD])
 

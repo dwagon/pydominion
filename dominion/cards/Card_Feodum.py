@@ -51,7 +51,7 @@ class Test_Feodum(unittest.TestCase):
 
     def test_trash(self):
         """Trash a Feodum card"""
-        card = self.g["Feodum"].remove()
+        card = self.g.get_card_from_pile("Feodum")
         self.plr.add_card(card, Piles.HAND)
         self.plr.trash_card(card)
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 3)

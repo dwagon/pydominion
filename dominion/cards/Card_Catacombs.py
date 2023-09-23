@@ -45,7 +45,7 @@ class Test_Catacombs(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Catacombs"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.cat = self.g["Catacombs"].remove()
+        self.cat = self.g.get_card_from_pile("Catacombs")
         self.plr.add_card(self.cat, Piles.HAND)
 
     def test_keep(self):
@@ -75,7 +75,7 @@ class Test_Catacombs(unittest.TestCase):
         self.plr.trash_card(self.cat)
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
         self.assertTrue(self.plr.piles[Piles.DISCARD][0].cost < self.cat.cost)
-        self.assertIn("Catacombs", self.g.trashpile)
+        self.assertIn("Catacombs", self.g.trash_pile)
 
 
 ###############################################################################

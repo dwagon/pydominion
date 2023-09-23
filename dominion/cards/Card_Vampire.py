@@ -31,7 +31,7 @@ class Test_Vampire(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Vampire"], badcards=["Duchess"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Vampire"].remove()
+        self.card = self.g.get_card_from_pile("Vampire")
         self.plr.add_card(self.card, Piles.HAND)
         for h in self.g.hexes[:]:
             if h.name != "Delusion":

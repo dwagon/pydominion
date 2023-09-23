@@ -53,7 +53,7 @@ class Test_Inn(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Inn", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Inn"].remove()
+        self.card = self.g.get_card_from_pile("Inn")
 
     def test_play(self):
         """Play the card"""

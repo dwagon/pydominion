@@ -32,7 +32,7 @@ class Card_Embargo(Card.Card):
             return
         player.trash_card(self)
         card_pile = player.card_pile_sel(prompt="Which stack to embargo")
-        game[card_pile[0]].embargo()
+        game.card_piles[card_pile[0]].embargo()
 
 
 ###############################################################################
@@ -43,7 +43,7 @@ class TestEmbargo(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Embargo"], oldcards=True)
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
-        self.card = self.g["Embargo"].remove()
+        self.card = self.g.get_card_from_pile("Embargo")
 
     def test_play(self):
         """Test playing Embargo"""
@@ -51,8 +51,8 @@ class TestEmbargo(unittest.TestCase):
         self.plr.test_input = ["trash", "Select Silver"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertEqual(self.g["Silver"].embargo_level, 1)
-        self.assertIn("Embargo", self.g.trashpile)
+        self.assertEqual(self.g.card_piles["Silver"].embargo_level, 1)
+        self.assertIn("Embargo", self.g.trash_pile)
 
 
 ###############################################################################

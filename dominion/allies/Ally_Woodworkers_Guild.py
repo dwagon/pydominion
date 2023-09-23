@@ -67,7 +67,7 @@ class Test_Woodworkers_Guild(unittest.TestCase):
             "End Phase",
         ]
         self.plr.buy_phase()
-        self.assertIn("Underling", self.g.trashpile)
+        self.assertIn("Underling", self.g.trash_pile)
         self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.favors.get(), 1)
 

@@ -37,7 +37,7 @@ class Test_Scepter(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Scepter", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Scepter"].remove()
+        self.card = self.g.get_card_from_pile("Scepter")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_coin(self):

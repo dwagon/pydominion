@@ -33,7 +33,7 @@ class TestMasterpiece(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Masterpiece"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Masterpiece"].remove()
+        self.card = self.g.get_card_from_pile("Masterpiece")
 
     def test_play(self):
         """Play a Masterpiece"""

@@ -46,7 +46,7 @@ class TestMint(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Mint", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Mint"].remove()
+        self.card = self.g.get_card_from_pile("Mint")
 
     def test_play(self):
         self.plr.piles[Piles.HAND].set("Duchy", "Gold", "Silver", "Estate")
@@ -58,15 +58,15 @@ class TestMint(unittest.TestCase):
         self.assertIn("Gold", self.plr.piles[Piles.HAND])
 
     def test_buy(self):
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.coins.set(5)
         self.plr.piles[Piles.HAND].set("Gold", "Estate")
         self.plr.piles[Piles.PLAYED].set("Copper", "Silver", "Estate", "Moat")
         self.plr.buy_card("Mint")
-        self.assertEqual(self.g.trashpile.size(), tsize + 2)
-        self.assertIn("Copper", self.g.trashpile)
-        self.assertIn("Silver", self.g.trashpile)
-        self.assertNotIn("Gold", self.g.trashpile)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 2)
+        self.assertIn("Copper", self.g.trash_pile)
+        self.assertIn("Silver", self.g.trash_pile)
+        self.assertNotIn("Gold", self.g.trash_pile)
 
 
 ###############################################################################

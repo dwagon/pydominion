@@ -33,7 +33,7 @@ class Test_Familiar(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Familiar", "Moat"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g["Familiar"].remove()
+        self.card = self.g.get_card_from_pile("Familiar")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

@@ -29,7 +29,7 @@ class TestCursedVillage(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Cursed Village"].remove()
+        self.card = self.g.get_card_from_pile("Cursed Village")
         for h in self.g.hexes[:]:
             if h.name != "Delusion":
                 self.g.discarded_hexes.append(h)

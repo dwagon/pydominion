@@ -28,7 +28,7 @@ class Test_Coppersmith(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Coppersmith"], oldcards=True)
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Coppersmith"].remove()
+        self.card = self.g.get_card_from_pile("Coppersmith")
 
     def test_copper(self):
         """Copper should be worth two"""

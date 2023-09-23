@@ -32,7 +32,7 @@ class Test_Swamps_Gift(unittest.TestCase):
                 myboon = b
                 break
         self.g.boons = [myboon]
-        self.card = self.g["Bard"].remove()
+        self.card = self.g.get_card_from_pile("Bard")
 
     def test_winds_gift(self):
         self.plr.add_card(self.card, Piles.HAND)

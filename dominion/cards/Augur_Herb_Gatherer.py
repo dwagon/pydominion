@@ -54,7 +54,7 @@ class Test_Herb_Gatherer(unittest.TestCase):
         self.plr = self.g.player_list()[0]
 
         while True:
-            card = self.g["Augurs"].remove()
+            card = self.g.get_card_from_pile("Augurs")
             if card.name == "Herb Gatherer":
                 break
         self.card = card

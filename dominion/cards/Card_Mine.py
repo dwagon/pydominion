@@ -40,7 +40,7 @@ class Card_Mine(Card.Card):
             val = o["card"].cost
             # Make an assumption and pick the best treasure card
             # TODO - let user pick
-            for card_name, _ in game.card_piles():
+            for card_name, _ in game.get_card_piles():
                 card = game.get_card_from_pile(card_name)
                 if not card:
                     continue
@@ -64,7 +64,7 @@ class TestMine(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Mine"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Mine"].remove()
+        self.card = self.g.get_card_from_pile("Mine")
 
     def test_convert_copper(self):
         self.plr.piles[Piles.HAND].set("Copper")

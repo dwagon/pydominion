@@ -37,7 +37,7 @@ class TestPatrician(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Patrician"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Patrician"].remove()
+        self.card = self.g.get_card_from_pile("Patrician")
 
     def test_play_cheap(self):
         """Play the Patrician"""

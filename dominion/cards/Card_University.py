@@ -41,7 +41,7 @@ class Test_University(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.university = self.g["University"].remove()
+        self.university = self.g.get_card_from_pile("University")
         self.plr.add_card(self.university, Piles.HAND)
 
     def test_gain(self):

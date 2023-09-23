@@ -36,7 +36,7 @@ class TestSirMichael(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         while True:
-            self.card = self.g["Knights"].remove()
+            self.card = self.g.get_card_from_pile("Knights")
             if self.card.name == "Sir Michael":
                 break
 

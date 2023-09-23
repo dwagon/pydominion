@@ -43,7 +43,7 @@ class Test_Cauldron(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Cauldron", "Moat"])
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
-        self.card = self.g["Cauldron"].remove()
+        self.card = self.g.get_card_from_pile("Cauldron")
         self.plr.add_card(self.card, "played")
 
     def test_play(self):

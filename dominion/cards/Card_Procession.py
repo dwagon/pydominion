@@ -42,7 +42,7 @@ class TestProcession(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Procession", "Moat", "Witch"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Procession"].remove()
+        self.card = self.g.get_card_from_pile("Procession")
 
     def test_play(self):
         """Play procession to trash moat and buy a witch"""
@@ -50,7 +50,7 @@ class TestProcession(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Moat", "Witch"]
         self.plr.play_card(self.card)
-        self.assertIn("Moat", self.g.trashpile)
+        self.assertIn("Moat", self.g.trash_pile)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 4)
         self.assertIn("Witch", self.plr.piles[Piles.DISCARD])
 
