@@ -618,11 +618,6 @@ class Game:  # pylint: disable=too-many-public-methods
         return self.card_piles.items()
 
     ###########################################################################
-    def X__getitem__(self, key):
-        """Return the card using `game[card_name]`"""
-        return self.card_instances[key]
-
-    ###########################################################################
     def __contains__(self, key):
         """TODO"""
         return key in self.card_piles

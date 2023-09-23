@@ -644,7 +644,9 @@ class Player:
     def _card_check(self):
         for pile in self.piles:
             for card in self.piles[pile]:
-                assert card.location == pile, f"{self.name=} {pile=} {card.location=}"
+                assert (
+                    card.location == pile
+                ), f"{self.name} {card.name=} {pile=} {card.location=}"
 
     ###########################################################################
     def _get_all_purchasable(self):

@@ -36,7 +36,7 @@ class Card_Barbarian(Card.Card):
             return
         cards = []
         for name, card_pile in game.get_card_piles():
-            check_card = game.get_card_from_pile(name)
+            check_card = game.card_instances[name]
             if _card_types(check_card).intersection(_card_types(victim_card)):
                 if check_card.cost < victim_card.cost:
                     cards.append(check_card)

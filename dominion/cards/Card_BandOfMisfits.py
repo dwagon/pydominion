@@ -25,7 +25,7 @@ class Card_BandOfMisfits(Card.Card):
         choice = player.plr_choose_options(
             "What action card do you want to play?", *options
         )
-        action = game.get_card_from_pile(choice)
+        action = game.card_instances[choice]
         player.card_benefits(action)
 
 
