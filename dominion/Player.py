@@ -1330,7 +1330,10 @@ class Player:
         #   shuffle: True - shuffle the deck after gaining new card
         options = {}
         if not new_card:
-            new_card = self.game.get_card_from_pile(card_name)
+            pile = self.game.card_instances[card_name].pile
+            if not pile:
+                pile = card_name
+            new_card = self.game.get_card_from_pile(pile)
 
         if not new_card:
             self.output(f"No more {card_name}")
@@ -1429,13 +1432,13 @@ class Player:
         if not new_card:
             self.output("Couldn't buy card")
             return
-        if self.game.card_piles[card.name].embargo_level:
-            for _ in range(self.game.card_piles[card.name].embargo_level):
+        if self.game.card_piles[new_card.pile].embargo_level:
+            for _ in range(self.game.card_piles[new_card.pile].embargo_level):
                 self.gain_card("Curse")
                 self.output("Gained a Curse from embargo")
         self.stats["bought"].append(new_card)
         self.output(f"Bought {new_card} for {cost} coin")
-        if "Trashing" in self.which_token(card.name):
+        if "Trashing" in self.which_token(new_card.name):
             self.output("Trashing token allows you to trash a card")
             self.plr_trash_card()
         self.hook_buy_card(new_card)
@@ -1715,6 +1718,7 @@ class Player:
     ###########################################################################
     def _cost_string(self, card) -> str:
         """Generate the string showing the cost of the card"""
+        assert isinstance(card, (Card, EventPile, ProjectPile))
         cost = [f"{self.card_cost(card)} Coins"]
         if card.debtcost:
             cost.append(f"{card.debtcost} Debt")

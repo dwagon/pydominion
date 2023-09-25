@@ -515,7 +515,8 @@ class Game:  # pylint: disable=too-many-public-methods
     def _use_card_pile(
         self, available, card_name: str, force=False, card_type="Card"
     ) -> int:
-        """TODO"""
+        """Set up a card pile for use
+        Return 1 if it counts against the number of card piles in use"""
         try:
             if available is not None:
                 available.remove(card_name)
@@ -533,7 +534,8 @@ class Game:  # pylint: disable=too-many-public-methods
             return 0
 
         self.card_piles[card_name] = card_pile
-        self.card_instances[card_name] = self.card_mapping[card_type][card_name]()
+        if card_name not in self.card_instances:
+            self.card_instances[card_name] = self.card_mapping[card_type][card_name]()
         for card in card_pile:
             self._cards[card.uuid] = card
             if not card.pile:
@@ -634,6 +636,7 @@ class Game:  # pylint: disable=too-many-public-methods
             "Castle",
             "Heirloom",
             "Shelter",
+            "Split",
         ):
             mapping[prefix] = self.get_card_classes(
                 prefix, self.paths["cards"], "Card_"

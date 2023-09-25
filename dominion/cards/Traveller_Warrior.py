@@ -63,7 +63,6 @@ class TestWarrior(unittest.TestCase):
         self.plr, self.victim = self.g.player_list()
         self.card = self.g.get_card_from_pile("Warrior")
         self.plr.add_card(self.card, Piles.HAND)
-        print(f"DBG {self.card=}")
         self.g.print_state()
 
     def test_warrior(self):
