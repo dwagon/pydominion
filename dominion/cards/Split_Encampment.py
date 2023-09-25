@@ -43,7 +43,7 @@ class Card_Encampment(Card.Card):
     def hook_cleanup(self, game, player):
         if self._discard:
             for card in player.piles[Piles.PLAYED]:
-                if card.name == self:
+                if card == self:
                     player.output("Returning Encampment to Supply")
                     player.move_card(self, Piles.CARDPILE)
                     self._discard = False
@@ -59,7 +59,7 @@ class TestEncampment(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Encampment")
 
     def test_play_reveal(self):
-        """Play a Encampment and reveal a Gold"""
+        """Play an Encampment and reveal a Gold"""
         self.plr.piles[Piles.HAND].set("Gold")
         hndsz = self.plr.piles[Piles.HAND].size()
         acts = self.plr.actions.get()
@@ -73,16 +73,16 @@ class TestEncampment(unittest.TestCase):
         self.assertEqual(len(self.g.card_piles["Encampment"]), 9)
 
     def test_play_return(self):
-        """Play a Encampment and don't have anything to return"""
+        """Play an Encampment and don't have anything to return"""
         self.plr.piles[Piles.DISCARD].set(
             "Copper", "Copper", "Copper", "Estate", "Estate"
         )
         self.plr.piles[Piles.HAND].set("Silver")
-        hndsz = self.plr.piles[Piles.HAND].size()
+        hand_size = self.plr.piles[Piles.HAND].size()
         acts = self.plr.actions.get()
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsz + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hand_size + 2)
         self.assertEqual(self.plr.actions.get(), acts + 2 - 1)
         self.assertEqual(self.card._discard, True)
         self.plr.cleanup_phase()

@@ -1718,7 +1718,7 @@ class Player:
     ###########################################################################
     def _cost_string(self, card) -> str:
         """Generate the string showing the cost of the card"""
-        assert isinstance(card, Card)
+        assert isinstance(card, (Card, EventPile, ProjectPile))
         cost = [f"{self.card_cost(card)} Coins"]
         if card.debtcost:
             cost.append(f"{card.debtcost} Debt")
