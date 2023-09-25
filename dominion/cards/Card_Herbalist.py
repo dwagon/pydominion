@@ -28,7 +28,6 @@ class Card_Herbalist(Card.Card):
                     sel = "%d" % index
                     options.append({"selector": sel, "print": "Put %s" % c.name, "card": c})
                     index += 1
-            print("index=%d" % index)
             if index != 1:
                 o = player.user_input(options, "Put a card on the top of your deck?")
                 if o["card"]:
