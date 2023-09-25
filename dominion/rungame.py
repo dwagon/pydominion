@@ -119,7 +119,7 @@ def parse_cli_args(args=None):
 
 
 ###############################################################################
-def runGame(args):  # pragma: no cover
+def run_game(args):  # pragma: no cover
     """TODO"""
     cards = args["initcards"]
     turn = 0
@@ -153,7 +153,7 @@ def runGame(args):  # pragma: no cover
 def main():  # pragma: no cover
     """Command line entry point"""
     args = parse_cli_args()
-    runGame(vars(args))
+    run_game(vars(args))
 
 
 ###############################################################################
