@@ -1,8 +1,8 @@
 #!/usr/bin/env python
+""" https://wiki.dominionstrategy.com/index.php/Plunder"""
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -16,15 +16,16 @@ class Card_Plunder(Card.Card):
         self.coin = 2
         self.victory = 1
         self.cost = 5
+        self.pile = "Encampment"
 
 
 ###############################################################################
-class Test_Plunder(unittest.TestCase):
+class TestPlunder(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Plunder"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Encampment"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.get_card_from_pile("Plunder")
+        self.card = self.g.get_card_from_pile("Encampment", "Plunder")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
