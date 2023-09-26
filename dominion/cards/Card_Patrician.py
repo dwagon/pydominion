@@ -1,60 +1,56 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Patrician
+    https://wiki.dominionstrategy.com/index.php/Emporium"""
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Card, Game, CardPile
 
 
 ###############################################################################
-class Card_Patrician(Card.Card):
+class Card_PatricianSplit(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.CardType.ACTION
-        self.base = Card.CardExpansion.EMPIRES
-        self.desc = """+1 Card, +1 Action. Reveal the top card of your deck.
-        If it costs 5 or more, put it into your hand."""
         self.name = "Patrician"
-        self.cards = 1
-        self.actions = 1
-        self.cost = 2
+        self.base = Card.CardExpansion.EMPIRES
 
-    ###########################################################################
-    def special(self, game, player):
-        top_card = player.next_card()
-        if not top_card:
-            return
-        player.reveal_card(top_card)
-        if top_card.cost >= 5:
-            player.add_card(top_card, Piles.HAND)
-            player.output(f"Adding {top_card} to hand")
-        else:
-            player.add_card(top_card, "topdeck")
-            player.output(f"{top_card} too cheap to bother with")
+    @classmethod
+    def cardpile_setup(cls, game):
+        card_pile = PatricianCardPile(game)
+        return card_pile
 
 
 ###############################################################################
-class TestPatrician(unittest.TestCase):
+class PatricianCardPile(CardPile.CardPile):
+    def __init__(self, game):
+        mapping = game.get_card_classes("Split", game.paths["cards"], "Card_")
+        for name, class_ in mapping.items():
+            game.card_instances[name] = class_()
+        super().__init__()
+
+    def init_cards(self, num_cards=0, card_class=None):
+        # pylint: disable=import-outside-toplevel
+        from dominion.cards.Split_Patrician import Card_Patrician
+        from dominion.cards.Split_Emporium import Card_Emporium
+
+        for card_class in (Card_Patrician, Card_Emporium):
+            for _ in range(5):
+                self.cards.insert(0, card_class())
+
+
+###############################################################################
+class TestEncampmentPile(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Patrician"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g.get_card_from_pile("Patrician")
 
-    def test_play_cheap(self):
-        """Play the Patrician"""
-        self.plr.piles[Piles.DECK].set("Estate", "Estate")
-        self.plr.add_card(self.card, Piles.HAND)
-        self.plr.play_card(self.card)
-        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
-        self.assertEqual(self.plr.actions.get(), 1)
-
-    def test_play_good(self):
-        """Play the Patrician"""
-        self.plr.piles[Piles.DECK].set("Gold", "Estate")
-        self.plr.add_card(self.card, Piles.HAND)
-        self.plr.play_card(self.card)
-        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
-        self.assertEqual(self.plr.actions.get(), 1)
-        self.assertIn("Gold", self.plr.piles[Piles.HAND])
+    def test_pile(self):
+        self.assertEqual(len(self.g.card_piles["Patrician"]), 10)
+        card = self.g.get_card_from_pile("Patrician")
+        self.assertEqual(card.name, "Patrician")
+        self.assertEqual(len(self.g.card_piles["Patrician"]), 9)
+        for _ in range(5):
+            card = self.g.get_card_from_pile("Patrician")
+        self.assertEqual(card.name, "Emporium")
 
 
 ###############################################################################
