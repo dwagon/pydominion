@@ -15,6 +15,7 @@ class Card_Emporium(Card.Card):
         self.actions = 1
         self.cards = 1
         self.cost = 5
+        self.pile = "Patrician"
 
     ###########################################################################
     def desc(self, player):
@@ -35,10 +36,10 @@ class Card_Emporium(Card.Card):
 ###############################################################################
 class Test_Emporium(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Emporium", "Moat"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Patrician", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g.get_card_from_pile("Emporium")
+        self.card = self.g.get_card_from_pile("Patrician", "Emporium")
 
     def test_play(self):
         """Play the Emporium"""
@@ -51,7 +52,8 @@ class Test_Emporium(unittest.TestCase):
     def test_gain_with_actions(self):
         """Play the Emporium having played lots of actions"""
         self.plr.piles[Piles.PLAYED].set("Moat", "Moat", "Moat", "Moat", "Moat")
-        self.plr.gain_card("Emporium")
+        for _ in range(6):  # Get the Patricians off the top of the stack
+            self.plr.gain_card("Emporium")
         self.assertEqual(self.plr.get_score_details()["Emporium"], 2)
 
 
