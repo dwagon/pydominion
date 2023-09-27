@@ -477,7 +477,7 @@ class Game:  # pylint: disable=too-many-public-methods
         if not found_all:
             sys.exit(1)
 
-        while unfilled:
+        while unfilled > 0:
             if not available:
                 # Not enough cards to fill the hand - almost certainly in a test
                 break
