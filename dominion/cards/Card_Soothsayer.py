@@ -20,7 +20,7 @@ class Card_Soothsayer(Card.Card):
         player.gain_card("Gold")
         for pl in player.attack_victims():
             player.output(f"{pl.name} got cursed")
-            pl.output("f{player.name}'s Soothsayer cursed you")
+            pl.output(f"{player.name}'s Soothsayer cursed you")
             pl.gain_card("Curse")
             pl.pickup_card()
 
