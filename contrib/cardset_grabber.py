@@ -36,8 +36,8 @@ def get_card_name(item) -> Optional[str]:
 def save_set(name, cards):
     """Save the set"""
     fname = name.replace(" ", "_")
-    fname = name.replace("&", "_and_")
-    fname = name.replace("'", "")
+    fname = fname.replace("&", "_and_")
+    fname = fname.replace("'", "")
     print(f"Saving {fname} with {cards}", file=sys.stderr)
     with open(fname, "w", encoding="utf-8") as outfh:
         for card in sorted(cards):
@@ -77,7 +77,7 @@ def get_setname():
 def main():
     """Main"""
     setname = get_setname()
-    url = f"http://wiki.dominionstrategy.com/index.php/{setname.title()}"
+    url = f"http://wiki.dominionstrategy.com/index.php/{setname}"
     try:
         html = get_html(url)
     except requests.exceptions.HTTPError as exc:

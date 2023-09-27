@@ -28,14 +28,16 @@ class Card_YoungWitch(Card.Card):
         banes = []
         for klass in game.card_mapping["Card"].values():
             card = klass()
-            if card.name in game:
+
+            if card.name in game.card_piles.keys():
                 continue
             if not card.insupply or not card.purchasable:
                 continue
             if card.name in game.badcards:
                 continue
-            if card.cost in (2, 3):
-                banes.append(card.name)
+            if card.cost not in (2, 3):
+                continue
+            banes.append(card.name)
         game._bane = random.choice(banes)
         game._use_card_pile(game.getAvailableCards(), game._bane)
         game.output(f"Using {game._bane} as the bane for Young Witch")

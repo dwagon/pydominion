@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Defiled_Shrine"""
 import unittest
 from dominion import Card, Game, Landmark
 
@@ -18,9 +18,9 @@ class Landmark_DefiledShrine(Landmark.Landmark):
     @classmethod
     def setup(cls, game):
         cls._vp = {}
-        for name, _ in list(game.get_card_piles()):
+        for name, _ in game.get_card_piles():
             card = game.get_card_from_pile(name)
-            if not card.isGathering():
+            if card and not card.isGathering():
                 cls._vp[name] = 2
 
     def hook_all_players_buy_card(self, game, player, owner, card):
