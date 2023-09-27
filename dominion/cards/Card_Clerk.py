@@ -23,7 +23,7 @@ class Card_Clerk(Card.Card):
 
     def special(self, game, player):
         """Each other player with 5 or more cards in hand puts one onto their deck."""
-        # TODO - play it free at the start of the turn
+        """ TODO - play it free at the start of the turn """
         for victim in player.attack_victims():
             if len(victim.piles[Piles.HAND]) >= 5:
                 self.attack(player, victim)
