@@ -26,8 +26,10 @@ class Card_Pirate(Card.Card):
     def duration(self, game, player):
         """gain a Treasure costing up to $6 to your hand"""
         # Discard first to avoid the gained card triggering the pirate again
-        player.move_card(self, "played")
-        player.plr_gain_card(cost=6, types={Card.CardType.TREASURE: True}, destination=Piles.HAND)
+        player.move_card(self, Piles.PLAYED)
+        player.plr_gain_card(
+            cost=6, types={Card.CardType.TREASURE: True}, destination=Piles.HAND
+        )
 
     def hook_allplayers_gain_card(self, game, player, owner, card):
         """When any player gains a Treasure, you may play this from your hand"""
@@ -43,8 +45,10 @@ class Card_Pirate(Card.Card):
         )
         if not gain:
             return
-        owner.move_card(self, "played")
-        owner.plr_gain_card(cost=6, types={Card.CardType.TREASURE: True}, destination=Piles.HAND)
+        owner.move_card(self, Piles.PLAYED)
+        owner.plr_gain_card(
+            cost=6, types={Card.CardType.TREASURE: True}, destination=Piles.HAND
+        )
 
 
 ###############################################################################
@@ -57,7 +61,7 @@ class Test_Pirate(unittest.TestCase):
         self.plr, self.oth = self.g.player_list()
         self.card = self.g.get_card_from_pile("Pirate")
 
-    def test_playcard(self):
+    def test_play_card(self):
         """Play a pirate"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
