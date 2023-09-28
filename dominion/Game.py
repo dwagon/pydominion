@@ -466,7 +466,7 @@ class Game:  # pylint: disable=too-many-public-methods
         found_all = True
         for crd in initcards:
             # These cards get loaded by other things
-            if crd in ("Boons",):
+            if crd in ("Boons", "Hexes"):
                 continue
             result = self._place_init_card(crd, available)
             if result is None:
