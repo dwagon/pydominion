@@ -6,7 +6,7 @@ from dominion import Game, Card, Piles
 
 
 ###############################################################################
-class Card_Battle_Plan(Card.Card):
+class Card_BattlePlan(Card.Card):
     """Battle Plan"""
 
     def __init__(self):
@@ -20,6 +20,7 @@ class Card_Battle_Plan(Card.Card):
         self.name = "Battle Plan"
         self.cards = 1
         self.actions = 1
+        self.pile = "Clashes"
         self.desc = """+1 Card; +1 Action; You may reveal an Attack card from your hand for +1 Card.
             You may rotate any Supply pile."""
 

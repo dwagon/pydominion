@@ -20,6 +20,7 @@ class Card_Warlord(Card.Card):
         ]
         self.base = Card.CardExpansion.ALLIES
         self.cost = 5
+        self.pile = "Clashes"
         self.name = "Warlord"
         self.actions = 1
         self.desc = """+1 Action; At the start of your next turn, +2 Cards.

@@ -17,6 +17,7 @@ class Card_Territory(Card.Card):
         ]
         self.base = Card.CardExpansion.ALLIES
         self.cost = 6
+        self.pile = "Clashes"
         self.name = "Territory"
         self.desc = """Worth 1VP per differently named Victory card you have.
             When you gain this, gain a Gold per empty Supply pile."""
