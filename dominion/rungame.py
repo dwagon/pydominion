@@ -125,6 +125,8 @@ def run_game(args):  # pragma: no cover
     turn = 0
     if args["cardset"]:
         for line in args["cardset"]:
+            if line.startswith("#"):
+                continue
             if line.startswith("--prosperity"):
                 args["prosperity"] = True
                 continue

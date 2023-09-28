@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """ Grab recommended sets of cards from wiki.dominionstrategy.com """
 import argparse
+import string
 import sys
 from typing import Optional
 import requests
@@ -33,13 +34,14 @@ def get_card_name(item) -> Optional[str]:
 
 
 ##############################################################################
-def save_set(name, cards):
+def save_set(name, cards, expansion):
     """Save the set"""
     fname = name.replace(" ", "_")
     fname = fname.replace("&", "_and_")
     fname = fname.replace("'", "")
-    print(f"Saving {fname} with {cards}", file=sys.stderr)
+    print(f"Saving {fname} from {expansion}", file=sys.stderr)
     with open(fname, "w", encoding="utf-8") as outfh:
+        outfh.write(f"# {expansion}\n")
         for card in sorted(cards):
             card = card.strip()
             if not card:
@@ -50,7 +52,7 @@ def save_set(name, cards):
 
 
 ##############################################################################
-def parse_table(table):
+def parse_table(table, expansion):
     """Parse the table recommended sets of 10 section"""
     cards = []
     set_name = None
@@ -61,23 +63,24 @@ def parse_table(table):
         return
     for item in table.find_all("a"):
         cards.append(get_card_name(item))
-    save_set(set_name, cards)
+    if set_name[0] in string.ascii_uppercase:
+        save_set(set_name, cards, expansion)
 
 
 ##############################################################################
-def get_setname():
-    """Process args to get setname"""
+def get_expansion():
+    """Process args to get expansion"""
     parser = argparse.ArgumentParser(description="Get Recommended Sets")
-    parser.add_argument("setname")
+    parser.add_argument("expansion")
     args = parser.parse_args()
-    return args.setname
+    return args.expansion
 
 
 ##############################################################################
 def main():
     """Main"""
-    setname = get_setname()
-    url = f"http://wiki.dominionstrategy.com/index.php/{setname}"
+    expansion = get_expansion()
+    url = f"http://wiki.dominionstrategy.com/index.php/{expansion}"
     try:
         html = get_html(url)
     except requests.exceptions.HTTPError as exc:
@@ -89,7 +92,7 @@ def main():
         if "Recommended sets " in h2.text:
             for item in h2.next_elements:
                 if item.name == "table":
-                    parse_table(item)
+                    parse_table(item, expansion)
                 if item.name == "h2":
                     break
 
