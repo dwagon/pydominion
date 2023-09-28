@@ -34,7 +34,7 @@ class Test_Skulk(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Skulk"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.Skulk = self.g.get_card_from_pile("Skulk")
+        self.skulk = self.g.get_card_from_pile("Skulk")
         for h in self.g.hexes[:]:
             if h.name != "Delusion":
                 self.g.discarded_hexes.append(h)
@@ -42,8 +42,8 @@ class Test_Skulk(unittest.TestCase):
 
     def test_play_card(self):
         """Play Skulk"""
-        self.plr.add_card(self.Skulk, Piles.HAND)
-        self.plr.play_card(self.Skulk)
+        self.plr.add_card(self.skulk, Piles.HAND)
+        self.plr.play_card(self.skulk)
         self.assertTrue(self.vic.has_state("Deluded"))
 
     def test_gain(self):
