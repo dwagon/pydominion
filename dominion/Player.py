@@ -1061,7 +1061,8 @@ class Player:
         """Perform the duration pile at the start of the turn"""
         for card in self.piles[Piles.DURATION]:
             options = {"dest": Piles.PLAYED}
-            self.output(f"Playing {card} from duration pile")
+            if not card.permanent:
+                self.output(f"Playing {card} from duration pile")
             self.currcards.append(card)
             upd_opts = card.duration(game=self.game, player=self)
             if isinstance(upd_opts, dict):
@@ -1071,8 +1072,7 @@ class Player:
                 # Handle case where cards move themselves elsewhere
                 if card.location != Piles.DURATION:
                     continue
-                self.add_card(card, options["dest"])
-                self.piles[Piles.DURATION].remove(card)
+                self.move_card(card, options["dest"])
 
     ###########################################################################
     def _hook_start_turn(self):

@@ -4,6 +4,7 @@
 import os
 import uuid
 from enum import Enum, auto
+from typing import Optional
 
 
 ###############################################################################
@@ -193,7 +194,7 @@ class Card:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def duration(self, game, player):
+    def duration(self, game, player) -> Optional[dict]:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
