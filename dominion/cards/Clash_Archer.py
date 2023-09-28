@@ -19,7 +19,8 @@ class Card_Archer(Card.Card):
         self.base = Card.CardExpansion.ALLIES
         self.cost = 4
         self.name = "Archer"
-        self.coins = 2
+        self.coin = 2
+        self.pile = "Clashes"
         self.desc = """+$2; Each other player with 5 or more cards in hand reveals all but one,
         and discards one of those you choose."""
 

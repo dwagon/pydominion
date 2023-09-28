@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 class Card_University(Card.Card):
@@ -18,13 +17,13 @@ class Card_University(Card.Card):
 
     def special(self, game, player):
         """Gain an action card costing up to 5"""
-        c = player.plr_gain_card(5, types={Card.CardType.ACTION: True})
-        if c:
-            player.output("Gained %s from university" % c.name)
+        card = player.plr_gain_card(5, types={Card.CardType.ACTION: True})
+        if card:
+            player.output(f"Gained {card} from university")
 
 
 ###############################################################################
-class Test_University(unittest.TestCase):
+class TestUniversity(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,

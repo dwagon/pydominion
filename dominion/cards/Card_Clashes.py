@@ -20,7 +20,6 @@ class Card_Clashes(Card.Card):
     def cardpile_setup(cls, game):
         """Setup"""
         card_pile = ClashCardPile(game)
-        # card_pile.init_cards()
         return card_pile
 
 
@@ -29,19 +28,19 @@ class ClashCardPile(CardPile.CardPile):
     """Pile of Clashes"""
 
     def __init__(self, game):
-        mapping = game.get_card_classes("Clashes", game.paths["cards"], "Clash_")
+        mapping = game.get_card_classes("Clash", game.paths["cards"], "Card_")
         for name, class_ in mapping.items():
             game.card_instances[name] = class_()
         super().__init__()
 
     def init_cards(self, num_cards=0, card_class=None):
         # pylint: disable=import-outside-toplevel
-        from dominion.cards.Clash_Battle_Plan import Card_Battle_Plan
+        from dominion.cards.Clash_Battle_Plan import Card_BattlePlan
         from dominion.cards.Clash_Archer import Card_Archer
         from dominion.cards.Clash_Warlord import Card_Warlord
         from dominion.cards.Clash_Territory import Card_Territory
 
-        for card in (Card_Battle_Plan, Card_Archer, Card_Warlord, Card_Territory):
+        for card in (Card_BattlePlan, Card_Archer, Card_Warlord, Card_Territory):
             for _ in range(4):
                 self.cards.insert(0, card())
 
