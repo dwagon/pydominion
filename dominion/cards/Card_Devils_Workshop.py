@@ -2,12 +2,11 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 from dominion.Player import Phase
 
 
 ###############################################################################
-class Card_Devils_Workshop(Card.Card):
+class Card_DevilsWorkshop(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.NIGHT
@@ -20,20 +19,18 @@ class Card_Devils_Workshop(Card.Card):
         self.required_cards = [("Card", "Imp")]
 
     def night(self, game, player):
-        nc = len(player.stats["gained"])
-        player.output(f"You gained {nc} cards this turn")
-        if nc >= 2:
+        num_cards = len(player.stats["gained"])
+        player.output(f"You gained {num_cards} cards this turn")
+        if num_cards >= 2:
             player.gain_card("Imp")
-            player.output("Gained an Imp")
-        elif nc == 1:
+        elif num_cards == 1:
             player.plr_gain_card(4)
         else:
             player.gain_card("Gold")
-            player.output("Gained a Gold")
 
 
 ###############################################################################
-class Test_Devils_Workshop(unittest.TestCase):
+class Test_DevilsWorkshop(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Devil's Workshop", "Moat"])
         self.g.start_game()
