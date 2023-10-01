@@ -11,6 +11,7 @@ class CardPile:
         self.cards = []
         self.embargo_level = 0
         self.gatheredvp = 0
+        self.trait = None
 
     ###########################################################################
     def init_cards(self, num_cards=0, card_class=None):
@@ -134,7 +135,10 @@ class CardPile:
 
     ###########################################################################
     def __repr__(self):
-        return f"<CardPile {len(self.cards)} {self.cards}>"
+        trait_str = ""
+        if self.trait:
+            trait_str = f" Trait: {self.trait}"
+        return f"<CardPile {len(self.cards)}{trait_str}>"
 
 
 ###############################################################################

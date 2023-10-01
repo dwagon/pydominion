@@ -88,6 +88,10 @@ def parse_cli_args(args=None):
         "--trait_path", default="dominion/traits", help=argparse.SUPPRESS
     )
     parser.add_argument(
+        "--trait", dest="traits", default=[], help="Include specific trait"
+    )
+
+    parser.add_argument(
         "--cardset",
         type=argparse.FileType("r"),
         help="File containing list of cards to use",

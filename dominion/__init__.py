@@ -5,16 +5,16 @@ from enum import auto, Enum, StrEnum
 class Piles(StrEnum):
     """Play Areas for a card"""
 
-    HAND = auto()
-    EXILE = auto()
-    DURATION = auto()
-    DEFER = auto()
+    CARDPILE = auto()
     DECK = auto()
-    PLAYED = auto()
+    DEFER = auto()
     DISCARD = auto()
+    DURATION = auto()
+    EXILE = auto()
+    HAND = auto()
+    PLAYED = auto()
     RESERVE = auto()
     TRASH = auto()
-    CARDPILE = auto()
 
 
 ###############################################################################
@@ -33,15 +33,17 @@ class Phase(Enum):
 class Keys(StrEnum):
     """Keys to various internal arrays- to stop using magic strings as dictionary keys"""
 
-    BAD_CARDS = auto()
-    EVENT = auto()
     ALLIES = auto()
     ARTIFACTS = auto()
-    CARDS = auto()
-    HEXES = auto()
+    BAD_CARDS = auto()
     BOONS = auto()
-    STATES = auto()
+    CARDS = auto()
+    EVENT = auto()
+    HEXES = auto()
     LANDMARK = auto()
     PROJECTS = auto()
+    STATES = auto()
     TRAITS = auto()
     WAY = auto()
+
+# EOF

@@ -49,6 +49,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.ways = {}
         self.landmarks = {}
         self.boons = []
+        self.traits = {}
         self.discarded_boons = []
         self.retained_boons = []
         self.hexes = []
@@ -185,9 +186,12 @@ class Game:  # pylint: disable=too-many-public-methods
         self._load_landmarks()
         self._load_artifacts()
         self._load_projects()
+        self._load_traits()
 
         if self.hexes or self.boons:
             self._load_states()
+        if self.traits:
+            self.assign_traits()
         self._check_card_requirements()
         self._setup_players(playernames, plr_class)
         self.card_setup()  # Has to be after players have been created
@@ -196,6 +200,23 @@ class Game:  # pylint: disable=too-many-public-methods
             for plr in self.player_list():
                 plr.favors.add(1)
         self._save_original()
+
+    ###########################################################################
+    def assign_traits(self):
+        for trait in self.traits:
+            card_piles = []
+            for pile in self.card_piles:
+                if self.card_piles[pile].trait:
+                    continue
+                if pile in self._base_cards:
+                    continue
+                card = self.card_instances[pile]
+                if not card.isAction() and not card.isTreasure():
+                    continue
+                card_piles.append(pile)
+            random.shuffle(card_piles)
+            card_pile = card_piles[0]
+            self.card_piles[card_pile].trait = trait
 
     ###########################################################################
     def _setup_players(self, playernames=None, plr_class=TextPlayer):
@@ -303,6 +324,16 @@ class Game:  # pylint: disable=too-many-public-methods
             specified=way_cards,
             num_required=self.specials[Keys.WAY],
             cardKlass=WayPile,
+        )
+
+    ###########################################################################
+    def _load_traits(self):
+        """Load Traits into the game"""
+        self.traits = self._load_non_kingdom_cards(
+            cardtype="Trait",
+            specified=self.init[Keys.TRAITS],
+            num_required=self.specials[Keys.TRAITS],
+            cardKlass=TraitPile,
         )
 
     ###########################################################################
@@ -473,6 +504,8 @@ class Game:  # pylint: disable=too-many-public-methods
             self.init[Keys.PROJECTS].append(project_name)
         elif ally_name := self.guess_cardname(card, "Ally"):
             self.init[Keys.ALLIES].append(ally_name)
+        elif trait_name := self.guess_cardname(card, "Trait"):
+            self.init[Keys.TRAITS].append(trait_name)
         elif self.guess_cardname(card, "Boon"):
             self._load_boons()
         elif self.guess_cardname(card, "Artifact"):
@@ -699,6 +732,9 @@ class Game:  # pylint: disable=too-many-public-methods
         )
         mapping["Ally"] = self.get_card_classes(
             "Ally", self.paths[Keys.ALLIES], "Ally_"
+        )
+        mapping["Trait"] = self.get_card_classes(
+            "Trait", self.paths[Keys.TRAITS], "Trait_"
         )
         return mapping
 
