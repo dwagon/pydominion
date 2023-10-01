@@ -30,7 +30,7 @@ class Landmark_Baths(Landmark.Landmark):
 ###############################################################################
 class Test_Baths(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, landmarkcards=["Baths"])
+        self.g = Game.TestGame(numplayers=1, landmarks=["Baths"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

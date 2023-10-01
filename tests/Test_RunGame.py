@@ -30,7 +30,7 @@ class Test_parse_args(unittest.TestCase):
     def test_events(self):
         """Test using events"""
         args = rungame.parse_cli_args(["--events", "Alms"])
-        self.assertEqual(args.eventcards, ["Alms"])
+        self.assertEqual(args.events, ["Alms"])
         g = Game.TestGame(**vars(args))
         g.start_game()
         self.assertIn("Alms", g.events)

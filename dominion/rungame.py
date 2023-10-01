@@ -32,11 +32,11 @@ def parse_cli_args(args=None):
         "--num_events", type=int, default=0, help="Number of events to use"
     )
     parser.add_argument(
-        "--events", action="append", dest="eventcards", default=[], help="Include event"
+        "--events", action="append", dest="events", default=[], help="Include event"
     )
     parser.add_argument("--num_ways", type=int, default=0, help="Number of ways to use")
     parser.add_argument(
-        "--ways", action="append", dest="waycards", default=[], help="Include way"
+        "--ways", action="append", dest="ways", default=[], help="Include way"
     )
 
     parser.add_argument(
@@ -45,7 +45,7 @@ def parse_cli_args(args=None):
     parser.add_argument(
         "--landmark",
         action="append",
-        dest="landmarkcards",
+        dest="landmarks",
         default=[],
         help="Include landmark",
     )
@@ -69,7 +69,7 @@ def parse_cli_args(args=None):
     parser.add_argument(
         "--project",
         action="append",
-        dest="initprojects",
+        dest="init_projects",
         default=[],
         help="Include project",
     )
@@ -78,7 +78,7 @@ def parse_cli_args(args=None):
     )
     parser.add_argument(
         "--ally",
-        dest="init_ally",
+        dest="allies",
         action="append",
         default=[],
         help="Include specific ally",

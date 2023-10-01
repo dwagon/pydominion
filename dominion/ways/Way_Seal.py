@@ -36,7 +36,7 @@ class TestSeal(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            waycards=["Way of the Seal"],
+            ways=["Way of the Seal"],
             initcards=["Moat"],
             badcards=["Duchess"],
         )

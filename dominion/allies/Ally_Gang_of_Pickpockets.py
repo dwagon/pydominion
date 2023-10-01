@@ -31,7 +31,7 @@ class Ally_Gang_Pickpockets(Ally.Ally):
 ###############################################################################
 class Test_Gang_Pickpockets(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, ally="Gang of Pickpockets", initcards=["Underling"])
+        self.g = Game.TestGame(numplayers=1, allies="Gang of Pickpockets", initcards=["Underling"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

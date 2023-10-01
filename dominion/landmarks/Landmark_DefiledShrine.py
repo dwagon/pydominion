@@ -39,7 +39,7 @@ class TestDefiledShrine(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=2,
-            landmarkcards=["Defiled Shrine"],
+            landmarks=["Defiled Shrine"],
             initcards=["Moat"],
         )
         self.g.start_game()

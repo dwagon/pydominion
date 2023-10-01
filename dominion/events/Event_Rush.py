@@ -29,7 +29,7 @@ class TestRush(unittest.TestCase):
     """Test Rush"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, eventcards=["Rush"], initcards=["Moat"])
+        self.g = Game.TestGame(numplayers=1, events=["Rush"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.event = self.g.events["Rush"]

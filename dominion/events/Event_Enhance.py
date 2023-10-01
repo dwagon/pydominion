@@ -35,7 +35,7 @@ class TestEnhance(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            eventcards=["Enhance"],
+            events=["Enhance"],
             initcards=["Festival"],
             badcards=["Duchess"],
         )

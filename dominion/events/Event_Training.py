@@ -30,7 +30,7 @@ class Event_Training(Event.Event):
 class TestTraining(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
-            numplayers=1, eventcards=["Training"], initcards=["Moat"]
+            numplayers=1, events=["Training"], initcards=["Moat"]
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]

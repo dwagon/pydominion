@@ -31,7 +31,7 @@ class Test_TriumphalArch(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            landmarkcards=["Triumphal Arch"],
+            landmarks=["Triumphal Arch"],
             initcards=["Moat", "Militia"],
         )
         self.g.start_game()

@@ -24,7 +24,7 @@ class Test_Mole(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            waycards=["Way of the Mole"],
+            ways=["Way of the Mole"],
             initcards=["Moat"],
             badcards=["Duchess"],
         )

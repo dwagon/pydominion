@@ -33,7 +33,7 @@ class Test_Architects_Guild(unittest.TestCase):
     """Test Architects Guild"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, ally="Architects Guild", initcards=["Underling"])
+        self.g = Game.TestGame(numplayers=1, allies="Architects Guild", initcards=["Underling"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

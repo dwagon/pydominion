@@ -4,7 +4,7 @@
 
 import unittest
 import random
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Keys
 
 
 ###############################################################################
@@ -33,7 +33,7 @@ class Card_YoungWitch(Card.Card):
                 continue
             if not card.insupply or not card.purchasable:
                 continue
-            if card.name in game.badcards:
+            if card.name in game.init[Keys.BAD_CARDS]:
                 continue
             if card.cost not in (2, 3):
                 continue

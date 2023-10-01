@@ -40,7 +40,7 @@ class Test_Fellowship_of_Scribes(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            ally="Fellowship of Scribes",
+            allies="Fellowship of Scribes",
             initcards=["Festival", "Underling"],
         )
         self.g.start_game()

@@ -30,7 +30,7 @@ class TestBattlefield(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            landmarkcards=["Battlefield"],
+            landmarks=["Battlefield"],
             badcards=["Duchess"],
         )
         self.g.start_game()

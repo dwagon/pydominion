@@ -39,7 +39,7 @@ class Test_Keep(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=2,
-            landmarkcards=["Keep"],
+            landmarks=["Keep"],
             badcards=[
                 "Shepherd",
                 "Tracker",

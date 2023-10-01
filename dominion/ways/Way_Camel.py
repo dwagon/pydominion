@@ -21,7 +21,7 @@ class TestCamel(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            waycards=["Way of the Camel"],
+            ways=["Way of the Camel"],
             initcards=["Moat"],
             badcards=["Duchess"],
         )

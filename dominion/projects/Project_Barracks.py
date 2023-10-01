@@ -20,7 +20,7 @@ class Project_Barracks(Project.Project):
 ###############################################################################
 class Test_Barracks(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initprojects=["Barracks"])
+        self.g = Game.TestGame(numplayers=1, projects=["Barracks"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

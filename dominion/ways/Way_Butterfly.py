@@ -25,7 +25,7 @@ class TestButterfly(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            waycards=["Way of the Butterfly"],
+            ways=["Way of the Butterfly"],
             initcards=["Moat", "Witch"],
             badcards=["Duchess"],
         )

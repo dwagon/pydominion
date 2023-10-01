@@ -19,7 +19,7 @@ class TestOtter(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            waycards=["Way of the Otter"],
+            ways=["Way of the Otter"],
             initcards=["Moat"],
             badcards=["Duchess"],
         )

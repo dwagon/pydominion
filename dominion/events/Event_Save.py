@@ -43,7 +43,7 @@ class Event_Save(Event.Event):
 ###############################################################################
 class TestSave(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, eventcards=["Save"], initcards=["Militia"])
+        self.g = Game.TestGame(numplayers=1, events=["Save"], initcards=["Militia"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.events["Save"]

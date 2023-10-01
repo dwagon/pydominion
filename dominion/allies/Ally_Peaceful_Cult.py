@@ -32,7 +32,7 @@ def botresponse(player, kind, args=None, kwargs=None):
 class TestPeacefulCult(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
-            numplayers=1, ally="Peaceful Cult", initcards=["Underling"]
+            numplayers=1, allies="Peaceful Cult", initcards=["Underling"]
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)

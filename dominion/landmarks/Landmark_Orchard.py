@@ -27,7 +27,7 @@ class Test_Orchard(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            landmarkcards=["Orchard"],
+            landmarks=["Orchard"],
             initcards=["Moat", "Militia"],
         )
         self.g.start_game()

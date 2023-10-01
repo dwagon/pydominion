@@ -18,7 +18,7 @@ class Test_assignProject(unittest.TestCase):
             numstacks=1,
             boon_path="tests/boons",
             project_path="tests/projects",
-            initprojects=["ProjectA", "ProjectB", "ProjectC"],
+            projects=["ProjectA", "ProjectB", "ProjectC"],
         )
         self.g.start_game()
         self.plr, self.plr2 = self.g.player_list()
@@ -73,7 +73,7 @@ class Test_buy_project(unittest.TestCase):
             numstacks=1,
             boon_path="tests/boons",
             project_path="tests/projects",
-            initprojects=["ProjectA"],
+            projects=["ProjectA"],
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)

@@ -48,7 +48,7 @@ class Test_Banish(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            eventcards=["Banish"],
+            events=["Banish"],
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]

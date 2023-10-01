@@ -37,7 +37,7 @@ class Landmark_Colonnade(Landmark.Landmark):
 class TestColonnade(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
-            numplayers=1, landmarkcards=["Colonnade"], initcards=["Moat"]
+            numplayers=1, landmarks=["Colonnade"], initcards=["Moat"]
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]

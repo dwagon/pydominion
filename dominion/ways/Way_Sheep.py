@@ -21,7 +21,7 @@ class TestSheep(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            waycards=["Way of the Sheep"],
+            ways=["Way of the Sheep"],
             initcards=["Moat"],
             badcards=["Duchess"],
         )

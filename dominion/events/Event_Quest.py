@@ -36,7 +36,7 @@ class Event_Quest(Event.Event):
 ###############################################################################
 class TestQuest(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, eventcards=["Quest"], initcards=["Witch"])
+        self.g = Game.TestGame(numplayers=1, events=["Quest"], initcards=["Witch"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.events["Quest"]

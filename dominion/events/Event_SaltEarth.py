@@ -31,7 +31,7 @@ class Event_SaltEarth(Event.Event):
 ###############################################################################
 class Test_SaltEarth(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, eventcards=["Salt the Earth"])
+        self.g = Game.TestGame(numplayers=1, events=["Salt the Earth"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.event = self.g.events["Salt the Earth"]

@@ -30,7 +30,7 @@ class TestRat(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            waycards=["Way of the Rat"],
+            ways=["Way of the Rat"],
             initcards=["Moat"],
             badcards=["Duchess"],
         )

@@ -28,7 +28,7 @@ class TestPopulate(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            eventcards=["Populate"],
+            events=["Populate"],
             initcards=[
                 "Cellar",
                 "Chapel",
