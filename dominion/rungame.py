@@ -50,7 +50,7 @@ def parse_cli_args(args=None):
         help="Include landmark",
     )
     parser.add_argument(
-        "--landmarkpath", default="dominion/landmarks", help=argparse.SUPPRESS
+        "--landmark_path", default="dominion/landmarks", help=argparse.SUPPRESS
     )
 
     parser.add_argument(
@@ -74,7 +74,7 @@ def parse_cli_args(args=None):
         help="Include project",
     )
     parser.add_argument(
-        "--projectpath", default="dominion/projects", help=argparse.SUPPRESS
+        "--project_path", default="dominion/projects", help=argparse.SUPPRESS
     )
     parser.add_argument(
         "--ally",
@@ -82,6 +82,10 @@ def parse_cli_args(args=None):
         action="append",
         default=[],
         help="Include specific ally",
+    )
+
+    parser.add_argument(
+        "--trait_path", default="dominion/traits", help=argparse.SUPPRESS
     )
     parser.add_argument(
         "--cardset",
@@ -92,12 +96,12 @@ def parse_cli_args(args=None):
         "--cardbase", action="append", help="Include only cards from the specified base"
     )
     parser.add_argument(
-        "--cardpath", default="dominion/cards", help="Where to find card definitions"
+        "--card_path", default="dominion/cards", help="Where to find card definitions"
     )
     parser.add_argument(
-        "--artifactpath", default="dominion/artifacts", help=argparse.SUPPRESS
+        "--artifact_path", default="dominion/artifacts", help=argparse.SUPPRESS
     )
-    parser.add_argument("--boonpath", default="dominion/boons", help=argparse.SUPPRESS)
+    parser.add_argument("--boon_path", default="dominion/boons", help=argparse.SUPPRESS)
     parser.add_argument("--num_stacks", default=10, help=argparse.SUPPRESS)
     parser.add_argument(
         "--prosperity",

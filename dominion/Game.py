@@ -27,6 +27,7 @@ from dominion.Player import Player
 from dominion.ProjectPile import ProjectPile
 from dominion.StatePile import StatePile
 from dominion.TextPlayer import TextPlayer
+from dominion.Trait import TraitPile
 from dominion.WayPile import WayPile
 
 
@@ -71,6 +72,7 @@ class Game:  # pylint: disable=too-many-public-methods
             "projects": "dominion/projects",
             "landmarks": "dominion/landmarks",
             "events": "dominion/events",
+            "traits": "dominion/traits",
             "ways": "dominion/ways",
         }
         self.specials = {
@@ -96,16 +98,17 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def parse_args(self, **args):
         """Parse the arguments passed to the class"""
-        self.paths["cards"] = args.get("cardpath", self.paths["cards"])
-        self.paths["allies"] = args.get("allypath", self.paths["allies"])
-        self.paths["hexes"] = args.get("hexpath", self.paths["hexes"])
-        self.paths["boons"] = args.get("boonpath", self.paths["boons"])
-        self.paths["states"] = args.get("statepath", self.paths["states"])
-        self.paths["artifacts"] = args.get("artifactpath", self.paths["artifacts"])
-        self.paths["projects"] = args.get("projectpath", self.paths["projects"])
-        self.paths["landmarks"] = args.get("landmarkpath", self.paths["landmarks"])
-        self.paths["events"] = args.get("eventpath", self.paths["events"])
-        self.paths["ways"] = args.get("waypath", self.paths["ways"])
+        self.paths["cards"] = args.get("card_path", self.paths["cards"])
+        self.paths["allies"] = args.get("ally_path", self.paths["allies"])
+        self.paths["hexes"] = args.get("hex_path", self.paths["hexes"])
+        self.paths["boons"] = args.get("boon_path", self.paths["boons"])
+        self.paths["states"] = args.get("state_path", self.paths["states"])
+        self.paths["artifacts"] = args.get("artifact_path", self.paths["artifacts"])
+        self.paths["projects"] = args.get("project_path", self.paths["projects"])
+        self.paths["landmarks"] = args.get("landmark_path", self.paths["landmarks"])
+        self.paths["events"] = args.get("event_path", self.paths["events"])
+        self.paths["traits"] = args.get("trait_path", self.paths["traits"])
+        self.paths["ways"] = args.get("way_path", self.paths["ways"])
 
         self.num_stacks = args.get("num_stacks", 10)
         self.prosperity = args.get("prosperity", False)
@@ -986,7 +989,7 @@ class TestGame(Game):
     def __init__(self, **kwargs):
         if "ally" not in kwargs:
             kwargs["init_ally"] = []
-            kwargs["allypath"] = "tests/allies"
+            kwargs["ally_path"] = "tests/allies"
         kwargs["shelters"] = False  # Can cause lots of bad interactions
         if "quiet" not in kwargs:
             kwargs["quiet"] = True

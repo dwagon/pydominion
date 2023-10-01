@@ -10,10 +10,10 @@ class Test_assignState(unittest.TestCase):
         self.g = Game.TestGame(
             numplayers=2,
             initcards=["StateTester"],
-            statepath="tests/states",
-            cardpath="tests/cards",
+            state_path="tests/states",
+            card_path="tests/cards",
             numstacks=1,
-            boonpath="tests/boons",
+            boon_path="tests/boons",
         )
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
