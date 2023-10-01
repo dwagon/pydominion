@@ -29,18 +29,18 @@ def parse_cli_args(args=None):
     )
     parser.add_argument("--shelters", type=bool, default=True, help="Allow shelters")
     parser.add_argument(
-        "--numevents", type=int, default=0, help="Number of events to use"
+        "--num_events", type=int, default=0, help="Number of events to use"
     )
     parser.add_argument(
         "--events", action="append", dest="eventcards", default=[], help="Include event"
     )
-    parser.add_argument("--numways", type=int, default=0, help="Number of ways to use")
+    parser.add_argument("--num_ways", type=int, default=0, help="Number of ways to use")
     parser.add_argument(
         "--ways", action="append", dest="waycards", default=[], help="Include way"
     )
 
     parser.add_argument(
-        "--numlandmarks", type=int, default=0, help="Number of landmarks to use"
+        "--num_landmarks", type=int, default=0, help="Number of landmarks to use"
     )
     parser.add_argument(
         "--landmark",
@@ -54,7 +54,11 @@ def parse_cli_args(args=None):
     )
 
     parser.add_argument(
-        "--numprojects", type=int, default=0, help="Number of projects to use"
+        "--num_projects", type=int, default=0, help="Number of projects to use"
+    )
+
+    parser.add_argument(
+        "--num_traits", type=int, default=0, help="Number of traits to use"
     )
     parser.add_argument(
         "--oldcards",
@@ -94,7 +98,7 @@ def parse_cli_args(args=None):
         "--artifactpath", default="dominion/artifacts", help=argparse.SUPPRESS
     )
     parser.add_argument("--boonpath", default="dominion/boons", help=argparse.SUPPRESS)
-    parser.add_argument("--numstacks", default=10, help=argparse.SUPPRESS)
+    parser.add_argument("--num_stacks", default=10, help=argparse.SUPPRESS)
     parser.add_argument(
         "--prosperity",
         default=False,
@@ -105,7 +109,11 @@ def parse_cli_args(args=None):
         "--bot", action="store_true", dest="bot", default=False, help="Bot Player"
     )
     parser.add_argument(
-        "--randobot", type=int, dest="randobot", default=0, help="Num Rando Bot Players"
+        "--randobot",
+        type=int,
+        dest="randobot",
+        default=0,
+        help="Number of Rando Bot Players",
     )
     parser.add_argument(
         "--quiet",

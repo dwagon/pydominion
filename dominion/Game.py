@@ -73,6 +73,13 @@ class Game:  # pylint: disable=too-many-public-methods
             "events": "dominion/events",
             "ways": "dominion/ways",
         }
+        self.specials = {
+            "events": 0,
+            "landmarks": 0,
+            "projects": 0,
+            "traits": 0,
+            "ways": 0,
+        }
         # The _base_cards are in every game
         self._base_cards = ["Copper", "Silver", "Gold", "Estate", "Duchy", "Province"]
         self.parse_args(**kwargs)
@@ -100,7 +107,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.paths["events"] = args.get("eventpath", self.paths["events"])
         self.paths["ways"] = args.get("waypath", self.paths["ways"])
 
-        self.numstacks = args.get("numstacks", 10)
+        self.num_stacks = args.get("num_stacks", 10)
         self.prosperity = args.get("prosperity", False)
         self.oldcards = args.get("oldcards", False)
         self.quiet = args["quiet"] if "quiet" in args else False
@@ -112,14 +119,16 @@ class Game:  # pylint: disable=too-many-public-methods
         self.randobot = args.get("randobot", 0)
         self.eventcards = args["eventcards"] if "eventcards" in args else []
         self.waycards = args["waycards"] if "waycards" in args else []
-        self.numevents = args["numevents"] if "numevents" in args else 0
-        self.numways = args.get("numways", 0)
         self.landmarkcards = args.get("landmarkcards", [])
-        self.numlandmarks = args["numlandmarks"] if "numlandmarks" in args else 0
-        self.numprojects = args["numprojects"] if "numprojects" in args else 0
         self.initprojects = args["initprojects"] if "initprojects" in args else []
         self.init_ally = args.get("init_ally", args.get("ally", []))
         self._allow_shelters = args.get("shelters", True)
+
+        self.specials["events"] = args.get("num_events", 0)
+        self.specials["ways"] = args.get("num_ways", 0)
+        self.specials["landmarks"] = args.get("num_landmarks", 0)
+        self.specials["projects"] = args.get("num_projects", 0)
+        self.specials["traits"] = args.get("num_traits", 0)
 
     ###########################################################################
     def _use_shelters(self):
@@ -154,7 +163,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def start_game(self, playernames=None, plr_class=TextPlayer):
         """Initialise game bits"""
 
-        self._load_decks(self._initcards, self.numstacks)
+        self._load_decks(self._initcards, self.num_stacks)
         self._load_events()
         self._load_ways()
         self._load_landmarks()
@@ -276,7 +285,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.ways = self._load_non_kingdom_cards(
             cardtype="Way",
             specified=way_cards,
-            num_required=self.numways,
+            num_required=self.specials["ways"],
             cardKlass=WayPile,
         )
 
@@ -286,7 +295,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.events = self._load_non_kingdom_cards(
             cardtype="Event",
             specified=self.eventcards,
-            num_required=self.numevents,
+            num_required=self.specials["events"],
             cardKlass=EventPile,
         )
 
@@ -294,7 +303,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def _load_landmarks(self):
         """TODO"""
         self.landmarks = self._load_non_kingdom_cards(
-            "Landmark", self.landmarkcards, self.numlandmarks, LandmarkPile
+            "Landmark", self.landmarkcards, self.specials["landmarks"], LandmarkPile
         )
 
     ###########################################################################
@@ -339,7 +348,7 @@ class Game:  # pylint: disable=too-many-public-methods
         if self.projects:
             return
         self.projects = self._load_non_kingdom_cards(
-            "Project", self.initprojects, self.numprojects, ProjectPile
+            "Project", self.initprojects, self.specials["projects"], ProjectPile
         )
 
     ###########################################################################

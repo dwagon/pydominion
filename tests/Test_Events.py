@@ -85,13 +85,13 @@ class Test_eventRandom(unittest.TestCase):
         self.assertIn("Raid", self.g.events)
 
     def test_random(self):
-        self.g = Game.TestGame(numplayers=1, numevents=2)
+        self.g = Game.TestGame(numplayers=1, num_events=2)
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.assertEqual(len(self.g.events), 2)
 
     def test_both(self):
-        self.g = Game.TestGame(numplayers=1, eventcards=["Alms"], numevents=2)
+        self.g = Game.TestGame(numplayers=1, eventcards=["Alms"], num_events=2)
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.assertEqual(len(self.g.events), 2)
