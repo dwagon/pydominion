@@ -6,6 +6,10 @@ from dominion import Card
 class Trait(Card.Card):
     """Class representing traits - mostly just card code"""
 
+    def __init__(self):
+        self.card_pile = None  # Which card pile this trait is associated with
+        Card.Card.__init__(self)
+
 
 ###############################################################################
 class TraitPile:

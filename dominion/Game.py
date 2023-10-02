@@ -217,6 +217,7 @@ class Game:  # pylint: disable=too-many-public-methods
             random.shuffle(card_piles)
             card_pile = card_piles[0]
             self.card_piles[card_pile].trait = trait
+            self.traits[trait].card_pile = card_pile
 
     ###########################################################################
     def _setup_players(self, playernames=None, plr_class=TextPlayer):
