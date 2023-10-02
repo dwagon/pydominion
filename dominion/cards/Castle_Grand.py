@@ -14,6 +14,7 @@ class Card_GrandCastle(CastleCard):
         self.cost = 9
         self.victory = 5
         self.name = "Grand Castle"
+        self.pile = "Castles"
 
     def desc(self, player):
         if player.phase == Player.Phase.BUY:

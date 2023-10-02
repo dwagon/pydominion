@@ -19,6 +19,7 @@ class Card_Elder(Card.Card):
         self.desc = """+$2; Not Implemented: You may play an Action card from your hand.
             When it gives you a choice of abilities (e.g. “choose one”) this turn,
             you may choose an extra (different) option."""
+        self.pile = "Townsfolk"
 
     def special(self, game, player):
         pass

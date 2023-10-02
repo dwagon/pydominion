@@ -22,6 +22,7 @@ class Card_Voyage(Card.Card):
             extra turn after this one, during which you can only play 3 cards
             from your hand."""
         self._take_turn = False
+        self.pile = "Odysseys"
 
     def special(self, game, player):
         if game.last_turn(player):

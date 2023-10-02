@@ -115,7 +115,18 @@ class Card:
         self.uuid = uuid.uuid4().hex
         self._location = None
         self._player = None
-        self.pile = ""
+        self._pile = ""
+
+    ##########################################################################
+    @property
+    def pile(self):
+        if not self._pile:
+            return self.name
+        return self._pile
+
+    @pile.setter
+    def pile(self, value):
+        self._pile = value
 
     ##########################################################################
     def check(self):

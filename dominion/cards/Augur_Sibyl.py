@@ -16,6 +16,7 @@ class Card_Sibyl(Card.Card):
         self.actions = 1
         self.desc = """+4 Cards; +1 Action;
             Put a card from your hand on top of your deck, and another on the bottom."""
+        self.pile = "Augurs"
 
     def special(self, game, player):
         tcard = player.card_sel(

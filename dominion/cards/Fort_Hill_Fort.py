@@ -18,6 +18,7 @@ class Card_Hill_Fort(Card.Card):
         self.name = "Hill Fort"
         self.desc = """Gain a card costing up to $4.
             Choose one: Put it into your hand; or +1 Card and +1 Action."""
+        self.pile = "Forts"
 
     def special(self, game, player):
         chc = player.plr_choose_options(

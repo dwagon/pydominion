@@ -14,6 +14,7 @@ class Card_Sunken_Treasure(Card.Card):
         self.cost = 5
         self.name = "Sunken Treasure"
         self.desc = """Gain an Action card you don't have a copy of in play."""
+        self.pile = "Odysseys"
 
     def special(self, game, player):
         options = []

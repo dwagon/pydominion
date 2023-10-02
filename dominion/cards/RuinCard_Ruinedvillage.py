@@ -16,6 +16,7 @@ class Card_RuinedVillage(Card.Card):
         self.cost = 0
         self.desc = "+1 Action"
         self.actions = 1
+        self.pile = "Ruins"
 
 
 ###############################################################################

@@ -20,6 +20,7 @@ class Card_Tent(Card.Card):
         self.name = "Tent"
         self.desc = """+$2; You may rotate the Forts.
             When you discard this from play, you may put it onto your deck."""
+        self.pile = "Forts"
 
     def special(self, game, player):
         opt = player.plr_choose_options(

@@ -15,6 +15,7 @@ class Card_Survivors(Card.Card):
         self.cost = 0
         self.desc = "Look at the top 2 cards of your deck. Discard them or put them back in any order."
         self.name = "Survivors"
+        self.pile = "Ruins"
 
     def special(self, game, player):
         """Look at the top 2 cards of your deck. Discard them or

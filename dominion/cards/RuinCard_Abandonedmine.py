@@ -16,6 +16,7 @@ class Card_AbandonedMine(Card.Card):
         self.cost = 0
         self.desc = "+1 coin"
         self.coin = 1
+        self.pile = "Ruins"
 
 
 ###############################################################################

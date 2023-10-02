@@ -19,6 +19,7 @@ class Card_Sorceress(Card.Card):
         self.desc = """+1 Action; Name a card. Reveal the top card of your deck
             and put it into your hand. If it's the named card, each other player
             gains a Curse."""
+        self.pile = "Augurs"
 
     def special(self, game, player):
         options = [{"selector": "0", "print": "No guess", "card": None}]

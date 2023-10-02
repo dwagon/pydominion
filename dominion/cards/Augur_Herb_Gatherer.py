@@ -17,6 +17,7 @@ class Card_Herb_Gatherer(Card.Card):
         self.desc = """+1 Buy; Put your deck into your discard pile.
             Look through it and you may play a Treasure from it.
             You may rotate the Augurs."""
+        self.pile = "Augurs"
 
     def special(self, game, player):
         for crd in player.piles[Piles.DECK]:

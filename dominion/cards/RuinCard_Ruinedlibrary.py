@@ -16,6 +16,7 @@ class Card_RuinedLibrary(Card.Card):
         self.cost = 0
         self.name = "Ruined Library"
         self.cards = 1
+        self.pile = "Ruins"
 
 
 ###############################################################################
