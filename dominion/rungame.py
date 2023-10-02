@@ -88,7 +88,11 @@ def parse_cli_args(args=None):
         "--trait_path", default="dominion/traits", help=argparse.SUPPRESS
     )
     parser.add_argument(
-        "--trait", dest="traits", default=[], help="Include specific trait"
+        "--trait",
+        dest="traits",
+        default=[],
+        action="append",
+        help="Include specific trait",
     )
 
     parser.add_argument(

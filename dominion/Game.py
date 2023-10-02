@@ -11,24 +11,16 @@ import uuid
 from typing import List, Optional
 
 from dominion import Piles, Keys
-from dominion.Ally import AllyPile
-from dominion.ArtifactPile import ArtifactPile
-from dominion.BoonPile import BoonPile
+from dominion.Boon import BoonPile
 from dominion.BotPlayer import BotPlayer
 from dominion.RandobotPlayer import RandobotPlayer
 from dominion.Card import CardExpansion
 from dominion.CardPile import CardPile
-from dominion.Event import EventPile
-from dominion.HexPile import HexPile
-from dominion.LandmarkPile import LandmarkPile
+from dominion.Hex import HexPile
 from dominion.Names import playerNames
 from dominion.PlayArea import PlayArea
 from dominion.Player import Player
-from dominion.ProjectPile import ProjectPile
-from dominion.StatePile import StatePile
 from dominion.TextPlayer import TextPlayer
-from dominion.Trait import TraitPile
-from dominion.WayPile import WayPile
 
 
 ###############################################################################
@@ -217,6 +209,7 @@ class Game:  # pylint: disable=too-many-public-methods
             random.shuffle(card_piles)
             card_pile = card_piles[0]
             self.card_piles[card_pile].trait = trait
+            self.traits[trait].card_pile = card_pile
 
     ###########################################################################
     def _setup_players(self, playernames=None, plr_class=TextPlayer):
@@ -312,7 +305,7 @@ class Game:  # pylint: disable=too-many-public-methods
 
     ###########################################################################
     def _load_ways(self):
-        """TODO"""
+        """Load required Ways"""
         way_cards = []
         for wname in self.init[Keys.WAY]:
             if not wname.lower().startswith("way of the "):
@@ -323,55 +316,53 @@ class Game:  # pylint: disable=too-many-public-methods
             cardtype="Way",
             specified=way_cards,
             num_required=self.specials[Keys.WAY],
-            cardKlass=WayPile,
         )
 
     ###########################################################################
     def _load_traits(self):
-        """Load Traits into the game"""
+        """Load required Traits"""
         self.traits = self._load_non_kingdom_cards(
             cardtype="Trait",
             specified=self.init[Keys.TRAITS],
             num_required=self.specials[Keys.TRAITS],
-            cardKlass=TraitPile,
         )
+        self.assign_traits()
 
     ###########################################################################
     def _load_events(self):
-        """TODO"""
+        """Load required events"""
         self.events = self._load_non_kingdom_cards(
             cardtype="Event",
             specified=self.init[Keys.EVENT],
             num_required=self.specials[Keys.EVENT],
-            cardKlass=EventPile,
         )
 
     ###########################################################################
     def _load_landmarks(self):
-        """TODO"""
+        """Load required landmarks"""
         self.landmarks = self._load_non_kingdom_cards(
             "Landmark",
             self.init[Keys.LANDMARK],
             self.specials[Keys.LANDMARK],
-            LandmarkPile,
         )
 
     ###########################################################################
     def _load_boons(self):
-        """TODO"""
+        """Load boons into Pile"""
         if self.boons:
             return
         self.output("Using boons")
-        d = self._load_non_kingdom_cards("Boon", None, None, BoonPile)
+        d = self._load_non_kingdom_pile("Boon", BoonPile)
         self.boons = list(d.values())
         random.shuffle(self.boons)
 
     ###########################################################################
     def _load_hexes(self):
-        """TODO"""
+        """Load Hexes into Pile"""
         if self.hexes:
             return
-        d = self._load_non_kingdom_cards("Hex", None, None, HexPile)
+        self.output("Using hexes")
+        d = self._load_non_kingdom_pile("Hex", HexPile)
         self.hexes = list(d.values())
         random.shuffle(self.hexes)
 
@@ -381,16 +372,14 @@ class Game:  # pylint: disable=too-many-public-methods
         if self.states:
             return
         self.output("Using states")
-        self.states = self._load_non_kingdom_cards("State", None, None, StatePile)
+        self.states = self._load_non_kingdom_cards("State", None, None)
 
     ###########################################################################
     def _load_artifacts(self):
         """TODO"""
         if self.artifacts:
             return
-        self.artifacts = self._load_non_kingdom_cards(
-            "Artifact", None, None, ArtifactPile
-        )
+        self.artifacts = self._load_non_kingdom_cards("Artifact", None, None)
 
     ###########################################################################
     def _load_projects(self):
@@ -401,21 +390,51 @@ class Game:  # pylint: disable=too-many-public-methods
             "Project",
             self.init[Keys.PROJECTS],
             self.specials[Keys.PROJECTS],
-            ProjectPile,
         )
 
     ###########################################################################
     def _load_ally(self):
-        """Load the allies and pick a single one to have in the game"""
+        """Load the ally"""
         if isinstance(self.init[Keys.ALLIES], str):
             self.init[Keys.ALLIES] = [self.init[Keys.ALLIES]]
-        allies = self._load_non_kingdom_cards(
-            "Ally", self.init[Keys.ALLIES], 1, AllyPile
-        )
-        self.ally = random.choice(list(allies.values())).ally
+        allies = self._load_non_kingdom_cards("Ally", self.init[Keys.ALLIES], 1)
+        self.ally = list(allies.values())[0]
 
     ###########################################################################
-    def _load_non_kingdom_cards(self, cardtype, specified, num_required, cardKlass):
+    def good_names(self, specified, cardtype):
+        """Replace specified names with ones that are good"""
+        answer = []
+        for name in specified:
+            if name in self.card_mapping[cardtype]:
+                answer.append(name)
+            else:
+                good_name = self.guess_card_name(name, cardtype)
+                if name is None:
+                    sys.stderr.write(f"Unknown {cardtype} '{name}'\n")
+                    sys.exit(1)
+                answer.append(good_name)
+        return answer
+
+    ###########################################################################
+    def _load_non_kingdom_pile(self, cardtype, pileClass):
+        """Load non kingdom cards into a pile
+        Returns a dictionary; key is the name, value is the instance
+        """
+        dest = {}
+        available = self.getAvailableCards(cardtype)
+        # To make up the numbers
+        for nkc in available:
+            klass = self.card_mapping[cardtype][nkc]
+            dest[nkc] = pileClass(nkc, klass)
+        return dest
+
+    ###########################################################################
+    def instantiate_non_kingdom_card(self, cardtype, card_name):
+        klass = self.card_mapping[cardtype][card_name]
+        return klass()
+
+    ###########################################################################
+    def _load_non_kingdom_cards(self, cardtype, specified, num_required=None):
         """Load non kingdom cards into the game
         If specific cards are required they need to be in `specified`
         Up to numrequired cards will be used
@@ -426,59 +445,48 @@ class Game:  # pylint: disable=too-many-public-methods
         available = self.getAvailableCards(cardtype)
         # Specified cards
         if specified is not None:
-            for nkc in specified:
-                try:
-                    if nkc not in self.card_mapping[cardtype]:
-                        nkc = self.guess_cardname(nkc, cardtype)
-                        if nkc is None:
-                            sys.stderr.write(f"Unknown {cardtype} '{nkc}'\n")
-                            sys.exit(1)
-                        print(f"Guessed {nkc}")
-                    klass = self.card_mapping[cardtype][nkc]
-                    dest[nkc] = cardKlass(nkc, klass)
-                    available.remove(nkc)
-                except (ValueError, KeyError):
-                    sys.stderr.write(f"Unknown {cardtype} '{nkc}'\n")
-                    sys.exit(1)
+            names = self.good_names(specified, cardtype)
+            for nkc in names:
+                dest[nkc] = self.instantiate_non_kingdom_card(cardtype, nkc)
+                available.remove(nkc)
+
+        # To make up the numbers
         if num_required is not None:
-            # To make up the numbers
             while len(dest) < num_required:
                 nkc = random.choice(available)
-                klass = self.card_mapping[cardtype][nkc]
-                dest[nkc] = cardKlass(nkc, klass)
+                dest[nkc] = self.instantiate_non_kingdom_card(cardtype, nkc)
                 available.remove(nkc)
         else:  # Do them all
             for nkc in available:
-                klass = self.card_mapping[cardtype][nkc]
-                dest[nkc] = cardKlass(nkc, klass)
+                dest[nkc] = self.instantiate_non_kingdom_card(cardtype, nkc)
 
         for crd in dest:
             self.output(f"Playing with {cardtype} {crd}")
         return dest
 
     ###########################################################################
-    def guess_cardname(self, name, prefix="Card"):
+    def guess_card_name(self, name, prefix="Card"):
         """Don't force the user to give the exact card name on the command
         line - maybe we can guess it"""
         available = self.getAvailableCards(prefix)
         if name in available:
             return name
-        for crd in available:
-            newc = crd.replace("'", "")
+        for card_name in available:
+            newc = card_name.replace("'", "")
             if newc.lower() == name.lower():
-                return crd
+                return card_name
             newc = newc.replace(" ", "")
             if newc.lower() == name.lower():
-                return crd
+                return card_name
             newc = newc.replace(" ", "_")
             if newc.lower() == name.lower():
-                return crd
+                return card_name
             newc = newc.replace(" ", "-")
             if newc.lower() == name.lower():
-                return crd
+                return card_name
             name = name.replace("_", "")
             if newc.lower() == name.lower():
-                return crd
+                return card_name
         return None
 
     ###########################################################################
@@ -487,28 +495,28 @@ class Game:  # pylint: disable=too-many-public-methods
         Return the number of kingdom card piles used or None for not found
         """
         # If base cards are specified by initcards
-        if card_name := self.guess_cardname(card, prefix="BaseCard"):
+        if card_name := self.guess_card_name(card, prefix="BaseCard"):
             card_pile = CardPile(self)
             card_pile.init_cards(10, self.card_mapping["BaseCard"][card_name])
             self.card_piles[card_name] = card_pile
-        elif card_name := self.guess_cardname(card):
+        elif card_name := self.guess_card_name(card):
             self._use_card_pile(available, card_name, force=True)
             return 1
-        elif event_name := self.guess_cardname(card, "Event"):
+        elif event_name := self.guess_card_name(card, "Event"):
             self.init[Keys.EVENT].append(event_name)
-        elif way_name := self.guess_cardname(card, "Way"):
+        elif way_name := self.guess_card_name(card, "Way"):
             self.init[Keys.WAY].append(way_name)
-        elif landmark_name := self.guess_cardname(card, "Landmark"):
+        elif landmark_name := self.guess_card_name(card, "Landmark"):
             self.init[Keys.LANDMARK].append(landmark_name)
-        elif project_name := self.guess_cardname(card, "Project"):
+        elif project_name := self.guess_card_name(card, "Project"):
             self.init[Keys.PROJECTS].append(project_name)
-        elif ally_name := self.guess_cardname(card, "Ally"):
+        elif ally_name := self.guess_card_name(card, "Ally"):
             self.init[Keys.ALLIES].append(ally_name)
-        elif trait_name := self.guess_cardname(card, "Trait"):
+        elif trait_name := self.guess_card_name(card, "Trait"):
             self.init[Keys.TRAITS].append(trait_name)
-        elif self.guess_cardname(card, "Boon"):
+        elif self.guess_card_name(card, "Boon"):
             self._load_boons()
-        elif self.guess_cardname(card, "Artifact"):
+        elif self.guess_card_name(card, "Artifact"):
             # Artifacts should be loaded by the requiring card but can still be specified
             # in a card set
             pass
@@ -752,6 +760,7 @@ class Game:  # pylint: disable=too-many-public-methods
             file_name = file_name.replace(".py", "")
             mod = importlib.import_module(f"{path.replace('/', '.')}.{file_name}")
 
+            # Find the class in the module that is the one we want (e.g. Card_Foo)
             classes = dir(mod)
             for kls in classes:
                 if kls.startswith(class_prefix):

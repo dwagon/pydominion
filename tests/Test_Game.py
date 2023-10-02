@@ -61,13 +61,13 @@ class TestGuessCardname(unittest.TestCase):
 
     def test_guesses(self):
         """TODO"""
-        self.assertEqual(self.g.guess_cardname("moat"), "Moat")
-        self.assertEqual(self.g.guess_cardname("grandmarket"), "Grand Market")
+        self.assertEqual(self.g.guess_card_name("moat"), "Moat")
+        self.assertEqual(self.g.guess_card_name("grandmarket"), "Grand Market")
         self.assertEqual(
-            self.g.guess_cardname("philosophersstone"), "Philosopher's Stone"
+            self.g.guess_card_name("philosophersstone"), "Philosopher's Stone"
         )
-        self.assertEqual(self.g.guess_cardname("colony", prefix="BaseCard"), "Colony")
-        self.assertIsNone(self.g.guess_cardname("nosuchcard"))
+        self.assertEqual(self.g.guess_card_name("colony", prefix="BaseCard"), "Colony")
+        self.assertIsNone(self.g.guess_card_name("nosuchcard"))
 
 
 ###############################################################################

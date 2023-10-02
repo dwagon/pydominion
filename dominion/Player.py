@@ -15,10 +15,10 @@ from dominion import Piles, Phase
 from dominion.Card import Card, CardType
 from dominion.CardPile import CardPile
 from dominion.Counter import Counter
-from dominion.Event import EventPile
+from dominion.Event import Event
 from dominion.Option import Option
 from dominion.PlayArea import PlayArea
-from dominion.ProjectPile import ProjectPile
+from dominion.Project import Project
 from dominion.Way import Way
 
 
@@ -1306,9 +1306,7 @@ class Player:
 
     ###########################################################################
     def card_cost(self, card: Card) -> int:
-        assert isinstance(
-            card, (Card, ProjectPile, EventPile)
-        ), f"Card{card=} {type(card)=}"
+        assert isinstance(card, (Card, Project, Event)), f"Card{card=} {type(card)=}"
         cost = card.cost
         if "-Cost" in self.which_token(card.name):
             cost -= 2
@@ -1489,20 +1487,22 @@ class Player:
         )
 
     ###########################################################################
-    def _hook_gain_card(self, card):
+    def _hook_gain_card(self, gained_card):
         """Hook which is fired by a card being obtained by a player"""
-        assert isinstance(card, Card)
+        assert isinstance(gained_card, Card)
         options = {}
         if self.hooks.get("gain_card"):
-            o = self.hooks["gain_card"](game=self.game, player=self, card=card)
-            options.update(o)
+            opts = self.hooks["gain_card"](
+                game=self.game, player=self, card=gained_card
+            )
+            options.update(opts)
 
-        for c in self.relevant_cards():
-            self.currcards.append(c)
-            o = c.hook_gain_card(game=self.game, player=self, card=card)
+        for card in self.relevant_cards():
+            self.currcards.append(card)
+            opts = card.hook_gain_card(game=self.game, player=self, card=gained_card)
             self.currcards.pop()
-            if o:
-                options.update(o)
+            if opts:
+                options.update(opts)
         return options
 
     ###########################################################################
@@ -1548,7 +1548,7 @@ class Player:
 
     ###########################################################################
     def buy_project(self, project):
-        assert issubclass(project.__class__, ProjectPile)
+        assert issubclass(project.__class__, Project)
         if not self.buys:
             self.output("Need a buy to buy a project")
             return False
@@ -1566,10 +1566,10 @@ class Player:
         return True
 
     ###########################################################################
-    def perform_event(self, event: EventPile) -> bool:
+    def perform_event(self, event: Event) -> bool:
         """Perform an event"""
         try:
-            assert isinstance(event, EventPile)
+            assert isinstance(event, Event)
         except AssertionError:
             print(f"Event={event} ({type(event)})")
             raise
@@ -1720,7 +1720,7 @@ class Player:
     ###########################################################################
     def _cost_string(self, card) -> str:
         """Generate the string showing the cost of the card"""
-        assert isinstance(card, (Card, EventPile, ProjectPile))
+        assert isinstance(card, (Card, Event, Project))
         cost = [f"{self.card_cost(card)} Coins"]
         if card.debtcost:
             cost.append(f"{card.debtcost} Debt")

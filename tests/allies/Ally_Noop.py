@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 """ Noop to make testing easier """
 
-import unittest
-from dominion import Card, Game, Ally
+from dominion import Card, Ally
 
 
 ###############################################################################
@@ -13,14 +12,5 @@ class Ally_Noop(Ally.Ally):
         self.desc = """ Nothing"""
         self.name = "noop"
 
-
-###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):
-    return []
-
-
-###############################################################################
-if __name__ == "__main__":  # pragma: no cover
-    unittest.main()
 
 # EOF

@@ -1,4 +1,4 @@
-.coverage
+.coverage*
 dist/*
 .cache
 .pytest_cache

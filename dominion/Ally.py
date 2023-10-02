@@ -1,26 +1,12 @@
+""" https://wiki.dominionstrategy.com/index.php/Ally"""
 from dominion import Card
 
 
 ###############################################################################
 class Ally(Card.Card):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self):
+        Card.Card.__init__(self)
         self.cardtype = Card.CardType.ALLY
-
-
-###############################################################################
-class AllyPile:
-    def __init__(self, cardname, klass):
-        self.cardname = cardname
-        self.ally = klass()
-
-    ###########################################################################
-    def __getattr__(self, name):
-        return getattr(self.ally, name)
-
-    ###########################################################################
-    def __repr__(self):
-        return self.name
 
 
 # EOF
