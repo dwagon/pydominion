@@ -429,7 +429,7 @@ class Game:  # pylint: disable=too-many-public-methods
             for nkc in specified:
                 try:
                     if nkc not in self.card_mapping[cardtype]:
-                        nkc = self.guess_cardname(nkc, cardtype)
+                        nkc = self.guess_card_name(nkc, cardtype)
                         if nkc is None:
                             sys.stderr.write(f"Unknown {cardtype} '{nkc}'\n")
                             sys.exit(1)
@@ -438,7 +438,7 @@ class Game:  # pylint: disable=too-many-public-methods
                     dest[nkc] = cardKlass(nkc, klass)
                     available.remove(nkc)
                 except (ValueError, KeyError):
-                    sys.stderr.write(f"Unknown {cardtype} '{nkc}'\n")
+                    sys.stderr.write(f"Unknown {cardtype}: '{nkc}'\n")
                     sys.exit(1)
         if num_required is not None:
             # To make up the numbers
@@ -457,28 +457,28 @@ class Game:  # pylint: disable=too-many-public-methods
         return dest
 
     ###########################################################################
-    def guess_cardname(self, name, prefix="Card"):
+    def guess_card_name(self, name, prefix="Card"):
         """Don't force the user to give the exact card name on the command
         line - maybe we can guess it"""
         available = self.getAvailableCards(prefix)
         if name in available:
             return name
-        for crd in available:
-            newc = crd.replace("'", "")
+        for card_name in available:
+            newc = card_name.replace("'", "")
             if newc.lower() == name.lower():
-                return crd
+                return card_name
             newc = newc.replace(" ", "")
             if newc.lower() == name.lower():
-                return crd
+                return card_name
             newc = newc.replace(" ", "_")
             if newc.lower() == name.lower():
-                return crd
+                return card_name
             newc = newc.replace(" ", "-")
             if newc.lower() == name.lower():
-                return crd
+                return card_name
             name = name.replace("_", "")
             if newc.lower() == name.lower():
-                return crd
+                return card_name
         return None
 
     ###########################################################################
@@ -487,28 +487,28 @@ class Game:  # pylint: disable=too-many-public-methods
         Return the number of kingdom card piles used or None for not found
         """
         # If base cards are specified by initcards
-        if card_name := self.guess_cardname(card, prefix="BaseCard"):
+        if card_name := self.guess_card_name(card, prefix="BaseCard"):
             card_pile = CardPile(self)
             card_pile.init_cards(10, self.card_mapping["BaseCard"][card_name])
             self.card_piles[card_name] = card_pile
-        elif card_name := self.guess_cardname(card):
+        elif card_name := self.guess_card_name(card):
             self._use_card_pile(available, card_name, force=True)
             return 1
-        elif event_name := self.guess_cardname(card, "Event"):
+        elif event_name := self.guess_card_name(card, "Event"):
             self.init[Keys.EVENT].append(event_name)
-        elif way_name := self.guess_cardname(card, "Way"):
+        elif way_name := self.guess_card_name(card, "Way"):
             self.init[Keys.WAY].append(way_name)
-        elif landmark_name := self.guess_cardname(card, "Landmark"):
+        elif landmark_name := self.guess_card_name(card, "Landmark"):
             self.init[Keys.LANDMARK].append(landmark_name)
-        elif project_name := self.guess_cardname(card, "Project"):
+        elif project_name := self.guess_card_name(card, "Project"):
             self.init[Keys.PROJECTS].append(project_name)
-        elif ally_name := self.guess_cardname(card, "Ally"):
+        elif ally_name := self.guess_card_name(card, "Ally"):
             self.init[Keys.ALLIES].append(ally_name)
-        elif trait_name := self.guess_cardname(card, "Trait"):
+        elif trait_name := self.guess_card_name(card, "Trait"):
             self.init[Keys.TRAITS].append(trait_name)
-        elif self.guess_cardname(card, "Boon"):
+        elif self.guess_card_name(card, "Boon"):
             self._load_boons()
-        elif self.guess_cardname(card, "Artifact"):
+        elif self.guess_card_name(card, "Artifact"):
             # Artifacts should be loaded by the requiring card but can still be specified
             # in a card set
             pass
