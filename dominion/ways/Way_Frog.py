@@ -24,7 +24,7 @@ class Test_Frog(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            waycards=["Way of the Frog"],
+            ways=["Way of the Frog"],
             initcards=["Moat"],
             badcards=["Duchess"],
         )

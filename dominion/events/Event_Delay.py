@@ -38,7 +38,7 @@ class TestDelay(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            eventcards=["Delay"],
+            events=["Delay"],
             initcards=["Moat"],
             badcards=["Duchess"],
         )

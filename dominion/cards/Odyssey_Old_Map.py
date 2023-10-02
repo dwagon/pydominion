@@ -16,6 +16,7 @@ class Card_Old_Map(Card.Card):
         self.cards = 1
         self.actions = 1
         self.desc = """+1 Card; +1 Action; Discard a card. +1 Card. You may rotate the Odysseys."""
+        self.pile = "Odysseys"
 
     def special(self, game, player):
         player.plr_discard_cards(num=1)

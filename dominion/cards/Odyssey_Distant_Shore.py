@@ -21,6 +21,7 @@ class Card_Distant_Shore(Card.Card):
         self.actions = 1
         self.victory = 2
         self.desc = """ +2 Cards; +1 Action; Gain an Estate. 2VP"""
+        self.pile = "Odysseys"
 
     def special(self, game, player):
         player.gain_card("Estate")

@@ -28,7 +28,7 @@ class Test_Owl(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            waycards=["Way of the Owl"],
+            ways=["Way of the Owl"],
             initcards=["Cellar"],
             badcards=["Duchess"],
         )

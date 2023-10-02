@@ -40,13 +40,13 @@ class TestArgs(unittest.TestCase):
 
     def test_event(self):
         """Test that we can specify an event on the command line"""
-        g = Game.TestGame(eventcards=["Alms"])
+        g = Game.TestGame(events=["Alms"])
         g.start_game()
         self.assertIn("Alms", g.events)
 
     def test_old_cards(self):
         """Can we access old cards"""
-        g = Game.TestGame(cardpath="tests/cards", oldcards=True)
+        g = Game.TestGame(card_path="tests/cards", oldcards=True)
         g.start_game()
         self.assertIn("OldCard", g.card_piles)
 

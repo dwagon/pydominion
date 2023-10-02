@@ -13,12 +13,12 @@ class Test_assignProject(unittest.TestCase):
         self.g = Game.TestGame(
             numplayers=2,
             initcards=["StateTester"],
-            statepath="tests/states",
-            cardpath="tests/cards",
+            state_path="tests/states",
+            card_path="tests/cards",
             numstacks=1,
-            boonpath="tests/boons",
-            projectpath="tests/projects",
-            initprojects=["ProjectA", "ProjectB", "ProjectC"],
+            boon_path="tests/boons",
+            project_path="tests/projects",
+            projects=["ProjectA", "ProjectB", "ProjectC"],
         )
         self.g.start_game()
         self.plr, self.plr2 = self.g.player_list()
@@ -68,12 +68,12 @@ class Test_buy_project(unittest.TestCase):
         self.g = Game.TestGame(
             numplayers=1,
             initcards=["StateTester"],
-            statepath="tests/states",
-            cardpath="tests/cards",
+            state_path="tests/states",
+            card_path="tests/cards",
             numstacks=1,
-            boonpath="tests/boons",
-            projectpath="tests/projects",
-            initprojects=["ProjectA"],
+            boon_path="tests/boons",
+            project_path="tests/projects",
+            projects=["ProjectA"],
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)

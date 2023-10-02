@@ -34,7 +34,7 @@ class Landmark_Basilica(Landmark.Landmark):
 ###############################################################################
 class TestBasilica(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, landmarkcards=["Basilica"])
+        self.g = Game.TestGame(numplayers=1, landmarks=["Basilica"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

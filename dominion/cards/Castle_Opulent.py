@@ -21,6 +21,7 @@ class Card_OpulentCastle(CastleCard):
         )
         self.victory = 3
         self.name = "Opulent Castle"
+        self.pile = "Castles"
 
     def special(self, game, player):
         victcards = [c for c in player.piles[Piles.HAND] if c.isVictory()]

@@ -24,7 +24,7 @@ class Test_Enclave(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            eventcards=["Enclave"],
+            events=["Enclave"],
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]

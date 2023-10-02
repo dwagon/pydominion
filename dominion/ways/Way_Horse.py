@@ -28,7 +28,7 @@ class TestHorse(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            waycards=["Way of the Horse"],
+            ways=["Way of the Horse"],
             initcards=["Moat"],
             badcards=["Duchess"],
         )

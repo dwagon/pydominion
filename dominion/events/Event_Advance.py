@@ -27,7 +27,7 @@ class Test_Advance(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            eventcards=["Advance"],
+            events=["Advance"],
             initcards=["Moat", "Lurker"],
         )
         self.g.start_game()

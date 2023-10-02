@@ -36,7 +36,7 @@ def botresponse(player, kind, args=None, kwargs=None):
 ###############################################################################
 class TestCityState(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, ally="City State", initcards=["Underling"])
+        self.g = Game.TestGame(numplayers=1, allies="City State", initcards=["Underling"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

@@ -20,7 +20,7 @@ class TestMonkey(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            waycards=["Way of the Monkey"],
+            ways=["Way of the Monkey"],
             initcards=["Moat"],
             badcards=["Duchess"],
         )

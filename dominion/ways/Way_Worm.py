@@ -21,7 +21,7 @@ class Test_Worm(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            waycards=["Way of the Worm"],
+            ways=["Way of the Worm"],
             initcards=["Moat"],
             badcards=["Duchess"],
         )

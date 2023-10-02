@@ -27,7 +27,7 @@ class Project_Pageant(Project.Project):
 ###############################################################################
 class TestPageant(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initprojects=["Pageant"])
+        self.g = Game.TestGame(numplayers=1, projects=["Pageant"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

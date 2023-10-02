@@ -14,6 +14,7 @@ class Card_Blacksmith(Card.Card):
         self.name = "Blacksmith"
         self.desc = """Choose one: Draw until you have 6 cards in hand;
             or +2 Cards; or +1 Card and +1 Action."""
+        self.pile = "Townsfolk"
 
     def special(self, game, player):
         opt = player.plr_choose_options(

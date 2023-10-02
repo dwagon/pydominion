@@ -25,7 +25,7 @@ class Project_Citadel(Project.Project):
 class TestCitadel(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
-            numplayers=1, initprojects=["Citadel"], initcards=["Moat"]
+            numplayers=1, projects=["Citadel"], initcards=["Moat"]
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)

@@ -43,7 +43,7 @@ class TestForts(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
-    def test_wizards(self):
+    def test_forts(self):
         card = self.g.get_card_from_pile("Forts")
         self.assertEqual(len(self.g.card_piles["Forts"]), 15)
         self.assertEqual(card.name, "Tent")

@@ -19,6 +19,7 @@ class Card_HumbleCastle(CastleCard):
         self.desc = "+1 Coin; Worth 1VP per Castle you have."
         self.coin = 1
         self.name = "Humble Castle"
+        self.pile = "Castles"
 
     def special_score(self, game, player):
         score = 0

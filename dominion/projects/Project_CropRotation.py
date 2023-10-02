@@ -29,7 +29,7 @@ class Project_CropRotation(Project.Project):
 ###############################################################################
 class Test_CropRotation(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initprojects=["Crop Rotation"])
+        self.g = Game.TestGame(numplayers=1, projects=["Crop Rotation"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

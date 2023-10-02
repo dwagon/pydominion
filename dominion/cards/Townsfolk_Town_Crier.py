@@ -15,6 +15,7 @@ class Card_Town_Crier(Card.Card):
         self.desc = """Choose one: +$2; or gain a Silver;
                 or +1 Card and +1 Action.
                 You may rotate the Townsfolk."""
+        self.pile = "Townsfolk"
 
     def special(self, game, player):
         opt = player.plr_choose_options(

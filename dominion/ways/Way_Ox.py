@@ -19,7 +19,7 @@ class Test_Ox(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            waycards=["Way of the Ox"],
+            ways=["Way of the Ox"],
             initcards=["Moat"],
             badcards=["Duchess"],
         )

@@ -27,7 +27,7 @@ class Event_TravellingFair(Event.Event):
 ###############################################################################
 class Test_TravellingFair(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, eventcards=["Travelling Fair"])
+        self.g = Game.TestGame(numplayers=1, events=["Travelling Fair"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.events["Travelling Fair"]

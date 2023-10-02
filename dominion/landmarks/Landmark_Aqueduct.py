@@ -44,7 +44,7 @@ class Landmark_Aqueduct(Landmark.Landmark):
 class TestAqueduct(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
-            numplayers=1, landmarkcards=["Aqueduct"], badcards=["Duchess"]
+            numplayers=1, landmarks=["Aqueduct"], badcards=["Duchess"]
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]

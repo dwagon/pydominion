@@ -39,7 +39,7 @@ class Test_Annex(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            eventcards=["Annex"],
+            events=["Annex"],
             initcards=["Moat"],
             badcards=["Duchess"],
         )

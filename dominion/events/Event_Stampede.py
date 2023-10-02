@@ -27,7 +27,7 @@ class TestStampede(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            eventcards=["Stampede"],
+            events=["Stampede"],
             initcards=["Cellar", "Chapel", "Moat", "Militia", "Village", "Workshop"],
             badcards=["Hostelry", "Border Village", "Inn", "Cursed Village"],
         )

@@ -16,6 +16,7 @@ class Card_RuinedMarket(Card.Card):
         self.purchasable = False
         self.cost = 0
         self.buys = 1
+        self.pile = "Ruins"
 
 
 ###############################################################################

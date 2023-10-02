@@ -15,6 +15,7 @@ class Card_Acolyte(Card.Card):
         self.name = "Acolyte"
         self.desc = """You may trash an Action or Victory card from your hand
             to gain a Gold.  You may trash this to gain an Augur."""
+        self.pile = "Augurs"
 
     def special(self, game, player):
         options = [("Do nothing", None)]

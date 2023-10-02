@@ -26,7 +26,7 @@ class Test_Delve(unittest.TestCase):
     """Test Delve"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, eventcards=["Delve"])
+        self.g = Game.TestGame(numplayers=1, events=["Delve"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g.events["Delve"]

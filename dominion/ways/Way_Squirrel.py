@@ -21,7 +21,7 @@ class Test_Squirrel(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            waycards=["Way of the Squirrel"],
+            ways=["Way of the Squirrel"],
             initcards=["Moat"],
             badcards=["Duchess"],
         )

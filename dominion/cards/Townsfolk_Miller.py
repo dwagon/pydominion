@@ -14,6 +14,7 @@ class Card_Miller(Card.Card):
         self.actions = 1
         self.name = "Miller"
         self.desc = """+1 Action; Look at the top 4 cards of your deck. Put one into your hand and discard the rest."""
+        self.pile = "Townsfolk"
 
     def special(self, game, player):
         cards = []

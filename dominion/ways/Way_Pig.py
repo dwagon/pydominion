@@ -20,7 +20,7 @@ class Test_Pig(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            waycards=["Way of the Pig"],
+            ways=["Way of the Pig"],
             initcards=["Moat"],
             badcards=["Duchess"],
         )

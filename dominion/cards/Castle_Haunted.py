@@ -20,6 +20,7 @@ class Card_HauntedCastle(CastleCard):
             their hand onto their deck."""
         self.victory = 2
         self.name = "Haunted Castle"
+        self.pile = "Castles"
 
     def hook_gain_this_card(self, game, player):
         player.gain_card("Gold")

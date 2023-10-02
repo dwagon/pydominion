@@ -30,7 +30,7 @@ class Test_WolfDen(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            landmarkcards=["Wolf Den"],
+            landmarks=["Wolf Den"],
             badcards=[
                 "Shepherd",
                 "Pooka",

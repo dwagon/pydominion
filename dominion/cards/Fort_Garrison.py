@@ -20,6 +20,7 @@ class Card_Garrison(Card.Card):
         self.desc = """+$2; This turn, when you gain a card, add a token here.
             At the start of your next turn, remove them for +1 Card each."""
         self._tokens = 0
+        self.pile = "Forts"
 
     def hook_gain_card(self, game, player, card):
         self._tokens += 1

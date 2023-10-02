@@ -20,7 +20,7 @@ class Way_Goat(Way.Way):
 class Test_Goat(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
-            numplayers=1, waycards=["Way of the Goat"], initcards=["Moat"]
+            numplayers=1, ways=["Way of the Goat"], initcards=["Moat"]
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)

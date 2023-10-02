@@ -15,6 +15,7 @@ class Card_CrumblingCastle(CastleCard):
         self.desc = "1VP. When you gain or trash this, +1VP and gain a Silver."
         self.victory = 1
         self.name = "Crumbling Castle"
+        self.pile = "Castles"
 
     def hook_gain_this_card(self, game, player):
         player.add_score("Crumbling Castle", 1)

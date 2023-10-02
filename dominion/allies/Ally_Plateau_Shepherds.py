@@ -23,7 +23,7 @@ class Ally_Plateau_Shepherds(Ally.Ally):
 ###############################################################################
 class Test_Plateau_Shepherds(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, ally="Plateau Shepherds", initcards=["Underling"])
+        self.g = Game.TestGame(numplayers=1, allies="Plateau Shepherds", initcards=["Underling"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

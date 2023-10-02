@@ -37,7 +37,7 @@ class Test_Desperation(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            eventcards=["Desperation"],
+            events=["Desperation"],
             initcards=["Cellar", "Chapel", "Moat", "Militia", "Village", "Workshop"],
             badcards=["Hostelry", "Border Village", "Inn", "Cursed Village"],
         )

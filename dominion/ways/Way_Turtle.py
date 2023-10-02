@@ -27,7 +27,7 @@ class Test_Turtle(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            waycards=["Way of the Turtle"],
+            ways=["Way of the Turtle"],
             initcards=["Moat"],
             badcards=["Duchess"],
         )

@@ -602,8 +602,8 @@ class TestDisplayOverview(unittest.TestCase):
         self.game = Game.TestGame(
             numplayers=1,
             initcards=["Moat"],
-            initprojects=["Cathedral"],
-            landmarkcards=["Baths"],
+            projects=["Cathedral"],
+            landmarks=["Baths"],
         )
         self.game.start_game()
         self.plr = self.game.player_list(0)
@@ -1131,7 +1131,7 @@ class TestWay(unittest.TestCase):
 
     def setUp(self):
         self.game = Game.TestGame(
-            numplayers=1, waycards=["Way of the Otter"], initcards=["Cellar"]
+            numplayers=1, ways=["Way of the Otter"], initcards=["Cellar"]
         )
         self.game.start_game()
         self.plr = self.game.player_list(0)

@@ -14,6 +14,7 @@ class Card_KingsCastle(CastleCard):
         self.cost = 10
         self.desc = "Worth 2VP per Castle you have."
         self.name = "King's Castle"
+        self.pile = "Castles"
 
     def special_score(self, game, player):
         return sum([2 for card in player.all_cards() if card.isCastle()])

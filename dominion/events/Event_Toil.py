@@ -33,7 +33,7 @@ class TestToil(unittest.TestCase):
     """Test Toil"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, eventcards=["Toil"], initcards=["Moat"])
+        self.g = Game.TestGame(numplayers=1, events=["Toil"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.event = self.g.events["Toil"]

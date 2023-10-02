@@ -22,7 +22,7 @@ class Landmark_Fountain(Landmark.Landmark):
 ###############################################################################
 class Test_Fountain(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, landmarkcards=["Fountain"])
+        self.g = Game.TestGame(numplayers=1, landmarks=["Fountain"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

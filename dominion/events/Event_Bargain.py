@@ -37,7 +37,7 @@ class Test_Bargain(unittest.TestCase):
     """Test Bargain"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, eventcards=["Bargain"], initcards=["Moat"])
+        self.g = Game.TestGame(numplayers=2, events=["Bargain"], initcards=["Moat"])
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
         self.card = self.g.events["Bargain"]

@@ -18,11 +18,16 @@ class Card_Stronghold(Card.Card):
         self.cost = 6
         self.victory = 2
         self.name = "Stronghold"
-        self.desc = """Choose one: +$3; or at the start of your next turn, +3 Cards. 2VP"""
+        self.desc = (
+            """Choose one: +$3; or at the start of your next turn, +3 Cards. 2VP"""
+        )
         self._choice = False
+        self.pile = "Forts"
 
     def special(self, game, player):
-        choice = player.plr_choose_options("Choose One: ", ("+$3", "cash"), ("+3 cards next turn", "cards"))
+        choice = player.plr_choose_options(
+            "Choose One: ", ("+$3", "cash"), ("+3 cards next turn", "cards")
+        )
         if choice == "cash":
             player.coins.add(3)
         else:
