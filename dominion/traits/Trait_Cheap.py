@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Cheap"""
 import unittest
-from dominion import Card, Game, Piles, Trait
+from dominion import Card, Game, Trait
 
 
 ###############################################################################
@@ -14,7 +14,9 @@ class Trait_Cheap(Trait.Trait):
         self.name = "Cheap"
 
     def hook_card_cost(self, game, player, card):
-        return -1
+        if game.card_piles[card.pile].trait == self:
+            return -1
+        return 0
 
 
 ###############################################################################
@@ -28,9 +30,16 @@ class Test_Cheap(unittest.TestCase):
 
     def test_cost(self):
         """Check cost of Cheap cards"""
+        # Gold should never be cheaper as it shouldn't have a trait
+        gold = self.g.get_card_from_pile("Gold")
+        self.assertEqual(self.plr.card_cost(gold), 6)
+
+        # Standard moat cost with no trait
         card = self.g.get_card_from_pile("Moat")
         self.g.card_piles["Moat"].trait = None
         self.assertEqual(self.plr.card_cost(card), 2)
+
+        # Cheaper moat with the trait
         self.g.card_piles["Moat"].trait = self.g.traits["Cheap"]
         self.assertEqual(self.plr.card_cost(card), 1)
 

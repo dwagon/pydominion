@@ -182,8 +182,6 @@ class Game:  # pylint: disable=too-many-public-methods
 
         if self.hexes or self.boons:
             self._load_states()
-        if self.traits:
-            self.assign_traits()
         self._check_card_requirements()
         self._setup_players(playernames, plr_class)
         self.card_setup()  # Has to be after players have been created
@@ -195,6 +193,7 @@ class Game:  # pylint: disable=too-many-public-methods
 
     ###########################################################################
     def assign_traits(self):
+        """Assign the trait to a random, suitable card pile"""
         for trait in self.traits:
             card_piles = []
             for pile in self.card_piles:
@@ -206,8 +205,7 @@ class Game:  # pylint: disable=too-many-public-methods
                 if not card.isAction() and not card.isTreasure():
                     continue
                 card_piles.append(pile)
-            random.shuffle(card_piles)
-            card_pile = card_piles[0]
+            card_pile = random.choice(card_piles)
             self.card_piles[card_pile].trait = trait
             self.traits[trait].card_pile = card_pile
 

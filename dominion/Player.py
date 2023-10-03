@@ -1312,8 +1312,6 @@ class Player:
             cost -= 2
         for crd in self.relevant_cards():
             cost += crd.hook_card_cost(game=self.game, player=self, card=card)
-        if trait := (isinstance(card, Card) and self.game.card_piles[card.pile].trait):
-            cost += trait.hook_card_cost(game=self.game, player=self, card=card)
         cost += card.hook_this_card_cost(game=self.game, player=self)
         return max(0, cost)
 
@@ -1484,6 +1482,7 @@ class Player:
             + self.states
             + self.artifacts
             + self.game.ally
+            + self.game.traits
         )
 
     ###########################################################################
