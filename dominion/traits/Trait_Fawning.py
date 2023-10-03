@@ -34,8 +34,7 @@ class Test_Fawning(unittest.TestCase):
 
     def test_cost(self):
         """Check gaining Fawning cards"""
-        self.g.card_piles["Moat"].trait = self.g.traits["Fawning"]
-        self.g.traits["Fawning"].card_pile = "Moat"
+        self.g.assign_trait("Fawning", "Moat")
 
         card = self.plr.gain_card("Province")
         self.assertIn("Province", self.plr.piles[Piles.DISCARD])

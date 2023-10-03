@@ -14,7 +14,7 @@ class Trait_Cheap(Trait.Trait):
         self.name = "Cheap"
 
     def hook_card_cost(self, game, player, card):
-        if game.card_piles[card.pile].trait == self:
+        if game.card_piles[card.pile].trait == self.name:
             return -1
         return 0
 
@@ -36,11 +36,12 @@ class Test_Cheap(unittest.TestCase):
 
         # Standard moat cost with no trait
         card = self.g.get_card_from_pile("Moat")
+        self.g.assign_trait("Cheap", "Copper")  # Assign to non-moat
         self.g.card_piles["Moat"].trait = None
         self.assertEqual(self.plr.card_cost(card), 2)
 
         # Cheaper moat with the trait
-        self.g.card_piles["Moat"].trait = self.g.traits["Cheap"]
+        self.g.assign_trait("Cheap", "Moat")
         self.assertEqual(self.plr.card_cost(card), 1)
 
 
