@@ -1,10 +1,10 @@
-###############################################################################
 from typing import Optional, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from dominion import Card
 
 
+###############################################################################
 class CardPile:
     def __init__(self, game=None):
         # game is required by some subclasses

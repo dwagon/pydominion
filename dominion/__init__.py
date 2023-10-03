@@ -41,9 +41,11 @@ class Keys(StrEnum):
     EVENT = auto()
     HEXES = auto()
     LANDMARK = auto()
+    LOOT = auto()
     PROJECTS = auto()
     STATES = auto()
     TRAITS = auto()
     WAY = auto()
+
 
 # EOF
