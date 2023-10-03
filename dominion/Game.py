@@ -192,24 +192,6 @@ class Game:  # pylint: disable=too-many-public-methods
         self._save_original()
 
     ###########################################################################
-    def assign_traits(self):
-        """Assign the trait to a random, suitable card pile"""
-        for trait in self.traits:
-            card_piles = []
-            for pile in self.card_piles:
-                if self.card_piles[pile].trait:
-                    continue
-                if pile in self._base_cards:
-                    continue
-                card = self.card_instances[pile]
-                if not card.isAction() and not card.isTreasure():
-                    continue
-                card_piles.append(pile)
-            card_pile = random.choice(card_piles)
-            self.card_piles[card_pile].trait = trait
-            self.traits[trait].card_pile = card_pile
-
-    ###########################################################################
     def _setup_players(self, playernames=None, plr_class=TextPlayer):
         use_shelters = self._use_shelters()
         names = playerNames[:]
@@ -315,6 +297,8 @@ class Game:  # pylint: disable=too-many-public-methods
             specified=way_cards,
             num_required=self.specials[Keys.WAY],
         )
+        if self.ways:
+            self.output(f"Playing with {self.ways}")
 
     ###########################################################################
     def _load_traits(self):
@@ -324,7 +308,25 @@ class Game:  # pylint: disable=too-many-public-methods
             specified=self.init[Keys.TRAITS],
             num_required=self.specials[Keys.TRAITS],
         )
-        self.assign_traits()
+        for trait in self.traits:
+            card_piles = []
+            for pile in self.card_piles:
+                if self.card_piles[pile].trait:
+                    continue
+                if pile in self._base_cards:
+                    continue
+                card = self.card_instances[pile]
+                if not card.isAction() and not card.isTreasure():
+                    continue
+                card_piles.append(pile)
+            card_pile = random.choice(card_piles)
+            self.assign_trait(trait, card_pile)
+
+    ###########################################################################
+    def assign_trait(self, trait, card_pile):
+        """Assign the trait to the card pile"""
+        self.card_piles[card_pile].trait = trait
+        self.traits[trait].card_pile = card_pile
 
     ###########################################################################
     def _load_events(self):
@@ -334,6 +336,8 @@ class Game:  # pylint: disable=too-many-public-methods
             specified=self.init[Keys.EVENT],
             num_required=self.specials[Keys.EVENT],
         )
+        if self.events:
+            self.output(f"Playing with Events {self.events}")
 
     ###########################################################################
     def _load_landmarks(self):
@@ -343,6 +347,8 @@ class Game:  # pylint: disable=too-many-public-methods
             self.init[Keys.LANDMARK],
             self.specials[Keys.LANDMARK],
         )
+        if self.landmarks:
+            self.output(f"Playing with Landmarks {self.landmarks}")
 
     ###########################################################################
     def _load_boons(self):
@@ -378,6 +384,7 @@ class Game:  # pylint: disable=too-many-public-methods
         if self.artifacts:
             return
         self.artifacts = self._load_non_kingdom_cards("Artifact", None, None)
+        self.output(f"Playing with Artifacts")
 
     ###########################################################################
     def _load_projects(self):
@@ -389,6 +396,8 @@ class Game:  # pylint: disable=too-many-public-methods
             self.init[Keys.PROJECTS],
             self.specials[Keys.PROJECTS],
         )
+        if self.projects:
+            self.output(f"Playing with Project {self.projects}")
 
     ###########################################################################
     def _load_ally(self):
@@ -397,6 +406,7 @@ class Game:  # pylint: disable=too-many-public-methods
             self.init[Keys.ALLIES] = [self.init[Keys.ALLIES]]
         allies = self._load_non_kingdom_cards("Ally", self.init[Keys.ALLIES], 1)
         self.ally = list(allies.values())[0]
+        self.output(f"Playing with Ally {self.ally}")
 
     ###########################################################################
     def good_names(self, specified, cardtype):
@@ -458,8 +468,6 @@ class Game:  # pylint: disable=too-many-public-methods
             for nkc in available:
                 dest[nkc] = self.instantiate_non_kingdom_card(cardtype, nkc)
 
-        for crd in dest:
-            self.output(f"Playing with {cardtype} {crd}")
         return dest
 
     ###########################################################################

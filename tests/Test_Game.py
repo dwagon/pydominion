@@ -167,6 +167,20 @@ class TestWhoWon(unittest.TestCase):
 
 
 ###############################################################################
+class TestAssignTrait(unittest.TestCase):
+    """Test assign_trait()"""
+
+    def setUp(self) -> None:
+        self.g = Game.TestGame(numplayers=1, traits=["Cheap"], initcards=["Moat"])
+        self.g.start_game()
+
+    def test_assign(self):
+        self.g.assign_trait("Cheap", "Moat")
+        self.assertEqual(self.g.card_piles["Moat"].trait, "Cheap")
+        self.assertEqual(self.g.traits["Cheap"].card_pile, "Moat")
+
+
+###############################################################################
 class TestGetCardFromPile(unittest.TestCase):
     """Test get_card_from_pile()"""
 

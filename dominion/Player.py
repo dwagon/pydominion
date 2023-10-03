@@ -940,6 +940,8 @@ class Player:
             self.output("| Hand: <EMPTY>")
         if self.artifacts:
             self.output(f"| Artifacts: {', '.join([_.name for _ in self.artifacts])}")
+        for trait_name, trait in self.game.traits.items():
+            self.output(f"| Trait {trait_name} on {trait.card_pile}: {trait.desc}")
         if self.piles[Piles.EXILE]:
             self.output(
                 f"| Exile: {', '.join([str(_) for _ in self.piles[Piles.EXILE]])}"

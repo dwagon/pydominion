@@ -1,44 +1,43 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Fawning"""
+""" https://wiki.dominionstrategy.com/index.php/Nearby"""
 import unittest
 from dominion import Card, Game, Piles, Trait
 
 
 ###############################################################################
-class Trait_Fawning(Trait.Trait):
-    """Fawning"""
+class Trait_Nearby(Trait.Trait):
+    """Nearby"""
 
     def __init__(self):
         Trait.Trait.__init__(self)
         self.cardtype = Card.CardType.TRAITS
         self.base = Card.CardExpansion.PLUNDER
-        self.desc = "When you gain a Province, gain a Fawning card."
-        self.name = "Fawning"
+        self.desc = "When you gain a Nearby card, +1 Buy."
+        self.name = "Nearby"
 
     def hook_gain_card(self, game, player, card):
-        """When you gain a province get something extra"""
-        if card.name == "Province":
-            player.gain_card(self.card_pile)
+        """When you gain a Nearby card, +1 Buy."""
+        if game.card_piles[card.pile].trait == self.name:
+            player.buys.add(1)
 
 
 ###############################################################################
-class Test_Fawning(unittest.TestCase):
-    """Test Fawning"""
+class Test_Nearby(unittest.TestCase):
+    """Test Nearby"""
 
     def setUp(self):
         self.g = Game.TestGame(
-            quiet=True, numplayers=1, traits=["Fawning"], initcards=["Moat"]
+            quiet=True, numplayers=1, traits=["Nearby"], initcards=["Moat"]
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_cost(self):
-        """Check gaining Fawning cards"""
-        self.g.assign_trait("Fawning", "Moat")
-
-        card = self.plr.gain_card("Province")
-        self.assertIn("Province", self.plr.piles[Piles.DISCARD])
-        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
+        """Check gaining Nearby cards"""
+        self.g.assign_trait("Nearby", "Moat")
+        buys = self.plr.buys.get()
+        self.plr.gain_card("Moat")
+        self.assertEqual(self.plr.buys.get(), buys + 1)
 
 
 ###############################################################################
