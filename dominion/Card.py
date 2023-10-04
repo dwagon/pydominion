@@ -444,6 +444,10 @@ class Card:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
+    def hook_start_every_turn(self, game, player):
+        """Hook fired every turn if this card is in the game - overwritten in subclasses"""
+
+    ##########################################################################
     def hook_revealThisCard(self, game, player):
         """Hook - overwritten in subclasses"""
 

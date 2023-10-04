@@ -108,7 +108,7 @@ Called before action cards are played.
 Returns None or a dictionary with keys:
     skip_card - if true then the benefits of the card is skipped
 
-hook_all_players_pre_action(game, player, owner, card)
+hook_all_players_post_action(game, player, owner, card)
 ----------------------------------------------------
 Called after action cards are played by anyone,
 * player - current player
@@ -166,6 +166,10 @@ Called just before the deck gets shuffled
 hook_post_shuffle(game, player)
 --------------------------------
 Called after the deck got shuffled
+
+hook_start_every_turn(game, player)
+-----------------------------------
+Called at the start of every turn, no matter the state of the card
 
 
 #EOF

@@ -37,7 +37,7 @@ class Card_Pirate(Card.Card):
             return
         if self.location != Piles.HAND:
             return
-        owner.output(f"Player {player.name} gained a treasure ({card.name})")
+        owner.output(f"Player {player.name} gained a treasure ({card})")
         gain = owner.plr_choose_options(
             "Do you wish to play your Pirate?",
             ("Do Nothing", False),
