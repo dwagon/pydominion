@@ -290,7 +290,7 @@ class Game:  # pylint: disable=too-many-public-methods
         """Load Loot cards into game"""
         if "Loot" in self.card_piles:
             return
-        self.output("Using loot")
+        self.output("Using Loot cards")
         self.card_piles["Loot"] = LootPile(self)
         self.card_piles["Loot"].init_cards()
 
