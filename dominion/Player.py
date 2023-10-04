@@ -361,6 +361,8 @@ class Player:
             self.piles[card.location].remove(card)
         elif card.location == Piles.CARDPILE:
             pass
+        elif card.location == Piles.TRASH:
+            self.game.trash_pile.remove(card)
         else:
             raise AssertionError(
                 f"Trying to remove_card {card} from unknown location: {card.location}"
@@ -1077,9 +1079,13 @@ class Player:
 
     ###########################################################################
     def _hook_start_turn(self):
-        """Start of turn hook"""
-        for c in self.piles[Piles.HAND] + self.states + self.projects + self.artifacts:
-            c.hook_start_turn(self.game, self)
+        """Start of turn hooks"""
+        for card in self.game.card_instances:
+            self.game.card_instances[card].hook_start_every_turn(self.game, self)
+        for card in (
+            self.piles[Piles.HAND] + self.states + self.projects + self.artifacts
+        ):
+            card.hook_start_turn(self.game, self)
         if self.game.ally:
             self.game.ally.hook_start_turn(self.game, self)
 
@@ -1802,12 +1808,16 @@ class Player:
             "prompt", self._get_buyable_prompt(cost, modifier)
         )
 
-        buyable = self._get_buyable(cost, modifier, **kwargs)
-        if not buyable:
-            self.output("Nothing suitable to gain")
-            return
+        if "cardsrc" in kwargs:
+            cardsrc = kwargs["cardsrc"]
+            del kwargs["cardsrc"]
+        else:
+            cardsrc = self._get_buyable(cost, modifier, **kwargs)
+            if not cardsrc:
+                self.output("Nothing suitable to gain")
+                return
         cards = self.card_sel(
-            cardsrc=buyable,
+            cardsrc=cardsrc,
             recipient=recipient,
             verbs=("Get", "Unget"),
             **kwargs,
