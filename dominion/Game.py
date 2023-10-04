@@ -327,6 +327,8 @@ class Game:  # pylint: disable=too-many-public-methods
                 if pile in self._base_cards:
                     continue
                 card = self.card_instances[pile]
+                if not card.purchasable():
+                    continue
                 if not card.isAction() and not card.isTreasure():
                     continue
                 card_piles.append(pile)
