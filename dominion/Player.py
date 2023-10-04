@@ -1035,7 +1035,6 @@ class Player:
     ###########################################################################
     def start_turn(self):
         self.phase = Phase.START
-        self.piles[Piles.PLAYED].empty()
         self.buys.set(1)
         self.actions.set(1)
         self.coins.set(0)
