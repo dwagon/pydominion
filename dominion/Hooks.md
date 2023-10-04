@@ -103,9 +103,17 @@ hook_all_players_pre_action(game, player, owner, card)
 Called before action cards are played.
 * player - current player
 * owner - owner of the card with the hook
-* card - card with the hook
+* card - action card being played
+
 Returns None or a dictionary with keys:
     skip_card - if true then the benefits of the card is skipped
+
+hook_all_players_pre_action(game, player, owner, card)
+----------------------------------------------------
+Called after action cards are played by anyone,
+* player - current player
+* owner - owner of the card with the hook
+* card - action card played
 
 hook_post_action(game, player, card)
 ---------------

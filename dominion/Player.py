@@ -1202,6 +1202,18 @@ class Player:
         return options
 
     ###########################################################################
+    def hook_all_players_post_action(self, card):
+        options = {}
+        for player in self.game.player_list():
+            for crd in player.piles[Piles.DURATION]:
+                ans = crd.hook_all_players_post_action(
+                    game=self.game, player=self, owner=player, card=card
+                )
+                if ans:
+                    options.update(ans)
+        return options
+
+    ###########################################################################
     def defer_card(self, card: Card) -> None:
         """Set a non-duration card to be played in its entirety next turn"""
         self.move_card(card, Piles.DEFER)
@@ -1258,6 +1270,7 @@ class Player:
             self.card_benefits(card)
         self.currcards.pop()
         if post_action_hook and card.isAction():
+            self.hook_all_players_post_action(card)
             for crd in self.relevant_cards():
                 if hasattr(crd, "hook_post_action"):
                     crd.hook_post_action(game=self.game, player=self, card=card)
