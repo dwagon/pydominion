@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Amulet"""
 import unittest
 from dominion import Game, Card, Piles
 
@@ -40,7 +40,7 @@ class Card_Amulet(Card.Card):
 ###############################################################################
 class Test_Amulet(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Amulet"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Amulet"], badcards=["Shaman"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g.get_card_from_pile("Amulet")
