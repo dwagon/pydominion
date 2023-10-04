@@ -1330,7 +1330,10 @@ class Player:
         #   shuffle: True - shuffle the deck after gaining new card
         options = {}
         if not new_card:
-            pile = self.game.card_instances[card_name].pile
+            if card_name == "Loot":
+                pile = "Loot"
+            else:
+                pile = self.game.card_instances[card_name].pile
             if not pile:
                 pile = card_name
             new_card = self.game.get_card_from_pile(pile)

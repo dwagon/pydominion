@@ -12,6 +12,7 @@ from typing import List, Optional
 
 from dominion import Piles, Keys
 from dominion.Boon import BoonPile
+from dominion.Loot import LootPile
 from dominion.BotPlayer import BotPlayer
 from dominion.RandobotPlayer import RandobotPlayer
 from dominion.Card import CardExpansion
@@ -62,6 +63,7 @@ class Game:  # pylint: disable=too-many-public-methods
             Keys.STATES: "dominion/states",
             Keys.ARTIFACTS: "dominion/artifacts",
             Keys.PROJECTS: "dominion/projects",
+            Keys.LOOT: "dominion/loot",
             Keys.LANDMARK: "dominion/landmarks",
             Keys.EVENT: "dominion/events",
             Keys.TRAITS: "dominion/traits",
@@ -282,6 +284,15 @@ class Game:  # pylint: disable=too-many-public-methods
         for trav in travellers:
             self._use_card_pile(None, trav, True, "Traveller")
         self.loaded_travellers = True
+
+    ############################################################################
+    def _load_loot(self):
+        """Load Loot cards into game"""
+        if "Loot" in self.card_piles:
+            return
+        self.output("Using loot")
+        self.card_piles["Loot"] = LootPile(self)
+        self.card_piles["Loot"].init_cards()
 
     ###########################################################################
     def _load_ways(self):
@@ -645,6 +656,7 @@ class Game:  # pylint: disable=too-many-public-methods
         check_cards = (
             list(self._cards.values())
             + list(self.events.values())
+            + list(self.traits.values())
             + list(self.hexes)
             + list(self.boons)
             + list(self.landmarks.values())
@@ -654,6 +666,9 @@ class Game:  # pylint: disable=too-many-public-methods
 
         for card in check_cards:
             for x in card.required_cards:
+                if x == "Loot":
+                    self._load_loot()
+                    continue
                 if isinstance(x, tuple):
                     krdtype, crd = x
                 else:
@@ -750,6 +765,7 @@ class Game:  # pylint: disable=too-many-public-methods
         mapping["Trait"] = self.get_card_classes(
             "Trait", self.paths[Keys.TRAITS], "Trait_"
         )
+        mapping["Loot"] = self.get_card_classes("Loot", self.paths[Keys.LOOT], "Loot_")
         return mapping
 
     ###########################################################################
