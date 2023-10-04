@@ -280,6 +280,11 @@ class Card:
         return self._is_type(CardType.ACTION)
 
     ##########################################################################
+    def isLoot(self):
+        """http://wiki.dominionstrategy.com/index.php/Loot"""
+        return self._is_type(CardType.LOOT)
+
+    ##########################################################################
     def isShelter(self):
         """http://wiki.dominionstrategy.com/index.php/Shelter"""
         return self._is_type(CardType.SHELTER)
