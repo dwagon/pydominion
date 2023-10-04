@@ -10,7 +10,7 @@ class Loot_Doubloons(Loot.Loot):
 
     def __init__(self):
         Loot.Loot.__init__(self)
-        self.cardtype = Card.CardType.LOOT
+        self.cardtype = [Card.CardType.LOOT, Card.CardType.TREASURE]
         self.base = Card.CardExpansion.PLUNDER
         self.desc = "$3; When you gain this, gain a Gold."
         self.name = "Doubloons"
@@ -31,6 +31,10 @@ class Test_Doubloons(unittest.TestCase):
         self.g = Game.TestGame(quiet=True, numplayers=1, traits=["Cursed"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
+        # Remove all other cards from loot pile, so we know what we will draw
+        for loot in self.g.card_piles["Loot"]:
+            if loot.name != "Doubloons":
+                self.g.card_piles["Loot"].remove(loot.name)
 
     def test_gain_doubloon(self):
         """Test gaining doubloon"""
@@ -40,10 +44,10 @@ class Test_Doubloons(unittest.TestCase):
 
     def test_playing(self):
         """Test playing a doubloon"""
-        doubloon = self.plr.gain_card("Doubloons")
-        self.plr.move_card(doubloon, Piles.HAND)
+        doubloons = self.g.get_card_from_pile("Loot", "Doubloons")
+        self.plr.add_card(doubloons, Piles.HAND)
         coins = self.plr.coins.get()
-        self.plr.play_card(doubloon)
+        self.plr.play_card(doubloons)
         self.assertEqual(self.plr.coins.get(), coins + 3)
 
 
