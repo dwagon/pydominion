@@ -21,7 +21,9 @@ class LootPile(CardPile.CardPile):
 
 ###############################################################################
 class Loot(Card.Card):
-    pass
+    def __init__(self):
+        Card.Card.__init__(self)
+        self.purchasable = False
 
 
 # EOF
