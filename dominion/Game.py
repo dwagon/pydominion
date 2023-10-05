@@ -717,8 +717,13 @@ class Game:  # pylint: disable=too-many-public-methods
 
     ###########################################################################
     def get_card_piles(self):
-        """TODO"""
-        return self.card_piles.items()
+        """Return the card piles in this game
+        While Loot is technically a Pile - it isn't for most purposes
+        """
+        piles = list(self.card_piles.items())
+        if "Loot" in piles:
+            piles.remove("Loot")
+        return piles
 
     ###########################################################################
     def __contains__(self, key):
@@ -823,7 +828,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def get_treasure_piles(self) -> list[str]:
         """Return all card stacks that are treasure cards"""
         treasure_piles = []
-        for name, _ in self.card_piles.values():
+        for name, _ in self.get_card_piles():
             card = self.card_instances[name]
             if card.isTreasure():
                 treasure_piles.append(name)
@@ -833,7 +838,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def get_victory_piles(self) -> list[str]:
         """Return all card stack names that are victory cards"""
         victory_piles = []
-        for name, _ in self.card_piles.items():
+        for name, _ in self.get_card_piles():
             card = self.card_instances[name]
             if card.isVictory():
                 victory_piles.append(name)
