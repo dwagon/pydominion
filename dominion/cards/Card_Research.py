@@ -56,7 +56,9 @@ class TestResearch(unittest.TestCase):
     """Test Research"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Research", "Moat"])
+        self.g = Game.TestGame(
+            numplayers=1, initcards=["Research", "Moat"], badcards=["Shaman"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g.get_card_from_pile("Research")
