@@ -32,9 +32,13 @@ class Test_Doubloons(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         # Remove all other cards from loot pile, so we know what we will draw
-        for loot in self.g.card_piles["Loot"]:
-            if loot.name != "Doubloons":
-                self.g.card_piles["Loot"].remove(loot.name)
+        mods = 1
+        while mods > 0:
+            mods = 0
+            for loot in self.g.card_piles["Loot"]:
+                if loot.name != "Doubloons":
+                    self.g.card_piles["Loot"].remove(loot.name)
+                    mods += 1
 
     def test_gain_doubloon(self):
         """Test gaining doubloon"""
