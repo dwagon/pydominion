@@ -717,8 +717,13 @@ class Game:  # pylint: disable=too-many-public-methods
 
     ###########################################################################
     def get_card_piles(self):
-        """TODO"""
-        return self.card_piles.items()
+        """Return the card piles in this game
+        While Loot is technically a Pile - it isn't for most purposes
+        """
+        piles = list(self.card_piles.items())
+        if "Loot" in piles:
+            piles.remove("Loot")
+        return piles
 
     ###########################################################################
     def __contains__(self, key):
