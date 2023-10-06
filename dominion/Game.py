@@ -352,7 +352,9 @@ class Game:  # pylint: disable=too-many-public-methods
             num_required=self.specials[Keys.EVENT],
         )
         if self.events:
-            self.output(f"Playing with Events {self.events}")
+            self.output(
+                f"Playing with Events: {', '.join(event for event in self.events)}"
+            )
 
     ###########################################################################
     def _load_landmarks(self):
