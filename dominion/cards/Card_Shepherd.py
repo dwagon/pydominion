@@ -19,6 +19,9 @@ class Card_Shepherd(Card.Card):
         self.heirloom = "Pasture"
 
     def special(self, game, player):
+        num_victories = sum([1 for _ in player.piles[Piles.HAND] if _.isVictory()])
+        if num_victories == 0:
+            return
         to_discard = player.plr_discard_cards(
             num=0, any_number=True, types={Card.CardType.VICTORY: True}
         )
