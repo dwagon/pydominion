@@ -24,7 +24,6 @@ class Card_Dismantle(Card.Card):
         cost = tc[0].cost
         if cost:
             player.plr_gain_card(cost=cost - 1)
-            player.output("Gained a Gold")
             player.gain_card("Gold")
 
 
