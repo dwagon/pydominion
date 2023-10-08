@@ -1260,13 +1260,14 @@ class Player:
 
         self._play_card_tokens(card)
 
-        if card.isAction() and cost_action and self.phase != Phase.NIGHT:
-            self.actions -= 1
-        if self.actions.get() < 0:  # pragma: no cover
-            self.actions.set(0)
-            self.currcards.pop()
-            self.output("Not enough actions")
-            return
+        if not card.isTreasure() and self.phase != Phase.BUY:
+            if card.isAction() and cost_action and self.phase != Phase.NIGHT:
+                self.actions -= 1
+            if self.actions.get() < 0:  # pragma: no cover
+                self.actions.set(0)
+                self.currcards.pop()
+                self.output("Not enough actions")
+                return
 
         force = options["skip_card"]
 
