@@ -9,8 +9,6 @@ from collections import defaultdict
 from typing import Optional
 from icecream import ic
 
-ic.configureOutput(includeContext=True)
-
 from dominion import Piles, Phase
 from dominion.Card import Card, CardType
 from dominion.CardPile import CardPile
@@ -20,6 +18,8 @@ from dominion.Option import Option
 from dominion.PlayArea import PlayArea
 from dominion.Project import Project
 from dominion.Way import Way
+
+ic.configureOutput(includeContext=True)
 
 
 ###############################################################################
@@ -887,7 +887,7 @@ class Player:
             return
         elif opt["action"] == "way":
             self.perform_way(opt["way"], opt["card"])
-        elif opt["action"] == None:
+        elif opt["action"] is None:
             return
         else:  # pragma: no cover
             print(f"ERROR: Unhandled action {opt['action']}", file=sys.stderr)
