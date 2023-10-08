@@ -887,6 +887,8 @@ class Player:
             return
         elif opt["action"] == "way":
             self.perform_way(opt["way"], opt["card"])
+        elif opt["action"] == None:
+            return
         else:  # pragma: no cover
             print(f"ERROR: Unhandled action {opt['action']}", file=sys.stderr)
             sys.exit(1)
