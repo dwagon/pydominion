@@ -887,6 +887,8 @@ class Player:
             return
         elif opt["action"] == "way":
             self.perform_way(opt["way"], opt["card"])
+        elif opt["action"] == None:
+            return
         else:  # pragma: no cover
             print(f"ERROR: Unhandled action {opt['action']}", file=sys.stderr)
             sys.exit(1)
@@ -1258,13 +1260,14 @@ class Player:
 
         self._play_card_tokens(card)
 
-        if card.isAction() and cost_action and self.phase != Phase.NIGHT:
-            self.actions -= 1
-        if self.actions.get() < 0:  # pragma: no cover
-            self.actions.set(0)
-            self.currcards.pop()
-            self.output("Not enough actions")
-            return
+        if not card.isTreasure() and self.phase != Phase.BUY:
+            if card.isAction() and cost_action and self.phase != Phase.NIGHT:
+                self.actions -= 1
+            if self.actions.get() < 0:  # pragma: no cover
+                self.actions.set(0)
+                self.currcards.pop()
+                self.output("Not enough actions")
+                return
 
         force = options["skip_card"]
 
