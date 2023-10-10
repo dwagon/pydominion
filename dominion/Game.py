@@ -923,14 +923,17 @@ class Game:  # pylint: disable=too-many-public-methods
         print(f"  state: {', '.join([_.name for _ in plr.states])}")
         print(f"  artifacts: {', '.join([_.name for _ in plr.artifacts])}")
         print(f"  projects: {', '.join([_.name for _ in plr.projects])}")
-        print(f"  hand: {', '.join([_.name for _ in plr.piles[Piles.HAND]])}")
-        print(f"  deck: {', '.join([_.name for _ in plr.piles[Piles.DECK]])}")
-        print(f"  discard: {', '.join([_.name for _ in plr.piles[Piles.DISCARD]])}")
-        print(f"  defer: {', '.join([_.name for _ in plr.piles[Piles.DEFER]])}")
-        print(f"  duration: {', '.join([_.name for _ in plr.piles[Piles.DURATION]])}")
-        print(f"  exile: {', '.join([_.name for _ in plr.piles[Piles.EXILE]])}")
-        print(f"  reserve: {', '.join([_.name for _ in plr.piles[Piles.RESERVE]])}")
-        print(f"  played: {', '.join([_.name for _ in plr.piles[Piles.PLAYED]])}")
+        for pile in (
+            Piles.HAND,
+            Piles.DECK,
+            Piles.DISCARD,
+            Piles.DEFER,
+            Piles.DURATION,
+            Piles.EXILE,
+            Piles.RESERVE,
+            Piles.PLAYED,
+        ):
+            plr.piles[pile].dump(f"  {pile.name}")
         print("  messages:")
         for msg in plr.messages:
             print(f"\t{msg}")

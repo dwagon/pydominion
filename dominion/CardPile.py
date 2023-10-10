@@ -127,11 +127,13 @@ class CardPile:
                 break
 
     ###########################################################################
-    def dump(self):
+    def dump(self, name=""):
         """Print out all the pile - for debugging purposes only"""
-        print("----------")
+        if name:
+            print(f"{name}: ", end="")
         for card in self.cards:
-            print(f"Card={card}")
+            print(f"{card} ", end="")
+        print()
 
     ###########################################################################
     def __repr__(self):

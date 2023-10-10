@@ -158,10 +158,10 @@ class PlayArea:
         """Print out all the playarea - for debugging purposes only"""
         if name is None:
             name = self.name
-        print(f"-vvvvvvvv- {name}")
-        for crd in self._cards:
-            print(f"Card={crd}")
-        print(f"-^^^^^^^^- {name}")
+        print(f"{name}: ", end="")
+        for card in self._cards:
+            print(f"{card} ", end="")
+        print()
 
 
 # EOF
