@@ -171,7 +171,7 @@ class Game:  # pylint: disable=too-many-public-methods
         return use_shelters
 
     ###########################################################################
-    def start_game(self, playernames=None, plr_class=TextPlayer):
+    def start_game(self, player_names=None, plr_class=TextPlayer):
         """Initialise game bits"""
 
         self._load_decks(self.init[Keys.CARDS], self.num_stacks)
@@ -185,7 +185,7 @@ class Game:  # pylint: disable=too-many-public-methods
         if self.hexes or self.boons:
             self._load_states()
         self._check_card_requirements()
-        self._setup_players(playernames, plr_class)
+        self._setup_players(player_names, plr_class)
         self.card_setup()  # Has to be after players have been created
         self.current_player = self.player_list(0)
         if self.ally:
@@ -519,9 +519,7 @@ class Game:  # pylint: disable=too-many-public-methods
         """
         # If base cards are specified by initcards
         if card_name := self.guess_card_name(card, prefix="BaseCard"):
-            card_pile = CardPile(self)
-            card_pile.init_cards(10, self.card_mapping["BaseCard"][card_name])
-            self.card_piles[card_name] = card_pile
+            self._use_card_pile(None, card_name, force=True, card_type="BaseCard")
         elif card_name := self.guess_card_name(card):
             self._use_card_pile(available, card_name, force=True)
             return 1
@@ -925,14 +923,17 @@ class Game:  # pylint: disable=too-many-public-methods
         print(f"  state: {', '.join([_.name for _ in plr.states])}")
         print(f"  artifacts: {', '.join([_.name for _ in plr.artifacts])}")
         print(f"  projects: {', '.join([_.name for _ in plr.projects])}")
-        print(f"  hand: {', '.join([_.name for _ in plr.piles[Piles.HAND]])}")
-        print(f"  deck: {', '.join([_.name for _ in plr.piles[Piles.DECK]])}")
-        print(f"  discard: {', '.join([_.name for _ in plr.piles[Piles.DISCARD]])}")
-        print(f"  defer: {', '.join([_.name for _ in plr.piles[Piles.DEFER]])}")
-        print(f"  duration: {', '.join([_.name for _ in plr.piles[Piles.DURATION]])}")
-        print(f"  exile: {', '.join([_.name for _ in plr.piles[Piles.EXILE]])}")
-        print(f"  reserve: {', '.join([_.name for _ in plr.piles[Piles.RESERVE]])}")
-        print(f"  played: {', '.join([_.name for _ in plr.piles[Piles.PLAYED]])}")
+        for pile in (
+            Piles.HAND,
+            Piles.DECK,
+            Piles.DISCARD,
+            Piles.DEFER,
+            Piles.DURATION,
+            Piles.EXILE,
+            Piles.RESERVE,
+            Piles.PLAYED,
+        ):
+            plr.piles[pile].dump(f"  {pile.name}")
         print("  messages:")
         for msg in plr.messages:
             print(f"\t{msg}")
@@ -972,7 +973,7 @@ class Game:  # pylint: disable=too-many-public-methods
             self.print_player_state(plr)
         if card_dump:
             for v in self._cards.values():
-                print(f"    {v}")
+                print(f"    {v} ({v.uuid} {v._player}@{v._location})")
 
     ###########################################################################
     def player_to_left(self, plr):
