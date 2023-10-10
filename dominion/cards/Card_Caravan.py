@@ -25,7 +25,7 @@ class Card_Caravan(Card.Card):
 ###############################################################################
 class Test_Caravan(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Caravan"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Caravan"], badcards=["Shaman"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g.get_card_from_pile("Caravan")
