@@ -519,9 +519,7 @@ class Game:  # pylint: disable=too-many-public-methods
         """
         # If base cards are specified by initcards
         if card_name := self.guess_card_name(card, prefix="BaseCard"):
-            card_pile = CardPile(self)
-            card_pile.init_cards(10, self.card_mapping["BaseCard"][card_name])
-            self.card_piles[card_name] = card_pile
+            self._use_card_pile(None, card_name, force=True, card_type="BaseCard")
         elif card_name := self.guess_card_name(card):
             self._use_card_pile(available, card_name, force=True)
             return 1
