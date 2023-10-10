@@ -108,10 +108,10 @@ class BotPlayer(Player):
         assert False, f"BigMoneyBot can't choose options from {mod.__name__}"
 
     ###########################################################################
-    def pick_to_discard(self, numtodiscard, keepvic=False):
+    def pick_to_discard(self, num_to_discard, keepvic=False):
         """Many attacks require this sort of response.
         Return num cards to discard"""
-        if numtodiscard <= 0:
+        if num_to_discard <= 0:
             return []
         todiscard = []
 
@@ -122,19 +122,19 @@ class BotPlayer(Player):
             if keepvic and card.isVictory():
                 continue
             todiscard.append(card)
-        if len(todiscard) >= numtodiscard:
-            return todiscard[:numtodiscard]
+        if len(todiscard) >= num_to_discard:
+            return todiscard[:num_to_discard]
 
         # Discard the cheapest treasures next
-        while len(todiscard) < numtodiscard:
+        while len(todiscard) < num_to_discard:
             for treas in ("Copper", "Silver", "Gold"):
                 for card in self.piles[Piles.HAND]:
                     if card.name == treas:
                         todiscard.append(card)
-        if len(todiscard) >= numtodiscard:
-            return todiscard[:numtodiscard]
+        if len(todiscard) >= num_to_discard:
+            return todiscard[:num_to_discard]
         sys.stderr.write(
-            f"Couldn't find cards to discard {numtodiscard} from {', '.join([_.name for _ in self.piles[Piles.HAND]])}"
+            f"Couldn't find cards to discard {num_to_discard} from {', '.join([_.name for _ in self.piles[Piles.HAND]])}"
         )
         sys.stderr.write(
             f"Managed to get {(', '.join([_.name for _ in todiscard]))} so far\n"
