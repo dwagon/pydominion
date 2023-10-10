@@ -37,6 +37,7 @@ class TestBandOfMisfits(unittest.TestCase):
         self.g = Game.TestGame(
             numplayers=1,
             initcards=["Band of Misfits", "Village", "Bureaucrat", "Moat"],
+            badcards=["Village Green"]
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
