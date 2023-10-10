@@ -34,18 +34,19 @@ class BotPlayer(Player):
         try:
             opts = {}
             for opt in options:
-                if opt["action"] == "buy" and opt["card"].name == "Colony":
-                    opts["colony"] = opt
-                if opt["action"] == "buy" and opt["card"].name == "Province":
-                    opts["province"] = opt
-                if opt["action"] == "buy" and opt["card"].name == "Platinum":
-                    opts["platinum"] = opt
-                if opt["action"] == "buy" and opt["card"].name == "Gold":
-                    opts["gold"] = opt
-                if opt["action"] == "buy" and opt["card"].name == "Duchy":
-                    opts["duchy"] = opt
-                if opt["action"] == "buy" and opt["card"].name == "Silver":
-                    opts["silver"] = opt
+                if opt["action"] == "buy":
+                    if opt["card"].name == "Colony":
+                        opts["colony"] = opt
+                    if opt["card"].name == "Province":
+                        opts["province"] = opt
+                    if opt["card"].name == "Platinum":
+                        opts["platinum"] = opt
+                    if opt["card"].name == "Gold":
+                        opts["gold"] = opt
+                    if opt["card"].name == "Duchy":
+                        opts["duchy"] = opt
+                    if opt["card"].name == "Silver":
+                        opts["silver"] = opt
                 if opt["action"] == "quit":
                     opts["quit"] = opt
                 if opt["action"] == "spendall":

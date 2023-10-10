@@ -171,7 +171,7 @@ class Game:  # pylint: disable=too-many-public-methods
         return use_shelters
 
     ###########################################################################
-    def start_game(self, playernames=None, plr_class=TextPlayer):
+    def start_game(self, player_names=None, plr_class=TextPlayer):
         """Initialise game bits"""
 
         self._load_decks(self.init[Keys.CARDS], self.num_stacks)
@@ -185,7 +185,7 @@ class Game:  # pylint: disable=too-many-public-methods
         if self.hexes or self.boons:
             self._load_states()
         self._check_card_requirements()
-        self._setup_players(playernames, plr_class)
+        self._setup_players(player_names, plr_class)
         self.card_setup()  # Has to be after players have been created
         self.current_player = self.player_list(0)
         if self.ally:
@@ -973,7 +973,7 @@ class Game:  # pylint: disable=too-many-public-methods
             self.print_player_state(plr)
         if card_dump:
             for v in self._cards.values():
-                print(f"    {v}")
+                print(f"    {v} ({v.uuid} {v._player}@{v._location})")
 
     ###########################################################################
     def player_to_left(self, plr):
