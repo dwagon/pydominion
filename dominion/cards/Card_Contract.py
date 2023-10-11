@@ -30,8 +30,11 @@ class Card_Contract(Card.Card):
     def hook_pre_buy(self, game, player):
         acts = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not acts:
+            player.output("No suitable actions")
             return
-        card = player.card_sel(cardsrc=acts, prompt="Contract: Set aside an action to play next turn")
+        card = player.card_sel(
+            cardsrc=acts, prompt="Contract: Set aside an action to play next turn"
+        )
         self._contract_reserve.add(card[0])
         player.piles[Piles.HAND].remove(card[0])
         player.secret_count += 1
