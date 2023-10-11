@@ -17,9 +17,10 @@ class Card_Courtier(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        cards = player.card_sel()
+        cards = player.card_sel(prompt="Select card to reveal", printtypes=True)
         if not cards:
             return
+        player.reveal_card(cards[0])
         if isinstance(cards[0].cardtype, list):
             num_types = len(cards[0].cardtype)
         else:
