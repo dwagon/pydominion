@@ -16,4 +16,4 @@ jobs:
       - name: Run Tests
         run: ./run_tests
       - name: Coveralls
-        uses: AndreMiras/coveralls-python-action@develop
+        uses: coverallsapp/github-action@v2
