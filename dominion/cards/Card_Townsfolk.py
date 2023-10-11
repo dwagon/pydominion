@@ -12,6 +12,7 @@ class Card_Townsfolk(Card.Card):
         self.base = Card.CardExpansion.ALLIES
         self.cardtype = [Card.CardType.ACTION, Card.CardType.LIAISON]
         self.required_cards = ["Curse"]
+        self.pile = "Townsfolk"
 
     @classmethod
     def cardpile_setup(cls, game):
@@ -23,6 +24,8 @@ class Card_Townsfolk(Card.Card):
 class TownsfolkCardPile(CardPile.CardPile):
     def __init__(self, game):
         self.mapping = game.get_card_classes("Townsfolk", game.paths["cards"], "Card_")
+        for name, class_ in self.mapping.items():
+            game.card_instances[name] = class_()
         super().__init__()
 
     def init_cards(self, num_cards=0, card_class=None):
