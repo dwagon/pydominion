@@ -25,7 +25,7 @@ class Card_Diplomat(Card.Card):
         if player.piles[Piles.HAND].size() <= 5:
             player.add_actions(2)
 
-    def hook_underAttack(self, game, player, attacker):
+    def hook_under_attack(self, game, player, attacker):
         """Reaction"""
         if player.piles[Piles.HAND].size() < 5:
             return

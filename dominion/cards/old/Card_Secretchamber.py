@@ -23,11 +23,14 @@ class Card_Secretchamber(Card.Card):
     def special(self, game, player):  # pylint: disable=unused-argument
         """Discard any number of cards, +1 coin per card discarded"""
         todiscard = player.plr_discard_cards(
-            any_number=True, prompt="Select which card(s) to discard (+1 coin per discard)?"
+            any_number=True,
+            prompt="Select which card(s) to discard (+1 coin per discard)?",
         )
         player.coins.add(len(todiscard))
 
-    def hook_underAttack(self, game, player, attacker):  # pylint: disable=unused-argument
+    def hook_under_attack(
+        self, game, player, attacker
+    ):  # pylint: disable=unused-argument
         """TODO"""
         player.output(f"Under attack from {attacker.name}")
         if not self.doRevealCard(player):
@@ -64,7 +67,9 @@ class Test_Secretchamber(unittest.TestCase):
     """Test Secret Chamber"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Secret Chamber", "Militia"])
+        self.g = Game.TestGame(
+            numplayers=2, oldcards=True, initcards=["Secret Chamber", "Militia"]
+        )
         self.g.start_game()
         self.plr, self.att = self.g.player_list()
         self.card = self.g.get_card_from_pile("Secret Chamber")

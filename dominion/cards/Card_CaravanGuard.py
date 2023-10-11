@@ -30,7 +30,7 @@ class Card_CaravanGuard(Card.Card):
     def duration(self, game, player):
         player.coins.add(1)
 
-    def hook_underAttack(self, game, player, attacker):
+    def hook_under_attack(self, game, player, attacker):
         player.output(f"Under attack from {attacker.name}")
         player.pickup_cards(1)
         player.move_card(player.piles[Piles.HAND]["Caravan Guard"], "played")
@@ -41,7 +41,9 @@ class Test_CaravanGuard(unittest.TestCase):
     """Test Caravan Guard"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, initcards=["Caravan Guard", "Militia", "Moat"])
+        self.g = Game.TestGame(
+            numplayers=2, initcards=["Caravan Guard", "Militia", "Moat"]
+        )
         self.g.start_game()
         self.plr, self.attacker = self.g.player_list()
         self.card = self.g.get_card_from_pile("Caravan Guard")

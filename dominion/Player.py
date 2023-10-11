@@ -1736,7 +1736,7 @@ class Player:
             if plr == self:
                 continue
             for crd in plr.piles[Piles.HAND]:
-                crd.hook_underAttack(game=self.game, player=plr, attacker=self)
+                crd.hook_under_attack(game=self.game, player=plr, attacker=self)
             if plr.has_defense(self):
                 continue
             victims.append(plr)
