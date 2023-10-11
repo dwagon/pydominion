@@ -155,7 +155,7 @@ duration(game, player)
 ----------------------
 Gets invoked for duration cards the next turn
 
-hook_underAttack
+hook_under_attack
 ----------------
 Called if you get under attack
 

@@ -21,7 +21,7 @@ class Card_Beggar(Card.Card):
         for _ in range(3):
             player.gain_card("Copper", Piles.HAND)
 
-    def hook_underAttack(self, game, player, attacker):
+    def hook_under_attack(self, game, player, attacker):
         player.output("Gaining silvers as under attack from %s" % attacker.name)
         player.gain_card("Silver", "topdeck")
         player.gain_card("Silver")

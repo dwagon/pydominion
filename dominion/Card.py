@@ -403,7 +403,7 @@ class Card:
         return 0  # pragma: no cover
 
     ##########################################################################
-    def hook_underAttack(self, game, player, attacker):
+    def hook_under_attack(self, game, player, attacker):
         """Hook - overwritten in subclasses"""
 
     ##########################################################################

@@ -23,7 +23,7 @@ class Card_Guard_Dog(Card.Card):
         if player.piles[Piles.HAND].size() <= 5:
             player.pickup_cards(2)
 
-    def hook_underAttack(self, game, player, attacker):
+    def hook_under_attack(self, game, player, attacker):
         player.output(f"Playing Guard Dog as under attack by {attacker.name}")
         player.play_card(self, cost_action=False)
 
