@@ -1078,6 +1078,8 @@ class Player:
                 if card.location != Piles.DURATION:
                     continue
                 self.move_card(card, options["dest"])
+        for event in self.game.events.values():
+            event.duration(game=self.game, player=self)
 
     ###########################################################################
     def _hook_start_turn(self):
