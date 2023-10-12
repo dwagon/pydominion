@@ -11,7 +11,7 @@ class Ally_Trappers_Lodge(Ally.Ally):
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
         self.desc = """When you gain a card, you may spend a Favor to put it onto your deck."""
-        self.name = "Trappers Lodge"
+        self.name = "Trappers' Lodge"
 
     def hook_gain_card(self, game, player, card):
         if not player.favors.get():
