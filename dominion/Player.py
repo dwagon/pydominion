@@ -769,21 +769,32 @@ class Player:
     def turn(self):
         """Have a turn as the player"""
         self.turn_number += 1
-        self.output("\n")
-        self.output(f"{'#' * 20} Turn {self.turn_number} {'#' * 20}")
+        self.output(f"\n{'#' * 30} Turn {self.turn_number} {'#' * 30}")
         stats = f"({self.get_score()} points, {self.count_cards()} cards)"
         if self.skip_turn:
             self.skip_turn = False
             return
         self.output(f"{self.name}'s Turn {stats}")
-        self._card_check()  # DEBUG
-        self.action_phase()
-        self._card_check()  # DEBUG
-        self.buy_phase()
-        self._card_check()  # DEBUG
-        self.night_phase()
-        self._card_check()  # DEBUG
-        self.cleanup_phase()
+        self.phase = Phase.ACTION
+        # This bizarre loop is so cards can change player phases
+        while True:
+            self._card_check()  # DEBUG
+            match self.phase:
+                case Phase.ACTION:
+                    self.action_phase()
+                    if self.phase == Phase.ACTION:
+                        self.phase = Phase.BUY
+                case Phase.BUY:
+                    self.buy_phase()
+                    if self.phase == Phase.BUY:
+                        self.phase = Phase.NIGHT
+                case Phase.NIGHT:
+                    self.night_phase()
+                    if self.phase == Phase.NIGHT:
+                        self.phase = Phase.CLEANUP
+                case Phase.CLEANUP:
+                    self.cleanup_phase()
+                    break
         self._card_check()  # DEBUG
 
     ###########################################################################
@@ -793,7 +804,6 @@ class Player:
         if not nights:
             return
         self.output("************ Night Phase ************")
-        self.phase = Phase.NIGHT
         while True:
             self._display_overview()
             options, prompt = self._choice_selection()
@@ -805,7 +815,6 @@ class Player:
     ###########################################################################
     def action_phase(self):
         self.output("************ Action Phase ************")
-        self.phase = Phase.ACTION
         while True:
             self._display_overview()
             options, prompt = self._choice_selection()
@@ -817,7 +826,6 @@ class Player:
     ###########################################################################
     def buy_phase(self):
         self.output("************ Buy Phase ************")
-        self.phase = Phase.BUY
         self.hook_pre_buy()
         while True:
             self._display_overview()
@@ -843,7 +851,6 @@ class Player:
             + self.game.landmarks
             + self.piles[Piles.DURATION]
         )
-        self.phase = Phase.CLEANUP
         self.game.cleanup_boons()
         for card in (
             self.piles[Piles.PLAYED] + self.piles[Piles.RESERVE] + self.artifacts
