@@ -28,6 +28,7 @@ class CardExpansion(Enum):
     PROSPERITY = auto()
     RENAISSANCE = auto()
     SEASIDE = auto()
+    TEST = auto()
 
 
 ###############################################################################

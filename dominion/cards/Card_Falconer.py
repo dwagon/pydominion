@@ -44,7 +44,7 @@ class Test_Falconer(unittest.TestCase):
 
     def test_gaincard(self):
         """Gain a card"""
-        self.plr.test_input = ["Get Silver"]
+        self.plr.test_input = ["Get Silver -"]
         self.plr.gain_card("Moat")
         self.g.print_state()
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])

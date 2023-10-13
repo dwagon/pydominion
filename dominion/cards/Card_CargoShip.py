@@ -49,7 +49,9 @@ class TestCargoShip(unittest.TestCase):
     """Test Cargo Ship"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Cargo Ship", "Moat"])
+        self.g = Game.TestGame(
+            numplayers=1, initcards=["Cargo Ship", "Moat"], badcards=["Shaman"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

@@ -54,6 +54,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self._heirlooms = []
         self._allow_shelters = True
         self._loaded_prizes = False
+        self._allow_potions = True
         self.current_player = None
         self.paths = {
             Keys.CARDS: "dominion/cards",
@@ -132,6 +133,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.init[Keys.TRAITS] = args.get("traits", [])
 
         self.num_stacks = args.get("num_stacks", 10)
+        self._allow_potions = args.get("potions", True)
         self.prosperity = args.get("prosperity", False)
         self.oldcards = args.get("oldcards", False)
         self.quiet = args["quiet"] if "quiet" in args else False
@@ -521,8 +523,7 @@ class Game:  # pylint: disable=too-many-public-methods
         if card_name := self.guess_card_name(card, prefix="BaseCard"):
             self._use_card_pile(None, card_name, force=True, card_type="BaseCard")
         elif card_name := self.guess_card_name(card):
-            self._use_card_pile(available, card_name, force=True)
-            return 1
+            return self._use_card_pile(available, card_name, force=True)
         elif event_name := self.guess_card_name(card, "Event"):
             self.init[Keys.EVENT].append(event_name)
         elif way_name := self.guess_card_name(card, "Way"):
@@ -619,6 +620,8 @@ class Game:  # pylint: disable=too-many-public-methods
             print(f"Unknown card '{card_name}'\n", file=sys.stderr)
             sys.exit(1)
         card = self.card_mapping[card_type][card_name]()
+        if not self._allow_potions and card.potcost:
+            return 0
         if hasattr(card, "cardpile_setup"):
             card_pile = card.cardpile_setup(self)
         else:

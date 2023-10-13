@@ -27,6 +27,12 @@ def parse_cli_args(args=None):
         default=[],
         help="Do not include card in lineup",
     )
+    parser.add_argument(
+        "--potions",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Use potions",
+    )
     parser.add_argument("--shelters", type=bool, default=True, help="Allow shelters")
     parser.add_argument(
         "--num_events", type=int, default=0, help="Number of events to use"
@@ -103,9 +109,7 @@ def parse_cli_args(args=None):
     parser.add_argument(
         "--cardbase", action="append", help="Include only cards from the specified base"
     )
-    parser.add_argument(
-        "--card_path", default="dominion/cards", help="Where to find card definitions"
-    )
+    parser.add_argument("--card_path", default="dominion/cards", help=argparse.SUPPRESS)
     parser.add_argument(
         "--artifact_path", default="dominion/artifacts", help=argparse.SUPPRESS
     )
