@@ -44,7 +44,7 @@ class TextPlayer(Player):
 
     ###########################################################################
     @classmethod
-    def wrap(cls, text, first=0, indent=15, maxwidth=75):
+    def wrap(cls, text, first=0, indent=15, maxwidth=95):
         """Wrap the text so that it doesn't take more than maxwidth chars.
         The first line already has "first" characters in it. Subsequent lines
         should be indented "indent" spaces
