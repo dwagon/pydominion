@@ -133,7 +133,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.init[Keys.TRAITS] = args.get("traits", [])
 
         self.num_stacks = args.get("num_stacks", 10)
-        self._allow_potions = args.get("potions", False)
+        self._allow_potions = args.get("potions", True)
         self.prosperity = args.get("prosperity", False)
         self.oldcards = args.get("oldcards", False)
         self.quiet = args["quiet"] if "quiet" in args else False
