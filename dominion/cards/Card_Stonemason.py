@@ -6,6 +6,7 @@ from dominion import Card, Game, Piles, Player
 
 ###############################################################################
 class Card_StoneMason(Card.Card):
+    """ Stonemason"""
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -40,23 +41,24 @@ class Card_StoneMason(Card.Card):
                 amount,
                 "less",
                 types={Card.CardType.ACTION: True},
-                prompt="Gain a card costing up to %s" % amount,
+                prompt=f"Gain a card costing up to {amount}"
             )
             player.plr_gain_card(
                 amount,
                 "less",
                 types={Card.CardType.ACTION: True},
-                prompt="Gain another card costing up to %s" % amount,
+                prompt=f"Gain another card costing up to {amount}"
             )
 
 
 ###############################################################################
 class TestStoneMason(unittest.TestCase):
+    """ Test Stonemason"""
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
             initcards=["Stonemason", "Moat"],
-            badcards=["Fool's Gold"],
+            badcards=["Fool's Gold", "Silver Mine"],
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
