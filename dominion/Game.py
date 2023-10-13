@@ -621,7 +621,6 @@ class Game:  # pylint: disable=too-many-public-methods
             sys.exit(1)
         card = self.card_mapping[card_type][card_name]()
         if not self._allow_potions and card.potcost:
-            print(f"Skipping {card_name} as has a potion cost")
             return 0
         if hasattr(card, "cardpile_setup"):
             card_pile = card.cardpile_setup(self)

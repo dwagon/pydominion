@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# pylint: disable=invalid-name, protected-access, fixme
 """ Test the Game module """
+# pylint: disable=invalid-name, protected-access, fixme
 
 import unittest
 from dominion import Game
@@ -49,6 +49,15 @@ class TestArgs(unittest.TestCase):
         g = Game.TestGame(card_path="tests/cards", oldcards=True)
         g.start_game()
         self.assertIn("OldCard", g.card_piles)
+
+    def test_potions(self):
+        """Test Specifying potions"""
+        g = Game.TestGame(card_path="tests/cards", potions=True, cards=["Pot Cost"])
+        g.start_game()
+        self.assertIn("Pot Cost", g.card_piles)
+        g = Game.TestGame(card_path="tests/cards", potions=False, cards=["Pot Cost"])
+        g.start_game()
+        self.assertNotIn("Pot Cost", g.card_piles)
 
 
 ###############################################################################
@@ -114,6 +123,8 @@ class TestGameOver(unittest.TestCase):
 
 ###############################################################################
 class TestActionPiles(unittest.TestCase):
+    """Test get_action_piles()"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Moat"])
         self.g.start_game()
@@ -122,6 +133,20 @@ class TestActionPiles(unittest.TestCase):
         piles = self.g.get_action_piles()
         self.assertIn("Moat", piles)
         self.assertNotIn("Copper", piles)
+
+
+###############################################################################
+class TestTreasurePiles(unittest.TestCase):
+    """Test get_treasure_piles()"""
+
+    def setUp(self):
+        self.g = Game.TestGame(numplayers=1, initcards=["Moat"])
+        self.g.start_game()
+
+    def test_treasure_piles(self):
+        piles = self.g.get_treasure_piles()
+        self.assertNotIn("Moat", piles)
+        self.assertIn("Copper", piles)
 
 
 ###############################################################################
