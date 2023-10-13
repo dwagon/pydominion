@@ -189,6 +189,7 @@ class TestCardsAffordable(unittest.TestCase):
                 "Bridge Troll",
                 "Highway",
                 "Fisherman",
+                "Souk",
             ],
         )
         self.game.start_game()
@@ -203,7 +204,7 @@ class TestCardsAffordable(unittest.TestCase):
                 self.assertLessEqual(a.cost, price)
                 self.assertTrue(a.isAction())
             except AssertionError:  # pragma: no cover
-                print(f"{a=}")
+                print(f"Failed on card: {a}")
                 self.game.print_state()
                 raise
 
