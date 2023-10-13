@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Butcher"""
 import unittest
 from dominion import Game, Card, Piles
 
@@ -27,8 +27,7 @@ class Card_Butcher(Card.Card):
         card = player.plr_trash_card(force=True)[0]
         options = []
         for i in range(player.coffers.get() + 1):
-            sel = f"{i}"
-            options.append({"selector": sel, "print": f"Add {i} coins", "coins": i})
+            options.append({"selector": f"{i}", "print": f"Add {i} coins", "coins": i})
         o = player.user_input(options, "Spend extra coins?")
         cost = card.cost + o["coins"]
         player.coffers -= o["coins"]
@@ -36,7 +35,7 @@ class Card_Butcher(Card.Card):
 
 
 ###############################################################################
-class Test_Butcher(unittest.TestCase):
+class TestButcher(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Butcher"])
         self.g.start_game()
@@ -60,7 +59,7 @@ class Test_Butcher(unittest.TestCase):
         # Trash card 3
         # Spend 2 coin
         # Buy card 1
-        self.plr.test_input = ["trash a card", "trash gold", "add 2", "get silver"]
+        self.plr.test_input = ["trash a card", "trash gold", "add 2", "get silver -"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coffers.get(), 0)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
