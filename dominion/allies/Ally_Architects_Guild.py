@@ -13,7 +13,7 @@ class Ally_Architects_Guild(Ally.Ally):
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
         self.desc = "When you gain a card, you may spend 2 Favors to gain a cheaper non-Victory card."
-        self.name = "Architects Guild"
+        self.name = "Architects' Guild"
 
     def hook_gain_card(self, game, player, card):
         if player.favors.get() < 2:
