@@ -23,33 +23,43 @@ class Card_FirstMate(Card.Card):
         options = [(f"Play {_.name}", _) for _ in actions]
         if actions:
             options.insert(0, ("Play nothing", None))
-        to_play = player.plr_choose_options("Play which action?", *actions)
-        if to_play:
-            pass
-
+            to_play = player.plr_choose_options("Play which action?", *options)
+            if to_play:
+                for card in actions:
+                    if card.name == to_play.name:
+                        player.play_card(card, cost_action=False, discard=False)
+        else:
+            player.output("No suitable actions")
         while len(player.piles[Piles.HAND]) < 6:
             player.pickup_card()
 
 
 ###############################################################################
-class Test_FirstMate(unittest.TestCase):
+class TestFirstMate(unittest.TestCase):
     """Test First Mate"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["First Mate", "Moat"])
+        self.g = Game.TestGame(numplayers=1, initcards=["First Mate", "Market"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g.get_card_from_pile("First Mate")
 
-    def test_gaincard(self):
-        """Gain a card"""
-        self.plr.piles[Piles.HAND].set("Copper", "Gold", "Estate")
+    def test_play_card(self):
+        """Play a card"""
+        self.plr.piles[Piles.HAND].set("Market", "Market", "Estate")
         self.plr.add_card(self.card, Piles.HAND)
-        self.plr.test_input = ["Discard Copper", "Get Moat"]
+        coins = self.plr.coins.get()
+        self.plr.test_input = ["1) Play Market"]
         self.plr.play_card(self.card)
-        self.assertIn("Copper", self.plr.piles[Piles.DISCARD])
-        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
-        self.assertNotIn("Copper", self.plr.piles[Piles.HAND])
+        self.assertEqual(self.plr.coins.get(), coins + 2)
+        self.assertEqual(len(self.plr.piles[Piles.HAND]), 6)
+
+    def test_play_no_actions(self):
+        """Play a card with no suitable actions"""
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
+        self.plr.play_card(self.card)
+        self.assertEqual(len(self.plr.piles[Piles.HAND]), 6)
 
 
 ###############################################################################
