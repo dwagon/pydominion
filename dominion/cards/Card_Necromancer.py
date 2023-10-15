@@ -31,7 +31,6 @@ class Card_Necromancer(Card.Card):
         game._necromancer = PlayArea.PlayArea()
 
     def hook_cleanup(self, game, player):
-        print("end")
         game._necromancer = PlayArea.PlayArea()
 
 

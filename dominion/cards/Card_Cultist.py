@@ -55,7 +55,6 @@ class TestCultist(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
         self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 1)
-        print(f"card = {self.victim.piles[Piles.DISCARD][0]}")
         self.assertTrue(self.victim.piles[Piles.DISCARD][0].isRuin())
 
     def test_defense(self):
