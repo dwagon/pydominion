@@ -27,7 +27,6 @@ class Card_Cauldron(Card.Card):
         # Card just gained hasn't been added to the stats["gained"] until after hook
         if not card.isAction():
             return
-        print(f"Actions={actions}")
         if len(actions) == 2:
             for pl in player.attack_victims():
                 player.output(f"{pl.name} got cursed")

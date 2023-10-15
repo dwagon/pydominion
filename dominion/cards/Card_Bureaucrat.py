@@ -4,6 +4,7 @@ import unittest
 from dominion import Game, Card, Piles
 
 
+###############################################################################
 class Card_Bureaucrat(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)

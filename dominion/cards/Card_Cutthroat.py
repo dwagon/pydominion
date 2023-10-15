@@ -66,7 +66,6 @@ class Test_Cutthroat(unittest.TestCase):
     def test_gain(self):
         """Someone gains a treasure"""
         self.plr.add_card(self.card, Piles.DURATION)
-        print(self.card.location)
         self.victim.gain_card("Gold")
         found = any([True for _ in self.plr.piles[Piles.DISCARD] if _.isLoot()])
         self.assertTrue(found)

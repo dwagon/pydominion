@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -11,7 +10,7 @@ class Card_Gardens(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.VICTORY
         self.base = Card.CardExpansion.DOMINION
-        self.desc = "numcards / 10 VP"
+        self.desc = "Worth 1 VP per 10 cards you have (round down)."
         self.name = "Gardens"
         self.playable = False
         self.cost = 4
