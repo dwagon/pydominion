@@ -33,14 +33,16 @@ class Test_Architects_Guild(unittest.TestCase):
     """Test Architects Guild"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, allies="Architects Guild", initcards=["Underling"])
+        self.g = Game.TestGame(
+            numplayers=1, allies="Architects Guild", initcards=["Underling"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_play_card(self):
         """Play and gain a card"""
         self.plr.favors.set(2)
-        self.plr.test_input = ["Get Silver"]
+        self.plr.test_input = ["Get Silver -"]
         self.plr.gain_card("Gold")
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.favors.get(), 0)
