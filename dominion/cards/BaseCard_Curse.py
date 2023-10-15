@@ -24,6 +24,15 @@ class Card_Curse(Card.Card):
             return 10
         return 10 * (game.numplayers - 1)
 
+    def special(self, game, player):
+        if "Charlatan" in game.card_piles:
+            player.coins.add(1)
+
+    def setup(self, game):
+        if "Charlatan" in game.card_piles:
+            self.cardtype = [Card.CardType.VICTORY, Card.CardType.TREASURE]
+            self.desc = "-1 VP; +$1"
+
 
 ###############################################################################
 class Test_Curse(unittest.TestCase):
