@@ -39,7 +39,7 @@ class Card_WishingWell(Card.Card):
             player.add_card(card, Piles.HAND)
         else:
             player.output(f"You chose poorly - it was a {card}")
-            player.add_card(card, "topdeck")
+            player.add_card(card, Piles.DECK)
 
 
 ###############################################################################
@@ -48,7 +48,7 @@ class TestWishingWell(unittest.TestCase):
         self.g = Game.TestGame(
             numplayers=1,
             initcards=["Wishing Well"],
-            badcards=["Fool's Gold", "Tournament", "Pooka"],
+            badcards=["Fool's Gold", "Tournament", "Pooka", "Silver Mine"],
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
