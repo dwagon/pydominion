@@ -6,6 +6,8 @@ from dominion import Card, Game, Piles
 
 ###############################################################################
 class Card_Deathcart(Card.Card):
+    """Death Cart"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.LOOTER]
@@ -40,13 +42,15 @@ class Card_Deathcart(Card.Card):
 
     def hook_gain_this_card(self, game, player):
         for _ in range(2):
-            c = player.gain_card("Ruins")
-            player.output(f"Gained {c.name}")
+            if card := player.gain_card("Ruins"):
+                player.output(f"Gained {card.name}")
         return {}
 
 
 ###############################################################################
 class Test_Deathcart(unittest.TestCase):
+    """Test Death Cart"""
+
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
