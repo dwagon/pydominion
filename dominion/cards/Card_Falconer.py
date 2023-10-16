@@ -3,7 +3,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -28,7 +27,7 @@ class Card_Falconer(Card.Card):
 
 
 ###############################################################################
-class Test_Falconer(unittest.TestCase):
+class TestFalconer(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Falconer", "Moat"])
         self.g.start_game()
@@ -36,13 +35,13 @@ class Test_Falconer(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Falconer")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_playcard(self):
+    def test_play_card(self):
         """Play a card"""
-        self.plr.test_input = ["Get Silver"]
+        self.plr.test_input = ["Get Silver -"]
         self.plr.play_card(self.card)
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
-    def test_gaincard(self):
+    def test_gain_card(self):
         """Gain a card"""
         self.plr.test_input = ["Get Silver -"]
         self.plr.gain_card("Moat")
