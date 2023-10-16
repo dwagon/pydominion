@@ -18,7 +18,7 @@ class Card_Kiln(Card.Card):
         self.coin = 2
         self.cost = 5
 
-    def hook_pre_action(self, game, player, card):  # pylint: disable=unused-argument
+    def hook_pre_play(self, game, player, card):  # pylint: disable=unused-argument
         """The next time you play a card this turn, you may first gain a copy of it."""
         opt = player.plr_choose_options(
             f"Gain a copy of {card.name}?",

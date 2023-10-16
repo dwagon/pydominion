@@ -1196,37 +1196,34 @@ class Player:
             self.buys += 1
 
     ###########################################################################
-    def _hook_pre_action(self, card):
+    def _hook_pre_play(self, card):
         """Hook before an action card is played"""
         options = {}
         for crd in self.piles[Piles.DURATION] + self.piles[Piles.PLAYED]:
-            ans = crd.hook_pre_action(game=self.game, player=self, card=card)
-            if ans:
+            if ans := crd.hook_pre_play(game=self.game, player=self, card=card):
                 options.update(ans)
         return options
 
     ###########################################################################
-    def hook_all_players_pre_action(self, card):
+    def hook_all_players_pre_play(self, card):
         options = {}
         for player in self.game.player_list():
             for crd in player.piles[Piles.DURATION]:
-                ans = crd.hook_all_players_pre_action(
+                if ans := crd.hook_all_players_pre_play(
                     game=self.game, player=self, owner=player, card=card
-                )
-                if ans:
-                    options.update(ans)
+                ):
+                    options |= ans
         return options
 
     ###########################################################################
-    def hook_all_players_post_action(self, card):
+    def hook_all_players_post_play(self, card):
         options = {}
         for player in self.game.player_list():
             for crd in player.piles[Piles.DURATION]:
-                ans = crd.hook_all_players_post_action(
+                if ans := crd.hook_all_players_post_play(
                     game=self.game, player=self, owner=player, card=card
-                )
-                if ans:
-                    options.update(ans)
+                ):
+                    options |= ans
         return options
 
     ###########################################################################
@@ -1263,9 +1260,8 @@ class Player:
             self.playlimit -= 1
         self.output(f"Playing {card}")
         self.currcards.append(card)
-        if card.isAction():
-            options.update(self._hook_pre_action(card))
-            options.update(self.hook_all_players_pre_action(card))
+        options |= self._hook_pre_play(card)
+        options |= self.hook_all_players_pre_play(card)
 
         self._play_card_tokens(card)
 
@@ -1286,8 +1282,8 @@ class Player:
         if not options["skip_card"]:
             self.card_benefits(card)
         self.currcards.pop()
-        if post_action_hook and card.isAction():
-            self.hook_all_players_post_action(card)
+        if post_action_hook:
+            self.hook_all_players_post_play(card)
             for crd in self.relevant_cards():
                 if hasattr(crd, "hook_post_action"):
                     crd.hook_post_action(game=self.game, player=self, card=card)
@@ -1305,9 +1301,9 @@ class Player:
             return
         self.output(f"Playing {way.name} instead of {card}")
         self.card_benefits(way)
-        newopts = way.special_way(game=self.game, player=self, card=card)
-        if isinstance(newopts, dict):
-            opts.update(newopts)
+        new_opts = way.special_way(game=self.game, player=self, card=card)
+        if isinstance(new_opts, dict):
+            opts |= new_opts
         if opts["discard"]:
             self.move_card(card, Piles.PLAYED)
         self.played_ways.append((way, card))
@@ -1374,9 +1370,9 @@ class Player:
         self.output(f"Gained a {new_card}")
         if callhook:
             if rc := self._hook_gain_card(new_card):
-                options.update(rc)
+                options |= rc
             if rc := new_card.hook_gain_this_card(game=self.game, player=self):
-                options.update(rc)
+                options |= rc
 
         # check for un-exiling
         if self.piles[Piles.EXILE][new_card.name]:
@@ -1411,14 +1407,13 @@ class Player:
             (f"Unexile {num} x {card_name}", True),
             ("Do nothing", False),
         ]
-        unex = self.plr_choose_options(f"Un-exile {card_name}", *choices)
-        if unex:
+        if unex := self.plr_choose_options(f"Un-exile {card_name}", *choices):
             self.unexile(card_name)
 
     ###########################################################################
     def unexile(self, cardname: str) -> int:
         """Un-exile cards
-        Return number unexiled"""
+        Return number un-exiled"""
         count = 0
         if not self.piles[Piles.EXILE]:
             return 0
@@ -1433,9 +1428,7 @@ class Player:
     ###########################################################################
     def overpay(self, card):
         """http://wiki.dominionstrategy.com/index.php/Overpay"""
-        options = []
-        for i in range(self.coins.get() + 1):
-            options.append((f"Spend {i} more", i))
+        options = [(f"Spend {i} more", i) for i in range(self.coins.get() + 1)]
         ans = self.plr_choose_options("How much do you wish to overpay?", *options)
         if ans > 0:
             card.hook_overpay(game=self.game, player=self, amount=ans)
@@ -1529,7 +1522,7 @@ class Player:
             opts = self.hooks["gain_card"](
                 game=self.game, player=self, card=gained_card
             )
-            options.update(opts)
+            options |= opts
 
         for card in self.relevant_cards():
             self.currcards.append(card)
@@ -1569,8 +1562,7 @@ class Player:
             options.append((f"Gain {prize}", prize))
         if options:
             self.output("Gain a prize")
-            option = self.plr_choose_options("Gain a Prize", *options)
-            if option:
+            if option := self.plr_choose_options("Gain a Prize", *options):
                 prize = self.game.get_card_from_pile(option)
                 self.add_card(prize)
         else:
@@ -1659,9 +1651,6 @@ class Player:
             if card.always_buyable:
                 affordable.add(card)
                 continue
-            if card.always_buyable:
-                affordable.add(card)
-                continue
             if coin is None:
                 affordable.add(card)
                 continue
@@ -1673,7 +1662,7 @@ class Player:
                 continue
         affordable.sort(key=self.card_cost)
         affordable.sort(key=lambda x: x.basecard)
-        return [_ for _ in affordable]
+        return list(affordable)
 
     ###########################################################################
     def cards_under(self, coin, num_potions=0, types=None) -> list[str]:
@@ -1771,10 +1760,7 @@ class Player:
     ) -> Optional[Card]:
         """Ask player to trash num cards"""
         if "prompt" not in kwargs:
-            if anynum:
-                kwargs["prompt"] = "Trash any cards"
-            else:
-                kwargs["prompt"] = f"Trash {num} cards"
+            kwargs["prompt"] = "Trash any cards" if anynum else f"Trash {num} cards"
         if isinstance(cardsrc, str):
             for pname, pile in self.piles.items():
                 if pname.lower() == cardsrc.lower():
@@ -1828,13 +1814,12 @@ class Player:
             if not cardsrc:
                 self.output("Nothing suitable to gain")
                 return
-        cards = self.card_sel(
+        if cards := self.card_sel(
             cardsrc=cardsrc,
             recipient=recipient,
             verbs=("Get", "Unget"),
             **kwargs,
-        )
-        if cards:
+        ):
             card_name = cards[0].name
             new_card = recipient.gain_card(card_name, destination)
             recipient.output(f"Got a {new_card}")

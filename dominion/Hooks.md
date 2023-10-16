@@ -94,11 +94,11 @@ hook_call_reserve
 --------------
 Called when a card is pulled from the Reserve
 
-hook_pre_action(game, player, card)
+hook_pre_play(game, player, card)
 -----------------------------------
 Called before actions are played
 
-hook_all_players_pre_action(game, player, owner, card)
+hook_all_players_pre_play(game, player, owner, card)
 ----------------------------------------------------
 Called before action cards are played.
 * player - current player
@@ -108,7 +108,7 @@ Called before action cards are played.
 Returns None or a dictionary with keys:
     skip_card - if true then the benefits of the card is skipped
 
-hook_all_players_post_action(game, player, owner, card)
+hook_all_players_post_play(game, player, owner, card)
 ----------------------------------------------------
 Called after action cards are played by anyone,
 * player - current player

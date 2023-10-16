@@ -22,7 +22,7 @@ class Card_Frigate(Card.Card):
         self.cost = 5
         self.coin = 3
 
-    def hook_all_players_post_action(self, game, player, owner, card):
+    def hook_all_players_post_play(self, game, player, owner, card):
         """each time another player plays an Action card, they discard down to 4 cards in hand afterwards."""
         if player != owner:
             player.output(f"{owner.name}'s Frigate: Discard down to 4 cards")
