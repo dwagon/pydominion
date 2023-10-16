@@ -24,7 +24,7 @@ class Card_Enchantress(Card.Card):
     def duration(self, game, player):
         player.pickup_cards(2)
 
-    def hook_all_players_pre_action(self, game, player, owner, card):
+    def hook_all_players_pre_play(self, game, player, owner, card):
         if len(player.piles[Piles.PLAYED]) == 0:
             player.output(f"{owner.name}'s Enchantress gazump'd your {card.name}")
             player.add_actions(1)
@@ -36,7 +36,9 @@ class Card_Enchantress(Card.Card):
 ###############################################################################
 class TestEnchantress(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, initcards=["Enchantress", "Remodel", "Moat"])
+        self.g = Game.TestGame(
+            numplayers=2, initcards=["Enchantress", "Remodel", "Moat"]
+        )
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g.get_card_from_pile("Enchantress")
@@ -53,7 +55,9 @@ class TestEnchantress(unittest.TestCase):
         self.assertEqual(self.vic.actions.get(), 1)
         self.vic.add_card(self.m1, Piles.HAND)
         self.vic.play_card(self.m1)
-        self.assertEqual(self.vic.piles[Piles.HAND].size(), 5 + 1 + 2)  # Hand + Enchantress + Moat
+        self.assertEqual(
+            self.vic.piles[Piles.HAND].size(), 5 + 1 + 2
+        )  # Hand + Enchantress + Moat
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)

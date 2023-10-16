@@ -340,15 +340,15 @@ class Card:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_all_players_pre_action(self, game, player, owner, card):
+    def hook_all_players_pre_play(self, game, player, owner, card):
         """Hook - overwritten in subclasses if required"""
 
     ##########################################################################
-    def hook_all_players_post_action(self, game, player, owner, card):
+    def hook_all_players_post_play(self, game, player, owner, card):
         """Hook - overwritten in subclasses if required"""
 
     ##########################################################################
-    def hook_pre_action(self, game, player, card):
+    def hook_pre_play(self, game, player, card):
         """Hook - overwritten in subclasses if required"""
 
     ##########################################################################

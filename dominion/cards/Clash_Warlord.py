@@ -27,7 +27,7 @@ class Card_Warlord(Card.Card):
             Until then, other players can't play an Action from their hand that
             they have 2 or more copies of in play."""
 
-    def hook_all_players_pre_action(
+    def hook_all_players_pre_play(
         self, game, player, owner, card
     ):  # pylint: disable=unused-argument
         """Until then, other players can't play an Action from their hand that
