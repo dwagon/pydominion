@@ -23,7 +23,7 @@ class Card_Nomads(Card.Card):
         """+$2"""
         player.coins.add(2)
 
-    def hook_trashThisCard(self, game, player):
+    def hook_trash_this_card(self, game, player):
         """+$2"""
         player.coins.add(2)
 

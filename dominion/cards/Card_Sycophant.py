@@ -24,7 +24,7 @@ When you gain or trash this, +2 Favors."""
     def hook_gain_this_card(self, game, player):
         player.favors.add(2)
 
-    def hook_trashThisCard(self, game, player):
+    def hook_trash_this_card(self, game, player):
         player.favors.add(2)
 
 

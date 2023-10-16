@@ -24,7 +24,7 @@ class Card_Lich(Card.Card):
     def special(self, game, player):
         player.skip_turn = True
 
-    def hook_trashThisCard(self, game, player):
+    def hook_trash_this_card(self, game, player):
         """Discard rather than trash"""
         player.add_card(self, "discard")
         player.piles[Piles.HAND].remove(self)

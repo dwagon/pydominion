@@ -23,7 +23,7 @@ class Card_Black_Cat(Card.Card):
         self.cost = 2
         self.required_cards = ["Curse"]
 
-    def hook_allplayers_gain_card(self, game, player, owner, card):
+    def hook_all_players_gain_card(self, game, player, owner, card):
         if owner == player:
             return
         if card.isVictory():

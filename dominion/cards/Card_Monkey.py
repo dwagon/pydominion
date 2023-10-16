@@ -18,7 +18,7 @@ class Card_Monkey(Card.Card):
         self.name = "Monkey"
         self.cost = 3
 
-    def hook_allplayers_gain_card(self, game, player, owner, card):
+    def hook_all_players_gain_card(self, game, player, owner, card):
         """Until your next turn, when the player to your right gains a card, +1 Card"""
         if player == game.playerToRight(owner):
             owner.pickup_card()

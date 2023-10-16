@@ -22,7 +22,7 @@ class Card_Rocks(Card.Card):
         self.rocks_special(player)
 
     ###########################################################################
-    def hook_trashThisCard(self, game, player):
+    def hook_trash_this_card(self, game, player):
         self.rocks_special(player)
 
     ###########################################################################

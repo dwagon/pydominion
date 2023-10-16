@@ -29,7 +29,7 @@ The next time anyone gains a Treasure costing $5 or more, gain a Loot."""
             plr.plr_discard_down_to(3)
 
     ###########################################################################
-    def hook_allplayers_gain_card(self, game, player, owner, card):
+    def hook_all_players_gain_card(self, game, player, owner, card):
         """The next time anyone gains a Treasure costing $5 or more, gain a Loot."""
         if self.location != Piles.DURATION:
             return

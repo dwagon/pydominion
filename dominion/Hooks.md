@@ -46,7 +46,7 @@ is invoked for every card that has been played this turn.
 
 Return the delta. So 0 for no change.
 
-hook_allplayers_gain_card(game, player, owner, card)
+hook_all_players_gain_card(game, player, owner, card)
 ---------------
 If any player gains a card call this for any card in everyone's hand.
 Player is the player who picked up the card
@@ -82,7 +82,7 @@ hook_coinvalue
 --------------
 How much this card is worth
 
-hook_trashThisCard
+hook_trash_this_card
 --------------
 Called just before the card is trashed
 
@@ -135,7 +135,7 @@ hook_this_card_cost
 -----------------
 Modifier to the cost of buying this card.
 
-hook_revealThisCard
+hook_reveal_this_card
 -----------------
 Called when a card is revealed
 

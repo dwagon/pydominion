@@ -373,7 +373,7 @@ class Card:
         return True  # pragma: no cover
 
     ##########################################################################
-    def hook_allplayers_gain_card(self, game, player, owner, card):
+    def hook_all_players_gain_card(self, game, player, owner, card):
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
@@ -412,7 +412,7 @@ class Card:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_trashThisCard(self, game, player):
+    def hook_trash_this_card(self, game, player):
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
@@ -449,7 +449,7 @@ class Card:
         """Hook fired every turn if this card is in the game - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_revealThisCard(self, game, player):
+    def hook_reveal_this_card(self, game, player):
         """Hook - overwritten in subclasses"""
 
 

@@ -36,7 +36,7 @@ class Card_Cultist(Card.Card):
             if ans:
                 player.play_card(cultist, cost_action=False)
 
-    def hook_trashThisCard(self, game, player):
+    def hook_trash_this_card(self, game, player):
         """When you trash this, +3 cards"""
         player.pickup_cards(3)
 
