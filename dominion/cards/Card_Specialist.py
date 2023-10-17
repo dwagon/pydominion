@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Specialist"""
 import unittest
 from dominion import Game, Card, Piles
 
@@ -11,25 +11,25 @@ class Card_Specialist(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ALLIES
         self.name = "Specialist"
-        self.desc = (
-            "You may play an Action or Treasure from your hand. Choose one: play it again; or gain a copy of it."
-        )
+        self.desc = """You may play an Action or Treasure from your hand.
+        Choose one: play it again; or gain a copy of it."""
         self.cost = 5
 
     def special(self, game, player):
-        from_cards = [_ for _ in player.piles[Piles.HAND] if _.isAction() or _.isTreasure()]
-        cards = player.card_sel(cardsrc=from_cards, prompt="Play which card?")
-        chosen = cards[0]
-        player.play_card(chosen, discard=False, cost_action=False)
-        play_again = player.plr_choose_options(
-            f"What to do with {chosen.name}?",
-            ("Play it again?", True),
-            ("Gain a copy of it?", False),
-        )
-        if play_again:
+        from_cards = [
+            _ for _ in player.piles[Piles.HAND] if _.isAction() or _.isTreasure()
+        ]
+        if cards := player.card_sel(cardsrc=from_cards, prompt="Play which card?"):
+            chosen = cards[0]
             player.play_card(chosen, discard=False, cost_action=False)
-        else:
-            player.gain_card(chosen.name)
+            if play_again := player.plr_choose_options(
+                f"What to do with {chosen.name}?",
+                ("Play it again?", True),
+                ("Gain a copy of it?", False),
+            ):
+                player.play_card(chosen, discard=False, cost_action=False)
+            else:
+                player.gain_card(chosen.name)
 
 
 ###############################################################################

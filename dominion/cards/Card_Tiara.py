@@ -24,20 +24,18 @@ class Card_Tiara(Card.Card):
         if not treasures:
             return
         player.output("Select treasure that Tiara will let you play twice")
-        treasure = player.card_sel(cardsrc=treasures)
-        if treasure:
+        if treasure := player.card_sel(cardsrc=treasures):
             for _ in range(2):
                 player.play_card(treasure[0], discard=False, cost_action=False)
             player.move_card(treasure[0], Piles.DISCARD)
 
     def hook_gain_card(self, game, player, card):
         """when you gain a card, you may put it onto your deck."""
-        top_deck = player.plr_choose_options(
+        if top_deck := player.plr_choose_options(
             f"Tiara lets you put {card} on top of your deck.",
             (f"Put {card} on top of your deck?", True),
             (f"Discard {card} as per normal?", False),
-        )
-        if top_deck:
+        ):
             return {"destination": "topdeck"}
 
 

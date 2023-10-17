@@ -24,7 +24,7 @@ class Card_Odysseys(Card.Card):
 ###############################################################################
 class OdysseyCardPile(CardPile.CardPile):
     def __init__(self, game):
-        mapping = game.get_card_classes("Odysseys", game.paths["cards"], "Card_")
+        mapping = game.get_card_classes("Odyssey", game.paths["cards"], "Card_")
         for name, class_ in mapping.items():
             game.card_instances[name] = class_()
         super().__init__()

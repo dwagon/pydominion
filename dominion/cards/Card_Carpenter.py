@@ -27,13 +27,13 @@ class Card_Carpenter(Card.Card):
         return """+1 Action and gain a card costing up to $4."""
 
     def special(self, game, player):
-        empties = sum([1 for _, st in game.get_card_piles() if st.is_empty()])
-        if not empties:
+        if sum(1 for _, st in game.get_card_piles() if st.is_empty()):
+            tr = player.plr_trash_card()
+            if tr:
+                player.plr_gain_card(tr[0].cost + 2)
+        else:
             player.add_actions(1)
             player.plr_gain_card(4)
-        else:
-            tr = player.plr_trash_card()
-            player.plr_gain_card(tr[0].cost + 2)
 
 
 ###############################################################################

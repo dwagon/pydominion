@@ -175,10 +175,7 @@ class TextPlayer(Player):
                 card = self.game.get_card_from_pile(name)
                 if "exclude" in kwargs and card_pile.name in kwargs["exclude"]:
                     continue
-                if card_pile not in selected:
-                    verb = verbs[0]
-                else:
-                    verb = verbs[1]
+                verb = verbs[0] if card_pile not in selected else verbs[1]
                 o = Option(selector=f"{index}", verb=verb, card=name, name=name)
                 index += 1
                 if showdesc:

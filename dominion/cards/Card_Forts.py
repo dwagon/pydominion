@@ -14,14 +14,15 @@ class Card_Forts(Card.Card):
         self.cardtype = Card.CardType.ACTION
 
     def cardpile_setup(self, game):
-        card_pile = FortCardPile(game)
-        return card_pile
+        return FortCardPile(game)
 
 
 ###############################################################################
 class FortCardPile(CardPile.CardPile):
     def __init__(self, game):
         self.mapping = game.get_card_classes("Fort", game.paths["cards"], "Card_")
+        for name, class_ in self.mapping.items():
+            game.card_instances[name] = class_()
         super().__init__()
 
     def init_cards(self, num_cards=0, card_class=None):

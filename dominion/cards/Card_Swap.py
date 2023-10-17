@@ -28,7 +28,7 @@ class Card_Swap(Card.Card):
         )
         if choice:
             player.piles[Piles.HAND].remove(choice[0])
-            game.card_piles[choice[0].name].add(choice[0])
+            game.card_piles[choice[0].pile].add(choice[0])
             player.plr_gain_card(5, "less")
 
 

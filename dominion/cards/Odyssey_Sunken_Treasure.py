@@ -7,6 +7,8 @@ from dominion import Game, Card, Piles
 
 ###############################################################################
 class Card_Sunken_Treasure(Card.Card):
+    """Sunken Treasure"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.TREASURE, Card.CardType.ODYSSEY]
@@ -20,7 +22,7 @@ class Card_Sunken_Treasure(Card.Card):
         options = []
         for name, pile in game.get_card_piles():
             card = game.get_card_from_pile(name)
-            if not card.isAction():
+            if card and not card.isAction():
                 continue
             if name in player.piles[Piles.PLAYED]:
                 continue
@@ -31,6 +33,8 @@ class Card_Sunken_Treasure(Card.Card):
 
 ###############################################################################
 class TestSunkenTreasure(unittest.TestCase):
+    """Test Sunken Treasure"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Odysseys", "Moat", "Militia"])
         self.g.start_game()

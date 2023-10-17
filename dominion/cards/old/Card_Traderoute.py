@@ -1,11 +1,13 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Trade_Route"""
 import unittest
 from dominion import Card, Game, Piles
 
 
 ###############################################################################
 class Card_TradeRoute(Card.Card):
+    """Trade Route"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -29,9 +31,8 @@ class Card_TradeRoute(Card.Card):
     def is_worth(self, game):
         worth = 0
         for name, card_pile in game.get_card_piles():
-            if name in self.tokens:
-                if self.tokens[name] != len(card_pile):
-                    worth += 1
+            if name in self.tokens and self.tokens[name] != len(card_pile):
+                worth += 1
         return worth
 
     def special(self, game, player):
@@ -45,6 +46,8 @@ class Card_TradeRoute(Card.Card):
 
 ###############################################################################
 class TestTradeRoute(unittest.TestCase):
+    """Test Trade Route"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Trade Route"])
         self.g.start_game()

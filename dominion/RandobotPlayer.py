@@ -1,4 +1,6 @@
 """ Player is a non-interactive bot of no intelligence - randomly select option """
+
+
 import sys
 import random
 import colorama
@@ -32,7 +34,7 @@ class RandobotPlayer(Player):
 
     def __init__(self, game, name="", quiet=False, **kwargs):
         colorama.init()
-        self.colour = f"{colorama.Back.BLACK}" + random.choice(colours)
+        self.colour = f"{colorama.Back.BLACK}{random.choice(colours)}"
         self.quiet = quiet
         Player.__init__(self, game, name, **kwargs)
 
@@ -135,6 +137,18 @@ class RandobotPlayer(Player):
         print(f"card_sel {cards=}")
         card = random.choice(cards)
         print(f"card_sel {card=}")
+        return [card]
+
+    ###########################################################################
+    def card_pile_sel(self, num=1, **kwargs):
+        """Select a card at random"""
+        print(f"card_pile_sel {kwargs=}")
+        cards = self.card_selSource(**kwargs)
+        if not cards:
+            return None
+        print(f"card_pile_sel {cards=}")
+        card = random.choice(cards)
+        print(f"card_pile_sel {card=}")
         return [card]
 
     ###########################################################################

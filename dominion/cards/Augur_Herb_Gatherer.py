@@ -44,7 +44,7 @@ class Card_Herb_Gatherer(Card.Card):
             ("Rotate", True),
         )
         if opt:
-            game["Augurs"].rotate()
+            game.card_piles["Augurs"].rotate()
 
 
 ###############################################################################

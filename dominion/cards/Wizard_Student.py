@@ -23,12 +23,11 @@ class Card_Student(Card.Card):
             Trash a card from your hand. If it's a Treasure, +1 Favor and put this onto your deck."""
 
     def special(self, game, player):
-        opt = player.plr_choose_options(
+        if opt := player.plr_choose_options(
             "Do you want to rotate the Wizards?",
             ("Don't change", False),
             ("Rotate", True),
-        )
-        if opt:
+        ):
             game.card_piles["Wizards"].rotate()
         trashed = player.plr_trash_card(
             prompt="Pick a card to trash", num=1, force=True

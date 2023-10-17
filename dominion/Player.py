@@ -648,7 +648,7 @@ class Player:
             for card in self.piles[pile]:
                 assert (
                     card.location == pile
-                ), f"{self.name} {card.name=} {pile=} {card.location=}"
+                ), f"{self.name} {card=} {pile=} {card.location=}"
 
     ###########################################################################
     def _get_all_purchasable(self):
@@ -1940,7 +1940,7 @@ class Player:
         if discard is None:
             return None
         for card in discard:
-            self.output(f"Discarding {card.name}")
+            self.output(f"Discarding {card}")
             self.discard_card(card)
         return discard
 

@@ -58,7 +58,9 @@ class Test_Catacombs(unittest.TestCase):
         self.assertEqual(numgold, 3)
 
     def test_discard(self):
-        self.plr.piles[Piles.DECK].set("Province", "Province", "Province", "Gold", "Gold", "Gold")
+        self.plr.piles[Piles.DECK].set(
+            "Province", "Province", "Province", "Gold", "Gold", "Gold"
+        )
         self.plr.test_input = ["discard and draw"]
         self.plr.play_card(self.cat)
         # Normal 5, +3 new ones

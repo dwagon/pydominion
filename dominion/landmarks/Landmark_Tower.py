@@ -1,11 +1,13 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Tower"""
 import unittest
 from dominion import Card, Game, Piles, Landmark
 
 
 ###############################################################################
 class Landmark_Tower(Landmark.Landmark):
+    """Tower"""
+
     def __init__(self):
         Landmark.Landmark.__init__(self)
         self.base = Card.CardExpansion.EMPIRES
@@ -19,16 +21,16 @@ class Landmark_Tower(Landmark.Landmark):
         for card in player.all_cards():
             if card.isVictory():
                 continue
-            if game.card_piles[card.name].is_empty():
+            if game.card_piles[card.pile].is_empty():
                 player.add_score("Tower", 1)
 
 
 ###############################################################################
 class TestTower(unittest.TestCase):
+    """Test Tower"""
+
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, landmarks=["Tower"], initcards=["Moat"]
-        )
+        self.g = Game.TestGame(numplayers=1, landmarks=["Tower"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

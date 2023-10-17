@@ -1,12 +1,13 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Storeroom"""
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
 class Card_Storeroom(Card.Card):
+    """Storeroom"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -22,21 +23,23 @@ class Card_Storeroom(Card.Card):
         """Discard any number of cards. +1 Card per card discarded.
         Discard any number of cards. +1 Coin per card discarded the
         second time"""
-        todiscard = player.plr_discard_cards(
+        to_discard = player.plr_discard_cards(
             0,
             any_number=True,
             prompt="Discard any number of cards. +1 Card per card discarded",
         )
-        player.output("Gaining %d cards from Storeroom" % len(todiscard))
-        player.pickup_cards(len(todiscard))
+        player.output(f"Gaining {len(to_discard)} cards from Storeroom")
+        player.pickup_cards(len(to_discard))
         player.output("Discard any number of cards. +1 Coin per card discarded")
-        todiscard = player.plr_discard_cards(0, any_number=True)
-        player.output("Gaining %d coins from Storeroom" % len(todiscard))
-        player.coins.add(len(todiscard))
+        if to_discard := player.plr_discard_cards(0, any_number=True):
+            player.output(f"Gaining {len(to_discard)} coins from Storeroom")
+            player.coins.add(len(to_discard))
 
 
 ###############################################################################
 class Test_Storeroom(unittest.TestCase):
+    """Test Storeroom"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Store Room"])
         self.g.start_game()

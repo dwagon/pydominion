@@ -37,6 +37,9 @@ class Card_Hunter(Card.Card):
     def special(self, game, player):
         cards = [player.next_card() for _ in range(3)]
         for card in cards:
+            if not card:
+                cards.remove(card)
+                continue
             player.reveal_card(card)
         self.hunter_special(
             cards, player, [_ for _ in cards if _.isAction()], "an action"

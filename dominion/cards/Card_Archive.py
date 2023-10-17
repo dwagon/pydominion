@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Archive"""
 import unittest
 from dominion import Card, Game, Piles, PlayArea, Piles
 
@@ -22,24 +22,23 @@ class Card_Archive(Card.Card):
 
     def special(self, game, player):
         for _ in range(3):
-            card = player.next_card()
-            player.output(f"Putting {card.name} in the archive")
-            self._archive_reserve.add(card)
-            player.secret_count += 1
+            if card := player.next_card():
+                player.output(f"Putting {card.name} in the archive")
+                self._archive_reserve.add(card)
+                player.secret_count += 1
         self.permanent = True
 
     def duration(self, game, player):
         options = []
         index = 0
         for card in self._archive_reserve:
-            sel = f"{index}"
-            toprint = f"Bring back {card.name}"
-            options.append({"selector": sel, "print": toprint, "card": card})
+            to_print = f"Bring back {card.name}"
+            options.append({"selector": f"{index}", "print": to_print, "card": card})
             index += 1
-        o = player.user_input(options, "What card to bring back from the Archive?")
-        player.add_card(o["card"], Piles.HAND)
-        self._archive_reserve.remove(o["card"])
-        player.secret_count -= 1
+        if o := player.user_input(options, "What card to bring back from the Archive?"):
+            player.add_card(o["card"], Piles.HAND)
+            self._archive_reserve.remove(o["card"])
+            player.secret_count -= 1
         if self._archive_reserve.is_empty():
             self.permanent = False
 

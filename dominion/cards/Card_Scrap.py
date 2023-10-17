@@ -7,6 +7,8 @@ from dominion import Game, Card, Piles
 
 ###############################################################################
 class Card_Scrap(Card.Card):
+    """Scrap"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -59,7 +61,9 @@ class Card_Scrap(Card.Card):
 
 
 ###############################################################################
-class Test_Scrap(unittest.TestCase):
+class TestScrap(unittest.TestCase):
+    """Test Scrap"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Scrap"])
         self.g.start_game()
