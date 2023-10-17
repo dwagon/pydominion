@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Tracker"""
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -26,13 +25,12 @@ class Card_Tracker(Card.Card):
         """While this is in play, when you gain a card, you may
         put that card on top of your deck"""
         mod = {}
-        deck = player.plr_choose_options(
-            "Where to put %s?" % card.name,
-            ("Put %s on discard" % card.name, False),
-            ("Put %s on top of deck" % card.name, True),
-        )
-        if deck:
-            player.output("Putting %s on deck due to Tracker" % card.name)
+        if deck := player.plr_choose_options(
+            f"Where to put {card}?",
+            (f"Put {card} on discard", False),
+            (f"Put {card} on top of deck", True),
+        ):
+            player.output(f"Putting {card} on deck due to Tracker")
             mod["destination"] = "topdeck"
         return mod
 

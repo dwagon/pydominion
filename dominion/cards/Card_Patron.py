@@ -19,7 +19,7 @@ class Card_Patron(Card.Card):
     def special(self, game, player):
         player.villagers.add(1)
 
-    def hook_revealThisCard(self, game, player):
+    def hook_reveal_this_card(self, game, player):
         player.coffers.add(1)
 
 

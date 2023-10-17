@@ -673,16 +673,19 @@ class Game:  # pylint: disable=too-many-public-methods
 
         for card in check_cards:
             for x in card.required_cards:
+                card_type = "Card"
                 if x == "Loot":
                     self._load_loot()
                     continue
                 if isinstance(x, tuple):
-                    krdtype, crd = x
+                    card_type, card_name = x
                 else:
-                    krdtype, crd = "BaseCard", x
-                if crd not in self.card_piles:
-                    self._use_card_pile(None, crd, force=True, card_type=krdtype)
-                    self.output(f"Playing with {crd} as required by {card}")
+                    card_type, card_name = "BaseCard", x
+                if card_name not in self.card_piles:
+                    self._use_card_pile(
+                        None, card_name, force=True, card_type=card_type
+                    )
+                    self.output(f"Playing with {card_name} as required by {card}")
 
             if card.heirloom is not None and card.heirloom not in self._heirlooms:
                 self._use_card_pile(
@@ -724,11 +727,7 @@ class Game:  # pylint: disable=too-many-public-methods
         While Loot is technically a Pile - it isn't for most purposes
         """
         piles = list(self.card_piles.items())
-        result = []
-        for key, value in piles:
-            if key != "Loot":
-                result.append((key, value))
-        return result
+        return [(key, value) for key, value in piles if key not in ("Loot", "Shelters")]
 
     ###########################################################################
     def __contains__(self, key):
@@ -844,6 +843,8 @@ class Game:  # pylint: disable=too-many-public-methods
         """Return all card stack names that are victory cards"""
         victory_piles = []
         for name, _ in self.get_card_piles():
+            if name in ("Shelters",):
+                continue
             card = self.card_instances[name]
             if card.isVictory():
                 victory_piles.append(name)
@@ -1026,18 +1027,10 @@ class Game:  # pylint: disable=too-many-public-methods
             tmp[pile_name]["pile"] = total
             for plr in self.player_list():
                 for stack_name, stack in plr.piles.items():
-                    count = 0
-                    for card in stack:
-                        if card.name == pile_name:
-                            count += 1
-                    if count:
+                    if count := sum(1 for card in stack if card.pile == pile_name):
                         tmp[pile_name][f"{plr.name}:{stack_name}"] = count
                         total += count
-            count = 0
-            for card in self.trash_pile:
-                if card.name == pile_name:
-                    count += 1
-            if count:
+            if count := sum(1 for card in self.trash_pile if card.name == pile_name):
                 tmp[pile_name]["trash"] = count
                 total += count
             tmp[pile_name]["total"] = total

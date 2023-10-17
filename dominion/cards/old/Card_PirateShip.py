@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Pirate_Ship"""
 import unittest
 from dominion import Card, Game, Piles
 
@@ -23,14 +23,13 @@ class Card_PirateShip(Card.Card):
         choice = player.plr_choose_options(
             "Pick one",
             (
-                "Each other player reveals the top 2 cards of his deck, trashes a "
-                + "revealed Treasure that you choose, discards the rest, and if anyone "
-                + "trashed a Treasure you take a Coin token",
+                """Each other player reveals the top 2 cards of his deck, trashes a
+                revealed Treasure that you choose, discards the rest, and if anyone
+                trashed a Treasure you take a Coin token""",
                 "attack",
             ),
             (
-                "+%d = +1 per treasure you've taken with Pirate Ships this game."
-                % player._pirate_ship,
+                f"+{player._pirate_ship} = +1 per treasure you've taken with Pirate Ships this game.",
                 "spend",
             ),
         )
@@ -53,7 +52,7 @@ class Card_PirateShip(Card.Card):
             if card.isTreasure():
                 cards.append(card)
             else:
-                victim.output(f"{player.name}'s Pirate Ship discarded your {card.name}")
+                victim.output(f"{player.name}'s Pirate Ship discarded your {card}")
                 victim.add_card(card, Piles.DISCARD)
         if cards:
             to_trash = player.plr_trash_card(
@@ -63,11 +62,11 @@ class Card_PirateShip(Card.Card):
             for card in cards:
                 if card not in to_trash:
                     victim.add_card(card, "discard")
-                    victim.output("Discarded %s" % card.name)
+                    victim.output(f"Discarded {card}")
                 else:
-                    victim.output("Trashed %s" % card.name)
+                    victim.output(f"Trashed {card}")
         else:
-            player.output("Player %s has no treasures to trash" % victim.name)
+            player.output(f"Player {victim.name} has no treasures to trash")
         return trashed
 
     def hook_gain_this_card(self, game, player):
@@ -88,12 +87,12 @@ class TestPirateShip(unittest.TestCase):
         self.plr.gain_card(new_card=self.card, destination=Piles.HAND)
 
     def test_play_attack(self):
-        tsize = self.g.trash_pile.size()
+        trash_size = self.g.trash_pile.size()
         self.vic.piles[Piles.DECK].set("Copper", "Estate")
         self.plr.test_input = ["Each other", "copper"]
         self.plr.play_card(self.card)
         try:
-            self.assertEqual(self.g.trash_pile.size(), tsize + 1)
+            self.assertEqual(self.g.trash_pile.size(), trash_size + 1)
             self.assertIn("Copper", self.g.trash_pile)
             self.assertEqual(self.plr._pirate_ship, 1)
         except AssertionError:  # pragma: no cover

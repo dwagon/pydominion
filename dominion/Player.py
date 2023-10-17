@@ -253,7 +253,7 @@ class Player:
         if not card:
             return
         self.game.output(f"{self.name} reveals {card}")
-        card.hook_revealThisCard(game=self.game, player=self)
+        card.hook_reveal_this_card(game=self.game, player=self)
 
     ###########################################################################
     def trash_card(self, card: Card, **kwargs):
@@ -261,7 +261,7 @@ class Player:
         assert isinstance(card, Card)
         self.stats["trashed"].append(card)
         trash_opts = {}
-        rc = card.hook_trashThisCard(game=self.game, player=self)
+        rc = card.hook_trash_this_card(game=self.game, player=self)
         if rc:
             trash_opts.update(rc)
         if trash_opts.get("trash", True):
@@ -648,7 +648,7 @@ class Player:
             for card in self.piles[pile]:
                 assert (
                     card.location == pile
-                ), f"{self.name} {card.name=} {pile=} {card.location=}"
+                ), f"{self.name} {card=} {pile=} {card.location=}"
 
     ###########################################################################
     def _get_all_purchasable(self):
@@ -1389,7 +1389,7 @@ class Player:
         self.stats["gained"].append(new_card)
         destination = options.get("destination", destination)
         if callhook:
-            self.hook_allplayers_gain_card(new_card)
+            self.hook_all_players_gain_card(new_card)
         if options.get("trash", False):
             self.trash_card(new_card)
             return new_card
@@ -1484,10 +1484,10 @@ class Player:
             )
 
     ###########################################################################
-    def hook_allplayers_gain_card(self, card):
+    def hook_all_players_gain_card(self, card):
         for player in self.game.player_list():
             for crd in player.relevant_cards():
-                crd.hook_allplayers_gain_card(
+                crd.hook_all_players_gain_card(
                     game=self.game, player=self, owner=player, card=card
                 )
 
@@ -1940,7 +1940,7 @@ class Player:
         if discard is None:
             return None
         for card in discard:
-            self.output(f"Discarding {card.name}")
+            self.output(f"Discarding {card}")
             self.discard_card(card)
         return discard
 

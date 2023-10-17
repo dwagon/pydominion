@@ -31,7 +31,7 @@ class Card_Trail(Card.Card):
             if self.want_to_play(player):
                 player.play_card(self, cost_action=False, discard=False)
 
-    def hook_trashThisCard(self, game, player):
+    def hook_trash_this_card(self, game, player):
         if self.want_to_play(player):
             player.play_card(self, cost_action=False, discard=False)
 

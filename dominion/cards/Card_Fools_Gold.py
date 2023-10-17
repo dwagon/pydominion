@@ -25,7 +25,7 @@ class Card_Fools_Gold(Card.Card):
             player.output("Gained 1 Coin")
             player.coins.add(1)
 
-    def hook_allplayers_gain_card(self, game, player, owner, card):
+    def hook_all_players_gain_card(self, game, player, owner, card):
         if card.name != "Province":
             return
         if owner == player:

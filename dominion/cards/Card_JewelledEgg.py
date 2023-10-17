@@ -19,7 +19,7 @@ class Card_JewelledEgg(Card.Card):
         self.coin = 1
         self.buys = 1
 
-    def hook_trashThisCard(self, game, player):
+    def hook_trash_this_card(self, game, player):
         player.gain_card("Loot")
 
 

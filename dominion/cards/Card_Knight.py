@@ -59,13 +59,13 @@ class KnightCard(Card.Card):
     def knight_attack(self, game, player, victim):
         cards = []
         for _ in range(2):
-            crd = victim.next_card()
-            victim.reveal_card(crd)
-            if crd.cost in (3, 4, 5, 6):
-                cards.append(crd)
-            else:
-                victim.output(f"{player.name}'s {self} discarded your {crd}")
-                victim.discard_card(crd)
+            if crd := victim.next_card():
+                victim.reveal_card(crd)
+                if crd.cost in (3, 4, 5, 6):
+                    cards.append(crd)
+                else:
+                    victim.output(f"{player.name}'s {self} discarded your {crd}")
+                    victim.discard_card(crd)
         if not cards:
             return
         player.output("Looking at %s" % ", ".join([_.name for _ in cards]))

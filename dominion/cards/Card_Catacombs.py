@@ -34,7 +34,7 @@ class Card_Catacombs(Card.Card):
                 player.add_card(c, "discard")
             player.pickup_cards(3)
 
-    def hook_trashThisCard(self, game, player):
+    def hook_trash_this_card(self, game, player):
         """When you trash this, gain a cheaper card"""
         player.plr_gain_card(cost=self.cost - 1)
 
@@ -58,7 +58,9 @@ class Test_Catacombs(unittest.TestCase):
         self.assertEqual(numgold, 3)
 
     def test_discard(self):
-        self.plr.piles[Piles.DECK].set("Province", "Province", "Province", "Gold", "Gold", "Gold")
+        self.plr.piles[Piles.DECK].set(
+            "Province", "Province", "Province", "Gold", "Gold", "Gold"
+        )
         self.plr.test_input = ["discard and draw"]
         self.plr.play_card(self.cat)
         # Normal 5, +3 new ones

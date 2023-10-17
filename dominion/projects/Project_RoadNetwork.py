@@ -13,7 +13,7 @@ class Project_RoadNetwork(Project.Project):
         self.name = "Road Network"
         self.cost = 5
 
-    def hook_allplayers_gain_card(self, game, player, owner, card):
+    def hook_all_players_gain_card(self, game, player, owner, card):
         if card.isVictory() and owner != player:
             owner.pickup_cards(1)
             owner.output(

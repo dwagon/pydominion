@@ -22,7 +22,7 @@ class Card_SilkMerchant(Card.Card):
         player.coffers.add(1)
 
     ###########################################################################
-    def hook_trashThisCard(self, game, player):
+    def hook_trash_this_card(self, game, player):
         player.villagers.add(1)
         player.coffers.add(1)
 

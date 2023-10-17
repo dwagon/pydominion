@@ -24,7 +24,7 @@ class Card_Feodum(Card.Card):
                 numsilver += 1
         return int(numsilver / 3)
 
-    def hook_trashThisCard(self, game, player):
+    def hook_trash_this_card(self, game, player):
         """When you trash this gain 3 silvers"""
         for _ in range(3):
             player.gain_card("Silver")
@@ -46,7 +46,9 @@ class Test_Feodum(unittest.TestCase):
     def test_scoreTwo(self):
         self.plr.piles[Piles.HAND].set("Feodum")
         self.plr.piles[Piles.DECK].set("Feodum")
-        self.plr.piles[Piles.DISCARD].set("Silver", "Silver", "Silver", "Silver", "Silver", "Silver")
+        self.plr.piles[Piles.DISCARD].set(
+            "Silver", "Silver", "Silver", "Silver", "Silver", "Silver"
+        )
         self.assertEqual(self.plr.get_score_details()["Feodum"], 4)
 
     def test_trash(self):

@@ -32,7 +32,8 @@ class Card_Embargo(Card.Card):
             return
         player.trash_card(self)
         card_pile = player.card_pile_sel(prompt="Which stack to embargo")
-        game.card_piles[card_pile[0]].embargo()
+        if card_pile:
+            game.card_piles[card_pile[0]].embargo()
 
 
 ###############################################################################

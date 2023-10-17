@@ -18,7 +18,7 @@ class Card_Haunted_Mirror(Card.Card):
         self.required_cards = [("Card", "Ghost")]
         self.purchasable = False
 
-    def hook_trashThisCard(self, game, player):
+    def hook_trash_this_card(self, game, player):
         ac = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not ac:
             player.output("No action cards in hand, no effect")

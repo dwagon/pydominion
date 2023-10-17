@@ -30,7 +30,7 @@ class Card_Squire(Card.Card):
         elif choice == "silver":
             player.gain_card("Silver")
 
-    def hook_trashThisCard(self, game, player):
+    def hook_trash_this_card(self, game, player):
         attacks = []
         for name, _ in game.get_card_piles():
             card = game.card_instances[name]

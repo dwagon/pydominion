@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Duplicate"""
 import unittest
 from dominion import Game, Card, Piles
 
@@ -25,12 +25,11 @@ class Card_Duplicate(Card.Card):
             return {}
         if card.potcost:
             return {}
-        o = player.plr_choose_options(
+        if o := player.plr_choose_options(
             f"Call Duplicate on {card}?",
             ("Save for later", False),
             (f"Duplicate {card}", True),
-        )
-        if o:
+        ):
             self._duplicate = card
             player.call_reserve(self)
         else:

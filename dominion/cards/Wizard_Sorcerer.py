@@ -1,11 +1,13 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Sorcerer"""
 import unittest
 from dominion import Game, Card, Piles
 
 
 ###############################################################################
 class Card_Sorcerer(Card.Card):
+    """Sorcerer"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [
@@ -38,13 +40,13 @@ class Card_Sorcerer(Card.Card):
             pick = plr.plr_choose_options(
                 "Sorcerer: Guess the top card correctly or get a curse", *options
             )
-            top_card = plr.piles[Piles.DECK].top_card()
-            player.reveal_card(top_card)
-            if top_card.name != pick:
-                player.output(f"Top card is {top_card.name} not {pick}")
-                plr.gain_card("Curse")
-            else:
-                player.output(f"Guessed {pick} correctly")
+            if top_card := plr.piles[Piles.DECK].top_card():
+                player.reveal_card(top_card)
+                if top_card.name != pick:
+                    player.output(f"Top card is {top_card.name} not {pick}")
+                    plr.gain_card("Curse")
+                else:
+                    player.output(f"Guessed {pick} correctly")
 
 
 ###############################################################################
@@ -55,6 +57,8 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 ###############################################################################
 class TestSorcerer(unittest.TestCase):
+    """Test Sorcerer"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Wizards"])
         self.g.start_game()

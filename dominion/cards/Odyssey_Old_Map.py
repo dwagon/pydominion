@@ -21,17 +21,16 @@ class Card_Old_Map(Card.Card):
     def special(self, game, player):
         player.plr_discard_cards(num=1)
         player.pickup_card()
-        opt = player.plr_choose_options(
+        if opt := player.plr_choose_options(
             "Do you want to rotate the Odysseys?",
             ("Don't change", False),
             ("Rotate", True),
-        )
-        if opt:
+        ):
             game.card_piles["Odysseys"].rotate()
 
 
 ###############################################################################
-class Test_Old_Map(unittest.TestCase):
+class TestOldMap(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Odysseys"])
         self.g.start_game()

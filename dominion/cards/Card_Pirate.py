@@ -31,7 +31,7 @@ class Card_Pirate(Card.Card):
             cost=6, types={Card.CardType.TREASURE: True}, destination=Piles.HAND
         )
 
-    def hook_allplayers_gain_card(self, game, player, owner, card):
+    def hook_all_players_gain_card(self, game, player, owner, card):
         """When any player gains a Treasure, you may play this from your hand"""
         if not card.isTreasure():
             return

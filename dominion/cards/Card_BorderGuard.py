@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Border_Guard"""
 import unittest
 from dominion import Game, Card, Piles
 
@@ -18,13 +18,13 @@ class Card_BorderGuard(Card.Card):
         self.actions = 1
 
     def special(self, game, player):
-        ncards = 3 if player.has_artifact("Lantern") else 2
+        num_cards = 3 if player.has_artifact("Lantern") else 2
         cards = []
-        for _ in range(ncards):
-            card = player.next_card()
-            player.reveal_card(card)
-            cards.append(card)
-        nacts = sum([1 for _ in cards if _.isAction()])
+        for _ in range(num_cards):
+            if card := player.next_card():
+                player.reveal_card(card)
+                cards.append(card)
+        num_acts = sum([1 for _ in cards if _.isAction()])
         ch = player.card_sel(
             prompt="Select a card to put into your hand, other will be discarded",
             cardsrc=cards,
@@ -35,7 +35,7 @@ class Card_BorderGuard(Card.Card):
             player.output(f"Putting {card.name} into the discard pile")
             player.add_card(card, "discard")
 
-        if nacts == ncards:
+        if num_acts == num_cards:
             art = player.plr_choose_options(
                 "Pick an artifact to take",
                 ("Take Lantern (Border Guard reveals 3 cards)", "Lantern"),
@@ -58,7 +58,9 @@ class Card_BorderGuard(Card.Card):
 ###############################################################################
 class Test_BorderGuard(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Border Guard", "Moat", "Guide"])
+        self.g = Game.TestGame(
+            numplayers=1, initcards=["Border Guard", "Moat", "Guide"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g.get_card_from_pile("Border Guard")

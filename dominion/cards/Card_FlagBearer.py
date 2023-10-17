@@ -22,7 +22,7 @@ class Card_FlagBearer(Card.Card):
         player.assign_artifact("Flag")
 
     ###########################################################################
-    def hook_trashThisCard(self, game, player):
+    def hook_trash_this_card(self, game, player):
         player.assign_artifact("Flag")
 
 

@@ -7,6 +7,8 @@ from dominion import Game, Card, Piles
 
 ###############################################################################
 class Card_Courier(Card.Card):
+    """Courier"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -34,11 +36,14 @@ class Card_Courier(Card.Card):
         to_play = player.plr_choose_options(
             "Courier can play a card from your discard", *options
         )
-        player.play_card(to_play, cost_action=False, discard=False)
+        if to_play:
+            player.play_card(to_play, cost_action=False, discard=False)
 
 
 ###############################################################################
-class Test_Courier(unittest.TestCase):
+class TestCourier(unittest.TestCase):
+    """Test Courier"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Courier"])
         self.g.start_game()

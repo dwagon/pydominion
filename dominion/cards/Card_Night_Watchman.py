@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 from dominion.Player import Phase
 
 
@@ -19,16 +18,17 @@ class Card_NightWatchman(Card.Card):
     def night(self, game, player):
         cards = []
         for _ in range(5):
-            c = player.next_card()
-            cards.append(c)
-        player.output("Top 5 cards on the deck are: %s" % ", ".join([_.name for _ in cards]))
+            if c := player.next_card():
+                cards.append(c)
+        player.output(
+            f'Top 5 cards on the deck are: {", ".join([_.name for _ in cards])}'
+        )
         for c in cards:
-            discard = player.plr_choose_options(
+            if discard := player.plr_choose_options(
                 "What do you want to do?",
                 (f"Discard {c.name}", True),
                 (f"Return {c.name} to the deck", False),
-            )
-            if discard:
+            ):
                 player.discard_card(c)
             else:
                 player.add_card(c, "topdeck")
