@@ -3,10 +3,23 @@
 
 import os
 import sys
+from collections import defaultdict
 
 
+############################################################################################
+def get_card_name(str):
+    card = str.replace("ALL: Playing with ", "")
+    if "(" in card:
+        card = card.split("(")[0]
+    if "as required" in card:
+        card = card.split("as required")[0]
+    return card.strip()
+
+
+############################################################################################
 def make_run(cardset=None, run=None):
-    """ Run the game """
+    """Run the game"""
+    cards = set()
     if cardset:
         cardsetname = cardset.replace("cardset/", "")
         cardset_args = f"--cardset {cardset}"
@@ -19,35 +32,52 @@ def make_run(cardset=None, run=None):
     env_args = "PYDOMINION_DEBUG=1 PYTHONPATH=."
     args = f"--oldcards {players} {cardset_args} {redirect_args}"
     print(f"Playing with {cardsetname}")
-    grc = os.system(
-        f"{env_args} ./dominion/rungame.py {args}"
-    )
+    grc = os.system(f"{env_args} ./dominion/rungame.py {args}")
+    with open(output_file) as infh:
+        for line in infh:
+            if line.startswith("ALL: Playing with"):
+                card = get_card_name(line)
+                cards.add(card)
     if grc:
         print(f"Broke playing with {cardsetname}")
+        return cards
     else:
         os.unlink(output_file)
+        return set()
 
 
+############################################################################################
+def print_results(stats):
+    results = sorted(stats.items(), key=lambda x: x[1])
+    for card, num in results:
+        print(card, num)
+
+
+############################################################################################
 def main():
-    """ Do stuff """
+    """Do stuff"""
     os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
     num_runs = 0
+    card_stats = defaultdict(int)
     if len(sys.argv) > 1:
         try:
             num_runs = int(sys.argv[1])
         except ValueError:
-            cardsets = sys.argv[1:]
+            card_sets = sys.argv[1:]
     else:
-        cardsets = [os.path.join("cardset", _) for _ in os.listdir("cardset")]
+        card_sets = [os.path.join("cardset", _) for _ in os.listdir("cardset")]
 
     if num_runs:
         for run in range(num_runs):
-            make_run(run=run)
+            cards = make_run(run=run)
+            for card in cards:
+                card_stats[card] += 1
     else:
-        for cardsetfile in cardsets:
-            if not os.path.isfile(cardsetfile):
+        for card_set_file in card_sets:
+            if not os.path.isfile(card_set_file):
                 continue
-            make_run(cardset=cardsetfile)
+            make_run(cardset=card_set_file)
+    print_results(card_stats)
 
 
 if __name__ == "__main__":
