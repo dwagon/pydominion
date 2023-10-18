@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Count"""
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -49,7 +48,7 @@ class Card_Count(Card.Card):
             player.gain_card("Duchy")
         elif ans == "trash":
             for card in player.piles[Piles.HAND]:
-                player.output(f"Trashing {card.name}")
+                player.output(f"Trashing {card}")
                 player.trash_card(card)
         else:
             player.coins.add(3)
@@ -64,7 +63,7 @@ class Card_Count(Card.Card):
             options.append({"selector": f"{index}", "print": pr, "card": card})
             index += 1
         o = player.user_input(options, "Select card to put on top of your deck")
-        player.output(f"Moving {o['card'].name} to top of deck")
+        player.output(f"Moving {o['card']} to top of deck")
         player.move_card(o["card"], "topdeck")
 
 

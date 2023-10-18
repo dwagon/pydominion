@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Monument"""
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -21,7 +20,7 @@ class Card_Monument(Card.Card):
 
 
 ###############################################################################
-class Test_Monument(unittest.TestCase):
+class TestMonument(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Monument"])
         self.g.start_game()

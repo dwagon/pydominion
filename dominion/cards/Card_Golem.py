@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Golem"""
 import unittest
 from dominion import Card, Game, Piles
 
@@ -24,26 +24,26 @@ class Card_Golem(Card.Card):
         maxnum = len(player.all_cards())
         count = 0
         while len(actions) != 2:
-            c = player.next_card()
-            player.reveal_card(c)
+            card = player.next_card()
+            player.reveal_card(card)
             count += 1
             if count > maxnum:
                 player.output("Not enough action cards in deck")
                 break
-            if c.isAction() and c.name != "Golem":
-                player.pickup_card(card=c)
-                actions.append(c)
+            if card.isAction() and card.name != "Golem":
+                actions.append(card)
             else:
-                player.output(f"Drew and discarded {c.name}")
-                player.discard_card(c)
+                player.output(f"Drew and discarded {card}")
+                player.discard_card(card)
         # TODO - let the player choose the order
         for card in actions:
-            player.output(f"Golem playing {card.name}")
-            player.play_card(card, cost_action=False)
+            player.output(f"Golem playing {card}")
+            player.play_card(card, cost_action=False, discard=False)
+            player.add_card(card, Piles.PLAYED)
 
 
 ###############################################################################
-class Test_Golem(unittest.TestCase):
+class TestGolem(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Golem", "Village", "Moat"])
         self.g.start_game()
@@ -53,19 +53,26 @@ class Test_Golem(unittest.TestCase):
     def test_actions(self):
         """Ensure two actions are picked up and played, others are discarded"""
         self.plr.piles[Piles.HAND].set()
-        self.plr.piles[Piles.DECK].set("Gold", "Gold", "Gold", "Village", "Moat", "Estate", "Copper")
+        self.plr.piles[Piles.DECK].set(
+            "Gold", "Gold", "Gold", "Village", "Moat", "Estate", "Copper"
+        )
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(
             sorted(["Golem", "Moat", "Village"]),
             sorted([c.name for c in self.plr.piles[Piles.PLAYED]]),
         )
-        self.assertEqual(sorted(["Copper", "Estate"]), sorted([c.name for c in self.plr.piles[Piles.DISCARD]]))
+        self.assertEqual(
+            sorted(["Copper", "Estate"]),
+            sorted([c.name for c in self.plr.piles[Piles.DISCARD]]),
+        )
 
     def test_golem(self):
         """Ensure golem isn't picked up"""
         self.plr.piles[Piles.HAND].set()
-        self.plr.piles[Piles.DECK].set("Gold", "Gold", "Gold", "Village", "Golem", "Moat", "Estate", "Copper")
+        self.plr.piles[Piles.DECK].set(
+            "Gold", "Gold", "Gold", "Village", "Golem", "Moat", "Estate", "Copper"
+        )
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(
