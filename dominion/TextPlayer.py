@@ -179,10 +179,7 @@ class TextPlayer(Player):
                 o = Option(selector=f"{index}", verb=verb, card=name, name=name)
                 index += 1
                 if showdesc:
-                    if card:
-                        o["desc"] = card.description(self)
-                    else:
-                        o["desc"] = "Empty card pile"
+                    o["desc"] = card.description(self) if card else "Empty card pile"
                 if kwargs.get("printcost"):
                     o["details"] = str(self.card_cost(card_pile))
                 if kwargs.get("printtypes"):
