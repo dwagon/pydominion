@@ -28,12 +28,13 @@ class Card_Black_Cat(Card.Card):
             return
         if card.isVictory():
             for plr in owner.attack_victims():
-                plr.output(f"{owner.name}'s Black Cat Cursed you")
+                plr.output(f"{owner.name}'s Black Cat cursed you")
                 plr.gain_card("Curse", callhook=False)
+                player.output(f"Your Black Cat cursed {plr.name}")
 
 
 ###############################################################################
-class Test_Black_Cat(unittest.TestCase):
+class TestBlackCat(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Black Cat"])
         self.g.start_game()
