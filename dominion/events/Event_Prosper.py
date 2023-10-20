@@ -10,7 +10,7 @@ class Event_Prosper(Event.Event):
 
     def __init__(self):
         Event.Event.__init__(self)
-        self.base = Card.CardExpansion.ADVENTURE
+        self.base = Card.CardExpansion.PLUNDER
         self.desc = " Gain a Loot, plus any number of differently named Treasures."
         self.name = "Prosper"
         self.cost = 10
