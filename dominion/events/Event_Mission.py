@@ -14,27 +14,35 @@ class Event_Mission(Event.Event):
         self.name = "Mission"
         self.cost = 4
 
+    def special(self, game, player):
+        if not game.last_turn(player):
+            player.output("You had the previous turn")
+            return
+
     def hook_end_turn(self, game, player):
-        game.current_player = game.playerToRight(player)
-        player.limits[Limits.BUY] = 0
+        if game.last_turn(player):
+            game.current_player = game.playerToRight(player)
+            player.limits[Limits.BUY] = 0
 
 
 ###############################################################################
 class TestMission(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
-            numplayers=1,
+            numplayers=2,
             events=["Mission"],
         )
         self.g.start_game()
-        self.plr = self.g.player_list()[0]
+        self.plr, self.other = self.g.player_list()
         self.card = self.g.events["Mission"]
 
     def test_Mission(self):
         """Use Mission"""
         self.plr.coins.add(4)
         self.plr.perform_event(self.card)
-        # TODO - how to test?
+        self.plr.end_turn()
+        self.g.print_state()
+        # TODO - need to test somehow
 
 
 ###############################################################################
