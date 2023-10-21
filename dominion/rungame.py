@@ -106,9 +106,6 @@ def parse_cli_args(args=None):
         type=argparse.FileType("r"),
         help="File containing list of cards to use",
     )
-    parser.add_argument(
-        "--cardbase", action="append", help="Include only cards from the specified base"
-    )
     parser.add_argument("--card_path", default="dominion/cards", help=argparse.SUPPRESS)
     parser.add_argument(
         "--artifact_path", default="dominion/artifacts", help=argparse.SUPPRESS

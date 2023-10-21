@@ -48,7 +48,6 @@ options:
   --ally ALLIES         Include specific ally
   --trait TRAITS        Include specific trait
   --cardset CARDSET     File containing list of cards to use
-  --cardbase CARDBASE   Include only cards from the specified base
   --card_path CARD_PATH
                         Where to find card definitions
   --prosperity          Use colonies and platinum coins
