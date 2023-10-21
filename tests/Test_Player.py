@@ -4,7 +4,7 @@
 
 import unittest
 from dominion.Counter import Counter
-from dominion import Card, Game, Phase, Piles
+from dominion import Card, Game, Phase, Piles, Limits
 
 
 ###############################################################################
@@ -950,6 +950,18 @@ class TestBuyCard(unittest.TestCase):
         self.plr.buy_card("Copper")
         self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Curse"])
         self.assertIn("Gained a Curse from embargo", self.plr.messages)
+
+    def test_buy_limit(self):
+        """Test setting a buy limit"""
+        self.plr.coins.set(20)
+        self.plr.buys.set(2)
+        self.plr.limits[Limits.BUY] = 1
+        self.plr.buy_card("Silver")
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
+        self.assertEqual(self.plr.buys.get(), 1)
+        self.plr.buy_card("Gold")
+        self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertEqual(self.plr.buys.get(), 1)
 
 
 ###############################################################################

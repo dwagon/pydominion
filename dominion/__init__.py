@@ -48,4 +48,11 @@ class Keys(StrEnum):
     WAY = auto()
 
 
+class Limits(StrEnum):
+    """Limits to play"""
+
+    PLAY = auto()
+    BUY = auto()
+
+
 # EOF

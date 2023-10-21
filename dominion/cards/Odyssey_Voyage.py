@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Voyage"""
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Limits
 
 
 ###############################################################################
@@ -33,7 +33,7 @@ class Card_Voyage(Card.Card):
     def hook_end_turn(self, game, player):
         if self._take_turn:
             player.output("Having a second turn due to Voyage")
-            player.playlimit = 3
+            player.limits[Limits.PLAY] = 3
             self._take_turn = False
             game.current_player = game.playerToRight(player)
 
