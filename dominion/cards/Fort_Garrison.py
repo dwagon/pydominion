@@ -46,7 +46,7 @@ class Test_Garrison(unittest.TestCase):
 
     def test_play(self):
         """Play a garrison"""
-        self.plr.test_input = ["Get Silver"]
+        self.plr.test_input = ["Get Silver -"]
         coins = self.plr.coins.get()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), coins + 2)

@@ -9,7 +9,7 @@ from collections import defaultdict
 from typing import Optional
 from icecream import ic
 
-from dominion import Piles, Phase
+from dominion import Piles, Phase, Limits
 from dominion.Card import Card, CardType
 from dominion.CardPile import CardPile
 from dominion.Counter import Counter
@@ -59,7 +59,7 @@ class Player:
         self.coffers = Counter("Coffers", 0)
         self.favors = Counter("Favors", 0)
         self.newhandsize = 5
-        self.playlimit = None
+        self.limits = {Limits.PLAY: None, Limits.BUY: 999}
         self.card_token = False
         self.coin_token = False
         self.journey_token = True
@@ -79,6 +79,28 @@ class Player:
         self.misc = {"is_start": False, "cleaned": False}
         self.skip_turn = False
         game.output(f"Player {name} is at the table")
+
+    ###########################################################################
+    def print_state(self) -> None:
+        """Print the player state for debugging"""
+        print(f"\n{self.name} {self.turn_number} --------------------------")
+        print(f"  state: {', '.join([_.name for _ in self.states])}")
+        print(f"  artifacts: {', '.join([_.name for _ in self.artifacts])}")
+        print(f"  projects: {', '.join([_.name for _ in self.projects])}")
+        for pile in self.piles:
+            self.piles[pile].dump(f"  {pile.name}")
+        print(f"  score: {self.get_score()} {self.get_score_details()}")
+        print(f"  tokens: {self.tokens}")
+        print(f"  phase: {self.phase}")
+        print(
+            f"  coin={self.coins.get()} debt={self.debt.get()} actions={self.actions.get()}"
+            f" buys={self.buys.get()} favors={self.favors.get()}"
+            f" coffers={self.coffers.get()}"
+            f" villagers={self.villagers.get()} potions={self.potions.get()}"
+        )
+        print("  messages:")
+        for msg in self.messages:
+            print(f"\t{msg}")
 
     ###########################################################################
     def _initial_deck(self, heirlooms=None, use_shelters=False):
@@ -760,8 +782,8 @@ class Player:
             status += f" Coffer={self.coffers.get()}"
         if self.villagers:
             status += f" Villager={self.villagers.get()}"
-        if self.playlimit is not None:
-            status += f" Play Limit={self.playlimit}"
+        if self.limits[Limits.PLAY] is not None:
+            status += f" Play Limit={self.limits[Limits.PLAY]}"
         prompt = f"What to do ({status})?"
         return prompt
 
@@ -1134,7 +1156,8 @@ class Player:
         """End of turn"""
         if not self.misc["cleaned"]:
             self.cleanup_phase()
-        self.playlimit = None
+        self.limits[Limits.PLAY] = None
+        self.limits[Limits.BUY] = 999
         for card in self.had_cards:
             self.currcards.append(card)
             card.hook_end_turn(game=self.game, player=self)
@@ -1253,11 +1276,11 @@ class Player:
         options = {"skip_card": False, "discard": discard}
         if card not in self.piles[Piles.HAND] and options["discard"]:
             raise AssertionError(f"Playing {card} which is not in hand")
-        if self.playlimit is not None:
-            if self.playlimit <= 0:
+        if self.limits[Limits.PLAY] is not None:
+            if self.limits[Limits.PLAY] <= 0:
                 self.output(f"Can't play {card} due to limits in number of plays")
                 return
-            self.playlimit -= 1
+            self.limits[Limits.PLAY] -= 1
         self.output(f"Playing {card}")
         self.currcards.append(card)
         options |= self._hook_pre_play(card)
@@ -1440,10 +1463,14 @@ class Player:
         assert isinstance(card_name, str), f"buy_card({card_name=}) {type(card_name)=}"
         if not self.buys:  # pragma: no cover
             return
+        if not self.limits[Limits.BUY]:
+            self.output("Buy limit stops buying")
+            return
         if self.debt:
             self.output("Must pay off debt first")
             return
         self.buys -= 1
+        self.limits[Limits.BUY] -= 1
         card = self.game.card_instances[card_name]
         cost = self.card_cost(card)
         if card.isDebt():
