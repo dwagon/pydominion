@@ -98,14 +98,14 @@ class BotPlayer(Player):
         mod = self.getCallingCard()
         if hasattr(mod, "botresponse"):
             return mod.botresponse(self, "cards", kwargs=kwargs)
-        assert False, f"BigMoneyBot can't select cards from {mod.__name__}"
+        assert False, f"BigMoneyBot can't select cards from {mod.__name__} {kwargs=}"
 
     ###########################################################################
     def plr_choose_options(self, prompt, *choices):
         mod = self.getCallingCard()
         if hasattr(mod, "botresponse"):
             return mod.botresponse(self, "choices", args=choices)
-        assert False, f"BigMoneyBot can't choose options from {mod.__name__}"
+        assert False, f"BigMoneyBot can't choose options from {mod.__name__} {choices=}"
 
     ###########################################################################
     def pick_to_discard(self, num_to_discard, keepvic=False):

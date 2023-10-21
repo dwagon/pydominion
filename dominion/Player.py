@@ -1375,7 +1375,7 @@ class Player:
                 options |= rc
 
         # check for un-exiling
-        if self.piles[Piles.EXILE][new_card.name]:
+        if new_card.name in self.piles[Piles.EXILE]:
             self.check_unexile(new_card.name)
 
         # Replace is to gain a different card
