@@ -81,6 +81,28 @@ class Player:
         game.output(f"Player {name} is at the table")
 
     ###########################################################################
+    def print_state(self) -> None:
+        """Print the player state for debugging"""
+        print(f"\n{self.name} {self.turn_number} --------------------------")
+        print(f"  state: {', '.join([_.name for _ in self.states])}")
+        print(f"  artifacts: {', '.join([_.name for _ in self.artifacts])}")
+        print(f"  projects: {', '.join([_.name for _ in self.projects])}")
+        for pile in self.piles:
+            self.piles[pile].dump(f"  {pile.name}")
+        print(f"  score: {self.get_score()} {self.get_score_details()}")
+        print(f"  tokens: {self.tokens}")
+        print(f"  phase: {self.phase}")
+        print(
+            f"  coin={self.coins.get()} debt={self.debt.get()} actions={self.actions.get()}"
+            f" buys={self.buys.get()} favors={self.favors.get()}"
+            f" coffers={self.coffers.get()}"
+            f" villagers={self.villagers.get()} potions={self.potions.get()}"
+        )
+        print("  messages:")
+        for msg in self.messages:
+            print(f"\t{msg}")
+
+    ###########################################################################
     def _initial_deck(self, heirlooms=None, use_shelters=False):
         """Provide the initial deck"""
         if heirlooms is None:

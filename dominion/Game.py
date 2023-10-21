@@ -920,40 +920,6 @@ class Game:  # pylint: disable=too-many-public-methods
             self.discarded_boons.append(boon)
 
     ###########################################################################
-    def print_player_state(self, plr: Player) -> None:
-        """Print the player state for debugging"""
-        print("\n")
-        print(f"{plr.name} --------------------------")
-        print(f"  state: {', '.join([_.name for _ in plr.states])}")
-        print(f"  artifacts: {', '.join([_.name for _ in plr.artifacts])}")
-        print(f"  projects: {', '.join([_.name for _ in plr.projects])}")
-        for pile in (
-            Piles.HAND,
-            Piles.DECK,
-            Piles.DISCARD,
-            Piles.DEFER,
-            Piles.DURATION,
-            Piles.EXILE,
-            Piles.RESERVE,
-            Piles.PLAYED,
-        ):
-            plr.piles[pile].dump(f"  {pile.name}")
-        print("  messages:")
-        for msg in plr.messages:
-            print(f"\t{msg}")
-        print(f"  score: {plr.get_score()} {plr.get_score_details()}")
-        print(f"  tokens: {plr.tokens}")
-        print(f"  phase: {plr.phase}")
-        print(
-            f"  turn: coin={plr.coins.get()} debt={plr.debt.get()} actions={plr.actions.get()}"
-            f" buys={plr.buys.get()} favors={plr.favors.get()}"
-        )
-        print(
-            f"  coffers={plr.coffers.get()} "
-            f"villagers={plr.villagers.get()} potions={plr.potions.get()}"
-        )
-
-    ###########################################################################
     def print_state(self, card_dump=False) -> None:  # pragma: no cover
         """This is used for debugging"""
         print("\n" + "#" * 80)
@@ -974,7 +940,7 @@ class Game:  # pylint: disable=too-many-public-methods
         print(f"Instances: {', '.join([_ for _ in self.card_instances])}")
 
         for plr in self.player_list():
-            self.print_player_state(plr)
+            plr.print_state()
         if card_dump:
             for v in self._cards.values():
                 print(f"    {v} ({v.uuid} {v._player}@{v._location})")
