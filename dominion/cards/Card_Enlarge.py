@@ -38,7 +38,7 @@ class TestEnlarge(unittest.TestCase):
 
     def test_play(self):
         """Play a Enlarge"""
-        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Duchy")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Silver", "Get Duchy"]
         self.plr.play_card(self.card)
