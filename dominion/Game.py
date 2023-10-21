@@ -1061,6 +1061,10 @@ class TestGame(Game):
         kwargs["shelters"] = False  # Can cause lots of bad interactions
         if "quiet" not in kwargs:
             kwargs["quiet"] = True
+        # Shaman causes lots of bad interactions
+        if "Shaman" not in kwargs.get("initcards", []):
+            kwargs["badcards"] = kwargs.get("badcards", [])
+            kwargs["badcards"].append("Shaman")
         super().__init__(**kwargs)
 
 
