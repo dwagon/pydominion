@@ -1375,7 +1375,7 @@ class Player:
                 options |= rc
 
         # check for un-exiling
-        if self.piles[Piles.EXILE][new_card.name]:
+        if new_card.name in self.piles[Piles.EXILE]:
             self.check_unexile(new_card.name)
 
         # Replace is to gain a different card
@@ -1389,7 +1389,7 @@ class Player:
         self.stats["gained"].append(new_card)
         destination = options.get("destination", destination)
         if callhook:
-            self.hook_all_players_gain_card(new_card)
+            options |= self.hook_all_players_gain_card(new_card)
         if options.get("trash", False):
             self.trash_card(new_card)
             return new_card
@@ -1484,12 +1484,15 @@ class Player:
             )
 
     ###########################################################################
-    def hook_all_players_gain_card(self, card):
+    def hook_all_players_gain_card(self, card) -> dict:
+        options = {}
         for player in self.game.player_list():
             for crd in player.relevant_cards():
-                crd.hook_all_players_gain_card(
+                if opts := crd.hook_all_players_gain_card(
                     game=self.game, player=self, owner=player, card=card
-                )
+                ):
+                    options |= opts
+        return options
 
     ###########################################################################
     def add_hook(self, hook_name, hook):
