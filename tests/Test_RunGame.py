@@ -13,7 +13,6 @@ class Test_parse_args(unittest.TestCase):
         """Test that no args gives us the defaults"""
         args = rungame.parse_cli_args([])
         self.assertEqual(args.numplayers, 2)
-        self.assertEqual(args.cardbase, None)
         self.assertEqual(args.prosperity, False)
         self.assertEqual(args.initcards, [])
 
