@@ -2,12 +2,13 @@
 """ Run a Dominion Game """
 import argparse
 import sys
+from typing import Any, Optional
 
 from dominion import Game
 
 
 ###############################################################################
-def parse_cli_args(args=None):
+def parse_cli_args(args: Optional[list[str]] = None) -> argparse.Namespace:
     """Parse the command line arguments"""
     if args is None:
         args = sys.argv[1:]
@@ -135,12 +136,11 @@ def parse_cli_args(args=None):
         default=False,
         help="Supress a lot of output",
     )
-    namespace = parser.parse_args(args)
-    return namespace
+    return parser.parse_args(args)
 
 
 ###############################################################################
-def run_game(args):  # pragma: no cover
+def run_game(args: dict[str, Any]) -> None:  # pragma: no cover
     """TODO"""
     cards = args["initcards"]
     turn = 0
@@ -173,7 +173,7 @@ def run_game(args):  # pragma: no cover
 
 
 ###############################################################################
-def main():  # pragma: no cover
+def main() -> None:  # pragma: no cover
     """Command line entry point"""
     args = parse_cli_args()
     run_game(vars(args))

@@ -1,26 +1,33 @@
 """ Class defining a PlayArea - such as a deck of cards, a player's hand of cards, etc """
 import random
 import sys
-from dominion import Card
+from typing import Any, Optional, Iterator, TYPE_CHECKING, Self
+
+from dominion.Card import Card
+
+if TYPE_CHECKING:
+    from dominion.Game import Game
 
 
 ###############################################################################
 class PlayArea:
     """Area of play - such as a deck of cards"""
 
-    def __init__(self, name="", game=None, initial=None):
-        self.name = name
-        self.game = game
+    def __init__(
+        self, name="", game=None, initial: Optional[list[Card]] = None
+    ) -> None:
+        self.name: str = name
+        self.game: Optional[Game] = game
         if initial is None:
             initial = []
-        self._cards = initial
+        self._cards: list[Card] = initial
 
     ###########################################################################
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<PlayArea {self.name}: {', '.join([_.name for _ in self._cards])}>"
 
     ###########################################################################
-    def __contains__(self, obj) -> bool:
+    def __contains__(self, obj: Any) -> bool:
         """Return True if a card {obj} or a card with name {obj} is in play area"""
         for card in self._cards:
             if isinstance(obj, str):
@@ -31,7 +38,7 @@ class PlayArea:
         return False
 
     ###########################################################################
-    def __getitem__(self, name_or_idx):
+    def __getitem__(self, name_or_idx: str | int) -> Optional[Card]:
         """Return a card with the name {name_or_idx} or None from playarea
         If the {name_or_idx} is an integer - return that card from that index
         """
@@ -46,6 +53,7 @@ class PlayArea:
     def set(self, *cards: list[str]) -> None:
         """Used for testing to set contents"""
         self.empty()
+        assert self.game is not None
         for card_name in cards:
             if card_name in self.game.card_piles:
                 card = self.game.card_piles[card_name].remove()
@@ -60,12 +68,12 @@ class PlayArea:
             self.addToTop(card)
 
     ###########################################################################
-    def add(self, card) -> None:
+    def add(self, card: Card) -> None:
         """Add a card to the area"""
         self._cards.insert(0, card)
 
     ###########################################################################
-    def remove(self, card):
+    def remove(self, card: Card) -> None:
         """Remove a card from the area"""
         try:
             self._cards.remove(card)
@@ -77,28 +85,28 @@ class PlayArea:
             raise
 
     ###########################################################################
-    def addToTop(self, card):
+    def addToTop(self, card: Card) -> None:
         self._cards.append(card)
 
     ###########################################################################
-    def shuffle(self):
+    def shuffle(self) -> None:
         random.shuffle(self._cards)
 
     ###########################################################################
-    def size(self):
+    def size(self) -> int:
         return len(self)
 
     ###########################################################################
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._cards)
 
     ###########################################################################
-    def next_card(self):
+    def next_card(self) -> Card:
         """Take the next card of the playarea"""
         return self._cards.pop()
 
     ###########################################################################
-    def top_card(self):
+    def top_card(self) -> Optional[Card]:
         """Return the next card - but don't move it"""
         try:
             return self._cards[-1]
@@ -106,29 +114,24 @@ class PlayArea:
             return None
 
     ###########################################################################
-    def empty(self):
+    def empty(self) -> None:
         self._cards = []
 
     ###########################################################################
-    def count(self, card):
-        if hasattr(card, "name"):
-            cname = card.name
-        else:
-            cname = card
+    def count(self, card: Card | str) -> int:
+        cname = card.name if hasattr(card, "name") else card
         return [_.name for _ in self._cards].count(cname)
 
     ###########################################################################
-    def is_empty(self):
+    def is_empty(self) -> bool:
         return self._cards == []
 
     ###########################################################################
-    def __eq__(self, a):
-        if hasattr(a, "cards"):
-            return self._cards == a.cards
-        return self._cards == a
+    def __eq__(self, a: Any) -> bool:
+        return self._cards == a.cards if hasattr(a, "cards") else self._cards == a
 
     ###########################################################################
-    def __add__(self, a):
+    def __add__(self, a: Any) -> Self:
         x = self._cards[:]
         if a is None:
             pass
@@ -138,23 +141,23 @@ class PlayArea:
             x.extend(a._cards[:])
         elif isinstance(a, list):
             x.extend(a[:])
-        elif isinstance(a, Card.Card):
+        elif isinstance(a, Card):
             x.append(a)
         else:
             sys.stderr.write(f"Unhandled __add__ operand: {type(a)}\n")
         return PlayArea("", self.game, x)
 
     ###########################################################################
-    def __iter__(self):
-        for c in self._cards[:]:
-            yield c
+    def __iter__(self) -> Iterator[Card]:
+        for card in self._cards[:]:
+            yield card
 
     ###########################################################################
-    def sort(self, *args, **kwargs):
+    def sort(self, *args, **kwargs) -> None:
         self._cards.sort(*args, **kwargs)
 
     ###########################################################################
-    def dump(self, name=None):
+    def dump(self, name: Optional[str] = None) -> None:
         """Print out all the playarea - for debugging purposes only"""
         if name is None:
             name = self.name

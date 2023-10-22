@@ -1,20 +1,22 @@
-from typing import Optional, TYPE_CHECKING
+from typing import Optional, TYPE_CHECKING, Self
 
 if TYPE_CHECKING:
-    from dominion import Card
+    from dominion.Game import Game
+    from dominion.Trait import Trait
+    from dominion.Card import Card
 
 
 ###############################################################################
 class CardPile:
-    def __init__(self, game=None):
+    def __init__(self, game: Optional["Game"] = None) -> None:
         # game is required by some subclasses
-        self.cards = []
+        self.cards: list[Card] = []
         self.embargo_level = 0
         self.gatheredvp = 0
-        self.trait = None
+        self.trait: Optional[Trait] = None
 
     ###########################################################################
-    def init_cards(self, num_cards=0, card_class=None):
+    def init_cards(self, num_cards=0, card_class=None) -> None:
         """Can be overwritten for the more unusual piles"""
         if num_cards == 0 or not card_class:
             return
@@ -22,15 +24,15 @@ class CardPile:
             self.cards.append(card_class())
 
     ##########################################################################
-    def addVP(self, num=1):
+    def addVP(self, num: int = 1) -> None:
         self.gatheredvp += num
 
     ##########################################################################
-    def getVP(self):
+    def getVP(self) -> int:
         return self.gatheredvp
 
     ##########################################################################
-    def drainVP(self):
+    def drainVP(self) -> int:
         num = self.gatheredvp
         self.gatheredvp = 0
         return num
@@ -40,42 +42,42 @@ class CardPile:
         return CardPileIterator(self)
 
     ###########################################################################
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.cards)
 
     ###########################################################################
-    def __bool__(self):
+    def __bool__(self) -> bool:
         return not self.is_empty()
 
     ###########################################################################
-    def embargo(self):
+    def embargo(self) -> None:
         self.embargo_level += 1
 
     ###########################################################################
-    def __lt__(self, other_card):
+    def __lt__(self, other_card_pile: Self) -> bool:
         self_name = self.cards[-1].name
-        if other_card.cards:
-            other_name = other_card.cards[-1].name
+        if other_card_pile.cards:
+            other_name = other_card_pile.cards[-1].name
         else:
             try:
-                other_name = other_card.cards[-1].name
+                other_name = other_card_pile.cards[-1].name
             except IndexError:
                 other_name = "ZZZZ"
         return self_name < other_name
 
     ###########################################################################
-    def setup(self, game):
+    def setup(self, game: "Game") -> None:
         """Setup card pile"""
         if self.cards:
             self.cards[-1].setup(game)
 
     ###########################################################################
-    def is_empty(self):
+    def is_empty(self) -> bool:
         """Is the card pile empty"""
         return not self.cards
 
     ###########################################################################
-    def remove(self, name=""):
+    def remove(self, name: str = "") -> Optional["Card"]:
         """Remove a card from the card pile"""
         if not name:
             try:
@@ -89,7 +91,7 @@ class CardPile:
         return None
 
     ###########################################################################
-    def add(self, card):
+    def add(self, card: "Card") -> None:
         """Add a card to the bottom of the deck"""
         self.cards.insert(0, card)
 
@@ -102,14 +104,14 @@ class CardPile:
         return self.cards[-1].name
 
     ###########################################################################
-    def get_top_card(self):
+    def get_top_card(self) -> Optional["Card"]:
         """What is the top card of the card pile"""
         if self.is_empty():
             return None
         return self.cards[-1]
 
     ###########################################################################
-    def rotate(self):
+    def rotate(self) -> None:
         """Rotate a pile of cards - only works with split decks
         http://wiki.dominionstrategy.com/index.php/Rotate
         """
@@ -121,13 +123,13 @@ class CardPile:
             count += 1
             if self.top_card() != top_card_name:
                 break
-            next_card = self.remove()
-            self.add(next_card)
+            if next_card := self.remove():
+                self.add(next_card)
             if count > 20:  # Only one sort of card in deck
                 break
 
     ###########################################################################
-    def dump(self, name=""):
+    def dump(self, name: str = "") -> None:
         """Print out all the pile - for debugging purposes only"""
         if name:
             print(f"{name}: ", end="")
@@ -136,7 +138,7 @@ class CardPile:
         print()
 
     ###########################################################################
-    def __repr__(self):
+    def __repr__(self) -> str:
         trait_str = ""
         if self.trait:
             trait_str = f" Trait: {self.trait}"
@@ -145,11 +147,11 @@ class CardPile:
 
 ###############################################################################
 class CardPileIterator:
-    def __init__(self, card_pile):
+    def __init__(self, card_pile: CardPile) -> None:
         self.card_pile = card_pile
         self.index = 0
 
-    def __next__(self):
+    def __next__(self) -> "Card":
         try:
             result = self.card_pile.cards[self.index]
         except IndexError:

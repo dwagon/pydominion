@@ -3,9 +3,9 @@
 
 import unittest
 from dominion import Card, Game, Piles
+from dominion.Player import Player
 
 
-###############################################################################
 ###############################################################################
 class Card_Barbarian(Card.Card):
     """Barbarian"""
@@ -22,11 +22,11 @@ class Card_Barbarian(Card.Card):
         self.cost = 5
         self.required_cards = ["Curse"]
 
-    def special(self, game, player):
+    def special(self, game, player: Player):
         for plr in player.attack_victims():
             self._barbarian_attack(game, attacker=player, victim=plr)
 
-    def _barbarian_attack(self, game, attacker, victim):
+    def _barbarian_attack(self, game, attacker: Player, victim: Player):
         """Do the barbarian attack"""
         victim_card = victim.top_card()
         victim.output(f"{attacker.name}'s Barbarian: Trashes your {victim_card}")
@@ -86,7 +86,7 @@ class TestBarbarian(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Barbarian")
         self.attacker.add_card(self.card, Piles.HAND)
 
-    def Xtest_play(self):
+    def test_play(self):
         """Test against a low-cost victim card"""
         self.victim.piles[Piles.DECK].set("Estate", "Copper")
         self.attacker.play_card(self.card)
