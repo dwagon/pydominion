@@ -51,7 +51,7 @@ class TestTradeRoute(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Trade Route"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.trade_route = self.g.get_card_from_pile("Trade Route")
         self.plr.add_card(self.trade_route, Piles.HAND)
 

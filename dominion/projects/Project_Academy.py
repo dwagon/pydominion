@@ -26,7 +26,7 @@ class Test_Academy(unittest.TestCase):
             numplayers=1, projects=["Academy"], initcards=["Moat"]
         )
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_have(self):
         self.assertEqual(self.plr.villagers.get(), 0)

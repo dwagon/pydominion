@@ -47,7 +47,7 @@ class Test_Pilgrimage(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, events=["Pilgrimage"], initcards=["Moat"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.card = self.g.events["Pilgrimage"]
 
     def test_play(self):

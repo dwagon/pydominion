@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
-from dominion.Player import Phase
+from dominion import Game, Card, Piles, Phase
 
 
 ###############################################################################
@@ -33,7 +31,7 @@ class Test_Grandmarket(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Grand Market"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.gm = self.g.get_card_from_pile("Grand Market")
 
     def test_play(self):
@@ -51,7 +49,9 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.phase = Phase.BUY
         options = self.plr._choice_selection()
         for opt in options:
-            if opt["name"] == "Grand Market" and opt["verb"] == "Buy":  # pragma: no cover
+            if (
+                opt["name"] == "Grand Market" and opt["verb"] == "Buy"
+            ):  # pragma: no cover
                 self.fail("Allowed to buy with copper")
 
     def test_nobuy_played(self):
@@ -62,7 +62,9 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.phase = Phase.BUY
         options = self.plr._choice_selection()
         for opt in options:
-            if opt["name"] == "Grand Market" and opt["verb"] == "Buy":  # pragma: no cover
+            if (
+                opt["name"] == "Grand Market" and opt["verb"] == "Buy"
+            ):  # pragma: no cover
                 self.fail("Allowed to buy with copper")
 
     def test_buy(self):
@@ -72,7 +74,9 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.phase = Phase.BUY
         options = self.plr._choice_selection()
         for opt in options:
-            if opt["name"] == "Grand Market" and opt["verb"] == "Buy":  # pragma: no cover
+            if (
+                opt["name"] == "Grand Market" and opt["verb"] == "Buy"
+            ):  # pragma: no cover
                 break
         else:  # pragma: no cover
             self.fail("Not allowed to buy grand market")

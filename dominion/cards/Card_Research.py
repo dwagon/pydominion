@@ -60,7 +60,7 @@ class TestResearch(unittest.TestCase):
             numplayers=1, initcards=["Research", "Moat"], badcards=["Shaman"]
         )
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Research")
         self.plr.piles[Piles.HAND].set("Gold", "Silver", "Copper")
         self.plr.add_card(self.card, Piles.HAND)

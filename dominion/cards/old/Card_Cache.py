@@ -34,7 +34,7 @@ class Test_Cache(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Cache"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.cache = self.g.get_card_from_pile("Cache")
 
     def test_gain(self):

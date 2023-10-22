@@ -24,7 +24,7 @@ class Test_Lantern(unittest.TestCase):
             initcards=["Border Guard", "Moat", "Guide"],
         )
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.artifact = self.g.artifacts["Lantern"]
         self.card = self.g.get_card_from_pile("Border Guard")
         self.plr.assign_artifact("Lantern")

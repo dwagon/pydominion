@@ -44,7 +44,7 @@ class Test_FortuneHunter(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Fortune Hunter"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Fortune Hunter")
 
     def test_play(self):

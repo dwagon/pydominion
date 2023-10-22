@@ -33,7 +33,7 @@ class Test_Courtyard(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Courtyard"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.cy = self.g.get_card_from_pile("Courtyard")
 
     def test_play(self):

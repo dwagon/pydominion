@@ -29,7 +29,7 @@ class Test_Monastery(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Monastery"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.monastery = self.g.get_card_from_pile("Monastery")
 
     def test_play_card(self):

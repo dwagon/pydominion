@@ -38,7 +38,7 @@ class TestEndlessChalice(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, traits=["Cursed"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_playing(self):
         """Test playing an Endless Chalice"""

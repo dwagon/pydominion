@@ -29,7 +29,7 @@ class Test_Crafters_Guild(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, allies="Crafters' Guild", initcards=["Underling"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_flag(self):
         self.plr.favors.set(5)

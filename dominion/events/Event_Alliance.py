@@ -27,7 +27,7 @@ class Test_Alliance(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, events=["Alliance"], badcards=["Duchess"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.card = self.g.events["Alliance"]
 
     def test_play(self):

@@ -24,7 +24,7 @@ class TestAbandonedMine(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=4, initcards=["Cultist"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Ruins", "Abandoned Mine")
         self.plr.add_card(self.card, Piles.HAND)
 

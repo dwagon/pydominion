@@ -29,7 +29,7 @@ class Test_Countinghouse(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Counting House"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.ch = self.g.get_card_from_pile("Counting House")
         self.plr.piles[Piles.HAND].set()
         self.plr.add_card(self.ch, Piles.HAND)

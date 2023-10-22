@@ -39,7 +39,7 @@ class Test_Scout(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Scout"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.scout = self.g.get_card_from_pile("Scout")
 
     def test_play(self):

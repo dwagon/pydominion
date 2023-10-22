@@ -9,7 +9,7 @@ class TestGetOptions(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, bot=True)
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_getOptions(self):
         options = [
@@ -82,7 +82,7 @@ class TestPickToDiscard(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, bot=True)
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_no_discard(self):
         """Test pick_to_discard with no discard requirement"""

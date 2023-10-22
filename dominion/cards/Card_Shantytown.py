@@ -32,7 +32,7 @@ class Test_Shantytown(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Shanty Town", "Moat"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Shanty Town")
 
     def test_no_actions(self):

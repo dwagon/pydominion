@@ -28,7 +28,7 @@ class Test_Delve(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, events=["Delve"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.card = self.g.events["Delve"]
 
     def test_play(self):

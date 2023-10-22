@@ -30,7 +30,7 @@ class Test_Nearby(unittest.TestCase):
             quiet=True, numplayers=1, traits=["Nearby"], initcards=["Moat"]
         )
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_cost(self):
         """Check gaining Nearby cards"""

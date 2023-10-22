@@ -29,7 +29,7 @@ class Test_Silkroad(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Silk Road"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_scoreOne(self):
         self.plr.piles[Piles.HAND].set("Silk Road")

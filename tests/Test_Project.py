@@ -76,7 +76,7 @@ class Test_buy_project(unittest.TestCase):
             projects=["ProjectA"],
         )
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_buy(self):
         """Test Buying a project"""

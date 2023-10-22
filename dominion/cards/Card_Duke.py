@@ -30,7 +30,7 @@ class Test_Duke(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Duke"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_score(self):
         self.plr.piles[Piles.DECK].set("Duchy", "Duchy", "Estate")

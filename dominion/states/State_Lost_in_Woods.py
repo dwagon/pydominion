@@ -29,7 +29,7 @@ class Test_Lost_in_woods(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bard"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.state = self.g.states["Lost in the Woods"]
 
     def test_lost_in_woods(self):

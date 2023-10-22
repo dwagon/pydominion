@@ -34,7 +34,7 @@ class Test_HumbleCastle(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Castles"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Castles", "Humble Castle")
 
     def test_play(self):

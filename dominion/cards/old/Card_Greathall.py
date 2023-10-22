@@ -25,7 +25,7 @@ class Test_Greathall(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Great Hall"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Great Hall")
         self.plr.add_card(self.card, Piles.HAND)
 

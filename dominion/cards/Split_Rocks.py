@@ -38,7 +38,7 @@ class Test_Rocks(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Catapult"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_gain_rocks(self):
         """Gain a Rocks"""

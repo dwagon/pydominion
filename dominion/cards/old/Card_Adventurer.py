@@ -34,7 +34,7 @@ class Test_Adventurer(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Adventurer"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_treasures(self):
         self.plr.piles[Piles.DECK].set("Copper", "Silver", "Gold", "Estate")

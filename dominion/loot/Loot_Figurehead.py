@@ -34,7 +34,7 @@ class Test_Figurehead(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, traits=["Cursed"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         # Remove all other cards from loot pile, so we know what we will draw
         mods = True
         while mods:

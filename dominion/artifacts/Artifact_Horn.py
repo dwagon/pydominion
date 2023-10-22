@@ -20,7 +20,7 @@ class Test_Horn(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initartifacts=["Horn"], initcards=["Border Guard"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.artifact = self.g.artifacts["Horn"]
         self.card = self.g.get_card_from_pile("Border Guard")
 
