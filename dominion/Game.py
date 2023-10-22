@@ -31,7 +31,7 @@ from dominion.Trait import Trait
 class Game:  # pylint: disable=too-many-public-methods
     """Game class"""
 
-    def __init__(self, **kwargs: dict[str, Any]) -> None:
+    def __init__(self, **kwargs: Any) -> None:
         self.players: dict[str, Player] = {}
         self.bot = False
         self.randobot = False
@@ -1058,7 +1058,7 @@ class Game:  # pylint: disable=too-many-public-methods
 class TestGame(Game):
     """Game for testing purposes"""
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs: Any) -> None:
         if "allies" not in kwargs:
             kwargs["allies"] = []
             kwargs["ally_path"] = "tests/allies"
