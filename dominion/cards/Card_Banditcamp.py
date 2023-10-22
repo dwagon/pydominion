@@ -28,7 +28,7 @@ class Test_Banditcamp(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Bandit Camp"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_play(self):
         bc = self.g.get_card_from_pile("Bandit Camp")

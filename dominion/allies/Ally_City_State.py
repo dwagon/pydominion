@@ -38,7 +38,7 @@ class TestCityState(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, allies="City State", initcards=["Underling"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_play(self):
         """Play card"""

@@ -24,7 +24,7 @@ class Test_Wedding(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, events=["Wedding"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.card = self.g.events["Wedding"]
 
     def test_play(self):

@@ -52,7 +52,7 @@ class TestClashes(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Clashes"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_clashes(self):
         """Test that we can rotate the pile"""

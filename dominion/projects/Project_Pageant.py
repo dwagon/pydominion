@@ -29,7 +29,7 @@ class TestPageant(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, projects=["Pageant"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_play(self):
         num_coffers = self.plr.coffers.get()

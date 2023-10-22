@@ -1,9 +1,13 @@
 import sys
 import colorama
+from typing import Any, TYPE_CHECKING
 
 from dominion import Piles
 from dominion.Player import Player
 from dominion.Option import Option
+
+if TYPE_CHECKING:
+    from dominion.Card import Card
 
 if sys.version[0] == "3":
     raw_input = input
@@ -30,7 +34,7 @@ class TextPlayer(Player):
         Player.__init__(self, game, name, **kwargs)
 
     ###########################################################################
-    def output(self, msg, end="\n"):
+    def output(self, msg: str, end: str = "\n") -> None:
         if not self.quiet:
             sys.stdout.write(
                 "%s%s%s: " % (self.colour, self.name, colorama.Style.RESET_ALL)
@@ -44,13 +48,15 @@ class TextPlayer(Player):
 
     ###########################################################################
     @classmethod
-    def wrap(cls, text, first=0, indent=15, maxwidth=95):
+    def wrap(
+        cls, text: str, first: int = 0, indent: int = 15, maxwidth: int = 95
+    ) -> str:
         """Wrap the text so that it doesn't take more than maxwidth chars.
         The first line already has "first" characters in it. Subsequent lines
         should be indented "indent" spaces
         """
-        outstr = []
-        sentence = []
+        outstr: list[str] = []
+        sentence: list[str] = []
         if not text:
             return ""
         for word in text.split():
@@ -64,7 +70,7 @@ class TextPlayer(Player):
         return "\n".join(outstr)
 
     ###########################################################################
-    def selector_line(self, o):
+    def selector_line(self, o: Option) -> str:
         output = []
         if isinstance(o, dict):
             verb = o["print"]
@@ -98,7 +104,7 @@ class TextPlayer(Player):
         return " ".join(output)
 
     ###########################################################################
-    def user_input(self, options, prompt):
+    def user_input(self, options, prompt) -> None:
         """Get input from the user"""
         for o in options:
             line = self.selector_line(o)
@@ -127,7 +133,7 @@ class TextPlayer(Player):
             self.output(f"Invalid Option ({inp})")
 
     ###########################################################################
-    def select_source(self, **kwargs):
+    def select_source(self, **kwargs: str):
         """Understand the various places to select cards from - either a
         text description of the source, a list of cards, or by default
         the players hand"""
@@ -198,8 +204,8 @@ class TextPlayer(Player):
 
     ###########################################################################
     def card_sel(
-        self, num=1, **kwargs
-    ):  # pylint: disable=too-many-locals, too-many-branches
+        self, num: int = 1, **kwargs
+    ) -> list["Card"]:  # pylint: disable=too-many-locals, too-many-branches
         """Most interactions with players are the selection of cards
         either from the hand, the drawpiles, or a subset
         * force
@@ -280,7 +286,7 @@ class TextPlayer(Player):
         return selected
 
     ###########################################################################
-    def plr_choose_options(self, prompt, *choices):
+    def plr_choose_options(self, prompt: str, *choices: tuple[str, Any]):
         index = 0
         options = []
         for prnt, ans in choices:

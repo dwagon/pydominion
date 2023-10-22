@@ -40,7 +40,7 @@ class Test_SinisterPlot(unittest.TestCase):
             numplayers=1, projects=["Sinister Plot"], initcards=["Moat"]
         )
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_add(self):
         self.plr.assign_project("Sinister Plot")

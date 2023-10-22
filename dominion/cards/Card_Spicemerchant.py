@@ -39,7 +39,7 @@ class Test_SpiceMerchant(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Spice Merchant"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Spice Merchant")
 
     def test_play_card(self):

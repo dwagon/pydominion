@@ -43,7 +43,7 @@ class TestDelay(unittest.TestCase):
             badcards=["Duchess"],
         )
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.card = self.g.events["Delay"]
 
     def test_play(self):

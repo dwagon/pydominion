@@ -1,3 +1,7 @@
+""" Option Class"""
+from typing import Optional, Any
+
+
 class Option:
     """
      a) Buy Peasant (2 Coins; 9 left): +1 Buy, +1 Coin; Discard to replace with Soldier
@@ -14,27 +18,24 @@ class Option:
 
     """
 
-    def __init__(self, *args, **kwargs):
-        self.msgs = args
-        self.data = kwargs
+    def __init__(self, **kwargs: Optional[Any]) -> None:
+        self.data: dict[str, Optional[Any]] = kwargs
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: str, value: str) -> None:
         self.data[key] = value
 
-    def __contains__(self, key):
+    def __contains__(self, key: str) -> bool:
         return key in self.data
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: str) -> Optional[Any]:
         if key == "print":
             raise Exception("print")
-        if key not in self.data:
-            return ""
-        return self.data[key]
+        return "" if key not in self.data else self.data[key]
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<Option: {self.data}>"
 
-    def get(self, key, default=None):
+    def get(self, key: str, default: Optional[str] = None) -> Optional[str]:
         """dictionary.get()"""
         if key in self.data:
             return self[key]

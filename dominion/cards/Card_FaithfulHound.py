@@ -27,7 +27,7 @@ class TestFaithfulHound(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Faithful Hound"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.plr._tracker_dont_boon = True
         self.card = self.g.get_card_from_pile("Faithful Hound")
 

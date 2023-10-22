@@ -39,7 +39,7 @@ class Test_Desert_Guides(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, allies="Desert Guides", initcards=["Underling"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_play_nothing(self):
         """Play but do nothing"""

@@ -29,7 +29,7 @@ class Test_Leprechaun(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Leprechaun", "Moat"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Leprechaun")
         self.plr.add_card(self.card, Piles.HAND)
         for h in self.g.hexes[:]:

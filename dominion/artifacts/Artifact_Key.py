@@ -23,7 +23,7 @@ class Test_Key(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initartifacts=["Key"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.artifact = self.g.artifacts["Key"]
 
     def test_flag(self):

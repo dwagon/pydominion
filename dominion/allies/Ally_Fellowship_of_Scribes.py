@@ -44,7 +44,7 @@ class Test_Fellowship_of_Scribes(unittest.TestCase):
             initcards=["Festival", "Underling"],
         )
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_play(self):
         """Play and gain a card"""

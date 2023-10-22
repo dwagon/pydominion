@@ -41,7 +41,7 @@ class Test_WildHunt(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Wild Hunt"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Wild Hunt")
         self.plr.add_card(self.card, Piles.HAND)
 

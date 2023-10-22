@@ -30,7 +30,7 @@ class Test_BlessedVillage(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Blessed Village"], badcards=["Druid"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Blessed Village")
         for b in self.g.boons:
             if b.name == "The Sea's Gift":

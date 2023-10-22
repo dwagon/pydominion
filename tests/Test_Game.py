@@ -86,7 +86,7 @@ class TestGameOver(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2)
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_not_over(self):
         """The game isn't over yet"""
@@ -155,7 +155,7 @@ class Test_boon(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_receive_boon_empty(self):
         self.g.boons = []

@@ -50,7 +50,7 @@ class Test_Band_Nomads(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, allies="Band of Nomads", initcards=["Underling"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_play_card(self):
         """Play and gain a card"""

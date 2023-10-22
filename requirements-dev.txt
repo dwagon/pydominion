@@ -1,12 +1,13 @@
 -r requirements.txt
 
+black
+flake8
 icecream
-setuptools~=68.0.0
+mypy
+pre_commit
 pylint
-pytest>=4.4.0
 pytest-cov
 pytest-xdist
+pytest>=4.4.0
 python-coveralls
-flake8
-black
-pre_commit
+setuptools~=68.0.0

@@ -46,7 +46,7 @@ class TestCharm(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Charm"], badcards=["Duchess"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Charm")
         self.plr.add_card(self.card, Piles.HAND)
 

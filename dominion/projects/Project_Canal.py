@@ -24,7 +24,7 @@ class Test_Canal(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, projects=["Canal"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_cost(self):
         self.assertEqual(self.plr.card_cost(self.g.get_card_from_pile("Gold")), 6)

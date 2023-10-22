@@ -35,7 +35,7 @@ class Test_Rats(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Rats"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.rats = self.g.get_card_from_pile("Rats")
         self.plr.piles[Piles.DECK].set("Estate", "Province", "Duchy")
         self.plr.piles[Piles.HAND].set("Copper", "Gold", "Silver", "Rats")

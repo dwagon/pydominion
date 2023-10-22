@@ -33,7 +33,7 @@ class TestPiazza(unittest.TestCase):
             numplayers=1, projects=["Piazza"], initcards=["Moat"]
         )
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_play(self):
         self.plr.piles[Piles.DECK].set(

@@ -53,7 +53,7 @@ class TestCargoShip(unittest.TestCase):
             numplayers=1, initcards=["Cargo Ship", "Moat"], badcards=["Shaman"]
         )
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_play_card_yes(self):
         self.card = self.g.get_card_from_pile("Cargo Ship")

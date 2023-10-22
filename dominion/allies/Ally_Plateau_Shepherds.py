@@ -25,7 +25,7 @@ class Test_Plateau_Shepherds(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, allies="Plateau Shepherds", initcards=["Underling"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_score_less(self):
         """When we have less cards than favors"""

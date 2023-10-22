@@ -58,7 +58,7 @@ class Test_ForestDwellers(unittest.TestCase):
             numplayers=1, allies="Forest Dwellers", initcards=["Underling"]
         )
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_play_card(self):
         """Play and gain a card"""

@@ -42,7 +42,7 @@ class Test_Innovation(unittest.TestCase):
             numplayers=1, projects=["Innovation"], initcards=["Moat"]
         )
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_play(self):
         """Play a card through innovation"""

@@ -4,7 +4,10 @@
 import os
 import uuid
 from enum import Enum, auto
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from dominion.Player import Player
 
 
 ###############################################################################
@@ -81,7 +84,7 @@ class CardType(Enum):
 class Card:
     """Card class"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.name = ""
         self.basecard = False
         self.cost = -1
@@ -108,29 +111,30 @@ class Card:
         self.potion = 0
         self.cards = 0
         self.victory = 0
-        self.required_cards = []
+        self.required_cards: list[str] = []
         self.image = None
         self.numcards = 10
         self.retain_boon = False
         self.heirloom = None
         self.uuid = uuid.uuid4().hex
-        self._location = None
-        self._player = None
+        self._location: Optional[str] = None
+        self._player: Optional[Player] = None
         self._pile = ""
+        self.base: CardExpansion = CardExpansion.TEST
 
     ##########################################################################
     @property
-    def pile(self):
+    def pile(self) -> str:
         if not self._pile:
             return self.name
         return self._pile
 
     @pile.setter
-    def pile(self, value):
+    def pile(self, value: str) -> None:
         self._pile = value
 
     ##########################################################################
-    def check(self):
+    def check(self) -> None:
         """Check for some basic validity
         Some of these checks are caused by inconsistent naming standards
         """
@@ -155,24 +159,24 @@ class Card:
 
     ##########################################################################
     @property
-    def location(self):
+    def location(self) -> Optional[str]:
         return self._location
 
     @location.setter
-    def location(self, val):
+    def location(self, val: str) -> None:
         self._location = val
 
     ##########################################################################
     @property
-    def player(self):
+    def player(self) -> "Player":
         return self._player
 
     @player.setter
-    def player(self, val):
+    def player(self, val: "Player") -> None:
         self._player = val
 
     ##########################################################################
-    def get_cardtype_repr(self):
+    def get_cardtype_repr(self) -> str:
         if isinstance(self.cardtype, list):
             ct = self.cardtype[:]
         else:
@@ -181,91 +185,95 @@ class Card:
         return ", ".join([_.name.title() for _ in ct])
 
     ##########################################################################
-    def __repr__(self):
+    def __repr__(self) -> str:
         if os.getenv("PYDOMINION_DEBUG"):
             return f"{self.name} ({self.uuid} {self._player}@{self._location})"
         return f"{self.name}"
 
     ##########################################################################
-    def __lt__(self, card):
+    def __lt__(self, card) -> bool:
         assert isinstance(card, Card), f"__lt__({card=}) {type(card)=}"
         return self.name < card.name
 
     ##########################################################################
-    def description(self, player):
+    def description(self, player) -> str:
         if callable(self.desc):
             return self.desc(player)
         return self.desc
 
     ##########################################################################
-    def special(self, game, player):
+    def special(self, game, player) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def night(self, game, player):
+    def hook_overpay(self, game, player, amount: int) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def duration(self, game, player) -> Optional[dict]:
+    def night(self, game, player) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def setup(self, game):
+    def duration(self, game, player) -> Optional[dict[str, str]]:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def has_defense(self):
+    def setup(self, game) -> None:
+        """Hook - overwritten in subclasses"""
+
+    ##########################################################################
+    def has_defense(self) -> bool:
         """Hook - overwritten in subclasses"""
         return self.defense
 
     ##########################################################################
-    def isLiaison(self):
+    def isLiaison(self) -> bool:
         """Is this card a Liaison
         http://wiki.dominionstrategy.com/index.php/Liaison"""
         return self._is_type(CardType.LIAISON)
 
     ##########################################################################
-    def isGathering(self):
+    def isGathering(self) -> bool:
         return self._is_type(CardType.GATHERING)
 
     ##########################################################################
-    def isCommand(self):
+    def isCommand(self) -> bool:
         """http://wiki.dominionstrategy.com/index.php/Command"""
         return self._is_type(CardType.COMMAND)
 
     ##########################################################################
-    def isDuration(self):
+    def isDuration(self) -> bool:
         return self._is_type(CardType.DURATION)
 
     ##########################################################################
-    def isDebt(self):
+    def isDebt(self) -> bool:
         return self.debtcost != 0
 
     ##########################################################################
-    def isTreasure(self):
+    def isTreasure(self) -> bool:
         return self._is_type(CardType.TREASURE)
 
     ##########################################################################
-    def isNight(self):
+    def isNight(self) -> bool:
         return self._is_type(CardType.NIGHT)
 
     ##########################################################################
-    def isFate(self):
+    def isFate(self) -> bool:
         """Is the card a Fate"""
         return self._is_type(CardType.FATE)
 
     ##########################################################################
-    def isDoom(self):
+    def isDoom(self) -> bool:
         """Is the card a Doom"""
         return self._is_type(CardType.DOOM)
 
     ##########################################################################
-    def isLooter(self):
+    def isLooter(self) -> bool:
         """Is the card a Looter"""
         return self._is_type(CardType.LOOTER)
 
     ##########################################################################
-    def _is_type(self, ctype):
+    def _is_type(self, ctype) -> bool:
         """Is the card a specific type"""
         if isinstance(self.cardtype, list):
             if ctype in self.cardtype:
@@ -276,104 +284,104 @@ class Card:
         return False
 
     ##########################################################################
-    def isAction(self):
+    def isAction(self) -> bool:
         """http://wiki.dominionstrategy.com/index.php/Action"""
         return self._is_type(CardType.ACTION)
 
     ##########################################################################
-    def isLoot(self):
+    def isLoot(self) -> bool:
         """http://wiki.dominionstrategy.com/index.php/Loot"""
         return self._is_type(CardType.LOOT)
 
     ##########################################################################
-    def isShelter(self):
+    def isShelter(self) -> bool:
         """http://wiki.dominionstrategy.com/index.php/Shelter"""
         return self._is_type(CardType.SHELTER)
 
     ##########################################################################
-    def isRuin(self):
+    def isRuin(self) -> bool:
         """http://wiki.dominionstrategy.com/index.php/Ruin"""
         return self._is_type(CardType.RUIN)
 
     ##########################################################################
-    def isTraveller(self):
+    def isTraveller(self) -> bool:
         """http://wiki.dominionstrategy.com/index.php/Traveller"""
         return self._is_type(CardType.TRAVELLER)
 
     ##########################################################################
-    def isVictory(self):
+    def isVictory(self) -> bool:
         """http://wiki.dominionstrategy.com/index.php/Victory"""
         return self._is_type(CardType.VICTORY)
 
     ##########################################################################
-    def isReaction(self):
+    def isReaction(self) -> bool:
         """http://wiki.dominionstrategy.com/index.php/Reaction"""
         return self._is_type(CardType.REACTION)
 
     ##########################################################################
-    def isCastle(self):
+    def isCastle(self) -> bool:
         """http://wiki.dominionstrategy.com/index.php/Castle"""
         return self._is_type(CardType.CASTLE)
 
     ##########################################################################
-    def isKnight(self):
+    def isKnight(self) -> bool:
         """http://wiki.dominionstrategy.com/index.php/Knight"""
         return self._is_type(CardType.KNIGHT)
 
     ##########################################################################
-    def isAttack(self):
+    def isAttack(self) -> bool:
         """http://wiki.dominionstrategy.com/index.php/Attack"""
         return self._is_type(CardType.ATTACK)
 
     ##########################################################################
-    def isReserve(self):
+    def isReserve(self) -> bool:
         """http://wiki.dominionstrategy.com/index.php/Reserve"""
         return self._is_type(CardType.RESERVE)
 
     ##########################################################################
-    def special_score(self, game, player):  # pylint: disable=no-self-use
+    def special_score(self, game, player) -> int:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return 0  # pragma: nocover
 
     ##########################################################################
-    def hook_cleanup(self, game, player):
+    def hook_cleanup(self, game, player) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_all_players_pre_play(self, game, player, owner, card):
+    def hook_all_players_pre_play(self, game, player, owner, card) -> None:
         """Hook - overwritten in subclasses if required"""
 
     ##########################################################################
-    def hook_all_players_post_play(self, game, player, owner, card):
+    def hook_all_players_post_play(self, game, player, owner, card) -> None:
         """Hook - overwritten in subclasses if required"""
 
     ##########################################################################
-    def hook_pre_play(self, game, player, card):
+    def hook_pre_play(self, game, player, card) -> None:
         """Hook - overwritten in subclasses if required"""
 
     ##########################################################################
-    def hook_all_players_buy_card(self, game, player, owner, card):
+    def hook_all_players_buy_card(self, game, player, owner, card) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_buy_card(self, game, player, card):
+    def hook_buy_card(self, game, player, card) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_buy_this_card(self, game, player):
+    def hook_buy_this_card(self, game, player) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_call_reserve(self, game, player):
+    def hook_call_reserve(self, game, player) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_allowed_to_buy(self, game, player):  # pylint: disable=no-self-use
+    def hook_allowed_to_buy(self, game, player) -> None:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return True  # pragma: no cover
 
     ##########################################################################
-    def hook_all_players_gain_card(self, game, player, owner, card):
+    def hook_all_players_gain_card(self, game, player, owner, card) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
@@ -382,41 +390,43 @@ class Card:
         return {}  # pragma: no cover
 
     ##########################################################################
-    def hook_card_cost(self, game, player, card):  # pylint: disable=no-self-use
+    def hook_card_cost(self, game, player, card) -> int:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return 0  # pragma: no cover
 
     ##########################################################################
-    def hook_this_card_cost(self, game, player):  # pylint: disable=no-self-use
+    def hook_this_card_cost(self, game, player) -> int:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return 0  # pragma: no cover
 
     ##########################################################################
-    def hook_coinvalue(self, game, player):
+    def hook_coinvalue(self, game, player) -> int:
         """Hook - overwritten in subclasses;
         How much coin does this card contribute"""
         return self.coin  # pragma: no cover
 
     ##########################################################################
-    def hook_spend_value(self, game, player, card):  # pylint: disable=no-self-use
+    def hook_spend_value(
+        self, game, player, card
+    ) -> int:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses
         Does this card make any  modifications on the value of spending a card"""
         return 0  # pragma: no cover
 
     ##########################################################################
-    def hook_under_attack(self, game, player, attacker):
+    def hook_under_attack(self, game, player, attacker) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_discard_this_card(self, game, player, source):
+    def hook_discard_this_card(self, game, player, source) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_trash_this_card(self, game, player):
+    def hook_trash_this_card(self, game, player) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_trash_card(self, game, player, card):
+    def hook_trash_card(self, game, player, card) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
@@ -425,31 +435,31 @@ class Card:
         return {}  # pragma: no cover
 
     ##########################################################################
-    def hook_end_turn(self, game, player):
+    def hook_end_turn(self, game, player) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_end_of_game(self, game, player):
+    def hook_end_of_game(self, game, player) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_pre_buy(self, game, player):
+    def hook_pre_buy(self, game, player) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_end_buy_phase(self, game, player):
+    def hook_end_buy_phase(self, game, player) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_start_turn(self, game, player):
+    def hook_start_turn(self, game, player) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_start_every_turn(self, game, player):
+    def hook_start_every_turn(self, game, player) -> None:
         """Hook fired every turn if this card is in the game - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_reveal_this_card(self, game, player):
+    def hook_reveal_this_card(self, game, player) -> None:
         """Hook - overwritten in subclasses"""
 
 

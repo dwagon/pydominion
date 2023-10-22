@@ -54,7 +54,7 @@ class Test_Woodworkers_Guild(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, allies="Woodworkers' Guild", initcards=["Underling", "Moat"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_play_card(self):
         """Play and gain a card"""

@@ -41,7 +41,7 @@ class TestFarmersMarket(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Farmers' Market"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.c1 = self.g.get_card_from_pile("Farmers' Market")
         self.c2 = self.g.get_card_from_pile("Farmers' Market")
 

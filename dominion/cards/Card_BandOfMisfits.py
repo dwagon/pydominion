@@ -40,7 +40,7 @@ class TestBandOfMisfits(unittest.TestCase):
             badcards=["Village Green"]
         )
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Band of Misfits")
         self.plr.add_card(self.card, Piles.HAND)
 

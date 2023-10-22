@@ -35,7 +35,7 @@ class TestSkysGift(unittest.TestCase):
             quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"]
         )
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         my_boon = None
         for b in self.g.boons:
             if b.name == "The Sky's Gift":

@@ -44,7 +44,7 @@ class Test_Catacombs(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Catacombs"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.cat = self.g.get_card_from_pile("Catacombs")
         self.plr.add_card(self.cat, Piles.HAND)
 

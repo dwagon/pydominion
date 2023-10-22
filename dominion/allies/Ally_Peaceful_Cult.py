@@ -35,7 +35,7 @@ class TestPeacefulCult(unittest.TestCase):
             numplayers=1, allies="Peaceful Cult", initcards=["Underling"]
         )
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_flag(self):
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")

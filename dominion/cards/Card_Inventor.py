@@ -33,7 +33,7 @@ class TestInventor(unittest.TestCase):
             badcards=["Blessed Village", "Cemetery"],
         )
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.inventor = self.g.get_card_from_pile("Inventor")
         self.plr.add_card(self.inventor, Piles.HAND)
 

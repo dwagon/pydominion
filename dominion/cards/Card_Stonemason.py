@@ -61,7 +61,7 @@ class TestStoneMason(unittest.TestCase):
             badcards=["Fool's Gold", "Silver Mine"],
         )
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Stonemason")
 
     def test_play(self):

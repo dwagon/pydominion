@@ -9,7 +9,7 @@ class TestGetWhens(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Moat"], badcards=["Pixie"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_start(self):
         self.plr.start_turn()
@@ -47,7 +47,7 @@ class TestReserve(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Coin of the Realm"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_reserve(self):
         """Test reserve[]"""
@@ -97,7 +97,7 @@ class Test_reserveSelection(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Coin of the Realm"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_callable(self):
         gold = self.g.get_card_from_pile("Gold")

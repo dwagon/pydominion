@@ -31,7 +31,7 @@ class Test_CropRotation(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, projects=["Crop Rotation"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
 
     def test_cost(self):
         self.plr.assign_project("Crop Rotation")

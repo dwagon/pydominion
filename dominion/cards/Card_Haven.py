@@ -41,7 +41,7 @@ class TestHaven(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Haven"])
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Haven")
         self.plr.piles[Piles.DISCARD].set(
             "Copper", "Copper", "Copper", "Copper", "Copper"
