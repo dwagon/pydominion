@@ -65,7 +65,7 @@ class TestContraband(unittest.TestCase):
         self.plr.coins.set(6)
         self.plr.play_card(self.card)
         self.plr.phase = "buy"
-        options, _ = self.plr._choice_selection()  # pylint: disable=protected-access
+        options = self.plr._choice_selection()  # pylint: disable=protected-access
         for msg in options:
             if "Buy Gold" in msg["line"]:
                 self.fail("Allowed to buy Gold")

@@ -734,7 +734,7 @@ class Player:
         return options, index
 
     ###########################################################################
-    def _choice_selection(self):
+    def _choice_selection(self) -> list[Option]:
         index = 0
         o = Option(selector="0", verb="End Phase", card=None, action="quit")
         options = [o]
@@ -763,8 +763,7 @@ class Player:
             op, index = self._reserve_selection(index)
             options.extend(op)
 
-        prompt = self._generate_prompt()
-        return options, prompt
+        return options
 
     ###########################################################################
     def _generate_prompt(self) -> str:
@@ -828,7 +827,9 @@ class Player:
         self.output("************ Night Phase ************")
         while True:
             self._display_overview()
-            options, prompt = self._choice_selection()
+            options = self._choice_selection()
+            prompt = self._generate_prompt()
+
             opt = self.user_input(options, prompt)
             self._perform_action(opt)
             if opt["action"] == "quit":
@@ -839,7 +840,9 @@ class Player:
         self.output("************ Action Phase ************")
         while True:
             self._display_overview()
-            options, prompt = self._choice_selection()
+            options = self._choice_selection()
+            prompt = self._generate_prompt()
+
             opt = self.user_input(options, prompt)
             self._perform_action(opt)
             if opt["action"] == "quit":
@@ -851,7 +854,9 @@ class Player:
         self.hook_pre_buy()
         while True:
             self._display_overview()
-            options, prompt = self._choice_selection()
+            options = self._choice_selection()
+            prompt = self._generate_prompt()
+
             opt = self.user_input(options, prompt)
             self._perform_action(opt)
             if opt["action"] == "quit":

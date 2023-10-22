@@ -784,7 +784,7 @@ class TestChoiceSelection(unittest.TestCase):
     def test_action_phase(self):
         self.plr.piles[Piles.HAND].set("Moat")
         self.plr.phase = Phase.ACTION
-        opts, _ = self.plr._choice_selection()
+        opts = self.plr._choice_selection()
 
         self.assertEqual(opts[0]["verb"], "End Phase")
         self.assertEqual(opts[0]["action"], "quit")
@@ -804,7 +804,7 @@ class TestChoiceSelection(unittest.TestCase):
         self.plr.coffers = Counter(
             "Coffer", 0
         )  # Stop card _choice_selection breaking test
-        opts, _ = self.plr._choice_selection()
+        opts = self.plr._choice_selection()
 
         self.assertEqual(opts[0]["verb"], "End Phase")
         self.assertEqual(opts[0]["action"], "quit")
@@ -821,9 +821,9 @@ class TestChoiceSelection(unittest.TestCase):
         self.plr.potions.set(9)
         self.plr.coins.set(5)
         self.plr.coffers.set(1)
-        self.plr.phase = "buy"
+        self.plr.phase = Phase.BUY
         self.plr.debt = Counter("Debt", 2)
-        _, prompt = self.plr._choice_selection()
+        prompt = self.plr._generate_prompt()
         self.assertIn("Actions=3", prompt)
         self.assertIn("Coins=5", prompt)
         self.assertIn("Buys=7", prompt)
@@ -838,8 +838,8 @@ class TestChoiceSelection(unittest.TestCase):
         self.plr.potions.set(0)
         self.plr.coins.set(0)
         self.plr.coffers.set(0)
-        self.plr.phase = "buy"
-        _, prompt = self.plr._choice_selection()
+        self.plr.phase = Phase.BUY
+        prompt = self.plr._generate_prompt()
         self.assertIn("Actions=0", prompt)
         self.assertIn("Buys=0", prompt)
         self.assertNotIn("Coins", prompt)
