@@ -244,11 +244,9 @@ class Game:  # pylint: disable=too-many-public-methods
         self._original["total_cards"] = self.count_cards()
 
     ###########################################################################
-    def player_list(self, num=None):
+    def player_list(self) -> list[Player]:
         """TODO"""
-        if num is None:
-            return list(self.players.values())
-        return list(self.players.values())[num]
+        return list(self.players.values())
 
     ###########################################################################
     def card_setup(self):
