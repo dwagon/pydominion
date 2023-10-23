@@ -1820,7 +1820,7 @@ class Player:
     ###########################################################################
     def plr_trash_card(
         self, num=1, anynum=False, cardsrc=Piles.HAND, **kwargs
-    ) -> Optional[Card]:
+    ) -> Optional[list[Card]]:
         """Ask player to trash num cards"""
         if "prompt" not in kwargs:
             kwargs["prompt"] = "Trash any cards" if anynum else f"Trash {num} cards"
