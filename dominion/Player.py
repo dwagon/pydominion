@@ -76,19 +76,19 @@ class Player:
         self.test_input: list[str] = []
         self.forbidden_to_buy: list[Card] = []
         self.played_events = PlayArea("played_events", game=self.game)
-        self.played_ways: list[Way] = []
-        self._initial_deck(heirlooms, use_shelters)
-        self._initial_tokens()
+        self.played_ways: list[tuple[Way, Card]] = []
         self.once: dict[str, bool] = {}
         self.turn_number = 0
         self.stats: dict[str, list[Card]] = {"gained": [], "bought": [], "trashed": []}
-        self.pick_up_hand()
         self.secret_count = 0  # Hack to count cards that aren't anywhere normal
         self.end_of_game_cards: list[Card] = []
         self.phase = Phase.NONE
         self.misc = {"is_start": False, "cleaned": False}
         self.skip_turn = False
         self.uuid: str = ""
+        self._initial_deck(heirlooms, use_shelters)
+        self._initial_tokens()
+        self.pick_up_hand()
         game.output(f"Player {name} is at the table")
 
     ###########################################################################
