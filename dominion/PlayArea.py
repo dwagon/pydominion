@@ -50,7 +50,7 @@ class PlayArea:
         return None
 
     ###########################################################################
-    def set(self, *cards: list[str]) -> None:
+    def set(self, *cards: str) -> None:
         """Used for testing to set contents"""
         self.empty()
         assert self.game is not None
