@@ -22,7 +22,6 @@ from dominion.Names import playerNames
 from dominion.PlayArea import PlayArea
 from dominion.Player import Player
 from dominion.TextPlayer import TextPlayer
-from dominion.Trait import Trait
 
 
 ###############################################################################
@@ -342,7 +341,7 @@ class Game:  # pylint: disable=too-many-public-methods
             self.assign_trait(trait, card_pile)
 
     ###########################################################################
-    def assign_trait(self, trait: Trait, card_pile) -> None:
+    def assign_trait(self, trait: str, card_pile: str) -> None:
         """Assign the trait to the card pile"""
         self.card_piles[card_pile].trait = trait
         self.traits[trait].card_pile = card_pile
@@ -739,9 +738,9 @@ class Game:  # pylint: disable=too-many-public-methods
         return key in self.card_piles
 
     ###########################################################################
-    def _get_available_card_classes(self) -> dict[str, Any]:
+    def _get_available_card_classes(self) -> dict[str, dict[str, type[Card]]]:
         """Create a mapping between the card name and the module of that card"""
-        mapping = {}
+        mapping: dict[str, dict[str, type[Card]]] = {}
         for prefix in (
             "Card",
             "BaseCard",
@@ -787,13 +786,15 @@ class Game:  # pylint: disable=too-many-public-methods
 
     ###########################################################################
     @classmethod
-    def get_card_classes(cls, prefix, path, class_prefix="Card_"):
+    def get_card_classes(
+        cls, prefix: str, path: str, class_prefix: str = "Card_"
+    ) -> dict[str, type[Card]]:
         """Import all the modules to determine the real name of the card
         This is slow, but it is the only way that I can think of
 
         Look in {path} for files starting with {prefix}
         """
-        mapping = {}
+        mapping: dict[str, type[Card]] = {}
         files = glob.glob(f"{path}/{prefix}_*.py")
         for file_name in [os.path.basename(_) for _ in files]:
             file_name = file_name.replace(".py", "")

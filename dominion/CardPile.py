@@ -13,7 +13,7 @@ class CardPile:
         self.cards: list[Card] = []
         self.embargo_level = 0
         self.gatheredvp = 0
-        self.trait: Optional[Trait] = None
+        self.trait: Optional[str] = None
 
     ###########################################################################
     def init_cards(self, num_cards=0, card_class=None) -> None:

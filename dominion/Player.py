@@ -450,7 +450,9 @@ class Player:
         return card
 
     ###########################################################################
-    def discard_card(self, card: Card, source=None, hook=True) -> bool:
+    def discard_card(
+        self, card: Card, source: Optional[Piles] = None, hook: bool = True
+    ) -> None:
         """Discard a card"""
         assert isinstance(card, Card)
         if card in self.piles[Piles.HAND]:
