@@ -76,19 +76,19 @@ class Player:
         self.test_input: list[str] = []
         self.forbidden_to_buy: list[Card] = []
         self.played_events = PlayArea("played_events", game=self.game)
-        self.played_ways: list[Way] = []
-        self._initial_deck(heirlooms, use_shelters)
-        self._initial_tokens()
+        self.played_ways: list[tuple[Way, Card]] = []
         self.once: dict[str, bool] = {}
         self.turn_number = 0
         self.stats: dict[str, list[Card]] = {"gained": [], "bought": [], "trashed": []}
-        self.pick_up_hand()
         self.secret_count = 0  # Hack to count cards that aren't anywhere normal
         self.end_of_game_cards: list[Card] = []
         self.phase = Phase.NONE
         self.misc = {"is_start": False, "cleaned": False}
         self.skip_turn = False
         self.uuid: str = ""
+        self._initial_deck(heirlooms, use_shelters)
+        self._initial_tokens()
+        self.pick_up_hand()
         game.output(f"Player {name} is at the table")
 
     ###########################################################################
@@ -450,7 +450,9 @@ class Player:
         return card
 
     ###########################################################################
-    def discard_card(self, card: Card, source=None, hook=True) -> bool:
+    def discard_card(
+        self, card: Card, source: Optional[Piles] = None, hook: bool = True
+    ) -> None:
         """Discard a card"""
         assert isinstance(card, Card)
         if card in self.piles[Piles.HAND]:
@@ -1142,14 +1144,10 @@ class Player:
     ###########################################################################
     def _hook_start_turn(self) -> None:
         """Start of turn hooks"""
-        for card in self.game.card_instances:
-            self.game.card_instances[card].hook_start_every_turn(self.game, self)
-        for card in (
-            self.piles[Piles.HAND] + self.states + self.projects + self.artifacts
-        ):
+        for card_name in self.game.card_instances:
+            self.game.card_instances[card_name].hook_start_every_turn(self.game, self)
+        for card in self.relevant_cards():
             card.hook_start_turn(self.game, self)
-        if self.game.ally:
-            self.game.ally.hook_start_turn(self.game, self)
 
     ###########################################################################
     def spend_coffer(self) -> None:
