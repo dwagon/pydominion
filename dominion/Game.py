@@ -101,7 +101,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.card_instances: dict[str, Card] = {}
 
     ###########################################################################
-    def parse_args(self, **args) -> None:
+    def parse_args(self, **args: Any) -> None:
         """Parse the arguments passed to the class"""
         self.paths[Keys.CARDS] = args.get("card_path", self.paths[Keys.CARDS])
         self.paths[Keys.ALLIES] = args.get("ally_path", self.paths[Keys.ALLIES])
@@ -249,7 +249,7 @@ class Game:  # pylint: disable=too-many-public-methods
 
     ###########################################################################
     def player_list(self) -> list[Player]:
-        """TODO"""
+        """List of players"""
         return list(self.players.values())
 
     ###########################################################################
