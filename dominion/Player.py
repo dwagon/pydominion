@@ -1142,14 +1142,10 @@ class Player:
     ###########################################################################
     def _hook_start_turn(self) -> None:
         """Start of turn hooks"""
-        for card in self.game.card_instances:
-            self.game.card_instances[card].hook_start_every_turn(self.game, self)
-        for card in (
-            self.piles[Piles.HAND] + self.states + self.projects + self.artifacts
-        ):
+        for card_name in self.game.card_instances:
+            self.game.card_instances[card_name].hook_start_every_turn(self.game, self)
+        for card in self.relevant_cards():
             card.hook_start_turn(self.game, self)
-        if self.game.ally:
-            self.game.ally.hook_start_turn(self.game, self)
 
     ###########################################################################
     def spend_coffer(self) -> None:
