@@ -69,7 +69,7 @@ class Player:
         self.coffers = Counter("Coffers", 0)
         self.favors = Counter("Favors", 0)
         self.newhandsize = 5
-        self.limits = {Limits.PLAY: None, Limits.BUY: 999}
+        self.limits: dict[Limits, Optional[int]] = {Limits.PLAY: None, Limits.BUY: 999}
         self.card_token: bool = False
         self.coin_token: bool = False
         self.journey_token: bool = True
@@ -188,7 +188,7 @@ class Player:
             self.replace_card(src, dst, destination=Piles.HAND)
 
     ###########################################################################
-    def replace_card(self, src: Card, dst: str, **kwargs: dict[str, Any]) -> None:
+    def replace_card(self, src: Card, dst: str, **kwargs: Any) -> None:
         """Replace the {src} card with the {dst} card"""
         # New card goes into hand as it is about to be discarded
         destination = kwargs.get("destination", Piles.DISCARD)
@@ -1205,7 +1205,7 @@ class Player:
         self.currcards.pop()
 
     ###########################################################################
-    def hook_spend_value(self, card: Card, actual=False) -> int:
+    def hook_spend_value(self, card: Card, actual: bool = False) -> int:
         """How much do you get for spending the card
         If actual is True then we are spending the coin rather than
         just working out what we would get for spending it
@@ -1236,8 +1236,8 @@ class Player:
             self.output("Gaining action from +1 Action token")
             self.add_actions(1)
         if "+1 Card" in tkns:
-            c = self.pickup_card()
-            self.output(f"Picked up {c.name} from +1 Card token")
+            if c := self.pickup_card():
+                self.output(f"Picked up {c} from +1 Card token")
         if "+1 Coin" in tkns:
             self.output("Gaining coin from +1 Coin token")
             self.coins += 1
@@ -1246,16 +1246,16 @@ class Player:
             self.buys += 1
 
     ###########################################################################
-    def _hook_pre_play(self, card: Card) -> dict:
+    def _hook_pre_play(self, card: Card) -> dict[str, str]:
         """Hook before an action card is played"""
-        options = {}
+        options: dict[str, str] = {}
         for crd in self.piles[Piles.DURATION] + self.piles[Piles.PLAYED]:
             if ans := crd.hook_pre_play(game=self.game, player=self, card=card):
                 options.update(ans)
         return options
 
     ###########################################################################
-    def hook_all_players_pre_play(self, card: Card) -> dict:
+    def hook_all_players_pre_play(self, card: Card) -> dict[str, str]:
         options: dict[str, str] = {}
         for player in self.game.player_list():
             for crd in player.piles[Piles.DURATION]:
@@ -2030,7 +2030,7 @@ class Player:
         raise NotImplementedError
 
     ###########################################################################
-    def user_input(self, options, prompt):
+    def user_input(self, options: list[Option], prompt: str) -> Any:
         raise NotImplementedError
 
     ###########################################################################

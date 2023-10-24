@@ -3,6 +3,7 @@ import colorama
 from typing import Any, TYPE_CHECKING
 
 from dominion import Piles
+from dominion.PlayArea import PlayArea
 from dominion.Player import Player
 from dominion.Option import Option
 
@@ -104,7 +105,7 @@ class TextPlayer(Player):
         return " ".join(output)
 
     ###########################################################################
-    def user_input(self, options, prompt) -> None:
+    def user_input(self, options: list[Option], prompt: str) -> Any:
         """Get input from the user"""
         for o in options:
             line = self.selector_line(o)
@@ -133,7 +134,7 @@ class TextPlayer(Player):
             self.output(f"Invalid Option ({inp})")
 
     ###########################################################################
-    def select_source(self, **kwargs: str):
+    def select_source(self, **kwargs: Any) -> PlayArea:
         """Understand the various places to select cards from - either a
         text description of the source, a list of cards, or by default
         the players hand"""
@@ -151,7 +152,7 @@ class TextPlayer(Player):
         return select_from
 
     ###########################################################################
-    def card_pile_sel(self, num=1, **kwargs):
+    def card_pile_sel(self, num: int = 1, **kwargs: Any):
         """Select some card piles from a selection of card piles and return their names"""
         force = kwargs.get("force", False)
         showdesc = kwargs.get("showdesc", True)
@@ -204,7 +205,7 @@ class TextPlayer(Player):
 
     ###########################################################################
     def card_sel(
-        self, num: int = 1, **kwargs
+        self, num: int = 1, **kwargs: Any
     ) -> list["Card"]:  # pylint: disable=too-many-locals, too-many-branches
         """Most interactions with players are the selection of cards
         either from the hand, the drawpiles, or a subset

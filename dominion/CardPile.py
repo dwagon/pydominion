@@ -1,22 +1,23 @@
 from typing import Optional, TYPE_CHECKING, Self
 
 if TYPE_CHECKING:
-    from dominion.Game import Game
-    from dominion.Trait import Trait
+    from dominion import Game
     from dominion.Card import Card
 
 
 ###############################################################################
 class CardPile:
-    def __init__(self, game: Optional["Game"] = None) -> None:
-        # game is required by some subclasses
+    def __init__(self, game: Optional["Game.Game"] = None) -> None:
         self.cards: list[Card] = []
+        self.game = game
         self.embargo_level = 0
         self.gatheredvp = 0
         self.trait: Optional[str] = None
 
     ###########################################################################
-    def init_cards(self, num_cards=0, card_class=None) -> None:
+    def init_cards(
+        self, num_cards: int = 0, card_class: Optional[type["Card"]] = None
+    ) -> None:
         """Can be overwritten for the more unusual piles"""
         if num_cards == 0 or not card_class:
             return
@@ -66,7 +67,7 @@ class CardPile:
         return self_name < other_name
 
     ###########################################################################
-    def setup(self, game: "Game") -> None:
+    def setup(self, game: "Game.Game") -> None:
         """Setup card pile"""
         if self.cards:
             self.cards[-1].setup(game)
