@@ -2,14 +2,12 @@
 # pylint: disable=protected-access
 
 import unittest
-from dominion import Card
-from dominion import PlayArea
-from dominion import Game, Piles
+from dominion import Card, Game, PlayArea, Piles, Player
 
 
 ###############################################################################
 class Card_NativeVillage(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.desc = """+2 Actions;
@@ -20,10 +18,10 @@ class Card_NativeVillage(Card.Card):
         self.actions = 2
         self.cost = 2
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         if not hasattr(player, "_native_map"):
             player._native_map = PlayArea.PlayArea([])
-        player.output("Native Village contains: %s" % ", ".join(c.name for c in player._native_map))
+        player.output(f'Native Village contains: {", ".join(player._native_map)}')
         choice = player.plr_choose_options(
             "Choose One",
             (
@@ -35,17 +33,17 @@ class Card_NativeVillage(Card.Card):
         if choice == "push":
             card = player.next_card()
             player._native_map.add(card)
-            player.output("Adding %s to the Native Village" % card.name)
+            player.output(f"Adding {card} to the Native Village")
             player.secret_count += 1
         else:
             self.pull_back(player)
 
-    def hook_end_of_game(self, game, player):
+    def hook_end_of_game(self, game: Game.Game, player: Player.Player) -> None:
         self.pull_back(player)
 
-    def pull_back(self, player):
+    def pull_back(self, player: Player.Player) -> None:
         for card in player._native_map:
-            player.output("Returning %s from Native Map" % card.name)
+            player.output(f"Returning {card} from Native Map")
             player.add_card(card, Piles.HAND)
             player._native_map.remove(card)
             player.secret_count -= 1
@@ -53,13 +51,13 @@ class Card_NativeVillage(Card.Card):
 
 ###############################################################################
 class Test_NativeVillage(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Native Village"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g.get_card_from_pile("Native Village")
 
-    def test_play(self):
+    def test_play(self) -> None:
         self.plr.piles[Piles.DECK].set("Gold")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Set aside"]
