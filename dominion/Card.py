@@ -209,19 +209,19 @@ class Card:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_overpay(self, game, player, amount: int) -> None:
+    def hook_overpay(self, game: "Game", player: "Player", amount: int) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def night(self, game, player) -> None:
+    def night(self, game: "Game", player: "Player") -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def duration(self, game, player) -> Optional[dict[str, str]]:
+    def duration(self, game: "Game", player: "Player") -> Optional[dict[str, str]]:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def setup(self, game) -> None:
+    def setup(self, game: "Game") -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
@@ -276,7 +276,7 @@ class Card:
         return self._is_type(CardType.LOOTER)
 
     ##########################################################################
-    def _is_type(self, ctype) -> bool:
+    def _is_type(self, ctype: CardType) -> bool:
         """Is the card a specific type"""
         if isinstance(self.cardtype, list):
             if ctype in self.cardtype:
@@ -368,8 +368,9 @@ class Card:
     ##########################################################################
     def hook_pre_play(
         self, game: "Game", player: "Player", card: "Card"
-    ) -> dict[str, str]:
+    ) -> Optional[dict[str, str]]:
         """Hook - overwritten in subclasses if required"""
+        return None
 
     ##########################################################################
     def hook_all_players_buy_card(
@@ -378,8 +379,9 @@ class Card:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_buy_card(self, game: "Game", player: "Player", card) -> None:
+    def hook_buy_card(self, game: "Game", player: "Player", card: "Card") -> None:
         """Hook - overwritten in subclasses"""
+        return None
 
     ##########################################################################
     def hook_buy_this_card(self, game: "Game", player: "Player") -> None:
@@ -460,7 +462,7 @@ class Card:
     ##########################################################################
     def hook_gain_this_card(
         self, game: "Game", player: "Player"
-    ):  # pylint: disable=no-self-use
+    ) -> Optional[dict[str, Any]]:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return {}  # pragma: no cover
 
