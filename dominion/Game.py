@@ -725,7 +725,7 @@ class Game:  # pylint: disable=too-many-public-methods
             sys.exit(1)
 
     ###########################################################################
-    def get_card_piles(self):
+    def get_card_piles(self) -> list[tuple[str, CardPile]]:
         """Return the card piles in this game
         While Loot is technically a Pile - it isn't for most purposes
         """
