@@ -1335,8 +1335,7 @@ class Player:
         if post_action_hook:
             self.hook_all_players_post_play(card)
             for crd in self.relevant_cards():
-                if hasattr(crd, "hook_post_action"):
-                    crd.hook_post_action(game=self.game, player=self, card=card)
+                crd.hook_post_play(game=self.game, player=self, card=card)
 
     ###########################################################################
     def perform_way(self, way: Way, card: Card) -> None:

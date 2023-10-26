@@ -13,9 +13,9 @@ class Project_Citadel(Project.Project):
         self.name = "Citadel"
         self.cost = 8
 
-    def hook_post_action(self, game, player, card):
-        if player.piles[Piles.PLAYED].size() == 1:
-            player.output("Citadel plays {} again".format(card.name))
+    def hook_post_play(self, game, player, card):
+        if card.isAction() and player.piles[Piles.PLAYED].size() == 1:
+            player.output(f"Citadel plays {card} again")
             player.play_card(
                 card, discard=False, cost_action=False, post_action_hook=False
             )
@@ -24,9 +24,7 @@ class Project_Citadel(Project.Project):
 ###############################################################################
 class TestCitadel(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, projects=["Citadel"], initcards=["Moat"]
-        )
+        self.g = Game.TestGame(numplayers=1, projects=["Citadel"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Moat")

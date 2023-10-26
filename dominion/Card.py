@@ -373,6 +373,13 @@ class Card:
         return None
 
     ##########################################################################
+    def hook_post_play(
+        self, game: "Game", player: "Player", card: "Card"
+    ) -> Optional[dict[str, str]]:
+        """Hook - overwritten in subclasses if required"""
+        return None
+
+    ##########################################################################
     def hook_all_players_buy_card(
         self, game: "Game", player: "Player", owner: "Player", card: "Card"
     ) -> None:

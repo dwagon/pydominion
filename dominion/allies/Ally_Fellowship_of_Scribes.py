@@ -7,25 +7,22 @@ from dominion import Card, Game, Piles, Ally
 
 ###############################################################################
 class Ally_Fellowship_of_Scribes(Ally.Ally):
-    def __init__(self):
+    def __init__(self) -> None:
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
-        self.desc = (
-            """After playing an Action, if you have 4 or fewer cards in hand, you may spend a Favor for +1 Card."""
-        )
+        self.desc = """After playing an Action, if you have 4 or fewer cards in hand, you may spend a Favor for +1 Card."""
         self.name = "Fellowship of Scribes"
 
-    def hook_post_action(self, game, player, card):
+    def hook_post_play(self, game, player, card):
         if not player.favors.get():
             return
         if player.piles[Piles.HAND].size() > 4:
             return
-        choice = player.plr_choose_options(
+        if player.plr_choose_options(
             "Use Fellowship of Scribes to spend a favor to pickup a card?",
-            ("Gain a card", "gain"),
-            ("No thanks", "no"),
-        )
-        if choice == "gain":
+            ("Gain a card", True),
+            ("No thanks", False),
+        ):
             player.pickup_card()
             player.favors.add(-1)
 
@@ -37,7 +34,7 @@ def botresponse(player, kind, args=None, kwargs=None):
 
 ###############################################################################
 class Test_Fellowship_of_Scribes(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1,
             allies="Fellowship of Scribes",
@@ -46,7 +43,7 @@ class Test_Fellowship_of_Scribes(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play and gain a card"""
         self.card = self.g.get_card_from_pile("Festival")
         self.plr.piles[Piles.HAND].set("Duchy")
@@ -58,7 +55,7 @@ class Test_Fellowship_of_Scribes(unittest.TestCase):
         self.assertEqual(self.plr.favors.get(), 1)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 1 + 1)
 
-    def test_play_no_gain(self):
+    def test_play_no_gain(self) -> None:
         """Play and don't gain a card"""
         self.card = self.g.get_card_from_pile("Festival")
         self.plr.piles[Piles.HAND].set("Duchy")

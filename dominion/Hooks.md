@@ -30,7 +30,6 @@ hook_all_players_buy_card
 ---------------
 If any player buys a card call this for any card in everyone's duration pile
 
-
 hook_discard_this_card
 ----------------------
 This is called when this card is discarded.
@@ -115,9 +114,9 @@ Called after action cards are played by anyone,
 * owner - owner of the card with the hook
 * card - action card played
 
-hook_post_action(game, player, card)
+hook_post_play(game, player, card)
 ---------------
-Called for every card after an action has happened
+Called for every card after a card has been played
 
 hook_end_turn
 ------------
