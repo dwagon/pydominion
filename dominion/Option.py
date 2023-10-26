@@ -18,7 +18,7 @@ class Option:
 
     """
 
-    def __init__(self, **kwargs: Optional[Any]) -> None:
+    def __init__(self, **kwargs: Any) -> None:
         self.data: dict[str, Optional[Any]] = kwargs
 
     def __setitem__(self, key: str, value: str) -> None:

@@ -9,6 +9,7 @@ from dominion.Option import Option
 
 if TYPE_CHECKING:
     from dominion.Card import Card
+    from dominion.Game import Game
 
 if sys.version[0] == "3":
     raw_input = input
@@ -27,7 +28,7 @@ colours = [
 ###############################################################################
 ###############################################################################
 class TextPlayer(Player):
-    def __init__(self, game, name="", quiet=False, **kwargs):
+    def __init__(self, game: "Game", name="", quiet=False, **kwargs: Any) -> None:
         colorama.init()
         self.colour = colours[kwargs["number"]]
         self.quiet = quiet
@@ -37,42 +38,40 @@ class TextPlayer(Player):
     ###########################################################################
     def output(self, msg: str, end: str = "\n") -> None:
         if not self.quiet:
-            sys.stdout.write(
-                "%s%s%s: " % (self.colour, self.name, colorama.Style.RESET_ALL)
-            )
+            sys.stdout.write(f"{self.colour}{self.name}{colorama.Style.RESET_ALL}: ")
             try:
                 sys.stdout.write("%s: " % self.currcards[0].name)
             except IndexError:
                 pass
-            sys.stdout.write("%s%s" % (msg, end))
+            sys.stdout.write(f"{msg}{end}")
         self.messages.append(msg)
 
     ###########################################################################
     @classmethod
     def wrap(
-        cls, text: str, first: int = 0, indent: int = 15, maxwidth: int = 95
+        cls, text: str, first: int = 0, indent: int = 15, max_width: int = 95
     ) -> str:
         """Wrap the text so that it doesn't take more than maxwidth chars.
         The first line already has "first" characters in it. Subsequent lines
         should be indented "indent" spaces
         """
-        outstr: list[str] = []
+        out_str: list[str] = []
         sentence: list[str] = []
         if not text:
             return ""
         for word in text.split():
-            if len(" ".join(sentence)) + len(word) + first > maxwidth:
-                outstr.append(" ".join(sentence))
+            if len(" ".join(sentence)) + len(word) + first > max_width:
+                out_str.append(" ".join(sentence))
                 sentence = [" " * indent, word]
                 first = 0
             else:
                 sentence.append(word.strip())
-        outstr.append(" ".join(sentence))
-        return "\n".join(outstr)
+        out_str.append(" ".join(sentence))
+        return "\n".join(out_str)
 
     ###########################################################################
-    def selector_line(self, o: Option) -> str:
-        output = []
+    def selector_line(self, o: Option | dict[str, Any]) -> str:
+        output: list[str] = []
         if isinstance(o, dict):
             verb = o["print"]
             del o["print"]
@@ -82,7 +81,7 @@ class TextPlayer(Player):
             pass
         else:
             sys.stderr.write("o is %s\n" % type(o))
-        output.append("%s)" % o["selector"])
+        output.append(f"{o['selector']})")
         if o["verb"]:
             output.append(o["verb"])
         if o["name"]:
@@ -105,7 +104,7 @@ class TextPlayer(Player):
         return " ".join(output)
 
     ###########################################################################
-    def user_input(self, options: list[Option], prompt: str) -> Any:
+    def user_input(self, options: list[Option | dict[str, Any]], prompt: str) -> Any:
         """Get input from the user"""
         for o in options:
             line = self.selector_line(o)
@@ -123,7 +122,7 @@ class TextPlayer(Player):
                     self.game.print_state()
                     raise
             if inp:
-                matching = []
+                matching: list[Any] = []
                 for o in options:
                     if o["selector"] == inp:
                         return o
@@ -152,7 +151,7 @@ class TextPlayer(Player):
         return select_from
 
     ###########################################################################
-    def card_pile_sel(self, num: int = 1, **kwargs: Any):
+    def card_pile_sel(self, num: int = 1, **kwargs: Any) -> list[Any]:
         """Select some card piles from a selection of card piles and return their names"""
         force = kwargs.get("force", False)
         showdesc = kwargs.get("showdesc", True)
@@ -167,7 +166,7 @@ class TextPlayer(Player):
         else:
             anynum = False
 
-        selected = []
+        selected: list[Any] = []
         while True:
             options = []
             if (
@@ -206,7 +205,7 @@ class TextPlayer(Player):
     ###########################################################################
     def card_sel(
         self, num: int = 1, **kwargs: Any
-    ) -> list["Card"]:  # pylint: disable=too-many-locals, too-many-branches
+    ) -> list["Card"]:    # pylint: disable=too-many-locals, too-many-branches
         """Most interactions with players are the selection of cards
         either from the hand, the drawpiles, or a subset
         * force
@@ -244,8 +243,8 @@ class TextPlayer(Player):
         else:
             anynum = False
 
-        selected = []
-        types = kwargs["types"] if "types" in kwargs else {}
+        selected: list[Card] = []
+        types = kwargs.get("types", {})
         types = self._type_selector(types)
         while True:
             options = []
@@ -287,9 +286,9 @@ class TextPlayer(Player):
         return selected
 
     ###########################################################################
-    def plr_choose_options(self, prompt: str, *choices: tuple[str, Any]):
+    def plr_choose_options(self, prompt: str, *choices: tuple[str, Any]) -> Any:
         index = 0
-        options = []
+        options: list[Option] = []
         for prnt, ans in choices:
             options.append(Option(selector=f"{index}", verb=prnt, answer=ans))
             index += 1
