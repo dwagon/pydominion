@@ -22,7 +22,7 @@ class BotPlayer(Player):
         Player.__init__(self, game, name, **kwargs)
 
     ###########################################################################
-    def output(self, msg, end="\n"):
+    def output(self, msg: str, end: str = "\n") -> None:
         if not self.quiet:
             sys.stdout.write(f"{self.colour}{self.name}{colorama.Style.RESET_ALL}: ")
             sys.stdout.write(f"{msg}{end}")
@@ -82,11 +82,12 @@ class BotPlayer(Player):
 
     ###########################################################################
     @classmethod
-    def getCallingCard(cls):
+    def get_calling_card(cls):
         """Get the module that represents the card doing requiring the response"""
         stack = inspect.stack()
         for rec in stack:
             mod = inspect.getmodule(rec[0])
+            assert mod is not None
             mod_name = mod.__name__.replace("dominion.", "")
             if mod_name not in ("BotPlayer", "Player", "__main__"):
                 mod = inspect.getmodule(rec[0])
@@ -95,14 +96,14 @@ class BotPlayer(Player):
 
     ###########################################################################
     def card_sel(self, num=1, **kwargs):
-        mod = self.getCallingCard()
+        mod = self.get_calling_card()
         if hasattr(mod, "botresponse"):
             return mod.botresponse(self, "cards", kwargs=kwargs)
         assert False, f"BigMoneyBot can't select cards from {mod.__name__} {kwargs=}"
 
     ###########################################################################
     def plr_choose_options(self, prompt, *choices):
-        mod = self.getCallingCard()
+        mod = self.get_calling_card()
         if hasattr(mod, "botresponse"):
             return mod.botresponse(self, "choices", args=choices)
         assert False, f"BigMoneyBot can't choose options from {mod.__name__} {choices=}"
