@@ -82,9 +82,9 @@ class Player:
         self.stats: dict[str, list[Card]] = {"gained": [], "bought": [], "trashed": []}
         self.secret_count = 0  # Hack to count cards that aren't anywhere normal
         self.end_of_game_cards: list[Card] = []
-        self.phase = Phase.NONE
+        self.phase: Phase = Phase.NONE
         self.misc = {"is_start": False, "cleaned": False}
-        self.skip_turn = False
+        self.skip_turn: bool = False
         self.uuid: str = ""
         self._initial_deck(heirlooms, use_shelters)
         self._initial_tokens()
@@ -1251,7 +1251,7 @@ class Player:
         options: dict[str, str] = {}
         for crd in self.piles[Piles.DURATION] + self.piles[Piles.PLAYED]:
             if ans := crd.hook_pre_play(game=self.game, player=self, card=card):
-                options.update(ans)
+                options |= ans
         return options
 
     ###########################################################################

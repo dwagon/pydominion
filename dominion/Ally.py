@@ -4,7 +4,7 @@ from dominion import Card
 
 ###############################################################################
 class Ally(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ALLY
 
