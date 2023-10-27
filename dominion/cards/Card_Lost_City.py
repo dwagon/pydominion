@@ -15,7 +15,7 @@ class Card_Lost_City(Card.Card):
         self.actions = 2
         self.cost = 5
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         if player.phase == Player.Phase.BUY:
             return "+2 Cards, +2 Actions; When you gain this every else gains a card"
         return "+2 Cards, +2 Actions"

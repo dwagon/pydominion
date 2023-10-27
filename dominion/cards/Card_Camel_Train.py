@@ -14,7 +14,7 @@ class Card_Camel_Train(Card.Card):
         self.name = "Camel Train"
         self.cost = 3
 
-    def desc(self, player: "Player.Player") -> str:
+    def dynamic_description(self, player: "Player.Player") -> str:
         if player.phase == Phase.BUY:
             return """Exile a non-Victory card from the Supply. When you gain this, Exile a Gold from the Supply."""
         return "Exile a non-Victory card from the Supply."

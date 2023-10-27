@@ -15,7 +15,7 @@ class Card_Harem(Card.Card):
         self.victory = 2
         self.cost = 6
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         if player.phase == Player.Phase.BUY:
             return "+2 coin; 2 VPs"
         return "+2 coin"

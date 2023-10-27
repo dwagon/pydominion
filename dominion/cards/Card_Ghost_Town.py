@@ -13,7 +13,7 @@ class Card_Ghost_Town(Card.Card):
         self.name = "Ghost Town"
         self.cost = 3
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         if player.phase == Player.Phase.BUY:
             return """At the start of your next turn, +1 Card and +1 Action. This
                 is gained to your hand (instead of your discard pile)."""

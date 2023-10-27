@@ -14,7 +14,7 @@ class Card_Cavalry(Card.Card):
         self.cost = 4
         self.required_cards = [("Card", "Horse")]
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         if player.phase == Player.Phase.ACTION:
             return "Gain 2 Horses."
         return """Gain 2 Horses. When you gain this, +2 Cards, +1 Buy,

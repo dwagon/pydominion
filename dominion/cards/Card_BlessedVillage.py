@@ -15,7 +15,7 @@ class Card_BlessedVillage(Card.Card):
         self.cards = 1
         self.cost = 4
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         if player.phase == Player.Phase.BUY:
             return """+1 Card; +2 Actions; When you gain this, take a Boon.
                 Receive it now or at the start of your next turn."""

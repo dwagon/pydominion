@@ -17,7 +17,7 @@ class Card_Messenger(Card.Card):
         self.coin = 2
         self.cost = 4
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         """Variable description"""
         if player.phase == Player.Phase.BUY:
             return """+1 Buy, +2 Coin, You may put your deck into your discard pile;

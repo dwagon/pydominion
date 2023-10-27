@@ -11,7 +11,7 @@ class Landmark_Colonnade(Landmark.Landmark):
         self.base = Card.CardExpansion.EMPIRES
         self.name = "Colonnade"
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         if self._vp:
             return (
                 "When you buy an Action card, if you have a copy of it in play, take 2VP from here. %d left"

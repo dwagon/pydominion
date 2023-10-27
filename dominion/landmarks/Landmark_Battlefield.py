@@ -12,7 +12,7 @@ class Landmark_Battlefield(Landmark.Landmark):
         self.name = "Battlefield"
         self._vp = 0
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         return "When you gain a Victory card, take 2VP from here. (%d left)" % self._vp
 
     def hook_gain_card(self, game, player, card):

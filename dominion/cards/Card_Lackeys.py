@@ -15,7 +15,7 @@ class Card_Lackeys(Card.Card):
         self.cost = 2
 
     ###########################################################################
-    def desc(self, player):
+    def dynamic_description(self, player):
         if player.phase == Player.Phase.BUY:
             return "+2 Cards; When you gain this, +2 Villagers."
         return "+2 Cards"

@@ -13,7 +13,7 @@ class Card_Den_of_Sin(Card.Card):
         self.name = "Den of Sin"
         self.cost = 2
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         if player.phase == Player.Phase.BUY:
             return "At the start of your next turn, +2 Cards; This is gained to your hand (instead of your discard pile)."
         return "At the start of your next turn, +2 Cards"

@@ -15,7 +15,7 @@ class Card_StoneMason(Card.Card):
         self.overpay = True
         self.cost = 2
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         if player.phase == Player.Phase.BUY:
             return """Trash a card from your hand. Gain 2 cards each costing less
                 than it.  When you buy this, you may overpay for it. If you do,

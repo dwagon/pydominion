@@ -15,7 +15,7 @@ class Card_Bordervillage(Card.Card):
         self.cards = 1
         self.actions = 2
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         if player.phase == Player.Phase.BUY:
             return "+1 card, +2 action. When you gain this, gain a card costing less than this"
         return "+1 card, +2 action"

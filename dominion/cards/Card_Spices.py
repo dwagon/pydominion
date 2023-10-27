@@ -16,7 +16,7 @@ class Card_Spices(Card.Card):
         self.cost = 5
 
     ###########################################################################
-    def desc(self, player):
+    def dynamic_description(self, player):
         if player.phase == Player.Phase.BUY:
             return "+2 Coin; +1 Buy; When you gain this, +2 Coffers."
         return "+2 Coin; +1 Buy"

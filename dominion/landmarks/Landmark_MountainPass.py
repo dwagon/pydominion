@@ -12,7 +12,7 @@ class Landmark_MountainPass(Landmark.Landmark):
         self.name = "Mountain Pass"
         self._state = "un"
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         if self._state == "done":
             return "Mountain Pass already claimed"
         return """When you are the first player to gain a Province, after that turn,

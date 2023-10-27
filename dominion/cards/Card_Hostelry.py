@@ -17,7 +17,7 @@ class Card_Hostelry(Card.Card):
         self.cost = 4
         self.required_cards = [("Card", "Horse")]
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         if player.phase == Player.Phase.BUY:
             return "+1 Card; +2 Actions; When you gain this, you may discard any number of Treasures, revealed, to gain that many Horses."
         return "+1 Card; +2 Actions"

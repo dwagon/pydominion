@@ -11,7 +11,7 @@ class Landmark_Baths(Landmark.Landmark):
         self.base = Card.CardExpansion.EMPIRES
         self.name = "Baths"
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         return (
             "When you end your turn without having gained a card, take 2VP from here. (%d left)"
             % self._vp

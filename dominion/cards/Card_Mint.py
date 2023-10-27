@@ -13,7 +13,7 @@ class Card_Mint(Card.Card):
         self.name = "Mint"
         self.cost = 5
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         if player.phase == Player.Phase.BUY:
             return """You may reveal a Treasure card from your hand. Gain a copy of it.
             When you buy this, trash all Treasures you have in play."""

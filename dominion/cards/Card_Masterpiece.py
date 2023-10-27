@@ -15,7 +15,7 @@ class Card_Masterpiece(Card.Card):
         self.coin = 1
         self.cost = 3
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         if player.phase == Player.Phase.BUY:
             return """+1 Coin. When you buy this, you may overpay for it.
                 If you do, gain a Silver per coin you overpaid."""

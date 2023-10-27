@@ -16,7 +16,7 @@ class Card_Port(Card.Card):
         self.cost = 4
         self.numcards = 12
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         if player.phase == Player.Phase.BUY:
             return "+1 Card, +2 Actions; When you buy this, gain another Port"
         return "+1 Card, +2 Actions"
