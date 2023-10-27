@@ -7,24 +7,23 @@ from dominion import Card, Game, Piles, Ally
 
 ###############################################################################
 class Ally_Circle_of_Witches(Ally.Ally):
-    def __init__(self):
+    def __init__(self) -> None:
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
         self.desc = "After playing a Liaison, you may spend 3 Favors to have each other player gain a curse"
         self.required_cards = ["Curse"]
         self.name = "Circle of Witches"
 
-    def hook_post_action(self, game, player, card):
+    def hook_post_play(self, game, player, card):
         if player.favors.get() < 3:
             return
         if not card.isLiaison():
             return
-        chc = player.plr_choose_options(
+        if chc := player.plr_choose_options(
             "Spend three favors to Curse everyone else: ",
             ("Nope, I'll be nice", False),
             ("Curse them", True),
-        )
-        if chc:
+        ):
             player.favors.add(-3)
             for plr in game.player_list():
                 if plr != player:
@@ -34,12 +33,14 @@ class Ally_Circle_of_Witches(Ally.Ally):
 
 ###############################################################################
 class Test_Circle_of_Witches(unittest.TestCase):
-    def setUp(self):
-        self.g = Game.TestGame(numplayers=2, allies="Circle of Witches", initcards=["Underling", "Moat"])
+    def setUp(self) -> None:
+        self.g = Game.TestGame(
+            numplayers=2, allies="Circle of Witches", initcards=["Underling", "Moat"]
+        )
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
 
-    def test_play_card(self):
+    def test_play_card(self) -> None:
         """Play a liaison and curse"""
         self.plr.favors.set(4)
         card = self.g.get_card_from_pile("Underling")

@@ -7,14 +7,14 @@ from dominion import Card, Game, Piles, Ally
 
 ###############################################################################
 class Ally_League_Shopkeepers(Ally.Ally):
-    def __init__(self):
+    def __init__(self) -> None:
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
         self.desc = """After playing a Liaison, if you have 5 or more Favors, +$1;
             and if 10 or more, +1 Action and +1 Buy."""
         self.name = "League of Shopkeepers"
 
-    def hook_post_action(self, game, player, card):  # pylint: disable=no-self-use
+    def hook_post_play(self, game, player, card):  # pylint: disable=no-self-use
         if not card.isLiaison():
             return
         if player.favors.get() >= 5:
@@ -26,8 +26,10 @@ class Ally_League_Shopkeepers(Ally.Ally):
 
 ###############################################################################
 class Test_League_Shopkeepers(unittest.TestCase):
-    def setUp(self):
-        self.g = Game.TestGame(numplayers=1, allies="League of Shopkeepers", initcards=["Underling"])
+    def setUp(self) -> None:
+        self.g = Game.TestGame(
+            numplayers=1, allies="League of Shopkeepers", initcards=["Underling"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Underling")

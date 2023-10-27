@@ -361,12 +361,19 @@ class Card:
 
     ##########################################################################
     def hook_all_players_post_play(
-        self, game: "Game", player: "Player", owner, card: "Card"
+        self, game: "Game", player: "Player", owner: "Player", card: "Card"
     ) -> None:
         """Hook - overwritten in subclasses if required"""
 
     ##########################################################################
     def hook_pre_play(
+        self, game: "Game", player: "Player", card: "Card"
+    ) -> Optional[dict[str, str]]:
+        """Hook - overwritten in subclasses if required"""
+        return None
+
+    ##########################################################################
+    def hook_post_play(
         self, game: "Game", player: "Player", card: "Card"
     ) -> Optional[dict[str, str]]:
         """Hook - overwritten in subclasses if required"""

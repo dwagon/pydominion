@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from typing import Optional
+
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Champion(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
         self.base = Card.CardExpansion.ADVENTURE
@@ -19,21 +20,25 @@ class Card_Champion(Card.Card):
         self.numcards = 5
         self.cost = 6
 
-    def hook_post_action(self, game, player, card):
-        player.add_actions(1)
+    def hook_post_play(
+        self, game: "Game.Game", player: "Player.Player", card: "Card.Card"
+    ) -> Optional[dict[str, str]]:
+        if card.isAction():
+            player.add_actions(1)
+        return None
 
 
 ###############################################################################
-class Test_Champion(unittest.TestCase):
-    def setUp(self):
+class TestChampion(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Page", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Champion")
 
-    def test_champion(self):
+    def test_champion(self) -> None:
         """Play a champion"""
-        self.plr.add_card(self.card, "duration")
+        self.plr.add_card(self.card, Piles.DURATION)
         self.assertEqual(self.plr.actions.get(), 1)
         moat = self.g.get_card_from_pile("Moat")
         self.plr.add_card(moat, Piles.HAND)
