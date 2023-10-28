@@ -1529,7 +1529,7 @@ class Player:
         self.hook_all_players_buy_card(new_card)
 
     ###########################################################################
-    def hook_all_players_buy_card(self, card):
+    def hook_all_players_buy_card(self, card) -> None:
         for player in self.game.player_list():
             for crd in player.piles[Piles.DURATION]:
                 crd.hook_all_players_buy_card(
