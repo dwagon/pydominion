@@ -14,7 +14,7 @@ class Landmark_Aqueduct(Landmark.Landmark):
         self._silvervp = 8
         self._vp = 0
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         return f"""When you gain a Treasure, move 1 VP from its pile to this.
             When you gain a Victory card, take the VP from this.
             (Here: {self._vp} VP, Gold: {self._goldvp} VP, Silver: {self._silvervp} VP)"""

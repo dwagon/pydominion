@@ -15,7 +15,7 @@ class Card_Temple(Card.Card):
         self.name = "Temple"
         self.cost = 4
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         """Variable Description"""
         if player.phase == Player.Phase.BUY:
             return f"""+1 VP. Trash from 1 to 3 differently named cards from your

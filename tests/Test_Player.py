@@ -44,15 +44,16 @@ class TestPlayer(unittest.TestCase):
 class TestTrashCard(unittest.TestCase):
     """Test plr.trash_card()"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.game = Game.TestGame(numplayers=1)
         self.game.start_game()
         self.plr = self.game.player_list()[0]
 
-    def test_trashcard_hand(self):
+    def test_trash_card_hand(self) -> None:
         """Test that trashing a card from hand works"""
         num_cards = self.game.count_cards()
         card = self.plr.piles[Piles.HAND][0]
+        assert card is not None
         self.plr.trash_card(card)
         self.assertEqual(num_cards, self.game.count_cards())
         self.assertIn(card, self.game.trash_pile)
@@ -60,11 +61,12 @@ class TestTrashCard(unittest.TestCase):
         self.assertEqual(card.location, "trash")
         self.assertEqual(card.player, None)
 
-    def test_trashcard_played(self):
+    def test_trash_card_played(self) -> None:
         """Test that trashing a card from played works"""
         self.plr.piles[Piles.PLAYED].set("Estate")
         num_cards = self.game.count_cards()
         card = self.plr.piles[Piles.PLAYED][0]
+        assert card is not None
         self.plr.trash_card(card)
         self.assertIn(card, self.game.trash_pile)
         self.assertEqual(num_cards, self.game.count_cards())

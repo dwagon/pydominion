@@ -14,7 +14,7 @@ class Card_Skulk(Card.Card):
         self.buys = 1
         self.cost = 4
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         if player.phase == Player.Phase.BUY:
             return "+1 Buy; Each other player receives the next Hex; When you gain this, gain a Gold."
         return "+1 Buy; Each other player receives the next Hex."

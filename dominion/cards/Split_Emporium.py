@@ -18,7 +18,7 @@ class Card_Emporium(Card.Card):
         self.pile = "Patrician"
 
     ###########################################################################
-    def desc(self, player):
+    def dynamic_description(self, player):
         if player.phase == Player.Phase.ACTION:
             return "+1 Card, +1 Action, +1 Coin"
         return "+1 Card, +1 Action, +1 Coin. When you gain this, if you have at least 5 Action cards in play, +2VP."

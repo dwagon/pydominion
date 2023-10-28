@@ -123,6 +123,7 @@ class Card:
         self._location: Optional[Piles] = None
         self._player: Optional[Player] = None
         self._pile: str = ""
+        self.desc = ""
         self.base: CardExpansion = CardExpansion.TEST
 
     ##########################################################################
@@ -171,7 +172,7 @@ class Card:
 
     ##########################################################################
     @property
-    def player(self) -> "Player":
+    def player(self) -> "Player|None":
         return self._player
 
     @player.setter
@@ -199,10 +200,15 @@ class Card:
         return self.name < card.name
 
     ##########################################################################
-    def description(self, player) -> str:
-        if callable(self.desc):
-            return self.desc(player)
+    def description(self, player: "Player") -> str:
+        if desc := self.dynamic_description(player):
+            return desc
         return self.desc
+
+    ##########################################################################
+    def dynamic_description(self, player: "Player") -> str:
+        """Dynamic description - generally based on phase"""
+        return ""
 
     ##########################################################################
     def special(self, game: "Game", player: "Player") -> None:
@@ -414,7 +420,7 @@ class Card:
     ##########################################################################
     def hook_gain_card(
         self, game: "Game", player: "Player", card: "Card"
-    ):  # pylint: disable=no-self-use
+    ) -> Optional[dict[str, Any]]:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return {}  # pragma: no cover
 

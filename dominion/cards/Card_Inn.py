@@ -15,7 +15,7 @@ class Card_Inn(Card.Card):
         self.actions = 2
         self.cost = 5
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         if player.phase == Player.Phase.BUY:
             return """+2 Cards, +2 Actions, Discard 2 cards.
             When you gain this, look through your discard pile

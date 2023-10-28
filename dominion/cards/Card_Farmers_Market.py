@@ -14,7 +14,7 @@ class Card_FarmersMarket(Card.Card):
         self.buys = 1
         self.cost = 3
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         """If there are 4VP or more on the Farmers' Market pile, take them and trash this.
         Otherwise, add 1VP to the pile and then +$1 per 1VP on the pile."""
         vps = player.game.card_piles["Farmers' Market"].getVP()

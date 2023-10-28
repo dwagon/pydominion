@@ -15,7 +15,7 @@ class Card_Forum(Card.Card):
         self.actions = 1
         self.cost = 5
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         if player.phase == Player.Phase.BUY:
             return "+3 Cards, +1 Action, Discard 2 cards. When you buy this, +1 Buy."
         return "+3 Cards, +1 Action, Discard 2 cards."

@@ -19,7 +19,7 @@ class Card_Herald(Card.Card):
         self.actions = 1
         self.cost = 4
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         """Variable description"""
         if player.phase == Player.Phase.BUY:
             return """+1 Card +1 Action. Reveal the top card of your deck.

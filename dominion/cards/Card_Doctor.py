@@ -16,7 +16,7 @@ class Card_Doctor(Card.Card):
         self.overpay = True
         self.cost = 3
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         """Variable description"""
         if player.phase == Player.Phase.BUY:
             return """Name a card. Reveal the top 3 cards of your deck.

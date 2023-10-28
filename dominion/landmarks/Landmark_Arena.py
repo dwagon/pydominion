@@ -11,7 +11,7 @@ class Landmark_Arena(Landmark.Landmark):
         self.base = Card.CardExpansion.EMPIRES
         self.name = "Arena"
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         return (
             "At the start of your Buy phase, you may discard an Action card. If you do, take 2VP from here. (%d left)"
             % self._vp

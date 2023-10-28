@@ -11,7 +11,7 @@ class Landmark_Labyrinth(Landmark.Landmark):
         self.base = Card.CardExpansion.EMPIRES
         self.name = "Labyrinth"
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         return "When you gain a 2nd card in one of your turns, take 2VP from here ({} left)".format(
             self._vp
         )

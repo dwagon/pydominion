@@ -14,7 +14,7 @@ class Landmark_Basilica(Landmark.Landmark):
     def setup(self, game):
         self._vp = 6 * game.numplayers
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         if self._vp <= 0:
             return "No effect"
         return (

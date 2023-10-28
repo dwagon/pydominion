@@ -19,7 +19,7 @@ class Card_Villa(Card.Card):
         self.buys = 1
         self.coin = 1
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         """Variable desc"""
         if player.phase == Player.Phase.ACTION:
             return "+2 Actions; +1 Buy; +1 Coin"

@@ -12,7 +12,7 @@ class Event_Alms(Event.Event):
         self.name = "Alms"
         self.cost = 0
 
-    def desc(self, player):
+    def dynamic_description(self, player):
         if self.treasures(player):
             return "You have treasures in play so you can't gain a card costing up to 4"
         return "You have no treasures in play, gain a card costing up to 4"
