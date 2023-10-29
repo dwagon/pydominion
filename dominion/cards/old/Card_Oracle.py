@@ -1,60 +1,63 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
 class Card_Oracle(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.HINTERLANDS
-        self.desc = """Each player (including you) reveals the top 2 cards of his deck, and you choose one:
-        either he discards them or he puts them back on top in an order he chooses.  +2 cards """
+        self.desc = """Each player (including you) reveals the top 2 cards of their deck, and discards them 
+        or puts them back, your choice (they choose the order). Then, +2 Cards."""
         self.name = "Oracle"
         self.cost = 3
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         for plr in player.attack_victims():
-            self.attack(player, plr, "%s's" % plr.name)
+            self.attack(player, plr, f"{plr.name}'s")
         self.attack(player, player, "your")
         player.pickup_cards(2)
 
-    def attack(self, player, victim, name):
+    def attack(
+        self, player: "Player.Player", victim: "Player.Player", name: str
+    ) -> None:
+        """reveals the top 2 cards of their deck, and discards them or puts them back, your choice"""
         cards = []
         for _ in range(2):
-            card = victim.next_card()
-            victim.reveal_card(card)
-            cards.append(card)
-        cardnames = ", ".join([c.name for c in cards])
+            if card := victim.next_card():
+                victim.reveal_card(card)
+                cards.append(card)
+        card_names = ", ".join([_.name for _ in cards])
         discard = player.plr_choose_options(
-            "What to do with %s cards: %s" % (name, cardnames),
-            ("Discard %s" % cardnames, True),
-            ("Put %s on top of deck" % cardnames, False),
+            f"What to do with {name} cards: {card_names}",
+            (f"Discard {card_names}", True),
+            (f"Put {card_names} on top of deck", False),
         )
         if discard:
             for card in cards:
                 victim.discard_card(card)
-            victim.output("%s's Oracle discarded your %s" % (player.name, cardnames))
+            victim.output(f"{player.name}'s Oracle discarded your {card_names}")
         else:
             for card in cards:
                 victim.add_card(card, "topdeck")
             victim.output(
-                "%s's Oracle put %s on top of your deck" % (player.name, cardnames)
+                f"{player.name}'s Oracle put {card_names} on top of your deck"
             )
 
 
 ###############################################################################
 class TestOracle(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Oracle"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g.get_card_from_pile("Oracle")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play_card(self):
+    def test_play_card(self) -> None:
         """Play Oracle"""
         self.vic.piles[Piles.DECK].set("Estate", "Duchy", "Province")
         self.plr.piles[Piles.DECK].set("Copper", "Silver", "Gold")

@@ -6,7 +6,7 @@ import json
 import operator
 import sys
 from collections import defaultdict
-from typing import Any, Optional, TYPE_CHECKING
+from typing import Any, Optional, TYPE_CHECKING, Callable
 
 if TYPE_CHECKING:
     from dominion.Game import Game
@@ -421,7 +421,7 @@ class Player:
         return self.add_card(card, dest)
 
     ###########################################################################
-    def add_card(self, card: Card, pile: Piles = Piles.DISCARD) -> Optional[Card]:
+    def add_card(self, card: Card, pile: Piles | str = Piles.DISCARD) -> Optional[Card]:
         """Add an existing card to a new location"""
         if not card:  # pragma: no cover
             return None
@@ -1694,7 +1694,13 @@ class Player:
         return True
 
     ###########################################################################
-    def cards_affordable(self, oper, coin: int, num_potions: int, types) -> list[Card]:
+    def cards_affordable(
+        self,
+        oper: Callable[[int, int], bool],
+        coin: int,
+        num_potions: int,
+        types: Optional[dict[CardType, bool]],
+    ) -> list[Card]:
         """Return the list of cards for under cost
         {coin} {num_potions} are the resources constraints we have
         """
@@ -1703,6 +1709,7 @@ class Player:
             if not pile:
                 continue
             card = pile.get_top_card()
+            assert card is not None
             cost = self.card_cost(card)
             if not self.select_by_type(card, types):
                 continue
@@ -1725,7 +1732,12 @@ class Player:
         return list(affordable)
 
     ###########################################################################
-    def cards_under(self, coin, num_potions=0, types=None) -> list[str]:
+    def cards_under(
+        self,
+        coin: int,
+        num_potions: int = 0,
+        types: Optional[dict[CardType, bool]] = None,
+    ) -> list[Card]:
         """Return the list of cards for under cost"""
         if types is None:
             types = {}
@@ -1733,7 +1745,12 @@ class Player:
         return self.cards_affordable(operator.le, coin, num_potions, types)
 
     ###########################################################################
-    def cards_worth(self, coin, num_potions=0, types=None) -> list[str]:
+    def cards_worth(
+        self,
+        coin: int,
+        num_potions: int = 0,
+        types: Optional[dict[CardType, bool]] = None,
+    ) -> list[Card]:
         """Return the list of cards that are exactly cost"""
         if types is None:
             types = {}
@@ -1743,7 +1760,7 @@ class Player:
     ###########################################################################
     def get_cards(self) -> dict[str, int]:
         """Return a list of all the cards owned"""
-        cards = defaultdict(int)
+        cards: defaultdict[str, int] = defaultdict(int)
         for _, stack in self.piles.items():
             for card in stack:
                 cards[card.name] += 1
@@ -1761,7 +1778,9 @@ class Player:
 
     ###########################################################################
     @classmethod
-    def _type_selector(cls, types=None) -> dict[CardType, bool]:
+    def _type_selector(
+        cls, types: Optional[dict[CardType, bool]] = None
+    ) -> dict[CardType, bool]:
         if types is None:
             types = {}
         assert set(types.keys()) <= {
@@ -2033,11 +2052,11 @@ class Player:
         raise NotImplementedError
 
     ###########################################################################
-    def card_sel(self, num: int = 1, **kwargs: Any) -> list[Card]:
+    def card_sel(self, num: int = 1, **kwargs: Any) -> list[Card] | None:
         raise NotImplementedError
 
     ###########################################################################
-    def card_pile_sel(self, num: int = 1, **kwargs: Any) -> list[Any]:
+    def card_pile_sel(self, num: int = 1, **kwargs: Any) -> list[str] | None:
         raise NotImplementedError
 
 

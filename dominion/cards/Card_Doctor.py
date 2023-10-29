@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, Phase
 
 
 ###############################################################################
@@ -16,9 +16,9 @@ class Card_Doctor(Card.Card):
         self.overpay = True
         self.cost = 3
 
-    def dynamic_description(self, player):
+    def dynamic_description(self, player: "Player.Player") -> str:
         """Variable description"""
-        if player.phase == Player.Phase.BUY:
+        if player.phase == Phase.BUY:
             return """Name a card. Reveal the top 3 cards of your deck.
                 Trash the matches. Put the rest back on top in any order.
                 When you buy this, you may overpay for it. For each 1 you overpaid,
@@ -27,7 +27,7 @@ class Card_Doctor(Card.Card):
         return """Name a card. Reveal the top 3 cards of your deck.
             Trash the matches. Put the rest back on top in any order."""
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         options = []
         index = 1
         for name, pile in sorted(game.get_card_piles()):
@@ -39,7 +39,8 @@ class Card_Doctor(Card.Card):
         )
         cards = []
         for _ in range(3):
-            cards.append(player.next_card())
+            if card := player.next_card():
+                cards.append(card)
         for card in cards:
             player.reveal_card(card)
             if card.name == o["card"]:
@@ -48,14 +49,18 @@ class Card_Doctor(Card.Card):
                 player.trash_card(card)
             else:
                 player.output(f"Putting {card} back")
-                player.add_card(card, "topdeck")
+                player.add_card(card, Piles.DECK)
 
-    def hook_overpay(self, game, player, amount):
+    def hook_overpay(
+        self, game: "Game.Game", player: "Player.Player", amount: int
+    ) -> None:
         """For each 1 you overpaid, look at the top card of your deck; trash it,
         discard it, or put it back."""
         for i in range(amount):
             player.output(f"Doctoring {i+1}/{amount}")
             card = player.next_card()
+            if card is None:
+                continue
             options = []
             options.append(
                 {
@@ -87,7 +92,7 @@ class Card_Doctor(Card.Card):
                 player.add_card(card, Piles.DISCARD)
                 player.output(f"Discarding {card}")
             elif o["action"] == "put back":
-                player.add_card(card, "topdeck")
+                player.add_card(card, Piles.DECK)
                 player.output(f"Putting {card} back")
 
 
@@ -95,14 +100,14 @@ class Card_Doctor(Card.Card):
 class TestDoctor(unittest.TestCase):
     """Test Doctor"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Doctor"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Doctor")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play_card(self):
+    def test_play_card(self) -> None:
         """Play the Doctor"""
         self.plr.piles[Piles.DECK].set("Silver", "Province", "Duchy")
         self.plr.test_input = ["Province"]
@@ -111,7 +116,7 @@ class TestDoctor(unittest.TestCase):
         self.assertIn("Silver", self.plr.piles[Piles.DECK])
         self.assertIn("Duchy", self.plr.piles[Piles.DECK])
 
-    def test_buy(self):
+    def test_buy(self) -> None:
         """Buy a Doctor"""
         self.plr.coins.set(6)
         self.plr.test_input = ["3", "trash", "discard", "back on top"]

@@ -3,10 +3,12 @@
 
 import sys
 import random
+from typing import Any
+
 import colorama
 from dominion.Player import Player
 from dominion.Option import Option
-from dominion import Piles
+from dominion import Piles, Card
 
 
 colours = [
@@ -128,7 +130,7 @@ class RandobotPlayer(Player):
         return None
 
     ###########################################################################
-    def card_sel(self, num=1, **kwargs):
+    def card_sel(self, num: int = 1, **kwargs: Any) -> list[Card.Card] | None:
         """Select a card at random"""
         print(f"card_sel {kwargs=}")
         cards = self.card_selSource(**kwargs)
@@ -140,10 +142,10 @@ class RandobotPlayer(Player):
         return [card]
 
     ###########################################################################
-    def card_pile_sel(self, num=1, **kwargs):
-        """Select a card at random"""
+    def card_pile_sel(self, num: int = 1, **kwargs: Any) -> list[str] | None:
+        """Select a card pile at random"""
         print(f"card_pile_sel {kwargs=}")
-        cards = self.card_selSource(**kwargs)
+        cards = list(self.game.card_piles.keys())
         if not cards:
             return None
         print(f"card_pile_sel {cards=}")
