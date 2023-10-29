@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
@@ -11,12 +10,13 @@ class Card_Lurker(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.INTRIGUE
-        self.desc = "+1 Action; Choose one: Trash an Action card from the Supply, or gain an Action card from the trash."
+        self.desc = """+1 Action; Choose one: Trash an Action card from the Supply, 
+        or gain an Action card from the trash."""
         self.name = "Lurker"
         self.cost = 2
         self.actions = 1
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         ch = player.plr_choose_options(
             "Choose one? ",
             ("Trash an Action from the Supply", "to"),
@@ -27,7 +27,7 @@ class Card_Lurker(Card.Card):
         if ch == "from":
             self._from_trash(game, player)
 
-    def _trash_supply(self, game, player):
+    def _trash_supply(self, game: "Game.Game", player: "Player.Player") -> None:
         """Trash an action from supply"""
         options = []
         for name, pile in game.get_card_piles():
@@ -44,10 +44,10 @@ class Card_Lurker(Card.Card):
             "Select Action from Supply to Trash", *options
         )
         card = game.get_card_from_pile(to_trash)
-        player.add_card(card, "played")  # In order to trash
+        player.add_card(card, Piles.PLAYED)  # In order to trash
         player.trash_card(card)
 
-    def _from_trash(self, game, player):
+    def _from_trash(self, game: "Game.Game", player: "Player.Player") -> None:
         """Gain an action from the trash"""
         acts = [_ for _ in game.trash_pile if _.isAction()]
         if not acts:
@@ -55,7 +55,7 @@ class Card_Lurker(Card.Card):
             return
         card = player.card_sel(cardsrc=acts, prompt="Select Action from the Trash")
         game.trash_pile.remove(card[0])
-        player.add_card(card[0], "discard")
+        player.add_card(card[0], Piles.DISCARD)
 
 
 ###############################################################################
