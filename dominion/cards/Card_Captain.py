@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
@@ -20,16 +20,16 @@ class Card_Captain(Card.Card):
         self.name = "Captain"
         self.cost = 6
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         self.special_sauce(game, player)
 
-    def duration(self, game, player):
+    def duration(self, game: "Game.Game", player: "Player.Player") -> None:
         self.special_sauce(game, player)
 
-    def special_sauce(self, game, player):
+    def special_sauce(self, game: "Game.Game", player: "Player.Player") -> None:
         options = [("None", None)]
         for name in game.get_action_piles(4):
-            card = game.get_card_from_pile(name)
+            card = game.card_instances[name]
             if card.isDuration():
                 continue
             if card.isCommand():
@@ -45,7 +45,7 @@ class Card_Captain(Card.Card):
 
 ###############################################################################
 class TestCaptain(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1, initcards=["Captain", "Workshop", "Bureaucrat"]
         )
@@ -54,13 +54,13 @@ class TestCaptain(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Captain")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play_bureaucrat(self):
+    def test_play_bureaucrat(self) -> None:
         """Make the Captain be a Bureaucrat"""
         self.plr.test_input = ["Bureaucrat"]
         self.plr.play_card(self.card)
         self.assertIn("Silver", self.plr.piles[Piles.DECK])
 
-    def test_play_market(self):
+    def test_play_market(self) -> None:
         """Make the Captain be a Workshop"""
         self.plr.test_input = ["Play Workshop", "Get Bureaucrat"]
         self.plr.play_card(self.card)

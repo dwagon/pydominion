@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Sorcerer"""
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
@@ -25,16 +25,16 @@ class Card_Sorcerer(Card.Card):
         self.desc = """+1 Card; +1 Action; Each other player names a card,
             then reveals the top card of their deck. If wrong, they gain a Curse."""
 
-    def _generate_options(self, game):
+    def _generate_options(self, game: "Game.Game") -> list[tuple[str, str]]:
         """Generate the options for user interaction"""
-        options = []
+        options: list[tuple[str, str]] = []
         for name, card_pile in game.get_card_piles():
-            card = game.get_card_from_pile(name)
+            card = game.card_instances[name]
             if card and card.purchasable:
                 options.append((name, name))
         return options
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         for plr in player.attack_victims():
             options = self._generate_options(game)
             pick = plr.plr_choose_options(
@@ -59,12 +59,12 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 class TestSorcerer(unittest.TestCase):
     """Test Sorcerer"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Wizards"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
 
-    def test_play_hit(self):
+    def test_play_hit(self) -> None:
         card = self.g.get_card_from_pile("Wizards", "Sorcerer")
         self.plr.add_card(card, Piles.HAND)
         hndsz = self.plr.piles[Piles.HAND].size()
@@ -75,7 +75,7 @@ class TestSorcerer(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertNotIn("Curse", self.vic.piles[Piles.DISCARD])
 
-    def test_play_miss(self):
+    def test_play_miss(self) -> None:
         while True:
             card = self.g.get_card_from_pile("Wizards")
             if card.name == "Sorcerer":

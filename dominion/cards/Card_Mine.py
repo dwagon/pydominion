@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
+from typing import Any
+
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -14,9 +16,11 @@ class Card_Mine(Card.Card):
         self.name = "Mine"
         self.cost = 5
 
-    def _generate_options(self, player):
+    def _generate_options(self, player: "Player.Player") -> list[dict[str, Any]]:
         """Generate the options for player dialog"""
-        options = [{"selector": "0", "print": "Don't trash a card", "card": None}]
+        options: list[dict[str, Any]] = [
+            {"selector": "0", "print": "Don't trash a card", "card": None}
+        ]
         index = 1
         for card in player.piles[Piles.HAND]:
             if card.isTreasure():
@@ -30,7 +34,7 @@ class Card_Mine(Card.Card):
                 index += 1
         return options
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Trash a treasure card from your hand. Gain a treasure card
         costing up to 3 more, put it in your hand"""
         options = self._generate_options(player)
@@ -41,7 +45,7 @@ class Card_Mine(Card.Card):
             # Make an assumption and pick the best treasure card
             # TODO - let user pick
             for card_name, _ in game.get_card_piles():
-                card = game.get_card_from_pile(card_name)
+                card = game.card_instances[card_name]
                 if not card:
                     continue
                 if not card.isTreasure():
@@ -60,13 +64,13 @@ class Card_Mine(Card.Card):
 
 ###############################################################################
 class TestMine(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Mine"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Mine")
 
-    def test_convert_copper(self):
+    def test_convert_copper(self) -> None:
         self.plr.piles[Piles.HAND].set("Copper")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["1"]
@@ -78,7 +82,7 @@ class TestMine(unittest.TestCase):
         self.assertEqual(self.plr.buys.get(), 1)
         self.assertEqual(self.plr.actions.get(), 0)
 
-    def test_convert_nothing(self):
+    def test_convert_nothing(self) -> None:
         self.plr.piles[Piles.HAND].set("Copper")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["0"]
