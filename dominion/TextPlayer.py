@@ -144,6 +144,8 @@ class TextPlayer(Player):
                 select_from = self.piles[Piles.PLAYED]
             elif kwargs["cardsrc"] == "discard":
                 select_from = self.piles[Piles.DISCARD]
+            elif kwargs["cardsrc"] == "exile":
+                select_from = self.piles[Piles.EXILE]
             else:
                 select_from = kwargs["cardsrc"]
         else:
@@ -168,7 +170,7 @@ class TextPlayer(Player):
 
         selected: list[Any] = []
         while True:
-            options = []
+            options: list[Option] = []
             if (
                 anynum
                 or (force and num == len(selected))
@@ -178,8 +180,8 @@ class TextPlayer(Player):
                 options.append(o)
             index = 1
             for name, card_pile in self.game.get_card_piles():
-                card = self.game.get_card_from_pile(name)
-                if "exclude" in kwargs and card_pile.name in kwargs["exclude"]:
+                card = self.game.card_instances[name]
+                if "exclude" in kwargs and card.name in kwargs["exclude"]:
                     continue
                 verb = verbs[0] if card_pile not in selected else verbs[1]
                 o = Option(selector=f"{index}", verb=verb, card=name, name=name)
@@ -187,9 +189,9 @@ class TextPlayer(Player):
                 if showdesc:
                     o["desc"] = card.description(self) if card else "Empty card pile"
                 if kwargs.get("printcost"):
-                    o["details"] = str(self.card_cost(card_pile))
+                    o["details"] = str(self.card_cost(card))
                 if kwargs.get("printtypes"):
-                    o["details"] = card_pile.get_cardtype_repr()
+                    o["details"] = card.get_cardtype_repr()
                 options.append(o)
             ui = self.user_input(options, "Select which card pile?")
             if not ui["card"]:
@@ -205,7 +207,7 @@ class TextPlayer(Player):
     ###########################################################################
     def card_sel(
         self, num: int = 1, **kwargs: Any
-    ) -> list["Card"]:    # pylint: disable=too-many-locals, too-many-branches
+    ) -> list["Card"]:  # pylint: disable=too-many-locals, too-many-branches
         """Most interactions with players are the selection of cards
         either from the hand, the drawpiles, or a subset
         * force

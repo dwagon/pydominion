@@ -1917,7 +1917,7 @@ class Player:
         return buyable
 
     ###########################################################################
-    def plr_pick_card(self, force=False, **kwargs) -> Card:
+    def plr_pick_card(self, force: bool = False, **kwargs: Any) -> Card:
         sel = self.card_sel(force=force, **kwargs)
         return sel[0]
 
@@ -1988,7 +1988,7 @@ class Player:
 
     ###########################################################################
     def plr_discard_cards(
-        self, num=1, any_number=False, **kwargs
+        self, num=1, any_number=False, **kwargs: Any
     ) -> Optional[list[Card]]:
         """Get the player to discard exactly num cards"""
         if "prompt" not in kwargs:
@@ -2025,7 +2025,7 @@ class Player:
         raise NotImplementedError
 
     ###########################################################################
-    def plr_choose_options(self, prompt: str, *choices):
+    def plr_choose_options(self, prompt: str, *choices: tuple[str, Any]) -> Any:
         raise NotImplementedError
 
     ###########################################################################
@@ -2033,7 +2033,11 @@ class Player:
         raise NotImplementedError
 
     ###########################################################################
-    def card_sel(self, num=1, **kwargs) -> list[Card]:
+    def card_sel(self, num: int = 1, **kwargs: Any) -> list[Card]:
+        raise NotImplementedError
+
+    ###########################################################################
+    def card_pile_sel(self, num: int = 1, **kwargs: Any) -> list[Any]:
         raise NotImplementedError
 
 

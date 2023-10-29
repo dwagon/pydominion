@@ -24,7 +24,7 @@ class Card_Camel_Train(Card.Card):
         for name, pile in game.get_card_piles():
             if pile.is_empty():
                 continue
-            card = game.get_card_from_pile(name)
+            card = game.card_instances[name]
             if card.isVictory():
                 continue
             if not card.purchasable:

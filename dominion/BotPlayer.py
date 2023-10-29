@@ -95,6 +95,13 @@ class BotPlayer(Player):
         return None
 
     ###########################################################################
+    def check_unexile(self, card_name: str) -> None:
+        """Unexile treasure cards if we need to"""
+        card = self.game.card_instances[card_name]
+        if card.isTreasure():
+            self.unexile(card_name)
+
+    ###########################################################################
     def card_sel(self, num=1, **kwargs):
         mod = self.get_calling_card()
         if hasattr(mod, "botresponse"):
