@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Embargo"""
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Embargo(Card.Card):
     """Embargo"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.SEASIDE
@@ -21,7 +21,7 @@ class Card_Embargo(Card.Card):
         self.coin = 2
         self.cost = 2
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Embargo Special"""
         trash = player.plr_choose_options(
             "Trash this card?",
@@ -31,8 +31,7 @@ class Card_Embargo(Card.Card):
         if not trash:
             return
         player.trash_card(self)
-        card_pile = player.card_pile_sel(prompt="Which stack to embargo")
-        if card_pile:
+        if card_pile := player.card_pile_sel(prompt="Which stack to embargo"):
             game.card_piles[card_pile[0]].embargo()
 
 
@@ -40,13 +39,13 @@ class Card_Embargo(Card.Card):
 class TestEmbargo(unittest.TestCase):
     """Test Embargo"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Embargo"], oldcards=True)
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.card = self.g.get_card_from_pile("Embargo")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Test playing Embargo"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["trash", "Select Silver -"]

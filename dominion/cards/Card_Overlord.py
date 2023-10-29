@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Overlord """
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
 class Card_Overlord(Card.Card):
     """Overlord"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.COMMAND]
         self.base = Card.CardExpansion.EMPIRES
@@ -17,24 +17,26 @@ class Card_Overlord(Card.Card):
         self.name = "Overlord"
         self.debtcost = 8
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         cards = [_ for _ in player.cards_under(5) if _.isAction() and not _.isCommand()]
-        opts = [(f"Play {_.name}", _) for _ in cards]
-        choice = player.plr_choose_options("Play which action card from supply?", *opts)
-        player.play_card(choice, discard=False, cost_action=False)
+        if opts := [(f"Play {_}", _) for _ in cards]:
+            choice = player.plr_choose_options(
+                "Play which action card from supply?", *opts
+            )
+            player.play_card(choice, discard=False, cost_action=False)
 
 
 ###############################################################################
 class TestOverlord(unittest.TestCase):
     """Test Overlord"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Overlord", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Overlord")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a Overlord"""
         hand = self.plr.piles[Piles.HAND].size()
         self.plr.add_card(self.card, Piles.HAND)
