@@ -69,6 +69,7 @@ class Player:
         self.coffers = Counter("Coffers", 0)
         self.favors = Counter("Favors", 0)
         self.newhandsize = 5
+        self.specials: dict[str, Any] = {}  # Used by cards for special reasons
         self.limits: dict[Limits, Optional[int]] = {Limits.PLAY: None, Limits.BUY: 999}
         self.card_token: bool = False
         self.coin_token: bool = False

@@ -5,7 +5,9 @@ import unittest
 import random
 from dominion import Card
 from dominion import PlayArea
-from dominion import Game, Piles
+from dominion import Game, Piles, Player
+
+DRUID = "druid"
 
 
 ###############################################################################
@@ -21,19 +23,18 @@ class Card_Druid(Card.Card):
         self.buys = 1
         self.cost = 2
 
-    def setup(self, game):
-        game._druid_area = PlayArea.PlayArea([])
+    def setup(self, game: "Game.Game") -> None:
+        game.specials[DRUID] = PlayArea.PlayArea([])
         random.shuffle(game.boons)
         for _ in range(3):
-            game._druid_area.add(game.boons.pop())
+            game.specials[DRUID].add(game.boons.pop())
 
     def special(self, game, player):
         options = []
         for i in range(3):
-            sel = f"{i}"
-            bn = list(game._druid_area)[i]
-            toprint = f"Receive {bn.name}: {bn.description(player)}"
-            options.append({"selector": sel, "print": toprint, "boon": bn})
+            boon = list(game.specials[DRUID])[i]
+            to_print = f"Receive {boon.name}: {boon.description(player)}"
+            options.append({"selector": f"{i}", "print": to_print, "boon": boon})
         b = player.user_input(options, "Which boon? ")
         player.receive_boon(boon=b["boon"], discard=False)
 
@@ -57,7 +58,9 @@ class Test_Druid(unittest.TestCase):
 
     def test_setaside(self):
         """Test that we don't get a set aside boon"""
-        setaside = {_.name for _ in self.g._druid_area}  # pylint: disable=no-member
+        set_aside = {
+            _.name for _ in self.g.specials[DRUID]
+        }  # pylint: disable=no-member
         left = {_.name for _ in self.g.boons}
         if setaside.intersection(left):
             self.fail("Set aside boons not set aside")

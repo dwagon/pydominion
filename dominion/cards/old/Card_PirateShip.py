@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Pirate_Ship"""
 import unittest
-from dominion import Card, Game, Piles
+from typing import Any
+
+from dominion import Card, Game, Piles, Player
+
+PIRATE_SHIP = "pirate_ship"
 
 
 ###############################################################################
@@ -29,7 +33,7 @@ class Card_PirateShip(Card.Card):
                 "attack",
             ),
             (
-                f"+{player._pirate_ship} = +1 per treasure you've taken with Pirate Ships this game.",
+                f"+{player.specials[PIRATE_SHIP]} = +1 per treasure you've taken with Pirate Ships this game.",
                 "spend",
             ),
         )
@@ -39,9 +43,9 @@ class Card_PirateShip(Card.Card):
                 if self.attack_player(player, victim):
                     trashed = True
             if trashed:
-                player._pirate_ship += 1
+                player.specials[PIRATE_SHIP] += 1
         else:
-            player.coins.add(player._pirate_ship)
+            player.coins.add(player.specials[PIRATE_SHIP])
 
     def attack_player(self, player, victim):
         trashed = False
@@ -69,9 +73,11 @@ class Card_PirateShip(Card.Card):
             player.output(f"Player {victim.name} has no treasures to trash")
         return trashed
 
-    def hook_gain_this_card(self, game, player):
-        if not hasattr(player, "_pirate_ship"):
-            player._pirate_ship = 0
+    def hook_gain_this_card(
+        self, game: "Game.Game", player: "Player.Player"
+    ) -> dict[str, Any]:
+        if PIRATE_SHIP not in player.specials:
+            player.specials[PIRATE_SHIP] = 0
         return {}
 
 
@@ -94,7 +100,7 @@ class TestPirateShip(unittest.TestCase):
         try:
             self.assertEqual(self.g.trash_pile.size(), trash_size + 1)
             self.assertIn("Copper", self.g.trash_pile)
-            self.assertEqual(self.plr._pirate_ship, 1)
+            self.assertEqual(self.plr.specials[PIRATE_SHIP], 1)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
@@ -106,8 +112,8 @@ class TestPirateShip(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIn("Copper", self.vic.piles[Piles.DISCARD])
 
-    def test_spend(self):
-        self.plr._pirate_ship = 2
+    def test_spend(self) -> None:
+        self.plr.specials[PIRATE_SHIP] = 2
         self.plr.test_input = ["per treasure"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
