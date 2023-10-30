@@ -22,6 +22,13 @@ from dominion.Names import playerNames
 from dominion.PlayArea import PlayArea
 from dominion.Player import Player
 from dominion.TextPlayer import TextPlayer
+from dominion.State import State
+from dominion.Artifact import Artifact
+from dominion.Project import Project
+from dominion.Event import Event
+from dominion.Way import Way
+from dominion.Landmark import Landmark
+from dominion.Trait import Trait
 
 
 ###############################################################################
@@ -35,14 +42,14 @@ class Game:  # pylint: disable=too-many-public-methods
         self.bot = False
         self.randobot = False
         self.card_piles: dict[str, CardPile] = {}
-        self.states: dict[str, str] = {}
-        self.artifacts = {}
-        self.projects = {}
-        self.events = {}
-        self.ways = {}
-        self.landmarks = {}
+        self.states: dict[str, State] = {}
+        self.artifacts: dict[str, Artifact] = {}
+        self.projects: dict[str, Project] = {}
+        self.events: dict[str, Event] = {}
+        self.ways: dict[str, Way] = {}
+        self.landmarks: dict[str, Landmark] = {}
         self.boons: list[Boon] = []
-        self.traits = {}
+        self.traits: dict[str, Trait] = {}
         self.discarded_boons: list[Boon] = []
         self.retained_boons: list[Boon] = []
         self.hexes: list[Hex] = []

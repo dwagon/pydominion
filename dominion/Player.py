@@ -480,7 +480,7 @@ class Player:
             self.discard_card(card, Piles.PLAYED, hook=False)
 
     ###########################################################################
-    def _playable_selection(self, index):
+    def _playable_selection(self, index: int) -> tuple[list[Option], int]:
         options = []
         playable = [c for c in self.piles[Piles.HAND] if c.playable and c.isAction()]
         if self.villagers:
@@ -526,7 +526,7 @@ class Player:
         return options, index
 
     ###########################################################################
-    def _night_selection(self, index):
+    def _night_selection(self, index: int) -> tuple[list[Option], int]:
         options = []
         nights = [c for c in self.piles[Piles.HAND] if c.isNight()]
         if nights:
@@ -547,9 +547,9 @@ class Player:
         return options, index
 
     ###########################################################################
-    def _spendable_selection(self):
+    def _spendable_selection(self) -> list[Option]:
         options = []
-        spendable = [c for c in self.piles[Piles.HAND] if c.isTreasure()]
+        spendable = [_ for _ in self.piles[Piles.HAND] if _.isTreasure()]
         spendable.sort(key=lambda x: x.name)
         totcoin = sum(self.hook_spend_value(_) for _ in spendable)
         numpots = sum(1 for _ in spendable if _.name == "Potion")
@@ -1937,6 +1937,7 @@ class Player:
     ###########################################################################
     def plr_pick_card(self, force: bool = False, **kwargs: Any) -> Card:
         sel = self.card_sel(force=force, **kwargs)
+        assert sel is not None
         return sel[0]
 
     ###########################################################################
@@ -1949,14 +1950,15 @@ class Player:
 
     ###########################################################################
     def assign_state(self, state: str) -> None:
+        """Assign a state to the player - remove from other players if unique"""
         assert isinstance(state, str)
         state_card = self.game.states[state]
 
         if state_card.unique_state:
-            for pl in self.game.player_list():
-                for st in pl.states[:]:
+            for player in self.game.player_list():
+                for st in player.states[:]:
                     if st.name == state:
-                        pl.states.remove(st)
+                        player.states.remove(st)
                         break
         self.states.append(state_card)
 
@@ -2006,7 +2008,7 @@ class Player:
 
     ###########################################################################
     def plr_discard_cards(
-        self, num=1, any_number=False, **kwargs: Any
+        self, num: int = 1, any_number: bool = False, **kwargs: Any
     ) -> Optional[list[Card]]:
         """Get the player to discard exactly num cards"""
         if "prompt" not in kwargs:
