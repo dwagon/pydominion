@@ -206,10 +206,7 @@ class Player:
     ###########################################################################
     def flip_journey_token(self) -> bool:
         """Flip a journey token - and return its new state"""
-        if self.journey_token:
-            self.journey_token = False
-        else:
-            self.journey_token = True
+        self.journey_token = not self.journey_token
         return self.journey_token
 
     ###########################################################################
@@ -338,8 +335,7 @@ class Player:
         if not self.piles[Piles.DECK]:
             self.output("No more cards in deck")
             return None
-        crd = self.piles[Piles.DECK].top_card()
-        return crd
+        return self.piles[Piles.DECK].top_card()
 
     ###########################################################################
     def refill_deck(self) -> None:
@@ -740,7 +736,9 @@ class Player:
                 action = None
             details = [self._cost_string(card)]
             if self.game.card_piles[card.pile].embargo_level:
-                details.append(f"Embargo {card.embargo_level}")
+                details.append(
+                    f"Embargo {self.game.card_piles[card.pile].embargo_level}"
+                )
             if self.game.card_piles[card.pile].getVP():
                 details.append(f"Gathered {self.game.card_piles[card.name].getVP()} VP")
             details.append(card.get_cardtype_repr())

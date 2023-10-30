@@ -12,7 +12,7 @@ PIRATE_SHIP = "pirate_ship"
 class Card_PirateShip(Card.Card):
     """Pirate Ship"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.SEASIDE
@@ -23,7 +23,7 @@ class Card_PirateShip(Card.Card):
         self.name = "Pirate Ship"
         self.cost = 4
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         choice = player.plr_choose_options(
             "Pick one",
             (
@@ -47,11 +47,13 @@ class Card_PirateShip(Card.Card):
         else:
             player.coins.add(player.specials[PIRATE_SHIP])
 
-    def attack_player(self, player, victim):
+    def attack_player(self, player: "Player.Player", victim: "Player.Player") -> bool:
         trashed = False
         cards = []
         for _ in range(2):
             card = victim.next_card()
+            if not card:
+                continue
             victim.reveal_card(card)
             if card.isTreasure():
                 cards.append(card)
@@ -62,6 +64,8 @@ class Card_PirateShip(Card.Card):
             to_trash = player.plr_trash_card(
                 prompt=f"Trash a card from {victim.name}", cardsrc=cards
             )
+            if to_trash is None:
+                return False
             trashed = True
             for card in cards:
                 if card not in to_trash:
@@ -85,14 +89,14 @@ class Card_PirateShip(Card.Card):
 class TestPirateShip(unittest.TestCase):
     """Test Pirate Ship"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Pirate Ship"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g.get_card_from_pile("Pirate Ship")
         self.plr.gain_card(new_card=self.card, destination=Piles.HAND)
 
-    def test_play_attack(self):
+    def test_play_attack(self) -> None:
         trash_size = self.g.trash_pile.size()
         self.vic.piles[Piles.DECK].set("Copper", "Estate")
         self.plr.test_input = ["Each other", "copper"]
@@ -105,7 +109,7 @@ class TestPirateShip(unittest.TestCase):
             self.g.print_state()
             raise
 
-    def test_trash_nothing(self):
+    def test_trash_nothing(self) -> None:
         """Play the card but chose to not trash anything"""
         self.vic.piles[Piles.DECK].set("Copper", "Estate")
         self.plr.test_input = ["Each other", "Finish selecting"]
