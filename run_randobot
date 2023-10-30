@@ -7,8 +7,8 @@ from collections import defaultdict
 
 
 ############################################################################################
-def get_card_name(str):
-    card = str.replace("ALL: Playing with ", "")
+def get_card_name(input_string: str) -> str:
+    card = input_string.replace("ALL: Playing with ", "")
     if "(" in card:
         card = card.split("(")[0]
     if "as required" in card:
@@ -17,9 +17,9 @@ def get_card_name(str):
 
 
 ############################################################################################
-def make_run(cardset=None, run=None):
+def make_run(cardset: str | None = None, run: int | None = None) -> set[str]:
     """Run the game"""
-    cards = set()
+    cards: set[str] = set()
     if cardset:
         cardsetname = cardset.replace("cardset/", "")
         cardset_args = f"--cardset {cardset}"
@@ -47,18 +47,19 @@ def make_run(cardset=None, run=None):
 
 
 ############################################################################################
-def print_results(stats):
+def print_results(stats: dict[str, int]) -> None:
     results = sorted(stats.items(), key=lambda x: x[1])
     for card, num in results:
         print(card, num)
 
 
 ############################################################################################
-def main():
+def main() -> None:
     """Do stuff"""
     os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
     num_runs = 0
-    card_stats = defaultdict(int)
+    card_stats: dict[str, int] = defaultdict(int)
+    card_sets = []
     if len(sys.argv) > 1:
         try:
             num_runs = int(sys.argv[1])
