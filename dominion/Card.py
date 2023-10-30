@@ -118,7 +118,7 @@ class Card:
         self.image = None
         self.numcards = 10
         self.retain_boon = False
-        self.heirloom = None
+        self.heirloom: Optional[str] = None
         self.uuid = uuid.uuid4().hex
         self._location: Optional[Piles] = None
         self._player: Optional[Player] = None
@@ -465,11 +465,15 @@ class Card:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_trash_this_card(self, game: "Game", player: "Player") -> None:
+    def hook_trash_this_card(
+        self, game: "Game", player: "Player"
+    ) -> Optional[dict[str, Any]]:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_trash_card(self, game: "Game", player: "Player", card: "Card") -> None:
+    def hook_trash_card(
+        self, game: "Game", player: "Player", card: "Card"
+    ) -> Optional[dict[str, Any]]:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################

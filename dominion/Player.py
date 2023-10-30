@@ -299,13 +299,12 @@ class Player:
         card.hook_reveal_this_card(game=self.game, player=self)
 
     ###########################################################################
-    def trash_card(self, card: Card, **kwargs) -> None:
+    def trash_card(self, card: Card, **kwargs: Any) -> None:
         """Take a card out of the game"""
         assert isinstance(card, Card)
         self.stats["trashed"].append(card)
         trash_opts = {}
-        rc = card.hook_trash_this_card(game=self.game, player=self)
-        if rc:
+        if rc := card.hook_trash_this_card(game=self.game, player=self):
             trash_opts.update(rc)
         if trash_opts.get("trash", True):
             if card.location and card.location != Piles.TRASH:
@@ -357,9 +356,10 @@ class Player:
         self, num: int, verbose: bool = True, verb: str = "Picked up"
     ) -> list[Card]:
         """Pickup multiple cards into players hand"""
-        cards = []
+        cards: list[Card] = []
         for _ in range(num):
-            cards.append(self.pickup_card(verbose=verbose, verb=verb))
+            if card := self.pickup_card(verbose=verbose, verb=verb):
+                cards.append(card)
         return cards
 
     ###########################################################################
