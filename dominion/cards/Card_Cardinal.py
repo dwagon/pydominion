@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Cardinal """
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
 class Card_Cardinal(Card.Card):
     """Cardinal"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.MENAGERIE
@@ -18,33 +18,35 @@ class Card_Cardinal(Card.Card):
         self.name = "Cardinal"
         self.cost = 4
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         for plr in player.attack_victims():
-            exilecount = 0
+            exile_count = 0
             for _ in range(2):
-                crd = plr.pickup_card()
-                plr.reveal_card(crd)
-                if 3 <= crd.cost <= 6 and not exilecount:
-                    plr.exile_card(crd)
-                    plr.output(f"{player.name}'s Cardinal exiled your {crd.name}")
-                    exilecount += 1
+                card = plr.pickup_card()
+                if card is None:
+                    continue
+                plr.reveal_card(card)
+                if 3 <= card.cost <= 6 and not exile_count:
+                    plr.exile_card(card)
+                    plr.output(f"{player.name}'s Cardinal exiled your {card}")
+                    exile_count += 1
                 else:
-                    plr.output(f"{player.name}'s Cardinal discarded your {crd.name}")
-                    plr.discard_card(crd)
+                    plr.output(f"{player.name}'s Cardinal discarded your {card}")
+                    plr.discard_card(card)
 
 
 ###############################################################################
 class TestCardinal(unittest.TestCase):
     """Test Cardinal"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Cardinal", "Village"])
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
         self.card = self.g.get_card_from_pile("Cardinal")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Test play"""
         self.oth.piles[Piles.DECK].set("Silver", "Village")
         self.plr.play_card(self.card)

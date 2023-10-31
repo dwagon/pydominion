@@ -376,7 +376,8 @@ class Player:
 
     ###########################################################################
     def _shuffle_discard(self) -> None:
-        self.output(f"Shuffling Pile of {len(self.piles[Piles.DISCARD])} cards")
+        num_cards = len(self.piles[Piles.DISCARD])
+        self.output(f"Shuffling Pile of {num_cards} cards")
         for card in self.projects:
             if hasattr(card, "hook_pre_shuffle"):
                 card.hook_pre_shuffle(game=self.game, player=self)
@@ -1051,7 +1052,7 @@ class Player:
         return x
 
     ###########################################################################
-    def get_score_details(self) -> dict:
+    def get_score_details(self) -> dict[str, int]:
         """Calculate score of the player from all factors"""
         score: dict[str, int] = {}
         for card in self.all_cards():
@@ -1124,7 +1125,7 @@ class Player:
     def _duration_start_turn(self) -> None:
         """Perform the duration pile at the start of the turn"""
         for card in self.piles[Piles.DURATION]:
-            options = {"dest": Piles.PLAYED}
+            options: dict[str, Any] = {"dest": Piles.PLAYED}
             if not card.permanent:
                 self.output(f"Playing {card} from duration pile")
             self.currcards.append(card)
@@ -1265,7 +1266,7 @@ class Player:
         return options
 
     ###########################################################################
-    def hook_all_players_post_play(self, card: Card) -> dict:
+    def hook_all_players_post_play(self, card: Card) -> dict[str, Any]:
         options: dict[str, str] = {}
         for player in self.game.player_list():
             for crd in player.piles[Piles.DURATION]:
@@ -1395,9 +1396,9 @@ class Player:
     def gain_card(
         self,
         card_name: Optional[str] = None,
-        destination=Piles.DISCARD,
-        new_card=None,
-        callhook=True,
+        destination: Piles = Piles.DISCARD,
+        new_card: Optional[Card] = None,
+        callhook: bool = True,
     ) -> Optional[Card]:
         """Add a new card to the players set of cards from a card pile, return the card gained"""
         # Options:
@@ -1406,7 +1407,7 @@ class Player:
         #   destination: <dest> - Move the new card to <dest> rather than discard pile
         #   trash: True - trash the new card
         #   shuffle: True - shuffle the deck after gaining new card
-        options: dict[str, str] = {}
+        options: dict[str, Any] = {}
         if not new_card:
             if card_name == "Loot":
                 pile = "Loot"
@@ -1573,10 +1574,10 @@ class Player:
         )
 
     ###########################################################################
-    def _hook_gain_card(self, gained_card: Card) -> dict[str, str]:
+    def _hook_gain_card(self, gained_card: Card) -> dict[str, Any]:
         """Hook which is fired by a card being obtained by a player"""
         assert isinstance(gained_card, Card)
-        options = {}
+        options: dict[str, Any] = {}
         if self.hooks.get("gain_card"):
             opts = self.hooks["gain_card"](
                 game=self.game, player=self, card=gained_card
@@ -1592,7 +1593,7 @@ class Player:
         return options
 
     ###########################################################################
-    def has_defense(self, attacker: Player, verbose=True) -> bool:
+    def has_defense(self, attacker: "Player", verbose: bool = True) -> bool:
         """Does this player have a defense against attack"""
         for crd in self.piles[Piles.HAND]:
             if crd.has_defense():

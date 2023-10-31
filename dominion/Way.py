@@ -1,5 +1,5 @@
 """ http://wiki.dominionstrategy.com/index.php/Way """
-from typing import Optional, TYPE_CHECKING
+from typing import Optional, TYPE_CHECKING, Any
 from dominion.Card import Card
 
 if TYPE_CHECKING:
@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 class Way(Card):
     def special_way(
         self, game: "Game", player: "Player", card: "Card"
-    ) -> Optional[dict[str, str]]:
+    ) -> Optional[dict[str, Any]]:
         """Special hook for ways that include the triggering card"""
 
     def hook_way_discard_this_card(

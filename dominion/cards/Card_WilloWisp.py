@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
 class Card_WilloWisp(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.SPIRIT]
         self.base = Card.CardExpansion.NOCTURNE
@@ -19,7 +19,7 @@ class Card_WilloWisp(Card.Card):
         self.insupply = False
         self.cost = 0
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         card = player.next_card()
         if not card:
             player.output("No suitable card")
@@ -35,13 +35,13 @@ class Card_WilloWisp(Card.Card):
 
 ###############################################################################
 class TestWilloWisp(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Will-o'-Wisp"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Will-o'-Wisp")
 
-    def test_special_cheap(self):
+    def test_special_cheap(self) -> None:
         self.plr.piles[Piles.HAND].set()
         self.plr.piles[Piles.DECK].set("Copper", "Estate")
         self.plr.add_card(self.card, Piles.HAND)
@@ -51,7 +51,7 @@ class TestWilloWisp(unittest.TestCase):
         self.assertIn("Copper", self.plr.piles[Piles.HAND])
         self.assertIn("Estate", self.plr.piles[Piles.HAND])
 
-    def test_special_expensive(self):
+    def test_special_expensive(self) -> None:
         self.plr.piles[Piles.HAND].set()
         self.plr.piles[Piles.DECK].set("Gold", "Estate")
         self.plr.add_card(self.card, Piles.HAND)

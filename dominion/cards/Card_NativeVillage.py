@@ -4,6 +4,8 @@
 import unittest
 from dominion import Card, Game, PlayArea, Piles, Player
 
+NATIVE_VILLAGE = "native_village"
+
 
 ###############################################################################
 class Card_NativeVillage(Card.Card):
@@ -19,10 +21,10 @@ class Card_NativeVillage(Card.Card):
         self.cost = 2
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
-        if not hasattr(player, "_native_map"):
-            player._native_map = PlayArea.PlayArea([])
+        if NATIVE_VILLAGE not in player.specials:
+            player.specials[NATIVE_VILLAGE] = PlayArea.PlayArea([])
         player.output(
-            f'Native Village contains: {", ".join(_.name for _ in player._native_map)}'
+            f'Native Village contains: {", ".join(_.name for _ in player.specials[NATIVE_VILLAGE])}'
         )
         choice = player.plr_choose_options(
             "Choose One",
@@ -34,9 +36,10 @@ class Card_NativeVillage(Card.Card):
         )
         if choice == "push":
             card = player.next_card()
-            player._native_map.add(card)
-            player.output(f"Adding {card} to the Native Village")
-            player.secret_count += 1
+            if card is not None:
+                player.specials[NATIVE_VILLAGE].add(card)
+                player.output(f"Adding {card} to the Native Village")
+                player.secret_count += 1
         else:
             self.pull_back(player)
 
@@ -44,10 +47,10 @@ class Card_NativeVillage(Card.Card):
         self.pull_back(player)
 
     def pull_back(self, player: Player.Player) -> None:
-        for card in player._native_map:
+        for card in player.specials[NATIVE_VILLAGE]:
             player.output(f"Returning {card} from Native Map")
             player.add_card(card, Piles.HAND)
-            player._native_map.remove(card)
+            player.specials[NATIVE_VILLAGE].remove(card)
             player.secret_count -= 1
 
 
@@ -65,7 +68,7 @@ class Test_NativeVillage(unittest.TestCase):
         self.plr.test_input = ["Set aside"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr._native_map[0].name, "Gold")
+        self.assertEqual(self.plr.specials[NATIVE_VILLAGE][0].name, "Gold")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Put all"]
         self.plr.play_card(self.card)

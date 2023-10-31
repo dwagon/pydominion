@@ -378,7 +378,7 @@ class Card:
         player: "Player.Player",
         owner: "Player.Player",
         card: "Card",
-    ) -> None:
+    ) -> Optional[dict[str, Any]]:
         """Hook - overwritten in subclasses if required"""
 
     ##########################################################################
@@ -434,7 +434,7 @@ class Card:
         player: "Player.Player",
         owner: "Player.Player",
         card: "Card",
-    ) -> None:
+    ) -> Optional[dict[str, Any]]:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
