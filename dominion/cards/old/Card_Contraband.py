@@ -26,7 +26,7 @@ class Card_Contraband(Card.Card):
         plr = game.player_to_left(player)
         options = []
         for name, pile in game.get_card_piles():
-            card = game.get_card_from_pile(name)
+            card = game.card_instances[name]
             if not card or not card.purchasable:
                 continue
             options.append((name, name))

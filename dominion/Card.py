@@ -8,7 +8,7 @@ from typing import Optional, TYPE_CHECKING, Any
 from dominion import Piles
 
 if TYPE_CHECKING:
-    from dominion.Player import Player
+    from dominion import Player
     from dominion.Game import Game
     from dominion.PlayArea import PlayArea
 
@@ -118,12 +118,12 @@ class Card:
         self.image = None
         self.numcards = 10
         self.retain_boon = False
-        self.heirloom = None
+        self.heirloom: Optional[str] = None
         self.uuid = uuid.uuid4().hex
         self._location: Optional[Piles] = None
-        self._player: Optional[Player] = None
+        self._player: Optional[Player.Player] = None
         self._pile: str = ""
-        self.desc = ""
+        self.desc: str = ""
         self.base: CardExpansion = CardExpansion.TEST
 
     ##########################################################################
@@ -172,11 +172,11 @@ class Card:
 
     ##########################################################################
     @property
-    def player(self) -> "Player|None":
+    def player(self) -> "Player.Player|None":
         return self._player
 
     @player.setter
-    def player(self, val: "Player") -> None:
+    def player(self, val: "Player.Player") -> None:
         self._player = val
 
     ##########################################################################
@@ -200,30 +200,32 @@ class Card:
         return self.name < card.name
 
     ##########################################################################
-    def description(self, player: "Player") -> str:
+    def description(self, player: "Player.Player") -> str:
         if desc := self.dynamic_description(player):
             return desc
         return self.desc
 
     ##########################################################################
-    def dynamic_description(self, player: "Player") -> str:
+    def dynamic_description(self, player: "Player.Player") -> str:
         """Dynamic description - generally based on phase"""
         return ""
 
     ##########################################################################
-    def special(self, game: "Game", player: "Player") -> None:
+    def special(self, game: "Game", player: "Player.Player") -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_overpay(self, game: "Game", player: "Player", amount: int) -> None:
+    def hook_overpay(self, game: "Game", player: "Player.Player", amount: int) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def night(self, game: "Game", player: "Player") -> None:
+    def night(self, game: "Game", player: "Player.Player") -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def duration(self, game: "Game", player: "Player") -> Optional[dict[str, str]]:
+    def duration(
+        self, game: "Game", player: "Player.Player"
+    ) -> Optional[dict[str, str]]:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
@@ -349,104 +351,122 @@ class Card:
 
     ##########################################################################
     def special_score(
-        self, game: "Game", player: "Player"
+        self, game: "Game", player: "Player.Player"
     ) -> int:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return 0  # pragma: nocover
 
     ##########################################################################
-    def hook_cleanup(self, game: "Game", player: "Player") -> None:
+    def hook_cleanup(self, game: "Game", player: "Player.Player") -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_all_players_pre_play(
-        self, game: "Game", player: "Player", owner: "Player", card: "Card"
+        self,
+        game: "Game",
+        player: "Player.Player",
+        owner: "Player.Player",
+        card: "Card",
     ) -> Optional[dict[str, Any]]:
         """Hook - overwritten in subclasses if required"""
         return None
 
     ##########################################################################
     def hook_all_players_post_play(
-        self, game: "Game", player: "Player", owner: "Player", card: "Card"
-    ) -> None:
+        self,
+        game: "Game",
+        player: "Player.Player",
+        owner: "Player.Player",
+        card: "Card",
+    ) -> Optional[dict[str, Any]]:
         """Hook - overwritten in subclasses if required"""
 
     ##########################################################################
     def hook_pre_play(
-        self, game: "Game", player: "Player", card: "Card"
+        self, game: "Game", player: "Player.Player", card: "Card"
     ) -> Optional[dict[str, str]]:
         """Hook - overwritten in subclasses if required"""
         return None
 
     ##########################################################################
     def hook_post_play(
-        self, game: "Game", player: "Player", card: "Card"
+        self, game: "Game", player: "Player.Player", card: "Card"
     ) -> Optional[dict[str, str]]:
         """Hook - overwritten in subclasses if required"""
         return None
 
     ##########################################################################
     def hook_all_players_buy_card(
-        self, game: "Game", player: "Player", owner: "Player", card: "Card"
+        self,
+        game: "Game",
+        player: "Player.Player",
+        owner: "Player.Player",
+        card: "Card",
     ) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_buy_card(self, game: "Game", player: "Player", card: "Card") -> None:
+    def hook_buy_card(
+        self, game: "Game", player: "Player.Player", card: "Card"
+    ) -> None:
         """Hook - overwritten in subclasses"""
         return None
 
     ##########################################################################
-    def hook_buy_this_card(self, game: "Game", player: "Player") -> None:
+    def hook_buy_this_card(self, game: "Game", player: "Player.Player") -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_call_reserve(self, game: "Game", player: "Player") -> None:
+    def hook_call_reserve(self, game: "Game", player: "Player.Player") -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_allowed_to_buy(
-        self, game: "Game", player: "Player"
+        self, game: "Game", player: "Player.Player"
     ) -> bool:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return True  # pragma: no cover
 
     ##########################################################################
     def hook_all_players_gain_card(
-        self, game: "Game", player: "Player", owner: "Player", card: "Card"
-    ) -> None:
+        self,
+        game: "Game",
+        player: "Player.Player",
+        owner: "Player.Player",
+        card: "Card",
+    ) -> Optional[dict[str, Any]]:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_gain_card(
-        self, game: "Game", player: "Player", card: "Card"
+        self, game: "Game", player: "Player.Player", card: "Card"
     ) -> Optional[dict[str, Any]]:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return {}  # pragma: no cover
 
     ##########################################################################
     def hook_card_cost(
-        self, game: "Game", player: "Player", card: "Card"
+        self, game: "Game", player: "Player.Player", card: "Card"
     ) -> int:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return 0  # pragma: no cover
 
     ##########################################################################
     def hook_this_card_cost(
-        self, game: "Game", player: "Player"
+        self, game: "Game", player: "Player.Player"
     ) -> int:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return 0  # pragma: no cover
 
     ##########################################################################
-    def hook_coinvalue(self, game: "Game", player: "Player") -> int:
+    def hook_coinvalue(self, game: "Game", player: "Player.Player") -> int:
         """Hook - overwritten in subclasses;
         How much coin does this card contribute"""
         return self.coin  # pragma: no cover
 
     ##########################################################################
     def hook_spend_value(
-        self, game: "Game", player: "Player", card: "Card"
+        self, game: "Game", player: "Player.Player", card: "Card"
     ) -> int:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses
         Does this card make any  modifications on the value of spending a card"""
@@ -454,57 +474,61 @@ class Card:
 
     ##########################################################################
     def hook_under_attack(
-        self, game: "Game", player: "Player", attacker: "Player"
+        self, game: "Game", player: "Player.Player", attacker: "Player.Player"
     ) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_discard_this_card(
-        self, game: "Game", player: "Player", source: "PlayArea"
+        self, game: "Game", player: "Player.Player", source: "PlayArea"
     ) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_trash_this_card(self, game: "Game", player: "Player") -> None:
+    def hook_trash_this_card(
+        self, game: "Game", player: "Player.Player"
+    ) -> Optional[dict[str, Any]]:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_trash_card(self, game: "Game", player: "Player", card: "Card") -> None:
+    def hook_trash_card(
+        self, game: "Game", player: "Player.Player", card: "Card"
+    ) -> Optional[dict[str, Any]]:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_gain_this_card(
-        self, game: "Game", player: "Player"
+        self, game: "Game", player: "Player.Player"
     ) -> Optional[dict[str, Any]]:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return {}  # pragma: no cover
 
     ##########################################################################
-    def hook_end_turn(self, game: "Game", player: "Player") -> None:
+    def hook_end_turn(self, game: "Game", player: "Player.Player") -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_end_of_game(self, game: "Game", player: "Player") -> None:
+    def hook_end_of_game(self, game: "Game", player: "Player.Player") -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_pre_buy(self, game: "Game", player: "Player") -> None:
+    def hook_pre_buy(self, game: "Game", player: "Player.Player") -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_end_buy_phase(self, game: "Game", player: "Player") -> None:
+    def hook_end_buy_phase(self, game: "Game", player: "Player.Player") -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_start_turn(self, game: "Game", player: "Player") -> None:
+    def hook_start_turn(self, game: "Game", player: "Player.Player") -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_start_every_turn(self, game: "Game", player: "Player") -> None:
+    def hook_start_every_turn(self, game: "Game", player: "Player.Player") -> None:
         """Hook fired every turn if this card is in the game - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_reveal_this_card(self, game: "Game", player: "Player") -> None:
+    def hook_reveal_this_card(self, game: "Game", player: "Player.Player") -> None:
         """Hook - overwritten in subclasses"""
 
 

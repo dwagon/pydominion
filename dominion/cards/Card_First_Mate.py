@@ -2,14 +2,14 @@
 """http://wiki.dominionstrategy.com/index.php/First_Mate"""
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_FirstMate(Card.Card):
     """First Mate"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.PLUNDER
@@ -18,7 +18,7 @@ class Card_FirstMate(Card.Card):
         self.name = "First Mate"
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         actions = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         options = [(f"Play {_.name}", _) for _ in actions]
         if actions:
@@ -31,20 +31,21 @@ class Card_FirstMate(Card.Card):
         else:
             player.output("No suitable actions")
         while len(player.piles[Piles.HAND]) < 6:
-            player.pickup_card()
+            if player.pickup_card() is None:
+                break
 
 
 ###############################################################################
 class TestFirstMate(unittest.TestCase):
     """Test First Mate"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["First Mate", "Market"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("First Mate")
 
-    def test_play_card(self):
+    def test_play_card(self) -> None:
         """Play a card"""
         self.plr.piles[Piles.HAND].set("Market", "Market", "Estate")
         self.plr.add_card(self.card, Piles.HAND)
@@ -54,7 +55,7 @@ class TestFirstMate(unittest.TestCase):
         self.assertEqual(self.plr.coins.get(), coins + 2)
         self.assertEqual(len(self.plr.piles[Piles.HAND]), 6)
 
-    def test_play_no_actions(self):
+    def test_play_no_actions(self) -> None:
         """Play a card with no suitable actions"""
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Estate")
         self.plr.add_card(self.card, Piles.HAND)

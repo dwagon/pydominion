@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Event
+from dominion import Card, Game, Piles, Event, Player
 
 
 ###############################################################################
 class Event_Banquet(Event.Event):
-    def __init__(self):
+    def __init__(self) -> None:
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.ADVENTURE
         self.desc = "Gain 2 Coppers and a non-Victory card costing up to 5"
         self.name = "Banquet"
         self.cost = 3
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         for _ in range(2):
             player.gain_card("Copper")
         player.plr_gain_card(
@@ -27,16 +27,16 @@ class Event_Banquet(Event.Event):
 
 
 ###############################################################################
-class Test_Banquet(unittest.TestCase):
-    def setUp(self):
+class TestBanquet(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, events=["Banquet"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.events["Banquet"]
 
-    def test_event(self):
+    def test_event(self) -> None:
         """Use the event"""
-        self.plr.test_input = ["Get Silver"]
+        self.plr.test_input = ["Get Silver -"]
         self.plr.coins.add(3)
         self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Copper"])

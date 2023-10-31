@@ -1,39 +1,44 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Boon
-from dominion import Card
-from dominion import Game, Piles
+from dominion import Boon, Card, Game, Piles, Player
 
 
 ###############################################################################
 class Boon_Moons_Gift(Boon.Boon):
-    def __init__(self):
+    def __init__(self) -> None:
         Boon.Boon.__init__(self)
         self.cardtype = Card.CardType.BOON
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = "Look through your discard pile. You may put a card from it onto your deck"
+        self.desc = (
+            "Look through your discard pile. You may put a card from it onto your deck"
+        )
         self.name = "The Moon's Gift"
         self.purchasable = False
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         if not player.piles[Piles.DISCARD].size():
             return
         cards = []
-        cardnames = set()
+        card_names = set()
         for c in player.piles[Piles.DISCARD]:
-            if c.name not in cardnames:
+            if c.name not in card_names:
                 cards.append(c)
-                cardnames.add(c.name)
-        card = player.card_sel(cardsrc=cards, prompt="Pull card from discard and add to top of your deck")
-        player.add_card(card[0], "topdeck")
-        player.piles[Piles.DISCARD].remove(card[0])
+                card_names.add(c.name)
+        if card := player.card_sel(
+            cardsrc=cards, prompt="Pull card from discard and add to top of your deck"
+        ):
+            # player.add_card(card[0], "topdeck")
+            # player.piles[Piles.DISCARD].remove(card[0])
+            player.move_card(card[0], "topdeck")
 
 
 ###############################################################################
 class Test_Moons_Gift(unittest.TestCase):
-    def setUp(self):
-        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"])
+    def setUp(self) -> None:
+        self.g = Game.TestGame(
+            quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         for b in self.g.boons:
@@ -43,7 +48,7 @@ class Test_Moons_Gift(unittest.TestCase):
         self.g.boons = [myboon]
         self.card = self.g.get_card_from_pile("Bard")
 
-    def test_moons_gift(self):
+    def test_moons_gift(self) -> None:
         self.plr.piles[Piles.DISCARD].set("Province", "Gold")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Gold"]

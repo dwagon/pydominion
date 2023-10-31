@@ -69,6 +69,7 @@ class Player:
         self.coffers = Counter("Coffers", 0)
         self.favors = Counter("Favors", 0)
         self.newhandsize = 5
+        self.specials: dict[str, Any] = {}  # Used by cards for special reasons
         self.limits: dict[Limits, Optional[int]] = {Limits.PLAY: None, Limits.BUY: 999}
         self.card_token: bool = False
         self.coin_token: bool = False
@@ -205,10 +206,7 @@ class Player:
     ###########################################################################
     def flip_journey_token(self) -> bool:
         """Flip a journey token - and return its new state"""
-        if self.journey_token:
-            self.journey_token = False
-        else:
-            self.journey_token = True
+        self.journey_token = not self.journey_token
         return self.journey_token
 
     ###########################################################################
@@ -298,13 +296,12 @@ class Player:
         card.hook_reveal_this_card(game=self.game, player=self)
 
     ###########################################################################
-    def trash_card(self, card: Card, **kwargs) -> None:
+    def trash_card(self, card: Card, **kwargs: Any) -> None:
         """Take a card out of the game"""
         assert isinstance(card, Card)
         self.stats["trashed"].append(card)
         trash_opts = {}
-        rc = card.hook_trash_this_card(game=self.game, player=self)
-        if rc:
+        if rc := card.hook_trash_this_card(game=self.game, player=self):
             trash_opts.update(rc)
         if trash_opts.get("trash", True):
             if card.location and card.location != Piles.TRASH:
@@ -338,8 +335,7 @@ class Player:
         if not self.piles[Piles.DECK]:
             self.output("No more cards in deck")
             return None
-        crd = self.piles[Piles.DECK].top_card()
-        return crd
+        return self.piles[Piles.DECK].top_card()
 
     ###########################################################################
     def refill_deck(self) -> None:
@@ -356,9 +352,10 @@ class Player:
         self, num: int, verbose: bool = True, verb: str = "Picked up"
     ) -> list[Card]:
         """Pickup multiple cards into players hand"""
-        cards = []
+        cards: list[Card] = []
         for _ in range(num):
-            cards.append(self.pickup_card(verbose=verbose, verb=verb))
+            if card := self.pickup_card(verbose=verbose, verb=verb):
+                cards.append(card)
         return cards
 
     ###########################################################################
@@ -379,7 +376,8 @@ class Player:
 
     ###########################################################################
     def _shuffle_discard(self) -> None:
-        self.output(f"Shuffling Pile of {len(self.piles[Piles.DISCARD])} cards")
+        num_cards = len(self.piles[Piles.DISCARD])
+        self.output(f"Shuffling Pile of {num_cards} cards")
         for card in self.projects:
             if hasattr(card, "hook_pre_shuffle"):
                 card.hook_pre_shuffle(game=self.game, player=self)
@@ -483,7 +481,7 @@ class Player:
             self.discard_card(card, Piles.PLAYED, hook=False)
 
     ###########################################################################
-    def _playable_selection(self, index):
+    def _playable_selection(self, index: int) -> tuple[list[Option], int]:
         options = []
         playable = [c for c in self.piles[Piles.HAND] if c.playable and c.isAction()]
         if self.villagers:
@@ -529,7 +527,7 @@ class Player:
         return options, index
 
     ###########################################################################
-    def _night_selection(self, index):
+    def _night_selection(self, index: int) -> tuple[list[Option], int]:
         options = []
         nights = [c for c in self.piles[Piles.HAND] if c.isNight()]
         if nights:
@@ -550,9 +548,9 @@ class Player:
         return options, index
 
     ###########################################################################
-    def _spendable_selection(self):
+    def _spendable_selection(self) -> list[Option]:
         options = []
-        spendable = [c for c in self.piles[Piles.HAND] if c.isTreasure()]
+        spendable = [_ for _ in self.piles[Piles.HAND] if _.isTreasure()]
         spendable.sort(key=lambda x: x.name)
         totcoin = sum(self.hook_spend_value(_) for _ in spendable)
         numpots = sum(1 for _ in spendable if _.name == "Potion")
@@ -739,7 +737,9 @@ class Player:
                 action = None
             details = [self._cost_string(card)]
             if self.game.card_piles[card.pile].embargo_level:
-                details.append(f"Embargo {card.embargo_level}")
+                details.append(
+                    f"Embargo {self.game.card_piles[card.pile].embargo_level}"
+                )
             if self.game.card_piles[card.pile].getVP():
                 details.append(f"Gathered {self.game.card_piles[card.name].getVP()} VP")
             details.append(card.get_cardtype_repr())
@@ -1052,7 +1052,7 @@ class Player:
         return x
 
     ###########################################################################
-    def get_score_details(self) -> dict:
+    def get_score_details(self) -> dict[str, int]:
         """Calculate score of the player from all factors"""
         score: dict[str, int] = {}
         for card in self.all_cards():
@@ -1125,7 +1125,7 @@ class Player:
     def _duration_start_turn(self) -> None:
         """Perform the duration pile at the start of the turn"""
         for card in self.piles[Piles.DURATION]:
-            options = {"dest": Piles.PLAYED}
+            options: dict[str, Any] = {"dest": Piles.PLAYED}
             if not card.permanent:
                 self.output(f"Playing {card} from duration pile")
             self.currcards.append(card)
@@ -1266,7 +1266,7 @@ class Player:
         return options
 
     ###########################################################################
-    def hook_all_players_post_play(self, card: Card) -> dict:
+    def hook_all_players_post_play(self, card: Card) -> dict[str, Any]:
         options: dict[str, str] = {}
         for player in self.game.player_list():
             for crd in player.piles[Piles.DURATION]:
@@ -1396,9 +1396,9 @@ class Player:
     def gain_card(
         self,
         card_name: Optional[str] = None,
-        destination=Piles.DISCARD,
-        new_card=None,
-        callhook=True,
+        destination: Piles = Piles.DISCARD,
+        new_card: Optional[Card] = None,
+        callhook: bool = True,
     ) -> Optional[Card]:
         """Add a new card to the players set of cards from a card pile, return the card gained"""
         # Options:
@@ -1407,7 +1407,7 @@ class Player:
         #   destination: <dest> - Move the new card to <dest> rather than discard pile
         #   trash: True - trash the new card
         #   shuffle: True - shuffle the deck after gaining new card
-        options: dict[str, str] = {}
+        options: dict[str, Any] = {}
         if not new_card:
             if card_name == "Loot":
                 pile = "Loot"
@@ -1574,10 +1574,10 @@ class Player:
         )
 
     ###########################################################################
-    def _hook_gain_card(self, gained_card: Card) -> dict[str, str]:
+    def _hook_gain_card(self, gained_card: Card) -> dict[str, Any]:
         """Hook which is fired by a card being obtained by a player"""
         assert isinstance(gained_card, Card)
-        options = {}
+        options: dict[str, Any] = {}
         if self.hooks.get("gain_card"):
             opts = self.hooks["gain_card"](
                 game=self.game, player=self, card=gained_card
@@ -1593,7 +1593,7 @@ class Player:
         return options
 
     ###########################################################################
-    def has_defense(self, attacker: Player, verbose=True) -> bool:
+    def has_defense(self, attacker: "Player", verbose: bool = True) -> bool:
         """Does this player have a defense against attack"""
         for crd in self.piles[Piles.HAND]:
             if crd.has_defense():
@@ -1938,6 +1938,7 @@ class Player:
     ###########################################################################
     def plr_pick_card(self, force: bool = False, **kwargs: Any) -> Card:
         sel = self.card_sel(force=force, **kwargs)
+        assert sel is not None
         return sel[0]
 
     ###########################################################################
@@ -1950,14 +1951,15 @@ class Player:
 
     ###########################################################################
     def assign_state(self, state: str) -> None:
+        """Assign a state to the player - remove from other players if unique"""
         assert isinstance(state, str)
         state_card = self.game.states[state]
 
         if state_card.unique_state:
-            for pl in self.game.player_list():
-                for st in pl.states[:]:
+            for player in self.game.player_list():
+                for st in player.states[:]:
                     if st.name == state:
-                        pl.states.remove(st)
+                        player.states.remove(st)
                         break
         self.states.append(state_card)
 
@@ -2007,7 +2009,7 @@ class Player:
 
     ###########################################################################
     def plr_discard_cards(
-        self, num=1, any_number=False, **kwargs: Any
+        self, num: int = 1, any_number: bool = False, **kwargs: Any
     ) -> Optional[list[Card]]:
         """Get the player to discard exactly num cards"""
         if "prompt" not in kwargs:

@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Transmute(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ALCHEMY
@@ -17,24 +16,29 @@ class Card_Transmute(Card.Card):
         self.required_cards = ["Potion"]
         self.potcost = True
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Trash a card from your hand. If it is an...
         Action card, gain a Duchy, Treasure card, gain a Transmute,
         Victory card, gain a gold"""
         player.output("Trash a card to gain...")
-        options = []
-        options.append({"selector": "0", "print": "Trash Nothing", "card": None, "gain": None})
+        options = [
+            {"selector": "0", "print": "Trash Nothing", "card": None, "gain": None}
+        ]
         index = 1
-        for c in player.piles[Piles.HAND]:
-            sel = "%d" % index
-            if c.isAction():
-                trashtag = "Duchy"
-            elif c.isTreasure():
-                trashtag = "Transmute"
-            elif c.isVictory():
-                trashtag = "Gold"
-            pr = "Trash %s for %s" % (c.name, trashtag)
-            options.append({"selector": sel, "print": pr, "card": c, "gain": trashtag})
+        for card in player.piles[Piles.HAND]:
+            trash_tag = None
+            if card.isAction():
+                trash_tag = "Duchy"
+            elif card.isTreasure():
+                trash_tag = "Transmute"
+            elif card.isVictory():
+                trash_tag = "Gold"
+            if trash_tag is None:
+                continue
+            pr = f"Trash {card} for {trash_tag}"
+            options.append(
+                {"selector": f"{index}", "print": pr, "card": card, "gain": trash_tag}
+            )
             index += 1
         o = player.user_input(options, "Trash which card?")
         if not o["card"]:
@@ -46,20 +50,22 @@ class Card_Transmute(Card.Card):
 
 ###############################################################################
 class Test_Transmute(unittest.TestCase):
-    def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Transmute"], badcards=["Duchess"])
+    def setUp(self) -> None:
+        self.g = Game.TestGame(
+            numplayers=1, initcards=["Transmute"], badcards=["Duchess"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Transmute")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a transmute - trash nothing"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["trash nothing"]
         self.plr.play_card(self.card)
         self.assertTrue(self.plr.piles[Piles.DISCARD].is_empty())
 
-    def test_trash_treasure(self):
+    def test_trash_treasure(self) -> None:
         """Transmute a treasure card to gain a Transmute"""
         self.plr.piles[Piles.HAND].set("Gold", "Estate", "Transmute")
         self.plr.add_card(self.card, Piles.HAND)
@@ -67,7 +73,7 @@ class Test_Transmute(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.DISCARD][-1].name, "Transmute")
 
-    def test_trash_action(self):
+    def test_trash_action(self) -> None:
         """Transmute a action card to gain a Duchy"""
         self.plr.piles[Piles.HAND].set("Gold", "Estate", "Transmute")
         self.plr.add_card(self.card, Piles.HAND)
@@ -75,7 +81,7 @@ class Test_Transmute(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.DISCARD][-1].name, "Duchy")
 
-    def test_trash_victory(self):
+    def test_trash_victory(self) -> None:
         """Transmute a victory card to gain a Gold"""
         self.plr.piles[Piles.HAND].set("Gold", "Estate", "Transmute")
         self.plr.add_card(self.card, Piles.HAND)

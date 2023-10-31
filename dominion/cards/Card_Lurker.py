@@ -6,7 +6,7 @@ from dominion import Game, Card, Piles, Player
 
 ###############################################################################
 class Card_Lurker(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.INTRIGUE
@@ -17,14 +17,13 @@ class Card_Lurker(Card.Card):
         self.actions = 1
 
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
-        ch = player.plr_choose_options(
+        if player.plr_choose_options(
             "Choose one? ",
-            ("Trash an Action from the Supply", "to"),
-            ("Gain an Action card from the Trash", "from"),
-        )
-        if ch == "to":
+            ("Trash an Action from the Supply", True),
+            ("Gain an Action card from the Trash", False),
+        ):
             self._trash_supply(game, player)
-        if ch == "from":
+        else:
             self._from_trash(game, player)
 
     def _trash_supply(self, game: "Game.Game", player: "Player.Player") -> None:
@@ -33,7 +32,7 @@ class Card_Lurker(Card.Card):
         for name, pile in game.get_card_piles():
             if pile.is_empty():
                 continue
-            card = game.get_card_from_pile(name)
+            card = game.card_instances[name]
             if card.isAction():
                 options.append((f"Trash {name}", name))
 
@@ -53,27 +52,28 @@ class Card_Lurker(Card.Card):
         if not acts:
             player.output("No suitable cards found")
             return
-        card = player.card_sel(cardsrc=acts, prompt="Select Action from the Trash")
-        game.trash_pile.remove(card[0])
-        player.add_card(card[0], Piles.DISCARD)
+        cards = player.card_sel(cardsrc=acts, prompt="Select Action from the Trash")
+        if cards is not None:
+            game.trash_pile.remove(cards[0])
+            player.add_card(cards[0], Piles.DISCARD)
 
 
 ###############################################################################
 class TestLurker(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Lurker", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Lurker")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_trash(self):
+    def test_trash(self) -> None:
         self.plr.test_input = ["Trash an Action", "Moat"]
         self.plr.play_card(self.card)
         self.assertIn("Moat", self.g.trash_pile)
         self.assertEqual(self.plr.actions.get(), 0 + 1)
 
-    def test_recover(self):
+    def test_recover(self) -> None:
         self.plr.test_input = ["Gain an Action", "Moat"]
         self.g.trash_pile.set("Moat")
         self.plr.play_card(self.card)

@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Secret_Chamber """
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
-class Card_Secretchamber(Card.Card):
+class Card_SecretChamber(Card.Card):
     """TODO"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
         self.base = Card.CardExpansion.INTRIGUE
@@ -20,20 +20,23 @@ class Card_Secretchamber(Card.Card):
         self.name = "Secret Chamber"
         self.cost = 2
 
-    def special(self, game, player):  # pylint: disable=unused-argument
+    def special(
+        self, game: "Game.Game", player: "Player.Player"
+    ) -> None:  # pylint: disable=unused-argument
         """Discard any number of cards, +1 coin per card discarded"""
-        todiscard = player.plr_discard_cards(
+        to_discard = player.plr_discard_cards(
             any_number=True,
             prompt="Select which card(s) to discard (+1 coin per discard)?",
         )
-        player.coins.add(len(todiscard))
+        if to_discard is not None:
+            player.coins.add(len(to_discard))
 
     def hook_under_attack(
-        self, game, player, attacker
-    ):  # pylint: disable=unused-argument
+        self, game: "Game.Game", player: "Player.Player", attacker: "Player.Player"
+    ) -> None:  # pylint: disable=unused-argument
         """TODO"""
         player.output(f"Under attack from {attacker.name}")
-        if not self.doRevealCard(player):
+        if not self.do_reveal_card(player):
             return
         player.reveal_card(self)
         player.pickup_cards(2)
@@ -44,11 +47,12 @@ class Card_Secretchamber(Card.Card):
             num=2,
             verbs=("Put", "Unput"),
         )
-        for card in cards:
-            player.add_card(card, "topdeck")
-            player.piles[Piles.HAND].remove(card)
+        if cards is not None:
+            for card in cards:
+                player.add_card(card, "topdeck")
+                player.piles[Piles.HAND].remove(card)
 
-    def doRevealCard(self, player):
+    def do_reveal_card(self, player: "Player.Player") -> Card.Card:
         """TODO"""
         options = [
             {"selector": "0", "print": "Do nothing", "reveal": False},
@@ -63,10 +67,10 @@ class Card_Secretchamber(Card.Card):
 
 
 ###############################################################################
-class Test_Secretchamber(unittest.TestCase):
+class TestSecretChamber(unittest.TestCase):
     """Test Secret Chamber"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=2, oldcards=True, initcards=["Secret Chamber", "Militia"]
         )
@@ -74,7 +78,7 @@ class Test_Secretchamber(unittest.TestCase):
         self.plr, self.att = self.g.player_list()
         self.card = self.g.get_card_from_pile("Secret Chamber")
 
-    def test_play_none(self):
+    def test_play_none(self) -> None:
         """Play the Secret Chamber - discard none"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["finish"]
@@ -82,7 +86,7 @@ class Test_Secretchamber(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertEqual(self.plr.coins.get(), 0)
 
-    def test_play_three(self):
+    def test_play_three(self) -> None:
         """Play the Secret Chamber - discard three"""
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Province", "Estate")
         self.plr.add_card(self.card, Piles.HAND)
@@ -96,7 +100,7 @@ class Test_Secretchamber(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
         self.assertEqual(self.plr.coins.get(), 3)
 
-    def test_underattack(self):
+    def test_under_attack(self) -> None:
         """Secret chamber is under attack - use it"""
         mil = self.g.get_card_from_pile("Militia")
         self.plr.piles[Piles.DECK].set("Duchy", "Province")
@@ -111,7 +115,7 @@ class Test_Secretchamber(unittest.TestCase):
         self.assertIn("Silver", self.plr.piles[Piles.DECK])
         self.assertNotIn("Silver", self.plr.piles[Piles.HAND])
 
-    def test_underattack_pass(self):
+    def test_under_attack_pass(self) -> None:
         """Secret chamber is under attack - use it"""
         mil = self.g.get_card_from_pile("Militia")
         self.plr.piles[Piles.DECK].set("Duchy", "Province")

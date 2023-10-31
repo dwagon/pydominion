@@ -22,6 +22,13 @@ from dominion.Names import playerNames
 from dominion.PlayArea import PlayArea
 from dominion.Player import Player
 from dominion.TextPlayer import TextPlayer
+from dominion.State import State
+from dominion.Artifact import Artifact
+from dominion.Project import Project
+from dominion.Event import Event
+from dominion.Way import Way
+from dominion.Landmark import Landmark
+from dominion.Trait import Trait
 
 
 ###############################################################################
@@ -35,14 +42,14 @@ class Game:  # pylint: disable=too-many-public-methods
         self.bot = False
         self.randobot = False
         self.card_piles: dict[str, CardPile] = {}
-        self.states: dict[str, str] = {}
-        self.artifacts = {}
-        self.projects = {}
-        self.events = {}
-        self.ways = {}
-        self.landmarks = {}
+        self.states: dict[str, State] = {}
+        self.artifacts: dict[str, Artifact] = {}
+        self.projects: dict[str, Project] = {}
+        self.events: dict[str, Event] = {}
+        self.ways: dict[str, Way] = {}
+        self.landmarks: dict[str, Landmark] = {}
         self.boons: list[Boon] = []
-        self.traits = {}
+        self.traits: dict[str, Trait] = {}
         self.discarded_boons: list[Boon] = []
         self.retained_boons: list[Boon] = []
         self.hexes: list[Hex] = []
@@ -56,6 +63,9 @@ class Game:  # pylint: disable=too-many-public-methods
         self._loaded_prizes = False
         self._allow_potions = True
         self.current_player = None
+        self.specials: dict[
+            str, Any
+        ] = {}  # Special areas for specific card related stuff
         self.paths = {
             Keys.CARDS: "dominion/cards",
             Keys.ALLIES: "dominion/allies",
@@ -70,7 +80,7 @@ class Game:  # pylint: disable=too-many-public-methods
             Keys.TRAITS: "dominion/traits",
             Keys.WAY: "dominion/ways",
         }
-        self.specials = {
+        self.init_numbers = {
             Keys.EVENT: 0,
             Keys.LANDMARK: 0,
             Keys.PROJECTS: 0,
@@ -117,11 +127,11 @@ class Game:  # pylint: disable=too-many-public-methods
         self.paths[Keys.TRAITS] = args.get("trait_path", self.paths[Keys.TRAITS])
         self.paths[Keys.WAY] = args.get("way_path", self.paths[Keys.WAY])
 
-        self.specials[Keys.EVENT] = args.get("num_events", 0)
-        self.specials[Keys.WAY] = args.get("num_ways", 0)
-        self.specials[Keys.LANDMARK] = args.get("num_landmarks", 0)
-        self.specials[Keys.PROJECTS] = args.get("num_projects", 0)
-        self.specials[Keys.TRAITS] = args.get("num_traits", 0)
+        self.init_numbers[Keys.EVENT] = args.get("num_events", 0)
+        self.init_numbers[Keys.WAY] = args.get("num_ways", 0)
+        self.init_numbers[Keys.LANDMARK] = args.get("num_landmarks", 0)
+        self.init_numbers[Keys.PROJECTS] = args.get("num_projects", 0)
+        self.init_numbers[Keys.TRAITS] = args.get("num_traits", 0)
 
         self.init[Keys.CARDS] = args.get("initcards", [])
         self.init[Keys.BAD_CARDS] = args.get("badcards", [])
@@ -309,7 +319,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.ways = self._load_non_kingdom_cards(
             cardtype="Way",
             specified=way_cards,
-            num_required=self.specials[Keys.WAY],
+            num_required=self.init_numbers[Keys.WAY],
         )
         if self.ways:
             self.output(f"Playing with {self.ways}")
@@ -320,7 +330,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.traits = self._load_non_kingdom_cards(
             cardtype="Trait",
             specified=self.init[Keys.TRAITS],
-            num_required=self.specials[Keys.TRAITS],
+            num_required=self.init_numbers[Keys.TRAITS],
         )
         for trait in self.traits:
             card_piles = []
@@ -352,7 +362,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.events = self._load_non_kingdom_cards(
             cardtype="Event",
             specified=self.init[Keys.EVENT],
-            num_required=self.specials[Keys.EVENT],
+            num_required=self.init_numbers[Keys.EVENT],
         )
         if self.events:
             self.output(
@@ -365,7 +375,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.landmarks = self._load_non_kingdom_cards(
             "Landmark",
             self.init[Keys.LANDMARK],
-            self.specials[Keys.LANDMARK],
+            self.init_numbers[Keys.LANDMARK],
         )
         if self.landmarks:
             self.output(f"Playing with Landmarks {self.landmarks}")
@@ -414,7 +424,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.projects = self._load_non_kingdom_cards(
             "Project",
             self.init[Keys.PROJECTS],
-            self.specials[Keys.PROJECTS],
+            self.init_numbers[Keys.PROJECTS],
         )
         if self.projects:
             self.output(f"Playing with Project {self.projects}")
