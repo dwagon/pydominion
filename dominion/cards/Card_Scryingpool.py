@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_ScryingPool(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.ALCHEMY
@@ -20,23 +20,24 @@ class Card_ScryingPool(Card.Card):
         self.required_cards = ["Potion"]
         self.potcost = True
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         for plr in player.attack_victims():
             discard_or_put_back(plr, player)
         discard_or_put_back(player, player)
-        revealed = []
+        revealed: list[Card.Card] = []
         while True:
             top_card = player.pickup_card()
-            player.reveal_card(top_card)
-            revealed.append(top_card)
-            if not top_card.isAction():
-                break
+            if top_card is not None:
+                player.reveal_card(top_card)
+                revealed.append(top_card)
+                if not top_card.isAction():
+                    break
         for card in revealed:
             player.add_card(card, Piles.HAND)
 
 
 ###############################################################################
-def discard_or_put_back(victim, player):
+def discard_or_put_back(victim: Player.Player, player: Player.Player) -> None:
     if player == victim:
         name = ("you", "your")
     else:
@@ -45,12 +46,11 @@ def discard_or_put_back(victim, player):
     if top_card is None:
         return
     victim.reveal_card(top_card)
-    putback = player.plr_choose_options(
+    if putback := player.plr_choose_options(
         f"For {name[0]} which one?",
         (f"Discard {top_card.name}", False),
         (f"Putback {top_card.name}", True),
-    )
-    if putback:
+    ):
         victim.output(f"Put {top_card.name} back on {name[1]} deck")
         victim.add_card(top_card, "topdeck")
     else:
@@ -60,14 +60,14 @@ def discard_or_put_back(victim, player):
 
 ###############################################################################
 class TestScryingPool(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Scrying Pool", "Moat"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g.get_card_from_pile("Scrying Pool")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play_card(self):
+    def test_play_card(self) -> None:
         """Play a scrying pool"""
         self.plr.piles[Piles.DECK].set("Silver", "Province", "Moat", "Gold")
         self.vic.piles[Piles.DECK].set("Duchy")

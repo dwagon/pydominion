@@ -2,14 +2,16 @@
 """ http://wiki.dominionstrategy.com/index.php/Saboteur"""
 
 import unittest
-from dominion import Card, Game, Piles
+from typing import Optional
+
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
 class Card_Saboteur(Card.Card):
     """Saboteur"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.INTRIGUE
@@ -20,7 +22,9 @@ class Card_Saboteur(Card.Card):
         self.name = "Saboteur"
         self.cost = 5
 
-    def special(self, game, player):  # pylint: disable=unused-argument
+    def special(
+        self, game: "Game.Game", player: "Player.Player"
+    ) -> None:  # pylint: disable=unused-argument
         """Each other player reveals cards from the top of his
         deck until revealing one costing 3 or more. He trashes that
         card and may gain a card costing at most 2 less than it.
@@ -33,17 +37,21 @@ class Card_Saboteur(Card.Card):
             victim.trash_card(card)
             victim.plr_gain_card(card.cost - 2)
 
-    def pickCard(self, victim, player):
+    def pickCard(
+        self, victim: "Player.Player", player: "Player.Player"
+    ) -> Optional[Card.Card]:
         """Pick Card"""
         for _ in range(len(victim.all_cards())):
-            crd = victim.next_card()
-            victim.reveal_card(crd)
-            if crd.cost >= 3:
-                return crd
-            victim.output(f"Saboteur checking and discarding {crd.name}")
-            victim.discard_card(crd)
+            card = victim.next_card()
+            if card is None:
+                break
+            victim.reveal_card(card)
+            if card.cost >= 3:
+                return card
+            victim.output(f"Saboteur checking and discarding {card}")
+            victim.discard_card(card)
         victim.output("Don't have any suitable cards")
-        player.output("%s doesn't have any suitable cards")
+        player.output(f"{victim} doesn't have any suitable cards")
         return None
 
 
@@ -62,10 +70,10 @@ def botresponse(
 
 
 ###############################################################################
-class Test_Saboteur(unittest.TestCase):
+class TestSaboteur(unittest.TestCase):
     """Test Saboteur"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=2,
             oldcards=True,
@@ -77,7 +85,7 @@ class Test_Saboteur(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Saboteur")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a saboteur"""
         trash_size = self.g.trash_pile.size()
         try:
@@ -96,7 +104,7 @@ class Test_Saboteur(unittest.TestCase):
             self.g.print_state()
             raise
 
-    def test_no_matching(self):
+    def test_no_matching(self) -> None:
         """Play a saboteur where the victim doesn't have a suitable card"""
         trash_size = self.g.trash_pile.size()
         self.victim.piles[Piles.DECK].set("Copper", "Copper", "Estate")

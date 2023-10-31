@@ -7,7 +7,7 @@ from dominion import Card, Game, CardPile
 
 ###############################################################################
 class Card_PatricianSplit(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.name = "Settlers"
         self.base = Card.CardExpansion.EMPIRES
@@ -20,13 +20,13 @@ class Card_PatricianSplit(Card.Card):
 
 ###############################################################################
 class SettlersCardPile(CardPile.CardPile):
-    def __init__(self, game):
+    def __init__(self, game) -> None:
         mapping = game.get_card_classes("Split", game.paths["cards"], "Card_")
         for name, class_ in mapping.items():
             game.card_instances[name] = class_()
         super().__init__()
 
-    def init_cards(self, num_cards=0, card_class=None):
+    def init_cards(self, num_cards: int = 0, card_class=None) -> None:
         # pylint: disable=import-outside-toplevel
         from dominion.cards.Split_Settlers import Card_Settlers
         from dominion.cards.Split_Bustling_Village import Card_BustlingVillage
@@ -38,12 +38,12 @@ class SettlersCardPile(CardPile.CardPile):
 
 ###############################################################################
 class TestEncampmentPile(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Settlers"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_pile(self):
+    def test_pile(self) -> None:
         self.assertEqual(len(self.g.card_piles["Settlers"]), 10)
         card = self.g.get_card_from_pile("Settlers")
         self.assertEqual(card.name, "Settlers")
