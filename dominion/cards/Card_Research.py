@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, PlayArea
+from dominion import Card, Game, Piles, PlayArea, Player
 
 
 ###############################################################################
 class Card_Research(Card.Card):
     """Research"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
         self.base = Card.CardExpansion.RENAISSANCE
@@ -21,8 +21,10 @@ class Card_Research(Card.Card):
         self._research = PlayArea.PlayArea([])
 
     ###########################################################################
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         tc = player.plr_trash_card(num=1, force=True, printcost=True)
+        if tc is None:
+            return
         cost = tc[0].cost
         if cost == 0:
             return
@@ -40,22 +42,21 @@ class Card_Research(Card.Card):
             player.secret_count += 1
 
     ###########################################################################
-    def duration(self, game, player):
-        cards = []
-        for card in self._research:
-            cards.append(card)
+    def duration(self, game: "Game.Game", player: "Player.Player") -> dict[str, str] | None:
+        cards = list(self._research)
         for card in cards:
             player.output(f"Bringing {card.name} out from research")
             player.add_card(card, Piles.HAND)
             self._research.remove(card)
             player.secret_count -= 1
+        return None
 
 
 ###############################################################################
 class TestResearch(unittest.TestCase):
     """Test Research"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1, initcards=["Research", "Moat"], badcards=["Shaman"]
         )
@@ -67,7 +68,7 @@ class TestResearch(unittest.TestCase):
         self.moat = self.g.get_card_from_pile("Moat")
         self.plr.add_card(self.moat, Piles.HAND)
 
-    def test_play_card(self):
+    def test_play_card(self) -> None:
         self.plr.test_input = ["Trash Moat", "Set Gold", "Set Silver", "Finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)

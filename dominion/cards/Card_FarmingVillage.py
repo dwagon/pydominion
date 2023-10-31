@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
-class Card_Farmingvillage(Card.Card):
-    def __init__(self):
+class Card_FarmingVillage(Card.Card):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.CORNUCOPIA
@@ -18,31 +17,33 @@ class Card_Farmingvillage(Card.Card):
         self.actions = 2
         self.cost = 4
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Reveal cards from the top of your deck until you revel
         an Action or Treasure card. Put that card into your hand
         and discard the other cards."""
         while True:
-            c = player.next_card()
-            player.reveal_card(c)
-            if c.isTreasure() or c.isAction():
-                player.output("Added %s to hand" % c.name)
-                player.add_card(c, Piles.HAND)
+            card = player.next_card()
+            if card is None:
                 break
-            player.output("Picked up and discarded %s" % c.name)
-            player.discard_card(c)
+            player.reveal_card(card)
+            if card.isTreasure() or card.isAction():
+                player.output(f"Added {card} to hand")
+                player.add_card(card, Piles.HAND)
+                break
+            player.output(f"Picked up and discarded {card}")
+            player.discard_card(card)
 
 
 ###############################################################################
-class Test_Farmingvillage(unittest.TestCase):
-    def setUp(self):
+class TestFarmingVillage(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Farming Village"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Farming Village")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play_treasure(self):
+    def test_play_treasure(self) -> None:
         """Play farming village with a treasure in deck"""
         self.plr.piles[Piles.DECK].set("Estate", "Estate", "Silver", "Estate", "Estate")
         self.plr.play_card(self.card)
@@ -51,9 +52,11 @@ class Test_Farmingvillage(unittest.TestCase):
         for c in self.plr.piles[Piles.DISCARD]:
             self.assertEqual(c.name, "Estate")
 
-    def test_play_action(self):
+    def test_play_action(self) -> None:
         """Play farming village with an action in deck"""
-        self.plr.piles[Piles.DECK].set("Estate", "Estate", "Farming Village", "Estate", "Estate")
+        self.plr.piles[Piles.DECK].set(
+            "Estate", "Estate", "Farming Village", "Estate", "Estate"
+        )
         self.plr.play_card(self.card)
         self.assertIn("Farming Village", self.plr.piles[Piles.HAND])
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)

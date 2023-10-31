@@ -23,6 +23,10 @@ class Card_PirateShip(Card.Card):
         self.name = "Pirate Ship"
         self.cost = 4
 
+    def setup(self, game: "Game.Game") -> None:
+        for player in game.player_list():
+            player.specials[PIRATE_SHIP] = 0
+
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
         choice = player.plr_choose_options(
             "Pick one",
@@ -76,13 +80,6 @@ class Card_PirateShip(Card.Card):
         else:
             player.output(f"Player {victim.name} has no treasures to trash")
         return trashed
-
-    def hook_gain_this_card(
-        self, game: "Game.Game", player: "Player.Player"
-    ) -> dict[str, Any]:
-        if PIRATE_SHIP not in player.specials:
-            player.specials[PIRATE_SHIP] = 0
-        return {}
 
 
 ###############################################################################
