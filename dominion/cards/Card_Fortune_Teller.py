@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
-class Card_Fortuneteller(Card.Card):
-    def __init__(self):
+class Card_FortuneTeller(Card.Card):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.CORNUCOPIA
@@ -17,31 +16,40 @@ class Card_Fortuneteller(Card.Card):
         self.coin = 2
         self.cost = 3
 
-    def special(self, game, player):
-        for plr in player.attack_victims():
-            while True:
-                card = plr.next_card()
-                plr.reveal_card(card)
-                if not card:
-                    break
-                if card.isVictory() or card.name == "Curse":
-                    plr.add_card(card, "topdeck")
-                    plr.output("%s's Fortune Teller put %s on top of your deck" % (player.name, card.name))
-                    break
-                plr.output("%s's Fortune Teller discarded your %s" % (player.name, card.name))
-                plr.discard_card(card)
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+        for victim in player.attack_victims():
+            fortune_attack(victim, player)
 
 
 ###############################################################################
-class Test_Fortuneteller(unittest.TestCase):
-    def setUp(self):
+def fortune_attack(victim: "Player.Player", attacker: "Player.Player") -> None:
+    max_cards = victim.count_cards()
+    while max_cards:
+        card = victim.next_card()
+        if card is None:
+            break
+        victim.reveal_card(card)
+        if card.isVictory() or card.name == "Curse":
+            victim.add_card(card, "topdeck")
+            victim.output(
+                f"{attacker.name}'s Fortune Teller put {card} on top of your deck"
+            )
+            break
+        victim.output(f"{attacker.name}'s Fortune Teller discarded your {card}")
+        victim.discard_card(card)
+        max_cards -= 1  # So we don't do it forever
+
+
+###############################################################################
+class Test_FortuneTeller(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Fortune Teller"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g.get_card_from_pile("Fortune Teller")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Fortune Teller"""
         self.vic.piles[Piles.DECK].set("Duchy", "Silver", "Copper")
         self.plr.play_card(self.card)

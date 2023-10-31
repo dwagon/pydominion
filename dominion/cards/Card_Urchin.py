@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Urchin(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.DARKAGES
@@ -19,24 +19,19 @@ class Card_Urchin(Card.Card):
         self.cards = 1
         self.cost = 3
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         for plr in player.attack_victims():
             plr.output(f"Discard down to 4 cards from {player.name}'s Urchin")
             plr.plr_discard_down_to(4)
 
-    def hook_cleanup(self, game, player):
-        attacks = 0
-        for card in player.piles[Piles.PLAYED]:
-            if card.isAttack():
-                attacks += 1
-        # Urchin and one more
+    def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> None:
+        attacks = sum(1 for card in player.piles[Piles.PLAYED] if card.isAttack())
         if attacks >= 2:
-            trash = player.plr_choose_options(
+            if player.plr_choose_options(
                 "Trash the urchin?",
                 ("Keep the Urchin", False),
                 ("Trash and gain a Mercenary", True),
-            )
-            if trash:
+            ):
                 player.trash_card(self)
                 player.gain_card("Mercenary")
 
@@ -49,13 +44,13 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 ###############################################################################
 class TestUrchin(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Urchin", "Militia"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g.get_card_from_pile("Urchin")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play an Urchin"""
         self.plr.add_card(self.card, Piles.HAND)
         self.victim.test_input = ["1", "0"]
@@ -64,7 +59,7 @@ class TestUrchin(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.victim.piles[Piles.HAND].size(), 4)
 
-    def test_mercenary(self):
+    def test_mercenary(self) -> None:
         """Play an Urchin and get a mercenary"""
         self.plr.piles[Piles.PLAYED].set("Urchin", "Militia")
         for crd in self.plr.piles[Piles.PLAYED]:
