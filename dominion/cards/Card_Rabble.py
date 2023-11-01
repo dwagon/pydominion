@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
@@ -18,24 +17,24 @@ class Card_Rabble(Card.Card):
         self.cost = 5
         self.cards = 3
 
-    def attack(self, victim, attacker):
+    def attack(self, victim: "Player.Player", attacker: "Player.Player"):
         cards = []
         for _ in range(3):
-            c = victim.next_card()
-            victim.reveal_card(c)
-            if c.isAction() or c.isTreasure():
-                victim.output("Discarding %s due to %s's rabble" % (c.name, attacker.name))
-                attacker.output("%s discarding %s" % (victim.name, c.name))
-                victim.discard_card(c)
+            card = victim.next_card()
+            victim.reveal_card(card)
+            if card.isAction() or card.isTreasure():
+                victim.output(f"Discarding {card} due to {attacker.name}'s rabble")
+                attacker.output(f"{victim.name} discarding {card}")
+                victim.discard_card(card)
             else:
-                cards.append(c)
+                cards.append(card)
         # TODO - let victim pick order
-        for c in cards:
-            victim.output("Putting %s back on deck" % c.name)
-            attacker.output("%s keeping %s" % (victim.name, c.name))
-            victim.add_card(c, "deck")
+        for card in cards:
+            victim.output(f"Putting {card} back on deck")
+            attacker.output(f"{victim.name} keeping {card}")
+            victim.add_card(card, "deck")
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Each other player reveals the top 3 cards of his deck,
         discard the revealed Actions and Treasures, and puts the
         rest back on top in any order he chooses"""
@@ -45,7 +44,7 @@ class Card_Rabble(Card.Card):
 
 ###############################################################################
 class Test_Rabble(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Rabble", "Moat"])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
@@ -53,14 +52,14 @@ class Test_Rabble(unittest.TestCase):
         self.moat = self.g.get_card_from_pile("Moat")
         self.attacker.add_card(self.rabble, Piles.HAND)
 
-    def test_defended(self):
+    def test_defended(self) -> None:
         self.victim.add_card(self.moat, Piles.HAND)
         self.attacker.play_card(self.rabble)
         self.assertEqual(self.victim.piles[Piles.HAND].size(), 6)  # 5 + moat
         self.assertEqual(self.attacker.piles[Piles.HAND].size(), 5 + 3)
         self.assertTrue(self.victim.piles[Piles.DISCARD].is_empty())
 
-    def test_nodefense(self):
+    def test_no_defense(self) -> None:
         self.victim.piles[Piles.DECK].set("Copper", "Estate", "Rabble")
         self.attacker.play_card(self.rabble)
         self.assertEqual(self.victim.piles[Piles.DECK][-1].name, "Estate")

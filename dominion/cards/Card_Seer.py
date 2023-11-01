@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Seer(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.RENAISSANCE
@@ -19,16 +18,18 @@ class Card_Seer(Card.Card):
         self.cost = 5
 
     ###########################################################################
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         drawn = []
         for _ in range(3):
-            c = player.next_card()
-            player.reveal_card(c)
-            if c.cost in (2, 3, 4) and not c.potcost and not c.debtcost:
-                player.output(f"Putting {c} into your hand")
-                player.add_card(c, Piles.HAND)
+            card = player.next_card()
+            if card is None:
+                continue
+            player.reveal_card(card)
+            if card.cost in (2, 3, 4) and not card.potcost and not card.debtcost:
+                player.output(f"Putting {card} into your hand")
+                player.add_card(card, Piles.HAND)
             else:
-                drawn.append(c)
+                drawn.append(card)
         for card in drawn:
             player.output(f"Putting {card} back on deck")
             player.add_card(card, "topdeck")
@@ -36,13 +37,13 @@ class Card_Seer(Card.Card):
 
 ###############################################################################
 class Test_Seer(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Seer"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Seer")
 
-    def test_play(self):
+    def test_play(self) -> None:
         self.plr.piles[Piles.DECK].set("Copper", "Silver", "Estate", "Province")
         self.plr.piles[Piles.HAND].set()
         self.plr.add_card(self.card, Piles.HAND)

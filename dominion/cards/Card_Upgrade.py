@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Upgrade(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.INTRIGUE
@@ -17,26 +16,25 @@ class Card_Upgrade(Card.Card):
         self.actions = 1
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Trash a card from your hand. Gain a card costing up to 1 more than it"""
-        tc = player.plr_trash_card(
+        if tc := player.plr_trash_card(
             printcost=True,
             prompt="Trash a card from your hand. Gain a card costing exactly 1 more than it",
-        )
-        if tc:
+        ):
             cost = player.card_cost(tc[0])
             player.plr_gain_card(cost + 1, "equal")
 
 
 ###############################################################################
-class Test_Upgrade(unittest.TestCase):
-    def setUp(self):
+class TestUpgrade(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Upgrade"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Upgrade")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play the Upgrade"""
         tsize = self.g.trash_pile.size()
         self.plr.add_card(self.card, Piles.HAND)
@@ -46,7 +44,7 @@ class Test_Upgrade(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.g.trash_pile.size(), tsize)
 
-    def test_trash(self):
+    def test_trash(self) -> None:
         """Trash an upgrade"""
         tsize = self.g.trash_pile.size()
         self.plr.piles[Piles.HAND].set("Duchy", "Copper")

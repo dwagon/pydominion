@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
-class Card_Wanderingminstrel(Card.Card):
-    def __init__(self):
+class Card_WanderingMinstrel(Card.Card):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DARKAGES
@@ -18,32 +17,34 @@ class Card_Wanderingminstrel(Card.Card):
         self.actions = 2
         self.cost = 4
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         cards = []
         for _ in range(3):
-            c = player.next_card()
-            player.reveal_card(c)
-            if c.isAction():
-                cards.append(c)
-                player.output("Revealed a %s and put on top of deck" % c.name)
+            card = player.next_card()
+            if card is None:
+                continue
+            player.reveal_card(card)
+            if card.isAction():
+                cards.append(card)
+                player.output(f"Revealed a {card} and put on top of deck")
             else:
-                player.add_card(c, "discard")
-                player.output("Discarded %s" % c.name)
+                player.add_card(card, "discard")
+                player.output(f"Discarded {card}")
 
         for card in cards:
             player.add_card(card, "topdeck")
 
 
 ###############################################################################
-class Test_Wanderingminstrel(unittest.TestCase):
-    def setUp(self):
+class TestWanderingMinstrel(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Wandering Minstrel", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Wandering Minstrel")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Wandering Minstrel"""
         self.plr.piles[Piles.DECK].set("Duchy", "Moat", "Silver", "Gold")
         self.plr.play_card(self.card)
