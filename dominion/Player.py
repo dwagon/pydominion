@@ -704,6 +704,8 @@ class Player:
             if pile.is_empty():
                 continue
             card = pile.get_top_card()
+            if card is None:
+                continue
             if not card.purchasable:
                 continue
             all_cards.add(card)
@@ -1439,6 +1441,8 @@ class Player:
                 self.output(f"No more {options['replace']}")
             else:
                 new_card.player = self
+        if new_card is None:
+            return None
         self.stats["gained"].append(new_card)
         destination = options.get("destination", destination)
         if callhook:

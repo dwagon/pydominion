@@ -2,37 +2,38 @@
 """ http://wiki.dominionstrategy.com/index.php/Forest_Dwellers"""
 
 import unittest
-from dominion import Card, Game, Piles, Ally
+from dominion import Card, Game, Piles, Ally, Player
 
 
 ###############################################################################
 class Ally_ForestDwellers(Ally.Ally):
     """Forest Dwellers"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
         self.desc = """At the start of your turn, you may spend a Favor to look at the top 3 cards of your deck, 
         discard any number and put the rest back in any order."""
         self.name = "Forest Dwellers"
 
-    def hook_start_turn(self, game, player):
+    def hook_start_turn(self, game: Game.Game, player: Player.Player) -> None:
         """ """
         if player.favors.get() < 1:
             return
-        do_it = player.plr_choose_options(
+        if do_it := player.plr_choose_options(
             "Forest Dwellers:",
             ("Do nothing", False),
             (
                 "Spend a favour to look at the top 3 cards of your deck, discard any number?",
                 True,
             ),
-        )
-        if do_it:
+        ):
             player.favors.add(-1)
             cards = [player.next_card() for _ in range(3)]
             player.output(f"Cards are: {', '.join([_.name for _ in cards])}")
             for card in cards:
+                if card is None:
+                    continue
                 options = [(f"Discard {card}", True), (f"Keep {card} on deck", False)]
                 opt = player.plr_choose_options(f"For {card} choose to", *options)
                 if opt:
@@ -53,14 +54,14 @@ def botresponse(
 class Test_ForestDwellers(unittest.TestCase):
     """Test Forest Dwellers"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1, allies="Forest Dwellers", initcards=["Underling"]
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_play_card(self):
+    def test_play_card(self) -> None:
         """Play and gain a card"""
         self.plr.piles[Piles.DECK].set("Gold", "Silver", "Copper")
         self.plr.favors.set(2)

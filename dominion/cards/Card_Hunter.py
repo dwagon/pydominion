@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Hunter"""
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
 class Card_Hunter(Card.Card):
     """Hunter"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ALLIES
@@ -18,26 +18,34 @@ class Card_Hunter(Card.Card):
         self.actions = 1
         self.cost = 5
 
-    def hunter_special(self, all_cards, player, typed_cards, card_description):
+    def hunter_special(
+        self,
+        all_cards: list[Card.Card],
+        player: "Player.Player",
+        typed_cards: list[Card.Card],
+        card_description: str,
+    ) -> None:
         """Abstract out repeat code"""
         if typed_cards:
             if len(typed_cards) > 1:
-                card = player.card_sel(
+                cards = player.card_sel(
                     num=1,
                     force=True,
                     prompt=f"Pick {card_description} to put in your hand",
                     cardsrc=typed_cards,
-                )[0]
+                )
+                if cards is not None:
+                    card = cards[0]
             else:
                 card = typed_cards[0]
             all_cards.remove(card)
             player.output(f"Putting {card} into hand")
             player.add_card(card, Piles.HAND)
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         cards = [player.next_card() for _ in range(3)]
         for card in cards:
-            if not card:
+            if card is None:
                 cards.remove(card)
                 continue
             player.reveal_card(card)
@@ -59,13 +67,13 @@ class Card_Hunter(Card.Card):
 class Test_Hunter(unittest.TestCase):
     """Test Hunter"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Hunter", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Hunter")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a hunter"""
         self.plr.piles[Piles.DECK].set("Gold", "Silver", "Moat")
         self.plr.add_card(self.card, Piles.HAND)

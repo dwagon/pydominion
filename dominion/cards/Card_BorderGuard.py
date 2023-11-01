@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Border_Guard"""
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, PlayArea
 
 
 ###############################################################################
 class Card_BorderGuard(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.RENAISSANCE
@@ -17,7 +17,7 @@ class Card_BorderGuard(Card.Card):
         self.cost = 2
         self.actions = 1
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         num_cards = 3 if player.has_artifact("Lantern") else 2
         cards = []
         for _ in range(num_cards):
@@ -29,8 +29,9 @@ class Card_BorderGuard(Card.Card):
             prompt="Select a card to put into your hand, other will be discarded",
             cardsrc=cards,
         )
-        player.add_card(ch[0], Piles.HAND)
-        cards.remove(ch[0])
+        if ch and ch[0] is not None:
+            player.add_card(ch[0], Piles.HAND)
+            cards.remove(ch[0])
         for card in cards:
             player.output(f"Putting {card.name} into the discard pile")
             player.add_card(card, "discard")
@@ -43,7 +44,9 @@ class Card_BorderGuard(Card.Card):
             )
             player.assign_artifact(art)
 
-    def hook_discard_this_card(self, game, player, source):
+    def hook_discard_this_card(
+        self, game: "Game.Game", player: "Player.Player", source: PlayArea.PlayArea
+    ) -> None:
         if not player.has_artifact("Horn"):
             return
         ch = player.plr_choose_options(
@@ -57,7 +60,7 @@ class Card_BorderGuard(Card.Card):
 
 ###############################################################################
 class Test_BorderGuard(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1, initcards=["Border Guard", "Moat", "Guide"]
         )
@@ -65,7 +68,7 @@ class Test_BorderGuard(unittest.TestCase):
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Border Guard")
 
-    def test_play(self):
+    def test_play(self) -> None:
         self.plr.piles[Piles.DECK].set("Silver", "Gold")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Select Gold"]
@@ -74,7 +77,7 @@ class Test_BorderGuard(unittest.TestCase):
         self.assertIn("Gold", self.plr.piles[Piles.HAND])
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
-    def test_play_actions(self):
+    def test_play_actions(self) -> None:
         self.plr.piles[Piles.DECK].set("Moat", "Guide")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Select Moat", "Take Horn"]

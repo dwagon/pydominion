@@ -2,13 +2,12 @@
 """ http://wiki.dominionstrategy.com/index.php/Wayfarer """
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Wayfarer(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.MENAGERIE
@@ -17,11 +16,11 @@ class Card_Wayfarer(Card.Card):
         self.cards = 3
         self.cost = 6
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         player.gain_card("Silver")
         player.output("Gained a Silver")
 
-    def hook_this_card_cost(self, game, player):
+    def hook_this_card_cost(self, game: "Game.Game", player: "Player.Player") -> int:
         if player.stats["gained"]:
             last_cost = player.stats["gained"][0].cost
             delta = -6 + last_cost
@@ -30,21 +29,21 @@ class Card_Wayfarer(Card.Card):
 
 
 ###############################################################################
-class Test_Wayfarer(unittest.TestCase):
-    def setUp(self):
+class TestWayfarer(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Wayfarer"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Wayfarer")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_playcard(self):
+    def test_playcard(self) -> None:
         """Play a wayfairer"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 3)
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
-    def test_buy(self):
+    def test_buy(self) -> None:
         """Buy a wayfairer"""
         cost = self.plr.card_cost(self.card)
         self.assertEqual(cost, 6)
