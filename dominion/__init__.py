@@ -2,6 +2,11 @@ from enum import auto, Enum, StrEnum
 
 
 ###############################################################################
+class NoCardException(Exception):
+    """Player has run out of cards"""
+
+
+###############################################################################
 class Piles(StrEnum):
     """Play Areas for a card"""
 

@@ -1,11 +1,13 @@
 #!/usr/bin/env python
-
+import contextlib
 import unittest
-from dominion import Game, Card, Piles
+from typing import Optional, Any
+
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 class Card_Lookout(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.SEASIDE
@@ -16,32 +18,33 @@ class Card_Lookout(Card.Card):
         self.actions = 1
         self.cost = 3
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Look at the top 3 cards of your deck. Trash one of them.
         Discard one of them. Put the other one on top of your deck
         """
         cards = []
         for _ in range(3):
-            cards.append(player.next_card())
+            with contextlib.suppress(NoCardException):
+                cards.append(player.next_card())
         cards = [_ for _ in cards if _]
         if not cards:
             player.output("No cards available")
             return
-        player.output("Pulled %s from deck" % ", ".join([_.name for _ in cards]))
+        player.output(f'Pulled {", ".join([_.name for _ in cards])} from deck')
         player.output("Trash a card, discard a card, put a card on your deck")
-        trash_card = self._trash(player, cards)
-        if trash_card:
+        if trash_card := self._trash(player, cards):
             cards.remove(trash_card)
-        discard_card = self._discard(player, cards)
-        if discard_card:
+        if discard_card := self._discard(player, cards):
             cards.remove(discard_card)
         if cards:
             player.output(f"Putting {cards[0]} on top of deck")
             player.add_card(cards[0], "topdeck")
 
-    def _trash(self, player, cards):
+    def _trash(
+        self, player: Player.Player, cards: list[Card.Card]
+    ) -> Optional[Card.Card]:
         index = 1
-        options = []
+        options: list[dict[str, Any]] = []
         for card in cards:
             index += 1
             options.append(
@@ -49,13 +52,15 @@ class Card_Lookout(Card.Card):
             )
         o = player.user_input(options, "Select a card to trash")
         if not o:
-            return
+            return None
         player.trash_card(o["card"])
         return o["card"]
 
-    def _discard(self, player, cards):
+    def _discard(
+        self, player: Player.Player, cards: list[Card.Card]
+    ) -> Optional[Card.Card]:
         index = 1
-        options = []
+        options: list[dict[str, Any]] = []
         for card in cards:
             index += 1
             options.append(
@@ -63,20 +68,20 @@ class Card_Lookout(Card.Card):
             )
         o = player.user_input(options, "Select a card to discard")
         if not o:
-            return
+            return None
         player.discard_card(o["card"])
         return o["card"]
 
 
 ###############################################################################
 class TestLookout(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Lookout"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.lookout = self.g.get_card_from_pile("Lookout")
 
-    def test_actions(self):
+    def test_actions(self) -> None:
         self.plr.piles[Piles.DECK].set("Copper", "Estate", "Gold", "Province")
         self.plr.add_card(self.lookout, Piles.HAND)
         self.plr.test_input = ["Province", "Gold"]
@@ -86,7 +91,7 @@ class TestLookout(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.DECK][0].name, "Copper")
         self.assertEqual(self.plr.piles[Piles.DECK][1].name, "Estate")
 
-    def test_no_cards(self):
+    def test_no_cards(self) -> None:
         """Play a lookout when there are no cards available"""
         trash_size = self.g.trash_pile.size()
         self.plr.piles[Piles.DECK].set()

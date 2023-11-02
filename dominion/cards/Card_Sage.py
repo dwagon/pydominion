@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -19,33 +18,36 @@ class Card_Sage(Card.Card):
         self.cost = 3
 
     ###########################################################################
-    def special(self, game, player):
-        todiscard = []
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        to_discard = []
         while True:
-            card = player.next_card()
+            try:
+                card = player.next_card()
+            except NoCardException:
+                break
             if not card:
                 player.output("No card costing 3 or more found")
                 break
             player.reveal_card(card)
             if card.cost >= 3:
-                player.output("Adding %s to hand" % card.name)
+                player.output(f"Adding {card} to hand")
                 player.add_card(card, Piles.HAND)
                 break
-            player.output("Discarding %s" % card.name)
-            todiscard.append(card)
-        for card in todiscard:
+            player.output(f"Discarding {card}")
+            to_discard.append(card)
+        for card in to_discard:
             player.discard_card(card)
 
 
 ###############################################################################
-class Test_Sage(unittest.TestCase):
-    def setUp(self):
+class TestSage(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Sage"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Sage")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Pick a card out of the pile"""
         self.plr.piles[Piles.DECK].set("Gold", "Copper", "Copper", "Copper")
         self.plr.add_card(self.card, Piles.HAND)
@@ -53,7 +55,7 @@ class Test_Sage(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertIn("Gold", self.plr.piles[Piles.HAND])
 
-    def test_exhaust_deck(self):
+    def test_exhaust_deck(self) -> None:
         """No good card to pick out of the pile"""
         self.plr.piles[Piles.DECK].set("Copper", "Copper", "Copper")
         self.plr.add_card(self.card, Piles.HAND)

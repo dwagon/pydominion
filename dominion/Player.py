@@ -11,7 +11,7 @@ from typing import Any, Optional, TYPE_CHECKING, Callable
 if TYPE_CHECKING:
     from dominion.Game import Game
 
-from dominion import Piles, Phase, Limits
+from dominion import Piles, Phase, Limits, NoCardException
 from dominion.Card import Card, CardType
 from dominion.CardPile import CardPile
 from dominion.Counter import Counter
@@ -316,25 +316,25 @@ class Player:
                     trash_opts.update(rc)
 
     ###########################################################################
-    def next_card(self) -> Optional[Card]:
+    def next_card(self) -> Card:
         """Pick up and return the next card from the deck"""
         if not self.piles[Piles.DECK]:
             self.refill_deck()
         if not self.piles[Piles.DECK]:
             self.output("No more cards in deck")
-            return None
+            raise NoCardException
         crd = self.piles[Piles.DECK].next_card()
         crd.location = None  # We don't know where it is going yet
         return crd
 
     ###########################################################################
-    def top_card(self) -> Optional[Card]:
+    def top_card(self) -> Card:
         """Return the top card from the deck but don't pick it up"""
         if not self.piles[Piles.DECK]:
             self.refill_deck()
         if not self.piles[Piles.DECK]:
             self.output("No more cards in deck")
-            return None
+            raise NoCardException
         return self.piles[Piles.DECK].top_card()
 
     ###########################################################################
@@ -361,13 +361,13 @@ class Player:
     ###########################################################################
     def pickup_card(
         self, card: Optional[Card] = None, verbose: bool = True, verb: str = "Picked up"
-    ) -> Optional[Card]:
+    ) -> Card:
         """Pick a card from the deck and put it into the players hand"""
         if card is None:
             card = self.next_card()
             if not card:
                 self.output("No more cards to pickup")
-                return None
+                raise NoCardException
         assert isinstance(card, Card)
         self.add_card(card, Piles.HAND)
         if verbose:
@@ -413,16 +413,14 @@ class Player:
             )
 
     ###########################################################################
-    def move_card(self, card: Card, dest: Piles) -> Optional[Card]:
+    def move_card(self, card: Card, dest: Piles) -> Card:
         """Move a card to {dest} card pile"""
         self.remove_card(card)
         return self.add_card(card, dest)
 
     ###########################################################################
-    def add_card(self, card: Card, pile: Piles | str = Piles.DISCARD) -> Optional[Card]:
+    def add_card(self, card: Card, pile: Piles | str = Piles.DISCARD) -> Card:
         """Add an existing card to a new location"""
-        if not card:  # pragma: no cover
-            return None
         assert isinstance(card, Card), f"{card=} {type(card)=}"
         card.player = self
 
