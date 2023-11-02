@@ -1,44 +1,53 @@
 #!/usr/bin/env python
 
+import contextlib
 import unittest
-from dominion import Card, Game, Piles, Player
+from typing import Any, Optional
+
+from dominion import Card, Game, Piles, Player, NoCardException, Phase
 
 
 ###############################################################################
 class Card_Den_of_Sin(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.NIGHT, Card.CardType.DURATION]
         self.base = Card.CardExpansion.NOCTURNE
         self.name = "Den of Sin"
         self.cost = 2
 
-    def dynamic_description(self, player):
-        if player.phase == Player.Phase.BUY:
+    def dynamic_description(self, player: Player.Player) -> str:
+        if player.phase == Phase.BUY:
             return "At the start of your next turn, +2 Cards; This is gained to your hand (instead of your discard pile)."
         return "At the start of your next turn, +2 Cards"
 
-    def duration(self, game, player):
+    def duration(
+        self, game: Game.Game, player: Player.Player
+    ) -> Optional[dict[str, str]]:
         for _ in range(2):
-            player.pickup_card()
+            with contextlib.suppress(NoCardException):
+                player.pickup_card()
+        return None
 
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[str, Any]:
         return {"destination": Piles.HAND}
 
 
 ###############################################################################
 class Test_Den_of_Sin(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Den of Sin"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Den of Sin")
 
-    def test_gain(self):
+    def test_gain(self) -> None:
         self.plr.gain_card("Den of Sin")
         self.assertIn("Den of Sin", self.plr.piles[Piles.HAND])
 
-    def test_duration(self):
+    def test_duration(self) -> None:
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.plr.end_turn()

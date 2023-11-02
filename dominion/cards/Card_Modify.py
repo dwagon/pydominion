@@ -24,7 +24,7 @@ class Card_Modify(Card.Card):
             (f"Gain a card costing up to {cost}", "gain"),
         )
         if choice == "card":
-            player.pickup_card()
+            player.pickup_cards(1)
             player.add_actions(1)
         elif choice == "gain":
             player.plr_gain_card(cost=cost)

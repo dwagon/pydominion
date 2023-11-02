@@ -2,6 +2,8 @@
 """ All the Player based stuff """
 # pylint: disable=too-many-instance-attributes, too-many-public-methods
 from __future__ import annotations
+
+import contextlib
 import json
 import operator
 import sys
@@ -220,7 +222,8 @@ class Player:
         self.output(f"Received {hx} as a hex")
         self.output(hx.description(self))
         for _ in range(hx.cards):
-            self.pickup_card()
+            with contextlib.suppress(NoCardException):
+                self.pickup_card()
         self.add_actions(hx.actions)
         self.buys += hx.buys
         self.coins += self.hook_spend_value(hx, actual=True)
@@ -240,7 +243,8 @@ class Player:
         self.output(f"Received {boon} as a boon")
         self.output(boon.description(self))
         for _ in range(boon.cards):
-            self.pickup_card()
+            with contextlib.suppress(NoCardException):
+                self.pickup_card()
         self.add_actions(boon.actions)
         self.buys += boon.buys
         self.coins += self.hook_spend_value(boon, actual=True)
@@ -354,8 +358,11 @@ class Player:
         """Pickup multiple cards into players hand"""
         cards: list[Card] = []
         for _ in range(num):
-            if card := self.pickup_card(verbose=verbose, verb=verb):
-                cards.append(card)
+            try:
+                if card := self.pickup_card(verbose=verbose, verb=verb):
+                    cards.append(card)
+            except NoCardException:
+                break
         return cards
 
     ###########################################################################
@@ -384,17 +391,18 @@ class Player:
         self.piles[Piles.DISCARD].shuffle()
 
     ###########################################################################
-    def pick_up_hand(self, handsize: Optional[int] = None) -> None:
+    def pick_up_hand(self, hand_size: Optional[int] = None) -> None:
         """Replenish hand from deck"""
-        if handsize is None:
-            handsize = self.newhandsize
+        if hand_size is None:
+            hand_size = self.newhandsize
         if self.card_token:
             self.output("-Card token reduce draw by one")
-            handsize -= 1
+            hand_size -= 1
             self.card_token = False
-        while self.piles[Piles.HAND].size() < handsize:
-            c = self.pickup_card(verb="Dealt")
-            if not c:
+        while self.piles[Piles.HAND].size() < hand_size:
+            try:
+                self.pickup_card(verb="Dealt")
+            except NoCardException:
                 self.output("Not enough cards to fill hand")
                 break
 
@@ -1236,8 +1244,11 @@ class Player:
             self.output("Gaining action from +1 Action token")
             self.add_actions(1)
         if "+1 Card" in tkns:
-            if c := self.pickup_card():
-                self.output(f"Picked up {c} from +1 Card token")
+            try:
+                if c := self.pickup_card():
+                    self.output(f"Picked up {c} from +1 Card token")
+            except NoCardException:
+                pass
         if "+1 Coin" in tkns:
             self.output("Gaining coin from +1 Coin token")
             self.coins += 1
@@ -1391,7 +1402,8 @@ class Player:
             modifier = -1
 
         for _ in range(card.cards + modifier):
-            self.pickup_card()
+            with contextlib.suppress(NoCardException):
+                self.pickup_card()
 
         if self.phase == Phase.NIGHT:
             card.night(game=self.game, player=self)

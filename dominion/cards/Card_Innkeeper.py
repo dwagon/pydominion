@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Innkeeper """
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, NoCardException
 
 
 ###############################################################################
@@ -25,7 +25,7 @@ class Card_Innkeeper(Card.Card):
             ("+5 Cards then discard 6", "five"),
         )
         if choice == "one":
-            player.pickup_card()
+            player.pickup_cards(1)
         elif choice == "three":
             player.pickup_cards(3)
             player.plr_discard_cards(3, force=True)
@@ -53,7 +53,9 @@ class Test_Innkeeper(unittest.TestCase):
     def test_play_three(self):
         """Play the card to gain three cards"""
         self.plr.piles[Piles.DECK].set("Copper", "Silver", "Gold")
-        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
+        self.plr.piles[Piles.HAND].set(
+            "Copper", "Silver", "Gold", "Estate", "Duchy", "Province"
+        )
         self.plr.add_card(self.card, Piles.HAND)
         hndsize = self.plr.piles[Piles.HAND].size()
         self.plr.test_input = [

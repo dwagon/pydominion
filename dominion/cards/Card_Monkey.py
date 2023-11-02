@@ -21,11 +21,11 @@ class Card_Monkey(Card.Card):
     def hook_all_players_gain_card(self, game, player, owner, card):
         """Until your next turn, when the player to your right gains a card, +1 Card"""
         if player == game.playerToRight(owner):
-            owner.pickup_card()
+            owner.pickup_cards(1)
 
     def duration(self, game, player):
         """At the start of your next turn, +1 Card."""
-        player.pickup_card()
+        player.pickup_cards(1)
 
 
 ###############################################################################

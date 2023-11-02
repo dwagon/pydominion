@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Venture(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
         self.desc = "+1 coin, get next treasure from deck"
@@ -14,32 +14,35 @@ class Card_Venture(Card.Card):
         self.name = "Venture"
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """When you play this, reveal cards from your deck until
         you reveal a Treasure. Discard the other cards. Play that
         Treasure"""
         while True:
-            c = player.pickup_card(verbose=False)
-            player.reveal_card(c)
-            if c.isTreasure():
-                player.output("Picked up %s from Venture" % c.name)
-                player.play_card(c)
+            try:
+                card = player.pickup_card(verbose=False)
+            except NoCardException:
                 break
-            player.output("Picked up and discarded %s" % c.name)
-            player.coins.add(c.coin)  # Compensate for not keeping card
-            player.discard_card(c)
+            player.reveal_card(card)
+            if card.isTreasure():
+                player.output(f"Picked up {card} from Venture")
+                player.play_card(card)
+                break
+            player.output(f"Picked up and discarded {card}")
+            player.coins.add(card.coin)  # Compensate for not keeping card
+            player.discard_card(card)
 
 
 ###############################################################################
 class Test_Venture(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Venture"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Venture")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a Venture"""
         self.plr.piles[Piles.DECK].set("Gold")
         self.plr.play_card(self.card)
@@ -51,7 +54,7 @@ class Test_Venture(unittest.TestCase):
             self.fail("Didn't play the gold")
         self.assertTrue(self.plr.piles[Piles.DECK].is_empty())
 
-    def test_discard(self):
+    def test_discard(self) -> None:
         """Make sure we discard non-treasures"""
         self.plr.piles[Piles.DECK].set("Gold", "Estate", "Estate")
         self.plr.play_card(self.card)

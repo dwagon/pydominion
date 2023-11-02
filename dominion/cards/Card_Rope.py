@@ -23,7 +23,7 @@ class Card_Rope(Card.Card):
 
     def duration(self, game, player):
         """At the start of your next turn, +1 Card and you may trash a card from your hand."""
-        player.pickup_card()
+        player.pickup_cards(1)
         player.plr_trash_card(num=1)
 
 

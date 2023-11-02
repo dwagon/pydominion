@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Adventurer(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DOMINION
@@ -14,33 +14,39 @@ class Card_Adventurer(Card.Card):
         self.name = "Adventurer"
         self.cost = 6
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Reveal cards from your deck until you reveal two treasure cards
         Add those to your hand and discard the other revealed cards"""
-        treasures = []
+        treasures: list[Card.Card] = []
         while len(treasures) < 2:
-            c = player.pickup_card(verbose=False)
-            player.reveal_card(c)
-            if c.isTreasure():
-                treasures.append(c)
-                player.output("Adding %s" % c.name)
+            try:
+                card = player.pickup_card(verbose=False)
+            except NoCardException:
+                break
+            player.reveal_card(card)
+            if card.isTreasure():
+                treasures.append(card)
+                player.output(f"Adding {card}")
             else:
-                player.discard_card(c)
-                player.output("Discarding %s as not treasure" % c.name)
+                player.discard_card(card)
+                player.output(f"Discarding {card} as not treasure")
 
 
 ###############################################################################
 class Test_Adventurer(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Adventurer"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_treasures(self):
+    def test_treasures(self) -> None:
         self.plr.piles[Piles.DECK].set("Copper", "Silver", "Gold", "Estate")
         self.plr.piles[Piles.HAND].set("Adventurer")
         self.plr.play_card(self.plr.piles[Piles.HAND][0])
-        self.assertEqual(sorted(["Silver", "Gold"]), sorted([c.name for c in self.plr.piles[Piles.HAND]]))
+        self.assertEqual(
+            sorted(["Silver", "Gold"]),
+            sorted([c.name for c in self.plr.piles[Piles.HAND]]),
+        )
         self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Estate"])
         self.assertEqual(self.plr.piles[Piles.DECK][0].name, "Copper")
 

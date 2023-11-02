@@ -21,7 +21,7 @@ class Card_Madman(Card.Card):
         handsize = player.piles[Piles.HAND].size()
         player.output(f"Gaining {handsize} cards from madman")
         for _ in range(handsize):
-            player.pickup_card()
+            player.pickup_cards(1)
         game.card_piles["Madman"].add(self)
         player.piles[Piles.PLAYED].remove(self)
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, NoCardException
 
 
 ###############################################################################
@@ -21,20 +21,21 @@ class Card_Library(Card.Card):
         aside action cards drawn this way, as you draw them; discard
         the set aside cards after you finish drawing"""
         while player.piles[Piles.HAND].size() < 7:
-            c = player.next_card()
-            if c.isAction():
-                if self.discardChoice(player, c):
-                    player.add_card(c, "discard")
-                    continue
-            player.pickup_card(c)
+            try:
+                card = player.next_card()
+            except NoCardException:
+                break
+            if card.isAction() and self.discard_choice(player, card):
+                player.add_card(card, "discard")
+                continue
+            player.pickup_card(card)
 
-    def discardChoice(self, plr, card):
-        ans = plr.plr_choose_options(
-            "Picked up %s. Discard from library?" % card.name,
-            ("Discard %s" % card.name, True),
-            ("Keep %s" % card.name, False),
+    def discard_choice(self, plr, card):
+        return plr.plr_choose_options(
+            f"Picked up {card}. Discard from library?",
+            (f"Discard {card}", True),
+            (f"Keep {card}", False),
         )
-        return ans
 
 
 ###############################################################################

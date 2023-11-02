@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Rebuild(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DARKAGES
@@ -18,7 +18,7 @@ class Card_Rebuild(Card.Card):
         self.actions = 1
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Name a card. Reveal cards from the top of your deck
         until you reveal a Victory card that is not the named card.
         Discard the other cards. Trash the Victory card and gain a
@@ -28,10 +28,11 @@ class Card_Rebuild(Card.Card):
             return
         discards = []
         while True:
-            card = player.next_card()
-            player.reveal_card(card)
-            if not card:
+            try:
+                card = player.next_card()
+            except NoCardException:
                 break
+            player.reveal_card(card)
             if card.isVictory() and guess != card.name:
                 player.output(f"Found and trashing {card}")
                 player.trash_card(card)
@@ -41,25 +42,24 @@ class Card_Rebuild(Card.Card):
                 break
             player.output(f"Drew and discarded {card}")
             discards.append(card)
-        for c in discards:
-            player.discard_card(c)
+        for discard in discards:
+            player.discard_card(discard)
 
-    def _pick_victory_card(self, game, player):
+    def _pick_victory_card(self, game: Game.Game, player: Player.Player) -> str:
         """Get the player to guess the victory card"""
         stacks = game.get_victory_piles()
-        options = []
+        options: list[tuple[str, str]] = []
         for card in stacks:
             options.append((f"{card}", card))
-        guess = player.plr_choose_options(
+        return player.plr_choose_options(
             "Guess a victory card - the next victory card that is not that will be upgraded",
             *options,
         )
-        return guess
 
 
 ###############################################################################
 class TestRebuild(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1, initcards=["Rebuild"], badcards=["Duchess"]
         )
@@ -68,7 +68,7 @@ class TestRebuild(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Rebuild")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a rebuild"""
         trash_size = self.g.trash_pile.size()
         self.plr.piles[Piles.DECK].set("Copper", "Copper", "Estate", "Province", "Gold")

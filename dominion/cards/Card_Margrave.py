@@ -3,10 +3,8 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
-###############################################################################
 ###############################################################################
 class Card_Margrave(Card.Card):
     def __init__(self):
@@ -23,7 +21,7 @@ class Card_Margrave(Card.Card):
     def special(self, game, player):
         """Each other player draws a card, then discards down to 3 cards in hand"""
         for plr in player.attack_victims():
-            plr.pickup_card()
+            plr.pickup_cards(1)
             plr.output(f"{player.name}'s Margrave: Discard down to 3 cards")
             plr.plr_discard_down_to(3)
 

@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, NoCardException
 
 
 ###############################################################################
@@ -21,21 +20,24 @@ class Card_Jack_of_all_Trades(Card.Card):
     def special(self, game, player):
         player.gain_card("Silver")
 
-        card = player.next_card()
-        topdeck = player.plr_choose_options(
-            "Put %s back on top of your deck?" % card.name,
-            ("Discard %s" % card.name, False),
-            ("Keep %s on top of your deck" % card.name, True),
-        )
-        if topdeck:
-            player.add_card(card, "topdeck")
+        try:
+            card = player.next_card()
+        except NoCardException:
+            pass
         else:
-            player.discard_card(card)
+            if player.plr_choose_options(
+                f"Put {card} back on top of your deck?",
+                (f"Discard {card}", False),
+                (f"Keep {card} on top of your deck", True),
+            ):
+                player.add_card(card, "topdeck")
+            else:
+                player.discard_card(card)
 
         while player.piles[Piles.HAND].size() < 5:
-            player.pickup_card()
+            player.pickup_cards(1)
 
-        cards = [c for c in player.piles[Piles.HAND] if not c.isTreasure()]
+        cards = [_ for _ in player.piles[Piles.HAND] if not _.isTreasure()]
         if cards:
             player.plr_trash_card(cardsrc=cards, prompt="Trash a non-Treasure")
 
@@ -51,7 +53,9 @@ class Test_Jack_of_all_Trades(unittest.TestCase):
     def test_play(self):
         """Play a Jack of all Trades"""
         tsize = self.g.trash_pile.size()
-        self.plr.piles[Piles.DECK].set("Copper", "Copper", "Copper", "Copper", "Copper", "Gold")
+        self.plr.piles[Piles.DECK].set(
+            "Copper", "Copper", "Copper", "Copper", "Copper", "Gold"
+        )
         self.plr.piles[Piles.HAND].set("Duchy")
         self.plr.test_input = ["keep", "duchy"]
         self.plr.add_card(self.card, Piles.HAND)
@@ -59,7 +63,9 @@ class Test_Jack_of_all_Trades(unittest.TestCase):
 
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])  # Gain a Silver
 
-        self.assertIn("Gold", self.plr.piles[Piles.HAND])  # Keep on deck, then picked up
+        self.assertIn(
+            "Gold", self.plr.piles[Piles.HAND]
+        )  # Keep on deck, then picked up
 
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 - 1)  # One trashed
         self.assertEqual(self.g.trash_pile.size(), tsize + 1)

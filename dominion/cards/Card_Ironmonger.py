@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
+import contextlib
 import unittest
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -22,21 +23,23 @@ class Card_Ironmonger(Card.Card):
         """Reveal the top card of your deck; you may discard it.
         Either way, if it is an... Action card, +1 Action; Treasure
         Card, +1 coin; Victory Card, +1 card"""
-        card = player.next_card()
-        if card is None:
+        try:
+            card = player.next_card()
+        except NoCardException:
             return
         player.reveal_card(card)
         if player.plr_choose_options(
             f"What to do with {card}? ",
             (f"Put back {card}", False),
-            (f"Discard {card.name}", True),
+            (f"Discard {card}", True),
         ):
             player.discard_card(card)
         else:
             player.add_card(card, "topdeck")
         if card.isVictory():
             player.output(f"Picking up card as {card} was a victory card")
-            player.pickup_card()
+            with contextlib.suppress(NoCardException):
+                player.pickup_card()
         if card.isAction():
             player.output(f"Gaining action as {card} was an action card")
             player.add_actions(1)

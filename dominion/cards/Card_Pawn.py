@@ -32,14 +32,14 @@ class Card_Pawn(Card.Card):
             for k, v in selectable:
                 if k in chosen:
                     continue
-                options.append({"selector": "%d" % index, "print": v, "opt": k})
+                options.append({"selector": f"{index}", "print": v, "opt": k})
                 index += 1
             o = player.user_input(options, "What do you want to do?")
             chosen.append(o["opt"])
 
         for choice in chosen:
             if choice == "card":
-                player.pickup_card()
+                player.pickup_cards(1)
             elif choice == Card.CardType.ACTION:
                 player.add_actions(1)
             elif choice == "buy":

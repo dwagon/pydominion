@@ -25,11 +25,11 @@ class Card_Blacksmith(Card.Card):
         )
         if opt == "draw":
             while player.piles[Piles.HAND].size() < 6:
-                player.pickup_card()
+                player.pickup_cards(1)
         elif opt == "cards":
             player.pickup_cards(2)
         elif opt == "action":
-            player.pickup_card()
+            player.pickup_cards(1)
             player.add_actions(1)
 
 

@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_ChariotRace(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.EMPIRES
@@ -18,10 +18,10 @@ class Card_ChariotRace(Card.Card):
         self.actions = 1
         self.cost = 3
 
-    def special(self, game, player):
-        card = player.pickup_card()
-        if not card:
-            player.output("No card")
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        try:
+            card = player.pickup_card()
+        except NoCardException:
             return
         player.reveal_card(card)
         other = game.player_to_left(player)
@@ -44,13 +44,13 @@ class Card_ChariotRace(Card.Card):
 
 ###############################################################################
 class TestChariotRace(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Chariot Race"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g.get_card_from_pile("Chariot Race")
 
-    def test_play_win(self):
+    def test_play_win(self) -> None:
         """Play a Chariot Race and win"""
         self.plr.piles[Piles.DECK].set("Gold")
         self.vic.piles[Piles.DECK].set("Silver")
@@ -61,7 +61,7 @@ class TestChariotRace(unittest.TestCase):
         self.assertIn("Gold", self.plr.piles[Piles.HAND])
         self.assertEqual(self.plr.score["Chariot Race"], 1)
 
-    def test_play_lose(self):
+    def test_play_lose(self) -> None:
         """Play a Chariot Race and lose"""
         self.plr.score["Chariot Race"] = 0
         self.plr.piles[Piles.DECK].set("Silver")

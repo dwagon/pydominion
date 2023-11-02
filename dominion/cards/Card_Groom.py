@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 """ http://wiki.dominionstrategy.com/index.php/Groom """
 
+
+import contextlib
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, NoCardException
 
 
 ###############################################################################
@@ -27,7 +28,8 @@ class Card_Groom(Card.Card):
         if card.isTreasure():
             player.gain_card("Silver")
         if card.isVictory():
-            player.pickup_card()
+            with contextlib.suppress(NoCardException):
+                player.pickup_card()
             player.add_actions(1)
 
 

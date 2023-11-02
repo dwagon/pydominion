@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, NoCardException
 
 
 ###############################################################################
@@ -21,19 +20,22 @@ class Card_Swindler(Card.Card):
 
     def special(self, game, player):
         for victim in player.attack_victims():
-            card = victim.pickup_card()
-            victim.trash_card(card)
-            victim.output(f"{player.name}'s Swindler trashed your {card.name}")
-            crd = player.plr_gain_card(
-                card.cost,
+            try:
+                trashed_card = victim.pickup_card()
+            except NoCardException:
+                continue
+            victim.trash_card(trashed_card)
+            victim.output(f"{player.name}'s Swindler trashed your {trashed_card}")
+            gained_card = player.plr_gain_card(
+                trashed_card.cost,
                 modifier="equal",
                 recipient=victim,
                 force=True,
                 prompt=f"Pick which card {victim.name} will get",
             )
-            if crd:
+            if gained_card:
                 victim.output(
-                    f"{player.name} picked a {crd.name} to replace your trashed {card.name}"
+                    f"{player.name} picked a {gained_card} to replace your trashed {trashed_card}"
                 )
 
 

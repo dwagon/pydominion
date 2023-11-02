@@ -29,7 +29,7 @@ class Card_Town_Crier(Card.Card):
         elif opt == "silver":
             player.gain_card("Silver")
         elif opt == "card":
-            player.pickup_card()
+            player.pickup_cards(1)
             player.add_actions(1)
         opt = player.plr_choose_options(
             "Do you want to rotate the Townsfolk?",

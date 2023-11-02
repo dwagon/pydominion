@@ -2,7 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/First_Mate"""
 
 import unittest
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -31,7 +31,9 @@ class Card_FirstMate(Card.Card):
         else:
             player.output("No suitable actions")
         while len(player.piles[Piles.HAND]) < 6:
-            if player.pickup_card() is None:
+            try:
+                player.pickup_card()
+            except NoCardException:
                 break
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -20,8 +20,9 @@ class Card_Vagrant(Card.Card):
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Reveal the top card of your deck. If it's a Curse,
         Ruins, Shelter or Victory card, put it into your hand"""
-        card = player.next_card()
-        if card is None:
+        try:
+            card = player.next_card()
+        except NoCardException:
             return
         player.reveal_card(card)
         if (

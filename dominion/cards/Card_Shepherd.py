@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
+import contextlib
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Shepherd(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.NOCTURNE
@@ -18,8 +19,8 @@ class Card_Shepherd(Card.Card):
         self.actions = 1
         self.heirloom = "Pasture"
 
-    def special(self, game, player):
-        num_victories = sum([1 for _ in player.piles[Piles.HAND] if _.isVictory()])
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        num_victories = sum(1 for _ in player.piles[Piles.HAND] if _.isVictory())
         if num_victories == 0:
             return
         to_discard = player.plr_discard_cards(
@@ -27,18 +28,19 @@ class Card_Shepherd(Card.Card):
         )
         if not to_discard:
             return
-        player.pickup_cards(2 * len(to_discard))
+        with contextlib.suppress(NoCardException):
+            player.pickup_cards(2 * len(to_discard))
 
 
 ###############################################################################
 class TestShepherd(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Shepherd"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Shepherd")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a Shepherd"""
         self.plr.piles[Piles.HAND].set("Estate", "Province", "Duchy")
         self.plr.add_card(self.card, Piles.HAND)
