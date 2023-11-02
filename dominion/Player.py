@@ -1294,6 +1294,26 @@ class Player:
             self.move_card(card, Piles.PLAYED)
 
     ###########################################################################
+    def _play_limit(self) -> bool:
+        """Did we hit limits on number of cards we can play - False if we can't play"""
+        if self.limits[Limits.PLAY] is not None:
+            if self.limits[Limits.PLAY] <= 0:
+                return False
+            self.limits[Limits.PLAY] -= 1
+        return True
+
+    ###########################################################################
+    def _play_enough_actions(self, card: Card, cost_action: bool) -> bool:
+        """Do we have enough actions to play this card"""
+        if not card.isTreasure() and self.phase != Phase.BUY:
+            if card.isAction() and cost_action and self.phase != Phase.NIGHT:
+                self.actions -= 1
+            if self.actions.get() < 0:  # pragma: no cover
+                self.actions.set(0)
+                return False
+        return True
+
+    ###########################################################################
     def play_card(
         self,
         card: Card,
@@ -1302,14 +1322,12 @@ class Player:
         post_action_hook: bool = True,
     ) -> None:
         """Play the card {card}"""
-        options = {"skip_card": False, "discard": discard}
+        options: dict[str, Any] = {"skip_card": False, "discard": discard}
         if card not in self.piles[Piles.HAND] and options["discard"]:
             raise AssertionError(f"Playing {card} which is not in hand")
-        if self.limits[Limits.PLAY] is not None:
-            if self.limits[Limits.PLAY] <= 0:
-                self.output(f"Can't play {card} due to limits in number of plays")
-                return
-            self.limits[Limits.PLAY] -= 1
+        if not self._play_limit():
+            self.output(f"Can't play {card} due to limits in number of plays")
+            return
         self.output(f"Playing {card}")
         self.currcards.append(card)
         options |= self._hook_pre_play(card)
@@ -1317,27 +1335,26 @@ class Player:
 
         self._play_card_tokens(card)
 
-        if not card.isTreasure() and self.phase != Phase.BUY:
-            if card.isAction() and cost_action and self.phase != Phase.NIGHT:
-                self.actions -= 1
-            if self.actions.get() < 0:  # pragma: no cover
-                self.actions.set(0)
-                self.currcards.pop()
-                self.output("Not enough actions")
-                return
-
-        force = options["skip_card"]
+        if not self._play_enough_actions(card, cost_action):
+            self.currcards.pop()
+            self.output("Not enough actions")
+            return
 
         if options["discard"]:
-            self.move_after_play(card, force)
+            self.move_after_play(card, options["skip_card"])
 
         if not options["skip_card"]:
             self.card_benefits(card)
         self.currcards.pop()
         if post_action_hook:
-            self.hook_all_players_post_play(card)
-            for crd in self.relevant_cards():
-                crd.hook_post_play(game=self.game, player=self, card=card)
+            self._post_play_hooks(card)
+
+    ###########################################################################
+    def _post_play_hooks(self, card: Card) -> None:
+        """Do all the post play hooks"""
+        self.hook_all_players_post_play(card)
+        for other_card in self.relevant_cards():
+            other_card.hook_post_play(game=self.game, player=self, card=card)
 
     ###########################################################################
     def perform_way(self, way: Way, card: Card) -> None:
