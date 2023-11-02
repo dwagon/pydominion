@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from typing import Any
+
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Cultist(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
             Card.CardType.ACTION,
@@ -20,36 +22,37 @@ class Card_Cultist(Card.Card):
         self.cost = 5
         self.cards = 2
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Each other play gains a Ruins. You may play a Cultist
         from your hand."""
         for plr in player.attack_victims():
             plr.output(f"Gained a ruin from {player.name}'s Cultist")
             plr.gain_card("Ruins")
-        cultist = player.piles[Piles.HAND]["Cultist"]
-        if cultist:
-            ans = player.plr_choose_options(
+        if cultist := player.piles[Piles.HAND]["Cultist"]:
+            if player.plr_choose_options(
                 "Play another cultist?",
                 ("Don't play cultist", False),
                 ("Play another cultist", True),
-            )
-            if ans:
+            ):
                 player.play_card(cultist, cost_action=False)
 
-    def hook_trash_this_card(self, game, player):
+    def hook_trash_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[str, Any]:
         """When you trash this, +3 cards"""
         player.pickup_cards(3)
+        return {}
 
 
 ###############################################################################
 class TestCultist(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Cultist", "Moat"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g.get_card_from_pile("Cultist")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a cultists - should give 2 cards"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
@@ -57,7 +60,7 @@ class TestCultist(unittest.TestCase):
         self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 1)
         self.assertTrue(self.victim.piles[Piles.DISCARD][0].isRuin())
 
-    def test_defense(self):
+    def test_defense(self) -> None:
         """Make sure moats work against cultists"""
         self.plr.add_card(self.card, Piles.HAND)
         moat = self.g.get_card_from_pile("Moat")
@@ -66,7 +69,7 @@ class TestCultist(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
         self.assertTrue(self.victim.piles[Piles.DISCARD].is_empty())
 
-    def test_no_other(self):
+    def test_no_other(self) -> None:
         """Don't ask to play another cultist if it doesn't exist"""
         self.plr.piles[Piles.HAND].set("Estate", "Estate", "Estate")
         self.plr.add_card(self.card, Piles.HAND)
@@ -74,7 +77,7 @@ class TestCultist(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.test_input, ["0"])
 
-    def test_another_cultist_no(self):
+    def test_another_cultist_no(self) -> None:
         """Don't play the other cultist"""
         self.plr.piles[Piles.HAND].set("Cultist", "Estate", "Estate")
         self.plr.add_card(self.card, Piles.HAND)
@@ -82,7 +85,7 @@ class TestCultist(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.PLAYED].size(), 1)
 
-    def test_another_cultist_yes(self):
+    def test_another_cultist_yes(self) -> None:
         """Another cultist can be played for free"""
         self.plr.piles[Piles.HAND].set("Cultist", "Estate", "Estate")
         self.plr.add_card(self.card, Piles.HAND)
@@ -96,7 +99,7 @@ class TestCultist(unittest.TestCase):
         for c in self.victim.piles[Piles.DISCARD]:
             self.assertTrue(c.isRuin())
 
-    def test_trash(self):
+    def test_trash(self) -> None:
         """Trashing a cultist should give 3 more cards"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.trash_card(self.card)

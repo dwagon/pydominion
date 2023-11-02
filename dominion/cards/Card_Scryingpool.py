@@ -33,7 +33,7 @@ class Card_ScryingPool(Card.Card):
                 if not top_card.isAction():
                     break
         for card in revealed:
-            player.add_card(card, Piles.HAND)
+            player.move_card(card, Piles.HAND)
 
 
 ###############################################################################

@@ -552,10 +552,10 @@ class Player:
         options = []
         spendable = [_ for _ in self.piles[Piles.HAND] if _.isTreasure()]
         spendable.sort(key=lambda x: x.name)
-        totcoin = sum(self.hook_spend_value(_) for _ in spendable)
+        total_coin = sum(self.hook_spend_value(_) for _ in spendable)
         numpots = sum(1 for _ in spendable if _.name == "Potion")
         potstr = f", {numpots} potions" if numpots else ""
-        details = f"{totcoin} coin{potstr}"
+        details = f"{total_coin} coin{potstr}"
         if spendable:
             o = Option(
                 selector="1",
@@ -1427,7 +1427,8 @@ class Player:
         #   trash: True - trash the new card
         #   shuffle: True - shuffle the deck after gaining new card
         options: dict[str, Any] = {}
-        if not new_card:
+        if new_card is None:
+            assert card_name is not None
             if card_name == "Loot":
                 pile = "Loot"
             else:
@@ -1436,7 +1437,7 @@ class Player:
                 pile = card_name
             new_card = self.game.get_card_from_pile(pile)
 
-        if not new_card:
+        if new_card is None:
             self.output(f"No more {card_name}")
             return None
         self.output(f"Gained a {new_card}")

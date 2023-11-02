@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 """https://wiki.dominionstrategy.com/index.php/Tiara """
 import unittest
-from dominion import Game, Card, Piles
+from typing import Any
+
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Tiara(Card.Card):
     """Tiara"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.PROSPERITY
@@ -18,38 +20,42 @@ class Card_Tiara(Card.Card):
         self.cost = 4
         self.buys = 1
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Play a treasure from your hand twice"""
         treasures = [_ for _ in player.piles[Piles.HAND] if _.isTreasure()]
         if not treasures:
             return
         player.output("Select treasure that Tiara will let you play twice")
+        player.move_card(self, Piles.PLAYED)
         if treasure := player.card_sel(cardsrc=treasures):
             for _ in range(2):
                 player.play_card(treasure[0], discard=False, cost_action=False)
-            player.move_card(treasure[0], Piles.DISCARD)
+            player.move_card(treasure[0], Piles.PLAYED)
 
-    def hook_gain_card(self, game, player, card):
+    def hook_gain_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> dict[str, Any]:
         """when you gain a card, you may put it onto your deck."""
-        if top_deck := player.plr_choose_options(
+        if player.plr_choose_options(
             f"Tiara lets you put {card} on top of your deck.",
             (f"Put {card} on top of your deck?", True),
             (f"Discard {card} as per normal?", False),
         ):
             return {"destination": "topdeck"}
+        return {}
 
 
 ###############################################################################
 class TestTiara(unittest.TestCase):
     """Test Tiara"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Tiara"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Tiara")
 
-    def test_play_deck(self):
+    def test_play_deck(self) -> None:
         """Play a Tiara and put gained cards on to the deck"""
         self.plr.piles[Piles.HAND].empty()
         self.plr.add_card(self.card, Piles.HAND)
@@ -60,7 +66,7 @@ class TestTiara(unittest.TestCase):
         self.plr.gain_card("Gold")
         self.assertIn("Gold", self.plr.piles[Piles.DECK])
 
-    def test_discard(self):
+    def test_discard(self) -> None:
         """Play a tiara and discard gained cards"""
         self.plr.piles[Piles.HAND].empty()
         self.plr.add_card(self.card, Piles.HAND)
@@ -70,7 +76,7 @@ class TestTiara(unittest.TestCase):
         self.assertNotIn("Gold", self.plr.piles[Piles.DECK])
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
 
-    def test_treasure(self):
+    def test_treasure(self) -> None:
         """Play a tiara and play a treasure twice"""
         self.plr.piles[Piles.HAND].set("Copper", "Duchy", "Province")
         self.plr.add_card(self.card, Piles.HAND)

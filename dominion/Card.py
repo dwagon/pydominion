@@ -114,7 +114,7 @@ class Card:
         self.potion = 0
         self.cards = 0
         self.victory = 0
-        self.required_cards: list[str] = []
+        self.required_cards: list[str | tuple[str, str]] = []
         self.image = None
         self.numcards = 10
         self.retain_boon = False

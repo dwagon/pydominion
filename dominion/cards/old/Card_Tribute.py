@@ -2,14 +2,14 @@
 """http://wiki.dominionstrategy.com/index.php/Tribute """
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
 class Card_Tribute(Card.Card):
     """Tribute"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.INTRIGUE
@@ -20,18 +20,20 @@ class Card_Tribute(Card.Card):
         self.name = "Tribute"
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Tribute Special"""
         victim = game.player_to_left(player)
         cards = []
         for _ in range(2):
             card = victim.next_card()
+            if card is None:
+                continue
             victim.reveal_card(card)
             cards.append(card)
         card_name = None
         for card in cards:
-            player.output(f"Looking at {card.name} from {victim.name}")
-            victim.output(f"{player.name}'s Tribute discarded {card.name}")
+            player.output(f"Looking at {card} from {victim.name}")
+            victim.output(f"{player.name}'s Tribute discarded {card}")
             victim.add_card(card, "discard")
             if card.name == card_name:
                 player.output("Duplicate - no extra")
@@ -52,14 +54,14 @@ class Card_Tribute(Card.Card):
 class TestTribute(unittest.TestCase):
     """Test Tribute"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Tribute"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g.get_card_from_pile("Tribute")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a tribute"""
         self.victim.piles[Piles.DECK].set("Copper", "Estate")
         self.plr.play_card(self.card)
@@ -67,7 +69,7 @@ class TestTribute(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
         self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 2)
 
-    def test_same(self):
+    def test_same(self) -> None:
         """Victim has the same cards for Tribute"""
         self.victim.piles[Piles.DECK].set("Tribute", "Tribute")
         self.plr.play_card(self.card)
