@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -20,8 +20,9 @@ class Card_WanderingMinstrel(Card.Card):
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
         cards = []
         for _ in range(3):
-            card = player.next_card()
-            if card is None:
+            try:
+                card = player.next_card()
+            except NoCardException:
                 continue
             player.reveal_card(card)
             if card.isAction():

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -25,8 +25,9 @@ class Card_FortuneTeller(Card.Card):
 def fortune_attack(victim: "Player.Player", attacker: "Player.Player") -> None:
     max_cards = victim.count_cards()
     while max_cards:
-        card = victim.next_card()
-        if card is None:
+        try:
+            card = victim.next_card()
+        except NoCardException:
             break
         victim.reveal_card(card)
         if card.isVictory() or card.name == "Curse":
