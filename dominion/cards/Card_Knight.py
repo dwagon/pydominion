@@ -3,21 +3,20 @@
 
 import random
 import unittest
-from dominion import Card, CardPile, Game, Piles, NoCardException
+from dominion import Card, CardPile, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Knight(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.name = "Knights"
         self.base = Card.CardExpansion.DARKAGES
 
     @classmethod
-    def cardpile_setup(cls, game):
+    def cardpile_setup(cls, game: Game.Game):
         """Setup"""
-        card_pile = KnightCardPile(game)
-        return card_pile
+        return KnightCardPile(game)
 
 
 ###############################################################################
@@ -27,51 +26,55 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 ###############################################################################
 class KnightCardPile(CardPile.CardPile):
-    def __init__(self, game):
+    def __init__(self, game: Game.Game) -> None:
         self.mapping = game.get_card_classes("KnightCard", game.paths["cards"], "Card_")
         for name, class_ in self.mapping.items():
             game.card_instances[name] = class_()
         super().__init__()
 
-    def init_cards(self, num_cards=0, card_class=None):
+    def init_cards(self, num_cards: int = 0, card_class=None) -> None:
         self.cards = [_() for _ in self.mapping.values()]
         random.shuffle(self.cards)
 
-    def isVictory(self):
+    def isVictory(self) -> bool:
         """Knight Pile is not considered a Victory pile"""
         return False
 
 
 ###############################################################################
 class KnightCard(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         self.name = "Undef Knight"
         super().__init__()
         self.pile = "Knights"
 
-    def knight_special(self, game, player):
+    def knight_special(self, game: Game.Game, player: Player.Player) -> None:
         """Each other player reveals the top 2 cards of his deck,
         trashes one of them costing from 3 to 6 and discards the
         rest. If a knight is trashed by this, trash this card"""
         for pl in player.attack_victims():
             self.knight_attack(game, player, pl)
 
-    def knight_attack(self, game, player, victim):
+    def knight_attack(
+        self, game: Game.Game, player: Player.Player, victim: Player.Player
+    ) -> None:
         cards: list[Card.Card] = []
         for _ in range(2):
-            if crd := victim.next_card():
-                try:
-                    victim.reveal_card(crd)
-                except NoCardException:
-                    continue
-                if crd.cost in (3, 4, 5, 6):
-                    cards.append(crd)
-                else:
-                    victim.output(f"{player.name}'s {self} discarded your {crd}")
-                    victim.discard_card(crd)
+            try:
+                card = victim.next_card()
+            except NoCardException:
+                continue
+
+            victim.reveal_card(card)
+
+            if card.cost in (3, 4, 5, 6):
+                cards.append(card)
+            else:
+                victim.output(f"{player.name}'s {self} discarded your {card}")
+                victim.discard_card(card)
         if not cards:
             return
-        player.output("Looking at %s" % ", ".join([_.name for _ in cards]))
+        player.output(f'Looking at {", ".join([_.name for _ in cards])}')
 
         trash = victim.plr_trash_card(
             cardsrc=cards,
@@ -87,15 +90,15 @@ class KnightCard(Card.Card):
             )
             player.trash_card(self)
 
-        for crd in cards:
-            if crd != to_trash:
-                victim.output(f"{player.name}'s {self} discarded your {crd}")
-                victim.discard_card(crd)
+        for card in cards:
+            if card != to_trash:
+                victim.output(f"{player.name}'s {self} discarded your {card}")
+                victim.discard_card(card)
 
 
 ###############################################################################
 class TestKnight(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Knights"])
         self.g.start_game()
         self.player, self.victim = self.g.player_list()
@@ -104,13 +107,13 @@ class TestKnight(unittest.TestCase):
         self.player.piles[Piles.HAND].set("Silver", "Gold")
         self.player.add_card(self.card, Piles.HAND)
 
-    def test_play_card_no_suitable(self):
+    def test_play_card_no_suitable(self) -> None:
         """Play a knight with no suitable cards"""
         self.victim.piles[Piles.DECK].set("Copper", "Copper")
         self.player.play_card(self.card)
         self.assertEqual(len(self.victim.piles[Piles.DISCARD]), 2)
 
-    def test_play_card_one_suitable(self):
+    def test_play_card_one_suitable(self) -> None:
         """Play a knight with one suitable card"""
         self.victim.piles[Piles.DECK].set("Copper", "Duchy")
         self.victim.test_input = ["Duchy"]

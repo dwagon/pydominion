@@ -2,7 +2,7 @@
 # pylint: disable=protected-access
 
 import unittest
-from dominion import Card, Game, PlayArea, Piles, Player
+from dominion import Card, Game, PlayArea, Piles, Player, NoCardException
 
 NATIVE_VILLAGE = "native_village"
 
@@ -35,11 +35,13 @@ class Card_NativeVillage(Card.Card):
             ("Put all the cards from your mat into your hand.", "pull"),
         )
         if choice == "push":
-            card = player.next_card()
-            if card is not None:
-                player.specials[NATIVE_VILLAGE].add(card)
-                player.output(f"Adding {card} to the Native Village")
-                player.secret_count += 1
+            try:
+                card = player.next_card()
+            except NoCardException:
+                return
+            player.specials[NATIVE_VILLAGE].add(card)
+            player.output(f"Adding {card} to the Native Village")
+            player.secret_count += 1
         else:
             self.pull_back(player)
 
@@ -55,7 +57,7 @@ class Card_NativeVillage(Card.Card):
 
 
 ###############################################################################
-class Test_NativeVillage(unittest.TestCase):
+class TestNativeVillage(unittest.TestCase):
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Native Village"])
         self.g.start_game()

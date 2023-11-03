@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Apothecary(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ALCHEMY
@@ -18,14 +18,15 @@ class Card_Apothecary(Card.Card):
         self.potcost = True
         self.required_cards = ["Potion"]
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Reveal the top 4 cards of your deck. Put the revealed
         Coppers and Potions into your hand. Put the other cards
         back on top of your deck in any order"""
         unput = []
         for _ in range(4):
-            card = player.next_card()
-            if not card:
+            try:
+                card = player.next_card()
+            except NoCardException:
                 continue
             player.reveal_card(card)
             if card.name in ("Copper", "Potion"):
@@ -40,12 +41,12 @@ class Card_Apothecary(Card.Card):
 
 ###############################################################################
 class TestApothecary(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Apothecary"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_none(self):
+    def test_none(self) -> None:
         self.plr.piles[Piles.HAND].set("Apothecary")
         apoth = self.plr.piles[Piles.HAND][0]
         self.plr.piles[Piles.DECK].set(
@@ -55,7 +56,7 @@ class TestApothecary(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)  # P
         self.assertEqual(self.plr.piles[Piles.DECK].size(), 4)  # D + E + E + E
 
-    def test_some(self):
+    def test_some(self) -> None:
         self.plr.piles[Piles.HAND].set("Apothecary")
         apoth = self.plr.piles[Piles.HAND][0]
         self.plr.piles[Piles.DECK].set(
