@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -21,9 +21,10 @@ class Card_Seer(Card.Card):
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
         drawn = []
         for _ in range(3):
-            card = player.next_card()
-            if card is None:
-                continue
+            try:
+                card = player.next_card()
+            except NoCardException:
+                break
             player.reveal_card(card)
             if card.cost in (2, 3, 4) and not card.potcost and not card.debtcost:
                 player.output(f"Putting {card} into your hand")

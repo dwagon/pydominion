@@ -3,7 +3,7 @@
 import unittest
 from typing import Any
 
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, NoCardException
 
 PIRATE_SHIP = "pirate_ship"
 
@@ -55,8 +55,9 @@ class Card_PirateShip(Card.Card):
         trashed = False
         cards = []
         for _ in range(2):
-            card = victim.next_card()
-            if not card:
+            try:
+                card = victim.next_card()
+            except NoCardException:
                 continue
             victim.reveal_card(card)
             if card.isTreasure():

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Hunter"""
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -43,11 +43,13 @@ class Card_Hunter(Card.Card):
             player.add_card(card, Piles.HAND)
 
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
-        cards = [player.next_card() for _ in range(3)]
+        cards = []
+        for _ in range(3):
+            try:
+                cards.append(player.next_card())
+            except NoCardException:
+                break
         for card in cards:
-            if card is None:
-                cards.remove(card)
-                continue
             player.reveal_card(card)
         self.hunter_special(
             cards, player, [_ for _ in cards if _.isAction()], "an action"

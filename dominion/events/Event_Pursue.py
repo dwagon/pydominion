@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Pursue"""
 import unittest
-from dominion import Card, Game, Piles, Event, Player
-from dominion.Option import Option
+from dominion import Card, Game, Piles, Event, Player, NoCardException
 
 
 ###############################################################################
@@ -22,8 +21,10 @@ class Event_Pursue(Event.Event):
         ]
         named_card = player.plr_choose_options("Name a card", *options)
         for _ in range(4):
-            card = player.next_card()
-            assert card is not None
+            try:
+                card = player.next_card()
+            except NoCardException:
+                break
             player.reveal_card(card)
             if card.name == named_card:
                 player.add_card(card, Piles.DECK)

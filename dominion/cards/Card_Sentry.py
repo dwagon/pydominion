@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Sentry """
 
 import unittest
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -20,16 +20,18 @@ class Card_Sentry(Card.Card):
         self.actions = 1
 
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
-        cards = [player.next_card() for _ in range(2)]
-        while None in cards:
-            cards.remove(None)
-        assert None not in cards
+        cards: list[Card.Card] = []
+        for _ in range(2):
+            try:
+                cards.append(player.next_card())
+            except NoCardException:
+                continue
         player.output(
             "Look at the top two cards of your deck. Trash, discard or move to deck"
         )
         player.output(f"Trash any/all of {self.names(cards)}")
         to_trash = player.plr_trash_card(cardsrc=cards, num=2)
-        cards = [_ for _ in cards if _ not in to_trash]
+        cards = [_ for _ in cards if _ and _ not in to_trash]
         if not cards:
             return
         player.output(f"Discard any/all of {self.names(cards)}")
@@ -39,7 +41,7 @@ class Card_Sentry(Card.Card):
         ]:
             player.output(f"Moving {self.names(to_deck)} to the deck")
 
-    def names(self, cards: list[Card.Card | None]) -> str:
+    def names(self, cards: list[Card.Card]) -> str:
         return ", ".join([_.name for _ in cards if _ is not None])
 
 

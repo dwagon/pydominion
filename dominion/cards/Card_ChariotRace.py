@@ -25,8 +25,9 @@ class Card_ChariotRace(Card.Card):
             return
         player.reveal_card(card)
         other = game.player_to_left(player)
-        other_card = other.next_card()
-        if not other_card:
+        try:
+            other_card = other.next_card()
+        except NoCardException:
             player.output(f"{other.name} doesn't have a suitable card")
             player.coins.add(1)
             player.add_score("Chariot Race")

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, NoCardException
 
 
 ###############################################################################
@@ -18,19 +18,19 @@ class Card_Duchess(Card.Card):
 
     def special(self, game, player):
         for plr in game.player_list():
-            card = plr.next_card()
-            if not card:
+            try:
+                card = plr.next_card()
+            except NoCardException:
                 continue
             if plr == player:
                 name = "your"
             else:
                 name = f"{player.name}'s"
-            keep = plr.plr_choose_options(
+            if keep := plr.plr_choose_options(
                 f"Due to {name} Duchess you can keep or discard the top card",
                 (f"Keep {card} on top of deck", True),
                 (f"Discard {card}", False),
-            )
-            if keep:
+            ):
                 plr.add_card(card, "topdeck")
             else:
                 plr.output(f"Discarding {card}")

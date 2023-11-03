@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -27,9 +27,12 @@ class Card_Oracle(Card.Card):
         """reveals the top 2 cards of their deck, and discards them or puts them back, your choice"""
         cards = []
         for _ in range(2):
-            if card := victim.next_card():
-                victim.reveal_card(card)
-                cards.append(card)
+            try:
+                card = victim.next_card()
+            except NoCardException:
+                break
+            victim.reveal_card(card)
+            cards.append(card)
         card_names = ", ".join([_.name for _ in cards])
         discard = player.plr_choose_options(
             f"What to do with {name} cards: {card_names}",

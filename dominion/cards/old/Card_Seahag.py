@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, NoCardException
 
 
 ###############################################################################
@@ -20,9 +20,12 @@ class Card_Seahag(Card.Card):
         """Each other player discards the top card of his deck,
         then gains a Curse card, putting it on top of his deck"""
         for pl in player.attack_victims():
-            c = pl.next_card()
-            pl.discard_card(c)
-            pl.output(f"Discarded your {c.name}")
+            try:
+                card = pl.next_card()
+            except NoCardException:
+                break
+            pl.discard_card(card)
+            pl.output(f"Discarded your {card}")
             pl.gain_card("Curse", destination="topdeck")
             pl.output(f"Got cursed by {player.name}'s Sea Hag")
             player.output("{pl.name} got cursed")

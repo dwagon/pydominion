@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, NoCardException
 
 
 ###############################################################################
@@ -20,19 +20,24 @@ class Card_Navigator(Card.Card):
     def special(self, game, player):
         cards = []
         for _ in range(5):
-            cards.append(player.next_card())
-        player.output("Top 5 cards on the deck are: %s" % ", ".join([c.name for c in cards]))
+            try:
+                cards.append(player.next_card())
+            except NoCardException:
+                break
+        player.output(
+            "Top 5 cards on the deck are: %s" % ", ".join([c.name for c in cards])
+        )
         discard = player.plr_choose_options(
             "What do you want to do?",
             ("Discard cards", True),
             ("Return them to the deck", False),
         )
         if discard:
-            for c in cards:
-                player.discard_card(c)
+            for card in cards:
+                player.discard_card(card)
         else:
-            for c in cards:
-                player.add_card(c, "topdeck")
+            for card in cards:
+                player.add_card(card, "topdeck")
 
 
 ###############################################################################
@@ -45,14 +50,18 @@ class Test_Navigator(unittest.TestCase):
         self.plr.add_card(self.navigator, Piles.HAND)
 
     def test_discard(self):
-        self.plr.piles[Piles.DECK].set("Copper", "Estate", "Gold", "Province", "Silver", "Duchy")
+        self.plr.piles[Piles.DECK].set(
+            "Copper", "Estate", "Gold", "Province", "Silver", "Duchy"
+        )
         self.plr.test_input = ["discard"]
         self.plr.play_card(self.navigator)
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 5)
         self.assertEqual(self.plr.piles[Piles.DECK].size(), 1)
 
     def test_keep(self):
-        self.plr.piles[Piles.DECK].set("Copper", "Estate", "Gold", "Province", "Silver", "Duchy")
+        self.plr.piles[Piles.DECK].set(
+            "Copper", "Estate", "Gold", "Province", "Silver", "Duchy"
+        )
         self.plr.test_input = ["return"]
         self.plr.play_card(self.navigator)
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 0)

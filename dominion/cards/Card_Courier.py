@@ -2,14 +2,14 @@
 """ https://wiki.dominionstrategy.com/index.php/Courier"""
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Courier(Card.Card):
     """Courier"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ALLIES
@@ -19,10 +19,13 @@ class Card_Courier(Card.Card):
         self.coin = 1
         self.cost = 4
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Discard the top card of your deck. Look through your discard pile;
         you may play an Action or Treasure from it."""
-        top_card = player.next_card()
+        try:
+            top_card = player.next_card()
+        except NoCardException:
+            return
         player.output(f"Discard {top_card}")
         player.discard_card(top_card)
         action_treasures = [
@@ -33,10 +36,9 @@ class Card_Courier(Card.Card):
             return
         options = [(f"Play {_}: {_.desc}", _) for _ in action_treasures]
         options.insert(0, ("Do nothing", None))
-        to_play = player.plr_choose_options(
+        if to_play := player.plr_choose_options(
             "Courier can play a card from your discard", *options
-        )
-        if to_play:
+        ):
             player.play_card(to_play, cost_action=False, discard=False)
 
 
@@ -44,13 +46,13 @@ class Card_Courier(Card.Card):
 class TestCourier(unittest.TestCase):
     """Test Courier"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Courier"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Courier")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a Courier"""
         self.plr.piles[Piles.HAND].set()
         self.plr.piles[Piles.DECK].set("Estate", "Duchy", "Province")

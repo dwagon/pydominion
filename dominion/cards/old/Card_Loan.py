@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Loan """
 
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -25,8 +25,9 @@ class Card_Loan(Card.Card):
         you reveal a Treasure. Discard it or trash it. Discard the
         other cards"""
         while True:
-            card = player.next_card()
-            if card is None:
+            try:
+                card = player.next_card()
+            except NoCardException:
                 break
             player.reveal_card(card)
             if card.isTreasure():

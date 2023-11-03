@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Giant"""
 
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -32,8 +32,9 @@ class Card_Giant(Card.Card):
 
 ###############################################################################
 def giant_attack(victim: "Player.Player", player: "Player.Player") -> None:
-    card = victim.top_card()
-    if not card:
+    try:
+        card = victim.top_card()
+    except NoCardException:
         return
     victim.reveal_card(card)
     if 3 <= card.cost <= 6:

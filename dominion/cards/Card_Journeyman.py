@@ -2,7 +2,7 @@
 """https://wiki.dominionstrategy.com/index.php/Journeyman"""
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, NoCardException
 
 
 ###############################################################################
@@ -31,9 +31,12 @@ class Card_Journeyman(Card.Card):
         )
         if o["card"] is None:
             return
-        cards = []
+        cards: list[Card.Card] = []
         while len(cards) < 3:
-            card = player.next_card()
+            try:
+                card = player.next_card()
+            except NoCardException:
+                break
             player.reveal_card(card)
             if card.name == o["card"]:
                 player.output(f"Discarding {card}")

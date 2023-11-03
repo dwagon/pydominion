@@ -17,7 +17,7 @@ class Project_StarChart(Project.Project):
         names = {_.name for _ in player.piles[Piles.DISCARD]}
         choices = []
         for name in names:
-            choices.append(("Put {} on top".format(name), name))
+            choices.append((f"Put {name} on top", name))
         if not choices:
             player.output("No suitable cards")
             return
