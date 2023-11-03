@@ -1,19 +1,21 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Event
+from dominion import Card, Game, Piles, Event, Player
 
 
 ###############################################################################
 class Event_Alliance(Event.Event):
-    def __init__(self):
+    def __init__(self) -> None:
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.MENAGERIE
-        self.desc = "Gain a Province, a Duchy, an Estate, a Gold, a Silver, and a Copper."
+        self.desc = (
+            "Gain a Province, a Duchy, an Estate, a Gold, a Silver, and a Copper."
+        )
         self.name = "Alliance"
         self.cost = 10
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         player.gain_card("Province")
         player.gain_card("Duchy")
         player.gain_card("Estate")
@@ -23,15 +25,15 @@ class Event_Alliance(Event.Event):
 
 
 ###############################################################################
-class Test_Alliance(unittest.TestCase):
-    def setUp(self):
+class TestAlliance(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, events=["Alliance"], badcards=["Duchess"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.events["Alliance"]
 
-    def test_play(self):
-        """Perform a Alliance"""
+    def test_play(self) -> None:
+        """Perform an Alliance"""
         self.plr.coins.add(10)
         self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Province"])

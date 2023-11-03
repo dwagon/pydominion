@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from typing import Any, Optional
+
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Catacombs(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DARKAGES
@@ -16,39 +17,44 @@ class Card_Catacombs(Card.Card):
         self.name = "Catacombs"
         self.cost = 5
 
-    def special(self, game, player):
-        cards = []
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        cards: list[Card.Card] = []
         for _ in range(3):
-            cards.append(player.next_card())
-        player.output("You drew %s" % ", ".join([c.name for c in cards]))
-        ans = player.plr_choose_options(
+            try:
+                cards.append(player.next_card())
+            except NoCardException:
+                break
+        player.output(f'You drew {", ".join([_.name for _ in cards])}')
+        if ans := player.plr_choose_options(
             "What do you want to do?",
             ("Keep the three", True),
             ("Discard and draw 3 more", False),
-        )
-        if ans:
-            for c in cards:
-                player.add_card(c, Piles.HAND)
+        ):
+            for card in cards:
+                player.add_card(card, Piles.HAND)
         else:
-            for c in cards:
-                player.add_card(c, "discard")
+            for card in cards:
+                player.add_card(card, Piles.DISCARD)
             player.pickup_cards(3)
 
-    def hook_trash_this_card(self, game, player):
+    def hook_trash_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> Optional[dict[str, Any]]:
         """When you trash this, gain a cheaper card"""
         player.plr_gain_card(cost=self.cost - 1)
+        return None
 
 
 ###############################################################################
 class Test_Catacombs(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Catacombs"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.cat = self.g.get_card_from_pile("Catacombs")
         self.plr.add_card(self.cat, Piles.HAND)
 
-    def test_keep(self):
+    def test_keep(self) -> None:
         self.plr.piles[Piles.DECK].set("Province", "Gold", "Gold", "Gold")
         self.plr.test_input = ["keep the three"]
         self.plr.play_card(self.cat)
@@ -57,7 +63,7 @@ class Test_Catacombs(unittest.TestCase):
         numgold = sum(1 for c in self.plr.piles[Piles.HAND] if c.name == "Gold")
         self.assertEqual(numgold, 3)
 
-    def test_discard(self):
+    def test_discard(self) -> None:
         self.plr.piles[Piles.DECK].set(
             "Province", "Province", "Province", "Gold", "Gold", "Gold"
         )
@@ -72,7 +78,7 @@ class Test_Catacombs(unittest.TestCase):
         numgold = sum(1 for c in self.plr.piles[Piles.DISCARD] if c.name == "Gold")
         self.assertEqual(numgold, 3)
 
-    def test_trash(self):
+    def test_trash(self) -> None:
         self.plr.test_input = ["get estate"]
         self.plr.trash_card(self.cat)
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
