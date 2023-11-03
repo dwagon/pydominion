@@ -24,7 +24,9 @@ class Card_Catacombs(Card.Card):
                 cards.append(player.next_card())
             except NoCardException:
                 break
+                
         player.output(f'You drew {", ".join([_.name for _ in cards])}')
+
         if ans := player.plr_choose_options(
             "What do you want to do?",
             ("Keep the three", True),
