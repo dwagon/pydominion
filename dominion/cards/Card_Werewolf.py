@@ -17,13 +17,12 @@ class Card_Werewolf(Card.Card):
             Card.CardType.DOOM,
         ]
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = "If it's your Night phase, each other player receives the next Hex.  Otherwise, +3 Cards."
+        self.desc = "If it's your Night phase, each other player receives the next Hex. Otherwise, +3 Cards."
         self.name = "Werewolf"
         self.cost = 5
 
     def special(self, game, player):
-        for _ in range(3):
-            player.pickup_card()
+        player.pickup_cards(3)
 
     def night(self, game, player):
         for plr in player.attack_victims():

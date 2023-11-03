@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, NoCardException
 
 
 ###############################################################################
@@ -30,8 +30,9 @@ class Card_WishingWell(Card.Card):
         o = player.user_input(options, "Guess the top card")
         if not o["card"]:
             return
-        card = player.next_card()
-        if not card:
+        try:
+            card = player.next_card()
+        except NoCardException:
             return
         player.reveal_card(card)
         if o["card"] == card.name:

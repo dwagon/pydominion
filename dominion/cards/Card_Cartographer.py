@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, NoCardException
 
 
 ###############################################################################
@@ -19,18 +18,19 @@ class Card_Cartographer(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        cards = []
+        cards: list[Card.Card] = []
         for _ in range(4):
-            c = player.next_card()
-            if c:
-                cards.append(c)
-        todisc = player.plr_discard_cards(
+            try:
+                cards.append(player.next_card())
+            except NoCardException:
+                break
+        to_discard = player.plr_discard_cards(
             prompt="Discard any number and the rest go back on the top of the deck",
             any_number=True,
             cardsrc=cards,
         )
         for card in cards:
-            if card not in todisc:
+            if card not in to_discard:
                 player.add_card(card, "topdeck")
 
 

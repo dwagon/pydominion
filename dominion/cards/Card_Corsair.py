@@ -1,16 +1,19 @@
 #!/usr/bin/env python
 """http://wiki.dominionstrategy.com/index.php/Corsair"""
 
-import unittest
 
-from dominion import Game, Card, Piles
+import contextlib
+import unittest
+from typing import Optional, Any
+
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Corsair(Card.Card):
     """Corsair"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
             Card.CardType.ACTION,
@@ -25,34 +28,46 @@ class Card_Corsair(Card.Card):
         self.cost = 5
         self._states = {}
 
-    def duration(self, game, player):
+    def duration(
+        self, game: Game.Game, player: Player.Player
+    ) -> Optional[dict[str, str]]:
         """+1 Card; each other player trashes the first Silver or Gold they play each turn."""
-        player.pickup_card()
+        with contextlib.suppress(NoCardException):
+            player.pickup_card()
         self._states = {}
+        return None
 
-    def hook_all_players_post_play(self, game, player, owner, card):
+    def hook_all_players_post_play(
+        self,
+        game: Game.Game,
+        player: Player.Player,
+        owner: Player.Player,
+        card: Card.Card,
+    ) -> Optional[dict[str, Any]]:
         if player == owner or owner.has_defense(player):
-            return
+            return None
         if card.name not in ("Gold", "Silver"):
-            return
+            return None
         if player.name not in self._states:
             player.trash_card(card)
             self._states[player.name] = True
-            player.output(f"{owner.name}'s Corsiar trashed your {card}")
+            player.output(f"{owner.name}'s Corsair trashed your {card}")
+
             owner.output(f"Your corsair trashed {player.name}'s {card}")
+        return None
 
 
 ###############################################################################
 class TestCorsair(unittest.TestCase):
     """Test Corsair"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Corsair"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g.get_card_from_pile("Corsair")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play Corsair"""
         self.plr.add_card(self.card, Piles.HAND)
         coins = self.plr.coins.get()
@@ -62,7 +77,7 @@ class TestCorsair(unittest.TestCase):
         self.plr.start_turn()
         self.assertEqual(len(self.plr.piles[Piles.HAND]), 5 + 1)
 
-    def test_trash(self):
+    def test_trash(self) -> None:
         """Test other players playing treasure"""
         self.plr.add_card(self.card, Piles.DURATION)
         self.plr.end_turn()

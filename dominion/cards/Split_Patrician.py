@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, NoCardException
 
 
 ###############################################################################
@@ -18,9 +18,10 @@ class Card_Patrician(Card.Card):
         self.cost = 2
 
     ###########################################################################
-    def special(self, game, player):
-        top_card = player.next_card()
-        if not top_card:
+    def special(self, game, player) -> None:
+        try:
+            top_card = player.next_card()
+        except NoCardException:
             return
         player.reveal_card(top_card)
         if top_card.cost >= 5:

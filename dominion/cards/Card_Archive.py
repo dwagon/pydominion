@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Archive"""
 import unittest
-from dominion import Card, Game, Piles, PlayArea, Piles
+from dominion import Card, Game, PlayArea, Piles, NoCardException
 
 
 ###############################################################################
@@ -22,10 +22,13 @@ class Card_Archive(Card.Card):
 
     def special(self, game, player):
         for _ in range(3):
-            if card := player.next_card():
-                player.output(f"Putting {card.name} in the archive")
-                self._archive_reserve.add(card)
-                player.secret_count += 1
+            try:
+                card = player.next_card()
+            except NoCardException:
+                continue
+            player.output(f"Putting {card} in the archive")
+            self._archive_reserve.add(card)
+            player.secret_count += 1
         self.permanent = True
 
     def duration(self, game, player):

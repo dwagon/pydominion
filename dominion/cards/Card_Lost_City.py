@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -27,10 +27,12 @@ class Card_Lost_City(Card.Card):
         """When you gain this, each other player draws a card"""
         for pl in game.player_list():
             if pl != player:
-                c = pl.pickup_card()
+                try:
+                    card = pl.pickup_card()
+                except NoCardException:
+                    continue
                 pl.output(
-                    "Picking up a %s due to %s playing a Lost City"
-                    % (c.name, player.name)
+                    f"Picking up a {card} due to {player.name} playing a Lost City"
                 )
         return {}
 

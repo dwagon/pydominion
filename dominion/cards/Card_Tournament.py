@@ -33,7 +33,7 @@ class Card_Tournament(Card.Card):
         if not found:
             player.output("No Province revealed")
             player.coins.add(1)
-            player.pickup_card()
+            player.pickup_cards(1)
 
 
 ###############################################################################

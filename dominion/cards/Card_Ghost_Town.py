@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
+import contextlib
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -23,7 +24,8 @@ class Card_Ghost_Town(Card.Card):
         return {"destination": Piles.HAND}
 
     def duration(self, game, player):
-        player.pickup_card()
+        with contextlib.suppress(NoCardException):
+            player.pickup_card()
         player.add_actions(1)
 
 

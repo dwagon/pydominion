@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -20,10 +20,11 @@ class Card_WilloWisp(Card.Card):
         self.cost = 0
 
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
-        card = player.next_card()
-        if not card:
-            player.output("No suitable card")
+        try:
+            card = player.next_card()
+        except NoCardException:
             return
+
         player.reveal_card(card)
         if card.cost <= 2 and not card.potcost and not card.debtcost:
             player.add_card(card, Piles.HAND)

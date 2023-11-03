@@ -3,7 +3,7 @@
 
 import unittest
 
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -23,15 +23,16 @@ class Card_Mapmaker(Card.Card):
         self.cost = 4
 
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
-        if top_4 := [player.next_card() for _ in range(4)]:
-            to_hand = player.card_sel(
-                prompt="Pick 2 to put into your hand", num=2, cardsrc=top_4
-            )
-            if not to_hand:
-                return
-
+        top_4: list[Card.Card] = []
+        for _ in range(4):
+            try:
+                top_4.append(player.next_card())
+            except NoCardException:
+                continue
+        if to_hand := player.card_sel(
+            prompt="Pick 2 to put into your hand", num=2, cardsrc=top_4
+        ):
             for card in top_4:
-                assert card is not None
                 if card in to_hand:
                     player.add_card(card, Piles.HAND)
                 else:

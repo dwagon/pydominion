@@ -2,7 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Tribute """
 
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -25,8 +25,9 @@ class Card_Tribute(Card.Card):
         victim = game.player_to_left(player)
         cards = []
         for _ in range(2):
-            card = victim.next_card()
-            if card is None:
+            try:
+                card = victim.next_card()
+            except NoCardException:
                 continue
             victim.reveal_card(card)
             cards.append(card)

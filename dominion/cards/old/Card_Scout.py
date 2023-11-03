@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, NoCardException
 
 
 ###############################################################################
@@ -22,16 +22,19 @@ class Card_Scout(Card.Card):
         # TODO: Currently you can't order the cards you return
         cards = []
         for _ in range(4):
-            c = player.next_card()
-            player.reveal_card(c)
-            if c.isVictory():
-                player.add_card(c, Piles.HAND)
-                player.output(f"Adding {c.name} to hand")
+            try:
+                card = player.next_card()
+            except NoCardException:
+                break
+            player.reveal_card(card)
+            if card.isVictory():
+                player.add_card(card, Piles.HAND)
+                player.output(f"Adding {card} to hand")
             else:
-                cards.append(c)
-        for c in cards:
-            player.output(f"Putting {c.name} back on deck")
-            player.add_card(c, "deck")
+                cards.append(card)
+        for card in cards:
+            player.output(f"Putting {card} back on deck")
+            player.add_card(card, "deck")
 
 
 ###############################################################################

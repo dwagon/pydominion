@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Gamble """
 
 import unittest
-from dominion import Card, Game, Piles, Event
+from dominion import Card, Game, Piles, Event, NoCardException
 
 
 ###############################################################################
@@ -19,8 +19,11 @@ class Event_Gamble(Event.Event):
     def special(self, game, player):
         """Reveal the top card of your deck. If it's a Treasure
         or Action, you may play it. Otherwise, discard it."""
-        nxt = player.next_card()
-        player.output("Next card is {}".format(nxt.name))
+        try:
+            nxt = player.next_card()
+        except NoCardException:
+            return
+        player.output(f"Next card is {nxt}")
         if nxt.isAction() or nxt.isTreasure():
             player.card_benefits(nxt)
         else:

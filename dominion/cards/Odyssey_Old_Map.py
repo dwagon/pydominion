@@ -20,7 +20,7 @@ class Card_Old_Map(Card.Card):
 
     def special(self, game, player):
         player.plr_discard_cards(num=1)
-        player.pickup_card()
+        player.pickup_cards(1)
         if opt := player.plr_choose_options(
             "Do you want to rotate the Odysseys?",
             ("Don't change", False),

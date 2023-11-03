@@ -30,7 +30,7 @@ class Card_Hill_Fort(Card.Card):
             player.plr_gain_card(cost=4, destination=Piles.HAND)
         elif chc == "disc":
             player.plr_gain_card(cost=4)
-            player.pickup_card()
+            player.pickup_cards(1)
             player.add_actions(1)
 
 

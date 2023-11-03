@@ -23,7 +23,7 @@ class Ally_Fellowship_of_Scribes(Ally.Ally):
             ("Gain a card", True),
             ("No thanks", False),
         ):
-            player.pickup_card()
+            player.pickup_cards(1)
             player.favors.add(-1)
 
 

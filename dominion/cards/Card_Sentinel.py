@@ -2,12 +2,12 @@
 """http://wiki.dominionstrategy.com/index.php/Sentinel"""
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Sentinel(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ALLIES
@@ -16,10 +16,13 @@ class Card_Sentinel(Card.Card):
         Put the rest back in any order."""
         self.cost = 3
 
-    def special(self, game, player):
-        cards = []
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        cards: list[Card.Card] = []
         for _ in range(5):
-            cards.append(player.next_card())
+            try:
+                cards.append(player.next_card())
+            except NoCardException:
+                break
         if not cards:
             player.output("No suitable cards")
             return
@@ -32,14 +35,14 @@ class Card_Sentinel(Card.Card):
 
 ###############################################################################
 class TestSentinel(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Sentinel"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Sentinel")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play the card"""
         self.plr.piles[Piles.DECK].set(
             "Province", "Copper", "Silver", "Gold", "Estate", "Duchy"

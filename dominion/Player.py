@@ -2,6 +2,8 @@
 """ All the Player based stuff """
 # pylint: disable=too-many-instance-attributes, too-many-public-methods
 from __future__ import annotations
+
+import contextlib
 import json
 import operator
 import sys
@@ -11,7 +13,7 @@ from typing import Any, Optional, TYPE_CHECKING, Callable
 if TYPE_CHECKING:
     from dominion.Game import Game
 
-from dominion import Piles, Phase, Limits
+from dominion import Piles, Phase, Limits, NoCardException
 from dominion.Card import Card, CardType
 from dominion.CardPile import CardPile
 from dominion.Counter import Counter
@@ -220,7 +222,8 @@ class Player:
         self.output(f"Received {hx} as a hex")
         self.output(hx.description(self))
         for _ in range(hx.cards):
-            self.pickup_card()
+            with contextlib.suppress(NoCardException):
+                self.pickup_card()
         self.add_actions(hx.actions)
         self.buys += hx.buys
         self.coins += self.hook_spend_value(hx, actual=True)
@@ -240,7 +243,8 @@ class Player:
         self.output(f"Received {boon} as a boon")
         self.output(boon.description(self))
         for _ in range(boon.cards):
-            self.pickup_card()
+            with contextlib.suppress(NoCardException):
+                self.pickup_card()
         self.add_actions(boon.actions)
         self.buys += boon.buys
         self.coins += self.hook_spend_value(boon, actual=True)
@@ -316,25 +320,25 @@ class Player:
                     trash_opts.update(rc)
 
     ###########################################################################
-    def next_card(self) -> Optional[Card]:
+    def next_card(self) -> Card:
         """Pick up and return the next card from the deck"""
         if not self.piles[Piles.DECK]:
             self.refill_deck()
         if not self.piles[Piles.DECK]:
             self.output("No more cards in deck")
-            return None
+            raise NoCardException
         crd = self.piles[Piles.DECK].next_card()
         crd.location = None  # We don't know where it is going yet
         return crd
 
     ###########################################################################
-    def top_card(self) -> Optional[Card]:
+    def top_card(self) -> Card:
         """Return the top card from the deck but don't pick it up"""
         if not self.piles[Piles.DECK]:
             self.refill_deck()
         if not self.piles[Piles.DECK]:
             self.output("No more cards in deck")
-            return None
+            raise NoCardException
         return self.piles[Piles.DECK].top_card()
 
     ###########################################################################
@@ -354,20 +358,23 @@ class Player:
         """Pickup multiple cards into players hand"""
         cards: list[Card] = []
         for _ in range(num):
-            if card := self.pickup_card(verbose=verbose, verb=verb):
-                cards.append(card)
+            try:
+                if card := self.pickup_card(verbose=verbose, verb=verb):
+                    cards.append(card)
+            except NoCardException:
+                break
         return cards
 
     ###########################################################################
     def pickup_card(
         self, card: Optional[Card] = None, verbose: bool = True, verb: str = "Picked up"
-    ) -> Optional[Card]:
+    ) -> Card:
         """Pick a card from the deck and put it into the players hand"""
         if card is None:
             card = self.next_card()
             if not card:
                 self.output("No more cards to pickup")
-                return None
+                raise NoCardException
         assert isinstance(card, Card)
         self.add_card(card, Piles.HAND)
         if verbose:
@@ -384,17 +391,18 @@ class Player:
         self.piles[Piles.DISCARD].shuffle()
 
     ###########################################################################
-    def pick_up_hand(self, handsize: Optional[int] = None) -> None:
+    def pick_up_hand(self, hand_size: Optional[int] = None) -> None:
         """Replenish hand from deck"""
-        if handsize is None:
-            handsize = self.newhandsize
+        if hand_size is None:
+            hand_size = self.newhandsize
         if self.card_token:
             self.output("-Card token reduce draw by one")
-            handsize -= 1
+            hand_size -= 1
             self.card_token = False
-        while self.piles[Piles.HAND].size() < handsize:
-            c = self.pickup_card(verb="Dealt")
-            if not c:
+        while self.piles[Piles.HAND].size() < hand_size:
+            try:
+                self.pickup_card(verb="Dealt")
+            except NoCardException:
                 self.output("Not enough cards to fill hand")
                 break
 
@@ -413,16 +421,14 @@ class Player:
             )
 
     ###########################################################################
-    def move_card(self, card: Card, dest: Piles) -> Optional[Card]:
+    def move_card(self, card: Card, dest: Piles) -> Card:
         """Move a card to {dest} card pile"""
         self.remove_card(card)
         return self.add_card(card, dest)
 
     ###########################################################################
-    def add_card(self, card: Card, pile: Piles | str = Piles.DISCARD) -> Optional[Card]:
+    def add_card(self, card: Card, pile: Piles | str = Piles.DISCARD) -> Card:
         """Add an existing card to a new location"""
-        if not card:  # pragma: no cover
-            return None
         assert isinstance(card, Card), f"{card=} {type(card)=}"
         card.player = self
 
@@ -1238,8 +1244,11 @@ class Player:
             self.output("Gaining action from +1 Action token")
             self.add_actions(1)
         if "+1 Card" in tkns:
-            if c := self.pickup_card():
-                self.output(f"Picked up {c} from +1 Card token")
+            try:
+                if c := self.pickup_card():
+                    self.output(f"Picked up {c} from +1 Card token")
+            except NoCardException:
+                pass
         if "+1 Coin" in tkns:
             self.output("Gaining coin from +1 Coin token")
             self.coins += 1
@@ -1393,7 +1402,8 @@ class Player:
             modifier = -1
 
         for _ in range(card.cards + modifier):
-            self.pickup_card()
+            with contextlib.suppress(NoCardException):
+                self.pickup_card()
 
         if self.phase == Phase.NIGHT:
             card.night(game=self.game, player=self)

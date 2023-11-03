@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Advisor(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.GUILDS
@@ -15,24 +15,28 @@ class Card_Advisor(Card.Card):
         self.actions = 1
         self.cost = 4
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Reveal the top 3 cards of your deck. The player to your
         left chooses one of them. Discard that card. Put
         the other cards into your hand."""
         cards = []
-        choser = game.player_to_left(player)
+        chooser = game.player_to_left(player)
         for _ in range(3):
-            card = player.pickup_card()
+            try:
+                card = player.pickup_card()
+            except NoCardException:
+                break
             player.reveal_card(card)
             cards.append(card)
-        to_discard = choser.card_sel(
+        if to_discards := chooser.card_sel(
             force=True,
             prompt=f"Pick a card of {player.name} to discard from Advisor",
             cardsrc=cards,
             verbs=("Discard", "Undiscard"),
-        )[0]
-        player.output(f"{choser.name} discarded {to_discard.name}")
-        player.discard_card(to_discard)
+        ):
+            to_discard = to_discards[0]
+            player.output(f"{chooser.name} discarded {to_discard.name}")
+            player.discard_card(to_discard)
 
 
 ###############################################################################
@@ -55,14 +59,14 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 ###############################################################################
 class TestAdvisor(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Advisor"])
         self.g.start_game()
         self.plr, self.plr2 = self.g.player_list()
         self.acard = self.g.get_card_from_pile("Advisor")
         self.plr.add_card(self.acard, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """ " Play an advisor"""
         self.plr.piles[Piles.DECK].set("Duchy", "Silver", "Gold")
         self.plr2.test_input = ["discard gold"]

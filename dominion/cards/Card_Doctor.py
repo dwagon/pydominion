@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Player, Phase
+from dominion import Card, Game, Piles, Player, Phase, NoCardException
 
 
 ###############################################################################
@@ -37,10 +37,13 @@ class Card_Doctor(Card.Card):
         o = player.user_input(
             options, "Pick which card to trash if it is in the top 3 of your deck"
         )
-        cards = []
+        cards: list[Card.Card] = []
         for _ in range(3):
-            if card := player.next_card():
-                cards.append(card)
+            try:
+                cards.append(player.next_card())
+            except NoCardException:
+                break
+
         for card in cards:
             player.reveal_card(card)
             if card.name == o["card"]:

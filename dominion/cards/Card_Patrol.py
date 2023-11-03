@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, NoCardException, Player
 
 
 ###############################################################################
 class Card_Patrol(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.INTRIGUE
@@ -18,35 +17,38 @@ class Card_Patrol(Card.Card):
         self.cards = 3
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         cards = set()
         for _ in range(4):
-            c = player.next_card()
-            player.reveal_card(c)
-            if c is None:
+            try:
+                card = player.next_card()
+            except NoCardException:
                 break
-            if c.isVictory() or c.name == "Curse":
-                player.add_card(c, Piles.HAND)
-                player.output(f"Patrol adding {c.name}")
+            player.reveal_card(card)
+            if card.isVictory() or card.name == "Curse":
+                player.add_card(card, Piles.HAND)
+                player.output(f"Patrol adding {card}")
             else:
-                cards.add(c)
-        for c in cards:
-            player.output(f"Putting {c.name} back on deck")
-            player.add_card(c, "topdeck")
+                cards.add(card)
+        for card in cards:
+            player.output(f"Putting {card} back on deck")
+            player.add_card(card, "topdeck")
 
 
 ###############################################################################
 class Test_Patrol(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Patrol"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Patrol")
 
-    def test_play(self):
+    def test_play(self) -> None:
         self.plr.piles[Piles.HAND].set()
         self.plr.add_card(self.card, Piles.HAND)
-        self.plr.piles[Piles.DECK].set("Duchy", "Province", "Silver", "Gold", "Copper", "Copper", "Gold")
+        self.plr.piles[Piles.DECK].set(
+            "Duchy", "Province", "Silver", "Gold", "Copper", "Copper", "Gold"
+        )
         self.plr.play_card(self.card)
         self.g.print_state()
         self.assertIn("Province", self.plr.piles[Piles.HAND])

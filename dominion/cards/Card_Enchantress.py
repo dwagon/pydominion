@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, NoCardException
 
 
 ###############################################################################
@@ -28,7 +27,10 @@ class Card_Enchantress(Card.Card):
         if len(player.piles[Piles.PLAYED]) == 0:
             player.output(f"{owner.name}'s Enchantress gazump'd your {card.name}")
             player.add_actions(1)
-            player.pickup_card()
+            try:
+                player.pickup_card()
+            except NoCardException:
+                pass
             return {"skip_card": True}
         return None
 

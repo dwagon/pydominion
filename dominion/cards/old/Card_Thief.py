@@ -4,7 +4,7 @@
 import unittest
 from typing import Any
 
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -37,8 +37,9 @@ class Card_Thief(Card.Card):
         """Thieve on a victim"""
         treasures = []
         for _ in range(2):
-            card = victim.next_card()
-            if card is None:
+            try:
+                card = victim.next_card()
+            except NoCardException:
                 break
             victim.reveal_card(card)
             if card.isTreasure():
@@ -58,13 +59,13 @@ class Card_Thief(Card.Card):
             }
         ]
         for card in treasures:
-            pr = f"Trash {card.name} from {victim.name}"
+            pr = f"Trash {card} from {victim.name}"
             options.append(
                 {"selector": f"{index}", "print": pr, "card": card, "steal": False}
             )
             index += 1
             sel = f"{index}"
-            pr = f"Steal {card.name} from {victim.name}"
+            pr = f"Steal {card} from {victim.name}"
             options.append({"selector": sel, "print": pr, "card": card, "steal": True})
             index += 1
         o = thief.user_input(options, f"What to do to {victim.name}'s cards?")
@@ -75,12 +76,12 @@ class Card_Thief(Card.Card):
         if o["card"]:
             if o["steal"]:
                 thief.add_card(o["card"])
-                thief.output(f"Stealing {o['card'].name} from {victim.name}")
-                victim.output(f"{thief.name} stole your {o['card'].name}")
+                thief.output(f"Stealing {o['card']} from {victim.name}")
+                victim.output(f"{thief.name} stole your {o['card']}")
             else:
                 victim.trash_card(o["card"])
                 thief.output(f"Trashed {o['card'].name} from {victim.name}")
-                victim.output(f"{thief.name} trashed your {o['card'].name}")
+                victim.output(f"{thief.name} trashed your {o['card']}")
 
 
 ###############################################################################

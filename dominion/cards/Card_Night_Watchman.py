@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-from dominion.Player import Phase
+from dominion import Game, Card, Piles, NoCardException, Phase
 
 
 ###############################################################################
@@ -18,20 +17,22 @@ class Card_NightWatchman(Card.Card):
     def night(self, game, player):
         cards = []
         for _ in range(5):
-            if c := player.next_card():
-                cards.append(c)
+            try:
+                cards.append(player.next_card())
+            except NoCardException:
+                break
         player.output(
             f'Top 5 cards on the deck are: {", ".join([_.name for _ in cards])}'
         )
-        for c in cards:
+        for card in cards:
             if discard := player.plr_choose_options(
                 "What do you want to do?",
-                (f"Discard {c.name}", True),
-                (f"Return {c.name} to the deck", False),
+                (f"Discard {card}", True),
+                (f"Return {card} to the deck", False),
             ):
-                player.discard_card(c)
+                player.discard_card(card)
             else:
-                player.add_card(c, "topdeck")
+                player.add_card(card, "topdeck")
 
     def hook_gain_this_card(self, game, player):
         return {"destination": Piles.HAND}

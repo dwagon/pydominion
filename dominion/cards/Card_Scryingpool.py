@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -26,12 +26,14 @@ class Card_ScryingPool(Card.Card):
         discard_or_put_back(player, player)
         revealed: list[Card.Card] = []
         while True:
-            top_card = player.pickup_card()
-            if top_card is not None:
-                player.reveal_card(top_card)
-                revealed.append(top_card)
-                if not top_card.isAction():
-                    break
+            try:
+                top_card = player.pickup_card()
+            except NoCardException:
+                break
+            player.reveal_card(top_card)
+            revealed.append(top_card)
+            if not top_card.isAction():
+                break
         for card in revealed:
             player.move_card(card, Piles.HAND)
 

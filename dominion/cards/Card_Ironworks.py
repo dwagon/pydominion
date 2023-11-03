@@ -20,7 +20,7 @@ class Card_Ironworks(Card.Card):
         +1 action; treasure card +1 coin; victory card, +1 card"""
         c = player.plr_gain_card(4, force=True)
         if c.isVictory():
-            player.pickup_card()
+            player.pickup_cards(1)
         if c.isAction():
             player.add_actions(1)
         if c.isTreasure():

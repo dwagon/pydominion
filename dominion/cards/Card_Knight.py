@@ -3,7 +3,7 @@
 
 import random
 import unittest
-from dominion import Card, CardPile, Game, Piles
+from dominion import Card, CardPile, Game, Piles, NoCardException
 
 
 ###############################################################################
@@ -57,10 +57,13 @@ class KnightCard(Card.Card):
             self.knight_attack(game, player, pl)
 
     def knight_attack(self, game, player, victim):
-        cards = []
+        cards: list[Card.Card] = []
         for _ in range(2):
             if crd := victim.next_card():
-                victim.reveal_card(crd)
+                try:
+                    victim.reveal_card(crd)
+                except NoCardException:
+                    continue
                 if crd.cost in (3, 4, 5, 6):
                     cards.append(crd)
                 else:

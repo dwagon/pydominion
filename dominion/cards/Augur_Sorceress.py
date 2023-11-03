@@ -3,12 +3,12 @@
 
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Sorceress(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.AUGUR]
         self.base = Card.CardExpansion.ALLIES
@@ -21,7 +21,11 @@ class Card_Sorceress(Card.Card):
             gains a Curse."""
         self.pile = "Augurs"
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        try:
+            card = player.pickup_card()
+        except NoCardException:
+            return
         options = [{"selector": "0", "print": "No guess", "card": None}]
         index = 1
         for name, card_pile in sorted(game.get_card_piles()):
@@ -33,17 +37,16 @@ class Card_Sorceress(Card.Card):
         if not o["card"]:
             player.output("No suitable cards")
             return
-        card_pile = player.pickup_card()
-        player.output(f"Next card = {card_pile}, Guess = {o['card']}")
-        if card_pile.name == o["card"]:
-            game.output(f"Guessed {card_pile} correctly")
+        player.output(f"Next card = {card}, Guess = {o['card']}")
+        if card.name == o["card"]:
+            game.output(f"Guessed {card} correctly")
             for plr in player.attack_victims():
                 plr.gain_card("Curse")
 
 
 ###############################################################################
 class TestSorceress(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Augurs"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
@@ -55,7 +58,7 @@ class TestSorceress(unittest.TestCase):
         self.card = card
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_good_guess(self):
+    def test_good_guess(self) -> None:
         """Play a sorceress and guess correctly"""
         self.plr.piles[Piles.DECK].set("Gold", "Gold")
         self.plr.test_input = ["Guess Gold"]

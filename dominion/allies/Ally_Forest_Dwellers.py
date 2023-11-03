@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Forest_Dwellers"""
 
 import unittest
-from dominion import Card, Game, Piles, Ally, Player
+from dominion import Card, Game, Piles, Ally, Player, NoCardException
 
 
 ###############################################################################
@@ -29,7 +29,12 @@ class Ally_ForestDwellers(Ally.Ally):
             ),
         ):
             player.favors.add(-1)
-            cards = [player.next_card() for _ in range(3)]
+            cards: list[Card.Card] = []
+            for _ in range(3):
+                try:
+                    cards.append(player.next_card())
+                except NoCardException:
+                    break
             player.output(f"Cards are: {', '.join([_.name for _ in cards])}")
             for card in cards:
                 if card is None:

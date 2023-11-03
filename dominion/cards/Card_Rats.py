@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 
+import contextlib
 import unittest
-from dominion import Card, Game, Piles
+from typing import Optional, Any
+
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Rats(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DARKAGES
@@ -19,20 +22,24 @@ class Card_Rats(Card.Card):
         self.actions = 1
         self.cost = 4
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Gain a Rats. Trash a card from your hand other than a Rats."""
         player.output("Gained a Rays")
         player.gain_card("Rats")
         player.plr_trash_card(force=True, exclude=["Rats"])
 
-    def hook_trash_this_card(self, game, player):
+    def hook_trash_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> Optional[dict[str, Any]]:
         """When you trash this +1 Card"""
-        player.pickup_card(verb="Due to trashing Rats picked up")
+        with contextlib.suppress(NoCardException):
+            player.pickup_card(verb="Due to trashing Rats picked up")
+        return None
 
 
 ###############################################################################
 class Test_Rats(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Rats"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -41,24 +48,24 @@ class Test_Rats(unittest.TestCase):
         self.plr.piles[Piles.HAND].set("Copper", "Gold", "Silver", "Rats")
         self.plr.add_card(self.rats, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         self.plr.test_input = ["trash copper"]
         self.plr.play_card(self.rats)
         self.assertIn("Copper", self.g.trash_pile)
 
-    def test_trashcard(self):
+    def test_trash_card(self) -> None:
         tsize = self.g.trash_pile.size()
         self.plr.test_input = ["trash copper"]
         self.plr.play_card(self.rats)
         self.assertEqual(self.g.trash_pile.size(), tsize + 1)
         self.assertNotEqual(self.g.trash_pile[0].name, "Rats")
 
-    def test_gainrats(self):
+    def test_gain_rats(self) -> None:
         self.plr.test_input = ["trash copper"]
         self.plr.play_card(self.rats)
         self.assertEqual(self.plr.piles[Piles.DISCARD][0].name, "Rats")
 
-    def test_trashrats(self):
+    def test_trash_rats(self) -> None:
         """Trashing Rats - gain another card"""
         handsize = self.plr.piles[Piles.HAND].size()
         self.plr.trash_card(self.rats)

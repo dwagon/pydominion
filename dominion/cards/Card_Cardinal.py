@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Cardinal """
 
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -22,8 +22,9 @@ class Card_Cardinal(Card.Card):
         for plr in player.attack_victims():
             exile_count = 0
             for _ in range(2):
-                card = plr.pickup_card()
-                if card is None:
+                try:
+                    card = plr.pickup_card()
+                except NoCardException:
                     continue
                 plr.reveal_card(card)
                 if 3 <= card.cost <= 6 and not exile_count:

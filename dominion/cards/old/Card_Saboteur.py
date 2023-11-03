@@ -4,7 +4,7 @@
 import unittest
 from typing import Optional
 
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -42,8 +42,9 @@ class Card_Saboteur(Card.Card):
     ) -> Optional[Card.Card]:
         """Pick Card"""
         for _ in range(len(victim.all_cards())):
-            card = victim.next_card()
-            if card is None:
+            try:
+                card = victim.next_card()
+            except NoCardException:
                 break
             victim.reveal_card(card)
             if card.cost >= 3:

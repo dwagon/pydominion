@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, NoCardException
 
 
 ###############################################################################
@@ -22,15 +21,18 @@ class Card_Magpie(Card.Card):
     def special(self, game, player):
         """Reveal the top card of your deck. If it's a treasure, put it into your
         hand. If it's an Action or Victory card, gain a Magpie"""
-        c = player.next_card()
-        player.reveal_card(c)
-        if c.isTreasure():
-            player.output("Putting revealed %s into hand" % c.name)
-            player.add_card(c, Piles.HAND)
+        try:
+            card = player.next_card()
+        except NoCardException:
+            return
+        player.reveal_card(card)
+        if card.isTreasure():
+            player.output(f"Putting revealed {card} into hand")
+            player.add_card(card, Piles.HAND)
         else:
-            player.add_card(c, "deck")
-            if c.isAction() or c.isVictory():
-                player.output("Revealed %s so gaining magpie" % c.name)
+            player.add_card(card, "deck")
+            if card.isAction() or card.isVictory():
+                player.output(f"Revealed {card} so gaining magpie")
                 player.gain_card("Magpie")
 
 

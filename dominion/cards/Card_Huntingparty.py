@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Huntingparty(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.CORNUCOPIA
@@ -19,21 +18,21 @@ class Card_Huntingparty(Card.Card):
         self.actions = 1
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         discards = []
         for card in player.piles[Piles.HAND]:
             player.reveal_card(card)
         while True:
-            card = player.next_card()
-            player.reveal_card(card)
-            if not card:
-                player.output("No more cards")
+            try:
+                card = player.next_card()
+            except NoCardException:
                 break
+            player.reveal_card(card)
             if player.piles[Piles.HAND][card.name]:
-                player.output(f"Discarding {card.name}")
+                player.output(f"Discarding {card}")
                 discards.append(card)
                 continue
-            player.output(f"Picked up a {card.name}")
+            player.output(f"Picked up a {card}")
             player.add_card(card, Piles.HAND)
             break
         for card in discards:
@@ -42,14 +41,14 @@ class Card_Huntingparty(Card.Card):
 
 ###############################################################################
 class Test_Huntingparty(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Hunting Party"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Hunting Party")
         self.plr.piles[Piles.HAND].set("Silver", "Gold")
 
-    def test_playcard(self):
+    def test_playcard(self) -> None:
         """Play a hunting party"""
         self.plr.piles[Piles.DECK].set("Copper", "Province", "Silver", "Gold", "Duchy")
         self.plr.piles[Piles.HAND].set("Gold", "Silver")

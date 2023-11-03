@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 
+import contextlib
 import unittest
-from dominion import Game, Card, Piles
+from typing import Optional, Any
+
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_CursedVillage(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DOOM]
         self.base = Card.CardExpansion.NOCTURNE
@@ -15,17 +18,21 @@ class Card_CursedVillage(Card.Card):
         self.actions = 2
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         while player.piles[Piles.HAND].size() < 6:
-            player.pickup_card()
+            with contextlib.suppress(NoCardException):
+                player.pickup_card()
 
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> Optional[dict[str, Any]]:
         player.receive_hex()
+        return None
 
 
 ###############################################################################
 class TestCursedVillage(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -35,14 +42,14 @@ class TestCursedVillage(unittest.TestCase):
                 self.g.discarded_hexes.append(h)
                 self.g.hexes.remove(h)
 
-    def test_play_card(self):
+    def test_play_card(self) -> None:
         """Play Cursed Village"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertGreaterEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
-    def test_gain(self):
+    def test_gain(self) -> None:
         self.plr.gain_card("Cursed Village")
         self.assertTrue(self.plr.has_state("Deluded"))
 

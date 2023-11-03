@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
+import contextlib
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, NoCardException
 
 
 ###############################################################################
@@ -20,7 +20,8 @@ class Card_Hireling(Card.Card):
         pass
 
     def duration(self, game, player):
-        player.pickup_card()
+        with contextlib.suppress(NoCardException):
+            player.pickup_card()
 
 
 ###############################################################################

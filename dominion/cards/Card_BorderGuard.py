@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Border_Guard"""
 import unittest
-from dominion import Game, Card, Piles, Player, PlayArea
+from dominion import Game, Card, Piles, Player, PlayArea, NoCardException
 
 
 ###############################################################################
@@ -19,11 +19,14 @@ class Card_BorderGuard(Card.Card):
 
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
         num_cards = 3 if player.has_artifact("Lantern") else 2
-        cards = []
+        cards: list[Card.Card] = []
         for _ in range(num_cards):
-            if card := player.next_card():
-                player.reveal_card(card)
-                cards.append(card)
+            try:
+                card = player.next_card()
+            except NoCardException:
+                continue
+            player.reveal_card(card)
+            cards.append(card)
         num_acts = sum([1 for _ in cards if _.isAction()])
         ch = player.card_sel(
             prompt="Select a card to put into your hand, other will be discarded",
@@ -33,7 +36,7 @@ class Card_BorderGuard(Card.Card):
             player.add_card(ch[0], Piles.HAND)
             cards.remove(ch[0])
         for card in cards:
-            player.output(f"Putting {card.name} into the discard pile")
+            player.output(f"Putting {card} into the discard pile")
             player.add_card(card, "discard")
 
         if num_acts == num_cards:

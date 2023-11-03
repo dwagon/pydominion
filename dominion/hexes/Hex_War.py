@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Hex
+from dominion import Card, Game, Piles, Hex, NoCardException
 
 
 ###############################################################################
@@ -19,15 +19,16 @@ class Hex_War(Hex.Hex):
     def special(self, game, player):
         count = player.piles[Piles.DISCARD].size() + player.piles[Piles.DECK].size()
         while count:
-            card = player.next_card()
-            if not card:
+            try:
+                card = player.next_card()
+            except NoCardException:
                 break
             player.reveal_card(card)
             if card.cost in (3, 4):
-                player.output(f"Trashing {card.name}")
+                player.output(f"Trashing {card}")
                 player.trash_card(card)
                 break
-            player.output(f"Discarding {card.name}")
+            player.output(f"Discarding {card}")
             player.discard_card(card)
             count -= 1
         else:

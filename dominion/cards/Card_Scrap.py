@@ -46,7 +46,7 @@ class Card_Scrap(Card.Card):
                 choices.append(("Gain a Horse", "horse"))
             opt = player.plr_choose_options("Select one", *choices)
             if opt == "card":
-                player.pickup_card()
+                player.pickup_cards(1)
             if opt == "action":
                 player.add_actions(1)
             if opt == "buy":

@@ -2,14 +2,16 @@
 """ http://wiki.dominionstrategy.com/index.php/Bandit"""
 
 import unittest
-from dominion import Game, Card, Piles
+from typing import Any
+
+from dominion import Game, Card, Piles, NoCardException, Player
 
 
 ###############################################################################
 class Card_Bandit(Card.Card):
     """Bandit"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.DOMINION
@@ -19,17 +21,20 @@ class Card_Bandit(Card.Card):
         self.name = "Bandit"
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         player.gain_card("Gold")
         for plr in player.attack_victims():
             self.thieve_on(victim=plr, bandit=player)
 
-    def thieve_on(self, victim, bandit):
+    def thieve_on(self, victim: Player.Player, bandit: Player.Player) -> None:
         """Thieve on the victim"""
         # Each other player reveals the top 2 cards of their deck
         treasures = []
         for _ in range(2):
-            card = victim.next_card()
+            try:
+                card = victim.next_card()
+            except NoCardException:
+                continue
             victim.reveal_card(card)
             if card.isTreasure() and card.name != "Copper":
                 treasures.append(card)
@@ -40,7 +45,9 @@ class Card_Bandit(Card.Card):
             bandit.output(f"Player {victim.name} has no suitable treasures")
             return
         index = 1
-        options = [{"selector": "0", "print": "Don't trash any card", "card": None}]
+        options: list[dict[str, Any]] = [
+            {"selector": "0", "print": "Don't trash any card", "card": None}
+        ]
         for card in treasures:
             to_print = f"Trash {card.name} from {victim.name}"
             options.append({"selector": f"{index}", "print": to_print, "card": card})
@@ -61,7 +68,7 @@ class Card_Bandit(Card.Card):
 class TestBandit(unittest.TestCase):
     """Test Bandit"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Bandit"])
         self.g.start_game()
         self.thief, self.vic = self.g.player_list()
@@ -70,7 +77,7 @@ class TestBandit(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Bandit")
         self.thief.add_card(self.card, Piles.HAND)
 
-    def test_do_nothing(self):
+    def test_do_nothing(self) -> None:
         """Don't trash anything"""
         self.vic.piles[Piles.HAND].set("Copper", "Copper")
         self.vic.piles[Piles.DECK].set("Copper", "Silver", "Gold")
@@ -79,7 +86,7 @@ class TestBandit(unittest.TestCase):
         self.assertEqual(self.vic.piles[Piles.DECK].size(), 1)
         self.assertEqual(self.vic.piles[Piles.DISCARD].size(), 2)
 
-    def test_trash_treasure(self):
+    def test_trash_treasure(self) -> None:
         """Trash the treasure"""
         self.vic.piles[Piles.HAND].set("Copper", "Copper")
         self.vic.piles[Piles.DECK].set("Copper", "Silver", "Gold")
