@@ -1,25 +1,27 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from typing import Optional
+
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Haven(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
         self.base = Card.CardExpansion.SEASIDE
-        self.desc = "+1 cards, +1 action; play a card next turn"
+        self.desc = """+1 Card; +1 Action; Set aside a card from your hand face down (under this). 
+        At the start of your next turn, put it into your hand."""
         self.name = "Haven"
         self.cards = 1
         self.actions = 1
         self.cost = 4
-        self.savedHavenCard = None
+        self.savedHavenCard: Optional[Card.Card] = None
 
-    def special(self, game, player):
-        """Set aside a card from your hand face down. At the start of
-        your next turn, put it into your hand."""
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        """Set aside a card from your hand face down."""
         card = player.plr_pick_card(
             force=True, prompt="Pick card to put into hand next turn"
         )
@@ -27,18 +29,22 @@ class Card_Haven(Card.Card):
         player.piles[Piles.HAND].remove(card)
         self.savedHavenCard = card
 
-    def duration(self, game, player):
+    def duration(
+        self, game: Game.Game, player: Player.Player
+    ) -> Optional[dict[str, str]]:
+        """At the start of your next turn, put it into your hand." """
         card = self.savedHavenCard
         if not card:
-            return
+            return None
         player.move_card(card, Piles.HAND)
         player.output(f"Pulling {card} out of from haven")
         self.savedHavenCard = None
+        return None
 
 
 ###############################################################################
 class TestHaven(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Haven"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -49,7 +55,7 @@ class TestHaven(unittest.TestCase):
         self.plr.piles[Piles.DECK].set("Estate", "Estate", "Estate", "Estate", "Gold")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_playcard(self):
+    def test_play_card(self) -> None:
         """Play a haven"""
         self.plr.test_input = ["select gold"]
         self.plr.play_card(self.card)
