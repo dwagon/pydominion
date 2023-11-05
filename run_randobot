@@ -4,6 +4,7 @@
 import os
 import subprocess
 import sys
+import multiprocessing
 from collections import defaultdict
 
 
@@ -73,12 +74,60 @@ def print_results(stats: dict[str, int]) -> None:
 
 
 ############################################################################################
+def fill_num_queue(queue, num_runs: int = 0) -> None:
+    """Fill the queue with a number of jobs"""
+    for run in range(num_runs):
+        queue.put({"run": run})
+
+
+############################################################################################
+def fill_cardset_queue(queue, card_sets: list[str]) -> None:
+    """Fill the queue with cardset files"""
+    for card_set_file in card_sets:
+        if not os.path.isfile(card_set_file):
+            continue
+        queue.put({"cardset": card_set_file})
+
+
+############################################################################################
+def process_task(jq: multiprocessing.Queue, stats_dict):
+    """Pull jobs out of the queue and run them - runs in a thread"""
+    while True:
+        job = jq.get()
+        cards = make_run(**job)
+        for card in cards:
+            if card not in stats_dict:
+                stats_dict[card] = 0
+            stats_dict[card] += 1
+        if jq.empty():
+            break
+
+
+############################################################################################
+def run_queue(job_queue: multiprocessing.Queue) -> dict[str, int]:
+    """Spawn a number of processes (one per cpu) and then use them to run the hobs in the job_queue"""
+    processes = []
+    with multiprocessing.Manager() as manager:
+        shared_dict = manager.dict()
+        for cpu in range(multiprocessing.cpu_count()):
+            p = multiprocessing.Process(
+                target=process_task, args=(job_queue, shared_dict)
+            )
+            processes.append(p)
+            p.start()
+
+        for p in processes:
+            p.join()
+        return dict(shared_dict)
+
+
+############################################################################################
 def main() -> None:
     """Do stuff"""
     os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
     num_runs = 0
-    card_stats: dict[str, int] = defaultdict(int)
-    card_sets = []
+    card_sets: list[str] = []
+
     if len(sys.argv) > 1:
         try:
             num_runs = int(sys.argv[1])
@@ -87,19 +136,17 @@ def main() -> None:
     else:
         card_sets = [os.path.join("cardset", _) for _ in os.listdir("cardset")]
 
+    job_queue = multiprocessing.Queue()
+
     if num_runs:
-        for run in range(num_runs):
-            cards = make_run(run=run)
-            for card in cards:
-                card_stats[card] += 1
+        fill_num_queue(job_queue, num_runs)
     else:
-        for card_set_file in card_sets:
-            if not os.path.isfile(card_set_file):
-                continue
-            make_run(cardset=card_set_file)
+        fill_cardset_queue(job_queue, card_sets)
+    card_stats: dict[str, int] = run_queue(job_queue)
     print_results(card_stats)
 
 
+############################################################################################
 if __name__ == "__main__":
     main()
 
