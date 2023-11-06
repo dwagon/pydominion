@@ -2,15 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Barbarian """
 
 import unittest
-from dominion import Card, Game, Piles
-from dominion.Player import Player
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Barbarian(Card.Card):
     """Barbarian"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.ALLIES
@@ -22,13 +21,18 @@ class Card_Barbarian(Card.Card):
         self.cost = 5
         self.required_cards = ["Curse"]
 
-    def special(self, game, player: Player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         for plr in player.attack_victims():
             self._barbarian_attack(game, attacker=player, victim=plr)
 
-    def _barbarian_attack(self, game, attacker: Player, victim: Player):
+    def _barbarian_attack(
+        self, game: Game.Game, attacker: Player.Player, victim: Player.Player
+    ) -> None:
         """Do the barbarian attack"""
-        victim_card = victim.top_card()
+        try:
+            victim_card = victim.top_card()
+        except NoCardException:
+            return
         victim.output(f"{attacker.name}'s Barbarian: Trashes your {victim_card}")
         victim.trash_card(victim_card)
         if victim_card.cost < 3:
@@ -47,7 +51,7 @@ class Card_Barbarian(Card.Card):
             victim.output("No suitable cards")
 
 
-def _card_types(card):
+def _card_types(card: Card.Card) -> set[str]:
     """Return a set of the cards card types"""
     if isinstance(card.cardtype, list):
         return set(card.cardtype)
@@ -79,21 +83,21 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 class TestBarbarian(unittest.TestCase):
     """Test Barbarian"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Barbarian"])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
         self.card = self.g.get_card_from_pile("Barbarian")
         self.attacker.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Test against a low-cost victim card"""
         self.victim.piles[Piles.DECK].set("Estate", "Copper")
         self.attacker.play_card(self.card)
         self.assertIn("Copper", self.g.trash_pile)
         self.assertIn("Curse", self.victim.piles[Piles.DISCARD])
 
-    def test_expense(self):
+    def test_expense(self) -> None:
         """Test trashing an expensive card"""
         self.victim.piles[Piles.DECK].set("Estate", "Province")
         self.victim.test_input = ["Select Duchy"]

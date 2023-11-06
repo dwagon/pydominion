@@ -645,9 +645,11 @@ class Game:  # pylint: disable=too-many-public-methods
             return 0
 
         self.card_piles[card_name] = card_pile
-        if card_name not in self.card_instances:
-            self.card_instances[card_name] = self.card_mapping[card_type][card_name]()
         for card in card_pile:
+            if card_name not in self.card_instances:
+                self.card_instances[card_name] = self.card_mapping[card_type][
+                    card_name
+                ]()
             self._cards[card.uuid] = card
             if not card.pile:
                 card.pile = card_name

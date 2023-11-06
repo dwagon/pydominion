@@ -2,30 +2,30 @@
 """ http://wiki.dominionstrategy.com/index.php/Fort"""
 
 import unittest
-from dominion import Card, Game, CardPile
+from dominion import Card, Game, CardPile, Keys
 
 
 ###############################################################################
 class Card_Forts(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.name = "Forts"
         self.base = Card.CardExpansion.ALLIES
         self.cardtype = Card.CardType.ACTION
 
-    def cardpile_setup(self, game):
+    def cardpile_setup(self, game: Game.Game):
         return FortCardPile(game)
 
 
 ###############################################################################
 class FortCardPile(CardPile.CardPile):
-    def __init__(self, game):
-        self.mapping = game.get_card_classes("Fort", game.paths["cards"], "Card_")
+    def __init__(self, game: Game.Game) -> None:
+        self.mapping = game.get_card_classes("Fort", game.paths[Keys.CARDS], "Card_")
         for name, class_ in self.mapping.items():
             game.card_instances[name] = class_()
         super().__init__()
 
-    def init_cards(self, num_cards=0, card_class=None):
+    def init_cards(self, num_cards: int = 0, card_class=None) -> None:
         # pylint: disable=import-outside-toplevel
         from dominion.cards.Fort_Tent import Card_Tent
         from dominion.cards.Fort_Garrison import Card_Garrison
@@ -39,12 +39,12 @@ class FortCardPile(CardPile.CardPile):
 
 ###############################################################################
 class TestForts(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Forts"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_forts(self):
+    def test_forts(self) -> None:
         card = self.g.get_card_from_pile("Forts")
         self.assertEqual(len(self.g.card_piles["Forts"]), 15)
         self.assertEqual(card.name, "Tent")

@@ -74,14 +74,14 @@ def print_results(stats: dict[str, int]) -> None:
 
 
 ############################################################################################
-def fill_num_queue(queue, num_runs: int = 0) -> None:
+def fill_num_queue(queue: multiprocessing.Queue, num_runs: int = 0) -> None:
     """Fill the queue with a number of jobs"""
     for run in range(num_runs):
         queue.put({"run": run})
 
 
 ############################################################################################
-def fill_cardset_queue(queue, card_sets: list[str]) -> None:
+def fill_cardset_queue(queue: multiprocessing.Queue, card_sets: list[str]) -> None:
     """Fill the queue with cardset files"""
     for card_set_file in card_sets:
         if not os.path.isfile(card_set_file):
@@ -90,7 +90,7 @@ def fill_cardset_queue(queue, card_sets: list[str]) -> None:
 
 
 ############################################################################################
-def process_task(jq: multiprocessing.Queue, stats_dict):
+def process_task(jq: multiprocessing.Queue, stats_dict: dict[str, int]):
     """Pull jobs out of the queue and run them - runs in a thread"""
     while True:
         job = jq.get()

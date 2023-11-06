@@ -2,45 +2,51 @@
 """ http://wiki.dominionstrategy.com/index.php/City-state """
 
 import unittest
-from dominion import Card, Game, Piles, Ally
+from typing import Optional, Any
+
+from dominion import Card, Game, Piles, Ally, Player
 
 
 ###############################################################################
 class Ally_CityState(Ally.Ally):
-    def __init__(self):
+    def __init__(self) -> None:
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
         self.desc = """When you gain an Action card during your turn, you may spend 2 Favors to play it."""
         self.name = "City State"
 
-    def hook_gain_card(self, game, player, card):
+    def hook_gain_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> Optional[dict[str, Any]]:
         if not card.isAction():
-            return
+            return None
         if player.favors.get() < 2:
-            return
-        ch = player.plr_choose_options(
+            return None
+        if player.plr_choose_options(
             f"Play {card} from City State?",
             ("Do nothing", False),
             ("Play Card", True),
-        )
-        if ch:
+        ):
             player.play_card(card, discard=False, cost_action=False)
             player.favors.add(-2)
+        return None
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):
+def botresponse(player, kind, args=None, kwargs=None):  # type: ignore
     return []
 
 
 ###############################################################################
 class TestCityState(unittest.TestCase):
-    def setUp(self):
-        self.g = Game.TestGame(numplayers=1, allies="City State", initcards=["Underling"])
+    def setUp(self) -> None:
+        self.g = Game.TestGame(
+            numplayers=1, allies="City State", initcards=["Underling"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play card"""
         self.plr.piles[Piles.HAND].set()
         self.plr.favors.set(2)
@@ -51,8 +57,8 @@ class TestCityState(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
 
-    def test_dont_play(self):
-        """Dont play card"""
+    def test_dont_play(self) -> None:
+        """Don't play card"""
         self.plr.piles[Piles.HAND].set()
         self.plr.favors.set(2)
         self.plr.actions.set(0)

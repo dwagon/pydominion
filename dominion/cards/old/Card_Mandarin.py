@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
+from typing import Any
+
+from dominion import Card, Game, Piles, Player, Phase
 
 
 ###############################################################################
 class Card_Mandarin(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.HINTERLANDS
@@ -14,37 +16,39 @@ class Card_Mandarin(Card.Card):
         self.coin = 3
         self.cost = 5
 
-    def desc(self, player):
-        if player.phase == "buy":
+    def dynamic_description(self, player: Player.Player) -> str:
+        if player.phase == Phase.BUY:
             return """+3 Coins. Put a card from your hand on top of your deck.
             When you gain this, put all Treasures you have in play on top of your deck in any order."""
         return "+3 Coins. Put a card from your hand on top of your deck."
 
-    def special(self, game, player):
-        card = player.card_sel(
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        if cards := player.card_sel(
             force=True,
             cardsrc=Piles.HAND,
             prompt="Put a card from your hand on top of your deck",
-        )
-        player.move_card(card[0], "topdeck")
+        ):
+            player.move_card(cards[0], "topdeck")
 
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[str, Any]:
         for card in player.piles[Piles.PLAYED]:
             if card.isTreasure():
-                player.output(f"Putting {card.name} on to deck")
+                player.output(f"Putting {card} on to deck")
                 player.move_card(card, "topdeck")
         return {}
 
 
 ###############################################################################
 class Test_Mandarin(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Mandarin"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Mandarin")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play the card"""
         self.plr.piles[Piles.HAND].set("Gold", "Copper")
         self.plr.add_card(self.card, Piles.HAND)
@@ -53,7 +57,7 @@ class Test_Mandarin(unittest.TestCase):
         self.assertEqual(self.plr.coins.get(), 3)
         self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Gold")
 
-    def test_gain(self):
+    def test_gain(self) -> None:
         """Gain the card"""
         self.plr.piles[Piles.PLAYED].set("Gold", "Duchy")
         self.plr.gain_card("Mandarin")

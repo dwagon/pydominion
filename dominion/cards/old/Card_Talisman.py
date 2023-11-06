@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
 class Card_Talisman(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.PROSPERITY
@@ -16,17 +16,20 @@ class Card_Talisman(Card.Card):
         self.cost = 4
         self.coin = 1
 
-    def hook_buy_card(self, game, player, card):
+    def hook_buy_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> None:
         """While this is in play, when you buy a card costing 4
         or less that is not a victory card, gain a copy of it."""
         if card.cost <= 4 and not card.isVictory():
-            player.output(f"Gained another {card} from Talisman")
-            player.add_card(game.get_card_from_pile(card.name))
+            if new_card := game.get_card_from_pile(card.name):
+                player.output(f"Gained another {card} from Talisman")
+                player.add_card(new_card)
 
 
 ###############################################################################
 class TestTalisman(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1, initcards=["Talisman"], oldcards=True, badcards=["Duchess"]
         )
@@ -35,18 +38,18 @@ class TestTalisman(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Talisman")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)
 
-    def test_buy(self):
+    def test_buy(self) -> None:
         self.plr.play_card(self.card)
         self.plr.buy_card("Copper")
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
         for c in self.plr.piles[Piles.DISCARD]:
             self.assertEqual(c.name, "Copper")
 
-    def test_too_expensive(self):
+    def test_too_expensive(self) -> None:
         self.plr.play_card(self.card)
         self.plr.coins.set(6)
         self.plr.buy_card("Gold")
@@ -54,7 +57,7 @@ class TestTalisman(unittest.TestCase):
         for c in self.plr.piles[Piles.DISCARD]:
             self.assertEqual(c.name, "Gold")
 
-    def test_victory(self):
+    def test_victory(self) -> None:
         self.plr.play_card(self.card)
         self.plr.coins.set(6)
         self.plr.buy_card("Duchy")

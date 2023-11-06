@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 
+import contextlib
 import unittest
-from dominion import Game, Card, Piles, NoCardException
+from typing import Optional, Any
+
+from dominion import Game, Card, Piles, NoCardException, Player
 
 
 ###############################################################################
 class Card_Enchantress(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
             Card.CardType.ACTION,
@@ -20,24 +23,28 @@ class Card_Enchantress(Card.Card):
         self.name = "Enchantress"
         self.cost = 3
 
-    def duration(self, game, player):
+    def duration(self, game: Game.Game, player: Player.Player) -> None:
         player.pickup_cards(2)
 
-    def hook_all_players_pre_play(self, game, player, owner, card):
-        if len(player.piles[Piles.PLAYED]) == 0:
-            player.output(f"{owner.name}'s Enchantress gazump'd your {card.name}")
+    def hook_all_players_pre_play(
+        self,
+        game: Game.Game,
+        player: Player.Player,
+        owner: Player.Player,
+        card: Card.Card,
+    ) -> Optional[dict[str, Any]]:
+        if len(player.piles[Piles.PLAYED]) == 0 and card.isAction():
+            player.output(f"{owner.name}'s Enchantress gazump'd your {card}")
             player.add_actions(1)
-            try:
+            with contextlib.suppress(NoCardException):
                 player.pickup_card()
-            except NoCardException:
-                pass
             return {"skip_card": True}
         return None
 
 
 ###############################################################################
 class TestEnchantress(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=2, initcards=["Enchantress", "Remodel", "Moat"]
         )
@@ -47,7 +54,7 @@ class TestEnchantress(unittest.TestCase):
         self.r1 = self.g.get_card_from_pile("Remodel")
         self.m1 = self.g.get_card_from_pile("Moat")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play an Enchantress"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)

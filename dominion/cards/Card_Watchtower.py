@@ -45,7 +45,7 @@ class Card_Watchtower(Card.Card):
 
 
 ###############################################################################
-class Test_Watchtower(unittest.TestCase):
+class TestWatchtower(unittest.TestCase):
     """Test Watchtower"""
 
     def setUp(self) -> None:
