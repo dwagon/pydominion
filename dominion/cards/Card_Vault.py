@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Vault(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.PROSPERITY
@@ -17,21 +17,22 @@ class Card_Vault(Card.Card):
         self.cards = 2
         self.cost = 5
 
-    def special(self, game, player):
-        discards = player.plr_discard_cards(
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        if discards := player.plr_discard_cards(
             any_number=True,
             prompt="Discard any number of cards. +1 Coin per card discarded",
-        )
-        player.coins.add(len(discards))
-        player.output(f"Gaining {len(discards)} coins")
+        ):
+            player.coins.add(len(discards))
+            player.output(f"Gaining {len(discards)} coins")
+
         for plr in game.player_list():
             if plr != player:
                 plr.output(
                     f"Due to {player.name}'s Vault you may discard two cards. If you do, draw one"
                 )
-                plrdiscards = plr.plr_discard_cards(num=2)
-                if len(plrdiscards) == 2:
-                    plr.pickup_cards(1)
+                if plr_discards := plr.plr_discard_cards(num=2):
+                    if len(plr_discards) == 2:
+                        plr.pickup_cards(1)
 
 
 ###############################################################################
@@ -41,13 +42,13 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 ###############################################################################
 class TestVault(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Vault"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.card = self.g.get_card_from_pile("Vault")
 
-    def test_play(self):
+    def test_play(self) -> None:
         self.other.piles[Piles.HAND].set("Copper", "Silver", "Gold")
         self.plr.piles[Piles.HAND].set("Duchy", "Province", "Gold", "Silver", "Estate")
         self.plr.add_card(self.card, Piles.HAND)

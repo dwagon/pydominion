@@ -310,7 +310,7 @@ class Player:
         if trash_opts.get("trash", True):
             if card.location and card.location != Piles.TRASH:
                 self.remove_card(card)
-                self.game.trash_pile.add(card)
+            self.game.trash_pile.add(card)
             card.player = None
             card.location = Piles.TRASH
         for crd in self.relevant_cards():
@@ -426,7 +426,9 @@ class Player:
         return self.add_card(card, dest)
 
     ###########################################################################
-    def add_card(self, card: Card, pile: Piles | str = Piles.DISCARD) -> Card:
+    def add_card(
+        self, card: Card, pile: Piles | PlayArea | str = Piles.DISCARD
+    ) -> Card:
         """Add an existing card to a new location"""
         assert isinstance(card, Card), f"{card=} {type(card)=}"
         card.player = self
@@ -1462,7 +1464,7 @@ class Player:
 
         # Replace is to gain a different card
         if options.get("replace"):
-            self.game.card_piles[new_card.name].add(new_card)
+            self.game.card_piles[new_card.pile].add(new_card)
             new_card = self.game.get_card_from_pile(options["replace"])
             if not new_card:
                 self.output(f"No more {options['replace']}")
@@ -1475,6 +1477,7 @@ class Player:
         if callhook:
             options |= self.hook_all_players_gain_card(new_card)
         if options.get("trash", False):
+            self.add_card(new_card, Piles.HAND)
             self.trash_card(new_card)
             return new_card
         if not options.get("dontadd", False):
@@ -1740,7 +1743,8 @@ class Player:
             if not pile:
                 continue
             card = pile.get_top_card()
-            assert card is not None
+            if card is None:
+                continue
             cost = self.card_cost(card)
             if not self.select_by_type(card, types):
                 continue

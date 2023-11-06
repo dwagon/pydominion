@@ -49,7 +49,7 @@ class Card_Bandit(Card.Card):
             {"selector": "0", "print": "Don't trash any card", "card": None}
         ]
         for card in treasures:
-            to_print = f"Trash {card.name} from {victim.name}"
+            to_print = f"Trash {card} from {victim.name}"
             options.append({"selector": f"{index}", "print": to_print, "card": card})
             index += 1
         o = bandit.user_input(options, f"What to do to {victim.name}'s cards?")
@@ -58,8 +58,8 @@ class Card_Bandit(Card.Card):
             if o["card"] == card:
                 card.location = None
                 victim.trash_card(card)
-                bandit.output(f"Trashed {card.name} from {victim.name}")
-                victim.output(f"{bandit.name}'s Bandit trashed your {card.name}")
+                bandit.output(f"Trashed {card} from {victim.name}")
+                victim.output(f"{bandit.name}'s Bandit trashed your {card}")
             else:
                 victim.add_card(card, "discard")
 
@@ -92,7 +92,7 @@ class TestBandit(unittest.TestCase):
         self.vic.piles[Piles.DECK].set("Copper", "Silver", "Gold")
         self.thief.test_input = ["trash gold"]
         self.thief.play_card(self.card)
-        # Make sure the gold ends up in the trashpile and not in the victims deck
+        # Make sure the gold ends up in the trash pile and not in the victims deck
         self.assertIn("Gold", self.g.trash_pile)
         for card in self.vic.piles[Piles.DECK]:
             self.assertNotEqual(card.name, "Gold")

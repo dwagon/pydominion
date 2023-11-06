@@ -5,9 +5,8 @@ import unittest
 import random
 from typing import Any
 
-from dominion import Card
-from dominion import PlayArea
-from dominion import Game, Piles, Player
+from dominion import Card, PlayArea, Game, Piles, Player
+from dominion.Option import Option
 
 DRUID = "druid"
 
@@ -25,14 +24,14 @@ class Card_Druid(Card.Card):
         self.buys = 1
         self.cost = 2
 
-    def setup(self, game: "Game.Game") -> None:
+    def setup(self, game: Game.Game) -> None:
         game.specials[DRUID] = PlayArea.PlayArea([])
         random.shuffle(game.boons)
         for _ in range(3):
             game.specials[DRUID].add(game.boons.pop())
 
-    def special(self, game: "Game.Game", player: "Player.Player") -> None:
-        options: list[dict[str, Any]] = []
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        options: list[Option | dict[str, Any]] = []
         for i in range(3):
             boon = list(game.specials[DRUID])[i]
             to_print = f"Receive {boon.name}: {boon.description(player)}"

@@ -4,14 +4,16 @@
 
 import unittest
 import random
-from dominion import Card, Game, Piles, Keys
+from dominion import Card, Game, Piles, Keys, Player
+
+BANE = "bane"
 
 
 ###############################################################################
 class Card_YoungWitch(Card.Card):
     """Young Witch"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.CORNUCOPIA
@@ -22,7 +24,7 @@ class Card_YoungWitch(Card.Card):
         self.cards = 2
         self.cost = 4
 
-    def setup(self, game):
+    def setup(self, game: Game.Game) -> None:
         """Setup: Add an extra Kingdom card pile costing 2 or 3 to the Supply.
         Cards from that pile are Bane cards."""
         banes = []
@@ -38,15 +40,16 @@ class Card_YoungWitch(Card.Card):
             if card.cost not in (2, 3):
                 continue
             banes.append(card.name)
-        game._bane = random.choice(banes)
-        game._use_card_pile(game.getAvailableCards(), game._bane)
-        game.output(f"Using {game._bane} as the bane for Young Witch")
+        game.specials[BANE] = random.choice(banes)
+        game._use_card_pile(game.getAvailableCards(), game.specials[BANE])
+        game.card_piles[game.specials[BANE]].setup(game=game)
+        game.output(f"Using {game.specials[BANE]} as the bane for Young Witch")
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         player.plr_discard_cards(num=2, force=True)
         for pl in player.attack_victims():
-            if pl.piles[Piles.HAND][game._bane]:
-                player.output(f"{pl.name} has the bane: {game._bane}")
+            if pl.piles[Piles.HAND][game.specials[BANE]]:
+                player.output(f"{pl.name} has the bane: {game.specials[BANE]}")
                 continue
             player.output(f"{pl.name} got cursed")
             pl.output(f"{player.name}'s Young Witch cursed you")
@@ -57,7 +60,7 @@ class Card_YoungWitch(Card.Card):
 class TestYoungWitch(unittest.TestCase):
     """Test Young Witch"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=2,
             initcards=["Young Witch"],
@@ -67,7 +70,7 @@ class TestYoungWitch(unittest.TestCase):
         self.attacker, self.victim = self.g.player_list()
         self.card = self.g.get_card_from_pile("Young Witch")
 
-    def test_play_nobane(self):
+    def test_play_nobane(self) -> None:
         """Play the young witch without a bane"""
         self.victim.piles[Piles.HAND].set("Copper", "Silver")
         self.attacker.piles[Piles.HAND].set(
@@ -77,18 +80,18 @@ class TestYoungWitch(unittest.TestCase):
         self.attacker.test_input = ["Duchy", "Province", "finish"]
         self.attacker.play_card(self.card)
         try:
-            bane = self.g.get_card_from_pile(self.g._bane)
+            bane = self.g.get_card_from_pile(self.g.specials[BANE])
             self.assertIn(bane.cost, (2, 3))
             self.assertEqual(self.attacker.piles[Piles.HAND].size(), 5 + 2 - 2)
             self.assertIn("Curse", self.victim.piles[Piles.DISCARD])
         except AssertionError:  # pragma: no cover
-            print(f"Bane={self.g._bane}")
+            print(f"Bane={self.g.specials[BANE]}")
             self.g.print_state()
             raise
 
-    def test_play_bane(self):
+    def test_play_bane(self) -> None:
         """Play the young witch with a bane"""
-        self.victim.piles[Piles.HAND].set("Copper", "Silver", self.g._bane)
+        self.victim.piles[Piles.HAND].set("Copper", "Silver", self.g.specials[BANE])
         self.attacker.piles[Piles.HAND].set(
             "Copper", "Silver", "Gold", "Duchy", "Province"
         )
@@ -98,7 +101,7 @@ class TestYoungWitch(unittest.TestCase):
         try:
             self.assertNotIn("Curse", self.victim.piles[Piles.DISCARD])
         except AssertionError:  # pragma: no cover
-            print(f"Bane={self.g._bane}")
+            print(f"Bane={self.g.specials[BANE]}")
             self.g.print_state()
             raise
 
