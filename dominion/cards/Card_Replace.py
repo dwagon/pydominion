@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
 class Card_Replace(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.INTRIGUE
@@ -17,7 +17,7 @@ class Card_Replace(Card.Card):
         self.required_cards = ["Curse"]
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         tr = player.plr_trash_card()
         if not tr:
             return
@@ -26,8 +26,7 @@ class Card_Replace(Card.Card):
         if not gain:
             return
         if gain.isAction() or gain.isTreasure():
-            player.add_card(gain, "topdeck")
-            player.piles[Piles.DISCARD].remove(gain)
+            player.move_card(gain, "topdeck")
         if gain.isVictory():
             for victim in player.attack_victims():
                 victim.output(f"Gained a Curse due to {player.name}'s Replace")
@@ -35,14 +34,14 @@ class Card_Replace(Card.Card):
 
 
 ###############################################################################
-class Test_Replace(unittest.TestCase):
-    def setUp(self):
+class TestReplace(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Replace", "Moat"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g.get_card_from_pile("Replace")
 
-    def test_gain_action(self):
+    def test_gain_action(self) -> None:
         self.plr.piles[Piles.HAND].set("Estate", "Silver")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Estate", "Get Moat"]
@@ -50,7 +49,7 @@ class Test_Replace(unittest.TestCase):
         self.assertIn("Moat", self.plr.piles[Piles.DECK])
         self.assertNotIn("Moat", self.plr.piles[Piles.DISCARD])
 
-    def test_gain_victory(self):
+    def test_gain_victory(self) -> None:
         self.plr.piles[Piles.HAND].set(
             "Estate",
             "Silver",

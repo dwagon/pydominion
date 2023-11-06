@@ -26,7 +26,7 @@ class Card_Embargo(Card.Card):
         trash = player.plr_choose_options(
             "Trash this card?",
             ("Keep this card", False),
-            ("Trash this card to embargo", True),
+            ("Trash this card to embargo? ", True),
         )
         if not trash:
             return
@@ -53,6 +53,7 @@ class TestEmbargo(unittest.TestCase):
         self.assertEqual(self.plr.coins.get(), 2)
         self.assertEqual(self.g.card_piles["Silver"].embargo_level, 1)
         self.assertIn("Embargo", self.g.trash_pile)
+        self.assertNotIn("Embargo", self.plr.piles[Piles.PLAYED])
 
 
 ###############################################################################

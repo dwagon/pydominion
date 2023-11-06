@@ -310,13 +310,12 @@ class Player:
         if trash_opts.get("trash", True):
             if card.location and card.location != Piles.TRASH:
                 self.remove_card(card)
-            self.game.trash_pile.add(card)
+                self.game.trash_pile.add(card)
             card.player = None
             card.location = Piles.TRASH
         for crd in self.relevant_cards():
             if crd.name not in kwargs.get("exclude_hook", []):
-                rc = crd.hook_trash_card(game=self.game, player=self, card=card)
-                if rc:
+                if rc := crd.hook_trash_card(game=self.game, player=self, card=card):
                     trash_opts.update(rc)
 
     ###########################################################################

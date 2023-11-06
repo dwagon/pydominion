@@ -34,7 +34,6 @@ class Card_Necromancer(Card.Card):
         if card := player.card_sel(
             cardsrc=action_cards, prompt="Select Action card from Trash"
         ):
-            assert card[0] is not None
             game.specials[NECROMANCER].add(card[0])
             player.play_card(card[0], discard=False, cost_action=False)
 
@@ -59,9 +58,11 @@ class TestNecromancer(unittest.TestCase):
     def test_play(self) -> None:
         """Play a Necromancer"""
         self.plr.piles[Piles.DECK].set("Gold", "Silver")
-        self.plr.test_input = ["Zombie Spy", "Keep"]
+        self.plr.test_input = ["Select Zombie Spy", "Keep Gold"]
         self.plr.play_card(self.card)
+        self.g.print_state()
         self.assertIn("Silver", self.plr.piles[Piles.HAND])  # From Zombie Spy
+        self.assertIn("Zombie Spy", self.g.trash_pile)
 
 
 ###############################################################################

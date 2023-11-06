@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Ambassador"""
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
 class Card_Ambassador(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.SEASIDE
@@ -16,14 +16,16 @@ class Card_Ambassador(Card.Card):
         self.cost = 5
 
     @classmethod
-    def pick_card(cls, player):
+    def pick_card(cls, player: Player.Player) -> list[Card.Card] | None:
+        if player.piles[Piles.HAND].size() < 2:
+            return None
         while True:
             choice = player.card_sel(
                 num=2,
                 cardsrc=Piles.HAND,
                 prompt="Return up to 2 copies of this card to the Supply - Other players gain a copy of it",
             )
-            if len(choice) == 2:
+            if choice and len(choice) == 2:
                 if choice[0].name != choice[1].name:
                     player.output("Has to be the same type of card")
                 else:
@@ -31,7 +33,7 @@ class Card_Ambassador(Card.Card):
             else:
                 return choice
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         choice = self.pick_card(player)
         if not choice:
             return
@@ -47,7 +49,7 @@ class Card_Ambassador(Card.Card):
 
 ###############################################################################
 class TestAmbassador(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=2, initcards=["Ambassador"], badcards=["Duchess"], oldcards=True
         )
@@ -55,7 +57,7 @@ class TestAmbassador(unittest.TestCase):
         self.plr, self.vic = self.g.player_list()
         self.card = self.g.get_card_from_pile("Ambassador")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play the card"""
         self.plr.piles[Piles.HAND].set("Gold", "Duchy", "Silver")
         self.plr.add_card(self.card, Piles.HAND)
@@ -64,8 +66,8 @@ class TestAmbassador(unittest.TestCase):
         self.assertIn("Duchy", self.vic.piles[Piles.DISCARD])
         self.assertNotIn("Duchy", self.plr.piles[Piles.HAND])
 
-    def test_discard_two(self):
-        """Play the card  and discard two"""
+    def test_discard_two(self) -> None:
+        """Play the card and discard two"""
         self.plr.piles[Piles.HAND].set("Duchy", "Duchy", "Silver")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["1", "2", "finish"]

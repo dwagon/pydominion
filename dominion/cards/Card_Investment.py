@@ -2,34 +2,33 @@
 """http://wiki.dominionstrategy.com/index.php/Investment"""
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
 class Card_Investment(Card.Card):
     """Investment"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.PROSPERITY
         self.desc = """Trash a card from your hand.  Choose one: +$1;
-            or trash this to reveal your hand for +1 VP per differently named Treasure there."""
+            or trash this to reveal your hand for +1VP per differently named Treasure there."""
         self.name = "Investment"
         self.cost = 4
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         player.plr_trash_card(force=True)
         num_treas = len({_.name for _ in player.piles[Piles.HAND] if _.isTreasure()})
-        cash_opt = player.plr_choose_options(
+        if player.plr_choose_options(
             "Choose One? ",
             ("+1 Coin", True),
             (
                 f"Trash this to reveal your hand for +1 VP per differently named Treasure there (currently {num_treas})",
                 False,
             ),
-        )
-        if cash_opt:
+        ):
             player.coins.add(1)
             return
         player.trash_card(self)
@@ -38,10 +37,10 @@ class Card_Investment(Card.Card):
 
 
 ###############################################################################
-class Test_Investment(unittest.TestCase):
+class TestInvestment(unittest.TestCase):
     """Test Investment"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Investment"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -49,14 +48,14 @@ class Test_Investment(unittest.TestCase):
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Duchy")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_donttrash(self):
+    def test_dont_trash(self) -> None:
         """Play but don't trash"""
         cash = self.plr.coins.get()
         self.plr.test_input = ["Trash Copper", "Coin"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), cash + 1)
 
-    def test_trash(self):
+    def test_trash(self) -> None:
         """Play and trash"""
         cash = self.plr.coins.get()
         score = self.plr.get_score()
