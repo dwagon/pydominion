@@ -6,6 +6,7 @@ from __future__ import annotations
 import contextlib
 import json
 import operator
+import os
 import sys
 from collections import defaultdict
 from typing import Any, Optional, TYPE_CHECKING, Callable
@@ -825,7 +826,8 @@ class Player:
     def turn(self) -> None:
         """Have a turn as the player"""
         self.turn_number += 1
-        self.output(f"\n{'#' * 30} Turn {self.turn_number} {'#' * 30}")
+        print()
+        self.output(f"{'#' * 30} Turn {self.turn_number} {'#' * 30}")
         stats = f"({self.get_score()} points, {self.count_cards()} cards)"
         if self.skip_turn:
             self.skip_turn = False
@@ -1025,7 +1027,12 @@ class Player:
             )
         else:
             self.output("| Played: <NONE>")
-        self.output(f"| Deck Size: {len(self.piles[Piles.DECK])}")
+        if os.getenv("PYDOMINION_DEBUG"):
+            self.output(
+                f"| Deck ({len(self.piles[Piles.DECK])}): {', '.join([str(_) for _ in self.piles[Piles.DECK]])}"
+            )
+        else:
+            self.output(f"| Deck Size: {len(self.piles[Piles.DECK])}")
         if self.game.ally:
             self.output(
                 f"| Ally: {self.game.ally.name}: {self.game.ally.description(self)}"

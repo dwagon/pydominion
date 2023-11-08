@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -17,13 +17,14 @@ class Card_FarmingVillage(Card.Card):
         self.actions = 2
         self.cost = 4
 
-    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Reveal cards from the top of your deck until you revel
         an Action or Treasure card. Put that card into your hand
         and discard the other cards."""
         while True:
-            card = player.next_card()
-            if card is None:
+            try:
+                card = player.next_card()
+            except NoCardException:
                 break
             player.reveal_card(card)
             if card.isTreasure() or card.isAction():

@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Spoils"""
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Spoils(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.DARKAGES
@@ -18,20 +18,21 @@ class Card_Spoils(Card.Card):
         self.coin = 3
         self.numcards = 15
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """When you play this return it to the spoils pile"""
         game.card_piles["Spoils"].add(self)
-        player.remove_card(self)
+        if self.location:
+            player.remove_card(self)
 
 
 ###############################################################################
 class TestSpoils(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bandit Camp"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_play(self):
+    def test_play(self) -> None:
         num_spoils = len(self.g.card_piles["Spoils"])
         spoils = self.g.get_card_from_pile("Spoils")
         self.plr.add_card(spoils, Piles.HAND)

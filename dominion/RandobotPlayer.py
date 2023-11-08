@@ -37,7 +37,7 @@ class RandobotPlayer(Player):
     def __init__(self, game, name="", quiet=False, **kwargs):
         colorama.init()
         self.colour = f"{colorama.Back.BLACK}{random.choice(colours)}"
-        self.quiet = quiet
+        self.quiet = False
         Player.__init__(self, game, name, **kwargs)
 
     ###########################################################################

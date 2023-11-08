@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Hex
+from dominion import Card, Game, Piles, Hex, Player, NoCardException
 
 
 ###############################################################################
 class Hex_Locusts(Hex.Hex):
-    def __init__(self):
+    def __init__(self) -> None:
         Hex.Hex.__init__(self)
         self.cardtype = Card.CardType.HEX
         self.base = Card.CardExpansion.NOCTURNE
@@ -16,14 +16,17 @@ class Hex_Locusts(Hex.Hex):
         self.purchasable = False
         self.required_cards = ["Curse"]
 
-    def special(self, game, player):
-        nxt = player.top_card()
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        try:
+            nxt = player.top_card()
+        except NoCardException:
+            return
         if nxt.name in ("Copper", "Estate"):
-            player.output(f"Gaining a curse because your next card is {nxt.name}")
+            player.output(f"Gaining a curse because your next card is {nxt}")
             player.gain_card("Curse")
         else:
             player.output(
-                f"Gain a card costing {nxt.cost - 1} because your next card is {nxt.name}"
+                f"Gain a card costing {nxt.cost - 1} because your next card is {nxt}"
             )
             types = {
                 Card.CardType.VICTORY: nxt.isVictory(),
@@ -31,7 +34,7 @@ class Hex_Locusts(Hex.Hex):
                 Card.CardType.ACTION: nxt.isAction(),
             }
             player.plr_gain_card(cost=nxt.cost - 1, types=types)
-        player.output(f"Trashing your {nxt.name}")
+        player.output(f"Trashing your {nxt}")
         player.trash_card(nxt)
 
 
@@ -49,8 +52,8 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 
 ###############################################################################
-class Test_Locusts(unittest.TestCase):
-    def setUp(self):
+class TestLocusts(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -58,14 +61,14 @@ class Test_Locusts(unittest.TestCase):
             if h.name != "Locusts":
                 self.g.hexes.remove(h)
 
-    def test_curse(self):
+    def test_curse(self) -> None:
         """Locusts to gain a Curse"""
         self.plr.piles[Piles.DECK].set("Estate")
         self.plr.gain_card("Cursed Village")
         self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Curse"])
         self.assertIn("Estate", self.g.trash_pile)
 
-    def test_gain(self):
+    def test_gain(self) -> None:
         """Locusts to gain a cheaper card"""
         self.plr.piles[Piles.DECK].set("Duchy")
         self.plr.test_input = ["Get Estate"]
