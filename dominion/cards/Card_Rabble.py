@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Rabble(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.PROSPERITY
@@ -17,10 +17,13 @@ class Card_Rabble(Card.Card):
         self.cost = 5
         self.cards = 3
 
-    def attack(self, victim: "Player.Player", attacker: "Player.Player"):
+    def attack(self, victim: "Player.Player", attacker: "Player.Player") -> None:
         cards = []
         for _ in range(3):
-            card = victim.next_card()
+            try:
+                card = victim.next_card()
+            except NoCardException:
+                continue
             victim.reveal_card(card)
             if card.isAction() or card.isTreasure():
                 victim.output(f"Discarding {card} due to {attacker.name}'s rabble")

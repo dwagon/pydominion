@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Warrior """
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Warrior(Card.Card):
     """Warrior"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
             Card.CardType.ACTION,
@@ -27,7 +27,7 @@ class Card_Warrior(Card.Card):
         self.cost = 4
         self.numcards = 5
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """For each Traveller you have in play (including this), each other
         player discards the top card of his deck and trashes it if it
         costs 3 or 4"""
@@ -37,7 +37,10 @@ class Card_Warrior(Card.Card):
                 count += 1
         for victim in player.attack_victims():
             for _ in range(count):
-                card = victim.next_card()
+                try:
+                    card = victim.next_card()
+                except NoCardException:
+                    continue
                 if card.cost in (3, 4) and not card.potcost:
                     victim.output(f"Trashing {card} due to {player.name}'s Warrior")
                     player.output(f"Trashing {card} from {victim.name}")
@@ -55,7 +58,7 @@ class Card_Warrior(Card.Card):
 class TestWarrior(unittest.TestCase):
     """Test Warrior"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             quiet=True, numplayers=2, initcards=["Page"], badcards=["Pooka", "Fool"]
         )
@@ -65,7 +68,7 @@ class TestWarrior(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.g.print_state()
 
-    def test_warrior(self):
+    def test_warrior(self) -> None:
         """Play a warrior nothing to trash"""
         self.plr.play_card(self.card)
         try:
@@ -74,7 +77,7 @@ class TestWarrior(unittest.TestCase):
             self.g.print_state()
             raise
 
-    def test_with_trash(self):
+    def test_with_trash(self) -> None:
         """Play a warrior with something to trash"""
         trash_size = self.g.trash_pile.size()
         self.victim.piles[Piles.DECK].set("Silver", "Silver")
@@ -82,7 +85,7 @@ class TestWarrior(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trash_pile.size(), trash_size + 2)
 
-    def test_end_turn(self):
+    def test_end_turn(self) -> None:
         """End the turn with a played warrior"""
         self.plr.test_input = ["keep"]
         self.plr.play_card(self.card)

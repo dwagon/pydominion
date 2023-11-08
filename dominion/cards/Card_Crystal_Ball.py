@@ -2,14 +2,14 @@
 """http://wiki.dominionstrategy.com/index.php/Crystal_Ball"""
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_CrystalBall(Card.Card):
     """Crystal Ball"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.PROSPERITY
@@ -19,8 +19,11 @@ class Card_CrystalBall(Card.Card):
         self.name = "Crystal Ball"
         self.cost = 5
 
-    def special(self, game, player):
-        next_card = player.next_card()
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        try:
+            next_card = player.next_card()
+        except NoCardException:
+            return
         options = [
             (f"Ignore {next_card}", "ignore"),
             (f"Trash {next_card}", "trash"),
@@ -42,16 +45,16 @@ class Card_CrystalBall(Card.Card):
 
 
 ###############################################################################
-class Test_CrystalBall(unittest.TestCase):
+class TestCrystalBall(unittest.TestCase):
     """Test Crystal Ball"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Crystal Ball", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Crystal Ball")
 
-    def test_ignore(self):
+    def test_ignore(self) -> None:
         """Play a card and ignore"""
         self.plr.piles[Piles.DECK].set("Moat")
         self.plr.add_card(self.card, Piles.HAND)
@@ -61,7 +64,7 @@ class Test_CrystalBall(unittest.TestCase):
         self.assertIn("Moat", self.plr.piles[Piles.DECK])
         self.assertEqual(self.plr.coins.get(), coins + 1)
 
-    def test_trash(self):
+    def test_trash(self) -> None:
         """Play a card and trash"""
         self.plr.piles[Piles.DECK].set("Moat")
         self.plr.add_card(self.card, Piles.HAND)
@@ -69,7 +72,7 @@ class Test_CrystalBall(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIn("Moat", self.g.trash_pile)
 
-    def test_discard(self):
+    def test_discard(self) -> None:
         """Play a card and discard"""
         self.plr.piles[Piles.DECK].set("Moat")
         self.plr.add_card(self.card, Piles.HAND)
@@ -77,7 +80,7 @@ class Test_CrystalBall(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a card and play"""
         self.plr.piles[Piles.DECK].set("Copper", "Copper", "Moat")
         self.plr.piles[Piles.DISCARD].set(

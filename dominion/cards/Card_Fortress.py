@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from typing import Optional, Any
+
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Fortress(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DARKAGES
@@ -19,7 +20,9 @@ class Card_Fortress(Card.Card):
         self.actions = 2
         self.cost = 4
 
-    def hook_trash_this_card(self, game, player):
+    def hook_trash_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> Optional[dict[str, Any]]:
         player.output("Putting Fortress back in hand")
         if self in player.piles[Piles.PLAYED]:
             player.add_card(self, Piles.HAND)
@@ -35,20 +38,20 @@ class Card_Fortress(Card.Card):
 
 ###############################################################################
 class Test_Fortress(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Fortress"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Fortress")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play the card"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
         self.assertEqual(self.plr.actions.get(), 2)
 
-    def test_trash(self):
+    def test_trash(self) -> None:
         self.plr.trash_card(self.card)
         self.g.print_state()
         self.assertIn("Fortress", self.plr.piles[Piles.HAND])
