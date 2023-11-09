@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_DistantLands(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
             Card.CardType.ACTION,
@@ -14,28 +14,26 @@ class Card_DistantLands(Card.Card):
             Card.CardType.VICTORY,
         ]
         self.base = Card.CardExpansion.ADVENTURE
-        self.desc = "Worth 4 VP if on your tavern mat at the end of the game, else 0"
+        self.desc = "Put this on your tavern mat; Worth 4 VP if on your tavern mat at the end of the game, else 0"
         self.name = "Distant Lands"
         self.cost = 5
         self.callable = False
         self.counted = False
 
-    def special_score(self, game, player) -> int:
+    def special_score(self, game: Game.Game, player: Player.Player) -> int:
         """Worth 4 VP if on your tavern mat; else 0"""
-        if self.location == Piles.RESERVE:
-            return 4
-        return 0
+        return 4 if self.location == Piles.RESERVE else 0
 
 
 ###############################################################################
 class TestDistantLands(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Distant Lands"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Distant Lands")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a distant lands"""
         self.plr.piles[Piles.HAND].set()
         self.plr.add_card(self.card, Piles.HAND)
@@ -43,18 +41,18 @@ class TestDistantLands(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.RESERVE].size(), 1)
         self.assertIsNotNone(self.plr.piles[Piles.RESERVE]["Distant Lands"])
 
-    def test_not_on_mat(self):
+    def test_not_on_mat(self) -> None:
         self.plr.piles[Piles.HAND].set("Distant Lands")
         self.g.game_over = True
         self.assertEqual(self.plr.get_score_details()["Distant Lands"], 0)
 
-    def test_on_mat(self):
+    def test_on_mat(self) -> None:
         """Distant lands on mat"""
         self.plr.piles[Piles.RESERVE].set("Distant Lands")
         self.g.game_over = True
         self.assertEqual(self.plr.get_score_details()["Distant Lands"], 4)
 
-    def test_on_mat_twice(self):
+    def test_on_mat_twice(self) -> None:
         """Two Distant lands on mat"""
         self.plr.piles[Piles.RESERVE].set("Distant Lands", "Distant Lands")
         self.g.game_over = True
