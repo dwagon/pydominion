@@ -421,7 +421,7 @@ class Player:
             )
 
     ###########################################################################
-    def move_card(self, card: Card, dest: Piles) -> Card:
+    def move_card(self, card: Card, dest: Piles | str) -> Card:
         """Move a card to {dest} card pile"""
         self.remove_card(card)
         return self.add_card(card, dest)
