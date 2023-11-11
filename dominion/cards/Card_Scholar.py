@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Scholar(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.RENAISSANCE
@@ -16,20 +15,20 @@ class Card_Scholar(Card.Card):
         self.cost = 5
 
     ###########################################################################
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         player.discard_hand()
         player.pickup_cards(7)
 
 
 ###############################################################################
-class Test_Scholar(unittest.TestCase):
-    def setUp(self):
+class TestScholar(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Scholar"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Scholar")
 
-    def test_play(self):
+    def test_play(self) -> None:
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)

@@ -16,7 +16,7 @@ class Card_Doctor(Card.Card):
         self.overpay = True
         self.cost = 3
 
-    def dynamic_description(self, player: "Player.Player") -> str:
+    def dynamic_description(self, player: Player.Player) -> str:
         """Variable description"""
         if player.phase == Phase.BUY:
             return """Name a card. Reveal the top 3 cards of your deck.
@@ -27,7 +27,7 @@ class Card_Doctor(Card.Card):
         return """Name a card. Reveal the top 3 cards of your deck.
             Trash the matches. Put the rest back on top in any order."""
 
-    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         options = []
         index = 1
         for name, pile in sorted(game.get_card_piles()):
@@ -61,8 +61,9 @@ class Card_Doctor(Card.Card):
         discard it, or put it back."""
         for i in range(amount):
             player.output(f"Doctoring {i+1}/{amount}")
-            card = player.next_card()
-            if card is None:
+            try:
+                card = player.next_card()
+            except NoCardException:
                 continue
             options = []
             options.append(

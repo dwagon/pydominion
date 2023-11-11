@@ -18,9 +18,12 @@ class Ally_Market_Towns(Ally.Ally):
             play an Action card from your hand. Repeat as desired."""
         self.name = "Market Towns"
 
-    def hook_pre_buy(self, game: "Game.Game", player: "Player.Player") -> None:
-        acts = [_ for _ in player.piles[Piles.HAND] if _.playable and _.isAction()]
-        while player.favors.get() and acts:
+    def hook_pre_buy(self, game: Game.Game, player: Player.Player) -> None:
+        while player.favors.get():
+            # Suitable actions can change between invocations
+            acts = [_ for _ in player.piles[Piles.HAND] if _.playable and _.isAction()]
+            if not acts:
+                break
             opts = [("Do Nothing", None)]
             for act in acts:
                 opts.append((f"Play {act.name}", act))

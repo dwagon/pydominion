@@ -165,7 +165,7 @@ class Game:  # pylint: disable=too-many-public-methods
         # Pick a card to see if it is a dark ages card
         halfway = len(self.card_piles) // 2
         name, card_pile = list(self.card_piles.items())[halfway]
-        card = self.get_card_from_pile(name)
+        card = self.card_instances[name]
         if card.base == CardExpansion.DARKAGES:
             use_shelters = True
 
@@ -671,6 +671,48 @@ class Game:  # pylint: disable=too-many-public-methods
         self._use_card_pile(None, "Ruins", True)
 
     ###########################################################################
+    def check_card_requirement(self, card: Card) -> None:
+        for x in card.required_cards:
+            card_type = "Card"
+            if x == "Loot":
+                self._load_loot()
+                continue
+            if isinstance(x, tuple):
+                card_type, card_name = x
+            else:
+                card_type, card_name = "BaseCard", x
+            if card_name not in self.card_piles:
+                self._use_card_pile(None, card_name, force=True, card_type=card_type)
+                self.output(f"Playing with {card_name} as required by {card}")
+
+        if card.heirloom is not None and card.heirloom not in self._heirlooms:
+            self._use_card_pile(None, card.heirloom, force=True, card_type="Heirloom")
+            self._heirlooms.append(card.heirloom)
+            self.output(f"Playing with {card.heirloom} as required by {card}")
+
+        if card.isLooter() and "Ruins" not in self.card_piles:
+            self._use_ruins(card)
+        if card.isFate() and not self.boons:
+            self._load_boons()
+        if card.isDoom() and not self.hexes:
+            self._load_hexes()
+            self.output(f"Using hexes as required by {card}")
+        if card.isLiaison() and not self.ally:
+            self._load_ally()
+            self.output(f"Using Allies as required by {card}")
+        if card.traveller and not self.loaded_travellers:
+            self._load_travellers()
+        if card.needs_prizes and not self._loaded_prizes:
+            self._add_prizes()
+            self.output(f"Playing with Prizes as required by {card}")
+        if card.needsartifacts and not self.artifacts:
+            self._load_artifacts()
+            self.output(f"Using artifacts as required by {card}")
+        if card.needsprojects and not self.projects:
+            self._load_projects()
+            self.output(f"Using projects as required by {card}")
+
+    ###########################################################################
     def _check_card_requirements(self) -> None:
         """If any card we are playing requires another card (e.g. Curse) then
         ensure that is loaded as well"""
@@ -687,49 +729,8 @@ class Game:  # pylint: disable=too-many-public-methods
             check_cards.append(self.ally)
 
         for card in check_cards:
-            for x in card.required_cards:
-                card_type = "Card"
-                if x == "Loot":
-                    self._load_loot()
-                    continue
-                if isinstance(x, tuple):
-                    card_type, card_name = x
-                else:
-                    card_type, card_name = "BaseCard", x
-                if card_name not in self.card_piles:
-                    self._use_card_pile(
-                        None, card_name, force=True, card_type=card_type
-                    )
-                    self.output(f"Playing with {card_name} as required by {card}")
+            self.check_card_requirement(card)
 
-            if card.heirloom is not None and card.heirloom not in self._heirlooms:
-                self._use_card_pile(
-                    None, card.heirloom, force=True, card_type="Heirloom"
-                )
-                self._heirlooms.append(card.heirloom)
-                self.output(f"Playing with {card.heirloom} as required by {card}")
-
-            if card.isLooter() and "Ruins" not in self.card_piles:
-                self._use_ruins(card)
-            if card.isFate() and not self.boons:
-                self._load_boons()
-            if card.isDoom() and not self.hexes:
-                self._load_hexes()
-                self.output(f"Using hexes as required by {card}")
-            if card.isLiaison() and not self.ally:
-                self._load_ally()
-                self.output(f"Using Allies as required by {card}")
-            if card.traveller and not self.loaded_travellers:
-                self._load_travellers()
-            if card.needs_prizes and not self._loaded_prizes:
-                self._add_prizes()
-                self.output(f"Playing with Prizes as required by {card}")
-            if card.needsartifacts and not self.artifacts:
-                self._load_artifacts()
-                self.output(f"Using artifacts as required by {card}")
-            if card.needsprojects and not self.projects:
-                self._load_projects()
-                self.output(f"Using projects as required by {card}")
         if self.init[Keys.ALLIES] and not self.ally:
             print(
                 f"Need to specify a Liaison as well as an Ally {self.init[Keys.ALLIES]}"

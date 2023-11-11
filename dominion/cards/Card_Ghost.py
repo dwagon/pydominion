@@ -23,7 +23,7 @@ class Card_Ghost(Card.Card):
         self.cost = 4
         self._ghost_reserve = PlayArea.PlayArea([])
 
-    def night(self, game: "Game.Game", player: "Player.Player") -> None:
+    def night(self, game: Game.Game, player: Player.Player) -> None:
         count = len(player.all_cards())
         while count:
             card = player.next_card()
@@ -40,9 +40,9 @@ class Card_Ghost(Card.Card):
             player.output("No action cards in deck")
             return
 
-    def duration(self, game: "Game.Game", player: "Player.Player") -> None:
+    def duration(self, game: Game.Game, player: Player.Player) -> None:
         for card in self._ghost_reserve:
-            player.output(f"Ghost playing {card.name}")
+            player.output(f"Ghost playing {card}")
             for _ in range(2):
                 player.play_card(card, discard=False, cost_action=False)
             self._ghost_reserve.remove(card)

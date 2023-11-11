@@ -6,7 +6,7 @@ import unittest
 import random
 from dominion import Card, Game, Piles, Keys, Player
 
-BANE = "bane"
+BANE = "young witch bane"
 
 
 ###############################################################################
@@ -40,10 +40,12 @@ class Card_YoungWitch(Card.Card):
             if card.cost not in (2, 3):
                 continue
             banes.append(card.name)
-        game.specials[BANE] = random.choice(banes)
+        bane = random.choice(banes)
+        game.specials[BANE] = bane
         game._use_card_pile(game.getAvailableCards(), game.specials[BANE])
-        game.card_piles[game.specials[BANE]].setup(game=game)
-        game.output(f"Using {game.specials[BANE]} as the bane for Young Witch")
+        game.check_card_requirement(game.card_instances[bane])
+        game.card_piles[bane].setup(game=game)
+        game.output(f"Using {bane} as the bane for Young Witch")
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         player.plr_discard_cards(num=2, force=True)

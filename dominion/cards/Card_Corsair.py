@@ -46,13 +46,13 @@ class Card_Corsair(Card.Card):
     ) -> Optional[dict[str, Any]]:
         if player == owner or owner.has_defense(player):
             return None
-        if card.name not in ("Gold", "Silver"):
+        # If multiple corsairs attack, card may already be in trash
+        if card.location == Piles.TRASH or card.name not in ("Gold", "Silver"):
             return None
         if player.name not in self._states:
             player.trash_card(card)
             self._states[player.name] = True
             player.output(f"{owner.name}'s Corsair trashed your {card}")
-
             owner.output(f"Your corsair trashed {player.name}'s {card}")
         return None
 
