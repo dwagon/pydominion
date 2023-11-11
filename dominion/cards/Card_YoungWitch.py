@@ -43,8 +43,8 @@ class Card_YoungWitch(Card.Card):
         bane = random.choice(banes)
         game.specials[BANE] = bane
         game._use_card_pile(game.getAvailableCards(), game.specials[BANE])
-        game.card_piles[bane].setup(game=game)
         game.check_card_requirement(game.card_instances[bane])
+        game.card_piles[bane].setup(game=game)
         game.output(f"Using {bane} as the bane for Young Witch")
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
