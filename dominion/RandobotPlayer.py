@@ -155,7 +155,7 @@ class RandobotPlayer(Player):
 
     ###########################################################################
     def plr_choose_options(self, prompt, *choices):
-        print(f"plr_choose_options {choices=}")
+        print(f"plr_choose_options {prompt=} {choices=}")
         choice = random.choice(choices)
         print(f"plr_choose_options {choice=}")
         return choice[1]

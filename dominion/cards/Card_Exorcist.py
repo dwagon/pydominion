@@ -21,7 +21,7 @@ class Card_Exorcist(Card.Card):
             ("Card", "Will-o'-Wisp"),
         ]
 
-    def night(self, game: "Game.Game", player: "Player.Player") -> None:
+    def night(self, game: Game.Game, player: Player.Player) -> None:
         if player.piles[Piles.HAND].is_empty():
             player.output("No cards to trash")
             return

@@ -452,7 +452,7 @@ class Player:
             card.location = Piles.DECK
             self.piles[Piles.DECK].addToTop(card)
         else:
-            raise AssertionError(f"Adding card to unknown location: {pile}")
+            raise AssertionError(f"Adding card {card} to unknown location: {pile}")
         return card
 
     ###########################################################################
@@ -1487,8 +1487,10 @@ class Player:
             self.add_card(new_card, Piles.HAND)
             self.trash_card(new_card)
             return new_card
+
         if not options.get("dontadd", False):
             self.add_card(new_card, destination)
+
         if options.get("shuffle", False):
             self.piles[Piles.DECK].shuffle()
         return new_card
@@ -1570,7 +1572,7 @@ class Player:
         self.hook_all_players_buy_card(new_card)
 
     ###########################################################################
-    def hook_all_players_buy_card(self, card) -> None:
+    def hook_all_players_buy_card(self, card: Card) -> None:
         for player in self.game.player_list():
             for crd in player.piles[Piles.DURATION]:
                 crd.hook_all_players_buy_card(
@@ -1582,7 +1584,7 @@ class Player:
             )
 
     ###########################################################################
-    def hook_all_players_gain_card(self, card) -> dict[str, str]:
+    def hook_all_players_gain_card(self, card: Card) -> dict[str, str]:
         options: dict[str, str] = {}
         for player in self.game.player_list():
             for crd in player.relevant_cards():
