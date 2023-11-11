@@ -165,7 +165,7 @@ class Game:  # pylint: disable=too-many-public-methods
         # Pick a card to see if it is a dark ages card
         halfway = len(self.card_piles) // 2
         name, card_pile = list(self.card_piles.items())[halfway]
-        card = self.get_card_from_pile(name)
+        card = self.card_instances[name]
         if card.base == CardExpansion.DARKAGES:
             use_shelters = True
 
