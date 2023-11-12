@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Whens
 
 
 ###############################################################################
@@ -16,7 +15,7 @@ class Card_Transmogrify(Card.Card):
             than it, and put that card into your hand"""
         self.name = "Transmogrify"
         self.actions = 1
-        self.when = "start"
+        self.when = Whens.START
         self.cost = 4
 
     def hook_call_reserve(self, game, player):

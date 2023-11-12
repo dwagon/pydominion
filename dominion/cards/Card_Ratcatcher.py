@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Whens
 
 
 ###############################################################################
@@ -15,7 +15,7 @@ class Card_Ratcatcher(Card.Card):
         self.cards = 1
         self.actions = 1
         self.cost = 2
-        self.when = "start"
+        self.when = Whens.START
 
     def hook_call_reserve(self, game, player):
         """At the start of your turn, you may call this, to trash a

@@ -53,11 +53,22 @@ class Keys(StrEnum):
     WAY = auto()
 
 
+###############################################################################
 class Limits(StrEnum):
     """Limits to play"""
 
     PLAY = auto()
     BUY = auto()
+
+
+###############################################################################
+class Whens(StrEnum):
+    """When a card can be called"""
+
+    ANY = auto()
+    POSTACTION = auto()
+    SPECIAL = auto()
+    START = auto()
 
 
 # EOF

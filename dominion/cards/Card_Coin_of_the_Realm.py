@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Whens
 
 
 ###############################################################################
@@ -15,7 +14,7 @@ class Card_Coinoftherealm(Card.Card):
         self.name = "Coin of the Realm"
         self.coin = 1
         self.cost = 2
-        self.when = "postaction"
+        self.when = Whens.POSTACTION
 
     def hook_call_reserve(self, game, player):
         """Directly after resolving an action you may call this for +2 Actions"""

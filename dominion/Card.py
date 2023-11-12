@@ -5,7 +5,7 @@ import os
 import uuid
 from enum import Enum, auto
 from typing import Optional, TYPE_CHECKING, Any
-from dominion import Piles
+from dominion import Piles, Whens
 
 if TYPE_CHECKING:
     from dominion import Player
@@ -106,7 +106,7 @@ class Card:
         self.overpay = False
         self.insupply = True
         self.traveller = False
-        self.when = "any"
+        self.when = Whens.ANY
         self.actions = 0
         self.buys = 0
         self.favors = 0

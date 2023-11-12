@@ -14,7 +14,7 @@ from typing import Any, Optional, TYPE_CHECKING, Callable
 if TYPE_CHECKING:
     from dominion.Game import Game
 
-from dominion import Piles, Phase, Limits, NoCardException
+from dominion import Piles, Phase, Limits, NoCardException, Whens
 from dominion.Card import Card, CardType
 from dominion.CardPile import CardPile
 from dominion.Counter import Counter
@@ -602,14 +602,14 @@ class Player:
         return options
 
     ###########################################################################
-    def _get_whens(self) -> list[str]:
+    def _get_whens(self) -> list[Whens]:
         """Return when we are for calling reserve cards"""
-        whens: list[str] = ["any"]
-        for c in self.piles[Piles.PLAYED]:
-            if c.isAction():
-                whens.append("postaction")
+        whens: list[Whens] = [Whens.ANY]
+        for card in self.piles[Piles.PLAYED]:
+            if card.isAction():
+                whens.append(Whens.POSTACTION)
         if self.misc["is_start"]:
-            whens.append("start")
+            whens.append(Whens.START)
         return whens
 
     ###########################################################################
