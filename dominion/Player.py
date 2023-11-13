@@ -280,7 +280,7 @@ class Player:
     def call_reserve(self, card: str | Card) -> Optional[Card]:
         """Call a card from the reserve"""
         if isinstance(card, str):
-            card = self.piles[Piles.RESERVE][card]
+            card = self.piles[Piles.RESERVE][card]  # type: ignore
             if not card:
                 return None
         assert isinstance(card, Card)
@@ -606,7 +606,7 @@ class Player:
         """Return when we are for calling reserve cards"""
         whens: list[Whens] = [Whens.ANY]
         for card in self.piles[Piles.PLAYED]:
-            if card.isAction():
+            if card.isAction() and self.phase == Phase.ACTION:
                 whens.append(Whens.POSTACTION)
         if self.misc["is_start"]:
             whens.append(Whens.START)
@@ -933,7 +933,7 @@ class Player:
         self.debt -= payback
 
     ###########################################################################
-    def _perform_action(self, opt) -> None:
+    def _perform_action(self, opt: Option) -> None:
         if opt["action"] == "buy":
             self.buy_card(opt["name"])
         elif opt["action"] == "event":
