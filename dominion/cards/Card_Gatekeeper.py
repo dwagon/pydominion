@@ -2,15 +2,16 @@
 """http://wiki.dominionstrategy.com/index.php/Gatekeeper"""
 
 import unittest
+from typing import Optional, Any
 
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Gatekeeper(Card.Card):
     """Gatekeeper"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
             Card.CardType.ACTION,
@@ -23,12 +24,18 @@ class Card_Gatekeeper(Card.Card):
         self.name = "Gatekeeper"
         self.cost = 5
 
-    def duration(self, game, player):
+    def duration(self, game: Game.Game, player: Player.Player) -> None:
         player.coins.add(3)
 
-    def hook_all_players_gain_card(self, game, player, owner, card):
+    def hook_all_players_gain_card(
+        self,
+        game: Game.Game,
+        player: Player.Player,
+        owner: Player.Player,
+        card: Card.Card,
+    ) -> Optional[dict[str, Any]]:
         if player == owner:
-            return
+            return None
         if (card.isAction() or card.isTreasure()) and card.name not in player.piles[
             Piles.EXILE
         ]:
@@ -42,13 +49,13 @@ class Card_Gatekeeper(Card.Card):
 class TestGatekeeper(unittest.TestCase):
     """Test Gatekeeper"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Gatekeeper"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g.get_card_from_pile("Gatekeeper")
 
-    def test_play_card(self):
+    def test_play_card(self) -> None:
         """Play the card"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
@@ -56,7 +63,7 @@ class TestGatekeeper(unittest.TestCase):
         self.plr.start_turn()
         self.assertEqual(self.plr.coins.get(), 3)
 
-    def test_attack(self):
+    def test_attack(self) -> None:
         """Test the attack where there is no exile"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
@@ -65,7 +72,7 @@ class TestGatekeeper(unittest.TestCase):
         self.assertIn("Gold", self.victim.piles[Piles.EXILE])
         self.assertNotIn("Gold", self.victim.piles[Piles.DISCARD])
 
-    def test_attack_exile(self):
+    def test_attack_exile(self) -> None:
         """Test the attack where there is already an exile"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)

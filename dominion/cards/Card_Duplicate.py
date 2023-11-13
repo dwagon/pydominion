@@ -3,7 +3,7 @@
 import unittest
 from typing import Any, Optional
 
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, Whens
 
 
 ###############################################################################
@@ -15,11 +15,11 @@ class Card_Duplicate(Card.Card):
         self.desc = "When you gain a card costing up to 6, you may call this to gain a copy of that card"
         self.name = "Duplicate"
         self.cost = 4
-        self.when = ["special"]
+        self.when = Whens.SPECIAL
         self._duplicate: Optional[Card.Card] = None
 
     def hook_gain_card(
-        self, game: "Game.Game", player: "Player.Player", card: "Card.Card"
+        self, game: Game.Game, player: Player.Player, card: Card.Card
     ) -> dict[str, Any]:
         if not player.piles[Piles.RESERVE]["Duplicate"]:
             return {}

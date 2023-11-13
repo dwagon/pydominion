@@ -20,6 +20,7 @@ class Card_Ghost(Card.Card):
         self.name = "Ghost"
         self.purchasable = False
         self.insupply = False
+        self.numcards = 6
         self.cost = 4
         self._ghost_reserve = PlayArea.PlayArea([])
 
@@ -47,6 +48,7 @@ class Card_Ghost(Card.Card):
                 player.play_card(card, discard=False, cost_action=False)
             self._ghost_reserve.remove(card)
             player.secret_count -= 1
+            player.add_card(card, Piles.PLAYED)
 
 
 ###############################################################################
