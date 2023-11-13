@@ -17,7 +17,7 @@ class Card_Pixie(Card.Card):
         self.cards = 1
         self.heirloom = "Goat"
 
-    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         top_boon = game.receive_boon()
         if not top_boon:
             player.output("No boons left")

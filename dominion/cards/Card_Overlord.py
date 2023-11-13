@@ -17,7 +17,7 @@ class Card_Overlord(Card.Card):
         self.name = "Overlord"
         self.debtcost = 8
 
-    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         cards = [_ for _ in player.cards_under(5) if _.isAction() and not _.isCommand()]
         if opts := [(f"Play {_}", _) for _ in cards]:
             choice = player.plr_choose_options(

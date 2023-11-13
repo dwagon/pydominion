@@ -412,7 +412,7 @@ class Player:
         if card.location in self.piles:
             self.piles[card.location].remove(card)
         elif card.location == Piles.CARDPILE:
-            pass
+            self.game.card_piles[card.pile].remove()
         elif card.location == Piles.TRASH:
             self.game.trash_pile.remove(card)
         else:
