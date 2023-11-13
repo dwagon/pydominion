@@ -1673,7 +1673,7 @@ class Player:
 
     ###########################################################################
     def __str__(self) -> str:
-        return f"<Player {self.name}>"
+        return self.name
 
     ###########################################################################
     def buy_project(self, project: Project) -> bool:
