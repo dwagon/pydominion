@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Fortune_Hunter"""
 import unittest
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -21,9 +21,11 @@ class Card_FortuneHunter(Card.Card):
         """Look at the top 3 cards of your deck. You may play a Treasure from them."""
         pickup_cards = []
         for _ in range(3):
-            card = player.next_card()
-            if card is not None:
-                pickup_cards.append(card)
+            try:
+                card = player.next_card()
+            except NoCardException:
+                continue
+            pickup_cards.append(card)
         treasures = [_ for _ in pickup_cards if _.isTreasure()]
         to_play = None
         if treasures:
@@ -42,7 +44,7 @@ class Card_FortuneHunter(Card.Card):
 
 
 ###############################################################################
-class Test_FortuneHunter(unittest.TestCase):
+class TestFortuneHunter(unittest.TestCase):
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Fortune Hunter"])
         self.g.start_game()
