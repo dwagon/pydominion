@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Miller(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.TOWNSFOLK]
         self.base = Card.CardExpansion.ALLIES
@@ -16,21 +16,26 @@ class Card_Miller(Card.Card):
         self.desc = """+1 Action; Look at the top 4 cards of your deck. Put one into your hand and discard the rest."""
         self.pile = "Townsfolk"
 
-    def special(self, game, player):
-        cards = []
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        cards: list[Card.Card] = []
         for _ in range(4):
-            card = player.next_card()
+            try:
+                card = player.next_card()
+            except NoCardException:
+                break
             cards.append(card)
-        ch = player.card_sel(prompt="Pick a card to put into your hand", cardsrc=cards)
-        player.add_card(ch[0], Piles.HAND)
-        cards.remove(ch[0])
+        if ch := player.card_sel(
+            prompt="Pick a card to put into your hand", cardsrc=cards
+        ):
+            player.add_card(ch[0], Piles.HAND)
+            cards.remove(ch[0])
         for card in cards:
             player.add_card(card, "discard")
 
 
 ###############################################################################
-class Test_Miller(unittest.TestCase):
-    def setUp(self):
+class TestMiller(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Townsfolk"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -40,7 +45,7 @@ class Test_Miller(unittest.TestCase):
                 break
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a miller"""
         self.plr.piles[Piles.DECK].set("Silver", "Gold", "Estate", "Duchy")
         self.plr.test_input = ["Gold"]
