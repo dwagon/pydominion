@@ -1053,9 +1053,11 @@ class TestExile(unittest.TestCase):
 
     def test_exile_from_supply(self) -> None:
         """Test exiling a card from supply"""
+        ag_size = len(self.game.card_piles["Silver"])
         self.plr.piles[Piles.EXILE].empty()
         self.plr.exile_card_from_supply("Silver")
         self.assertIn("Silver", self.plr.piles[Piles.EXILE])
+        self.assertEqual(len(self.game.card_piles["Silver"]), ag_size - 1)
 
     def test_unexiling_card(self) -> None:
         """Test un-exiling a card"""

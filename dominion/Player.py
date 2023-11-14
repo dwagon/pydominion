@@ -1190,7 +1190,7 @@ class Player:
         if card is None:
             self.output(f"No more {card_name} in supply")
             return
-        self.move_card(card, Piles.EXILE)
+        self.add_card(card, Piles.EXILE)
 
     ###########################################################################
     def exile_card(self, card: Card) -> None:
