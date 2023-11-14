@@ -39,7 +39,7 @@ class Card_Gatekeeper(Card.Card):
         if (card.isAction() or card.isTreasure()) and card.name not in player.piles[
             Piles.EXILE
         ]:
-            player.output(f"{owner.name}'s Gatekeeper exiles your {card}")
+            player.output(f"{owner}'s Gatekeeper exiles your {card}")
             player.exile_card(card)
             return {"dontadd": True}
         return None

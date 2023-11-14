@@ -1118,26 +1118,36 @@ class TestAddCard(unittest.TestCase):
 class TestRemoveCard(unittest.TestCase):
     """Test remove_card()"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.game = Game.TestGame(numplayers=1)
         self.game.start_game()
         self.plr = self.game.player_list()[0]
 
-    def test_discard(self):
+    def test_discard(self) -> None:
         """Remove card from discard pile"""
         self.plr.piles[Piles.DISCARD].set("Gold")
         card = self.plr.piles[Piles.DISCARD][0]
+        assert card is not None
         card.location = Piles.DISCARD
         self.plr.remove_card(card)
         self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
 
-    def test_played(self):
+    def test_played(self) -> None:
         """Remove card from played pile"""
         self.plr.piles[Piles.PLAYED].set("Gold")
         card = self.plr.piles[Piles.PLAYED][0]
-        card.location = "played"
+        assert card is not None
+        card.location = Piles.PLAYED
         self.plr.remove_card(card)
         self.assertNotIn("Gold", self.plr.piles[Piles.PLAYED])
+
+    def test_cardpile(self) -> None:
+        """Remove card from card pile"""
+        pile_size = len(self.game.card_piles["Gold"])
+        card = self.game.card_piles["Gold"].get_top_card()
+        assert card is not None
+        self.plr.remove_card(card)
+        self.assertEqual(len(self.game.card_piles["Gold"]), pile_size - 1)
 
 
 ###############################################################################

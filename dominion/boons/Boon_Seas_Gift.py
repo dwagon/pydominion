@@ -1,14 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Boon
-from dominion import Card
-from dominion import Game, Piles
+from dominion import Boon, Card, Game, Piles
 
 
 ###############################################################################
 class Boon_Seas_Gift(Boon.Boon):
-    def __init__(self):
+    def __init__(self) -> None:
         Boon.Boon.__init__(self)
         self.cardtype = Card.CardType.BOON
         self.base = Card.CardExpansion.NOCTURNE
@@ -19,19 +17,20 @@ class Boon_Seas_Gift(Boon.Boon):
 
 
 ###############################################################################
-class Test_Seas_Gift(unittest.TestCase):
-    def setUp(self):
-        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"])
+class TestSeasGift(unittest.TestCase):
+    def setUp(self) -> None:
+        self.g = Game.TestGame(
+            quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         for b in self.g.boons:
             if b.name == "The Sea's Gift":
-                myboon = b
+                self.g.boons = [b]
                 break
-        self.g.boons = [myboon]
         self.card = self.g.get_card_from_pile("Bard")
 
-    def test_seas_gift(self):
+    def test_seas_gift(self) -> None:
         self.plr.piles[Piles.HAND].set("Copper")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
