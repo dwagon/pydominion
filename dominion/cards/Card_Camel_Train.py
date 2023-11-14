@@ -6,7 +6,7 @@ from dominion import Card, Game, Piles, Player, Phase
 
 
 ###############################################################################
-class Card_Camel_Train(Card.Card):
+class Card_CamelTrain(Card.Card):
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -47,6 +47,7 @@ class TestCamelTrain(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Camel Train")
+        assert self.card is not None
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self) -> None:

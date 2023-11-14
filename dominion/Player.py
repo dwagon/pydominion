@@ -1217,7 +1217,9 @@ class Player:
         self.had_cards = []
 
     ###########################################################################
-    def hook_discard_this_card(self, card: Card, source=None) -> None:
+    def hook_discard_this_card(
+        self, card: Card, source: Optional[PlayArea] = None
+    ) -> None:
         """A card has been discarded"""
         self.currcards.append(card)
         card.hook_discard_this_card(game=self.game, player=self, source=source)

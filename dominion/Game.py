@@ -658,16 +658,16 @@ class Game:  # pylint: disable=too-many-public-methods
         return 1
 
     ###########################################################################
-    def get_card_from_pile(self, pile: str, name: Optional[str] = None):
+    def get_card_from_pile(self, pile: str, name: str = "") -> Optional[Card]:
         """Get and return a card from pile (with name if specified)"""
         assert isinstance(pile, str), f"{pile=} {type(pile)=}"
         assert pile in self.card_piles, f"{pile=} not in {self.card_piles=}"
         return self.card_piles[pile].remove(name)
 
     ###########################################################################
-    def _use_ruins(self, card) -> None:
+    def _use_ruins(self, card: Card) -> None:
         """Use Ruins"""
-        self.output(f"Playing with Ruins as required by {card.name}")
+        self.output(f"Playing with Ruins as required by {card}")
         self._use_card_pile(None, "Ruins", True)
 
     ###########################################################################
