@@ -21,7 +21,7 @@ class Card_Coven(Card.Card):
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         for plr in player.attack_victims():
-            plr.exile_card("Curse")
+            plr.exile_card_from_supply("Curse")
             if game.card_piles["Curse"].is_empty():
                 num = plr.unexile("Curse")
                 plr.output(f"Unexiled {num} Curses from {player}'s Coven")

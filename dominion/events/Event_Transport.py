@@ -30,7 +30,7 @@ class Event_Transport(Event.Event):
         if piles := player.card_pile_sel(
             num=1, prompt="Exile an Action card from Supply", crdsrc=action_piles
         ):
-            player.exile_card(piles[0])
+            player.exile_card_from_supply(piles[0])
 
     def exile_to_deck(self, player: "Player.Player") -> None:
         """put an Action card you have in Exile onto your deck"""

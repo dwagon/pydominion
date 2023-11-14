@@ -1038,19 +1038,26 @@ class TestPlayerGainCard(unittest.TestCase):
 class TestExile(unittest.TestCase):
     """Test exile pile"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.game = Game.TestGame(numplayers=1)
         self.game.start_game()
         self.plr = self.game.player_list()[0]
 
-    def test_exile_card(self):
+    def test_exile_card(self) -> None:
         """Test exiling a card"""
         au_card = self.game.get_card_from_pile("Gold")
+        assert au_card is not None
         self.plr.piles[Piles.EXILE].empty()
         self.plr.exile_card(au_card)
         self.assertIn("Gold", self.plr.piles[Piles.EXILE])
 
-    def test_unexiling_card(self):
+    def test_exile_from_supply(self) -> None:
+        """Test exiling a card from supply"""
+        self.plr.piles[Piles.EXILE].empty()
+        self.plr.exile_card_from_supply("Silver")
+        self.assertIn("Silver", self.plr.piles[Piles.EXILE])
+
+    def test_unexiling_card(self) -> None:
         """Test un-exiling a card"""
         self.plr.piles[Piles.EXILE].set("Gold", "Gold", "Silver")
         self.plr.test_input = ["Unexile"]

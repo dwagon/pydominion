@@ -1184,14 +1184,17 @@ class Player:
         self.output("Spent a villager")
 
     ###########################################################################
-    def exile_card(self, card: str | Card) -> None:
-        """Send a card to the exile pile; if the card is a name then take it
-        from supply"""
-        if isinstance(card, str):
-            card = self.game.get_card_from_pile(card)
-            if card is None:
-                self.output(f"No more {card} in supply")
-                return
+    def exile_card_from_supply(self, card_name: str) -> None:
+        """Exile a card from supply"""
+        card = self.game.get_card_from_pile(card_name)
+        if card is None:
+            self.output(f"No more {card_name} in supply")
+            return
+        self.move_card(card, Piles.EXILE)
+
+    ###########################################################################
+    def exile_card(self, card: Card) -> None:
+        """Send a card to the exile pile"""
         self.move_card(card, Piles.EXILE)
 
     ###########################################################################

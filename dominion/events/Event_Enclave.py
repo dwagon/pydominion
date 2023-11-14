@@ -2,26 +2,26 @@
 """ http://wiki.dominionstrategy.com/index.php/Enclave """
 
 import unittest
-from dominion import Card, Game, Piles, Event
+from dominion import Card, Game, Piles, Event, Player
 
 
 ###############################################################################
 class Event_Enclave(Event.Event):
-    def __init__(self):
+    def __init__(self) -> None:
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.MENAGERIE
         self.desc = "Gain a Gold. Exile a Duchy from the Supply."
         self.name = "Enclave"
         self.cost = 8
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         player.gain_card("Gold")
-        player.exile_card("Duchy")
+        player.exile_card_from_supply("Duchy")
 
 
 ###############################################################################
-class Test_Enclave(unittest.TestCase):
-    def setUp(self):
+class TestEnclave(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1,
             events=["Enclave"],
@@ -30,7 +30,7 @@ class Test_Enclave(unittest.TestCase):
         self.plr = self.g.player_list()[0]
         self.card = self.g.events["Enclave"]
 
-    def test_Enclave(self):
+    def test_enclave(self) -> None:
         """Use Enclave"""
         self.plr.coins.add(8)
         self.plr.perform_event(self.card)

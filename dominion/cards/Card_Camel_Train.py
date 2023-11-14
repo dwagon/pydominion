@@ -32,10 +32,10 @@ class Card_Camel_Train(Card.Card):
             options.append((f"Exile {name}", name))
 
         if to_exile := player.plr_choose_options("Pick a card to Exile", *options):
-            player.exile_card(to_exile)
+            player.exile_card_from_supply(to_exile)
 
     def hook_gain_this_card(self, game: "Game.Game", player: "Player.Player") -> None:
-        player.exile_card("Gold")
+        player.exile_card_from_supply("Gold")
 
 
 ###############################################################################
