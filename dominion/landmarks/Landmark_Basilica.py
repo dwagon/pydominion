@@ -1,31 +1,31 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Basilica """
 import unittest
-from dominion import Card, Game, Landmark
+from dominion import Card, Game, Landmark, Player
 
 
 ###############################################################################
 class Landmark_Basilica(Landmark.Landmark):
-    def __init__(self):
+    def __init__(self) -> None:
         Landmark.Landmark.__init__(self)
         self.base = Card.CardExpansion.EMPIRES
         self.name = "Basilica"
+        self._vp = 0
 
-    def setup(self, game):
+    def setup(self, game: Game.Game) -> None:
         self._vp = 6 * game.numplayers
 
-    def dynamic_description(self, player):
+    def dynamic_description(self, player: Player.Player) -> str:
         if self._vp <= 0:
             return "No effect"
-        return (
-            "When you buy a card, if you have 2 Coin or more left, take 2VP from here. (%d VP left)"
-            % self._vp
-        )
+        return f"When you buy a card, if you have 2 Coin or more left, take 2VP from here. ({self._vp} VP left)"
 
-    def hook_buy_card(self, game, player, card):
+    def hook_buy_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> None:
         if self._vp <= 0:
             return
-        if player.coin >= 2:
+        if player.coins.get() >= 2:
             player.output("Gained 2 VP from Basilica")
             self._vp -= 2
             player.add_score("Basilica", 2)
@@ -33,14 +33,14 @@ class Landmark_Basilica(Landmark.Landmark):
 
 ###############################################################################
 class TestBasilica(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, landmarks=["Basilica"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_gain(self):
+    def test_gain(self) -> None:
         """Use Basilica"""
-        self.plr.coin = 4
+        self.plr.coins.set(4)
         self.plr.buy_card("Copper")
         self.assertEqual(self.plr.get_score_details()["Basilica"], 2)
 
