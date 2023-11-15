@@ -27,10 +27,10 @@ class Card_Sentinel(Card.Card):
             player.output("No suitable cards")
             return
         player.output("Trash up to 2 of these")
-        trashed = player.plr_trash_card(num=2, cardsrc=cards)
-        for card in cards:
-            if card not in trashed:
-                player.add_card(card, "topdeck")
+        if trashed := player.plr_trash_card(num=2, cardsrc=cards):
+            for card in cards:
+                if card not in trashed:
+                    player.add_card(card, "topdeck")
 
 
 ###############################################################################

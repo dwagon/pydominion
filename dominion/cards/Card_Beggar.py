@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Beggar(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
         self.base = Card.CardExpansion.DARKAGES
@@ -16,26 +16,28 @@ class Card_Beggar(Card.Card):
         self.name = "Beggar"
         self.cost = 2
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         player.output("Gaining 3 coppers")
         for _ in range(3):
             player.gain_card("Copper", Piles.HAND)
 
-    def hook_under_attack(self, game, player, attacker):
-        player.output("Gaining silvers as under attack from %s" % attacker.name)
+    def hook_under_attack(
+        self, game: Game.Game, player: Player.Player, attacker: Player.Player
+    ) -> None:
+        player.output(f"Gaining silvers as under attack from {attacker}")
         player.gain_card("Silver", "topdeck")
         player.gain_card("Silver")
 
 
 ###############################################################################
 class Test_Beggar(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Beggar", "Militia"])
         self.g.start_game()
         self.plr, self.attacker = self.g.player_list()
         self.card = self.g.get_card_from_pile("Beggar")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a beggar"""
         self.plr.piles[Piles.HAND].set()
         self.plr.add_card(self.card, Piles.HAND)
@@ -43,7 +45,7 @@ class Test_Beggar(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
         self.assertIn("Copper", self.plr.piles[Piles.HAND])
 
-    def test_attack(self):
+    def test_attack(self) -> None:
         """React to an attack as a beggar"""
         self.plr.piles[Piles.HAND].set("Beggar", "Estate", "Duchy", "Province", "Gold")
         self.plr.test_input = ["Estate", "Duchy", "Finish"]

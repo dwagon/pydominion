@@ -24,15 +24,7 @@ class Card_Fortress(Card.Card):
         self, game: Game.Game, player: Player.Player
     ) -> Optional[dict[str, Any]]:
         player.output("Putting Fortress back in hand")
-        if self in player.piles[Piles.PLAYED]:
-            player.add_card(self, Piles.HAND)
-            player.piles[Piles.PLAYED].remove(self)
-        if self in player.piles[Piles.HAND]:
-            player.add_card(self, Piles.HAND)
-            player.piles[Piles.HAND].remove(self)
-        if self in game.trash_pile:
-            player.add_card(self, Piles.HAND)
-            game.trash_pile.remove(self)
+        player.move_card(self, Piles.HAND)
         return {"trash": False}
 
 
@@ -53,7 +45,6 @@ class Test_Fortress(unittest.TestCase):
 
     def test_trash(self) -> None:
         self.plr.trash_card(self.card)
-        self.g.print_state()
         self.assertIn("Fortress", self.plr.piles[Piles.HAND])
         self.assertNotIn("Fortress", self.g.trash_pile)
 
