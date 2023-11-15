@@ -48,8 +48,9 @@ class TestCity(unittest.TestCase):
     def test_one_stack(self) -> None:
         """Play a city with one stacks empty"""
         while True:
-            c = self.g.get_card_from_pile("Moat")
-            if not c:
+            try:
+                self.g.get_card_from_pile("Moat")
+            except NoCardException:
                 break
         self.plr.play_card(self.city)
         self.assertEqual(self.plr.actions.get(), 2)
@@ -58,12 +59,14 @@ class TestCity(unittest.TestCase):
     def test_two_stack(self) -> None:
         """Play a city with two stacks empty"""
         while True:
-            c = self.g.get_card_from_pile("Moat")
-            if not c:
+            try:
+                self.g.get_card_from_pile("Cellar")
+            except NoCardException:
                 break
         while True:
-            c = self.g.get_card_from_pile("Cellar")
-            if not c:
+            try:
+                self.g.get_card_from_pile("Moat")
+            except NoCardException:
                 break
         self.plr.play_card(self.city)
         self.assertEqual(self.plr.actions.get(), 2)

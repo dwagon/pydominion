@@ -2,14 +2,16 @@
 """ http://wiki.dominionstrategy.com/index.php/Territory """
 
 import unittest
-from dominion import Game, Card, Piles
+from typing import Optional, Any
+
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Territory(Card.Card):
     """Territory"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
             Card.CardType.VICTORY,
@@ -22,15 +24,18 @@ class Card_Territory(Card.Card):
         self.desc = """Worth 1VP per differently named Victory card you have.
             When you gain this, gain a Gold per empty Supply pile."""
 
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> Optional[dict[str, Any]]:
         """When you gain this, gain a Gold per empty Supply pile."""
         empties = sum(
             1 for st, _ in game.get_card_piles() if game.card_piles[st].is_empty()
         )
         for _ in range(empties):
             player.gain_card("Gold")
+        return None
 
-    def special_score(self, game, player):
+    def special_score(self, game: Game.Game, player: Player.Player) -> int:
         """Worth 1VP per differently named Victory card you have."""
         vict = {_.name for _ in player.all_cards() if _.isVictory()}
         return len(vict)
@@ -40,12 +45,12 @@ class Card_Territory(Card.Card):
 class TestTerritory(unittest.TestCase):
     """Test Territory"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Clashes"], use_liaisons=True)
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a Territory"""
         while True:
             card = self.g.get_card_from_pile("Clashes")
@@ -53,9 +58,11 @@ class TestTerritory(unittest.TestCase):
                 break
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Estate", "Duchy")
         # Empty Duchy Pile
-        c = self.g.get_card_from_pile("Duchy")
-        while c:
-            c = self.g.get_card_from_pile("Duchy")
+        while True:
+            try:
+                self.g.get_card_from_pile("Duchy")
+            except NoCardException:
+                break
         self.plr.gain_card("Clashes")
         score = self.plr.get_score_details()
         self.assertEqual(score["Territory"], 3)  # Estate, Duchy, Territory

@@ -1186,8 +1186,9 @@ class Player:
     ###########################################################################
     def exile_card_from_supply(self, card_name: str) -> None:
         """Exile a card from supply"""
-        card = self.game.get_card_from_pile(card_name)
-        if card is None:
+        try:
+            card = self.game.get_card_from_pile(card_name)
+        except NoCardException:
             self.output(f"No more {card_name} in supply")
             return
         self.add_card(card, Piles.EXILE)
@@ -1458,7 +1459,10 @@ class Player:
                 pile = self.game.card_instances[card_name].pile
             if not pile:
                 pile = card_name
-            new_card = self.game.get_card_from_pile(pile)
+            try:
+                new_card = self.game.get_card_from_pile(pile)
+            except NoCardException:
+                new_card = None
 
         if new_card is None:
             self.output(f"No more {card_name}")
@@ -1477,8 +1481,9 @@ class Player:
         # Replace is to gain a different card
         if options.get("replace"):
             self.game.card_piles[new_card.pile].add(new_card)
-            new_card = self.game.get_card_from_pile(options["replace"])
-            if not new_card:
+            try:
+                new_card = self.game.get_card_from_pile(options["replace"])
+            except NoCardException:
                 self.output(f"No more {options['replace']}")
             else:
                 new_card.player = self
@@ -1559,8 +1564,9 @@ class Player:
         self.coins -= cost
         if card.overpay and self.coins.get():
             self.overpay(card)
-        new_card = self.gain_card(card.name)
-        if not new_card:
+        try:
+            new_card = self.gain_card(card.name)
+        except NoCardException:
             self.output("Couldn't buy card")
             return
         if self.game.card_piles[new_card.pile].embargo_level:

@@ -10,7 +10,7 @@ import sys
 import uuid
 from typing import List, Optional, Any, Callable
 
-from dominion import Piles, Keys
+from dominion import Piles, Keys, NoCardException
 from dominion.Boon import Boon, BoonPile
 from dominion.Loot import LootPile
 from dominion.BotPlayer import BotPlayer
@@ -658,11 +658,14 @@ class Game:  # pylint: disable=too-many-public-methods
         return 1
 
     ###########################################################################
-    def get_card_from_pile(self, pile: str, name: str = "") -> Optional[Card]:
+    def get_card_from_pile(self, pile: str, name: str = "") -> Card:
         """Get and return a card from pile (with name if specified)"""
         assert isinstance(pile, str), f"{pile=} {type(pile)=}"
         assert pile in self.card_piles, f"{pile=} not in {self.card_piles=}"
-        return self.card_piles[pile].remove(name)
+        card = self.card_piles[pile].remove(name)
+        if card is None:
+            raise NoCardException
+        return card
 
     ###########################################################################
     def _use_ruins(self, card: Card) -> None:

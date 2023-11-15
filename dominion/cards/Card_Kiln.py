@@ -2,14 +2,16 @@
 """ http://wiki.dominionstrategy.com/index.php/Kiln """
 
 import unittest
-from dominion import Card, Game, Piles
+from typing import Optional, Any
+
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Kiln(Card.Card):
     """Kiln"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.MENAGERIE
@@ -18,22 +20,27 @@ class Card_Kiln(Card.Card):
         self.coin = 2
         self.cost = 5
 
-    def hook_pre_play(self, game, player, card):  # pylint: disable=unused-argument
+    def hook_pre_play(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> Optional[dict[str, Any]]:  # pylint: disable=unused-argument
         """The next time you play a card this turn, you may first gain a copy of it."""
-        opt = player.plr_choose_options(
-            f"Gain a copy of {card.name}?",
+        if player.plr_choose_options(
+            f"Gain a copy of {card}?",
             ("Do nothing", False),
-            (f"Gain {card.name}", True),
-        )
-        if opt:
-            player.gain_card(card.name)
+            (f"Gain {card}", True),
+        ):
+            try:
+                player.gain_card(card.name)
+            except NoCardException:
+                pass
+        return None
 
 
 ###############################################################################
-class Test_Kiln(unittest.TestCase):
+class TestKiln(unittest.TestCase):
     """Test Kiln"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Kiln", "Village"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -42,7 +49,7 @@ class Test_Kiln(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.add_card(self.village, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Test play and gain card"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)

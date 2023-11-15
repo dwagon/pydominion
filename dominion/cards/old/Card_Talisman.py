@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -22,9 +22,12 @@ class Card_Talisman(Card.Card):
         """While this is in play, when you buy a card costing 4
         or less that is not a victory card, gain a copy of it."""
         if card.cost <= 4 and not card.isVictory():
-            if new_card := game.get_card_from_pile(card.pile):
-                player.output(f"Gained another {card} from Talisman")
-                player.add_card(new_card)
+            try:
+                if new_card := game.get_card_from_pile(card.pile):
+                    player.output(f"Gained another {card} from Talisman")
+                    player.add_card(new_card)
+            except NoCardException:
+                player.output(f"No more {card} in supply")
 
 
 ###############################################################################

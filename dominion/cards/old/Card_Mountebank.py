@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -20,19 +20,23 @@ class Card_Mountebank(Card.Card):
         for plr in player.attack_victims():
             for card in plr.piles[Piles.HAND]:
                 if card.name == "Curse":
-                    player.output(f"Player {plr.name} discarded a curse")
-                    plr.output(f"Discarded a Curse due to {player.name}'s Mountebank")
+                    player.output(f"Player {plr} discarded a curse")
+                    plr.output(f"Discarded a Curse due to {player}'s Mountebank")
                     plr.discard_card(card)
                     break
             else:
-                player.output(f"Player {plr.name} gained a curse and a copper")
-                plr.output(
-                    f"Gained a Curse and Copper due to {player.name}'s Mountebank"
-                )
-                if curse := game.get_card_from_pile("Curse"):
-                    plr.add_card(curse)
-                if copper := game.get_card_from_pile("Copper"):
-                    plr.add_card(copper)
+                player.output(f"Player {plr} gained a curse and a copper")
+                plr.output(f"Gained a Curse and Copper due to {player}'s Mountebank")
+                try:
+                    if curse := game.get_card_from_pile("Curse"):
+                        plr.add_card(curse)
+                except NoCardException:
+                    plr.output("No more Curses")
+                try:
+                    if copper := game.get_card_from_pile("Copper"):
+                        plr.add_card(copper)
+                except NoCardException:
+                    plr.output("No more Copper")
 
 
 ###############################################################################

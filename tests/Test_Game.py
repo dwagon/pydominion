@@ -3,7 +3,7 @@
 # pylint: disable=invalid-name, protected-access, fixme
 
 import unittest
-from dominion import Game
+from dominion import Game, NoCardException
 
 
 ###############################################################################
@@ -209,20 +209,21 @@ class TestAssignTrait(unittest.TestCase):
 class TestGetCardFromPile(unittest.TestCase):
     """Test get_card_from_pile()"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
 
-    def test_get_card(self):
+    def test_get_card(self) -> None:
         pile_size = len(self.g.card_piles["Copper"])
         card = self.g.get_card_from_pile("Copper")
         self.assertEqual(card.name, "Copper")
         self.assertEqual(len(self.g.card_piles["Copper"]), pile_size - 1)
 
-    def test_get_wrong_card(self):
+    def test_get_wrong_card(self) -> None:
         """Test asking for a wrong card"""
         pile_size = len(self.g.card_piles["Copper"])
-        self.assertIsNone(self.g.get_card_from_pile("Copper", "Gold"))
+        with self.assertRaises(NoCardException):
+            self.g.get_card_from_pile("Copper", "Gold")
         self.assertEqual(len(self.g.card_piles["Copper"]), pile_size)
 
 

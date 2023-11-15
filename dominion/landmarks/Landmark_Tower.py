@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Tower"""
 import unittest
-from dominion import Card, Game, Piles, Landmark
+from dominion import Card, Game, Piles, Landmark, Player, NoCardException
 
 
 ###############################################################################
 class Landmark_Tower(Landmark.Landmark):
     """Tower"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Landmark.Landmark.__init__(self)
         self.base = Card.CardExpansion.EMPIRES
         self.desc = (
@@ -16,7 +16,7 @@ class Landmark_Tower(Landmark.Landmark):
         )
         self.name = "Tower"
 
-    def hook_end_of_game(self, game, player):
+    def hook_end_of_game(self, game: Game.Game, player: Player.Player) -> None:
         player.add_score("Tower", 0)
         for card in player.all_cards():
             if card.isVictory():
@@ -29,22 +29,23 @@ class Landmark_Tower(Landmark.Landmark):
 class TestTower(unittest.TestCase):
     """Test Tower"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, landmarks=["Tower"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_none(self):
+    def test_none(self) -> None:
         """Use Tower"""
         self.plr.piles[Piles.HAND].set("Moat", "Moat")
         self.plr.game_over()
         self.assertEqual(self.plr.get_score_details()["Tower"], 0)
 
-    def test_one(self):
+    def test_one(self) -> None:
         self.plr.piles[Piles.HAND].set("Moat", "Moat")
         while True:
-            c = self.g.get_card_from_pile("Moat")
-            if not c:
+            try:
+                self.g.get_card_from_pile("Moat")
+            except NoCardException:
                 break
         self.plr.game_over()
         self.assertEqual(self.plr.get_score_details()["Tower"], 2)
