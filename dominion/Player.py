@@ -1436,6 +1436,22 @@ class Player:
         return max(0, cost)
 
     ###########################################################################
+    def _gain_card_from_name(self, card_name: str) -> Optional[Card]:
+        """Return the card if a name was specified"""
+        if card_name == "Loot":
+            pile = "Loot"
+        else:
+            pile = self.game.card_instances[card_name].pile
+        if not pile:
+            pile = card_name
+        try:
+            new_card = self.game.get_card_from_pile(pile)
+        except NoCardException:
+            self.output(f"No more {card_name}")
+            return None
+        return new_card
+
+    ###########################################################################
     def gain_card(
         self,
         card_name: Optional[str] = None,
@@ -1453,26 +1469,16 @@ class Player:
         options: dict[str, Any] = {}
         if new_card is None:
             assert card_name is not None
-            if card_name == "Loot":
-                pile = "Loot"
-            else:
-                pile = self.game.card_instances[card_name].pile
-            if not pile:
-                pile = card_name
-            try:
-                new_card = self.game.get_card_from_pile(pile)
-            except NoCardException:
-                new_card = None
-
+            new_card = self._gain_card_from_name(card_name)
         if new_card is None:
-            self.output(f"No more {card_name}")
             return None
+
         self.output(f"Gained a {new_card}")
         if callhook:
-            if rc := self._hook_gain_card(new_card):
-                options |= rc
-            if rc := new_card.hook_gain_this_card(game=self.game, player=self):
-                options |= rc
+            if rc_1 := self._hook_gain_card(new_card):
+                options |= rc_1
+            if rc_2 := new_card.hook_gain_this_card(game=self.game, player=self):
+                options |= rc_2
 
         # check for un-exiling
         if new_card.name in self.piles[Piles.EXILE]:
@@ -1678,7 +1684,7 @@ class Player:
             self.output("Gain a prize")
             if option := self.plr_choose_options("Gain a Prize", *options):
                 prize = self.game.get_card_from_pile(option)
-                self.add_card(prize)
+                self.add_card(card=prize)
         else:
             self.output("No prizes available")
 
@@ -1735,7 +1741,7 @@ class Player:
 
     ###########################################################################
     @classmethod
-    def select_by_type(cls, card: Card, types) -> bool:
+    def select_by_type(cls, card: Card, types: dict[CardType, bool]) -> bool:
         assert isinstance(card, Card), f"select_by_type {card=} {type(card)=}"
         if card.isAction() and not types[CardType.ACTION]:
             return False
@@ -1824,9 +1830,7 @@ class Player:
     ###########################################################################
     def count_cards(self) -> int:
         """How many cards does the player have"""
-        count: dict[str, int] = {}
-        for name, stack in self.piles.items():
-            count[name] = len(stack)
+        count: dict[str, int] = {name: len(stack) for name, stack in self.piles.items()}
         total = sum(count.values())
         total += self.secret_count
         return total
@@ -1890,17 +1894,20 @@ class Player:
 
     ###########################################################################
     def plr_trash_card(
-        self, num=1, anynum=False, cardsrc=Piles.HAND, **kwargs
+        self,
+        num: int = 1,
+        anynum: bool = False,
+        cardsrc: Piles = Piles.HAND,
+        **kwargs: Any,
     ) -> Optional[list[Card]]:
         """Ask player to trash num cards"""
         if "prompt" not in kwargs:
             kwargs["prompt"] = "Trash any cards" if anynum else f"Trash {num} cards"
         if isinstance(cardsrc, str):
             for pname, pile in self.piles.items():
-                if pname.lower() == cardsrc.lower():
-                    if len(pile) == 0:
-                        self.output(f"No cards to trash from {cardsrc}")
-                        return None
+                if pname.lower() == cardsrc.lower() and len(pile) == 0:
+                    self.output(f"No cards to trash from {cardsrc}")
+                    return None
         if isinstance(cardsrc, PlayArea) and len(cardsrc) == 0:
             self.output("No cards to trash")
             return None
@@ -1921,10 +1928,10 @@ class Player:
     def plr_gain_card(
         self,
         cost: int,
-        modifier="less",
-        recipient=None,
-        destination=Piles.DISCARD,
-        **kwargs,
+        modifier: str = "less",
+        recipient: Optional[Player] = None,
+        destination: Piles = Piles.DISCARD,
+        **kwargs: Any,
     ) -> Optional[Card]:
         """Gain a card up to cost coin
         if recipient defined then that player gets the card
@@ -2034,8 +2041,7 @@ class Player:
             self.artifacts.append(artifact_card)
 
     ###########################################################################
-    def assign_project(self, project: Project) -> bool:
-        assert isinstance(project, str)
+    def assign_project(self, project: str) -> bool:
         project_card = self.game.projects[project]
         if len(self.projects) == 2:
             self.output("Can't have more than two projects")
