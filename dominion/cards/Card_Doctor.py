@@ -69,14 +69,14 @@ class Card_Doctor(Card.Card):
             options.append(
                 {
                     "selector": "0",
-                    "print": "Put {card.name} back on top",
+                    "print": f"Put {card} back on top",
                     "action": "put back",
                 }
             )
             options.append(
                 {
                     "selector": "1",
-                    "print": "Trash {card.name}",
+                    "print": f"Trash {card}",
                     "action": "trash",
                 }
             )
