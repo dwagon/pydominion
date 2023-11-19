@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Sack_of_Loot"""
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
 class Card_SackOfLoot(Card.Card):
     """Sack Of Loot"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.PLUNDER
@@ -19,7 +19,7 @@ class Card_SackOfLoot(Card.Card):
         self.coin = 1
         self.buys = 1
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         player.gain_card("Loot")
 
 
@@ -27,13 +27,13 @@ class Card_SackOfLoot(Card.Card):
 class Test_SackOfLoot(unittest.TestCase):
     """Test Sack Of Loot"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Sack Of Loot"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Sack Of Loot")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play card"""
         self.plr.add_card(self.card, Piles.HAND)
         coins = self.plr.coins.get()

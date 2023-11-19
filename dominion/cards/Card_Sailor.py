@@ -2,14 +2,16 @@
 """ http://wiki.dominionstrategy.com/index.php/Sailor"""
 
 import unittest
-from dominion import Card, Game, Piles
+from typing import Optional, Any
+
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
 class Card_Sailor(Card.Card):
     """Sailor"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
         self.base = Card.CardExpansion.SEASIDE
@@ -19,41 +21,45 @@ class Card_Sailor(Card.Card):
         self.name = "Sailor"
         self.cost = 4
 
-    def hook_gain_card(self, game, player, card):
+    def hook_gain_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> Optional[dict[str, Any]]:
         """Once this turn, when you gain a Duration card, you may play it."""
         if not card.isDuration():
             return {}
         if player.do_once("Sailor"):
-            to_play = player.plr_choose_options(
-                f"Sailor lets you play {card.name} now",
+            if to_play := player.plr_choose_options(
+                f"Sailor lets you play {card} now",
                 ("Don't play", False),
                 ("Play now", True),
-            )
-            if to_play:
+            ):
                 player.move_card(card, Piles.HAND)
-                player.output(f"Playing {card.name} from Sailor effect")
+                player.output(f"Playing {card} from Sailor effect")
                 player.play_card(card, cost_action=False)
                 return {"dontadd": True}
         return {}
 
-    def duration(self, game, player):
-        """At the start of your next turn, +$2 and you may trash a card from your hand."""
+    def duration(
+        self, game: Game.Game, player: Player.Player
+    ) -> Optional[dict[str, Any]]:
+        """At the start of your next turn, +$2; and you may trash a card from your hand."""
         player.coins.add(2)
         player.plr_trash_card(num=1)
+        return None
 
 
 ###############################################################################
 class Test_Sailor(unittest.TestCase):
     """Test Sailor"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Sailor", "Guardian"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Sailor")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_playcard(self):
+    def test_play_card(self) -> None:
         """Play a sailor"""
         self.plr.play_card(self.card)
         self.plr.test_input = ["Play now"]
@@ -71,7 +77,7 @@ class Test_Sailor(unittest.TestCase):
         self.assertIn("Guardian", self.plr.piles[Piles.PLAYED])
         self.assertIn("Sailor", self.plr.piles[Piles.PLAYED])
 
-    def test_play_no_duration(self):
+    def test_play_no_duration(self) -> None:
         """Play a sailor but don't gain a duration card"""
         self.plr.play_card(self.card)
         self.plr.test_input = ["Play now"]
