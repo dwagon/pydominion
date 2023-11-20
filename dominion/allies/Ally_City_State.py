@@ -4,7 +4,7 @@
 import unittest
 from typing import Optional, Any
 
-from dominion import Card, Game, Piles, Ally, Player
+from dominion import Card, Game, Piles, Ally, Player, OptionKeys
 
 
 ###############################################################################
@@ -17,7 +17,7 @@ class Ally_CityState(Ally.Ally):
 
     def hook_gain_card(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> Optional[dict[str, Any]]:
+    ) -> Optional[dict[OptionKeys, Any]]:
         if not card.isAction():
             return None
         if player.favors.get() < 2:

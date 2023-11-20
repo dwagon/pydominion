@@ -2,22 +2,26 @@
 """ http://wiki.dominionstrategy.com/index.php/Architects%27_Guild"""
 
 import unittest
-from dominion import Card, Game, Piles, Ally
+from typing import Optional, Any
+
+from dominion import Card, Game, Piles, Player, Ally, OptionKeys
 
 
 ###############################################################################
 class Ally_Architects_Guild(Ally.Ally):
     """Architects Guild"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
         self.desc = "When you gain a card, you may spend 2 Favors to gain a cheaper non-Victory card."
         self.name = "Architects' Guild"
 
-    def hook_gain_card(self, game, player, card):
+    def hook_gain_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> Optional[dict[OptionKeys, Any]]:
         if player.favors.get() < 2:
-            return
+            return None
         player.favors.add(-2)  # To stop re-triggering before favors are spent
         crd = player.plr_gain_card(
             cost=card.cost - 1,
@@ -26,20 +30,21 @@ class Ally_Architects_Guild(Ally.Ally):
         )
         if not crd:
             player.favors.add(2)
+        return None
 
 
 ###############################################################################
 class Test_Architects_Guild(unittest.TestCase):
     """Test Architects Guild"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1, allies="Architects Guild", initcards=["Underling"]
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_play_card(self):
+    def test_play_card(self) -> None:
         """Play and gain a card"""
         self.plr.favors.set(2)
         self.plr.test_input = ["Get Silver -"]
