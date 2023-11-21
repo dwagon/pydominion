@@ -2,37 +2,39 @@
 """ http://wiki.dominionstrategy.com/index.php/Travelling_Fair """
 
 import unittest
-from dominion import Card, Game, Piles, Event
+from dominion import Card, Game, Piles, Event, OptionKeys
 
 
 ###############################################################################
 class Event_TravellingFair(Event.Event):
-    def __init__(self):
+    def __init__(self) -> None:
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.ADVENTURE
-        self.desc = "+2 Buys; When you gain a card this turn, you may put it onto your deck."
+        self.desc = (
+            "+2 Buys; When you gain a card this turn, you may put it onto your deck."
+        )
         self.name = "Travelling Fair"
         self.cost = 2
         self.buys = 2
 
     def hook_gain_card(self, game, player, card):
         choice = player.plr_choose_options(
-            "Do you want to put {} on the top of your deck?".format(card.name),
-            ("Put {} on deck".format(card.name), "topdeck"),
-            ("Discard {}".format(card.name), "discard"),
+            f"Do you want to put {card} on the top of your deck?",
+            (f"Put {card} on deck", "topdeck"),
+            (f"Discard {card}", "discard"),
         )
-        return {"destination": choice}
+        return {OptionKeys.DESTINATION: choice}
 
 
 ###############################################################################
-class Test_TravellingFair(unittest.TestCase):
-    def setUp(self):
+class TestTravellingFair(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, events=["Travelling Fair"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.events["Travelling Fair"]
 
-    def test_play_discard(self):
+    def test_play_discard(self) -> None:
         """Perform a Travelling Fair"""
         self.plr.coins.add(2)
         self.plr.perform_event(self.card)
@@ -42,7 +44,7 @@ class Test_TravellingFair(unittest.TestCase):
         self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Gold"])
         self.assertNotIn("Gold", self.plr.piles[Piles.DECK])
 
-    def test_play_deck(self):
+    def test_play_deck(self) -> None:
         """Perform a Travelling Fair and deck the card"""
         self.plr.coins.add(2)
         self.plr.perform_event(self.card)

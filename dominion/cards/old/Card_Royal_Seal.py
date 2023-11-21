@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, OptionKeys
 
 
 ###############################################################################
-class Card_Royalseal(Card.Card):
+class Card_RoyalSeal(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
@@ -17,22 +17,21 @@ class Card_Royalseal(Card.Card):
         self.coin = 2
 
     def hook_gain_card(self, game, player, card):
-        """While this is in play, when you gain a card, you may
-        put that card on top of your deck"""
+        """While this is in play, when you gain a card, you may put that card on top of your deck"""
         mod = {}
         deck = player.plr_choose_options(
-            "Where to put %s?" % card.name,
-            ("Put %s on discard" % card.name, False),
-            ("Put %s on top of deck" % card.name, True),
+            f"Where to put {card}?",
+            (f"Put {card} on discard", False),
+            (f"Put {card} on top of deck", True),
         )
         if deck:
-            player.output("Putting %s on deck due to Royal Seal" % card.name)
-            mod["destination"] = "topdeck"
+            player.output(f"Putting {card} on deck due to Royal Seal")
+            mod[OptionKeys.DESTINATION] = "topdeck"
         return mod
 
 
 ###############################################################################
-class Test_Royalseal(unittest.TestCase):
+class TestRoyalSeal(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Royal Seal"])
         self.g.start_game()

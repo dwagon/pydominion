@@ -195,13 +195,11 @@ class Player:
     def replace_card(self, src: Card, dst: str, **kwargs: Any) -> None:
         """Replace the {src} card with the {dst} card"""
         # New card goes into hand as it is about to be discarded
-        destination = kwargs.get(OptionKeys.DESTINATION, Piles.DISCARD)
+        destination = kwargs.get("destination", Piles.DISCARD)
         assert isinstance(src, Card), f"replace_card {src=} {type(src)=}"
         assert isinstance(dst, str), f"replace_card {dst=} {type(dst)=}"
 
-        if newcard := self.gain_card(
-            card_name=dst, destination=destination, callhook=False
-        ):
+        if self.gain_card(card_name=dst, destination=destination, callhook=False):
             card_pile = self.game.card_piles[src.name]
             card_pile.add(src)
             self.piles[Piles.PLAYED].remove(src)
