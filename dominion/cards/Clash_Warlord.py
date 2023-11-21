@@ -3,14 +3,16 @@
 
 import unittest
 from collections import Counter
-from dominion import Game, Card, Piles
+from typing import Optional, Any
+
+from dominion import Game, Card, Piles, OptionKeys, Player
 
 
 ###############################################################################
 class Card_Warlord(Card.Card):
     """Warlord"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
             Card.CardType.ACTION,
@@ -28,23 +30,27 @@ class Card_Warlord(Card.Card):
             they have 2 or more copies of in play."""
 
     def hook_all_players_pre_play(
-        self, game, player, owner, card
-    ):  # pylint: disable=unused-argument
+        self,
+        game: Game.Game,
+        player: Player.Player,
+        owner: Player.Player,
+        card: Card.Card,
+    ) -> Optional[dict[OptionKeys, Any]]:
         """Until then, other players can't play an Action from their hand that
         they have 2 or more copies of in play."""
         if not card.isAction():
             return {}
         counter = Counter()
         for crd in player.piles[Piles.PLAYED]:
-            counter.update({crd.name: 1})
+            counter += Counter([crd.name])
         if counter[card.name] >= 2:
             player.output(
-                f"{owner.name}'s Warlord prevents you playing {card.name} more than twice"
+                f"{owner}'s Warlord prevents you playing {card} more than twice"
             )
-            return {"skip_card": True}
+            return {OptionKeys.SKIP_CARD: True}
         return {}
 
-    def duration(self, game, player):
+    def duration(self, game: Game.Game, player: Player.Player) -> None:
         """At the start of your next turn, +2 Cards."""
         player.pickup_cards(num=2)
 
@@ -53,31 +59,25 @@ class Card_Warlord(Card.Card):
 class TestWarlord(unittest.TestCase):
     """Test Warlord"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=2, initcards=["Clashes", "Militia"], use_liaisons=True
         )
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play Card"""
-        while True:
-            card = self.g.get_card_from_pile("Clashes")
-            if card.name == "Warlord":
-                break
+        card = self.g.get_card_from_pile("Clashes", "Warlord")
         self.plr.add_card(card, Piles.HAND)
         self.plr.play_card(card)
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
 
-    def test_others_playing(self):
+    def test_others_playing(self) -> None:
         """Other players playing actions"""
-        while True:
-            card = self.g.get_card_from_pile("Clashes")
-            if card.name == "Warlord":
-                break
+        card = self.g.get_card_from_pile("Clashes", "Warlord")
         self.plr.add_card(card, Piles.HAND)
         self.plr.play_card(card)
         mil = self.g.get_card_from_pile("Militia")

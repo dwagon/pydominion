@@ -4,7 +4,7 @@
 import unittest
 from typing import Optional, Any
 
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -26,7 +26,7 @@ Until then, the first Treasure each other player plays each turn does nothing.""
 
     def duration(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[str, str]]:
+    ) -> Optional[dict[OptionKeys, str]]:
         """discard this from play and +3 Cards."""
         player.pickup_cards(3)
         return None
@@ -37,17 +37,17 @@ Until then, the first Treasure each other player plays each turn does nothing.""
         player: Player.Player,
         owner: Player.Player,
         card: Card.Card,
-    ) -> Optional[dict[str, Any]]:
+    ) -> Optional[dict[OptionKeys, Any]]:
         """Until then the first Treasure each other player plays each turn does nothing."""
         if not card.isTreasure():
             return None
         treas_played = any(True for _ in player.piles[Piles.PLAYED] if _.isTreasure())
         if treas_played:
             return None
-        player.output(f"{owner.name}'s Highwayman cancel your {card}")
-        owner.output(f"{player.name}'s {card} was cancelled")
+        player.output(f"{owner}'s Highwayman cancel your {card}")
+        owner.output(f"{player}'s {card} was cancelled")
 
-        return {"skip_card": True}
+        return {OptionKeys.SKIP_CARD: True}
 
 
 ###############################################################################

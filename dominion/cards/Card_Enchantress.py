@@ -4,7 +4,7 @@ import contextlib
 import unittest
 from typing import Optional, Any
 
-from dominion import Game, Card, Piles, NoCardException, Player
+from dominion import Game, Card, Piles, NoCardException, Player, OptionKeys
 
 
 ###############################################################################
@@ -32,13 +32,13 @@ class Card_Enchantress(Card.Card):
         player: Player.Player,
         owner: Player.Player,
         card: Card.Card,
-    ) -> Optional[dict[str, Any]]:
+    ) -> Optional[dict[OptionKeys, Any]]:
         if len(player.piles[Piles.PLAYED]) == 0 and card.isAction():
             player.output(f"{owner.name}'s Enchantress gazump'd your {card}")
             player.add_actions(1)
             with contextlib.suppress(NoCardException):
                 player.pickup_card()
-            return {"skip_card": True}
+            return {OptionKeys.SKIP_CARD: True}
         return None
 
 

@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Trader"""
 import unittest
-from dominion import Card, Game, Piles
+from typing import Optional, Any
+
+from dominion import Card, Game, Piles, OptionKeys, Player
 
 
 ###############################################################################
 class Card_Trader(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
         self.base = Card.CardExpansion.HINTERLANDS
@@ -15,37 +17,37 @@ class Card_Trader(Card.Card):
         self.name = "Trader"
         self.cost = 4
 
-    def special(self, game, player):
-        card = player.plr_trash_card(
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        if card := player.plr_trash_card(
             prompt="Trash a card from your hand. Gain a number of Silvers equal to its cost in coins."
-        )
-        if card:
+        ):
             player.output(f"Gaining {card[0].cost} Silvers")
             for _ in range(card[0].cost):
                 player.gain_card("Silver")
 
-    def hook_gain_card(self, game, player, card):
+    def hook_gain_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> Optional[dict[OptionKeys, Any]]:
         if card.name == "Silver":
             return {}
-        silver = player.plr_choose_options(
-            f"From your Trader gain {card.name} or gain a Silver instead?",
-            (f"Still gain {card.name}", False),
+        if silver := player.plr_choose_options(
+            f"From your Trader gain {card} or gain a Silver instead?",
+            (f"Still gain {card}", False),
             ("Instead gain Silver", True),
-        )
-        if silver:
-            return {"replace": "Silver", "destination": "discard"}
+        ):
+            return {OptionKeys.REPLACE: "Silver", OptionKeys.DESTINATION: "discard"}
         return {}
 
 
 ###############################################################################
 class TestTrader(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Trader"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Trader")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a trader - trashing an estate"""
         tsize = self.g.trash_pile.size()
         self.plr.piles[Piles.HAND].set("Estate")
@@ -58,7 +60,7 @@ class TestTrader(unittest.TestCase):
         self.assertEqual(self.g.trash_pile.size(), tsize + 1)
         self.assertIn("Estate", self.g.trash_pile)
 
-    def test_gain(self):
+    def test_gain(self) -> None:
         self.plr.test_input = ["Instead"]
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.coins.set(6)

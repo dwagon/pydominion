@@ -4,7 +4,7 @@
 import unittest
 from typing import Optional, Any
 
-from dominion import Game, Card, Piles, Player, Phase, NoCardException
+from dominion import Game, Card, Piles, Player, Phase, NoCardException, OptionKeys
 
 
 ###############################################################################
@@ -38,7 +38,7 @@ class Card_Siren(Card.Card):
 
     def duration(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[str, str]]:
+    ) -> Optional[dict[OptionKeys, str]]:
         """At the start of your next turn, draw until you have 8 cards in hand."""
         while player.piles[Piles.HAND].size() < 8:
             try:
@@ -49,7 +49,7 @@ class Card_Siren(Card.Card):
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[str, Any]]:
+    ) -> Optional[dict[OptionKeys, Any]]:
         """When you gain this, trash it unless you trash an Action from your hand."""
         if actions := [_ for _ in player.piles[Piles.HAND] if _.isAction()]:
             if player.plr_trash_card(
@@ -59,7 +59,7 @@ class Card_Siren(Card.Card):
             ):
                 return None
         player.output("Trashing Siren as no Action card was trashed")
-        return {"trash": True}
+        return {OptionKeys.TRASH: True}
 
 
 ###############################################################################
