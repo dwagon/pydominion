@@ -49,7 +49,7 @@ class Player:
         self.had_cards: list[Card] = []
         self.messages: list[str] = []
         self.hooks: dict[str, Any] = {}
-        self.piles = {
+        self.piles: dict[Piles, PlayArea] = {
             Piles.HAND: PlayArea(Piles.HAND, game=self.game),
             Piles.EXILE: PlayArea(Piles.EXILE, game=self.game),
             Piles.DURATION: PlayArea(Piles.DURATION, game=self.game),

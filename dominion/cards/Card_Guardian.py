@@ -24,7 +24,7 @@ class Card_Guardian(Card.Card):
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[str, Any]]:
+    ) -> Optional[dict[OptionKeys, Any]]:
         return {OptionKeys.DESTINATION: Piles.HAND}
 
 

@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Raider"""
 import unittest
-from dominion import Game, Card, Piles, Phase
+from dominion import Game, Card, Piles, Phase, Player
 
 
 ###############################################################################
 class Card_Raider(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
             Card.CardType.NIGHT,
@@ -20,37 +20,37 @@ class Card_Raider(Card.Card):
         self.name = "Raider"
         self.cost = 6
 
-    def duration(self, game, player):
+    def duration(self, game: Game.Game, player: Player.Player) -> None:
         player.coins.add(3)
 
-    def night(self, game, player):
+    def night(self, game: Game.Game, player: Player.Player) -> None:
         inplay = {_.name for _ in player.piles[Piles.PLAYED]}
-        for pl in player.attack_victims():
-            if pl.piles[Piles.HAND].size() >= 5:
-                player.output(f"Raiding {pl.name}")
-                todiscard = []
-                for c in pl.piles[Piles.HAND]:
-                    if c.name in inplay:
-                        pl.output(f"{player.name}'s Raider discarded your {c.name}")
-                        player.output(f"Raider discarded {pl.name}'s {c.name}")
-                        todiscard.append(c)
-                if not todiscard:
-                    for card in pl.piles[Piles.HAND]:
-                        pl.reveal_card(card)
-                for c in todiscard[:]:
-                    pl.discard_card(c)
+        for victim in player.attack_victims():
+            if victim.piles[Piles.HAND].size() >= 5:
+                player.output(f"Raiding {victim}")
+                to_discard = []
+                for card in victim.piles[Piles.HAND]:
+                    if card.name in inplay:
+                        victim.output(f"{player.name}'s Raider discarded your {card}")
+                        player.output(f"Raider discarded {victim}'s {card}")
+                        to_discard.append(card)
+                if not to_discard:
+                    for card in victim.piles[Piles.HAND]:
+                        victim.reveal_card(card)
+                for card in to_discard[:]:
+                    victim.discard_card(card)
 
 
 ###############################################################################
 class TestRaider(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Raider"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g.get_card_from_pile("Raider")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a Raider"""
         self.plr.phase = Phase.NIGHT
         self.plr.piles[Piles.PLAYED].set("Gold", "Silver")
