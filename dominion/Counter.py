@@ -6,7 +6,7 @@ from typing import Any
 class Counter:
     """Counter - wrapped integer"""
 
-    def __init__(self, name: str, value: int = 0):
+    def __init__(self, name: str, value: int = 0) -> None:
         self._name = name
         self._value = value
 

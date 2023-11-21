@@ -9,7 +9,7 @@ from dominion import Card, Game, Piles
 class Card_Teacher(Card.Card):
     """Teacher"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.RESERVE]
         self.base = Card.CardExpansion.ADVENTURE
@@ -21,7 +21,7 @@ class Card_Teacher(Card.Card):
         self.cost = 6
         self.numcards = 5
 
-    def special(self, game, player):
+    def special(self, game, player) -> None:
         """At the start of your turn, you may call this, to move your +1 Card,
         +1 Action, +1 Buy or +1 Coin token to an Action Supply pile you have
         no tokens on"""
@@ -43,7 +43,7 @@ class Card_Teacher(Card.Card):
 class TestTeacher(unittest.TestCase):
     """Test Teacher"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         init_cards = [
             "Page",
             "Cellar",
@@ -61,7 +61,7 @@ class TestTeacher(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Teacher")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play the card"""
         self.plr.test_input = [
             "Select Cellar",

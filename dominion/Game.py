@@ -605,7 +605,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self._loaded_prizes = True
 
     ###########################################################################
-    def getPrizes(self):
+    def getPrizes(self) -> list[str]:
         """TODO"""
         return list(self.card_mapping["PrizeCard"].keys())
 

@@ -2,12 +2,11 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
 class Card_Fugitive(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.TRAVELLER]
         self.base = Card.CardExpansion.ADVENTURE
@@ -19,7 +18,7 @@ class Card_Fugitive(Card.Card):
         self.cost = 4
         self.numcards = 5
 
-    def special(self, game, player):
+    def special(self, game, player) -> None:
         player.plr_discard_cards(num=1)
 
     def hook_discard_this_card(self, game, player, source):
@@ -28,14 +27,14 @@ class Card_Fugitive(Card.Card):
 
 
 ###############################################################################
-class Test_Fugitive(unittest.TestCase):
-    def setUp(self):
+class TestFugitive(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Page"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Fugitive")
 
-    def test_fugitive(self):
+    def test_fugitive(self) -> None:
         """Play a fugitive"""
         self.plr.piles[Piles.HAND].set("Province")
         self.plr.test_input = ["province"]

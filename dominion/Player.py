@@ -178,17 +178,14 @@ class Player:
         assert isinstance(dst, str)
 
         if src not in self.piles[Piles.PLAYED]:
-            self.output(f"Not activating {src.name} traveller as not played")
+            self.output(f"Not activating {src} traveller as not played")
             return
 
-        choice = self.plr_choose_options(
+        if self.plr_choose_options(
             "Replace Traveller",
-            (f"Keep {src.name}", "keep"),
-            (f"Replace with a {dst}?", "replace"),
-        )
-        if choice == "keep":
-            return
-        if choice == "replace":
+            (f"Keep {src}", False),
+            (f"Replace with a {dst}?", True),
+        ):
             self.replace_card(src, dst, destination=Piles.HAND)
 
     ###########################################################################
@@ -1687,8 +1684,8 @@ class Player:
         if options:
             self.output("Gain a prize")
             if option := self.plr_choose_options("Gain a Prize", *options):
-                prize = self.game.get_card_from_pile(option)
-                self.add_card(card=prize)
+                prize_card = self.game.get_card_from_pile(option)
+                self.add_card(card=prize_card)
         else:
             self.output("No prizes available")
 

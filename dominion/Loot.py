@@ -17,7 +17,7 @@ class LootPile(CardPile.CardPile):
             for _ in range(2):
                 card = loot_card()
                 card.location = Piles.CARDPILE
-                self.cards.append(loot_card())
+                self.cards.append(card)
         random.shuffle(self.cards)
 
 

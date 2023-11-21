@@ -2,12 +2,11 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
-class Card_Treasurehunter(Card.Card):
-    def __init__(self):
+class Card_TreasureHunter(Card.Card):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.TRAVELLER]
         self.base = Card.CardExpansion.ADVENTURE
@@ -20,11 +19,14 @@ class Card_Treasurehunter(Card.Card):
         self.cost = 3
         self.numcards = 5
 
-    def special(self, game, player):
+    def special(self, game, player) -> None:
         """Gain a Silver per card the player to your right gained in his last turn"""
         righty = game.playerToRight(player)
         numsilver = len(righty.stats["gained"])
-        player.output("Gaining %d silvers as %s gained %d cards" % (numsilver, righty.name, numsilver))
+        player.output(
+            "Gaining %d silvers as %s gained %d cards"
+            % (numsilver, righty.name, numsilver)
+        )
         for _ in range(numsilver):
             player.gain_card("Silver")
 
@@ -34,14 +36,14 @@ class Card_Treasurehunter(Card.Card):
 
 
 ###############################################################################
-class Test_Treasurehunter(unittest.TestCase):
-    def setUp(self):
+class TestTreasureHunter(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Page"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.card = self.g.get_card_from_pile("Treasure Hunter")
 
-    def test_treasure_hunter(self):
+    def test_treasure_hunter(self) -> None:
         """Play a treasure_hunter"""
         self.other.gain_card("Copper")
         self.other.gain_card("Estate")

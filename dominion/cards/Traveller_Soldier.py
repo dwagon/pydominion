@@ -2,12 +2,11 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
 class Card_Soldier(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
             Card.CardType.ACTION,
@@ -23,7 +22,7 @@ class Card_Soldier(Card.Card):
         self.cost = 3
         self.numcards = 5
 
-    def special(self, game, player):
+    def special(self, game, player) -> None:
         """+2 Coins; +1 Coin per other Attack you have in play.
         Each other player with 4 or more cards in hand discards a card."""
         count = 0
@@ -51,20 +50,22 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 ###############################################################################
 class Test_Soldier(unittest.TestCase):
-    def setUp(self):
-        self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Peasant", "Militia"])
+    def setUp(self) -> None:
+        self.g = Game.TestGame(
+            quiet=True, numplayers=2, initcards=["Peasant", "Militia"]
+        )
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g.get_card_from_pile("Soldier")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_soldier(self):
+    def test_soldier(self) -> None:
         """Play a soldier with no extra attacks"""
         self.vic.piles[Piles.HAND].set("Copper")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
 
-    def test_soldier_more(self):
+    def test_soldier_more(self) -> None:
         """Play a soldier with no extra attacks"""
         self.vic.piles[Piles.HAND].set("Copper")
         mil = self.g.get_card_from_pile("Militia")
@@ -72,7 +73,7 @@ class Test_Soldier(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 3)
 
-    def test_soldier_attack(self):
+    def test_soldier_attack(self) -> None:
         """Play a soldier with more than 4 cards"""
         self.vic.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Duchy")
         self.vic.test_input = ["Gold"]
