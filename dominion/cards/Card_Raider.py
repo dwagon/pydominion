@@ -24,13 +24,13 @@ class Card_Raider(Card.Card):
         player.coins.add(3)
 
     def night(self, game: Game.Game, player: Player.Player) -> None:
-        inplay = {_.name for _ in player.piles[Piles.PLAYED]}
+        in_play = {_.name for _ in player.piles[Piles.PLAYED]}
         for victim in player.attack_victims():
             if victim.piles[Piles.HAND].size() >= 5:
                 player.output(f"Raiding {victim}")
                 to_discard = []
                 for card in victim.piles[Piles.HAND]:
-                    if card.name in inplay:
+                    if card.name in in_play:
                         victim.output(f"{player.name}'s Raider discarded your {card}")
                         player.output(f"Raider discarded {victim}'s {card}")
                         to_discard.append(card)
