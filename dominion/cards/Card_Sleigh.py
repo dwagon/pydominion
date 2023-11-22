@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Sleigh """
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, OptionKeys
 
 
 ###############################################################################
 class Card_Sleigh(Card.Card):
     """Sleigh"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
         self.base = Card.CardExpansion.MENAGERIE
@@ -19,17 +19,17 @@ class Card_Sleigh(Card.Card):
         self.cost = 2
         self.required_cards = [("Card", "Horse")]
 
-    def special(self, game, player):
+    def special(self, game, player) -> None:
         player.gain_card("Horse")
         player.gain_card("Horse")
 
     def hook_gain_card(self, game, player, card):
         # Discard self if choice == hand or deck
         choice = player.plr_choose_options(
-            f"What to do with {card.name}?",
+            f"What to do with {card}?",
             ("Discard by default", Piles.DISCARD),
-            (f"Put {card.name} into hand and discard Sleigh", Piles.HAND),
-            (f"Put {card.name} onto your deck and discard Sleigh", "topdeck"),
+            (f"Put {card} into hand and discard Sleigh", Piles.HAND),
+            (f"Put {card} onto your deck and discard Sleigh", "topdeck"),
         )
         if choice != Piles.DISCARD:
             if self in player.piles[Piles.PLAYED]:
@@ -37,28 +37,28 @@ class Card_Sleigh(Card.Card):
             elif self in player.piles[Piles.HAND]:
                 player.piles[Piles.HAND].remove(self)
             player.discard_card(self)
-        return {"destination": choice}
+        return {OptionKeys.DESTINATION: choice}
 
 
 ###############################################################################
 class TestSleigh(unittest.TestCase):
     """Test Sleigh"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Sleigh"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Sleigh")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play_sleigh(self):
+    def test_play_sleigh(self) -> None:
         """Play a sleigh"""
         self.plr.test_input = ["Discard by default", "Put Horse into hand"]
         self.plr.play_card(self.card)
         self.assertIn("Horse", self.plr.piles[Piles.DISCARD])
         self.assertIn("Horse", self.plr.piles[Piles.HAND])
 
-    def test_gain_card(self):
+    def test_gain_card(self) -> None:
         """Gain a card while Sleigh in hand"""
         self.plr.test_input = ["Put Estate onto your deck"]
         self.plr.gain_card("Estate")

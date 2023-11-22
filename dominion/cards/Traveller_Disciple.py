@@ -18,7 +18,7 @@ class Card_Disciple(Card.Card):
         self.numcards = 5
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game, player) -> None:
         """You may play an Action card from your hand twice. Gain a copy of it"""
         actions = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not actions:
@@ -44,20 +44,20 @@ class Card_Disciple(Card.Card):
 
 ###############################################################################
 class TestDisciple(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Peasant", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Disciple")
 
-    def test_play_no_actions(self):
+    def test_play_no_actions(self) -> None:
         """Play a disciple with no actions available"""
         self.plr.piles[Piles.HAND].set("Copper", "Estate")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.PLAYED].size(), 1)
 
-    def test_play_actions(self):
+    def test_play_actions(self) -> None:
         """Play a disciple with an action available"""
         self.plr.piles[Piles.HAND].set("Copper", "Estate", "Moat")
         self.plr.test_input = ["moat"]

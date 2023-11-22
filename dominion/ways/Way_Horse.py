@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Way, Piles
+from typing import Optional, Any
+
+from dominion import Card, Game, Way, Piles, OptionKeys, Player
 
 
 ###############################################################################
 class Way_Horse(Way.Way):
     """Way of the Horse"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Way.Way.__init__(self)
         self.base = Card.CardExpansion.MENAGERIE
         self.desc = "+2 Cards; +1 Action; Return this to its pile."
@@ -16,16 +18,18 @@ class Way_Horse(Way.Way):
         self.cards = 2
         self.actions = 1
 
-    def special_way(self, game, player, card):
+    def special_way(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> Optional[dict[OptionKeys, Any]]:
         player.move_card(card, Piles.CARDPILE)
-        return {"discard": False}
+        return {OptionKeys.DISCARD: False}
 
 
 ###############################################################################
 class TestHorse(unittest.TestCase):
     """Test Way of the Horse"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1,
             ways=["Way of the Horse"],
@@ -37,7 +41,7 @@ class TestHorse(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Moat")
         self.way = self.g.ways["Way of the Horse"]
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Perform a Horse"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.perform_way(self.way, self.card)

@@ -2,7 +2,7 @@
 
 import contextlib
 import unittest
-from dominion import Card, Game, Piles, Player, NoCardException
+from dominion import Card, Game, Piles, Player, NoCardException, OptionKeys, Phase
 
 
 ###############################################################################
@@ -15,13 +15,13 @@ class Card_Ghost_Town(Card.Card):
         self.cost = 3
 
     def dynamic_description(self, player):
-        if player.phase == Player.Phase.BUY:
+        if player.phase == Phase.BUY:
             return """At the start of your next turn, +1 Card and +1 Action. This
                 is gained to your hand (instead of your discard pile)."""
         return "At the start of your next turn, +1 Card and +1 Action."
 
     def hook_gain_this_card(self, game, player):
-        return {"destination": Piles.HAND}
+        return {OptionKeys.DESTINATION: Piles.HAND}
 
     def duration(self, game, player):
         with contextlib.suppress(NoCardException):
@@ -30,14 +30,14 @@ class Card_Ghost_Town(Card.Card):
 
 
 ###############################################################################
-class Test_Ghost_Town(unittest.TestCase):
-    def setUp(self):
+class TestGhostTown(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Ghost Town"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.gtown = self.g.get_card_from_pile("Ghost Town")
 
-    def test_play_card(self):
+    def test_play_card(self) -> None:
         """Play Ghost Town"""
         self.plr.add_card(self.gtown, Piles.HAND)
         self.plr.play_card(self.gtown)
@@ -46,7 +46,7 @@ class Test_Ghost_Town(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
         self.assertEqual(self.plr.actions.get(), 2)
 
-    def test_gain(self):
+    def test_gain(self) -> None:
         self.plr.gain_card("Ghost Town")
         self.assertNotIn("Ghost Town", self.plr.piles[Piles.DISCARD])
         self.assertIn("Ghost Town", self.plr.piles[Piles.HAND])

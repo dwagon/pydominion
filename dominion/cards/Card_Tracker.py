@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Tracker"""
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, OptionKeys
 
 
 ###############################################################################
 class Card_Tracker(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.FATE]
         self.base = Card.CardExpansion.NOCTURNE
@@ -16,7 +16,7 @@ class Card_Tracker(Card.Card):
         self.coin = 1
         self.heirloom = "Pouch"
 
-    def special(self, game, player):
+    def special(self, game, player) -> None:
         # Special flag to stop boon interfering with tests
         if not hasattr(player, "_tracker_dont_boon"):
             player.receive_boon()
@@ -31,20 +31,20 @@ class Card_Tracker(Card.Card):
             (f"Put {card} on top of deck", True),
         ):
             player.output(f"Putting {card} on deck due to Tracker")
-            mod["destination"] = "topdeck"
+            mod[OptionKeys.DESTINATION] = "topdeck"
         return mod
 
 
 ###############################################################################
-class Test_Tracker(unittest.TestCase):
-    def setUp(self):
+class TestTracker(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Tracker"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.plr._tracker_dont_boon = True
         self.card = self.g.get_card_from_pile("Tracker")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a Tracker"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
@@ -54,7 +54,7 @@ class Test_Tracker(unittest.TestCase):
             self.g.print_state()
             raise
 
-    def test_discard(self):
+    def test_discard(self) -> None:
         """Have a Tracker  - discard the gained card"""
         self.plr.piles[Piles.PLAYED].set("Tracker")
         self.plr.test_input = ["discard"]
@@ -63,7 +63,7 @@ class Test_Tracker(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.DISCARD][0].name, "Gold")
         self.assertNotIn("Gold", self.plr.piles[Piles.HAND])
 
-    def test_deck(self):
+    def test_deck(self) -> None:
         """Have a Tracker  - the gained card on the deck"""
         self.plr.piles[Piles.PLAYED].set("Tracker")
         self.plr.test_input = ["deck"]

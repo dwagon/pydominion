@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 class Card_University(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ALCHEMY
@@ -15,7 +15,7 @@ class Card_University(Card.Card):
         self.required_cards = ["Potion"]
         self.potcost = True
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Gain an action card costing up to 5"""
         card = player.plr_gain_card(5, types={Card.CardType.ACTION: True})
         if card:
@@ -24,12 +24,13 @@ class Card_University(Card.Card):
 
 ###############################################################################
 class TestUniversity(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1,
             initcards=["University"],
             badcards=[
                 "Inn",
+                "Berserker",
                 "Death Cart",
                 "Blessed Village",
                 "Cursed Village",
@@ -43,7 +44,7 @@ class TestUniversity(unittest.TestCase):
         self.university = self.g.get_card_from_pile("University")
         self.plr.add_card(self.university, Piles.HAND)
 
-    def test_gain(self):
+    def test_gain(self) -> None:
         self.plr.test_input = ["1"]
         self.plr.play_card(self.university)
         try:
@@ -54,7 +55,7 @@ class TestUniversity(unittest.TestCase):
             self.g.print_state()
             raise
 
-    def test_none(self):
+    def test_none(self) -> None:
         self.plr.test_input = ["0"]
         self.plr.play_card(self.university)
         self.assertTrue(self.plr.piles[Piles.DISCARD].is_empty())

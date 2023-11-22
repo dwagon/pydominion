@@ -2,15 +2,14 @@
 """http://wiki.dominionstrategy.com/index.php/Trail"""
 
 import unittest
-from dominion import Game, Card, Piles
-from dominion.Player import Phase
+from dominion import Game, Card, Piles, OptionKeys, Phase
 
 
 ###############################################################################
 class Card_Trail(Card.Card):
     """Trail"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
         self.base = Card.CardExpansion.PROSPERITY
@@ -24,7 +23,7 @@ class Card_Trail(Card.Card):
     def hook_gain_this_card(self, game, player):
         if self.want_to_play(player):
             player.play_card(self, cost_action=False, discard=False)
-            return {"destination": Piles.PLAYED}
+            return {OptionKeys.DESTINATION: Piles.PLAYED}
 
     def hook_discard_this_card(self, game, player, source):
         if player.phase != Phase.CLEANUP:
@@ -47,13 +46,13 @@ class Card_Trail(Card.Card):
 class TestTrail(unittest.TestCase):
     """Test Trail"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Trail", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Trail")
 
-    def test_play_card(self):
+    def test_play_card(self) -> None:
         """Play a card"""
         self.plr.piles[Piles.HAND].empty()
         self.plr.add_card(self.card, Piles.HAND)
@@ -62,7 +61,7 @@ class TestTrail(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), actions + 1 - 1)  # One to play
         self.assertEqual(len(self.plr.piles[Piles.HAND]), 1)
 
-    def test_gain_card(self):
+    def test_gain_card(self) -> None:
         """Gain a card"""
         self.plr.piles[Piles.HAND].empty()
         actions = self.plr.actions.get()
@@ -72,7 +71,7 @@ class TestTrail(unittest.TestCase):
         self.assertEqual(len(self.plr.piles[Piles.HAND]), 1)
         self.assertIn("Trail", self.plr.piles[Piles.PLAYED])
 
-    def test_trash_card(self):
+    def test_trash_card(self) -> None:
         """Trash self"""
         actions = self.plr.actions.get()
         hand_size = len(self.plr.piles[Piles.HAND])
@@ -82,7 +81,7 @@ class TestTrail(unittest.TestCase):
         self.assertEqual(len(self.plr.piles[Piles.HAND]), hand_size + 1)
         self.assertIn("Trail", self.g.trash_pile)
 
-    def test_discard_card(self):
+    def test_discard_card(self) -> None:
         """Discard self"""
         actions = self.plr.actions.get()
         hand_size = len(self.plr.piles[Piles.HAND])

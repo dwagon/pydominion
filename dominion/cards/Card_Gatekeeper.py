@@ -4,7 +4,7 @@
 import unittest
 from typing import Optional, Any
 
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -33,7 +33,7 @@ class Card_Gatekeeper(Card.Card):
         player: Player.Player,
         owner: Player.Player,
         card: Card.Card,
-    ) -> Optional[dict[str, Any]]:
+    ) -> Optional[dict[OptionKeys, Any]]:
         if player == owner:
             return None
         if (card.isAction() or card.isTreasure()) and card.name not in player.piles[
@@ -41,7 +41,7 @@ class Card_Gatekeeper(Card.Card):
         ]:
             player.output(f"{owner}'s Gatekeeper exiles your {card}")
             player.exile_card(card)
-            return {"dontadd": True}
+            return {OptionKeys.DONTADD: True}
         return None
 
 

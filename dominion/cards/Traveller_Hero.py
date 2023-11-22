@@ -2,12 +2,11 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
 class Card_Hero(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.TRAVELLER]
         self.base = Card.CardExpansion.ADVENTURE
@@ -18,7 +17,7 @@ class Card_Hero(Card.Card):
         self.cost = 5
         self.numcards = 5
 
-    def special(self, game, player):
+    def special(self, game, player) -> None:
         """Gain a treasure"""
         player.plr_gain_card(cost=None, types={Card.CardType.TREASURE: True})
 
@@ -29,7 +28,7 @@ class Card_Hero(Card.Card):
 
 ###############################################################################
 class Test_Hero(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             quiet=True, numplayers=1, initcards=["Page"], badcards=["Fool's Gold"]
         )
@@ -38,7 +37,7 @@ class Test_Hero(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Hero")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_hero(self):
+    def test_hero(self) -> None:
         """Play a hero"""
         self.plr.test_input = ["get gold"]
         self.plr.play_card(self.card)

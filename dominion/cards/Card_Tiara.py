@@ -3,7 +3,7 @@
 import unittest
 from typing import Any
 
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -34,14 +34,14 @@ class Card_Tiara(Card.Card):
 
     def hook_gain_card(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[str, Any]:
+    ) -> dict[OptionKeys, Any]:
         """when you gain a card, you may put it onto your deck."""
         if player.plr_choose_options(
             f"Tiara lets you put {card} on top of your deck.",
             (f"Put {card} on top of your deck?", True),
             (f"Discard {card} as per normal?", False),
         ):
-            return {"destination": "topdeck"}
+            return {OptionKeys.DESTINATION: "topdeck"}
         return {}
 
 

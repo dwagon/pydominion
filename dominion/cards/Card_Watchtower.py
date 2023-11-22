@@ -3,7 +3,7 @@
 import unittest
 from typing import Any
 
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -26,11 +26,11 @@ class Card_Watchtower(Card.Card):
 
     def hook_gain_card(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[str, Any]:
+    ) -> dict[OptionKeys, Any]:
         """When you gain a card, you may reveal this from your
         hand. If you do, either trash that card, or put it on top
         of your deck"""
-        options: dict[str, Any] = {}
+        options: dict[OptionKeys, Any] = {}
         act = player.plr_choose_options(
             "What to do with Watchtower?",
             ("Do nothing", "nothing"),
@@ -38,9 +38,9 @@ class Card_Watchtower(Card.Card):
             (f"Put {card} on top of deck", "topdeck"),
         )
         if act == "trash":
-            options = {"trash": True}
+            options = {OptionKeys.TRASH: True}
         elif act == "topdeck":
-            options = {"destination": "topdeck"}
+            options = {OptionKeys.DESTINATION: "topdeck"}
         return options
 
 

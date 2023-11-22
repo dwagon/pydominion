@@ -14,7 +14,7 @@ from typing import Any, Optional, TYPE_CHECKING, Callable
 if TYPE_CHECKING:
     from dominion.Game import Game
 
-from dominion import Piles, Phase, Limits, NoCardException, Whens
+from dominion import Piles, Phase, Limits, NoCardException, Whens, OptionKeys
 from dominion.Card import Card, CardType
 from dominion.CardPile import CardPile
 from dominion.Counter import Counter
@@ -49,7 +49,7 @@ class Player:
         self.had_cards: list[Card] = []
         self.messages: list[str] = []
         self.hooks: dict[str, Any] = {}
-        self.piles = {
+        self.piles: dict[Piles, PlayArea] = {
             Piles.HAND: PlayArea(Piles.HAND, game=self.game),
             Piles.EXILE: PlayArea(Piles.EXILE, game=self.game),
             Piles.DURATION: PlayArea(Piles.DURATION, game=self.game),
@@ -178,17 +178,14 @@ class Player:
         assert isinstance(dst, str)
 
         if src not in self.piles[Piles.PLAYED]:
-            self.output(f"Not activating {src.name} traveller as not played")
+            self.output(f"Not activating {src} traveller as not played")
             return
 
-        choice = self.plr_choose_options(
+        if self.plr_choose_options(
             "Replace Traveller",
-            (f"Keep {src.name}", "keep"),
-            (f"Replace with a {dst}?", "replace"),
-        )
-        if choice == "keep":
-            return
-        if choice == "replace":
+            (f"Keep {src}", False),
+            (f"Replace with a {dst}?", True),
+        ):
             self.replace_card(src, dst, destination=Piles.HAND)
 
     ###########################################################################
@@ -199,9 +196,7 @@ class Player:
         assert isinstance(src, Card), f"replace_card {src=} {type(src)=}"
         assert isinstance(dst, str), f"replace_card {dst=} {type(dst)=}"
 
-        if newcard := self.gain_card(
-            card_name=dst, destination=destination, callhook=False
-        ):
+        if self.gain_card(card_name=dst, destination=destination, callhook=False):
             card_pile = self.game.card_piles[src.name]
             card_pile.add(src)
             self.piles[Piles.PLAYED].remove(src)
@@ -1141,7 +1136,7 @@ class Player:
     def _duration_start_turn(self) -> None:
         """Perform the duration pile at the start of the turn"""
         for card in self.piles[Piles.DURATION]:
-            options: dict[str, Any] = {"dest": Piles.PLAYED}
+            options: dict[OptionKeys, Any] = {OptionKeys.DESTINATION: Piles.PLAYED}
             if not card.permanent:
                 self.output(f"Playing {card} from duration pile")
             self.currcards.append(card)
@@ -1153,7 +1148,7 @@ class Player:
                 # Handle case where cards move themselves elsewhere
                 if card.location != Piles.DURATION:
                     continue
-                self.move_card(card, options["dest"])
+                self.move_card(card, options[OptionKeys.DESTINATION])
         for event in self.game.events.values():
             event.duration(game=self.game, player=self)
 
@@ -1271,17 +1266,17 @@ class Player:
             self.buys += 1
 
     ###########################################################################
-    def _hook_pre_play(self, card: Card) -> dict[str, str]:
+    def _hook_pre_play(self, card: Card) -> dict[OptionKeys, str]:
         """Hook before an action card is played"""
-        options: dict[str, str] = {}
+        options: dict[OptionKeys, str] = {}
         for crd in self.piles[Piles.DURATION] + self.piles[Piles.PLAYED]:
             if ans := crd.hook_pre_play(game=self.game, player=self, card=card):
                 options |= ans
         return options
 
     ###########################################################################
-    def hook_all_players_pre_play(self, card: Card) -> dict[str, str]:
-        options: dict[str, str] = {}
+    def hook_all_players_pre_play(self, card: Card) -> dict[OptionKeys, str]:
+        options: dict[OptionKeys, str] = {}
         for player in self.game.player_list():
             for crd in player.piles[Piles.DURATION]:
                 if ans := crd.hook_all_players_pre_play(
@@ -1291,8 +1286,8 @@ class Player:
         return options
 
     ###########################################################################
-    def hook_all_players_post_play(self, card: Card) -> dict[str, Any]:
-        options: dict[str, str] = {}
+    def hook_all_players_post_play(self, card: Card) -> dict[OptionKeys, Any]:
+        options: dict[OptionKeys, Any] = {}
         for player in self.game.player_list():
             for crd in player.piles[Piles.DURATION]:
                 if answer := crd.hook_all_players_post_play(
@@ -1345,9 +1340,14 @@ class Player:
         post_action_hook: bool = True,
     ) -> None:
         """Play the card {card}"""
-        options: dict[str, Any] = {"skip_card": False, "discard": discard}
-        if card not in self.piles[Piles.HAND] and options["discard"]:
-            raise AssertionError(f"Playing {card} which is not in hand")
+        options: dict[OptionKeys, Any] = {
+            OptionKeys.SKIP_CARD: False,
+            OptionKeys.DISCARD: discard,
+        }
+        # if card not in self.piles[Piles.HAND] and options["discard"]:
+        #    raise AssertionError(
+        #        f"Playing {card} which is not in hand ({card.location})"
+        #    )
         if not self._play_limit():
             self.output(f"Can't play {card} due to limits in number of plays")
             return
@@ -1363,10 +1363,10 @@ class Player:
             self.output("Not enough actions")
             return
 
-        if options["discard"]:
-            self.move_after_play(card, options["skip_card"])
+        if options[OptionKeys.DISCARD]:
+            self.move_after_play(card, options[OptionKeys.SKIP_CARD])
 
-        if not options["skip_card"]:
+        if not options[OptionKeys.SKIP_CARD]:
             self.card_benefits(card)
         self.currcards.pop()
         if post_action_hook:
@@ -1382,7 +1382,7 @@ class Player:
     ###########################################################################
     def perform_way(self, way: Way, card: Card) -> None:
         """Perform a way"""
-        opts = {"discard": True}
+        opts: dict[OptionKeys, Any] = {OptionKeys.DISCARD: True}
         self.currcards.append(way)
         self.actions -= 1
         if self.actions.get() < 0:
@@ -1395,7 +1395,7 @@ class Player:
         new_opts = way.special_way(game=self.game, player=self, card=card)
         if isinstance(new_opts, dict):
             opts |= new_opts
-        if opts["discard"]:
+        if opts[OptionKeys.DISCARD]:
             self.move_card(card, Piles.PLAYED)
         self.played_ways.append((way, card))
         self.currcards.pop()
@@ -1466,7 +1466,7 @@ class Player:
         #   destination: <dest> - Move the new card to <dest> rather than discard pile
         #   trash: True - trash the new card
         #   shuffle: True - shuffle the deck after gaining new card
-        options: dict[str, Any] = {}
+        options: dict[OptionKeys, Any] = {}
         if new_card is None:
             assert card_name is not None
             new_card = self._gain_card_from_name(card_name)
@@ -1485,29 +1485,29 @@ class Player:
             self.check_unexile(new_card.name)
 
         # Replace is to gain a different card
-        if options.get("replace"):
+        if options.get(OptionKeys.REPLACE):
             self.game.card_piles[new_card.pile].add(new_card)
             try:
-                new_card = self.game.get_card_from_pile(options["replace"])
+                new_card = self.game.get_card_from_pile(options[OptionKeys.REPLACE])
             except NoCardException:
-                self.output(f"No more {options['replace']}")
+                self.output(f"No more {options[OptionKeys.REPLACE]}")
             else:
                 new_card.player = self
         if new_card is None:
             return None
         self.stats["gained"].append(new_card)
-        destination = options.get("destination", destination)
+        destination = options.get(OptionKeys.DESTINATION, destination)
         if callhook:
             options |= self.hook_all_players_gain_card(new_card)
-        if options.get("trash", False):
+        if options.get(OptionKeys.TRASH, False):
             self.add_card(new_card, Piles.HAND)
             self.trash_card(new_card)
             return new_card
 
-        if not options.get("dontadd", False):
+        if not options.get(OptionKeys.DONTADD, False):
             self.add_card(new_card, destination)
 
-        if options.get("shuffle", False):
+        if options.get(OptionKeys.SHUFFLE, False):
             self.piles[Piles.DECK].shuffle()
         return new_card
 
@@ -1601,8 +1601,8 @@ class Player:
             )
 
     ###########################################################################
-    def hook_all_players_gain_card(self, card: Card) -> dict[str, str]:
-        options: dict[str, str] = {}
+    def hook_all_players_gain_card(self, card: Card) -> dict[OptionKeys, Any]:
+        options: dict[OptionKeys, Any] = {}
         for player in self.game.player_list():
             for crd in player.relevant_cards():
                 if opts := crd.hook_all_players_gain_card(
@@ -1634,10 +1634,10 @@ class Player:
         )
 
     ###########################################################################
-    def _hook_gain_card(self, gained_card: Card) -> dict[str, Any]:
+    def _hook_gain_card(self, gained_card: Card) -> dict[OptionKeys, Any]:
         """Hook which is fired by a card being obtained by a player"""
         assert isinstance(gained_card, Card)
-        options: dict[str, Any] = {}
+        options: dict[OptionKeys, Any] = {}
         if self.hooks.get("gain_card"):
             opts = self.hooks["gain_card"](
                 game=self.game, player=self, card=gained_card
@@ -1646,10 +1646,11 @@ class Player:
 
         for card in self.relevant_cards():
             self.currcards.append(card)
-            opts = card.hook_gain_card(game=self.game, player=self, card=gained_card)
-            self.currcards.pop()
-            if opts:
+            if opts := card.hook_gain_card(
+                game=self.game, player=self, card=gained_card
+            ):
                 options.update(opts)
+            self.currcards.pop()
         return options
 
     ###########################################################################
@@ -1683,8 +1684,8 @@ class Player:
         if options:
             self.output("Gain a prize")
             if option := self.plr_choose_options("Gain a Prize", *options):
-                prize = self.game.get_card_from_pile(option)
-                self.add_card(card=prize)
+                prize_card = self.game.get_card_from_pile(option)
+                self.add_card(card=prize_card)
         else:
             self.output("No prizes available")
 

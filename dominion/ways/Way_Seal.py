@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Way, Piles
+from dominion import Card, Game, Way, Piles, OptionKeys
 
 
 ###############################################################################
 class Way_Seal(Way.Way):
-    def __init__(self):
+    def __init__(self) -> None:
         Way.Way.__init__(self)
         self.base = Card.CardExpansion.MENAGERIE
         self.desc = (
@@ -14,26 +14,25 @@ class Way_Seal(Way.Way):
         )
         self.name = "Way of the Seal"
 
-    def special(self, game, player):
+    def special(self, game, player) -> None:
         player.coins.add(1)
         player.add_hook("gain_card", self.gain_card)
 
     def gain_card(self, game, player, card):
         mod = {}
-        deck = player.plr_choose_options(
-            f"Seal: Where to put {card.name}?",
-            (f"Put {card.name} on discard", False),
-            (f"Put {card.name} on top of deck", True),
-        )
-        if deck:
-            player.output("Putting %s on deck due to Way of the Seal" % card.name)
-            mod["destination"] = "topdeck"
+        if deck := player.plr_choose_options(
+            f"Seal: Where to put {card}?",
+            (f"Put {card} on discard", False),
+            (f"Put {card} on top of deck", True),
+        ):
+            player.output(f"Putting {card} on deck due to Way of the Seal")
+            mod[OptionKeys.DESTINATION] = "topdeck"
         return mod
 
 
 ###############################################################################
 class TestSeal(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1,
             ways=["Way of the Seal"],
@@ -45,7 +44,7 @@ class TestSeal(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Moat")
         self.way = self.g.ways["Way of the Seal"]
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Perform a Seal"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["top of deck"]

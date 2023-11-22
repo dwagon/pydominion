@@ -4,7 +4,7 @@ import contextlib
 import unittest
 from typing import Any, Optional
 
-from dominion import Card, Game, Piles, Player, NoCardException, Phase
+from dominion import Card, Game, Piles, Player, NoCardException, Phase, OptionKeys
 
 
 ###############################################################################
@@ -23,7 +23,7 @@ class Card_Den_of_Sin(Card.Card):
 
     def duration(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[str, str]]:
+    ) -> Optional[dict[OptionKeys, str]]:
         for _ in range(2):
             with contextlib.suppress(NoCardException):
                 player.pickup_card()
@@ -31,8 +31,8 @@ class Card_Den_of_Sin(Card.Card):
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> dict[str, Any]:
-        return {"destination": Piles.HAND}
+    ) -> dict[OptionKeys, Any]:
+        return {OptionKeys.DESTINATION: Piles.HAND}
 
 
 ###############################################################################

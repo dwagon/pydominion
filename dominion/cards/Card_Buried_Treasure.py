@@ -4,14 +4,14 @@
 import unittest
 from typing import Optional
 
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, OptionKeys
 
 
 ###############################################################################
 class Card_BuriedTreasure(Card.Card):
     """Buried Treasure"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.TREASURE, Card.CardType.DURATION]
         self.base = Card.CardExpansion.PLUNDER
@@ -26,25 +26,25 @@ class Card_BuriedTreasure(Card.Card):
 
     def hook_gain_this_card(self, game, player):
         """When you gain this, play it."""
-        return {"destination": Piles.DURATION}
+        return {OptionKeys.DESTINATION: Piles.DURATION}
 
 
 ###############################################################################
-class Test_BuriedTreasure(unittest.TestCase):
+class TestBuriedTreasure(unittest.TestCase):
     """Test Buried Treasure"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Buried Treasure", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Buried Treasure")
 
-    def test_gain_card(self):
+    def test_gain_card(self) -> None:
         """Gain a card"""
         self.plr.gain_card("Buried Treasure")
         self.assertIn("Buried Treasure", self.plr.piles[Piles.DURATION])
 
-    def test_duration(self):
+    def test_duration(self) -> None:
         """Duration"""
         self.plr.add_card(self.card, Piles.DURATION)
         self.plr.end_turn()

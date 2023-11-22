@@ -3,7 +3,7 @@
 import unittest
 from typing import Optional, Any
 
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -22,7 +22,7 @@ class Card_SecludedShrine(Card.Card):
 
     def hook_gain_card(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> Optional[dict[str, Any]]:
+    ) -> Optional[dict[OptionKeys, Any]]:
         if self.location != Piles.DURATION:
             return None
         if not card.isTreasure():

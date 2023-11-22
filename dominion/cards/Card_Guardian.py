@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Guardian"""
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from typing import Optional, Any
+
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
 class Card_Guardian(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.NIGHT, Card.CardType.DURATION]
         self.base = Card.CardExpansion.NOCTURNE
@@ -18,26 +19,28 @@ class Card_Guardian(Card.Card):
         self.defense = True
         self.cost = 2
 
-    def duration(self, game, player):
+    def duration(self, game: Game.Game, player: Player.Player) -> None:
         player.coins.add(1)
 
-    def hook_gain_this_card(self, game, player):
-        return {"destination": Piles.HAND}
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> Optional[dict[OptionKeys, Any]]:
+        return {OptionKeys.DESTINATION: Piles.HAND}
 
 
 ###############################################################################
-class Test_Guardian(unittest.TestCase):
-    def setUp(self):
+class TestGuardian(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Guardian"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Guardian")
 
-    def test_gain(self):
+    def test_gain(self) -> None:
         self.plr.gain_card("Guardian")
         self.assertIn("Guardian", self.plr.piles[Piles.HAND])
 
-    def test_duration(self):
+    def test_duration(self) -> None:
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.plr.end_turn()

@@ -5,7 +5,7 @@ import os
 import uuid
 from enum import Enum, auto
 from typing import Optional, TYPE_CHECKING, Any
-from dominion import Piles, Whens
+from dominion import Piles, Whens, OptionKeys
 
 if TYPE_CHECKING:
     from dominion import Player
@@ -227,7 +227,7 @@ class Card:
     ##########################################################################
     def duration(
         self, game: "Game.Game", player: "Player.Player"
-    ) -> Optional[dict[str, str]]:
+    ) -> Optional[dict[OptionKeys, str]]:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
@@ -369,7 +369,7 @@ class Card:
         player: "Player.Player",
         owner: "Player.Player",
         card: "Card",
-    ) -> Optional[dict[str, Any]]:
+    ) -> Optional[dict[OptionKeys, Any]]:
         """Hook - overwritten in subclasses if required"""
         return None
 
@@ -380,20 +380,20 @@ class Card:
         player: "Player.Player",
         owner: "Player.Player",
         card: "Card",
-    ) -> Optional[dict[str, Any]]:
+    ) -> Optional[dict[OptionKeys, Any]]:
         """Hook - overwritten in subclasses if required"""
 
     ##########################################################################
     def hook_pre_play(
         self, game: "Game.Game", player: "Player.Player", card: "Card"
-    ) -> Optional[dict[str, str]]:
+    ) -> Optional[dict[OptionKeys, str]]:
         """Hook - overwritten in subclasses if required"""
         return None
 
     ##########################################################################
     def hook_post_play(
         self, game: "Game.Game", player: "Player.Player", card: "Card"
-    ) -> Optional[dict[str, str]]:
+    ) -> Optional[dict[OptionKeys, str]]:
         """Hook - overwritten in subclasses if required"""
         return None
 
@@ -436,13 +436,13 @@ class Card:
         player: "Player.Player",
         owner: "Player.Player",
         card: "Card",
-    ) -> Optional[dict[str, Any]]:
+    ) -> Optional[dict[OptionKeys, Any]]:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_gain_card(
         self, game: "Game.Game", player: "Player.Player", card: "Card"
-    ) -> Optional[dict[str, Any]]:  # pylint: disable=no-self-use
+    ) -> Optional[dict[OptionKeys, Any]]:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return {}  # pragma: no cover
 
@@ -489,19 +489,19 @@ class Card:
     ##########################################################################
     def hook_trash_this_card(
         self, game: "Game.Game", player: "Player.Player"
-    ) -> Optional[dict[str, Any]]:
+    ) -> Optional[dict[OptionKeys, Any]]:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_trash_card(
         self, game: "Game.Game", player: "Player.Player", card: "Card"
-    ) -> Optional[dict[str, Any]]:
+    ) -> Optional[dict[OptionKeys, Any]]:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_gain_this_card(
         self, game: "Game.Game", player: "Player.Player"
-    ) -> Optional[dict[str, Any]]:  # pylint: disable=no-self-use
+    ) -> Optional[dict[OptionKeys, Any]]:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return {}  # pragma: no cover
 

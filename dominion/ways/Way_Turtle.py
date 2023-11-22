@@ -2,29 +2,35 @@
 """ http://wiki.dominionstrategy.com/index.php/Way_of_the_Turtle"""
 
 import unittest
-from dominion import Card, Game, Piles, Way
+from typing import Optional, Any
+
+from dominion import Card, Game, Piles, Way, OptionKeys, Player
 
 
 ###############################################################################
 class Way_Turtle(Way.Way):
     """Turtle"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Way.Way.__init__(self)
         self.base = Card.CardExpansion.MENAGERIE
-        self.desc = "Set this aside. If you did, play it at the start of your next turn."
+        self.desc = (
+            "Set this aside. If you did, play it at the start of your next turn."
+        )
         self.name = "Way of the Turtle"
 
-    def special_way(self, game, player, card):
+    def special_way(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> Optional[dict[OptionKeys, Any]]:
         player.defer_card(card)
-        return {"discard": False}
+        return {OptionKeys.DISCARD: False}
 
 
 ###############################################################################
-class Test_Turtle(unittest.TestCase):
+class TestTurtle(unittest.TestCase):
     """Test Turtle"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1,
             ways=["Way of the Turtle"],
@@ -36,7 +42,7 @@ class Test_Turtle(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Moat")
         self.way = self.g.ways["Way of the Turtle"]
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Perform a Turtle"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.perform_way(self.way, self.card)

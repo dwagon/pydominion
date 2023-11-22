@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
+from typing import Optional, Any
+
+from dominion import Card, Game, Piles, Player, OptionKeys
 
 
 ###############################################################################
 class Card_Bauble(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.TREASURE, Card.CardType.LIAISON]
         self.base = Card.CardExpansion.ALLIES
@@ -16,21 +18,23 @@ class Card_Bauble(Card.Card):
         self.cost = 2
         self._gain_hook = False
 
-    def hook_gain_card(self, game, player, card):
+    def hook_gain_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> Optional[dict[OptionKeys, Any]]:
         if not self._gain_hook:
             return {}
         mod = {}
         deck = player.plr_choose_options(
-            f"Where to put {card.name}?",
-            (f"Put {card.name} on discard", False),
-            (f"Put {card.name} on top of deck", True),
+            f"Where to put {card}?",
+            (f"Put {card} on discard", False),
+            (f"Put {card} on top of deck", True),
         )
         if deck:
-            player.output(f"Putting {card.name} on deck due to Royal Seal")
-            mod["destination"] = "topdeck"
+            player.output(f"Putting {card} on deck due to Royal Seal")
+            mod[OptionKeys.DESTINATION] = "topdeck"
         return mod
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         self._gain_hook = False
         chosen = []
         player.output("Choose two different options")
@@ -65,15 +69,15 @@ class Card_Bauble(Card.Card):
 
 
 ###############################################################################
-class Test_Bauble(unittest.TestCase):
-    def setUp(self):
+class TestBauble(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Bauble"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Bauble")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play_buy_cash(self):
+    def test_play_buy_cash(self) -> None:
         """Play the card and gain a buy and cash"""
         self.plr.test_input = ["buy", "cash"]
         self.plr.buys.set(0)
@@ -81,7 +85,7 @@ class Test_Bauble(unittest.TestCase):
         self.assertEqual(self.plr.buys.get(), 1)
         self.assertEqual(self.plr.coins.get(), 1)
 
-    def test_play_cash_favor(self):
+    def test_play_cash_favor(self) -> None:
         """Play the card and gain a cash and favor"""
         self.plr.test_input = ["favor", "cash"]
         self.plr.favors.set(0)
@@ -89,7 +93,7 @@ class Test_Bauble(unittest.TestCase):
         self.assertEqual(self.plr.favors.get(), 1)
         self.assertEqual(self.plr.coins.get(), 1)
 
-    def test_play_deck_deck(self):
+    def test_play_deck_deck(self) -> None:
         """Play the card and put next card on to deck"""
         self.plr.test_input = ["favor", "deck", "deck"]
         self.plr.play_card(self.card)
@@ -97,7 +101,7 @@ class Test_Bauble(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Gold")
         self.assertFalse(self.plr.piles[Piles.DISCARD]["Gold"])
 
-    def test_play_deck_discard(self):
+    def test_play_deck_discard(self) -> None:
         """Play the card and put next card on to deck"""
         self.plr.test_input = ["favor", "deck", "discard"]
         self.plr.play_card(self.card)

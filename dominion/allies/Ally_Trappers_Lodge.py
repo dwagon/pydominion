@@ -2,18 +2,24 @@
 """ http://wiki.dominionstrategy.com/index.php/Trappers%27_Lodge"""
 
 import unittest
-from dominion import Card, Game, Piles, Ally
+from typing import Optional, Any
+
+from dominion import Card, Game, Piles, Ally, Player, OptionKeys
 
 
 ###############################################################################
 class Ally_Trappers_Lodge(Ally.Ally):
-    def __init__(self):
+    def __init__(self) -> None:
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
-        self.desc = """When you gain a card, you may spend a Favor to put it onto your deck."""
+        self.desc = (
+            """When you gain a card, you may spend a Favor to put it onto your deck."""
+        )
         self.name = "Trappers' Lodge"
 
-    def hook_gain_card(self, game, player, card):
+    def hook_gain_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> Optional[dict[OptionKeys, Any]]:
         if not player.favors.get():
             return {}
         opt = player.plr_choose_options(
@@ -23,7 +29,7 @@ class Ally_Trappers_Lodge(Ally.Ally):
         )
         if opt:
             player.favors.add(-1)
-            return {"destination": "topdeck"}
+            return {OptionKeys.DESTINATION: "topdeck"}
         return {}
 
 
@@ -33,13 +39,15 @@ def botresponse(player, kind, args=None, kwargs=None):
 
 
 ###############################################################################
-class Test_Trappers_Lodge(unittest.TestCase):
-    def setUp(self):
-        self.g = Game.TestGame(numplayers=1, allies="Trappers Lodge", initcards=["Underling"])
+class TestTrappersLodge(unittest.TestCase):
+    def setUp(self) -> None:
+        self.g = Game.TestGame(
+            numplayers=1, allies="Trappers Lodge", initcards=["Underling"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_gain_card(self):
+    def test_gain_card(self) -> None:
         """Add to top deck"""
         self.plr.piles[Piles.DECK].set("Copper", "Copper")
         self.plr.favors.set(2)
@@ -48,7 +56,7 @@ class Test_Trappers_Lodge(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.DECK].top_card().name, "Estate")
         self.assertEqual(self.plr.favors.get(), 1)
 
-    def test_keep(self):
+    def test_keep(self) -> None:
         """Do nothing"""
         self.plr.piles[Piles.DECK].set("Copper", "Copper")
         self.plr.favors.set(2)

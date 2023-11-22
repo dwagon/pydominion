@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, OptionKeys
 
 
 ###############################################################################
 class Card_NomadCamp(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.HINTERLANDS
@@ -15,30 +15,30 @@ class Card_NomadCamp(Card.Card):
         self.cards = 2
         self.cost = 4
 
-    def desc(self, player):
+    def dynamic_description(self, player) -> str:
         if player.phase == "action":
             return "+1 Buy +2 Coins"
         return "+1 Buy +2 Coins; When you gain this, put it on top of your deck."
 
     def hook_gain_this_card(self, game, player):
-        return {"destination": "topdeck"}
+        return {OptionKeys.DESTINATION: "topdeck"}
 
 
 ###############################################################################
 class Test_NomadCamp(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Nomad Camp"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Nomad Camp")
 
-    def test_play(self):
+    def test_play(self) -> None:
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
         self.assertEqual(self.plr.buys.get(), 2)
 
-    def test_gain(self):
+    def test_gain(self) -> None:
         self.plr.gain_card("Nomad Camp")
         self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Nomad Camp")
 

@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Villa"""
 
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, OptionKeys, Phase
 
 
 ###############################################################################
 class Card_Villa(Card.Card):
     """Villa"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.EMPIRES
@@ -19,32 +19,32 @@ class Card_Villa(Card.Card):
         self.buys = 1
         self.coin = 1
 
-    def dynamic_description(self, player):
+    def dynamic_description(self, player) -> str:
         """Variable desc"""
-        if player.phase == Player.Phase.ACTION:
+        if player.phase == Phase.ACTION:
             return "+2 Actions; +1 Buy; +1 Coin"
         return """+2 Actions; +1 Buy; +1 Coin; When you gain this, put it into
             your hand, +1 Action, and if it's your Buy phase return to your
             Action phase."""
 
     def hook_gain_this_card(self, game, player):
-        if player.phase == Player.Phase.BUY:
-            player.phase = Player.Phase.ACTION
+        if player.phase == Phase.BUY:
+            player.phase = Phase.ACTION
         player.add_actions(1)
-        return {"destination": Piles.HAND}
+        return {OptionKeys.DESTINATION: Piles.HAND}
 
 
 ###############################################################################
 class Test_Villa(unittest.TestCase):
     """Test Villa"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Villa"], badcards=["Duchess"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Villa")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Test playing a villa"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
@@ -52,12 +52,12 @@ class Test_Villa(unittest.TestCase):
         self.assertEqual(self.plr.coins.get(), 1)
         self.assertEqual(self.plr.actions.get(), 2)
 
-    def test_gain(self):
+    def test_gain(self) -> None:
         """Test gaining a villa"""
-        self.plr.phase = Player.Phase.BUY
+        self.plr.phase = Phase.BUY
         self.plr.gain_card("Villa")
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.phase, Player.Phase.ACTION)
+        self.assertEqual(self.plr.phase, Phase.ACTION)
         self.assertIn("Villa", self.plr.piles[Piles.HAND])
 
 

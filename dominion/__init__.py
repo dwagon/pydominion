@@ -71,4 +71,17 @@ class Whens(StrEnum):
     START = auto()
 
 
+###############################################################################
+class OptionKeys(StrEnum):
+    """Keys for option returns"""
+
+    DESTINATION = auto()
+    SKIP_CARD = auto()
+    DISCARD = auto()
+    REPLACE = auto()
+    TRASH = auto()
+    DONTADD = auto()
+    SHUFFLE = auto()
+
+
 # EOF

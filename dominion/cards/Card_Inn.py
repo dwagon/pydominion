@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, OptionKeys, Phase
 
 
 ###############################################################################
 class Card_Inn(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.HINTERLANDS
@@ -16,14 +16,14 @@ class Card_Inn(Card.Card):
         self.cost = 5
 
     def dynamic_description(self, player):
-        if player.phase == Player.Phase.BUY:
+        if player.phase == Phase.BUY:
             return """+2 Cards, +2 Actions, Discard 2 cards.
             When you gain this, look through your discard pile
             (including this), reveal any number of Action cards
             from it, and shuffle them into your deck."""
         return "+2 Cards, +2 Actions, Discard 2 cards"
 
-    def special(self, game, player):
+    def special(self, game, player) -> None:
         player.plr_discard_cards(num=2, force=True)
 
     def hook_gain_this_card(self, game, player):
@@ -40,7 +40,7 @@ class Card_Inn(Card.Card):
         )
         for card in back:
             if card.name == "Inn":
-                return {"destination": "deck", "shuffle": True}
+                return {OptionKeys.DESTINATION: "deck", "shuffle": True}
             player.piles[Piles.DISCARD].remove(card)
             player.add_card(card, "deck")
             player.piles[Piles.DECK].shuffle()
@@ -48,14 +48,14 @@ class Card_Inn(Card.Card):
 
 
 ###############################################################################
-class Test_Inn(unittest.TestCase):
-    def setUp(self):
+class TestInn(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Inn", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Inn")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play the card"""
         self.plr.piles[Piles.HAND].set("Duchy", "Province", "Gold", "Silver")
         self.plr.add_card(self.card, Piles.HAND)
@@ -64,13 +64,13 @@ class Test_Inn(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 4 + 2 - 2)
         self.assertEqual(self.plr.actions.get(), 2)
 
-    def test_gain(self):
+    def test_gain(self) -> None:
         self.plr.piles[Piles.DISCARD].set("Moat", "Gold")
         self.plr.test_input = ["Moat", "finish"]
         self.plr.gain_card("Inn")
         self.assertIn("Moat", self.plr.piles[Piles.DECK])
 
-    def test_gain_self(self):
+    def test_gain_self(self) -> None:
         self.plr.piles[Piles.DISCARD].set()
         self.plr.test_input = ["Inn", "finish"]
         self.plr.gain_card("Inn")

@@ -2,14 +2,16 @@
 """ http://wiki.dominionstrategy.com/index.php/Sailor"""
 
 import unittest
-from dominion import Card, Game, Piles
+from typing import Optional, Any
+
+from dominion import Card, Game, Piles, Player, OptionKeys
 
 
 ###############################################################################
 class Card_Sailor(Card.Card):
     """Sailor"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
         self.base = Card.CardExpansion.SEASIDE
@@ -19,59 +21,65 @@ class Card_Sailor(Card.Card):
         self.name = "Sailor"
         self.cost = 4
 
-    def hook_gain_card(self, game, player, card):
+    def hook_gain_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> Optional[dict[OptionKeys, Any]]:
         """Once this turn, when you gain a Duration card, you may play it."""
         if not card.isDuration():
             return {}
         if player.do_once("Sailor"):
-            to_play = player.plr_choose_options(
-                f"Sailor lets you play {card.name} now",
+            if to_play := player.plr_choose_options(
+                f"Sailor lets you play {card} now",
                 ("Don't play", False),
                 ("Play now", True),
-            )
-            if to_play:
-                player.move_card(card, Piles.HAND)
-                player.output(f"Playing {card.name} from Sailor effect")
-                player.play_card(card, cost_action=False)
-                return {"dontadd": True}
+            ):
+                player.output(f"Playing {card} from Sailor effect")
+                player.play_card(card, cost_action=False, discard=False)
+                return {OptionKeys.DESTINATION: Piles.DURATION}
         return {}
 
-    def duration(self, game, player):
-        """At the start of your next turn, +$2 and you may trash a card from your hand."""
+    def duration(
+        self, game: Game.Game, player: Player.Player
+    ) -> Optional[dict[OptionKeys, Any]]:
+        """At the start of your next turn, +$2; and you may trash a card from your hand."""
         player.coins.add(2)
         player.plr_trash_card(num=1)
+        return None
 
 
 ###############################################################################
 class Test_Sailor(unittest.TestCase):
     """Test Sailor"""
 
-    def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Sailor", "Guardian"])
+    def setUp(self) -> None:
+        self.g = Game.TestGame(numplayers=1, initcards=["Sailor", "Raider"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Sailor")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_playcard(self):
+    def test_play_card(self) -> None:
         """Play a sailor"""
         self.plr.play_card(self.card)
         self.plr.test_input = ["Play now"]
-        self.plr.gain_card("Guardian")
-        self.assertIn("Guardian", self.plr.piles[Piles.DURATION])
+        num_Raiders = len(self.g.card_piles["Raider"])
+        self.plr.gain_card("Raider")
+        self.assertIn("Raider", self.plr.piles[Piles.DURATION])
         self.assertIn("Sailor", self.plr.piles[Piles.DURATION])
+        self.assertEqual(len(self.g.card_piles["Raider"]), num_Raiders - 1)
         self.plr.end_turn()
         self.plr.piles[Piles.HAND].set("Gold", "Silver", "Copper")
-        self.plr.piles[Piles.DECK].set("Province")
         self.plr.test_input = ["Trash Copper"]
         self.plr.start_turn()
         self.g.print_state()
-        self.assertEqual(self.plr.coins.get(), 3)  # 2 for sailor, 1 for guardian
+        self.plr.piles[Piles.HAND].set("Gold", "Silver", "Copper")
+        self.plr.piles[Piles.DECK].set("Province")
+        self.assertEqual(self.plr.coins.get(), 2 + 3)  # 2 for sailor, 3 for Raider
         self.assertIn("Copper", self.g.trash_pile)
-        self.assertIn("Guardian", self.plr.piles[Piles.PLAYED])
+        self.assertIn("Raider", self.plr.piles[Piles.PLAYED])
         self.assertIn("Sailor", self.plr.piles[Piles.PLAYED])
 
-    def test_play_no_duration(self):
+    def test_play_no_duration(self) -> None:
         """Play a sailor but don't gain a duration card"""
         self.plr.play_card(self.card)
         self.plr.test_input = ["Play now"]
