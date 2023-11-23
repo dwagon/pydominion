@@ -34,7 +34,10 @@ class Card_Siren(Card.Card):
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """Each other player gains a Curse."""
         for victim in player.attack_victims():
-            victim.gain_card("Curse")
+            try:
+                victim.gain_card("Curse")
+            except NoCardException:
+                player.output("No more Curses")
 
     def duration(
         self, game: Game.Game, player: Player.Player

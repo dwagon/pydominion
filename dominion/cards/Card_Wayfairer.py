@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Wayfarer """
 
 import unittest
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -16,11 +16,14 @@ class Card_Wayfarer(Card.Card):
         self.cards = 3
         self.cost = 6
 
-    def special(self, game: "Game.Game", player: "Player.Player") -> None:
-        player.gain_card("Silver")
-        player.output("Gained a Silver")
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        try:
+            player.gain_card("Silver")
+            player.output("Gained a Silver")
+        except NoCardException:
+            player.output("No more Silver")
 
-    def hook_this_card_cost(self, game: "Game.Game", player: "Player.Player") -> int:
+    def hook_this_card_cost(self, game: Game.Game, player: Player.Player) -> int:
         if player.stats["gained"]:
             last_cost = player.stats["gained"][0].cost
             delta = -6 + last_cost

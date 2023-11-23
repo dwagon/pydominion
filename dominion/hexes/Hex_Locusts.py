@@ -23,7 +23,10 @@ class Hex_Locusts(Hex.Hex):
             return
         if nxt.name in ("Copper", "Estate"):
             player.output(f"Gaining a curse because your next card is {nxt}")
-            player.gain_card("Curse")
+            try:
+                player.gain_card("Curse")
+            except NoCardException:
+                player.output("No more Curses")
         else:
             player.output(
                 f"Gain a card costing {nxt.cost - 1} because your next card is {nxt}"

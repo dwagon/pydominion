@@ -28,8 +28,11 @@ class Card_Noble_Brigand(Card.Card):
         for victim in player.attack_victims():
             cards = self.get_treasure_cards(victim, player)
             if not cards:
-                victim.output(f"{player.name}'s Noble Brigand gave you a copper")
-                victim.gain_card("Copper")
+                try:
+                    victim.gain_card("Copper")
+                    victim.output(f"{player}'s Noble Brigand gave you a copper")
+                except NoCardException:
+                    player.output("No more Coppers")
                 continue
             ans = None
             choices = []
@@ -41,15 +44,13 @@ class Card_Noble_Brigand(Card.Card):
             for card in cards:
                 if card == ans:
                     victim.trash_card(card)
-                    victim.output(f"{player.name}'s Noble Brigand trashed your {card}")
-                    player.output(f"Stole {card} from {victim.name}")
+                    victim.output(f"{player}'s Noble Brigand trashed your {card}")
+                    player.output(f"Stole {card} from {victim}")
                     game.trash_pile.remove(ans)
                     card.player = player
                     player.add_card(ans)
                 else:
-                    victim.output(
-                        f"{player.name}'s Noble Brigand discarded your {card}"
-                    )
+                    victim.output(f"{player}'s Noble Brigand discarded your {card}")
                     victim.discard_card(card)
 
     @classmethod

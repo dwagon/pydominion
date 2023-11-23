@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Disciple(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.TRAVELLER]
         self.base = Card.CardExpansion.ADVENTURE
@@ -18,7 +18,7 @@ class Card_Disciple(Card.Card):
         self.numcards = 5
         self.cost = 5
 
-    def special(self, game, player) -> None:
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """You may play an Action card from your hand twice. Gain a copy of it"""
         actions = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not actions:
@@ -33,9 +33,11 @@ class Card_Disciple(Card.Card):
             player.play_card(card, discard=False, cost_action=False)
         player.move_card(card, Piles.PLAYED)
         if card.purchasable:
-            c = player.gain_card(card.name)
-            if c:
-                player.output(f"Gained a {c} from Disciple")
+            try:
+                player.gain_card(card.name)
+                player.output(f"Gained a {card} from Disciple")
+            except NoCardException:
+                player.output(f"No more {card.name}")
 
     def hook_discard_this_card(self, game, player, source):
         """Replace with Teacher"""

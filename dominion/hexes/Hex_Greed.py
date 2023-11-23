@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Hex
+from dominion import Card, Game, Piles, Hex, Player, NoCardException
 
 
 ###############################################################################
 class Hex_Greed(Hex.Hex):
-    def __init__(self):
+    def __init__(self) -> None:
         Hex.Hex.__init__(self)
         self.cardtype = Card.CardType.HEX
         self.base = Card.CardExpansion.NOCTURNE
@@ -14,13 +14,16 @@ class Hex_Greed(Hex.Hex):
         self.name = "Greed"
         self.purchasable = False
 
-    def special(self, game, player):
-        player.gain_card("Copper", Piles.DECK)
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        try:
+            player.gain_card("Copper", Piles.DECK)
+        except NoCardException:
+            player.output("No more Copper")
 
 
 ###############################################################################
 class TestGreed(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -29,7 +32,7 @@ class TestGreed(unittest.TestCase):
                 self.g.discarded_hexes.append(h)
                 self.g.hexes.remove(h)
 
-    def test_famine(self):
+    def test_famine(self) -> None:
         self.plr.piles[Piles.DECK].set("Duchy", "Cursed Village", "Gold")
         self.plr.gain_card("Cursed Village")
         self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Cursed Village"])

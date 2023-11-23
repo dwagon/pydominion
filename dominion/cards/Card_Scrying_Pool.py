@@ -43,20 +43,21 @@ def discard_or_put_back(victim: Player.Player, player: Player.Player) -> None:
     if player == victim:
         name = ("you", "your")
     else:
-        name = (victim.name, f"{victim.name}'s")
-    top_card = victim.next_card()
-    if top_card is None:
+        name = (victim.name, f"{victim}'s")
+    try:
+        top_card = victim.next_card()
+    except NoCardException:
         return
     victim.reveal_card(top_card)
     if putback := player.plr_choose_options(
         f"For {name[0]} which one?",
-        (f"Discard {top_card.name}", False),
-        (f"Putback {top_card.name}", True),
+        (f"Discard {top_card}", False),
+        (f"Putback {top_card}", True),
     ):
-        victim.output(f"Put {top_card.name} back on {name[1]} deck")
+        victim.output(f"Put {top_card} back on {name[1]} deck")
         victim.add_card(top_card, "topdeck")
     else:
-        victim.output(f"Discarded {top_card.name}")
+        victim.output(f"Discarded {top_card}")
         victim.add_card(top_card, "discard")
 
 
