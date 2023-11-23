@@ -33,10 +33,13 @@ class Card_Barbarian(Card.Card):
             victim_card = victim.top_card()
         except NoCardException:
             return
-        victim.output(f"{attacker.name}'s Barbarian: Trashes your {victim_card}")
+        victim.output(f"{attacker}'s Barbarian: Trashes your {victim_card}")
         victim.trash_card(victim_card)
         if victim_card.cost < 3:
-            victim.gain_card("Curse")
+            try:
+                victim.gain_card("Curse")
+            except NoCardException:
+                attacker.output("No more Curses")
             return
         cards = []
         for name, card_pile in game.get_card_piles():
@@ -45,8 +48,11 @@ class Card_Barbarian(Card.Card):
                 if check_card.cost < victim_card.cost:
                     cards.append(check_card)
         if cards:
-            gained = victim.card_sel(prompt="Gain a cheaper card", cardsrc=cards)
-            victim.gain_card(gained[0].name, Piles.DISCARD)
+            if gained := victim.card_sel(prompt="Gain a cheaper card", cardsrc=cards):
+                try:
+                    victim.gain_card(gained[0].name, Piles.DISCARD)
+                except NoCardException:
+                    victim.output(f"No more {gained[0]}")
         else:
             victim.output("No suitable cards")
 

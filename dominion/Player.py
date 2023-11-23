@@ -181,6 +181,10 @@ class Player:
             self.output(f"Not activating {src} traveller as not played")
             return
 
+        if self.game.card_piles[dst].is_empty():
+            self.output(f"No more {dst} cards")
+            return
+
         if self.plr_choose_options(
             "Replace Traveller",
             (f"Keep {src}", False),
@@ -1458,7 +1462,7 @@ class Player:
         destination: Piles = Piles.DISCARD,
         new_card: Optional[Card] = None,
         callhook: bool = True,
-    ) -> Optional[Card]:
+    ) -> Card:
         """Add a new card to the players set of cards from a card pile, return the card gained"""
         # Options:
         #   dontadd: True - adding card handled elsewhere
@@ -1471,7 +1475,7 @@ class Player:
             assert card_name is not None
             new_card = self._gain_card_from_name(card_name)
         if new_card is None:
-            return None
+            raise NoCardException
 
         self.output(f"Gained a {new_card}")
         if callhook:
@@ -1494,7 +1498,7 @@ class Player:
             else:
                 new_card.player = self
         if new_card is None:
-            return None
+            raise NoCardException
         self.stats["gained"].append(new_card)
         destination = options.get(OptionKeys.DESTINATION, destination)
         if callhook:
@@ -1577,8 +1581,12 @@ class Player:
             return
         if self.game.card_piles[new_card.pile].embargo_level:
             for _ in range(self.game.card_piles[new_card.pile].embargo_level):
-                self.gain_card("Curse")
-                self.output("Gained a Curse from embargo")
+                try:
+                    self.gain_card("Curse")
+                except NoCardException:
+                    self.output("No more Curses")
+                else:
+                    self.output("Gained a Curse from embargo")
         self.stats["bought"].append(new_card)
         self.output(f"Bought {new_card} for {cost} coin")
         if "Trashing" in self.which_token(new_card.name):

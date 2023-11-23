@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Sorcerer"""
 import unittest
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -25,7 +25,7 @@ class Card_Sorcerer(Card.Card):
         self.desc = """+1 Card; +1 Action; Each other player names a card,
             then reveals the top card of their deck. If wrong, they gain a Curse."""
 
-    def _generate_options(self, game: "Game.Game") -> list[tuple[str, str]]:
+    def _generate_options(self, game: Game.Game) -> list[tuple[str, str]]:
         """Generate the options for user interaction"""
         options: list[tuple[str, str]] = []
         for name, card_pile in game.get_card_piles():
@@ -34,7 +34,7 @@ class Card_Sorcerer(Card.Card):
                 options.append((name, name))
         return options
 
-    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         for plr in player.attack_victims():
             options = self._generate_options(game)
             pick = plr.plr_choose_options(
@@ -43,8 +43,11 @@ class Card_Sorcerer(Card.Card):
             if top_card := plr.piles[Piles.DECK].top_card():
                 player.reveal_card(top_card)
                 if top_card.name != pick:
-                    player.output(f"Top card is {top_card.name} not {pick}")
-                    plr.gain_card("Curse")
+                    player.output(f"Top card is {top_card} not {pick}")
+                    try:
+                        plr.gain_card("Curse")
+                    except NoCardException:
+                        player.output("No more Curses")
                 else:
                     player.output(f"Guessed {pick} correctly")
 

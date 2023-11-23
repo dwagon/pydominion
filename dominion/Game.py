@@ -838,8 +838,9 @@ class Game:  # pylint: disable=too-many-public-methods
         """Return all card stacks that are action cards that cost less than cost"""
         action_piles = []
         for name, pile in self.card_piles.items():
-            card = pile.get_top_card()
-            if not card:
+            try:
+                card = pile.get_top_card()
+            except NoCardException:
                 continue
             if not card.purchasable:
                 continue

@@ -394,31 +394,37 @@ class Test_gain_card(unittest.TestCase):
         self.game.start_game()
         self.plr = self.game.player_list()[0]
 
-    def test_gainByString(self) -> None:
+    def test_gain_by_string(self) -> None:
         """Gain card by name"""
         self.plr.gain_card("Copper")
-        self.assertEqual(self.plr.piles[Piles.DISCARD][0].name, "Copper")
-        self.assertEqual(self.plr.piles[Piles.DISCARD][0].player.name, self.plr.name)
+        top_card = self.plr.piles[Piles.DISCARD].top_card()
+        assert top_card.player is not None
+        self.assertEqual(top_card.name, "Copper")
+        self.assertEqual(top_card.player.name, self.plr.name)
 
-    def test_gainByCardpile(self) -> None:
+    def test_gain_by_cardpile(self) -> None:
         """Gain card by pile"""
         self.plr.gain_card("Copper")
-        self.assertEqual(self.plr.piles[Piles.DISCARD][0].name, "Copper")
-        self.assertEqual(self.plr.piles[Piles.DISCARD][0].player.name, self.plr.name)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].top_card().name, "Copper")
+        self.assertEqual(
+            self.plr.piles[Piles.DISCARD].top_card().player.name, self.plr.name
+        )
 
-    def test_gainSpecific(self) -> None:
+    def test_gain_specific(self) -> None:
         """Gain card by specific card"""
         cu = self.game.get_card_from_pile("Copper")
         self.plr.gain_card(new_card=cu)
-        self.assertEqual(self.plr.piles[Piles.DISCARD][0].name, "Copper")
-        self.assertEqual(self.plr.piles[Piles.DISCARD][0].player.name, self.plr.name)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].top_card().name, "Copper")
+        self.assertEqual(
+            self.plr.piles[Piles.DISCARD].top_card().player.name, self.plr.name
+        )
 
     def test_destination(self) -> None:
         """gain card to a specific destination"""
         self.plr.piles[Piles.HAND].empty()
         self.plr.gain_card("Copper", Piles.HAND)
         self.assertTrue(self.plr.piles[Piles.DISCARD].is_empty())
-        self.assertEqual(self.plr.piles[Piles.HAND][0].name, "Copper")
+        self.assertEqual(self.plr.piles[Piles.HAND].top_card().name, "Copper")
 
 
 ###############################################################################

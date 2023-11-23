@@ -3,12 +3,12 @@
 import unittest
 from typing import Any
 
-from dominion import Game, Card, Piles, Phase, Player
+from dominion import Game, Card, Piles, Phase, Player, NoCardException
 
 
 ###############################################################################
 class Card_Exorcist(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.NIGHT]
         self.base = Card.CardExpansion.NOCTURNE
@@ -33,6 +33,8 @@ class Card_Exorcist(Card.Card):
         idx = 0
         for card_name in ("Ghost", "Imp", "Will-o'-Wisp"):
             card = game.card_instances[card_name]
+            if game.card_piles[card_name].is_empty():
+                continue
             if card.cost < cost:
                 options.append(
                     {

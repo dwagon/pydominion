@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Sea_Witch"""
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_SeaWitch(Card.Card):
     """Sea Witch"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
             Card.CardType.ACTION,
@@ -24,30 +24,33 @@ class Card_SeaWitch(Card.Card):
         self.cards = 2
         self.cost = 5
 
-    def special(self, game, player):
-        for plr in player.attack_victims():
-            player.output(f"{player.name}'s Sea Witch cursed you")
-            player.output(f"{plr.name} got cursed")
-            plr.gain_card("Curse")
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        for victim in player.attack_victims():
+            try:
+                victim.gain_card("Curse")
+                player.output(f"{player}'s Sea Witch cursed you")
+                player.output(f"{victim} got cursed")
+            except NoCardException:
+                player.output("No more Curses")
 
-    def duration(self, game, player):
+    def duration(self, game: Game.Game, player: Player.Player) -> None:
         """+2 card, discard 2"""
         player.pickup_cards(2)
         player.plr_discard_cards(num=2, force=True)
 
 
 ###############################################################################
-class Test_SeaWitch(unittest.TestCase):
+class TestSeaWitch(unittest.TestCase):
     """Test Sea Witch"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Sea Witch"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g.get_card_from_pile("Sea Witch")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_playcard(self):
+    def test_play_card(self) -> None:
         """Play a sea witch"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)

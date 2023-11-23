@@ -4,6 +4,7 @@ import sys
 from typing import Any, Optional, Iterator, TYPE_CHECKING, Self
 
 from dominion.Card import Card
+from dominion import NoCardException
 
 if TYPE_CHECKING:
     from dominion.Game import Game
@@ -102,16 +103,16 @@ class PlayArea:
 
     ###########################################################################
     def next_card(self) -> Card:
-        """Take the next card of the playarea"""
+        """Take the next card of the play area"""
         return self._cards.pop()
 
     ###########################################################################
-    def top_card(self) -> Optional[Card]:
+    def top_card(self) -> Card:
         """Return the next card - but don't move it"""
         try:
             return self._cards[-1]
-        except IndexError:
-            return None
+        except IndexError as e:
+            raise NoCardException from e
 
     ###########################################################################
     def empty(self) -> None:
@@ -153,7 +154,7 @@ class PlayArea:
             yield card
 
     ###########################################################################
-    def sort(self, *args, **kwargs) -> None:
+    def sort(self, *args: Any, **kwargs: Any) -> None:
         self._cards.sort(*args, **kwargs)
 
     ###########################################################################

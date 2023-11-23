@@ -30,23 +30,32 @@ class Card_Jester(Card.Card):
             plr.discard_card(card)
             plr.output(f"{player}'s Jester discarded your {card}")
             if card.isVictory():
-                plr.output(f"{player.name}'s Jester cursed you")
-                player.output(f"Cursed {plr}")
-                plr.gain_card("Curse")
+                try:
+                    plr.gain_card("Curse")
+                    plr.output(f"{player}'s Jester cursed you")
+                    player.output(f"Cursed {plr}")
+                except NoCardException:
+                    player.output("No more Curses")
                 continue
             if player.plr_choose_options(
                 f"Who should get a copy of {plr}'s {card}",
                 (f"You get a {card}", True),
                 (f"{plr} gets a {card}", False),
             ):
-                player.gain_card(card.name)
+                try:
+                    player.gain_card(card.name)
+                except NoCardException:
+                    player.output(f"No more {card.name}")
             else:
-                plr.output(f"{player.name}'s Jester gave you a {card}")
-                plr.gain_card(card.name)
+                try:
+                    plr.gain_card(card.name)
+                    plr.output(f"{player}'s Jester gave you a {card}")
+                except NoCardException:
+                    player.output(f"No more {card.name}")
 
 
 ###############################################################################
-class Test_Jester(unittest.TestCase):
+class TestJester(unittest.TestCase):
     """Test Jester"""
 
     def setUp(self) -> None:

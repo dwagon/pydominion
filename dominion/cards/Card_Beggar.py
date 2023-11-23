@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -19,14 +19,20 @@ class Card_Beggar(Card.Card):
     def special(self, game: Game.Game, player: Player.Player) -> None:
         player.output("Gaining 3 coppers")
         for _ in range(3):
-            player.gain_card("Copper", Piles.HAND)
+            try:
+                player.gain_card("Copper", Piles.HAND)
+            except NoCardException:
+                player.output("No more Copper")
 
     def hook_under_attack(
         self, game: Game.Game, player: Player.Player, attacker: Player.Player
     ) -> None:
-        player.output(f"Gaining silvers as under attack from {attacker}")
-        player.gain_card("Silver", "topdeck")
-        player.gain_card("Silver")
+        try:
+            player.gain_card("Silver", "topdeck")
+            player.gain_card("Silver")
+            player.output(f"Gaining silvers as under attack from {attacker}")
+        except NoCardException:
+            player.output("No more Silvers")
 
 
 ###############################################################################

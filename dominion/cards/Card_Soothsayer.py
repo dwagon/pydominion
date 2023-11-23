@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Soothsayer(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.GUILDS
@@ -16,25 +15,31 @@ class Card_Soothsayer(Card.Card):
         self.name = "Soothsayer"
         self.cost = 5
 
-    def special(self, game, player):
-        player.gain_card("Gold")
-        for pl in player.attack_victims():
-            player.output(f"{pl.name} got cursed")
-            pl.output(f"{player.name}'s Soothsayer cursed you")
-            pl.gain_card("Curse")
-            pl.pickup_cards(1)
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        try:
+            player.gain_card("Gold")
+        except NoCardException:
+            player.output("No more Gold")
+        for victim in player.attack_victims():
+            try:
+                victim.gain_card("Curse")
+                victim.output(f"{player}'s Soothsayer cursed you")
+                player.output(f"{victim} got cursed")
+            except NoCardException:
+                player.output("No more Curses")
+            victim.pickup_cards(1)
 
 
 ###############################################################################
 class Test_Soothsayer(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Soothsayer"])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
         self.wcard = self.g.get_card_from_pile("Soothsayer")
         self.attacker.add_card(self.wcard, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         self.attacker.play_card(self.wcard)
         self.assertEqual(self.victim.piles[Piles.HAND].size(), 6)
         self.assertIn("Curse", self.victim.piles[Piles.DISCARD])

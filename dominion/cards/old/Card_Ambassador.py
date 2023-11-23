@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Ambassador"""
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -42,9 +42,12 @@ class Card_Ambassador(Card.Card):
         player.output(f"Putting {card_name} back")
         for card in choice:
             player.move_card(card, Piles.CARDPILE)
-        for plr in player.attack_victims():
-            plr.output(f"Gained a {card_name} from {player.name}'s Ambassador")
-            plr.gain_card(card_name)
+        for victim in player.attack_victims():
+            try:
+                victim.gain_card(card_name)
+                victim.output(f"Gained a {card_name} from {player}'s Ambassador")
+            except NoCardException:
+                player.output(f"No more {card_name}s")
 
 
 ###############################################################################
