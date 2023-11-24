@@ -40,7 +40,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def __init__(self, **kwargs: Any) -> None:
         self.players: dict[str, Player] = {}
         self.bot = False
-        self.randobot = False
+        self.randobot = 0
         self.card_piles: dict[str, CardPile] = {}
         self.states: dict[str, State] = {}
         self.artifacts: dict[str, Artifact] = {}
@@ -105,9 +105,9 @@ class Game:  # pylint: disable=too-many-public-methods
             self._base_cards.append("Platinum")
 
         self.card_mapping = self._get_available_card_classes()
-        self._original = {}
+        self._original: dict[str, int | dict[str, dict[str, int]]] = {}
         self.loaded_travellers = False  # For testing purposes
-        self._cards = {}
+        self._cards: dict[str, Card] = {}
         self.card_instances: dict[str, Card] = {}
 
     ###########################################################################
@@ -183,7 +183,9 @@ class Game:  # pylint: disable=too-many-public-methods
 
     ###########################################################################
     def start_game(
-        self, player_names: Optional[list[str]] = None, plr_class=TextPlayer
+        self,
+        player_names: Optional[list[str]] = None,
+        plr_class: type[Player] = TextPlayer,
     ) -> None:
         """Initialise game bits"""
 
@@ -208,7 +210,9 @@ class Game:  # pylint: disable=too-many-public-methods
 
     ###########################################################################
     def _setup_players(
-        self, playernames: Optional[list[str]] = None, plr_class: Callable = TextPlayer
+        self,
+        playernames: Optional[list[str]] = None,
+        plr_class: type[Player] = TextPlayer,
     ) -> None:
         use_shelters = self._use_shelters()
         names = playerNames[:]
@@ -243,7 +247,6 @@ class Game:  # pylint: disable=too-many-public-methods
             else:
                 self.players[the_uuid] = plr_class(
                     game=self,
-                    quiet=self.quiet,
                     name=name,
                     number=player_num,
                     heirlooms=self._heirlooms,
@@ -266,16 +269,13 @@ class Game:  # pylint: disable=too-many-public-methods
     def card_setup(self) -> None:
         """Run the setup() method for all cards"""
         for name, card_pile in list(self.card_piles.items()):
-            try:  # Handle empty card piles
-                card_pile.setup(game=self)
-            except TypeError:
-                pass
+            card_pile.setup(game=self)
         for landmark in list(self.landmarks.values()):
             landmark.setup(game=self)
 
     ###########################################################################
     def count_cards(self) -> int:
-        """TODO"""
+        """Count the number of cards in the game"""
         count = {"trash": self.trash_pile.size()}
         for name, pile in list(self.card_piles.items()):
             count[f"pile_{name}"] = len(pile)
@@ -365,9 +365,7 @@ class Game:  # pylint: disable=too-many-public-methods
             num_required=self.init_numbers[Keys.EVENT],
         )
         if self.events:
-            self.output(
-                f"Playing with Events: {', '.join(event for event in self.events)}"
-            )
+            self.output(f"Playing with Events: {', '.join(self.events)}")
 
     ###########################################################################
     def _load_landmarks(self) -> None:
@@ -473,15 +471,15 @@ class Game:  # pylint: disable=too-many-public-methods
 
     ###########################################################################
     def _load_non_kingdom_cards(
-        self, cardtype: str, specified, num_required: Optional[int] = None
-    ):
+        self, cardtype: str, specified: list[str], num_required: Optional[int] = None
+    ) -> dict[str, Card]:
         """Load non kingdom cards into the game
         If specific cards are required they need to be in `specified`
         Up to numrequired cards will be used
 
         Returns a dictionary; key is the name, value is the instance
         """
-        dest = {}
+        dest: dict[str, Card] = {}
         available = self.getAvailableCards(cardtype)
         # Specified cards
         if specified is not None:
@@ -834,7 +832,7 @@ class Game:  # pylint: disable=too-many-public-methods
         return list(self.card_mapping[prefix].keys())
 
     ###########################################################################
-    def get_action_piles(self, cost=999) -> list[str]:
+    def get_action_piles(self, cost: int = 999) -> list[str]:
         """Return all card stacks that are action cards that cost less than cost"""
         action_piles = []
         for name, pile in self.card_piles.items():

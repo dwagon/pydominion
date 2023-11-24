@@ -42,13 +42,13 @@ class Test_Adventurer(unittest.TestCase):
     def test_treasures(self) -> None:
         self.plr.piles[Piles.DECK].set("Copper", "Silver", "Gold", "Estate")
         self.plr.piles[Piles.HAND].set("Adventurer")
-        self.plr.play_card(self.plr.piles[Piles.HAND][0])
+        self.plr.play_card(self.plr.piles[Piles.HAND].top_card())
         self.assertEqual(
             sorted(["Silver", "Gold"]),
-            sorted([c.name for c in self.plr.piles[Piles.HAND]]),
+            sorted([_.name for _ in self.plr.piles[Piles.HAND]]),
         )
         self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Estate"])
-        self.assertEqual(self.plr.piles[Piles.DECK][0].name, "Copper")
+        self.assertEqual(self.plr.piles[Piles.DECK].top_card().name, "Copper")
 
 
 ###############################################################################

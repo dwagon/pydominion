@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, NoCardException
+from typing import Any
+
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Duchess(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.HINTERLANDS
@@ -16,17 +18,14 @@ class Card_Duchess(Card.Card):
         self.coin = 2
         self.cost = 2
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         for plr in game.player_list():
             try:
                 card = plr.next_card()
             except NoCardException:
                 continue
-            if plr == player:
-                name = "your"
-            else:
-                name = f"{player.name}'s"
-            if keep := plr.plr_choose_options(
+            name = "your" if plr == player else f"{player}'s"
+            if plr.plr_choose_options(
                 f"Due to {name} Duchess you can keep or discard the top card",
                 (f"Keep {card} on top of deck", True),
                 (f"Discard {card}", False),
@@ -38,7 +37,9 @@ class Card_Duchess(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(
+    player: Player.Player, kind: str, args: Any = None, kwargs: Any = None
+) -> Any:  # pragma: no cover
     if "Estate" in args[0] or "Duchy" in args[0] or "Province" in args[0]:
         return False
     return True
@@ -46,13 +47,13 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 ###############################################################################
 class TestDuchess(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Duchess"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Duchess")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play duchess - keep on deck"""
         self.plr.piles[Piles.DECK].set("Province")
         self.plr.add_card(self.card, Piles.HAND)
@@ -62,7 +63,7 @@ class TestDuchess(unittest.TestCase):
         self.assertIn("Province", self.plr.piles[Piles.DECK])
         self.assertNotIn("Province", self.plr.piles[Piles.DISCARD])
 
-    def test_disacrd(self):
+    def test_disacrd(self) -> None:
         """Play duchess - discard"""
         self.plr.piles[Piles.DECK].set("Province")
         self.plr.add_card(self.card, Piles.HAND)
@@ -72,13 +73,13 @@ class TestDuchess(unittest.TestCase):
         self.assertNotIn("Province", self.plr.piles[Piles.DECK])
         self.assertIn("Province", self.plr.piles[Piles.DISCARD])
 
-    def test_buy_duchess(self):
+    def test_buy_duchess(self) -> None:
         self.plr.test_input = ["Duchess"]
         self.plr.gain_card("Duchy")
         self.assertIn("Duchess", self.plr.piles[Piles.DISCARD])
         self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
 
-    def test_buy_duchy(self):
+    def test_buy_duchy(self) -> None:
         self.plr.test_input = ["No"]
         self.plr.gain_card("Duchy")
         self.assertNotIn("Duchess", self.plr.piles[Piles.DISCARD])

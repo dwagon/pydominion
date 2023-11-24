@@ -9,7 +9,9 @@ class Trait(Card.Card):
     """Class representing traits - mostly just card code"""
 
     def __init__(self, cardname: Optional[str] = None, klass=None) -> None:
-        self.card_pile = None  # Which card pile this trait is associated with
+        self.card_pile: Optional[
+            Card.Card
+        ] = None  # Which card pile this trait is associated with
         Card.Card.__init__(self)
         if cardname:
             self.name = cardname

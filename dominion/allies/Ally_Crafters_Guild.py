@@ -13,12 +13,11 @@ class Ally_Crafters_Guild(Ally.Ally):
         self.desc = """At the start of your turn, you may spend 2 Favors to gain a card costing up to $4 onto your deck."""
         self.name = "Crafters' Guild"
 
-    def hook_start_turn(self, game: "Game.Game", player: "Player.Player") -> None:
+    def hook_start_turn(self, game: Game.Game, player: Player.Player) -> None:
         if player.favors.get() < 2:
             return
         player.output("Crafters' Guild lets you gain a card for 2 favours")
-        card = player.plr_gain_card(4, destination="deck")
-        if card:
+        if player.plr_gain_card(4, destination=Piles.DECK):
             player.favors.add(-2)
 
 
