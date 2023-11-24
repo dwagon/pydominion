@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Idol(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
             Card.CardType.TREASURE,
@@ -23,30 +22,35 @@ class Card_Idol(Card.Card):
         self.cost = 5
         self.required_cards = ["Curse"]
 
-    def special(self, game, player):
-        idols = player.piles[Piles.PLAYED].count("Idol") + player.piles[Piles.HAND].count("Idol")
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        idols = player.piles[Piles.PLAYED].count("Idol") + player.piles[
+            Piles.HAND
+        ].count("Idol")
         if idols % 2 == 1:  # Odd
             player.receive_boon()
         else:  # Even
-            for pl in player.attack_victims():
-                pl.output(f"{player.name}'s Idol cursed you")
-                pl.gain_card("Curse")
+            for victim in player.attack_victims():
+                try:
+                    victim.gain_card("Curse")
+                    victim.output(f"{player}'s Idol cursed you")
+                except NoCardException:
+                    player.output("No more Curses")
 
 
 ###############################################################################
 class Test_Idol(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Idol"], badcards=["Druid"])
         self.g.start_game()
         for b in self.g.boons:
             if b.name == "The Mountain's Gift":
-                myboon = b
+                self.g.boons = [b]
                 break
-        self.g.boons = [myboon]
+
         self.plr, self.vic = self.g.player_list()
         self.card = self.g.get_card_from_pile("Idol")
 
-    def test_play_even(self):
+    def test_play_even(self) -> None:
         """Play an even number of Idol"""
         self.plr.piles[Piles.PLAYED].set("Idol", "Gold")
         self.plr.add_card(self.card, Piles.HAND)
@@ -55,7 +59,7 @@ class Test_Idol(unittest.TestCase):
         self.assertIn("Curse", self.vic.piles[Piles.DISCARD])
         self.assertNotIn("Silver", self.plr.piles[Piles.DISCARD])
 
-    def test_play_odd(self):
+    def test_play_odd(self) -> None:
         """Play an odd number of Idol"""
         self.plr.piles[Piles.PLAYED].set("Gold")
         self.plr.add_card(self.card, Piles.HAND)

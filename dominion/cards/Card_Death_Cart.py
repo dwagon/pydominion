@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
+from typing import Optional, Any
+
+from dominion import Card, Game, Piles, Player, NoCardException, OptionKeys
 
 
 ###############################################################################
 class Card_Deathcart(Card.Card):
     """Death Cart"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.LOOTER]
         self.base = Card.CardExpansion.DARKAGES
@@ -17,8 +19,8 @@ class Card_Deathcart(Card.Card):
         self.name = "Death Cart"
         self.cost = 4
 
-    def special(self, game, player):
-        action_cards = [c for c in player.piles[Piles.HAND] if c.isAction()]
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        action_cards = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         choices = [
             ("Trash this Death Cart for 5 Gold", "trash_dc"),
         ]
@@ -28,7 +30,7 @@ class Card_Deathcart(Card.Card):
             choices.append(("No action cards to trash", "nothing"))
         choices.append(("Do nothing", "nothing"))
         ans = player.plr_choose_options("What to do with Death Cart?", *choices)
-        trash = None
+        trash: Optional[bool] = None
         if ans == "nothing":
             return
         if ans == "trash_action":
@@ -40,10 +42,16 @@ class Card_Deathcart(Card.Card):
         if trash:
             player.coins.add(5)
 
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> Optional[dict[OptionKeys, Any]]:
         for _ in range(2):
-            if card := player.gain_card("Ruins"):
-                player.output(f"Gained {card.name}")
+            try:
+                if card := player.gain_card("Ruins"):
+                    player.output(f"Gained {card}")
+            except NoCardException:
+                player.output("No more Ruins")
+                break
         return {}
 
 
@@ -51,7 +59,7 @@ class Card_Deathcart(Card.Card):
 class Test_Deathcart(unittest.TestCase):
     """Test Death Cart"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1,
             initcards=["Death Cart", "Moat"],
@@ -60,7 +68,7 @@ class Test_Deathcart(unittest.TestCase):
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Death Cart")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a death cart - no actions"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Do nothing"]
@@ -68,7 +76,7 @@ class Test_Deathcart(unittest.TestCase):
         self.assertEqual(self.plr.coins.get(), 0)
         self.assertNotIn("Death Cart", self.g.trash_pile)
 
-    def test_play_trash_action(self):
+    def test_play_trash_action(self) -> None:
         """Play a death cart - no actions"""
         self.plr.piles[Piles.HAND].set("Copper", "Moat")
         self.plr.add_card(self.card, Piles.HAND)
@@ -78,7 +86,7 @@ class Test_Deathcart(unittest.TestCase):
         self.assertIn("Moat", self.g.trash_pile)
         self.assertNotIn("Death Cart", self.g.trash_pile)
 
-    def test_play_trash_self(self):
+    def test_play_trash_self(self) -> None:
         """Play a death cart - no actions"""
         self.plr.piles[Piles.HAND].set("Copper", "Moat")
         self.plr.add_card(self.card, Piles.HAND)

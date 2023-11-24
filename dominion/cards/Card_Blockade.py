@@ -30,6 +30,8 @@ gains a copy of it on their turn, they gain a Curse."""
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """Gain a card costing up to $4, setting it aside."""
         self._blockade = player.plr_gain_card(4)
+        assert self._blockade is not None
+        player.move_card(self._blockade, Piles.DISCARD)  # In case it isn't there yet
         player.piles[Piles.DISCARD].remove(self._blockade)
         player.secret_count += 1
 

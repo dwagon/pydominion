@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player, Phase, NoCardException, OptionKeys
 
 
 ###############################################################################
 class Card_IGG(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.HINTERLANDS
@@ -15,34 +15,42 @@ class Card_IGG(Card.Card):
         self.cost = 5
         self.coin = 1
 
-    def desc(self, player):
-        if player.phase == "buy":
+    def dynamic_description(self, player: Player.Player) -> str:
+        if player.phase == Phase.BUY:
             return """+1 Coin. When you play this, you may gain a Copper, putting
                 it into your hand. When you gain this, each other player gains
                 a Curse."""
         return "+1 Coin. When you play this, you may gain a Copper, putting it into your hand."
 
-    def special(self, game, player):
-        ans = player.plr_choose_options("Gain a Copper into your hand?", ("No thanks", False), ("Gain Copper", True))
-        if ans:
-            player.gain_card("Copper", destination=Piles.HAND)
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        if player.plr_choose_options(
+            "Gain a Copper into your hand?",
+            ("No thanks", False),
+            ("Gain Copper", True),
+        ):
+            try:
+                player.gain_card("Copper", destination=Piles.HAND)
+            except NoCardException:
+                player.output("No more Coppers")
 
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(self, game: Game.Game, player: Player.Player):
         for plr in player.attack_victims():
             plr.gain_card("Curse")
-            plr.output("Cursed because %s gained an Ill-Gotten Gains" % player.name)
+            plr.output(f"Cursed because {player} gained an Ill-Gotten Gains")
         return {}
 
 
 ###############################################################################
-class Test_IGG(unittest.TestCase):
-    def setUp(self):
-        self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Ill-Gotten Gains"])
+class TestIGG(unittest.TestCase):
+    def setUp(self) -> None:
+        self.g = Game.TestGame(
+            numplayers=2, oldcards=True, initcards=["Ill-Gotten Gains"]
+        )
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g.get_card_from_pile("Ill-Gotten Gains")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play an Ill-Gotten Gains"""
         self.plr.piles[Piles.HAND].set("Estate")
         self.plr.add_card(self.card, Piles.HAND)

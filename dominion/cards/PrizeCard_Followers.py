@@ -21,8 +21,11 @@ class Card_Followers(Card.Card):
         self.desc = "+2 Cards. Gain an Estate. Each other player gains a Curse and discards down to 3 cards in hand."
         self.cards = 2
 
-    def special(self, game, player) -> None:
-        player.gain_card("Estate")
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        try:
+            player.gain_card("Estate")
+        except NoCardException:
+            player.output("No more Estates")
         for plr in player.attack_victims():
             try:
                 plr.gain_card("Curse")

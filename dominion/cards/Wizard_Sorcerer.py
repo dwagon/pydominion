@@ -40,16 +40,20 @@ class Card_Sorcerer(Card.Card):
             pick = plr.plr_choose_options(
                 "Sorcerer: Guess the top card correctly or get a curse", *options
             )
-            if top_card := plr.piles[Piles.DECK].top_card():
-                player.reveal_card(top_card)
-                if top_card.name != pick:
-                    player.output(f"Top card is {top_card} not {pick}")
-                    try:
-                        plr.gain_card("Curse")
-                    except NoCardException:
-                        player.output("No more Curses")
-                else:
-                    player.output(f"Guessed {pick} correctly")
+            try:
+                top_card = plr.piles[Piles.DECK].top_card()
+            except NoCardException:
+                player.output("No cards in deck")
+                continue
+            player.reveal_card(top_card)
+            if top_card.name != pick:
+                player.output(f"Top card is {top_card} not {pick}")
+                try:
+                    plr.gain_card("Curse")
+                except NoCardException:
+                    player.output("No more Curses")
+            else:
+                player.output(f"Guessed {pick} correctly")
 
 
 ###############################################################################
