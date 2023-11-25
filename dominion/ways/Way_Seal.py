@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Way, Piles, OptionKeys
+from typing import Optional, Any
+
+from dominion import Card, Game, Way, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -14,11 +16,12 @@ class Way_Seal(Way.Way):
         )
         self.name = "Way of the Seal"
 
-    def special(self, game, player) -> None:
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         player.coins.add(1)
-        player.add_hook("gain_card", self.gain_card)
 
-    def gain_card(self, game, player, card):
+    def hook_gain_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> Optional[dict[OptionKeys, Any]]:
         mod = {}
         if deck := player.plr_choose_options(
             f"Seal: Where to put {card}?",
