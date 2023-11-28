@@ -303,6 +303,9 @@ class Player:
     def trash_card(self, card: Card, **kwargs: Any) -> None:
         """Take a card out of the game"""
         assert isinstance(card, Card)
+        if card.location == Piles.TRASH:
+            self.output(f"{card} already in trash")
+            return
         self.stats["trashed"].append(card)
         trash_opts: dict[OptionKeys, Any] = {}
         if rc := card.hook_trash_this_card(game=self.game, player=self):

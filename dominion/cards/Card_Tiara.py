@@ -30,7 +30,8 @@ class Card_Tiara(Card.Card):
         if treasure := player.card_sel(cardsrc=treasures):
             for _ in range(2):
                 player.play_card(treasure[0], discard=False, cost_action=False)
-            player.move_card(treasure[0], Piles.PLAYED)
+            if treasure[0].location == Piles.HAND:
+                player.move_card(treasure[0], Piles.PLAYED)
 
     def hook_gain_card(
         self, game: Game.Game, player: Player.Player, card: Card.Card
@@ -50,7 +51,7 @@ class TestTiara(unittest.TestCase):
     """Test Tiara"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=1, initcards=["Tiara"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Tiara", "Investment"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Tiara")
@@ -85,6 +86,24 @@ class TestTiara(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), coins + 2)  # Copper twice
         self.assertNotIn("Copper", self.plr.piles[Piles.HAND])
+
+    def test_self_trasher(self) -> None:
+        """Test playing a card that trashes itself"""
+        self.plr.piles[Piles.HAND].set("Investment", "Copper", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
+        coins = self.plr.coins.get()
+        self.plr.test_input = [
+            "Select Investment",
+            "Trash Copper",
+            "Trash this",
+            "Trash Estate",
+            "Trash this",
+        ]
+        self.plr.play_card(self.card)
+        self.g.print_state()
+        self.assertIn("Investment", self.g.trash_pile)
+        self.assertNotIn("Investment", self.plr.piles[Piles.PLAYED])
+        self.assertIn("Estate", self.g.trash_pile)
 
 
 ###############################################################################
