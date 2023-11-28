@@ -4,7 +4,7 @@
 
 import unittest
 import random
-from dominion import Card, Game, Piles, Keys, Player
+from dominion import Card, Game, Piles, Keys, Player, NoCardException
 
 BANE = "young witch bane"
 
@@ -49,13 +49,16 @@ class Card_YoungWitch(Card.Card):
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         player.plr_discard_cards(num=2, force=True)
-        for pl in player.attack_victims():
-            if pl.piles[Piles.HAND][game.specials[BANE]]:
-                player.output(f"{pl.name} has the bane: {game.specials[BANE]}")
+        for victim in player.attack_victims():
+            if victim.piles[Piles.HAND][game.specials[BANE]]:
+                player.output(f"{victim} has the bane: {game.specials[BANE]}")
                 continue
-            player.output(f"{pl.name} got cursed")
-            pl.output(f"{player.name}'s Young Witch cursed you")
-            pl.gain_card("Curse")
+            player.output(f"{victim} got cursed")
+            victim.output(f"{player}'s Young Witch cursed you")
+            try:
+                victim.gain_card("Curse")
+            except NoCardException:
+                player.output("No more Curses")
 
 
 ###############################################################################

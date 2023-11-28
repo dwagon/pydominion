@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -16,7 +16,7 @@ class Card_Transmute(Card.Card):
         self.required_cards = ["Potion"]
         self.potcost = True
 
-    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Trash a card from your hand. If it is an...
         Action card, gain a Duchy, Treasure card, gain a Transmute,
         Victory card, gain a gold"""
@@ -45,11 +45,14 @@ class Card_Transmute(Card.Card):
             return
         player.trash_card(o["card"])
         if o["gain"] != "Nothing":
-            player.gain_card(o["gain"])
+            try:
+                player.gain_card(o["gain"])
+            except NoCardException:
+                player.output(f"No more {o['gain']}")
 
 
 ###############################################################################
-class Test_Transmute(unittest.TestCase):
+class TestTransmute(unittest.TestCase):
     def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1, initcards=["Transmute"], badcards=["Duchess"]

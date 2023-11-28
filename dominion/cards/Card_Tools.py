@@ -3,7 +3,7 @@
 
 import unittest
 
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -18,7 +18,7 @@ class Card_Tools(Card.Card):
         self.name = "Tools"
         self.cost = 4
 
-    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Gain a copy of a card anyone has in play."""
         available: set[str] = set(["Tools"])
         for plr in game.player_list():
@@ -29,7 +29,10 @@ class Card_Tools(Card.Card):
         options: list[tuple[str, str | None]] = [("Gain nothing", None)]
         options.extend((f"Gain {card_name}", card_name) for card_name in available)
         if to_gain := player.plr_choose_options("Gain a card", *options):
-            player.gain_card(to_gain)
+            try:
+                player.gain_card(to_gain)
+            except NoCardException:
+                player.output(f"No more {to_gain}")
 
 
 ###############################################################################

@@ -4,7 +4,7 @@ import contextlib
 import unittest
 from typing import Optional, Any
 
-from dominion import Card, Game, Piles, Player, NoCardException
+from dominion import Card, Game, Piles, Player, NoCardException, OptionKeys
 
 
 ###############################################################################
@@ -24,13 +24,16 @@ class Card_Rats(Card.Card):
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """Gain a Rats. Trash a card from your hand other than a Rats."""
-        player.output("Gained a Rays")
-        player.gain_card("Rats")
+        try:
+            player.gain_card("Rats")
+            player.output("Gained a Rays")
+        except NoCardException:
+            player.output("No more Rats")
         player.plr_trash_card(force=True, exclude=["Rats"])
 
     def hook_trash_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[str, Any]]:
+    ) -> Optional[dict[OptionKeys, Any]]:
         """When you trash this +1 Card"""
         with contextlib.suppress(NoCardException):
             player.pickup_card(verb="Due to trashing Rats picked up")

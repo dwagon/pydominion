@@ -4,7 +4,7 @@
 import unittest
 from typing import Optional, Any
 
-from dominion import Game, Card, Piles, Player, Whens
+from dominion import Game, Card, Piles, Player, NoCardException, OptionKeys
 
 
 ###############################################################################
@@ -30,12 +30,14 @@ gains a copy of it on their turn, they gain a Curse."""
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """Gain a card costing up to $4, setting it aside."""
         self._blockade = player.plr_gain_card(4)
+        assert self._blockade is not None
+        player.move_card(self._blockade, Piles.DISCARD)  # In case it isn't there yet
         player.piles[Piles.DISCARD].remove(self._blockade)
         player.secret_count += 1
 
     def duration(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[str, str]]:
+    ) -> Optional[dict[OptionKeys, str]]:
         """At the start of your next turn, put it into your hand"""
         if self._blockade:
             player.add_card(self._blockade, Piles.HAND)
@@ -49,14 +51,17 @@ gains a copy of it on their turn, they gain a Curse."""
         player: Player.Player,
         owner: Player.Player,
         card: Card.Card,
-    ) -> Optional[dict[str, Any]]:
+    ) -> Optional[dict[OptionKeys, Any]]:
         """While it's set aside, when another player gains a copy of it on their turn, they gain a Curse."""
         if not self._blockade or player == owner:
             return None
         if card.name != self._blockade.name:
             return None
-        player.output(f"Gained a Curse from {owner}'s Blockade")
-        player.gain_card("Curse")
+        try:
+            player.output(f"Gained a Curse from {owner}'s Blockade")
+            player.gain_card("Curse")
+        except NoCardException:
+            player.output("No more Curses")
         return None
 
 

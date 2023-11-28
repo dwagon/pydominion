@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Hideout(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.RENAISSANCE
@@ -18,20 +18,23 @@ class Card_Hideout(Card.Card):
         self.cost = 4
 
     ###########################################################################
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         card = player.plr_trash_card(num=1, force=True)
         if card[0].isVictory():
-            player.gain_card("Curse")
+            try:
+                player.gain_card("Curse")
+            except NoCardException:
+                player.output("No more Curses")
 
 
 ###############################################################################
-class Test_Hideout(unittest.TestCase):
-    def setUp(self):
+class TestHideout(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Hideout"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_play_card(self):
+    def test_play_card(self) -> None:
         self.plr.piles[Piles.DECK].set("Silver")
         self.plr.piles[Piles.HAND].set("Copper", "Estate")
         self.card = self.g.get_card_from_pile("Hideout")
@@ -41,7 +44,7 @@ class Test_Hideout(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
 
-    def test_trashVictory(self):
+    def test_trash_victory(self) -> None:
         self.plr.piles[Piles.DECK].set("Silver")
         self.plr.piles[Piles.HAND].set("Copper", "Estate")
         self.card = self.g.get_card_from_pile("Hideout")

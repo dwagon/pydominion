@@ -3,7 +3,7 @@
 import unittest
 from typing import Optional, Any
 
-from dominion import Card, Game, Piles, Phase, OptionKeys, Player
+from dominion import Card, Game, Piles, Phase, OptionKeys, Player, NoCardException
 
 
 ###############################################################################
@@ -42,7 +42,10 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
         o = player.user_input(options, "Trash Changeling to gain a card")
         if o["card"]:
             player.trash_card(self)
-            player.gain_card(o["card"].name)
+            try:
+                player.gain_card(o["card"].name)
+            except NoCardException:
+                player.output(f"No more {o['card']}")
 
 
 ###############################################################################

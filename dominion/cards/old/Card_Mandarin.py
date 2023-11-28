@@ -3,7 +3,7 @@
 import unittest
 from typing import Any
 
-from dominion import Card, Game, Piles, Player, Phase
+from dominion import Card, Game, Piles, Player, Phase, OptionKeys
 
 
 ###############################################################################
@@ -32,7 +32,7 @@ class Card_Mandarin(Card.Card):
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> dict[str, Any]:
+    ) -> dict[OptionKeys, Any]:
         for card in player.piles[Piles.PLAYED]:
             if card.isTreasure():
                 player.output(f"Putting {card} on to deck")
@@ -55,13 +55,13 @@ class Test_Mandarin(unittest.TestCase):
         self.plr.test_input = ["Gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 3)
-        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Gold")
+        self.assertEqual(self.plr.piles[Piles.DECK].top_card().name, "Gold")
 
     def test_gain(self) -> None:
         """Gain the card"""
         self.plr.piles[Piles.PLAYED].set("Gold", "Duchy")
         self.plr.gain_card("Mandarin")
-        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Gold")
+        self.assertEqual(self.plr.piles[Piles.DECK].top_card().name, "Gold")
         self.assertIn("Duchy", self.plr.piles[Piles.PLAYED])
 
 

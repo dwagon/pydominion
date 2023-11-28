@@ -2,12 +2,12 @@
 """ https://wiki.dominionstrategy.com/index.php/Swamp_Hag"""
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_SwampHag(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
             Card.CardType.ACTION,
@@ -21,30 +21,36 @@ class Card_SwampHag(Card.Card):
         self.name = "Swamp Hag"
         self.cost = 5
 
-    def special(self, game, player):
-        pass
-
-    def duration(self, game, player):
+    def duration(self, game: Game.Game, player: Player.Player) -> None:
         player.coins.add(3)
 
-    def hook_all_players_buy_card(self, game, player, owner, card):
+    def hook_all_players_buy_card(
+        self,
+        game: Game.Game,
+        player: Player.Player,
+        owner: Player.Player,
+        card: Card.Card,
+    ) -> None:
         if player == owner:
             return
-        player.gain_card("Curse")
-        player.output(f"Gained a curse from {owner.name}'s Swamp Hag")
-        owner.output(f"Cursed {player.name} when they bought a {card}")
+        try:
+            player.gain_card("Curse")
+            player.output(f"Gained a curse from {owner}'s Swamp Hag")
+            owner.output(f"Cursed {player} when they bought a {card}")
+        except NoCardException:
+            owner.output("No more Curses")
 
 
 ###############################################################################
 class TestSwampHag(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Swamp Hag"])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
         self.seahag = self.g.get_card_from_pile("Swamp Hag")
         self.attacker.add_card(self.seahag, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         self.attacker.play_card(self.seahag)
         self.attacker.end_turn()
         self.victim.buy_card("Copper")

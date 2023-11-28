@@ -1,12 +1,15 @@
 """ Player is a non-interactive bot of dubious intelligence - big money strategy """
 import inspect
 import sys
+from typing import Any, TYPE_CHECKING, Optional
+
 import colorama
 from dominion.Player import Player
 from dominion import Piles
 
-if sys.version[0] == "3":  # pragma: no cover
-    raw_input = input
+if TYPE_CHECKING:
+    from dominion.Game import Game
+    from dominion.Card import Card
 
 
 ###############################################################################
@@ -15,7 +18,9 @@ if sys.version[0] == "3":  # pragma: no cover
 class BotPlayer(Player):
     """The Bot"""
 
-    def __init__(self, game, name="", quiet=False, **kwargs):
+    def __init__(
+        self, game: "Game", name: str = "", quiet: bool = False, **kwargs: Any
+    ):
         colorama.init()
         self.colour = f"{colorama.Back.BLACK}{colorama.Fore.RED}"
         self.quiet = quiet
@@ -58,7 +63,9 @@ class BotPlayer(Player):
             raise
 
     ###########################################################################
-    def user_input(self, options, prompt):  # pylint: disable=too-many-return-statements
+    def user_input(
+        self, options, prompt: str
+    ):  # pylint: disable=too-many-return-statements
         opts = self.get_options(options)
         if "spendall" in opts:
             return opts["spendall"]
@@ -82,7 +89,7 @@ class BotPlayer(Player):
 
     ###########################################################################
     @classmethod
-    def get_calling_card(cls):
+    def get_calling_card(cls) -> Optional[Any]:  # Should be type module
         """Get the module that represents the card doing requiring the response"""
         stack = inspect.stack()
         for rec in stack:
@@ -116,12 +123,14 @@ class BotPlayer(Player):
         assert False, f"BigMoneyBot can't choose options from {mod.__name__} {choices=}"
 
     ###########################################################################
-    def pick_to_discard(self, num_to_discard, keepvic=False):
+    def pick_to_discard(
+        self, num_to_discard: int, keepvic: bool = False
+    ) -> list["Card"]:
         """Many attacks require this sort of response.
         Return num cards to discard"""
         if num_to_discard <= 0:
             return []
-        todiscard = []
+        to_discard = []
 
         # Discard non-treasures first
         for card in self.piles[Piles.HAND]:
@@ -129,24 +138,25 @@ class BotPlayer(Player):
                 continue
             if keepvic and card.isVictory():
                 continue
-            todiscard.append(card)
-        if len(todiscard) >= num_to_discard:
-            return todiscard[:num_to_discard]
+            to_discard.append(card)
+        if len(to_discard) >= num_to_discard:
+            return to_discard[:num_to_discard]
 
         # Discard the cheapest treasures next
-        while len(todiscard) < num_to_discard:
+        while len(to_discard) < num_to_discard:
             for treas in ("Copper", "Silver", "Gold"):
                 for card in self.piles[Piles.HAND]:
                     if card.name == treas:
-                        todiscard.append(card)
-        if len(todiscard) >= num_to_discard:
-            return todiscard[:num_to_discard]
+                        to_discard.append(card)
+        if len(to_discard) >= num_to_discard:
+            return to_discard[:num_to_discard]
         sys.stderr.write(
             f"Couldn't find cards to discard {num_to_discard} from {', '.join([_.name for _ in self.piles[Piles.HAND]])}"
         )
         sys.stderr.write(
-            f"Managed to get {(', '.join([_.name for _ in todiscard]))} so far\n"
+            f"Managed to get {(', '.join([_.name for _ in to_discard]))} so far\n"
         )
+        return []
 
 
 # EOF

@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Inventor(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.RENAISSANCE
@@ -14,19 +14,19 @@ class Card_Inventor(Card.Card):
         self.name = "Inventor"
         self.cost = 4
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Gain a card costing up to 4"""
         player.plr_gain_card(4)
 
-    def hook_card_cost(self, game, player, card):
-        if self in player.piles[Piles.PLAYED]:
-            return -1
-        return 0
+    def hook_card_cost(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> int:
+        return -1 if self in player.piles[Piles.PLAYED] else 0
 
 
 ###############################################################################
 class TestInventor(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1,
             initcards=["Inventor", "Gardens"],
@@ -37,7 +37,7 @@ class TestInventor(unittest.TestCase):
         self.inventor = self.g.get_card_from_pile("Inventor")
         self.plr.add_card(self.inventor, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         gold = self.g.get_card_from_pile("Gold")
         self.plr.test_input = ["Get Gardens"]
         self.assertEqual(self.plr.card_cost(gold), 6)

@@ -2,12 +2,12 @@
 """ http://wiki.dominionstrategy.com/index.php/Distant_Shore"""
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Distant_Shore(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
             Card.CardType.ACTION,
@@ -23,19 +23,22 @@ class Card_Distant_Shore(Card.Card):
         self.desc = """ +2 Cards; +1 Action; Gain an Estate. 2VP"""
         self.pile = "Odysseys"
 
-    def special(self, game, player):
-        player.gain_card("Estate")
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        try:
+            player.gain_card("Estate")
+        except NoCardException:
+            player.output("No more Estates")
 
 
 ###############################################################################
 class Test_Distant_Shore(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Odysseys"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Odysseys", "Distant Shore")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play the card"""
         hand_size = self.plr.piles[Piles.HAND].size()
         actions = self.plr.actions.get()

@@ -3,14 +3,14 @@
 
 import unittest
 
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_CabinBoy(Card.Card):
     """Cabin Boy"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
         self.base = Card.CardExpansion.PLUNDER
@@ -21,7 +21,7 @@ class Card_CabinBoy(Card.Card):
         self.name = "Cabin Boy"
         self.cost = 4
 
-    def duration(self, game, player):
+    def duration(self, game: Game.Game, player: Player.Player) -> None:
         """choose one: +$2; or trash this to gain a Duration card."""
         options = [
             ("Gain $2", "money"),
@@ -40,20 +40,23 @@ class Card_CabinBoy(Card.Card):
                 which_duration = player.plr_choose_options(
                     "Which duration to gain?", *durations
                 )
-                player.gain_card(which_duration)
+                try:
+                    player.gain_card(which_duration)
+                except NoCardException:
+                    player.output(f"No more {which_duration}")
 
 
 ###############################################################################
 class TestCabinBoy(unittest.TestCase):
     """Test Cabin Boy"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Cabin Boy"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Cabin Boy")
 
-    def test_gain_cash(self):
+    def test_gain_cash(self) -> None:
         """Play the card and gain cash"""
         self.plr.add_card(self.card, Piles.HAND)
         actions = self.plr.actions.get()
@@ -68,7 +71,7 @@ class TestCabinBoy(unittest.TestCase):
         self.plr.start_turn()
         self.assertEqual(self.plr.coins.get(), 2)
 
-    def test_gain_duration(self):
+    def test_gain_duration(self) -> None:
         """Play the card and gain duration"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)

@@ -34,7 +34,7 @@ class Boon_Moons_Gift(Boon.Boon):
 
 
 ###############################################################################
-class Test_Moons_Gift(unittest.TestCase):
+class TestMoonsGift(unittest.TestCase):
     def setUp(self) -> None:
         self.g = Game.TestGame(
             quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"]
@@ -43,9 +43,8 @@ class Test_Moons_Gift(unittest.TestCase):
         self.plr = self.g.player_list()[0]
         for b in self.g.boons:
             if b.name == "The Moon's Gift":
-                myboon = b
+                self.g.boons = [b]
                 break
-        self.g.boons = [myboon]
         self.card = self.g.get_card_from_pile("Bard")
 
     def test_moons_gift(self) -> None:
@@ -53,7 +52,7 @@ class Test_Moons_Gift(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Gold"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Gold")
+        self.assertEqual(self.plr.piles[Piles.DECK].top_card().name, "Gold")
         self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
 
 

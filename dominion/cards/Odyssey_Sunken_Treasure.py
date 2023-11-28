@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Sunken_Treasure"""
 
 import unittest
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -18,7 +18,7 @@ class Card_Sunken_Treasure(Card.Card):
         self.desc = """Gain an Action card you don't have a copy of in play."""
         self.pile = "Odysseys"
 
-    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         options = []
         for name, pile in game.get_card_piles():
             card = game.card_instances[name]
@@ -28,7 +28,10 @@ class Card_Sunken_Treasure(Card.Card):
                 continue
             options.append((f"Gain {name}", name))
         to_gain = player.plr_choose_options("Gain a card", *options)
-        player.gain_card(to_gain)
+        try:
+            player.gain_card(to_gain)
+        except NoCardException:
+            player.output(f"No more {to_gain}")
 
 
 ###############################################################################

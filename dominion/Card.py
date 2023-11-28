@@ -8,9 +8,7 @@ from typing import Optional, TYPE_CHECKING, Any
 from dominion import Piles, Whens, OptionKeys
 
 if TYPE_CHECKING:
-    from dominion import Player
-    from dominion import Game
-    from dominion.PlayArea import PlayArea
+    from dominion import Game, Player, PlayArea
 
 
 ###############################################################################
@@ -167,12 +165,12 @@ class Card:
         return self._location
 
     @location.setter
-    def location(self, val: Piles) -> None:
+    def location(self, val: Optional[Piles]) -> None:
         self._location = val
 
     ##########################################################################
     @property
-    def player(self) -> "Player.Player|None":
+    def player(self) -> Optional["Player.Player"]:
         return self._player
 
     @player.setter
@@ -482,7 +480,7 @@ class Card:
 
     ##########################################################################
     def hook_discard_this_card(
-        self, game: "Game.Game", player: "Player.Player", source: "PlayArea"
+        self, game: "Game.Game", player: "Player.Player", source: "PlayArea.PlayArea"
     ) -> None:
         """Hook - overwritten in subclasses"""
 

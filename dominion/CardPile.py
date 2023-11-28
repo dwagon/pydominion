@@ -1,5 +1,7 @@
 from typing import Optional, TYPE_CHECKING, Self
 
+from dominion import NoCardException
+
 if TYPE_CHECKING:
     from dominion import Game
     from dominion.Card import Card
@@ -84,7 +86,7 @@ class CardPile:
             try:
                 return self.cards.pop()
             except IndexError:
-                return None
+                raise NoCardException
         for card in self.cards:
             if card.name == name:
                 self.cards.remove(card)
@@ -97,18 +99,17 @@ class CardPile:
         self.cards.insert(0, card)
 
     ###########################################################################
-    def top_card(self) -> Optional[str]:
+    def top_card(self) -> str:
         """What is the name of the top card of the card pile"""
-        # TODO: Make this return the card, not just the name
         if self.is_empty():
-            return None
+            raise NoCardException
         return self.cards[-1].name
 
     ###########################################################################
-    def get_top_card(self) -> Optional["Card"]:
+    def get_top_card(self) -> "Card":
         """What is the top card of the card pile"""
         if self.is_empty():
-            return None
+            raise NoCardException
         return self.cards[-1]
 
     ###########################################################################

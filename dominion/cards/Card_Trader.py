@@ -3,7 +3,7 @@
 import unittest
 from typing import Optional, Any
 
-from dominion import Card, Game, Piles, OptionKeys, Player
+from dominion import Card, Game, Piles, OptionKeys, Player, NoCardException
 
 
 ###############################################################################
@@ -23,14 +23,18 @@ class Card_Trader(Card.Card):
         ):
             player.output(f"Gaining {card[0].cost} Silvers")
             for _ in range(card[0].cost):
-                player.gain_card("Silver")
+                try:
+                    player.gain_card("Silver")
+                except NoCardException:
+                    player.output("No more Silver")
+                    break
 
     def hook_gain_card(
         self, game: Game.Game, player: Player.Player, card: Card.Card
     ) -> Optional[dict[OptionKeys, Any]]:
         if card.name == "Silver":
             return {}
-        if silver := player.plr_choose_options(
+        if player.plr_choose_options(
             f"From your Trader gain {card} or gain a Silver instead?",
             (f"Still gain {card}", False),
             ("Instead gain Silver", True),

@@ -1,8 +1,10 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Circle_of_Witcches"""
+""" http://wiki.dominionstrategy.com/index.php/Circle_of_Witches"""
 
 import unittest
-from dominion import Card, Game, Piles, Ally
+from typing import Optional, Any
+
+from dominion import Card, Game, Piles, Ally, Player, NoCardException, OptionKeys
 
 
 ###############################################################################
@@ -14,12 +16,14 @@ class Ally_Circle_of_Witches(Ally.Ally):
         self.required_cards = ["Curse"]
         self.name = "Circle of Witches"
 
-    def hook_post_play(self, game, player, card):
+    def hook_post_play(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> Optional[dict[OptionKeys, Any]]:
         if player.favors.get() < 3:
-            return
+            return None
         if not card.isLiaison():
-            return
-        if chc := player.plr_choose_options(
+            return None
+        if player.plr_choose_options(
             "Spend three favors to Curse everyone else: ",
             ("Nope, I'll be nice", False),
             ("Curse them", True),
@@ -27,12 +31,16 @@ class Ally_Circle_of_Witches(Ally.Ally):
             player.favors.add(-3)
             for plr in game.player_list():
                 if plr != player:
-                    plr.output(f"{player.name}'s {self.name} cursed you")
-                    plr.gain_card("Curse")
+                    try:
+                        plr.gain_card("Curse")
+                        plr.output(f"{player}'s {self} cursed you")
+                    except NoCardException:
+                        player.output("No more Curses")
+        return None
 
 
 ###############################################################################
-class Test_Circle_of_Witches(unittest.TestCase):
+class TestCircleOfWitches(unittest.TestCase):
     def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=2, allies="Circle of Witches", initcards=["Underling", "Moat"]

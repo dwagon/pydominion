@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Torturer(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.INTRIGUE
@@ -17,24 +16,30 @@ class Card_Torturer(Card.Card):
         self.cards = 3
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Each other player chooses one: he discards 2 cards; or
         he gains a Curse card, putting it in his hand"""
         for plr in player.attack_victims():
             plr.output("Choose:")
-            self.choiceOfDoom(plr, player)
+            self.choice_of_doom(plr, player)
 
-    def choiceOfDoom(self, victim, player):
-        victim.output("Your hand is: %s" % ", ".join([c.name for c in victim.piles[Piles.HAND]]))
-        discard = victim.plr_choose_options(
-            "Discard or curse", ("Discard 2 cards", True), ("Gain a curse card", False)
+    def choice_of_doom(self, victim: Player.Player, player: Player.Player) -> None:
+        victim.output(
+            f'Your hand is: {", ".join([c.name for c in victim.piles[Piles.HAND]])}'
         )
-        if discard:
-            player.output("%s discarded" % victim.name)
+        if victim.plr_choose_options(
+            "Discard or curse",
+            ("Discard 2 cards", True),
+            ("Gain a curse card", False),
+        ):
+            player.output(f"{victim} discarded")
             victim.plr_discard_cards(2)
         else:
-            player.output("%s opted for a curse" % victim.name)
-            victim.gain_card("Curse", Piles.HAND)
+            player.output(f"{victim} opted for a curse")
+            try:
+                victim.gain_card("Curse", Piles.HAND)
+            except NoCardException:
+                player.output("No more Curses")
 
 
 ###############################################################################
@@ -48,21 +53,21 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 ###############################################################################
 class Test_Torturer(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Torturer", "Moat"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g.get_card_from_pile("Torturer")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_opt_curse(self):
+    def test_opt_curse(self) -> None:
         """Play the torturer - victim opts for a curse"""
         self.victim.test_input = ["1"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 8)
         self.assertIn("Curse", self.victim.piles[Piles.HAND])
 
-    def test_opt_discard(self):
+    def test_opt_discard(self) -> None:
         """Play the torturer - victim opts for discarding"""
         self.victim.test_input = ["0", "1", "2", "0"]
         self.plr.play_card(self.card)
@@ -70,7 +75,7 @@ class Test_Torturer(unittest.TestCase):
         self.assertEqual(self.victim.piles[Piles.HAND].size(), 3)
         self.assertNotIn("Curse", self.victim.piles[Piles.HAND])
 
-    def test_defended(self):
+    def test_defended(self) -> None:
         """Defending against a torturer"""
         self.victim.piles[Piles.HAND].set("Moat")
         self.plr.play_card(self.card)

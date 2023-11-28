@@ -82,6 +82,7 @@ class OptionKeys(StrEnum):
     TRASH = auto()
     DONTADD = auto()
     SHUFFLE = auto()
+    EXILE = auto()
 
 
 # EOF

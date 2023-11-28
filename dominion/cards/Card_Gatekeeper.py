@@ -40,8 +40,7 @@ class Card_Gatekeeper(Card.Card):
             Piles.EXILE
         ]:
             player.output(f"{owner}'s Gatekeeper exiles your {card}")
-            player.exile_card(card)
-            return {OptionKeys.DONTADD: True}
+            return {OptionKeys.EXILE: True}
         return None
 
 
@@ -68,9 +67,12 @@ class TestGatekeeper(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.plr.end_turn()
+        # self.victim.test_input = []
+        num_gold = len(self.g.card_piles["Gold"])
         self.victim.gain_card("Gold")
         self.assertIn("Gold", self.victim.piles[Piles.EXILE])
         self.assertNotIn("Gold", self.victim.piles[Piles.DISCARD])
+        self.assertEqual(len(self.g.card_piles["Gold"]), num_gold - 1)
 
     def test_attack_exile(self) -> None:
         """Test the attack where there is already an exile"""

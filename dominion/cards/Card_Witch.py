@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Witch(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.DOMINION
@@ -16,17 +16,20 @@ class Card_Witch(Card.Card):
         self.cards = 2
         self.cost = 3
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """All other players gain a curse"""
-        for pl in player.attack_victims():
-            player.output("%s got cursed" % pl.name)
-            pl.output("%s's witch cursed you" % player.name)
-            pl.gain_card("Curse")
+        for victim in player.attack_victims():
+            player.output(f"{victim} got cursed")
+            victim.output(f"{player}'s witch cursed you")
+            try:
+                victim.gain_card("Curse")
+            except NoCardException:
+                player.output("No more Curses")
 
 
 ###############################################################################
 class Test_Witch(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Witch", "Moat"])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
@@ -34,14 +37,14 @@ class Test_Witch(unittest.TestCase):
         self.mcard = self.g.get_card_from_pile("Moat")
         self.attacker.add_card(self.wcard, Piles.HAND)
 
-    def test_defended(self):
+    def test_defended(self) -> None:
         self.victim.add_card(self.mcard, Piles.HAND)
         self.attacker.play_card(self.wcard)
         self.assertEqual(self.victim.piles[Piles.HAND].size(), 6)
         self.assertEqual(self.attacker.piles[Piles.HAND].size(), 7)
         self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 0)
 
-    def test_nodefense(self):
+    def test_nodefense(self) -> None:
         self.attacker.play_card(self.wcard)
         self.assertEqual(self.victim.piles[Piles.HAND].size(), 5)
         self.assertEqual(self.attacker.piles[Piles.HAND].size(), 7)

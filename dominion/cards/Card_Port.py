@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Phase, Player, NoCardException
 
 
 ###############################################################################
 class Card_Port(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ADVENTURE
@@ -16,29 +16,28 @@ class Card_Port(Card.Card):
         self.cost = 4
         self.numcards = 12
 
-    def dynamic_description(self, player):
-        if player.phase == Player.Phase.BUY:
+    def dynamic_description(self, player: Player.Player) -> str:
+        if player.phase == Phase.BUY:
             return "+1 Card, +2 Actions; When you buy this, gain another Port"
         return "+1 Card, +2 Actions"
 
-    def hook_buy_this_card(self, game, player):
+    def hook_buy_this_card(self, game: Game.Game, player: Player.Player) -> None:
         """Gain another Port"""
-        c = player.gain_card("Port")
-        if c:
-            player.output("Gained a port")
-        else:
+        try:
+            player.gain_card("Port")
+        except NoCardException:
             player.output("No more ports")
 
 
 ###############################################################################
 class TestPort(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Port"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Port")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a port"""
         self.plr.piles[Piles.HAND].set()
         self.plr.add_card(self.card, Piles.HAND)
@@ -46,7 +45,7 @@ class TestPort(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
         self.assertEqual(self.plr.actions.get(), 2)
 
-    def test_buy(self):
+    def test_buy(self) -> None:
         """Buy a port"""
         self.plr.piles[Piles.DISCARD].set()
         self.plr.coins.set(5)

@@ -39,13 +39,16 @@ def giant_attack(victim: "Player.Player", player: "Player.Player") -> None:
     victim.reveal_card(card)
     if 3 <= card.cost <= 6:
         victim.trash_card(card)
-        victim.output(f"{player.name}'s Giant trashed your {card}")
-        player.output(f"Trashed {victim.name}'s {card}")
+        victim.output(f"{player}'s Giant trashed your {card}")
+        player.output(f"Trashed {victim}'s {card}")
     else:
-        victim.output(f"{player.name}'s Giant discarded your {card} and cursed you")
+        victim.output(f"{player}'s Giant discarded your {card} and cursed you")
         victim.move_card(card, Piles.HAND)
         victim.discard_card(card)
-        victim.gain_card("Curse")
+        try:
+            victim.gain_card("Curse")
+        except NoCardException:
+            player.output("No more Curses")
 
 
 ###############################################################################

@@ -6,7 +6,7 @@ from typing import Any
 
 from dominion.Game import Game, TestGame
 from dominion.Card import Card, CardType, CardExpansion
-from dominion import Piles
+from dominion import Piles, NoCardException
 from dominion.Player import Player
 
 WAR_CHEST = "war chest"
@@ -46,7 +46,10 @@ class Card_WarChest(Card):
         card_name = player.plr_choose_options(
             "Pick a card to gain", *self.generate_options(game, player)
         )
-        player.gain_card(card_name)
+        try:
+            player.gain_card(card_name)
+        except NoCardException:
+            player.output(f"No more {card_name}")
 
     @classmethod
     def generate_options(cls, game: Game, player: Player) -> list[tuple[str, str]]:
@@ -72,7 +75,9 @@ class TestWarChest(unittest.TestCase):
     """Test War Chest"""
 
     def setUp(self) -> None:
-        self.g = TestGame(numplayers=2, initcards=["War Chest"])
+        self.g = TestGame(
+            numplayers=2, initcards=["War Chest"], badcards=["Silver Mine"]
+        )
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
         self.card = self.g.get_card_from_pile("War Chest")

@@ -27,6 +27,7 @@ class Boon_Suns_Gift(Boon.Boon):
             any_number=True,
             cardsrc=cards,
         )
+        assert to_discard is not None
         for card in cards:
             if card not in to_discard:
                 player.add_card(card, "topdeck")
@@ -42,9 +43,9 @@ class TestSunsGift(unittest.TestCase):
         self.plr = self.g.player_list()[0]
         for b in self.g.boons:
             if b.name == "The Sun's Gift":
-                myboon = b
+                self.g.boons = [b]
                 break
-        self.g.boons = [myboon]
+
         self.card = self.g.get_card_from_pile("Bard")
         self.plr.add_card(self.card, Piles.HAND)
 

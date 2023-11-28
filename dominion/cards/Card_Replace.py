@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -29,8 +29,11 @@ class Card_Replace(Card.Card):
             player.move_card(gain, "topdeck")
         if gain.isVictory():
             for victim in player.attack_victims():
-                victim.output(f"Gained a Curse due to {player.name}'s Replace")
-                victim.gain_card("Curse")
+                try:
+                    victim.gain_card("Curse")
+                    victim.output(f"Gained a Curse due to {player}'s Replace")
+                except NoCardException:
+                    player.output("No more Curses")
 
 
 ###############################################################################
