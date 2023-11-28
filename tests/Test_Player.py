@@ -1068,7 +1068,7 @@ class TestExile(unittest.TestCase):
     def test_unexiling_card(self) -> None:
         """Test un-exiling a card"""
         self.plr.piles[Piles.EXILE].set("Gold", "Gold", "Silver")
-        self.plr.test_input = ["Unexile"]
+        self.plr.test_input = ["Un-exile"]
         self.plr.gain_card("Gold")
         self.assertEqual(len(self.plr.piles[Piles.DISCARD]), 3)
         self.assertEqual(len(self.plr.piles[Piles.EXILE]), 1)

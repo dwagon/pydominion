@@ -1528,7 +1528,7 @@ class Player:
         """Give players option to un-exile card"""
         num = sum(1 for _ in self.piles[Piles.EXILE] if _.name == card_name)
         choices = [
-            (f"Unexile {num} x {card_name}", True),
+            (f"Un-exile {num} x {card_name}", True),
             ("Do nothing", False),
         ]
         if self.plr_choose_options(f"Un-exile {card_name}", *choices):
