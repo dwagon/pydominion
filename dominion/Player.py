@@ -1469,6 +1469,7 @@ class Player:
         #   destination: <dest> - Move the new card to <dest> rather than discard pile
         #   trash: True - trash the new card
         #   shuffle: True - shuffle the deck after gaining new card
+
         options: dict[OptionKeys, Any] = {}
         if new_card is None:
             assert card_name is not None
@@ -1479,11 +1480,6 @@ class Player:
         if callhook:
             if rc := self._gain_card_hooks(new_card):
                 options |= rc
-            print(f"DBG {options=}")
-
-        # check for un-exiling
-        if new_card.name in self.piles[Piles.EXILE]:
-            self.check_unexile(new_card.name)
 
         # Replace is to gain a different card
         if options.get(OptionKeys.REPLACE):
@@ -1500,14 +1496,19 @@ class Player:
             self.trash_card(new_card)
             return new_card
 
-        if not options.get(OptionKeys.DONTADD, False):
+        # check for un-exiling
+        if new_card.name in self.piles[Piles.EXILE]:
+            self.check_unexile(new_card.name)
+
+        if not options.get(OptionKeys.DONTADD):
             self.add_card(new_card, destination)
-            self.output(f"Gained a {new_card} to {destination}")
-        else:
-            self.output(f"Gained a {new_card}")
+
+        if options.get(OptionKeys.EXILE):
+            self.exile_card(new_card)
 
         if options.get(OptionKeys.SHUFFLE, False):
             self.piles[Piles.DECK].shuffle()
+
         return new_card
 
     ###########################################################################
