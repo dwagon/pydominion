@@ -386,11 +386,13 @@ class TestAttackVictims(unittest.TestCase):
 
 
 ###############################################################################
-class Test_gain_card(unittest.TestCase):
+class TestGainCard(unittest.TestCase):
     """Test the gain_card() function"""
 
     def setUp(self) -> None:
-        self.game = Game.TestGame(numplayers=1)
+        self.game = Game.TestGame(
+            numplayers=1, card_path="tests/cards", initcards=["Don't Add"]
+        )
         self.game.start_game()
         self.plr = self.game.player_list()[0]
 
@@ -425,6 +427,13 @@ class Test_gain_card(unittest.TestCase):
         self.plr.gain_card("Copper", Piles.HAND)
         self.assertTrue(self.plr.piles[Piles.DISCARD].is_empty())
         self.assertEqual(self.plr.piles[Piles.HAND].top_card().name, "Copper")
+
+    def test_dont_add(self) -> None:
+        """Test with the DONTADD option"""
+        num_cards = len(self.game.card_piles["Don't Add"])
+        self.plr.gain_card("Don't Add")
+        self.assertNotIn("Don't Add", self.plr.piles[Piles.DISCARD])
+        self.assertEqual(len(self.game.card_piles["Don't Add"]), num_cards - 1)
 
 
 ###############################################################################
