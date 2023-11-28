@@ -304,10 +304,10 @@ class Player:
         """Take a card out of the game"""
         assert isinstance(card, Card)
         self.stats["trashed"].append(card)
-        trash_opts = {}
+        trash_opts: dict[OptionKeys, Any] = {}
         if rc := card.hook_trash_this_card(game=self.game, player=self):
             trash_opts.update(rc)
-        if trash_opts.get("trash", True):
+        if trash_opts.get(OptionKeys.TRASH, True):
             if card.location and card.location != Piles.TRASH:
                 self.remove_card(card)
             self.game.trash_pile.add(card)
@@ -490,7 +490,7 @@ class Player:
     ###########################################################################
     def _playable_selection(self, index: int) -> tuple[list[Option], int]:
         options = []
-        playable = [c for c in self.piles[Piles.HAND] if c.playable and c.isAction()]
+        playable = [_ for _ in self.piles[Piles.HAND] if _.playable and _.isAction()]
         if self.villagers:
             o = Option(
                 selector="1",
@@ -1439,7 +1439,7 @@ class Player:
         return max(0, cost)
 
     ###########################################################################
-    def _gain_card_from_name(self, card_name: str) -> Optional[Card]:
+    def _gain_card_from_name(self, card_name: str) -> Card:
         """Return the card if a name was specified"""
         if card_name == "Loot":
             pile = "Loot"
@@ -1447,11 +1447,7 @@ class Player:
             pile = self.game.card_instances[card_name].pile
         if not pile:
             pile = card_name
-        try:
-            new_card = self.game.get_card_from_pile(pile)
-        except NoCardException:
-            self.output(f"No more {card_name}")
-            return None
+        new_card = self.game.get_card_from_pile(pile)
         return new_card
 
     ###########################################################################
@@ -1641,7 +1637,6 @@ class Player:
         There are a lot of different hooks so centralise them
         """
         assert isinstance(gained_card, Card)
-        print(f"DBG {gained_card=}")
         options: dict[OptionKeys, Any] = {}
         options |= self._hook_gain_card(gained_card)
         options |= self._hook_gain_this_card(gained_card)

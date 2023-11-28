@@ -2,6 +2,8 @@
 """ http://wiki.dominionstrategy.com/index.php/Villa"""
 
 import unittest
+from typing import Optional, Any
+
 from dominion import Card, Game, Piles, Player, OptionKeys, Phase
 
 
@@ -19,7 +21,7 @@ class Card_Villa(Card.Card):
         self.buys = 1
         self.coin = 1
 
-    def dynamic_description(self, player) -> str:
+    def dynamic_description(self, player: Player.Player) -> str:
         """Variable desc"""
         if player.phase == Phase.ACTION:
             return "+2 Actions; +1 Buy; +1 Coin"
@@ -27,7 +29,9 @@ class Card_Villa(Card.Card):
             your hand, +1 Action, and if it's your Buy phase return to your
             Action phase."""
 
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> Optional[dict[OptionKeys, Any]]:
         if player.phase == Phase.BUY:
             player.phase = Phase.ACTION
         player.add_actions(1)

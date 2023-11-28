@@ -247,6 +247,7 @@ class Game:  # pylint: disable=too-many-public-methods
             else:
                 self.players[the_uuid] = plr_class(
                     game=self,
+                    quiet=self.quiet,
                     name=name,
                     number=player_num,
                     heirlooms=self._heirlooms,

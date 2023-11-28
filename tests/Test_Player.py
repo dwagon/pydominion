@@ -2,6 +2,7 @@
 # pylint: disable=protected-access
 """ Testing player code """
 
+import operator
 import unittest
 from dominion.Counter import Counter
 from dominion import Card, Game, Phase, Piles, Limits, NoCardException
@@ -218,10 +219,10 @@ class TestCardsAffordable(unittest.TestCase):
             self.assertEqual(a.cost, price)
             self.assertTrue(a.isVictory())
 
-    def test_nocost(self) -> None:
+    def test_no_cost(self) -> None:
         """Test with no cost"""
         ans = self.plr.cards_affordable(
-            "less",
+            oper=operator.le,
             coin=None,
             num_potions=0,
             types={
@@ -231,7 +232,7 @@ class TestCardsAffordable(unittest.TestCase):
                 Card.CardType.NIGHT: True,
             },
         )
-        self.assertIn("Province", [cp.name for cp in ans])
+        self.assertIn("Province", [_.name for _ in ans])
 
 
 ###############################################################################
@@ -243,21 +244,21 @@ class TestTypeSelector(unittest.TestCase):
         self.game.start_game()
         self.plr = self.game.player_list()[0]
 
-    def test_selzero(self) -> None:
+    def test_select_zero(self) -> None:
         """Test selecting zero types"""
         x = self.plr._type_selector({})
         self.assertTrue(x[Card.CardType.ACTION])
         self.assertTrue(x[Card.CardType.TREASURE])
         self.assertTrue(x[Card.CardType.VICTORY])
 
-    def test_selone(self) -> None:
+    def test_select_one(self) -> None:
         """Test selecting one type"""
         x = self.plr._type_selector({Card.CardType.ACTION: True})
         self.assertTrue(x[Card.CardType.ACTION])
         self.assertFalse(x[Card.CardType.TREASURE])
         self.assertFalse(x[Card.CardType.VICTORY])
 
-    def test_seltwo(self) -> None:
+    def test_select_two(self) -> None:
         """Test selecting two types"""
         x = self.plr._type_selector(
             {Card.CardType.ACTION: True, Card.CardType.VICTORY: True}
@@ -276,7 +277,7 @@ class TestPlrTrashCard(unittest.TestCase):
         self.game.start_game()
         self.plr = self.game.player_list()[0]
 
-    def test_None(self) -> None:
+    def test_none(self) -> None:
         """Trash nothing"""
         self.plr.piles[Piles.HAND].set("Gold")
         self.plr.test_input = ["0"]
@@ -284,22 +285,24 @@ class TestPlrTrashCard(unittest.TestCase):
         self.assertEqual(trashed, [])
         self.assertNotIn("Gold", self.game.trash_pile)
 
-    def test_Two(self) -> None:
+    def test_two(self) -> None:
         """Trash Two cards"""
         self.plr.piles[Piles.HAND].set("Gold", "Copper", "Silver")
         self.plr.test_input = ["Gold", "Silver", "0"]
         trashed = self.plr.plr_trash_card(num=2)
+        assert trashed is not None
         self.assertEqual(len(trashed), 2)
         self.assertIn("Gold", self.game.trash_pile)
         self.assertIn("Silver", self.game.trash_pile)
         self.assertIn("Copper", self.plr.piles[Piles.HAND])
 
-    def test_Trash(self) -> None:
+    def test_trash(self) -> None:
         """Test trashing"""
         tsize = self.game.trash_pile.size()
         self.plr.piles[Piles.HAND].set("Gold")
         self.plr.test_input = ["1"]
         trashed = self.plr.plr_trash_card()
+        assert trashed is not None
         self.assertEqual(trashed[0].name, "Gold")
         self.assertEqual(self.game.trash_pile.size(), tsize + 1)
         self.assertIn("Gold", self.game.trash_pile)
@@ -310,6 +313,7 @@ class TestPlrTrashCard(unittest.TestCase):
         self.plr.piles[Piles.HAND].set("Gold")
         self.plr.test_input = ["0", "1"]
         trashed = self.plr.plr_trash_card(force=True)
+        assert trashed is not None
         self.assertEqual(trashed[0].name, "Gold")
         self.assertEqual(self.game.trash_pile[-1].name, "Gold")
         for m in self.plr.messages:
@@ -326,6 +330,7 @@ class TestPlrTrashCard(unittest.TestCase):
         self.plr.piles[Piles.HAND].set("Gold", "Gold", "Copper")
         self.plr.test_input = ["1"]
         trashed = self.plr.plr_trash_card(exclude=["Gold"])
+        assert trashed is not None
         self.assertEqual(trashed[0].name, "Copper")
         self.assertIn("Copper", self.game.trash_pile)
 
@@ -1039,12 +1044,14 @@ class TestPlayerGainCard(unittest.TestCase):
     def test_gain_card_equal(self) -> None:
         self.plr.test_input = ["get silver"]
         card = self.plr.plr_gain_card(3, modifier="equal")
+        assert card is not None
         self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Silver"])
         self.assertEqual(card.name, "Silver")
 
     def test_gain_card_less(self) -> None:
         self.plr.test_input = ["get silver"]
         card = self.plr.plr_gain_card(4, modifier="less")
+        assert card is not None
         self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Silver"])
         self.assertEqual(card.name, "Silver")
 

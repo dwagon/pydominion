@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Count"""
 import unittest
-from dominion import Game, Card, Piles
-from dominion.Player import Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -18,7 +17,7 @@ class Card_Count(Card.Card):
         self.cost = 5
 
     ###########################################################################
-    def special(self, game: Game.Game, player: Player) -> None:
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Choose one: Discard 2 cards; or put a card from your
         hand on top of your deck; or gain a copper.
 
@@ -31,8 +30,11 @@ class Card_Count(Card.Card):
             ("Gain a copper", "copper"),
         )
         if ans == "copper":
-            player.output("Gained a copper")
-            player.gain_card("Copper")
+            try:
+                player.gain_card("Copper")
+                player.output("Gained a copper")
+            except NoCardException:
+                player.output("No more Copper")
         elif ans == "put_card":
             self.put_card(player)
         else:
@@ -45,8 +47,11 @@ class Card_Count(Card.Card):
             ("Gain Duchy", "duchy"),
         )
         if ans == "duchy":
-            player.output("Gained a duchy")
-            player.gain_card("Duchy")
+            try:
+                player.gain_card("Duchy")
+                player.output("Gained a duchy")
+            except NoCardException:
+                player.output("No more Duchys")
         elif ans == "trash":
             for card in player.piles[Piles.HAND]:
                 player.output(f"Trashing {card}")
@@ -55,7 +60,7 @@ class Card_Count(Card.Card):
             player.coins.add(3)
 
     ###########################################################################
-    def put_card(self, player: Player) -> None:
+    def put_card(self, player: Player.Player) -> None:
         """Put a card from your hand on top of your deck"""
         index = 1
         options = []
