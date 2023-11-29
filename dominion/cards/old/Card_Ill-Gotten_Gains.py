@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+from typing import Optional, Any
+
 from dominion import Card, Game, Piles, Player, Phase, NoCardException, OptionKeys
 
 
@@ -33,10 +35,15 @@ class Card_IGG(Card.Card):
             except NoCardException:
                 player.output("No more Coppers")
 
-    def hook_gain_this_card(self, game: Game.Game, player: Player.Player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> Optional[dict[OptionKeys, Any]]:
         for plr in player.attack_victims():
-            plr.gain_card("Curse")
-            plr.output(f"Cursed because {player} gained an Ill-Gotten Gains")
+            try:
+                plr.gain_card("Curse")
+                plr.output(f"Cursed because {player} gained an Ill-Gotten Gains")
+            except NoCardException:
+                player.output("No more Curses")
         return {}
 
 

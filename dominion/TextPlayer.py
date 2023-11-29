@@ -6,9 +6,9 @@ from dominion import Piles
 from dominion.PlayArea import PlayArea
 from dominion.Player import Player
 from dominion.Option import Option
+from dominion.Card import Card, CardType
 
 if TYPE_CHECKING:
-    from dominion.Card import Card
     from dominion.Game import Game
 
 if sys.version[0] == "3":
@@ -233,7 +233,7 @@ class TextPlayer(Player):
         """
         select_from = self.select_source(**kwargs)
         force = kwargs.get("force", False)
-        showdesc = kwargs.get("showdesc", True)
+        show_desc = kwargs.get("showdesc", True)
         verbs = kwargs.get("verbs", ("Select", "Unselect"))
 
         if "prompt" in kwargs:
@@ -254,28 +254,16 @@ class TextPlayer(Player):
                 anynum
                 or (force and num == len(selected))
                 or (not force and num >= len(selected))
+                or (len(select_from) < num)
             ):
                 o = Option(selector="0", verb="Finish Selecting", card=None)
                 options.append(o)
             index = 1
-            for card in sorted(select_from):
-                if "exclude" in kwargs and card.name in kwargs["exclude"]:
-                    continue
-                if not self.select_by_type(card, types):
-                    continue
-                if card not in selected:
-                    verb = verbs[0]
-                else:
-                    verb = verbs[1]
-                o = Option(selector=f"{index}", verb=verb, card=card, name=card.name)
-                index += 1
-                if showdesc:
-                    o["desc"] = card.description(self)
-                if kwargs.get("printcost"):
-                    o["details"] = str(self.card_cost(card))
-                if kwargs.get("printtypes"):
-                    o["details"] = card.get_cardtype_repr()
-                options.append(o)
+            options.extend(
+                self._card_sel_options(
+                    index, show_desc, selected, types, select_from, kwargs, verbs
+                )
+            )
             ui = self.user_input(options, "Select which card?")
             if not ui["card"]:
                 break
@@ -286,6 +274,38 @@ class TextPlayer(Player):
             if num == 1 and len(selected) == 1:
                 break
         return selected
+
+    ###########################################################################
+    def _card_sel_options(
+        self,
+        index: int,
+        show_desc: bool,
+        selected: list[Card],
+        types: dict[CardType, bool],
+        select_from: PlayArea,
+        kwargs: dict[str, Any],
+        verbs: tuple[str, str],
+    ) -> list[Option]:
+        options = []
+        for card in sorted(select_from):
+            if "exclude" in kwargs and card.name in kwargs["exclude"]:
+                continue
+            if not self.select_by_type(card, types):
+                continue
+            if card not in selected:
+                verb = verbs[0]
+            else:
+                verb = verbs[1]
+            o = Option(selector=f"{index}", verb=verb, card=card, name=card.name)
+            index += 1
+            if show_desc:
+                o["desc"] = card.description(self)
+            if kwargs.get("printcost"):
+                o["details"] = str(self.card_cost(card))
+            if kwargs.get("printtypes"):
+                o["details"] = card.get_cardtype_repr()
+            options.append(o)
+        return options
 
     ###########################################################################
     def plr_choose_options(self, prompt: str, *choices: tuple[str, Any]) -> Any:

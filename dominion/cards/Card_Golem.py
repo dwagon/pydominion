@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 """https://wiki.dominionstrategy.com/index.php/Golem"""
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
 class Card_Golem(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ALCHEMY
@@ -16,25 +16,25 @@ class Card_Golem(Card.Card):
         self.required_cards = ["Potion"]
         self.potcost = True
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Reveal cards from your deck until you reveal 2 Action
         cards other than Golem cards. Discard the other cards, then
         play the Action cards in either order"""
-        actions = []
-        maxnum = len(player.all_cards())
+        actions: list[Card.Card] = []
+        max_num = len(player.all_cards())
         count = 0
         while len(actions) != 2:
             card = player.next_card()
             player.reveal_card(card)
             count += 1
-            if count > maxnum:
-                player.output("Not enough action cards in deck")
-                break
             if card.isAction() and card.name != "Golem":
                 actions.append(card)
             else:
                 player.output(f"Drew and discarded {card}")
                 player.discard_card(card)
+            if count > max_num:
+                player.output("Not enough action cards in deck")
+                break
         # TODO - let the player choose the order
         for card in actions:
             player.output(f"Golem playing {card}")
@@ -44,13 +44,13 @@ class Card_Golem(Card.Card):
 
 ###############################################################################
 class TestGolem(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Golem", "Village", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Golem")
 
-    def test_actions(self):
+    def test_actions(self) -> None:
         """Ensure two actions are picked up and played, others are discarded"""
         self.plr.piles[Piles.HAND].set()
         self.plr.piles[Piles.DECK].set(
@@ -67,7 +67,7 @@ class TestGolem(unittest.TestCase):
             sorted([c.name for c in self.plr.piles[Piles.DISCARD]]),
         )
 
-    def test_golem(self):
+    def test_golem(self) -> None:
         """Ensure golem isn't picked up"""
         self.plr.piles[Piles.HAND].set()
         self.plr.piles[Piles.DECK].set(
@@ -84,7 +84,7 @@ class TestGolem(unittest.TestCase):
             sorted([c.name for c in self.plr.piles[Piles.DISCARD]]),
         )
 
-    def test_nocards(self):
+    def test_nocards(self) -> None:
         self.plr.piles[Piles.HAND].set("Copper", "Copper", "Copper")
         self.plr.piles[Piles.DECK].set("Copper", "Copper", "Copper")
         self.plr.add_card(self.card, Piles.HAND)
