@@ -1585,16 +1585,11 @@ class Player:
         try:
             new_card = self.gain_card(card.name)
         except NoCardException:
-            self.output(f"Couldn't buy card - no more {card.name}s available")
+            self.output(f"Couldn't buy card - no more {card}s available")
             return
         if self.game.card_piles[new_card.pile].embargo_level:
-            for _ in range(self.game.card_piles[new_card.pile].embargo_level):
-                try:
-                    self.gain_card("Curse")
-                except NoCardException:
-                    self.output("No more Curses")
-                else:
-                    self.output("Gained a Curse from embargo")
+            self._buy_card_embargo(new_card)
+
         self.stats["bought"].append(new_card)
         self.output(f"Bought {new_card} for {cost} coin")
         if "Trashing" in self.which_token(new_card.name):
@@ -1603,6 +1598,17 @@ class Player:
         self.hook_buy_card(new_card)
         new_card.hook_buy_this_card(game=self.game, player=self)
         self.hook_all_players_buy_card(new_card)
+
+    ###########################################################################
+    def _buy_card_embargo(self, new_card: Card) -> None:
+        """Handle Embargo on the card bought"""
+        for _ in range(self.game.card_piles[new_card.pile].embargo_level):
+            try:
+                self.gain_card("Curse")
+            except NoCardException:
+                self.output("No more Curses")
+            else:
+                self.output("Gained a Curse from embargo")
 
     ###########################################################################
     def hook_all_players_buy_card(self, card: Card) -> None:
