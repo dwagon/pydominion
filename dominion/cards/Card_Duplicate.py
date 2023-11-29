@@ -3,7 +3,7 @@
 import unittest
 from typing import Any, Optional
 
-from dominion import Game, Card, Piles, Player, Whens, OptionKeys
+from dominion import Game, Card, Piles, Player, Whens, OptionKeys, NoCardException
 
 
 ###############################################################################
@@ -29,7 +29,7 @@ class Card_Duplicate(Card.Card):
             return {}
         if card.potcost:
             return {}
-        if o := player.plr_choose_options(
+        if player.plr_choose_options(
             f"Call Duplicate on {card}?",
             ("Save for later", False),
             (f"Duplicate {card}", True),
@@ -44,7 +44,10 @@ class Card_Duplicate(Card.Card):
         card = self._duplicate
         assert card is not None
         player.output(f"Gaining a {card} from Duplicate")
-        player.gain_card(card.name, callhook=False)
+        try:
+            player.gain_card(card.name, callhook=False)
+        except NoCardException:
+            player.output(f"No more {card} left")
 
 
 ###############################################################################
