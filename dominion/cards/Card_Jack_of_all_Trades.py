@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, NoCardException
+from dominion import Game, Card, Piles, NoCardException, Player
 
 
 ###############################################################################
 class Card_Jack_of_all_Trades(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.HINTERLANDS
@@ -17,8 +17,11 @@ class Card_Jack_of_all_Trades(Card.Card):
         self.name = "Jack of all Trades"
         self.cost = 4
 
-    def special(self, game, player):
-        player.gain_card("Silver")
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        try:
+            player.gain_card("Silver")
+        except NoCardException:
+            player.output("No more Silver")
 
         try:
             card = player.next_card()
@@ -44,13 +47,13 @@ class Card_Jack_of_all_Trades(Card.Card):
 
 ###############################################################################
 class Test_Jack_of_all_Trades(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Jack of all Trades"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Jack of all Trades")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a Jack of all Trades"""
         tsize = self.g.trash_pile.size()
         self.plr.piles[Piles.DECK].set(
