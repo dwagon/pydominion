@@ -18,7 +18,13 @@ class Card_Venture(Card.Card):
         """When you play this, reveal cards from your deck until
         you reveal a Treasure. Discard the other cards. Play that
         Treasure"""
+        max_cards = player.count_cards()
+        count = 0
         while True:
+            count += 1
+            if count >= max_cards:
+                player.output("No suitable cards")
+                break
             try:
                 card = player.pickup_card(verbose=False)
             except NoCardException:
