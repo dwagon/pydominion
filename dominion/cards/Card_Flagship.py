@@ -44,7 +44,7 @@ class TestFlagship(unittest.TestCase):
     """Test Flagship"""
 
     def setUp(self) -> None:
-        self.g = TestGame(numplayers=1, initcards=["Flagship", "Moat"])
+        self.g = TestGame(numplayers=1, initcards=["Flagship", "Moat", "Horse"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Flagship")
@@ -69,6 +69,14 @@ class TestFlagship(unittest.TestCase):
         self.plr.play_card(moat)
         self.assertNotIn("Flagship", self.plr.piles[Piles.DURATION])
         self.assertEqual(self.plr.piles[Piles.HAND].size(), hand_size + 2 + 2)
+
+    def test_play_horse(self) -> None:
+        """Because both cards want to move it after play it can cause issues"""
+        horse = self.g.get_card_from_pile("Horse")
+        self.plr.move_card(self.card, Piles.DURATION)
+        self.plr.add_card(horse, Piles.HAND)
+        self.plr.play_card(horse)
+        self.assertEqual(horse.location, Piles.CARDPILE)
 
 
 ###############################################################################
