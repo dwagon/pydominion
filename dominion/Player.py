@@ -438,13 +438,14 @@ class Player:
 
         # There can be custom PlayAreas (such as part of  card)
         if isinstance(pile, PlayArea):
-            card.location = pile
+            card.location = pile.name
             pile.add(card)
             return card
 
         # Return card to a card pile
         if pile == Piles.CARDPILE or isinstance(pile, CardPile):
             self.game.card_piles[card.pile].add(card)
+            card.location = Piles.CARDPILE
             return card
 
         if pile in self.piles:

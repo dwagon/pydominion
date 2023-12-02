@@ -1141,8 +1141,10 @@ class TestAddCard(unittest.TestCase):
         """Test specifying a pile"""
         card = self.game.get_card_from_pile("Gold")
         gold_size = len(self.game.card_piles["Gold"])
+        self.plr.add_card(card, Piles.HAND)
         self.plr.add_card(card, Piles.CARDPILE)
         self.assertEqual(len(self.game.card_piles["Gold"]), gold_size + 1)
+        self.assertEqual(card.location, Piles.CARDPILE)
 
 
 ###############################################################################

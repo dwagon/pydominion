@@ -3,7 +3,7 @@
 import unittest
 from typing import Any
 
-from dominion import Game, Card, Piles, Player, OptionKeys
+from dominion import Game, Card, Piles, Player, OptionKeys, NoCardException
 
 
 ###############################################################################
@@ -23,8 +23,11 @@ class Card_Experiment(Card.Card):
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
     ) -> dict[OptionKeys, Any]:
-        player.gain_card("Experiment", callhook=False)
-        player.output("Gained a new experiment")
+        try:
+            player.gain_card("Experiment", callhook=False)
+            player.output("Gained a new experiment")
+        except NoCardException:
+            player.output("No more Experiments")
         return {}
 
     ###########################################################################
@@ -32,7 +35,7 @@ class Card_Experiment(Card.Card):
         """Return to supply"""
         # Sometimes the card will already be moved (e.g. Throne Room)
         if self in player.piles[Piles.HAND]:
-            player.move_card(self, game.card_piles["Experiment"])
+            player.move_card(self, Piles.CARDPILE)
             player.output("Returned experiment to stack")
 
 
@@ -56,6 +59,15 @@ class TestExperiment(unittest.TestCase):
             1 for card in self.plr.piles[Piles.DISCARD] if card.name == "Experiment"
         )
         self.assertEqual(count, 2)
+
+    def test_gain_none_left(self) -> None:
+        """Gain an experiment when there are no more left"""
+        for _ in range(9):
+            card = self.g.get_card_from_pile("Experiment")
+        try:
+            self.plr.gain_card("Experiment")
+        except:
+            self.fail("Failed when gaining experiment")
 
 
 ###############################################################################

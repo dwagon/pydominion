@@ -21,13 +21,9 @@ class Card_Duplicate(Card.Card):
     def hook_gain_card(
         self, game: Game.Game, player: Player.Player, card: Card.Card
     ) -> dict[OptionKeys, Any]:
-        if not player.piles[Piles.RESERVE]["Duplicate"]:
+        if self not in player.piles[Piles.RESERVE]:
             return {}
-        if card.cost > 6:
-            return {}
-        if not card.purchasable:
-            return {}
-        if card.potcost:
+        if card.cost > 6 or not card.purchasable or card.potcost:
             return {}
         if player.plr_choose_options(
             f"Call Duplicate on {card}?",
@@ -40,7 +36,7 @@ class Card_Duplicate(Card.Card):
             self._duplicate = None
         return {}
 
-    def hook_call_reserve(self, game: "Game.Game", player: "Player.Player") -> None:
+    def hook_call_reserve(self, game: Game.Game, player: Player.Player) -> None:
         card = self._duplicate
         assert card is not None
         player.output(f"Gaining a {card} from Duplicate")
