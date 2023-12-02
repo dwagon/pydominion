@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Doubloons"""
 import unittest
-from dominion import Loot, Card, Game, Piles
+from dominion import Loot, Card, Game, Piles, Player, OptionKeys
 
 
 ###############################################################################
 class Loot_Doubloons(Loot.Loot):
     """Doubloons"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Loot.Loot.__init__(self)
         self.cardtype = [Card.CardType.LOOT, Card.CardType.TREASURE]
         self.base = Card.CardExpansion.PLUNDER
@@ -19,15 +19,18 @@ class Loot_Doubloons(Loot.Loot):
         self.cost = 7
         self.pile = "Loot"
 
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[OptionKeys, str]:
         player.gain_card("Gold")
+        return {}
 
 
 ###############################################################################
-class Test_Doubloons(unittest.TestCase):
+class TestDoubloons(unittest.TestCase):
     """Test Doubloons"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(quiet=True, numplayers=1, traits=["Cursed"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -40,13 +43,13 @@ class Test_Doubloons(unittest.TestCase):
                     self.g.card_piles["Loot"].remove(loot.name)
                     mods += 1
 
-    def test_gain_doubloon(self):
+    def test_gain_doubloon(self) -> None:
         """Test gaining doubloon"""
         self.g.assign_trait("Cursed", "Copper")
         self.plr.gain_card("Doubloons")
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
 
-    def test_playing(self):
+    def test_playing(self) -> None:
         """Test playing a doubloon"""
         doubloons = self.g.get_card_from_pile("Loot", "Doubloons")
         self.plr.add_card(doubloons, Piles.HAND)

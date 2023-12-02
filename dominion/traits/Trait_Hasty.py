@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Hasty"""
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Card, Game, Trait, Piles, PlayArea, Player, OptionKeys
 
@@ -20,12 +20,12 @@ class Trait_Hasty(Trait.Trait):
 
     def hook_gain_card(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         """When you gain a Hasty card, gain a Silver"""
         if game.card_piles[card.pile].trait == self.name:
             player.defer_card(card)
             return {OptionKeys.DONTADD: True}
-        return None
+        return {}
 
 
 ###############################################################################

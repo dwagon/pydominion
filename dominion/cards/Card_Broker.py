@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Broker """
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
 class Card_Broker(Card.Card):
     """Broker"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.LIAISON]
         self.base = Card.CardExpansion.ALLIES
@@ -19,18 +19,19 @@ class Card_Broker(Card.Card):
             or +$1 per $1 it costs; or +1 Favor per $1 it costs."""
         self.cost = 4
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         tr = player.plr_trash_card(printcost=True)
         if not tr:
             return
         cost = tr[0].cost
         if cost == 0:
             return
-        options = []
-        options.append((f"+{cost} cards", "card"))
-        options.append((f"+{cost} actions", "action"))
-        options.append((f"+${cost} coins", "cash"))
-        options.append((f"+{cost} favors", "favor"))
+        options = [
+            (f"+{cost} cards", "card"),
+            (f"+{cost} actions", "action"),
+            (f"+${cost} coins", "cash"),
+            (f"+{cost} favors", "favor"),
+        ]
         dc = player.plr_choose_options("Pick one:", *options)
         if dc == "card":
             player.pickup_cards(cost)
@@ -46,7 +47,7 @@ class Card_Broker(Card.Card):
 class Test_Broker(unittest.TestCase):
     """Test Broker"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1,
             initcards=["Broker"],
@@ -56,7 +57,7 @@ class Test_Broker(unittest.TestCase):
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Broker")
 
-    def test_play_cards(self):
+    def test_play_cards(self) -> None:
         """Play the card - gain cards"""
         self.plr.piles[Piles.HAND].set("Copper", "Estate", "Duchy")
         self.plr.add_card(self.card, Piles.HAND)
@@ -64,7 +65,7 @@ class Test_Broker(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 2 + 2)
 
-    def test_play_nothing(self):
+    def test_play_nothing(self) -> None:
         """Play but select nothing to trash"""
         self.plr.piles[Piles.HAND].set("Copper", "Estate", "Duchy")
         self.plr.add_card(self.card, Piles.HAND)
@@ -74,7 +75,7 @@ class Test_Broker(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), 0)
         self.assertEqual(self.g.trash_pile.size(), tsize)
 
-    def test_play_action(self):
+    def test_play_action(self) -> None:
         """Play the card - gain action"""
         self.plr.piles[Piles.HAND].set("Copper", "Estate", "Duchy")
         self.plr.add_card(self.card, Piles.HAND)
@@ -82,7 +83,7 @@ class Test_Broker(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
 
-    def test_play_cash(self):
+    def test_play_cash(self) -> None:
         """Play the card - gain cash"""
         self.plr.piles[Piles.HAND].set("Copper", "Estate", "Duchy")
         self.plr.add_card(self.card, Piles.HAND)
@@ -90,10 +91,12 @@ class Test_Broker(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
 
-    def test_play_favor(self):
+    def test_play_favor(self) -> None:
         """Play the card - gain favor"""
         self.plr.favors.set(0)
-        self.plr.piles[Piles.HAND].set("Copper", "Estate", "Duchy", "Copper", "Province", "Duchy")
+        self.plr.piles[Piles.HAND].set(
+            "Copper", "Estate", "Duchy", "Copper", "Province", "Duchy"
+        )
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Estate", "favor"]
         self.plr.play_card(self.card)

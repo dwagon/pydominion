@@ -2,7 +2,7 @@
 """ https://wiki.dominionstrategy.com/index.php/Berserker"""
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Game, Card, Piles, Player, OptionKeys
 
@@ -28,10 +28,10 @@ class Card_Berserker(Card.Card):
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         if sum(1 for _ in player.piles[Piles.PLAYED] if _.isAction()):
             player.play_card(self, cost_action=False, discard=False)
-        return None
+        return {}
 
 
 ###############################################################################

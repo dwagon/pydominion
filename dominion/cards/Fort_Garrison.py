@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from typing import Any
+
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
 class Card_Garrison(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
             Card.CardType.ACTION,
@@ -22,19 +24,23 @@ class Card_Garrison(Card.Card):
         self._tokens = 0
         self.pile = "Forts"
 
-    def hook_gain_card(self, game, player, card):
+    def hook_gain_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> dict[OptionKeys, Any]:
         self._tokens += 1
+        return {}
 
-    def duration(self, game, player):
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         if self._tokens:
             player.output(f"Picking up {self._tokens} cards from Garrison")
             player.pickup_cards(self._tokens)
             self._tokens = 0
+        return {}
 
 
 ###############################################################################
-class Test_Garrison(unittest.TestCase):
-    def setUp(self):
+class Test_arrison(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Forts"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -44,7 +50,7 @@ class Test_Garrison(unittest.TestCase):
                 break
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a garrison"""
         self.plr.test_input = ["Get Silver -"]
         coins = self.plr.coins.get()

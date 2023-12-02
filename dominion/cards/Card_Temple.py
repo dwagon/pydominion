@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -24,7 +24,7 @@ class Card_Temple(Card.Card):
         return f"""+1 VP. Trash from 1 to 3 differently named cards from your hand.
             Add 1 VP to the Temple Supply pile ({player.game.card_piles["Temple"].getVP()} VP)."""
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         player.add_score("Temple", 1)
         card_names = {_.name for _ in player.piles[Piles.HAND]}
         cards = [player.piles[Piles.HAND][_] for _ in card_names]
@@ -35,10 +35,13 @@ class Card_Temple(Card.Card):
             return
         game.card_piles["Temple"].addVP()
 
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[OptionKeys, str]:
         score = game.card_piles["Temple"].drainVP()
         player.output(f"Gaining {score} VP from Temple")
         player.add_score("Temple", score)
+        return {}
 
 
 ###############################################################################

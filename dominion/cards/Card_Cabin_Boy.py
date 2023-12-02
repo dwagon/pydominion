@@ -3,7 +3,7 @@
 
 import unittest
 
-from dominion import Game, Card, Piles, Player, NoCardException
+from dominion import Game, Card, Piles, Player, NoCardException, OptionKeys
 
 
 ###############################################################################
@@ -21,7 +21,7 @@ class Card_CabinBoy(Card.Card):
         self.name = "Cabin Boy"
         self.cost = 4
 
-    def duration(self, game: Game.Game, player: Player.Player) -> None:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         """choose one: +$2; or trash this to gain a Duration card."""
         options = [
             ("Gain $2", "money"),
@@ -44,6 +44,7 @@ class Card_CabinBoy(Card.Card):
                     player.gain_card(which_duration)
                 except NoCardException:
                     player.output(f"No more {which_duration}")
+        return {}
 
 
 ###############################################################################

@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Circle_of_Witches"""
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Card, Game, Piles, Ally, Player, NoCardException, OptionKeys
 
@@ -18,11 +18,11 @@ class Ally_Circle_of_Witches(Ally.Ally):
 
     def hook_post_play(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         if player.favors.get() < 3:
-            return None
+            return {}
         if not card.isLiaison():
-            return None
+            return {}
         if player.plr_choose_options(
             "Spend three favors to Curse everyone else: ",
             ("Nope, I'll be nice", False),
@@ -36,7 +36,7 @@ class Ally_Circle_of_Witches(Ally.Ally):
                         plr.output(f"{player}'s {self} cursed you")
                     except NoCardException:
                         player.output("No more Curses")
-        return None
+        return {}
 
 
 ###############################################################################

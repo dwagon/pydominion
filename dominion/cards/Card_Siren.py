@@ -39,20 +39,18 @@ class Card_Siren(Card.Card):
             except NoCardException:
                 player.output("No more Curses")
 
-    def duration(
-        self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[OptionKeys, str]]:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         """At the start of your next turn, draw until you have 8 cards in hand."""
         while player.piles[Piles.HAND].size() < 8:
             try:
                 player.pickup_card()
             except NoCardException:
                 break
-        return None
+        return {}
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         """When you gain this, trash it unless you trash an Action from your hand."""
         if actions := [_ for _ in player.piles[Piles.HAND] if _.isAction()]:
             if player.plr_trash_card(
@@ -60,7 +58,7 @@ class Card_Siren(Card.Card):
                 prompt="Either trash an action or trash the Siren",
                 cardsrc=actions,
             ):
-                return None
+                return {}
         player.output("Trashing Siren as no Action card was trashed")
         return {OptionKeys.TRASH: True}
 

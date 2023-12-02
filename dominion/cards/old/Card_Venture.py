@@ -40,7 +40,7 @@ class Card_Venture(Card.Card):
 
 
 ###############################################################################
-class Test_Venture(unittest.TestCase):
+class TestVenture(unittest.TestCase):
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Venture"])
         self.g.start_game()

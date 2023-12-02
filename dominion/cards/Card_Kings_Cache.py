@@ -2,14 +2,14 @@
 """https://wiki.dominionstrategy.com/index.php/King%27s_Cache"""
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_KingCache(Card.Card):
     """King's Cache"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.PLUNDER
@@ -17,16 +17,17 @@ class Card_KingCache(Card.Card):
         self.name = "King's Cache"
         self.cost = 7
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         treasures = [_ for _ in player.piles[Piles.HAND] if _.isTreasure()]
         if not treasures:
             return
         options = [("Do Nothing", None)]
         for treasure in treasures:
             options.append((f"Play {treasure}?", treasure))
-        to_play = player.plr_choose_options("Play a treasure three times", *options)
-        if to_play:
-            for i in range(3):
+        if to_play := player.plr_choose_options(
+            "Play a treasure three times", *options
+        ):
+            for _ in range(3):
                 player.play_card(to_play, cost_action=False, discard=False)
 
 
@@ -34,13 +35,13 @@ class Card_KingCache(Card.Card):
 class TestKingCache(unittest.TestCase):
     """Test King's Cache"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["King's Cache"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("King's Cache")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a card"""
         self.plr.piles[Piles.HAND].set("Copper", "Gold", "Estate")
         self.plr.add_card(self.card, Piles.HAND)

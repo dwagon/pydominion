@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Trappers%27_Lodge"""
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Card, Game, Piles, Ally, Player, OptionKeys
 
@@ -19,15 +19,14 @@ class Ally_Trappers_Lodge(Ally.Ally):
 
     def hook_gain_card(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         if not player.favors.get():
             return {}
-        opt = player.plr_choose_options(
+        if player.plr_choose_options(
             "Use Trappers Lodge to put it onto your deck for a favour?",
             ("Do nothing", False),
             ("Put on to deck", True),
-        )
-        if opt:
+        ):
             player.favors.add(-1)
             return {OptionKeys.DESTINATION: "topdeck"}
         return {}

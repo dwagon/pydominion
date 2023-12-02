@@ -2,7 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Trail"""
 
 import unittest
-from dominion import Game, Card, Piles, OptionKeys, Phase
+from dominion import Game, Card, Piles, OptionKeys, Phase, Player, PlayArea
 
 
 ###############################################################################
@@ -20,21 +20,29 @@ class Card_Trail(Card.Card):
         self.name = "Trail"
         self.cost = 4
 
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[OptionKeys, str]:
         if self.want_to_play(player):
             player.play_card(self, cost_action=False, discard=False)
             return {OptionKeys.DESTINATION: Piles.PLAYED}
+        return {}
 
-    def hook_discard_this_card(self, game, player, source):
+    def hook_discard_this_card(
+        self, game: Game.Game, player: Player.Player, source: PlayArea.PlayArea
+    ) -> None:
         if player.phase != Phase.CLEANUP:
             if self.want_to_play(player):
                 player.play_card(self, cost_action=False, discard=False)
 
-    def hook_trash_this_card(self, game, player):
+    def hook_trash_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[OptionKeys, str]:
         if self.want_to_play(player):
             player.play_card(self, cost_action=False, discard=False)
+        return {}
 
-    def want_to_play(self, player) -> bool:
+    def want_to_play(self, player: Player.Player) -> bool:
         options = [("Don't use", False), ("Use Trail", True)]
         use_it = player.plr_choose_options(
             "Play Trail for +1 Card, +1 Action?", *options

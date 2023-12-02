@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """https://wiki.dominionstrategy.com/index.php/Abundance """
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Game, Card, Piles, Player, OptionKeys
 
@@ -21,14 +21,14 @@ class Card_Abundance(Card.Card):
 
     def hook_gain_card(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         """+1 Buy and +$3."""
         if card.isAction():
             player.output(f"Abundance triggered due to gaining {card}")
             player.buys.add(1)
             player.coins.add(3)
             player.move_card(self, Piles.DISCARD)
-        return None
+        return {}
 
 
 ###############################################################################

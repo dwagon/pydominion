@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Sea_Witch"""
 
 import unittest
-from dominion import Card, Game, Piles, Player, NoCardException
+from dominion import Card, Game, Piles, Player, NoCardException, OptionKeys
 
 
 ###############################################################################
@@ -33,10 +33,11 @@ class Card_SeaWitch(Card.Card):
             except NoCardException:
                 player.output("No more Curses")
 
-    def duration(self, game: Game.Game, player: Player.Player) -> None:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         """+2 card, discard 2"""
         player.pickup_cards(2)
         player.plr_discard_cards(num=2, force=True)
+        return {}
 
 
 ###############################################################################

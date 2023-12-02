@@ -19,6 +19,7 @@ class Project_RoadNetwork(Project.Project):
             owner.output(
                 f"Road Network gives card due to {player.name} picking up {card.name}"
             )
+        return {}
 
 
 ###############################################################################

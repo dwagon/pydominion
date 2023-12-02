@@ -31,7 +31,7 @@ class Card_Villa(Card.Card):
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         if player.phase == Phase.BUY:
             player.phase = Phase.ACTION
         player.add_actions(1)

@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, PlayArea, Game, Piles
+from typing import Any
+
+from dominion import Card, PlayArea, Game, Piles, Player, OptionKeys
 
 
 ###############################################################################
 class Card_CargoShip(Card.Card):
     """Cargo Ship"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
         self.base = Card.CardExpansion.RENAISSANCE
@@ -21,41 +23,43 @@ class Card_CargoShip(Card.Card):
         self._cargo_ship = PlayArea.PlayArea([])
 
     ###########################################################################
-    def hook_gain_card(self, game, player, card):
+    def hook_gain_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> dict[OptionKeys, Any]:
         if self not in player.piles[Piles.DURATION]:
-            return None
+            return {}
         if not self._cargo_ship:
-            choice = player.plr_choose_options(
+            if player.plr_choose_options(
                 f"Do you want to set {card.name} aside to play next turn?",
                 ("Yes", True),
                 ("No", False),
-            )
-            if choice:
+            ):
                 self._cargo_ship.add(card)
                 player.secret_count += 1
-                return {"dontadd": True}
-        return None
+                return {OptionKeys.DONTADD: True}
+        return {}
 
     ###########################################################################
-    def duration(self, game, player):
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         for card in self._cargo_ship:
             player.add_card(card, Piles.HAND)
             self._cargo_ship.remove(card)
             player.secret_count -= 1
+        return {}
 
 
 ###############################################################################
 class TestCargoShip(unittest.TestCase):
     """Test Cargo Ship"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1, initcards=["Cargo Ship", "Moat"], badcards=["Shaman"]
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_play_card_yes(self):
+    def test_play_card_yes(self) -> None:
         self.card = self.g.get_card_from_pile("Cargo Ship")
         self.card.hook_gain_this_card(self.g, self.plr)
         self.plr.add_card(self.card, Piles.HAND)
@@ -68,7 +72,7 @@ class TestCargoShip(unittest.TestCase):
         self.plr.start_turn()
         self.assertIn("Moat", self.plr.piles[Piles.HAND])
 
-    def test_play_card_no(self):
+    def test_play_card_no(self) -> None:
         self.card = self.g.get_card_from_pile("Cargo Ship")
         self.card.hook_gain_this_card(self.g, self.plr)
         self.plr.add_card(self.card, Piles.HAND)

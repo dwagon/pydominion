@@ -2,9 +2,8 @@
 """http://wiki.dominionstrategy.com/index.php/Buried_Treasure"""
 
 import unittest
-from typing import Optional
 
-from dominion import Game, Card, Piles, OptionKeys
+from dominion import Game, Card, Piles, OptionKeys, Player
 
 
 ###############################################################################
@@ -24,7 +23,9 @@ class Card_BuriedTreasure(Card.Card):
         player.buys.add(1)
         player.coins.add(3)
 
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[OptionKeys, str]:
         """When you gain this, play it."""
         return {OptionKeys.DESTINATION: Piles.DURATION}
 

@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, OptionKeys
 from dominion.cards.Card_Castles import CastleCard
 
 
 ###############################################################################
 class Card_SprawlingCastle(CastleCard):
-    def __init__(self):
+    def __init__(self) -> None:
         CastleCard.__init__(self)
         self.cardtype = [Card.CardType.VICTORY, Card.CardType.CASTLE]
         self.base = Card.CardExpansion.EMPIRES
@@ -17,7 +17,9 @@ class Card_SprawlingCastle(CastleCard):
         self.name = "Sprawling Castle"
         self.pile = "Castles"
 
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[OptionKeys, str]:
         ch = player.plr_choose_options(
             "Gain a Duchy or 3 Estates",
             ("Gain a Duchy", "duchy"),
@@ -28,18 +30,19 @@ class Card_SprawlingCastle(CastleCard):
         else:
             for _ in range(3):
                 player.gain_card("Estate")
+        return {}
 
 
 ###############################################################################
 class Test_SprawlingCastle(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             quiet=True, numplayers=2, initcards=["Castles"], badcards=["Duchess"]
         )
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a sprawling castle"""
         while True:
             self.card = self.g.get_card_from_pile("Castles")
@@ -48,7 +51,7 @@ class Test_SprawlingCastle(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.assertEqual(self.plr.get_score_details()["Sprawling Castle"], 4)
 
-    def test_gain_duchy(self):
+    def test_gain_duchy(self) -> None:
         """Gain duchy through Sprawling Castle"""
         while True:
             self.card = self.g.get_card_from_pile("Castles")
@@ -60,7 +63,7 @@ class Test_SprawlingCastle(unittest.TestCase):
         self.assertNotIn("Estate", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1 + 1)
 
-    def test_gain_estate(self):
+    def test_gain_estate(self) -> None:
         """Gain estates through Sprawling Castle"""
         while True:
             self.card = self.g.get_card_from_pile("Castles")

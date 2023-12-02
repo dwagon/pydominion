@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Town_Crier"""
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Town_Crier(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.TOWNSFOLK]
         self.base = Card.CardExpansion.ALLIES
@@ -17,7 +17,7 @@ class Card_Town_Crier(Card.Card):
                 You may rotate the Townsfolk."""
         self.pile = "Townsfolk"
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         opt = player.plr_choose_options(
             "Choose One: ",
             ("+$2", "cash"),
@@ -42,7 +42,7 @@ class Card_Town_Crier(Card.Card):
 
 ###############################################################################
 class TestTownCrier(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Townsfolk"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -52,7 +52,7 @@ class TestTownCrier(unittest.TestCase):
                 break
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play_rotate_cash(self):
+    def test_play_rotate_cash(self) -> None:
         """Play a town crier - rotate, but get cash"""
         self.plr.test_input = ["+$2", "Rotate"]
         cns = self.plr.coins.get()
@@ -61,7 +61,7 @@ class TestTownCrier(unittest.TestCase):
         card = self.g.get_card_from_pile("Townsfolk")
         self.assertEqual(card.name, "Blacksmith")
 
-    def test_play_retain_silver(self):
+    def test_play_retain_silver(self) -> None:
         """Play a town crier - don't rotate, but get silver"""
         self.plr.test_input = ["Silver", "Don't"]
         self.plr.play_card(self.card)
@@ -69,7 +69,7 @@ class TestTownCrier(unittest.TestCase):
         card = self.g.get_card_from_pile("Townsfolk")
         self.assertEqual(card.name, "Town Crier")
 
-    def test_play_retain_card(self):
+    def test_play_retain_card(self) -> None:
         """Play a town crier - don't rotate, but get card and action"""
         self.plr.test_input = ["card", "Don't"]
         hndsze = self.plr.piles[Piles.HAND].size()

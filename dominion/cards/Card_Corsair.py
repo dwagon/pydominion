@@ -6,7 +6,7 @@ import contextlib
 import unittest
 from typing import Optional, Any
 
-from dominion import Game, Card, Piles, Player, NoCardException
+from dominion import Game, Card, Piles, Player, NoCardException, OptionKeys
 
 
 ###############################################################################
@@ -28,14 +28,12 @@ class Card_Corsair(Card.Card):
         self.cost = 5
         self._states = {}
 
-    def duration(
-        self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[str, str]]:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         """+1 Card; each other player trashes the first Silver or Gold they play each turn."""
         with contextlib.suppress(NoCardException):
             player.pickup_card()
         self._states = {}
-        return None
+        return {}
 
     def hook_all_players_post_play(
         self,
@@ -43,18 +41,18 @@ class Card_Corsair(Card.Card):
         player: Player.Player,
         owner: Player.Player,
         card: Card.Card,
-    ) -> Optional[dict[str, Any]]:
+    ) -> dict[OptionKeys, Any]:
         if player == owner or owner.has_defense(player):
-            return None
+            return {}
         # If multiple corsairs attack, card may already be in trash
         if card.location == Piles.TRASH or card.name not in ("Gold", "Silver"):
-            return None
+            return {}
         if player.name not in self._states:
             player.trash_card(card)
             self._states[player.name] = True
             player.output(f"{owner.name}'s Corsair trashed your {card}")
             owner.output(f"Your corsair trashed {player.name}'s {card}")
-        return None
+        return {}
 
 
 ###############################################################################

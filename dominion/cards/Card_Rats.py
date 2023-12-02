@@ -33,11 +33,11 @@ class Card_Rats(Card.Card):
 
     def hook_trash_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         """When you trash this +1 Card"""
         with contextlib.suppress(NoCardException):
             player.pickup_card(verb="Due to trashing Rats picked up")
-        return None
+        return {}
 
 
 ###############################################################################

@@ -2,13 +2,13 @@
 """ https://wiki.dominionstrategy.com/index.php/Dame_Sylvia """
 
 import unittest
-from dominion import Game, Piles, Card
+from dominion import Game, Piles, Card, Player
 from dominion.cards.Card_Knight import KnightCard
 
 
 ###############################################################################
 class Card_DameSylvia(KnightCard):
-    def __init__(self):
+    def __init__(self) -> None:
         KnightCard.__init__(self)
         self.cardtype = [
             Card.CardType.ACTION,
@@ -24,20 +24,20 @@ class Card_DameSylvia(KnightCard):
         self.coin = 2
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         self.knight_special(game, player)
 
 
 ###############################################################################
 class TestDameSylvia(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Knights"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.g.print_state()
         self.card = self.g.get_card_from_pile("Knights", "Dame Sylvia")
 
-    def test_score(self):
+    def test_score(self) -> None:
         """Play the Dame"""
         self.assertIsNotNone(self.card)
         self.plr.add_card(self.card, Piles.HAND)

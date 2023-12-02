@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Shantytown(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.INTRIGUE
@@ -16,7 +15,7 @@ class Card_Shantytown(Card.Card):
         self.actions = 2
         self.cost = 3
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Reveal your hand. If you have no Action cards in hand, +2 cards"""
         for c in player.piles[Piles.HAND]:
             player.reveal_card(c)
@@ -29,22 +28,22 @@ class Card_Shantytown(Card.Card):
 
 ###############################################################################
 class Test_Shantytown(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Shanty Town", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Shanty Town")
 
-    def test_no_actions(self):
-        """Test Shany Town with no actions"""
+    def test_no_actions(self) -> None:
+        """Test Shanty Town with no actions"""
         self.plr.piles[Piles.HAND].set("Estate", "Estate", "Gold")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 3 + 2)
 
-    def test_actions(self):
-        """Test Shany Town with actions"""
+    def test_actions(self) -> None:
+        """Test Shanty Town with actions"""
         self.plr.piles[Piles.HAND].set("Moat", "Estate", "Gold")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)

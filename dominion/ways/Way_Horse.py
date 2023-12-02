@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Card, Game, Way, Piles, OptionKeys, Player
 
@@ -20,7 +20,7 @@ class Way_Horse(Way.Way):
 
     def special_way(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         player.move_card(card, Piles.CARDPILE)
         return {OptionKeys.DISCARD: False}
 

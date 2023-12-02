@@ -24,12 +24,10 @@ Until then, the first Treasure each other player plays each turn does nothing.""
         self.name = "Highwayman"
         self.cost = 5
 
-    def duration(
-        self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[OptionKeys, str]]:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         """discard this from play and +3 Cards."""
         player.pickup_cards(3)
-        return None
+        return {}
 
     def hook_all_players_pre_play(
         self,
@@ -37,13 +35,13 @@ Until then, the first Treasure each other player plays each turn does nothing.""
         player: Player.Player,
         owner: Player.Player,
         card: Card.Card,
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         """Until then the first Treasure each other player plays each turn does nothing."""
         if not card.isTreasure():
-            return None
+            return {}
         treas_played = any(True for _ in player.piles[Piles.PLAYED] if _.isTreasure())
         if treas_played:
-            return None
+            return {}
         player.output(f"{owner}'s Highwayman cancel your {card}")
         owner.output(f"{player}'s {card} was cancelled")
 

@@ -2,9 +2,9 @@
 """ http://wiki.dominionstrategy.com/index.php/Territory """
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
-from dominion import Game, Card, Piles, Player, NoCardException
+from dominion import Game, Card, Piles, Player, NoCardException, OptionKeys
 
 
 ###############################################################################
@@ -26,14 +26,14 @@ class Card_Territory(Card.Card):
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[str, Any]]:
+    ) -> dict[OptionKeys, Any]:
         """When you gain this, gain a Gold per empty Supply pile."""
         empties = sum(
             1 for st, _ in game.get_card_piles() if game.card_piles[st].is_empty()
         )
         for _ in range(empties):
             player.gain_card("Gold")
-        return None
+        return {}
 
     def special_score(self, game: Game.Game, player: Player.Player) -> int:
         """Worth 1VP per differently named Victory card you have."""

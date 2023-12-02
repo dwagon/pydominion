@@ -37,7 +37,7 @@ class Card_IGG(Card.Card):
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         for plr in player.attack_victims():
             try:
                 plr.gain_card("Curse")

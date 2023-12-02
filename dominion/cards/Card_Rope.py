@@ -4,7 +4,7 @@
 import unittest
 from typing import Optional
 
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, OptionKeys
 
 
 ###############################################################################
@@ -21,10 +21,11 @@ class Card_Rope(Card.Card):
         self.name = "Rope"
         self.cost = 4
 
-    def duration(self, game, player):
+    def duration(self, game, player) -> dict[OptionKeys, str]:
         """At the start of your next turn, +1 Card and you may trash a card from your hand."""
         player.pickup_cards(1)
         player.plr_trash_card(num=1)
+        return {}
 
 
 ###############################################################################

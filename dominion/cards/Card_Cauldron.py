@@ -25,12 +25,12 @@ class Card_Cauldron(Card.Card):
 
     def hook_gain_card(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         """The third time you gain an Action this turn, each other player gains a Curse."""
         actions = [_ for _ in player.stats["gained"] if _.isAction()]
         # Card just gained hasn't been added to the stats["gained"] until after hook
         if not card.isAction():
-            return None
+            return {}
         if len(actions) == 2:
             for victim in player.attack_victims():
                 try:
@@ -39,6 +39,7 @@ class Card_Cauldron(Card.Card):
                     player.output(f"{victim} got cursed")
                 except NoCardException:
                     player.output("No more Curses")
+        return {}
 
 
 ###############################################################################

@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Player, NoCardException
+from dominion import Card, Game, Piles, Player, NoCardException, OptionKeys
 
 
 ###############################################################################
 class Card_Lost_City(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ADVENTURE
@@ -20,10 +20,9 @@ class Card_Lost_City(Card.Card):
             return "+2 Cards, +2 Actions; When you gain this every else gains a card"
         return "+2 Cards, +2 Actions"
 
-    def special(self, game, player):
-        pass
-
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[OptionKeys, str]:
         """When you gain this, each other player draws a card"""
         for pl in game.player_list():
             if pl != player:
@@ -31,21 +30,19 @@ class Card_Lost_City(Card.Card):
                     card = pl.pickup_card()
                 except NoCardException:
                     continue
-                pl.output(
-                    f"Picking up a {card} due to {player.name} playing a Lost City"
-                )
+                pl.output(f"Picking up a {card} due to {player} playing a Lost City")
         return {}
 
 
 ###############################################################################
 class TestLostCity(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Lost City"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.card = self.g.get_card_from_pile("Lost City")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a lost_city"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)

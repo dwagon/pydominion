@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Amulet"""
 import unittest
-from dominion import Game, Card, Piles, Player, NoCardException
+from dominion import Game, Card, Piles, Player, NoCardException, OptionKeys
 
 
 ###############################################################################
@@ -17,8 +17,9 @@ class Card_Amulet(Card.Card):
     def special(self, game: Game.Game, player: Player.Player) -> None:
         self.amulet_special(player)
 
-    def duration(self, game: Game.Game, player: Player.Player) -> None:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         self.amulet_special(player)
+        return {}
 
     def amulet_special(self, player: Player.Player) -> None:
         """Now and at the start of your next turn, choose one: +1 Coin;

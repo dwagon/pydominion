@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Counterfeit(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.DARKAGES
@@ -17,16 +16,22 @@ class Card_Counterfeit(Card.Card):
         self.coin = 1
         self.buys = 1
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """When you play this, you may play a Treasure from your
         hand twice. If you do, trash that Treasure"""
         options = [{"selector": "0", "print": "Do nothing", "card": None}]
         index = 1
-        for c in player.piles[Piles.HAND]:
-            if c.isTreasure():
-                sel = "%d" % index
+        for card in player.piles[Piles.HAND]:
+            if card.isTreasure():
+                options.append(
+                    {
+                        "selector": f"{index}",
+                        "print": f"Play {card} twice",
+                        "card": card,
+                    }
+                )
                 index += 1
-                options.append({"selector": sel, "print": "Play %s twice" % c.name, "card": c})
+
         if index == 1:
             return
         o = player.user_input(options, "What to do?")
@@ -39,27 +44,27 @@ class Card_Counterfeit(Card.Card):
 
 ###############################################################################
 class Test_Counterfiet(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Counterfeit"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Counterfeit")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)
         self.assertEqual(self.plr.buys.get(), 2)
 
-    def test_notreasures(self):
+    def test_no_treasures(self) -> None:
         self.plr.piles[Piles.HAND].set("Estate", "Estate", "Estate")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.test_input, ["0"])
 
-    def test_twice(self):
+    def test_twice(self) -> None:
         self.plr.piles[Piles.HAND].set("Gold")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["1"]

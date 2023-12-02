@@ -3,7 +3,7 @@
 import unittest
 from typing import Optional
 
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -34,13 +34,13 @@ class Card_Sauna(Card.Card):
 
     def hook_post_play(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> Optional[dict[str, str]]:
+    ) -> dict[OptionKeys, str]:
         """This turn, when you play a Silver, you may trash a card from your hand."""
         if card.name != "Silver":
-            return None
+            return {}
         player.output("Sauna lets you trash a card")
         player.plr_trash_card(num=1)
-        return None
+        return {}
 
 
 ###############################################################################

@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
 class Card_Farmland(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.VICTORY
         self.base = Card.CardExpansion.HINTERLANDS
@@ -16,16 +16,17 @@ class Card_Farmland(Card.Card):
         self.cost = 6
         self.victory = 2
 
-    def hook_gain_this_card(self, game, player):
-        card = player.plr_trash_card(force=True)
-        if card:
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[OptionKeys, str]:
+        if card := player.plr_trash_card(force=True):
             player.plr_gain_card(cost=card[0].cost + 2, modifier="equal")
         return {}
 
 
 ###############################################################################
 class TestFarmland(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1,
             initcards=["Farmland", "Militia"],
@@ -35,7 +36,7 @@ class TestFarmland(unittest.TestCase):
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Farmland")
 
-    def test_gain(self):
+    def test_gain(self) -> None:
         """Gain a farmland"""
         try:
             trash_size = self.g.trash_pile.size()
@@ -50,7 +51,7 @@ class TestFarmland(unittest.TestCase):
             self.g.print_state()
             raise
 
-    def test_score(self):
+    def test_score(self) -> None:
         self.plr.piles[Piles.DECK].set("Farmland")
         sd = self.plr.get_score_details()
         self.assertEqual(sd["Farmland"], 2)

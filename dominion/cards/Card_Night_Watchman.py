@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, NoCardException, Phase
+from dominion import Game, Card, Piles, NoCardException, Phase, Player, OptionKeys
 
 
 ###############################################################################
@@ -14,7 +14,7 @@ class Card_NightWatchman(Card.Card):
         self.name = "Night Watchman"
         self.cost = 3
 
-    def night(self, game, player):
+    def night(self, game: Game.Game, player: Player.Player) -> None:
         cards = []
         for _ in range(5):
             try:
@@ -34,19 +34,21 @@ class Card_NightWatchman(Card.Card):
             else:
                 player.add_card(card, "topdeck")
 
-    def hook_gain_this_card(self, game, player):
-        return {"destination": Piles.HAND}
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[OptionKeys, str]:
+        return {OptionKeys.DESTINATION: Piles.HAND}
 
 
 ###############################################################################
 class Test_NightWatchman(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Night Watchman"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Night Watchman")
 
-    def test_play(self):
+    def test_play(self) -> None:
         self.plr.phase = Phase.NIGHT
         self.plr.piles[Piles.DECK].set("Gold", "Province", "Gold", "Duchy", "Silver")
         self.plr.add_card(self.card, Piles.HAND)

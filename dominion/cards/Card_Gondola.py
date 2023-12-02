@@ -4,7 +4,7 @@
 import unittest
 from typing import Optional, Any
 
-from dominion import Game, Card, Piles, Player, Option
+from dominion import Game, Card, Piles, Player, Option, OptionKeys
 
 
 ###############################################################################
@@ -34,19 +34,22 @@ class Card_Gondola(Card.Card):
         else:
             self._choice = "then"
 
-    def duration(self, game: "Game.Game", player: "Player.Player") -> None:
+    def duration(
+        self, game: "Game.Game", player: "Player.Player"
+    ) -> dict[OptionKeys, Any]:
         if self._choice == "then":
             player.coins.add(2)
         self._choice = "undef"
+        return {}
 
     def hook_gain_this_card(
         self, game: "Game.Game", player: "Player.Player"
-    ) -> Optional[dict[str, Any]]:
+    ) -> dict[OptionKeys, Any]:
         """When you gain this, you may play an Action card from your hand."""
         actions = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not actions:
             player.output("No action cards in hand")
-            return None
+            return {}
         options: list[Option.Option | dict[str, Any]] = [
             {"selector": "0", "print": "Don't play a card", "card": None}
         ]
@@ -58,7 +61,7 @@ class Card_Gondola(Card.Card):
         if o["card"]:
             player.play_card(o["card"], cost_action=False)
 
-        return None
+        return {}
 
 
 ###############################################################################

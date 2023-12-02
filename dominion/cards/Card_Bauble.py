@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Card, Game, Piles, Player, OptionKeys
 
@@ -20,7 +20,7 @@ class Card_Bauble(Card.Card):
 
     def hook_gain_card(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         if not self._gain_hook:
             return {}
         mod = {}

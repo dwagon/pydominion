@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Goat(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.TREASURE, Card.CardType.HEIRLOOM]
         self.base = Card.CardExpansion.NOCTURNE
@@ -17,7 +16,7 @@ class Card_Goat(Card.Card):
         self.coin = 1
         self.purchasable = False
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         if player.piles[Piles.HAND].size():
             player.plr_trash_card()
 
@@ -29,13 +28,13 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 ###############################################################################
 class Test_Goat(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Pixie"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Goat")
 
-    def test_play(self):
+    def test_play(self) -> None:
         self.plr.piles[Piles.HAND].set("Province", "Estate")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Province"]

@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+from typing import Any
+
 from dominion import Card, Game, Piles, Player, OptionKeys, Phase
 
 
@@ -23,10 +25,12 @@ class Card_Inn(Card.Card):
             from it, and shuffle them into your deck."""
         return "+2 Cards, +2 Actions, Discard 2 cards"
 
-    def special(self, game, player) -> None:
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         player.plr_discard_cards(num=2, force=True)
 
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[OptionKeys, Any]:
         cards = []
         for card in player.piles[Piles.DISCARD]:
             if card.isAction():
@@ -40,7 +44,7 @@ class Card_Inn(Card.Card):
         )
         for card in back:
             if card.name == "Inn":
-                return {OptionKeys.DESTINATION: "deck", "shuffle": True}
+                return {OptionKeys.DESTINATION: "deck", OptionKeys.SHUFFLE: True}
             player.piles[Piles.DISCARD].remove(card)
             player.add_card(card, "deck")
             player.piles[Piles.DECK].shuffle()

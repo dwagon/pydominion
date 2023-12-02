@@ -2,14 +2,14 @@
 """http://wiki.dominionstrategy.com/index.php/Caravan_Guard"""
 
 import unittest
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player, OptionKeys
 
 
 ###############################################################################
 class Card_CaravanGuard(Card.Card):
     """Caravan Guard"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
             Card.CardType.ACTION,
@@ -23,15 +23,18 @@ class Card_CaravanGuard(Card.Card):
         self.name = "Caravan Guard"
         self.cost = 3
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         player.add_actions(1)
         player.pickup_cards(1)
 
-    def duration(self, game, player):
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         player.coins.add(1)
+        return {}
 
-    def hook_under_attack(self, game, player, attacker):
-        player.output(f"Under attack from {attacker.name}")
+    def hook_under_attack(
+        self, game: Game.Game, player: Player.Player, attacker: Player.Player
+    ) -> None:
+        player.output(f"Under attack from {attacker}")
         player.pickup_cards(1)
         player.move_card(player.piles[Piles.HAND]["Caravan Guard"], "played")
 
@@ -40,7 +43,7 @@ class Card_CaravanGuard(Card.Card):
 class Test_CaravanGuard(unittest.TestCase):
     """Test Caravan Guard"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=2, initcards=["Caravan Guard", "Militia", "Moat"]
         )
@@ -50,7 +53,7 @@ class Test_CaravanGuard(unittest.TestCase):
         self.militia = self.g.get_card_from_pile("Militia")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Test playing the caravan guard"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
@@ -60,7 +63,7 @@ class Test_CaravanGuard(unittest.TestCase):
         self.plr.start_turn()
         self.assertEqual(self.plr.coins.get(), 1)
 
-    def test_attack(self):
+    def test_attack(self) -> None:
         """Test being attacked"""
         self.plr.piles[Piles.HAND].set("Caravan Guard", "Moat")
         self.attacker.add_card(self.militia, Piles.HAND)

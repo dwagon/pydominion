@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Card, Game, Piles, Player, NoCardException, OptionKeys
 
@@ -22,7 +22,7 @@ class Card_Embassy(Card.Card):
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         """When you gain this, each other player gains a Silver"""
         for plr in game.player_list():
             if plr != player:

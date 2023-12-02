@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from typing import Any
+
+from dominion import Game, Card, Piles, OptionKeys, Player
 
 
 ###############################################################################
 class Card_Groundskeeper(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.EMPIRES
@@ -16,7 +18,9 @@ class Card_Groundskeeper(Card.Card):
         self.actions = 1
         self.cost = 5
 
-    def hook_gain_card(self, game, player, card):
+    def hook_gain_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> dict[OptionKeys, Any]:
         if card.isVictory():
             player.add_score("Groundskeeper", 1)
             player.output("Scored 1 from Groundskeeper")
@@ -25,7 +29,7 @@ class Card_Groundskeeper(Card.Card):
 
 ###############################################################################
 class TestGroundskeeper(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1, initcards=["Groundskeeper"], badcards=["Duchess"]
         )
@@ -33,7 +37,7 @@ class TestGroundskeeper(unittest.TestCase):
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Groundskeeper")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a Groundskeeper"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)

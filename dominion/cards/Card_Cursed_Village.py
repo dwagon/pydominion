@@ -2,9 +2,9 @@
 """ https://wiki.dominionstrategy.com/index.php/Cursed_Village"""
 import contextlib
 import unittest
-from typing import Optional, Any
+from typing import Any
 
-from dominion import Game, Card, Piles, Player, NoCardException
+from dominion import Game, Card, Piles, Player, NoCardException, OptionKeys
 
 
 ###############################################################################
@@ -25,9 +25,9 @@ class Card_CursedVillage(Card.Card):
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[str, Any]]:
+    ) -> dict[OptionKeys, Any]:
         player.receive_hex()
-        return None
+        return {}
 
 
 ###############################################################################

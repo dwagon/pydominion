@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Raider"""
 import unittest
-from dominion import Game, Card, Piles, Phase, Player
+from dominion import Game, Card, Piles, Phase, Player, OptionKeys
 
 
 ###############################################################################
@@ -20,8 +20,9 @@ class Card_Raider(Card.Card):
         self.name = "Raider"
         self.cost = 6
 
-    def duration(self, game: Game.Game, player: Player.Player) -> None:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         player.coins.add(3)
+        return {}
 
     def night(self, game: Game.Game, player: Player.Player) -> None:
         in_play = {_.name for _ in player.piles[Piles.PLAYED]}

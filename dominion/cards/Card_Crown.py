@@ -18,7 +18,7 @@ class Card_Crown(Card.Card):
         self.name = "Crown"
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player)->None:
         if player.phase == Player.Phase.ACTION:
             cards = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
             self._do_twice(player, cards)

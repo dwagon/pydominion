@@ -2,11 +2,10 @@
 """http://wiki.dominionstrategy.com/index.php/Flagship"""
 
 import unittest
-from typing import Optional
 
 from dominion.Game import Game, TestGame
 from dominion.Card import Card, CardType, CardExpansion
-from dominion import Piles
+from dominion import Piles, OptionKeys
 from dominion.Player import Player
 
 
@@ -30,14 +29,14 @@ class Card_Flagship(Card):
 
     def hook_post_play(
         self, game: Game, player: Player, card: Card
-    ) -> Optional[dict[str, str]]:
+    ) -> dict[OptionKeys, str]:
         """The next time you play a non-Command Action card, replay it."""
         if not card.isAction() or card.isCommand():
-            return None
+            return {}
         player.output(f"Flagship plays {card} again")
         player.play_card(card, cost_action=False, discard=False, post_action_hook=False)
         player.move_card(self, Piles.DISCARD)
-        return None
+        return {}
 
 
 ###############################################################################

@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
 class Card_Tactician(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
         self.base = Card.CardExpansion.SEASIDE
@@ -15,7 +14,7 @@ class Card_Tactician(Card.Card):
         self.name = "Tactician"
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         self.discarded = False
         discard = player.plr_choose_options(
             "Discard hand for good stuff next turn?", ("Keep", False), ("Discard", True)
@@ -24,25 +23,26 @@ class Card_Tactician(Card.Card):
             self.discarded = True
             player.discard_hand()
 
-    def duration(self, game, player):
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         """+5 Cards, +1 Buy, +1 Action"""
         if self.discarded:
             player.pickup_cards(5)
             player.buys.add(1)
             player.add_actions(1)
             self.discarded = False
+        return {}
 
 
 ###############################################################################
-class Test_Tactician(unittest.TestCase):
-    def setUp(self):
+class TestTactician(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Tactician"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Tactician")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play_discard(self):
+    def test_play_discard(self) -> None:
         """Play a tactician and discard hand"""
         self.plr.test_input = ["discard"]
         self.plr.play_card(self.card)
@@ -53,7 +53,7 @@ class Test_Tactician(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.buys.get(), 2)
 
-    def test_play_keep(self):
+    def test_play_keep(self) -> None:
         """Play a tactician and discard hand"""
         self.plr.test_input = ["keep"]
         self.plr.play_card(self.card)

@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
 class Card_Cemetery(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.VICTORY
         self.base = Card.CardExpansion.NOCTURNE
@@ -17,21 +16,26 @@ class Card_Cemetery(Card.Card):
         self.victory = 2
         self.heirloom = "Haunted Mirror"
 
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[OptionKeys, str]:
         player.plr_trash_card(num=4)
+        return {}
 
 
 ###############################################################################
 class Test_Cemetery(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Cemetery"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Cemetery")
 
-    def test_gain(self):
+    def test_gain(self) -> None:
         """Gain a Cemetery"""
-        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
+        self.plr.piles[Piles.HAND].set(
+            "Copper", "Silver", "Gold", "Estate", "Duchy", "Province"
+        )
         self.plr.test_input = ["Copper", "Silver", "Gold", "Estate", "Finish"]
         self.plr.gain_card("Cemetery")
         self.assertIn("Copper", self.g.trash_pile)

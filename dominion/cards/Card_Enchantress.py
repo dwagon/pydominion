@@ -23,8 +23,9 @@ class Card_Enchantress(Card.Card):
         self.name = "Enchantress"
         self.cost = 3
 
-    def duration(self, game: Game.Game, player: Player.Player) -> None:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         player.pickup_cards(2)
+        return {}
 
     def hook_all_players_pre_play(
         self,
@@ -32,14 +33,14 @@ class Card_Enchantress(Card.Card):
         player: Player.Player,
         owner: Player.Player,
         card: Card.Card,
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         if len(player.piles[Piles.PLAYED]) == 0 and card.isAction():
             player.output(f"{owner.name}'s Enchantress gazump'd your {card}")
             player.add_actions(1)
             with contextlib.suppress(NoCardException):
                 player.pickup_card()
             return {OptionKeys.SKIP_CARD: True}
-        return None
+        return {}
 
 
 ###############################################################################

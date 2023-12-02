@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from typing import Any, Optional
+from typing import Any
 
-from dominion import Game, Card, Piles, Player, NoCardException
+from dominion import Game, Card, Piles, Player, NoCardException, OptionKeys
 
 
 ###############################################################################
@@ -24,7 +24,7 @@ class Card_Catacombs(Card.Card):
                 cards.append(player.next_card())
             except NoCardException:
                 break
-                
+
         player.output(f'You drew {", ".join([_.name for _ in cards])}')
 
         if ans := player.plr_choose_options(
@@ -41,10 +41,10 @@ class Card_Catacombs(Card.Card):
 
     def hook_trash_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[str, Any]]:
+    ) -> dict[OptionKeys, Any]:
         """When you trash this, gain a cheaper card"""
         player.plr_gain_card(cost=self.cost - 1)
-        return None
+        return {}
 
 
 ###############################################################################

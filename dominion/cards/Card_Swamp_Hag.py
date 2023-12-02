@@ -2,7 +2,7 @@
 """ https://wiki.dominionstrategy.com/index.php/Swamp_Hag"""
 
 import unittest
-from dominion import Game, Card, Piles, Player, NoCardException
+from dominion import Game, Card, Piles, Player, NoCardException, OptionKeys
 
 
 ###############################################################################
@@ -21,8 +21,9 @@ class Card_SwampHag(Card.Card):
         self.name = "Swamp Hag"
         self.cost = 5
 
-    def duration(self, game: Game.Game, player: Player.Player) -> None:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         player.coins.add(3)
+        return {}
 
     def hook_all_players_buy_card(
         self,

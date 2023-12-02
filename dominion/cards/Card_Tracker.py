@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Tracker"""
 import unittest
-from dominion import Game, Card, Piles, OptionKeys
+from typing import Any
+
+from dominion import Game, Card, Piles, OptionKeys, Player
 
 
 ###############################################################################
@@ -21,11 +23,13 @@ class Card_Tracker(Card.Card):
         if not hasattr(player, "_tracker_dont_boon"):
             player.receive_boon()
 
-    def hook_gain_card(self, game, player, card):
+    def hook_gain_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> dict[OptionKeys, Any]:
         """While this is in play, when you gain a card, you may
         put that card on top of your deck"""
         mod = {}
-        if deck := player.plr_choose_options(
+        if player.plr_choose_options(
             f"Where to put {card}?",
             (f"Put {card} on discard", False),
             (f"Put {card} on top of deck", True),

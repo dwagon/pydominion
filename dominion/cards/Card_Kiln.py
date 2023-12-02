@@ -2,9 +2,9 @@
 """ http://wiki.dominionstrategy.com/index.php/Kiln """
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
-from dominion import Card, Game, Piles, Player, NoCardException
+from dominion import Card, Game, Piles, Player, NoCardException, OptionKeys
 
 
 ###############################################################################
@@ -22,7 +22,7 @@ class Card_Kiln(Card.Card):
 
     def hook_pre_play(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> Optional[dict[str, Any]]:  # pylint: disable=unused-argument
+    ) -> dict[OptionKeys, Any]:  # pylint: disable=unused-argument
         """The next time you play a card this turn, you may first gain a copy of it."""
         if player.plr_choose_options(
             f"Gain a copy of {card}?",
@@ -33,7 +33,7 @@ class Card_Kiln(Card.Card):
                 player.gain_card(card.name)
             except NoCardException:
                 pass
-        return None
+        return {}
 
 
 ###############################################################################

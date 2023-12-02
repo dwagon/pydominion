@@ -19,18 +19,18 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
 
     def hook_gain_card(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         if card.cost < 3:
-            return None
+            return {}
         if game.card_piles["Changeling"].is_empty():
-            return None
+            return {}
         if swap := player.plr_choose_options(
             f"Swap {card} for a Changeling?",
             (f"Swap {card}", True),
             (f"Keep {card}", False),
         ):
             return {OptionKeys.REPLACE: "Changeling"}
-        return None
+        return {}
 
     def night(self, game: Game.Game, player: Player.Player) -> None:
         options = [{"selector": "0", "print": "Keep Changeling", "card": None}]

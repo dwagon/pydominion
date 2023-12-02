@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Game, Card, Player, NoCardException, OptionKeys
 
@@ -25,7 +25,7 @@ class Card_Duchy(Card.Card):
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         if "Duchess" in game.card_piles:
             if player.plr_choose_options(
                 "Gain a Duchess as well?",

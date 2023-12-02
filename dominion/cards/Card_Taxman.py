@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Taxman(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.GUILDS
@@ -17,8 +16,8 @@ class Card_Taxman(Card.Card):
         self.name = "Taxman"
         self.cost = 4
 
-    def special(self, game, player):
-        treas = [c for c in player.piles[Piles.HAND] if c.isTreasure()]
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        treas = [_ for _ in player.piles[Piles.HAND] if _.isTreasure()]
         cards = player.plr_trash_card(
             cardsrc=treas,
             prompt="Pick card to trash. Others discard that. You gain a treasure costing 3 more",
@@ -28,31 +27,34 @@ class Card_Taxman(Card.Card):
         card = cards[0]
         for vic in player.attack_victims():
             if vic.piles[Piles.HAND].size() >= 5:
-                viccard = vic.piles[Piles.HAND][card.name]
-                if viccard:
-                    vic.output("Discarding %s due to %s's Taxman" % (viccard.name, player.name))
-                    player.output("%s discarded a %s" % (vic.name, viccard.name))
-                    vic.discard_card(viccard)
+                if victim_card := vic.piles[Piles.HAND][card.name]:
+                    vic.output(f"Discarding {victim_card} due to {player}'s Taxman")
+                    player.output(f"{vic} discarded a {victim_card}")
+                    vic.discard_card(victim_card)
                 else:
-                    player.output("%s doesn't have a %s" % (vic.name, card.name))
+                    player.output(f"{vic} doesn't have a {card}")
                     for c in vic.piles[Piles.HAND]:
                         vic.reveal_card(c)
-        cardcost = player.card_cost(card) + 3
-        player.plr_gain_card(cost=cardcost, types={Card.CardType.TREASURE: True})
+        card_cost = player.card_cost(card) + 3
+        player.plr_gain_card(cost=card_cost, types={Card.CardType.TREASURE: True})
 
 
 ###############################################################################
 class Test_Taxman(unittest.TestCase):
-    def setUp(self):
-        self.g = Game.TestGame(numplayers=2, initcards=["Taxman"], badcards=["Fool's Gold"])
+    def setUp(self) -> None:
+        self.g = Game.TestGame(
+            numplayers=2, initcards=["Taxman"], badcards=["Fool's Gold"]
+        )
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g.get_card_from_pile("Taxman")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a Taxman"""
         self.plr.piles[Piles.HAND].set("Silver")
-        self.victim.piles[Piles.HAND].set("Copper", "Copper", "Estate", "Duchy", "Silver")
+        self.victim.piles[Piles.HAND].set(
+            "Copper", "Copper", "Estate", "Duchy", "Silver"
+        )
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Silver", "Get Gold"]
         self.plr.play_card(self.card)
