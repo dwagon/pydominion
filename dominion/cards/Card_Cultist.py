@@ -3,7 +3,7 @@
 import unittest
 from typing import Any
 
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, OptionKeys, NoCardException
 
 
 ###############################################################################
@@ -26,8 +26,12 @@ class Card_Cultist(Card.Card):
         """Each other play gains a Ruins. You may play a Cultist
         from your hand."""
         for plr in player.attack_victims():
-            plr.output(f"Gained a ruin from {player.name}'s Cultist")
-            plr.gain_card("Ruins")
+            plr.output(f"Gained a ruin from {player}'s Cultist")
+            try:
+                plr.gain_card("Ruins")
+            except NoCardException:
+                player.output("No more Ruins")
+
         if cultist := player.piles[Piles.HAND]["Cultist"]:
             if player.plr_choose_options(
                 "Play another cultist?",
@@ -38,7 +42,7 @@ class Card_Cultist(Card.Card):
 
     def hook_trash_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> dict[str, Any]:
+    ) -> dict[OptionKeys, Any]:
         """When you trash this, +3 cards"""
         player.pickup_cards(3)
         return {}

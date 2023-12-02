@@ -2,7 +2,9 @@
 """ http://wiki.dominionstrategy.com/index.php/Camel_Train """
 
 import unittest
-from dominion import Card, Game, Piles, Player, Phase
+from typing import Any
+
+from dominion import Card, Game, Piles, Player, Phase, OptionKeys
 
 
 ###############################################################################
@@ -34,8 +36,11 @@ class Card_CamelTrain(Card.Card):
         if to_exile := player.plr_choose_options("Pick a card to Exile", *options):
             player.exile_card_from_supply(to_exile)
 
-    def hook_gain_this_card(self, game: "Game.Game", player: "Player.Player") -> None:
+    def hook_gain_this_card(
+        self, game: "Game.Game", player: "Player.Player"
+    ) -> dict[OptionKeys, Any]:
         player.exile_card_from_supply("Gold")
+        return {}
 
 
 ###############################################################################

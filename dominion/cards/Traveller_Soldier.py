@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, PlayArea
 
 
 ###############################################################################
@@ -22,7 +22,7 @@ class Card_Soldier(Card.Card):
         self.cost = 3
         self.numcards = 5
 
-    def special(self, game, player) -> None:
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """+2 Coins; +1 Coin per other Attack you have in play.
         Each other player with 4 or more cards in hand discards a card."""
         count = 0
@@ -35,10 +35,12 @@ class Card_Soldier(Card.Card):
         player.output("Gained %d extra coins" % count)
         for plr in player.attack_victims():
             if plr.piles[Piles.HAND].size() >= 4:
-                plr.output("%s's Soldier: Discard a card" % player.name)
+                plr.output(f"{player}'s Soldier: Discard a card")
                 plr.plr_discard_cards(force=True)
 
-    def hook_discard_this_card(self, game, player, source):
+    def hook_discard_this_card(
+        self, game: Game.Game, player: Player.Player, source: PlayArea.PlayArea
+    ) -> None:
         """Replace with Hero"""
         player.replace_traveller(self, "Fugitive")
 
@@ -49,7 +51,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 
 ###############################################################################
-class Test_Soldier(unittest.TestCase):
+class TestSoldier(unittest.TestCase):
     def setUp(self) -> None:
         self.g = Game.TestGame(
             quiet=True, numplayers=2, initcards=["Peasant", "Militia"]

@@ -2,12 +2,12 @@
 """ http://wiki.dominionstrategy.com/index.php/Survivors """
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Survivors(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.RUIN]
         self.base = Card.CardExpansion.DARKAGES
@@ -17,7 +17,7 @@ class Card_Survivors(Card.Card):
         self.name = "Survivors"
         self.pile = "Ruins"
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Look at the top 2 cards of your deck. Discard them or
         put them back in any order"""
         cards = player.pickup_cards(2)
@@ -36,7 +36,7 @@ class Card_Survivors(Card.Card):
 
 ###############################################################################
 class TestSurvivors(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(quiet=True, numplayers=4, initcards=["Cultist"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -46,7 +46,7 @@ class TestSurvivors(unittest.TestCase):
                 break
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play_discard(self):
+    def test_play_discard(self) -> None:
         """Play a survivor and discard cards"""
         self.plr.piles[Piles.DECK].set("Copper", "Silver", "Gold")
         self.plr.test_input = ["Discard"]
@@ -56,7 +56,7 @@ class TestSurvivors(unittest.TestCase):
         self.assertNotIn("Gold", self.plr.piles[Piles.DECK])
         self.assertNotIn("Silver", self.plr.piles[Piles.DECK])
 
-    def test_play_return(self):
+    def test_play_return(self) -> None:
         """Play a survivor and return to deck"""
         self.plr.piles[Piles.DECK].set("Copper", "Silver", "Gold")
         self.plr.piles[Piles.DISCARD].empty()

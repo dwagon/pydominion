@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, Player
+from typing import Any
+
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -18,9 +20,12 @@ class Card_Experiment(Card.Card):
         self.actions = 1
 
     ###########################################################################
-    def hook_gain_this_card(self, game: Game.Game, player: Player.Player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[OptionKeys, Any]:
         player.gain_card("Experiment", callhook=False)
         player.output("Gained a new experiment")
+        return {}
 
     ###########################################################################
     def special(self, game: Game.Game, player: Player.Player) -> None:

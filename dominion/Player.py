@@ -308,8 +308,7 @@ class Player:
             return
         self.stats["trashed"].append(card)
         trash_opts: dict[OptionKeys, Any] = {}
-        if rc := card.hook_trash_this_card(game=self.game, player=self):
-            trash_opts.update(rc)
+        trash_opts |= card.hook_trash_this_card(game=self.game, player=self)
         if trash_opts.get(OptionKeys.TRASH, True):
             if card.location and card.location != Piles.TRASH:
                 self.remove_card(card)
@@ -318,8 +317,9 @@ class Player:
             card.location = Piles.TRASH
         for crd in self.relevant_cards():
             if crd.name not in kwargs.get("exclude_hook", []):
-                if rc := crd.hook_trash_card(game=self.game, player=self, card=card):
-                    trash_opts.update(rc)
+                trash_opts |= crd.hook_trash_card(
+                    game=self.game, player=self, card=card
+                )
 
     ###########################################################################
     def next_card(self) -> Card:
@@ -1276,8 +1276,7 @@ class Player:
         """Hook before an action card is played"""
         options: dict[OptionKeys, str] = {}
         for crd in self.piles[Piles.DURATION] + self.piles[Piles.PLAYED]:
-            if ans := crd.hook_pre_play(game=self.game, player=self, card=card):
-                options |= ans
+            options |= crd.hook_pre_play(game=self.game, player=self, card=card)
         return options
 
     ###########################################################################
@@ -1285,10 +1284,9 @@ class Player:
         options: dict[OptionKeys, str] = {}
         for player in self.game.player_list():
             for crd in player.piles[Piles.DURATION]:
-                if ans := crd.hook_all_players_pre_play(
+                options |= crd.hook_all_players_pre_play(
                     game=self.game, player=self, owner=player, card=card
-                ):
-                    options |= ans
+                )
         return options
 
     ###########################################################################
@@ -1296,10 +1294,9 @@ class Player:
         options: dict[OptionKeys, Any] = {}
         for player in self.game.player_list():
             for crd in player.piles[Piles.DURATION]:
-                if answer := crd.hook_all_players_post_play(
+                options |= crd.hook_all_players_post_play(
                     game=self.game, player=self, owner=player, card=card
-                ):
-                    options |= answer
+                )
         return options
 
     ###########################################################################
@@ -1477,8 +1474,7 @@ class Player:
             raise NoCardException
 
         if callhook:
-            if rc := self._gain_card_hooks(new_card):
-                options |= rc
+            options |= self._gain_card_hooks(new_card)
 
         # Replace is to gain a different card
         if options.get(OptionKeys.REPLACE):
@@ -1658,10 +1654,13 @@ class Player:
         options: dict[OptionKeys, Any] = {}
         for card in self.relevant_cards():
             self.currcards.append(card)
-            if opts := card.hook_gain_card(
-                game=self.game, player=self, card=gained_card
-            ):
-                options |= opts
+            try:
+                options |= card.hook_gain_card(
+                    game=self.game, player=self, card=gained_card
+                )
+            except TypeError:
+                print(f"HCG: failed on {card}")
+                raise
             self.currcards.pop()
         return options
 
@@ -1670,8 +1669,7 @@ class Player:
         """Run the hook_gain_this_card() for all relevant cards"""
         options: dict[OptionKeys, Any] = {}
         self.currcards.append(gained_card)
-        if opts := gained_card.hook_gain_this_card(game=self.game, player=self):
-            options |= opts
+        options |= gained_card.hook_gain_this_card(game=self.game, player=self)
         self.currcards.pop()
 
         return options
@@ -1683,10 +1681,14 @@ class Player:
 
         for player in self.game.player_list():
             for card in player.relevant_cards():
-                if opts := card.hook_all_players_gain_card(
-                    game=self.game, player=self, owner=player, card=gained_card
-                ):
-                    options |= opts
+                try:
+                    options |= card.hook_all_players_gain_card(
+                        game=self.game, player=self, owner=player, card=gained_card
+                    )
+                except TypeError:
+                    print(f"HAPGC: failed on {card}")
+                    raise
+
         return options
 
     ###########################################################################

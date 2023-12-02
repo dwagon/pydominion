@@ -23,7 +23,7 @@ class Card_Sailor(Card.Card):
 
     def hook_gain_card(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         """Once this turn, when you gain a Duration card, you may play it."""
         if not card.isDuration():
             return {}
@@ -38,13 +38,11 @@ class Card_Sailor(Card.Card):
                 return {OptionKeys.DESTINATION: Piles.DURATION}
         return {}
 
-    def duration(
-        self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[OptionKeys, Any]]:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         """At the start of your next turn, +$2; and you may trash a card from your hand."""
         player.coins.add(2)
         player.plr_trash_card(num=1)
-        return None
+        return {}
 
 
 ###############################################################################

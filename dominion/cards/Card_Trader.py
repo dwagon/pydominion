@@ -31,7 +31,7 @@ class Card_Trader(Card.Card):
 
     def hook_gain_card(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         if card.name == "Silver":
             return {}
         if player.plr_choose_options(

@@ -2,7 +2,9 @@
 """ http://wiki.dominionstrategy.com/index.php/Sleigh """
 
 import unittest
-from dominion import Card, Game, Piles, OptionKeys
+from typing import Any
+
+from dominion import Card, Game, Piles, OptionKeys, Player, NoCardException
 
 
 ###############################################################################
@@ -19,11 +21,16 @@ class Card_Sleigh(Card.Card):
         self.cost = 2
         self.required_cards = [("Card", "Horse")]
 
-    def special(self, game, player) -> None:
-        player.gain_card("Horse")
-        player.gain_card("Horse")
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        try:
+            player.gain_card("Horse")
+            player.gain_card("Horse")
+        except NoCardException:
+            player.output("No more Horses")
 
-    def hook_gain_card(self, game, player, card):
+    def hook_gain_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> dict[OptionKeys, Any]:
         # Discard self if choice == hand or deck
         choice = player.plr_choose_options(
             f"What to do with {card}?",

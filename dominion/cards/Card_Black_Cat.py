@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Black_Cat """
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Game, Card, Piles, Player, NoCardException, OptionKeys
 
@@ -31,9 +31,9 @@ class Card_Black_Cat(Card.Card):
         player: Player.Player,
         owner: Player.Player,
         card: Card.Card,
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         if owner == player:
-            return None
+            return {}
         if card.isVictory():
             for victim in owner.attack_victims():
                 try:
@@ -42,7 +42,7 @@ class Card_Black_Cat(Card.Card):
                     player.output(f"Your Black Cat cursed {victim}")
                 except NoCardException:
                     player.output("No more Curse cards")
-        return None
+        return {}
 
 
 ###############################################################################

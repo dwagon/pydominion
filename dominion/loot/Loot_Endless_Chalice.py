@@ -1,16 +1,15 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Endless_Chalice"""
 import unittest
-from typing import Optional
 
-from dominion import Loot, Card, Game, Piles
+from dominion import Loot, Card, Game, Piles, Player, OptionKeys
 
 
 ###############################################################################
 class Loot_EndlessChalice(Loot.Loot):
     """Endless Chalice"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Loot.Loot.__init__(self)
         self.cardtype = [
             Card.CardType.LOOT,
@@ -26,21 +25,22 @@ class Loot_EndlessChalice(Loot.Loot):
         self.pile = "Loot"
         self.permanent = True
 
-    def duration(self, game, player) -> Optional[dict]:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         player.coins.add(1)
         player.buys.add(1)
+        return {}
 
 
 ###############################################################################
 class TestEndlessChalice(unittest.TestCase):
     """Test Endless Chalice"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(quiet=True, numplayers=1, traits=["Cursed"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_playing(self):
+    def test_playing(self) -> None:
         """Test playing an Endless Chalice"""
         chalice = self.g.get_card_from_pile("Loot", "Endless Chalice")
         self.plr.add_card(chalice, Piles.HAND)

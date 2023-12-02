@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Aqueduct"""
 import unittest
-from dominion import Card, Game, Landmark
+from typing import Any
+
+from dominion import Card, Game, Landmark, OptionKeys, Player
 
 
 ###############################################################################
 class Landmark_Aqueduct(Landmark.Landmark):
-    def __init__(self):
+    def __init__(self) -> None:
         Landmark.Landmark.__init__(self)
         self.base = Card.CardExpansion.EMPIRES
         self.name = "Aqueduct"
@@ -14,12 +16,14 @@ class Landmark_Aqueduct(Landmark.Landmark):
         self._silvervp = 8
         self._vp = 0
 
-    def dynamic_description(self, player):
+    def dynamic_description(self, player: Player.Player) -> str:
         return f"""When you gain a Treasure, move 1 VP from its pile to this.
             When you gain a Victory card, take the VP from this.
             (Here: {self._vp} VP, Gold: {self._goldvp} VP, Silver: {self._silvervp} VP)"""
 
-    def hook_gain_card(self, game, player, card):
+    def hook_gain_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> dict[OptionKeys, Any]:
         if card.name == "Gold":
             if self._goldvp:
                 self._goldvp -= 1
@@ -38,18 +42,19 @@ class Landmark_Aqueduct(Landmark.Landmark):
             player.output(f"Gained {self._vp} VP from Aqueduct")
             player.add_score("Aqueduct", self._vp)
             self._vp = 0
+        return {}
 
 
 ###############################################################################
 class TestAqueduct(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1, landmarks=["Aqueduct"], badcards=["Duchess"]
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_gain_silver(self):
+    def test_gain_silver(self) -> None:
         """Use Aqueduct gaining Silver"""
         self.plr.buys.add(2)
         self.plr.coins.set(20)
@@ -59,7 +64,7 @@ class TestAqueduct(unittest.TestCase):
         self.plr.buy_card("Duchy")
         self.assertEqual(self.plr.get_score_details()["Aqueduct"], 1)
 
-    def test_gain_gold(self):
+    def test_gain_gold(self) -> None:
         """Use Aqueduct gaining Gold"""
         self.plr.buys.add(2)
         self.plr.coins.set(20)

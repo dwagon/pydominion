@@ -35,15 +35,13 @@ gains a copy of it on their turn, they gain a Curse."""
         player.piles[Piles.DISCARD].remove(self._blockade)
         player.secret_count += 1
 
-    def duration(
-        self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[OptionKeys, str]]:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         """At the start of your next turn, put it into your hand"""
         if self._blockade:
             player.add_card(self._blockade, Piles.HAND)
             self._blockade = None
             player.secret_count -= 1
-        return None
+        return {}
 
     def hook_all_players_gain_card(
         self,
@@ -51,18 +49,18 @@ gains a copy of it on their turn, they gain a Curse."""
         player: Player.Player,
         owner: Player.Player,
         card: Card.Card,
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         """While it's set aside, when another player gains a copy of it on their turn, they gain a Curse."""
         if not self._blockade or player == owner:
-            return None
+            return {}
         if card.name != self._blockade.name:
-            return None
+            return {}
         try:
             player.output(f"Gained a Curse from {owner}'s Blockade")
             player.gain_card("Curse")
         except NoCardException:
             player.output("No more Curses")
-        return None
+        return {}
 
 
 ###############################################################################

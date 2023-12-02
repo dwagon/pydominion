@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from typing import Optional
 
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -22,10 +21,10 @@ class Card_Champion(Card.Card):
 
     def hook_post_play(
         self, game: "Game.Game", player: "Player.Player", card: "Card.Card"
-    ) -> Optional[dict[str, str]]:
+    ) -> dict[OptionKeys, str]:
         if card.isAction():
             player.add_actions(1)
-        return None
+        return {}
 
 
 ###############################################################################

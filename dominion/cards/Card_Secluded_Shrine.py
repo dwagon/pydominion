@@ -22,20 +22,20 @@ class Card_SecludedShrine(Card.Card):
 
     def hook_gain_card(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         if self.location != Piles.DURATION:
-            return None
+            return {}
         if not card.isTreasure():
-            return None
+            return {}
         if player.piles[Piles.HAND].size() == 0:
-            return None
+            return {}
         player.plr_trash_card(
             num=2,
             cardsrc=Piles.HAND,
             prompt="Secluded Shrine lets you trash up to two cards",
         )
         player.move_card(self, Piles.DISCARD)
-        return None
+        return {}
 
 
 ###############################################################################

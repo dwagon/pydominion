@@ -2,12 +2,12 @@
 """ http://wiki.dominionstrategy.com/index.php/Acolyte"""
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Acolyte(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.AUGUR]
         self.base = Card.CardExpansion.ALLIES
@@ -17,7 +17,7 @@ class Card_Acolyte(Card.Card):
             to gain a Gold.  You may trash this to gain an Augur."""
         self.pile = "Augurs"
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         options = [("Do nothing", None)]
         for card in player.piles[Piles.HAND]:
             if card.isAction() or card.isVictory():
@@ -35,14 +35,14 @@ class Card_Acolyte(Card.Card):
 
 ###############################################################################
 class TestAcolyte(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Augurs"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
         self.card = self.g.get_card_from_pile("Augurs", "Acolyte")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play the card"""
         self.plr.piles[Piles.HAND].set("Estate", "Copper")
         self.plr.add_card(self.card, Piles.HAND)
@@ -51,7 +51,7 @@ class TestAcolyte(unittest.TestCase):
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertNotIn("Estate", self.plr.piles[Piles.HAND])
 
-    def test_trash_self(self):
+    def test_trash_self(self) -> None:
         """Play the card and trash self"""
         self.g.card_piles["Augurs"].rotate()  # Acolytes top
         self.g.card_piles["Augurs"].rotate()  # Sorceress top

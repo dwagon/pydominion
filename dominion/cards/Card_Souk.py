@@ -4,7 +4,7 @@
 import unittest
 from typing import Any
 
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -30,7 +30,7 @@ class Card_Souk(Card.Card):
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> dict[str, Any]:
+    ) -> dict[OptionKeys, Any]:
         """When you gain this, trash up to 2 cards from your hand."""
         player.plr_trash_card(num=2)
         return {}

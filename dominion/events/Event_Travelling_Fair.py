@@ -2,7 +2,9 @@
 """ http://wiki.dominionstrategy.com/index.php/Travelling_Fair """
 
 import unittest
-from dominion import Card, Game, Piles, Event, OptionKeys
+from typing import Any
+
+from dominion import Card, Game, Piles, Event, OptionKeys, Player
 
 
 ###############################################################################
@@ -17,7 +19,9 @@ class Event_TravellingFair(Event.Event):
         self.cost = 2
         self.buys = 2
 
-    def hook_gain_card(self, game, player, card):
+    def hook_gain_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> dict[OptionKeys, Any]:
         choice = player.plr_choose_options(
             f"Do you want to put {card} on the top of your deck?",
             (f"Put {card} on deck", "topdeck"),

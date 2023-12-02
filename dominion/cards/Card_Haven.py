@@ -3,7 +3,7 @@
 import unittest
 from typing import Optional
 
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -29,17 +29,15 @@ class Card_Haven(Card.Card):
         player.piles[Piles.HAND].remove(card)
         self.savedHavenCard = card
 
-    def duration(
-        self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[str, str]]:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         """At the start of your next turn, put it into your hand." """
         card = self.savedHavenCard
         if not card:
-            return None
+            return {}
         player.move_card(card, Piles.HAND)
         player.output(f"Pulling {card} out of from haven")
         self.savedHavenCard = None
-        return None
+        return {}
 
 
 ###############################################################################

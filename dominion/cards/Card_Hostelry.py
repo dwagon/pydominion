@@ -2,12 +2,12 @@
 """ http://wiki.dominionstrategy.com/index.php/Hostelry """
 
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, OptionKeys, Phase
 
 
 ###############################################################################
 class Card_Hostelry(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.MENAGERIE
@@ -17,16 +17,18 @@ class Card_Hostelry(Card.Card):
         self.cost = 4
         self.required_cards = [("Card", "Horse")]
 
-    def dynamic_description(self, player):
-        if player.phase == Player.Phase.BUY:
+    def dynamic_description(self, player: Player.Player) -> str:
+        if player.phase == Phase.BUY:
             return "+1 Card; +2 Actions; When you gain this, you may discard any number of Treasures, revealed, to gain that many Horses."
         return "+1 Card; +2 Actions"
 
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[OptionKeys, str]:
         treas = [_ for _ in player.piles[Piles.HAND] if _.isTreasure()]
         if not treas:
             player.output("No suitable cards for Hostelry")
-            return
+            return {}
         discards = player.card_sel(
             prompt="Discard number of cards to gain that number of horses",
             verbs=("Discard", "Undiscard"),
@@ -37,24 +39,25 @@ class Card_Hostelry(Card.Card):
             player.discard_card(crd)
             player.reveal_card(crd)
             player.gain_card("Horse")
+        return {}
 
 
 ###############################################################################
 class Test_Hostelry(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Hostelry"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Hostelry")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_playcard(self):
+    def test_playcard(self) -> None:
         """Play a card"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
         self.assertEqual(self.plr.actions.get(), 2)
 
-    def test_gain(self):
+    def test_gain(self) -> None:
         """Gain the card"""
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
         self.plr.test_input = ["Copper", "Silver", "Finish"]

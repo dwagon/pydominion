@@ -7,26 +7,29 @@ from dominion import Card, Game, Piles, Player, NoCardException, OptionKeys, Pha
 
 ###############################################################################
 class Card_Ghost_Town(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.NIGHT, Card.CardType.DURATION]
         self.base = Card.CardExpansion.NOCTURNE
         self.name = "Ghost Town"
         self.cost = 3
 
-    def dynamic_description(self, player):
+    def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
             return """At the start of your next turn, +1 Card and +1 Action. This
                 is gained to your hand (instead of your discard pile)."""
         return "At the start of your next turn, +1 Card and +1 Action."
 
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[OptionKeys, str]:
         return {OptionKeys.DESTINATION: Piles.HAND}
 
-    def duration(self, game, player):
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         with contextlib.suppress(NoCardException):
             player.pickup_card()
         player.add_actions(1)
+        return {}
 
 
 ###############################################################################

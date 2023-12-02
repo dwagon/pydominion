@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Mystic(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DARKAGES
@@ -18,7 +18,7 @@ class Card_Mystic(Card.Card):
         self.cost = 5
 
     ###########################################################################
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Name a card. Reveal the top card of your deck. If it's
         the named card, put it into your hand"""
         options = [{"selector": "0", "print": "No guess", "card": None}]
@@ -43,7 +43,7 @@ class Card_Mystic(Card.Card):
 
 ###############################################################################
 class TestMystic(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1,
             initcards=["Mystic"],
@@ -53,7 +53,7 @@ class TestMystic(unittest.TestCase):
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Mystic")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """No guess should still get results"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["0"]
@@ -61,7 +61,7 @@ class TestMystic(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 2)
 
-    def test_good(self):
+    def test_good(self) -> None:
         """When the guess is good the card should move to the hand"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.piles[Piles.DECK].set("Province")
@@ -72,7 +72,7 @@ class TestMystic(unittest.TestCase):
         self.assertIn("Province", self.plr.piles[Piles.HAND])
         self.assertTrue(self.plr.piles[Piles.DECK].is_empty())
 
-    def test_bad(self):
+    def test_bad(self) -> None:
         """When the guess is bad the card should stay on the deck"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.piles[Piles.DECK].set("Province")

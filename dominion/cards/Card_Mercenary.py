@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Mercenary(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.DARKAGES
@@ -18,7 +17,7 @@ class Card_Mercenary(Card.Card):
         self.purchasable = False
         self.cost = 0
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """You may trash 2 cards from your hand. If you do, +2
         cards, +2 coin, and each other player discards down to 3
         cards in hand"""
@@ -43,13 +42,13 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 ###############################################################################
 class Test_Mercenary(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Urchin", "Moat"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g.get_card_from_pile("Mercenary")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Trash nothing with mercenary - should do nothing"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["0"]
@@ -57,7 +56,7 @@ class Test_Mercenary(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertTrue(self.victim.piles[Piles.DISCARD].is_empty())
 
-    def test_defense(self):
+    def test_defense(self) -> None:
         """Make sure moats work against mercenaries"""
         tsize = self.g.trash_pile.size()
         self.plr.add_card(self.card, Piles.HAND)
@@ -71,7 +70,7 @@ class Test_Mercenary(unittest.TestCase):
         self.assertEqual(self.victim.piles[Piles.HAND].size(), 6)
         self.assertTrue(self.victim.piles[Piles.DISCARD].is_empty())
 
-    def test_attack(self):
+    def test_attack(self) -> None:
         """Attack with a mercenary"""
         tsize = self.g.trash_pile.size()
         self.plr.add_card(self.card, Piles.HAND)

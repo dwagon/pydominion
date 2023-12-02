@@ -21,13 +21,11 @@ class Card_Den_of_Sin(Card.Card):
             return "At the start of your next turn, +2 Cards; This is gained to your hand (instead of your discard pile)."
         return "At the start of your next turn, +2 Cards"
 
-    def duration(
-        self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[OptionKeys, str]]:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         for _ in range(2):
             with contextlib.suppress(NoCardException):
                 player.pickup_card()
-        return None
+        return {}
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player

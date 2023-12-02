@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Courtyard(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.INTRIGUE
@@ -16,7 +15,7 @@ class Card_Courtyard(Card.Card):
         self.cards = 3
         self.cost = 2
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Put a card from your hand on top of your deck"""
         cards = player.card_sel(
             prompt="Put which card on top of deck?", num=1, verbs=("Put", "Unput")
@@ -25,25 +24,25 @@ class Card_Courtyard(Card.Card):
             return
         card = cards[0]
         player.move_card(card, "topdeck")
-        player.output("Put %s on top of deck" % card.name)
+        player.output(f"Put {card} on top of deck")
 
 
 ###############################################################################
 class Test_Courtyard(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Courtyard"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.cy = self.g.get_card_from_pile("Courtyard")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play courtyard"""
         self.plr.add_card(self.cy, Piles.HAND)
         self.plr.test_input = ["finish"]
         self.plr.play_card(self.cy)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 8)
 
-    def test_putcard(self):
+    def test_put_card(self) -> None:
         """Use courtyard to put a card to the top of the deck"""
         self.plr.piles[Piles.HAND].set("Gold")
         self.plr.add_card(self.cy, Piles.HAND)

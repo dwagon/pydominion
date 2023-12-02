@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Way_of_the_Butterfly """
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Card, Game, Way, Piles, Player, OptionKeys
 
@@ -17,7 +17,7 @@ class Way_Butterfly(Way.Way):
 
     def special_way(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         player.move_card(card, Piles.CARDPILE)
         cst = player.card_cost(card)
         player.plr_gain_card(cst + 1, "equal")

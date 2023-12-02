@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/City-state """
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Card, Game, Piles, Ally, Player, OptionKeys
 
@@ -17,11 +17,11 @@ class Ally_CityState(Ally.Ally):
 
     def hook_gain_card(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         if not card.isAction():
-            return None
+            return {}
         if player.favors.get() < 2:
-            return None
+            return {}
         if player.plr_choose_options(
             f"Play {card} from City State?",
             ("Do nothing", False),
@@ -29,7 +29,7 @@ class Ally_CityState(Ally.Ally):
         ):
             player.play_card(card, discard=False, cost_action=False)
             player.favors.add(-2)
-        return None
+        return {}
 
 
 ###############################################################################

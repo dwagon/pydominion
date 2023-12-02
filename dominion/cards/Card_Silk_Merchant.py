@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
 class Card_SilkMerchant(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.RENAISSANCE
@@ -17,40 +16,46 @@ class Card_SilkMerchant(Card.Card):
         self.cost = 4
 
     ###########################################################################
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[OptionKeys, str]:
         player.villagers.add(1)
         player.coffers.add(1)
+        return {}
 
     ###########################################################################
-    def hook_trash_this_card(self, game, player):
+    def hook_trash_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[OptionKeys, str]:
         player.villagers.add(1)
         player.coffers.add(1)
+        return {}
 
 
 ###############################################################################
 class Test_SilkMerchant(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Silk Merchant"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Silk Merchant")
         self.plr.piles[Piles.HAND].set()
 
-    def test_gain_card(self):
+    def test_gain_card(self) -> None:
         self.plr.coffers.set(0)
         self.plr.gain_card("Silk Merchant")
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 0)
         self.assertEqual(self.plr.villagers.get(), 1)
         self.assertEqual(self.plr.coffers.get(), 1)
 
-    def test_trash_card(self):
+    def test_trash_card(self) -> None:
         self.plr.coffers.set(0)
         self.plr.trash_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 0)
         self.assertEqual(self.plr.villagers.get(), 1)
         self.assertEqual(self.plr.coffers.get(), 1)
 
-    def test_play_card(self):
+    def test_play_card(self) -> None:
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.coffers.set(0)
         self.plr.play_card(self.card)

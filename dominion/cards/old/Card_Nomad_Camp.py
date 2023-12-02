@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, OptionKeys
+from dominion import Card, Game, Piles, OptionKeys, Player, Phase
 
 
 ###############################################################################
@@ -15,12 +15,14 @@ class Card_NomadCamp(Card.Card):
         self.cards = 2
         self.cost = 4
 
-    def dynamic_description(self, player) -> str:
-        if player.phase == "action":
+    def dynamic_description(self, player: Player.Player) -> str:
+        if player.phase == Phase.ACTION:
             return "+1 Buy +2 Coins"
         return "+1 Buy +2 Coins; When you gain this, put it on top of your deck."
 
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[OptionKeys, str]:
         return {OptionKeys.DESTINATION: "topdeck"}
 
 

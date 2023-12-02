@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Fortune"""
 import unittest
-from typing import Optional, Any
+from typing import Any
 
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -31,11 +31,11 @@ class Card_Fortune(Card.Card):
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[str, Any]]:
+    ) -> dict[OptionKeys, Any]:
         num_cards = sum(1 for _ in player.piles[Piles.HAND] if _.name == "Gladiator")
         for _ in range(num_cards):
             player.gain_card("Gold")
-        return None
+        return {}
 
 
 ###############################################################################

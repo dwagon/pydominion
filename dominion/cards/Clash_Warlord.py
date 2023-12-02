@@ -3,7 +3,7 @@
 
 import unittest
 from collections import Counter
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Game, Card, Piles, OptionKeys, Player
 
@@ -35,7 +35,7 @@ class Card_Warlord(Card.Card):
         player: Player.Player,
         owner: Player.Player,
         card: Card.Card,
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         """Until then, other players can't play an Action from their hand that
         they have 2 or more copies of in play."""
         if not card.isAction():
@@ -50,9 +50,10 @@ class Card_Warlord(Card.Card):
             return {OptionKeys.SKIP_CARD: True}
         return {}
 
-    def duration(self, game: Game.Game, player: Player.Player) -> None:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         """At the start of your next turn, +2 Cards."""
         player.pickup_cards(num=2)
+        return {}
 
 
 ###############################################################################

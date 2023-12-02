@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from typing import Any
+
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
 class Card_Priest(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.RENAISSANCE
@@ -18,21 +19,24 @@ class Card_Priest(Card.Card):
         self.in_special = False
 
     ###########################################################################
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         self.in_special = True
         player.plr_trash_card(force=True)
         self.in_special = False
 
     ###########################################################################
-    def hook_trash_card(self, game, player, card):
+    def hook_trash_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> dict[OptionKeys, Any]:
         if not self.in_special:
             player.output("Adding 2 from Priest")
             player.coins.add(2)
+        return {}
 
 
 ###############################################################################
-class Test_Priest(unittest.TestCase):
-    def setUp(self):
+class TestPriest(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Priest", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -43,7 +47,7 @@ class Test_Priest(unittest.TestCase):
         self.gold = self.g.get_card_from_pile("Gold")
         self.plr.add_card(self.gold, Piles.HAND)
 
-    def test_play_card(self):
+    def test_play_card(self) -> None:
         self.plr.test_input = ["Trash Moat"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)

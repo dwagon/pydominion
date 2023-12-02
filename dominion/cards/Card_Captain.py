@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -23,11 +23,14 @@ class Card_Captain(Card.Card):
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
         self.special_sauce(game, player)
 
-    def duration(self, game: "Game.Game", player: "Player.Player") -> None:
+    def duration(
+        self, game: "Game.Game", player: "Player.Player"
+    ) -> dict[OptionKeys, str]:
         self.special_sauce(game, player)
+        return {}
 
     def special_sauce(self, game: "Game.Game", player: "Player.Player") -> None:
-        options = [("None", None)]
+        options: list[tuple[str, Card.Card | None]] = [("None", None)]
         for name in game.get_action_piles(4):
             card = game.card_instances[name]
             if card.isDuration():
@@ -36,10 +39,9 @@ class Card_Captain(Card.Card):
                 continue
             options.append((f"Play {name}", card))
 
-        action = player.plr_choose_options(
+        if action := player.plr_choose_options(
             "What action card do you want to imitate?", *options
-        )
-        if action:
+        ):
             player.card_benefits(action)
 
 

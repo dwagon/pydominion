@@ -26,15 +26,16 @@ class Card_Monkey(Card.Card):
         player: Player.Player,
         owner: Player.Player,
         card: Card.Card,
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         """Until your next turn, when the player to your right gains a card, +1 Card"""
         if player == game.playerToRight(owner):
             owner.pickup_cards(1)
-        return None
+        return {}
 
-    def duration(self, game: Game.Game, player: Player.Player) -> None:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         """At the start of your next turn, +1 Card."""
         player.pickup_cards(1)
+        return {}
 
 
 ###############################################################################

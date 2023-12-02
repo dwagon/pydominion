@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Forge(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.PROSPERITY
@@ -17,7 +17,7 @@ class Card_Forge(Card.Card):
         self.cost = 7
 
     ###########################################################################
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Trash any number of cards from your hand. Gain a card
         with cost exactly equal to the total cost in coins of the
         trashed cards."""
@@ -31,13 +31,13 @@ class Card_Forge(Card.Card):
 
 ###############################################################################
 class TestForge(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Forge", "Bureaucrat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.forge = self.g.get_card_from_pile("Forge")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play the Forge"""
         tsize = self.g.trash_pile.size()
         self.plr.piles[Piles.HAND].set("Estate", "Estate", "Estate")

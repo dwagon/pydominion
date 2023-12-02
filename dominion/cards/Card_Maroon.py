@@ -3,14 +3,14 @@
 import random
 import unittest
 
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Maroon(Card.Card):
     """Secluded Shrine"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.PLUNDER
@@ -18,7 +18,7 @@ class Card_Maroon(Card.Card):
         self.name = "Maroon"
         self.cost = 4
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """You may trash a card from your hand."""
         cards = player.plr_trash_card(num=1, printtypes=True)
         if not cards:
@@ -35,13 +35,13 @@ class Card_Maroon(Card.Card):
 class TestMaroon(unittest.TestCase):
     """Test Maroon"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Maroon", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Maroon")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a Maroon"""
         self.plr.piles[Piles.HAND].set("Moat")
         self.plr.add_card(self.card, Piles.HAND)

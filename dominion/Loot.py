@@ -1,11 +1,11 @@
 """ https://wiki.dominionstrategy.com/index.php/Loot"""
 import random
-from dominion import Card, CardPile, Keys, Piles
+from dominion import Game, Card, CardPile, Keys, Piles
 
 
 ###############################################################################
 class LootPile(CardPile.CardPile):
-    def __init__(self, game) -> None:
+    def __init__(self, game: "Game.Game") -> None:
         self.mapping = game.get_card_classes("Loot", game.paths[Keys.LOOT], "Loot_")
         for name, class_ in self.mapping.items():
             game.card_instances[name] = class_()
@@ -23,7 +23,7 @@ class LootPile(CardPile.CardPile):
 
 ###############################################################################
 class Loot(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.purchasable = False
 

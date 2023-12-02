@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Architects%27_Guild"""
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Card, Game, Piles, Player, Ally, OptionKeys
 
@@ -19,9 +19,9 @@ class Ally_Architects_Guild(Ally.Ally):
 
     def hook_gain_card(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         if player.favors.get() < 2:
-            return None
+            return {}
         player.favors.add(-2)  # To stop re-triggering before favors are spent
         crd = player.plr_gain_card(
             cost=card.cost - 1,
@@ -30,7 +30,7 @@ class Ally_Architects_Guild(Ally.Ally):
         )
         if not crd:
             player.favors.add(2)
-        return None
+        return {}
 
 
 ###############################################################################

@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Tormentor(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.DOOM]
         self.base = Card.CardExpansion.NOCTURNE
@@ -18,7 +17,7 @@ class Card_Tormentor(Card.Card):
         self.coin = 2
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         if player.piles[Piles.PLAYED].size() == 1:  # Include this card
             player.gain_card("Imp")
             player.output("Gained an Imp")
@@ -31,7 +30,7 @@ class Card_Tormentor(Card.Card):
 
 ###############################################################################
 class Test_Tormentor(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Tormentor"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
@@ -41,14 +40,14 @@ class Test_Tormentor(unittest.TestCase):
                 self.g.discarded_hexes.append(h)
                 self.g.hexes.remove(h)
 
-    def test_play_imp(self):
+    def test_play_imp(self) -> None:
         """Play tormentor with no other cards being played"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
         self.assertIn("Imp", self.plr.piles[Piles.DISCARD])
 
-    def test_play_hex(self):
+    def test_play_hex(self) -> None:
         """Play tormentor with other cards already being played"""
         self.plr.piles[Piles.PLAYED].set("Tormentor")
         self.plr.add_card(self.card, Piles.HAND)

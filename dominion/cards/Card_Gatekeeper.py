@@ -2,7 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Gatekeeper"""
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Game, Card, Piles, Player, OptionKeys
 
@@ -24,8 +24,9 @@ class Card_Gatekeeper(Card.Card):
         self.name = "Gatekeeper"
         self.cost = 5
 
-    def duration(self, game: Game.Game, player: Player.Player) -> None:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         player.coins.add(3)
+        return {}
 
     def hook_all_players_gain_card(
         self,
@@ -33,15 +34,15 @@ class Card_Gatekeeper(Card.Card):
         player: Player.Player,
         owner: Player.Player,
         card: Card.Card,
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         if player == owner:
-            return None
+            return {}
         if (card.isAction() or card.isTreasure()) and card.name not in player.piles[
             Piles.EXILE
         ]:
             player.output(f"{owner}'s Gatekeeper exiles your {card}")
             return {OptionKeys.EXILE: True}
-        return None
+        return {}
 
 
 ###############################################################################

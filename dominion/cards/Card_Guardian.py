@@ -19,12 +19,13 @@ class Card_Guardian(Card.Card):
         self.defense = True
         self.cost = 2
 
-    def duration(self, game: Game.Game, player: Player.Player) -> None:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         player.coins.add(1)
+        return {}
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         return {OptionKeys.DESTINATION: Piles.HAND}
 
 

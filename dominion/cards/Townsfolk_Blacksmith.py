@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Blacksmith(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.TOWNSFOLK]
         self.base = Card.CardExpansion.ALLIES
@@ -16,7 +16,7 @@ class Card_Blacksmith(Card.Card):
             or +2 Cards; or +1 Card and +1 Action."""
         self.pile = "Townsfolk"
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         opt = player.plr_choose_options(
             "Choose One: ",
             ("Draw until you have 6 cards in your hand", "draw"),
@@ -35,7 +35,7 @@ class Card_Blacksmith(Card.Card):
 
 ###############################################################################
 class Test_Blacksmith(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Townsfolk"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
@@ -45,18 +45,18 @@ class Test_Blacksmith(unittest.TestCase):
                 break
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play_draw(self):
+    def test_play_draw(self) -> None:
         self.plr.test_input = ["Draw"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
-    def test_play_cards(self):
+    def test_play_cards(self) -> None:
         self.plr.test_input = ["2 Cards"]
         hndsze = self.plr.piles[Piles.HAND].size()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsze + 2 - 1)
 
-    def test_play_action(self):
+    def test_play_action(self) -> None:
         self.plr.test_input = ["Action"]
         hndsze = self.plr.piles[Piles.HAND].size()
         acts = self.plr.actions.get()

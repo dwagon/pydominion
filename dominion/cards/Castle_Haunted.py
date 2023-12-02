@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Haunted_Castle """
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, OptionKeys
 from dominion.cards.Card_Castles import CastleCard
 
 
@@ -10,7 +10,7 @@ from dominion.cards.Card_Castles import CastleCard
 class Card_HauntedCastle(CastleCard):
     """Haunted Castle"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         CastleCard.__init__(self)
         self.cardtype = [Card.CardType.VICTORY, Card.CardType.CASTLE]
         self.base = Card.CardExpansion.EMPIRES
@@ -22,7 +22,9 @@ class Card_HauntedCastle(CastleCard):
         self.name = "Haunted Castle"
         self.pile = "Castles"
 
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(
+        self, game: Game.Game, player: Player.Player
+    ) -> dict[OptionKeys, str]:
         player.gain_card("Gold")
         for plr in list(game.players.values()):
             if plr == player:
@@ -35,6 +37,7 @@ class Card_HauntedCastle(CastleCard):
                 )
                 for card in cards:
                     plr.move_card(card, "topdeck")
+        return {}
 
 
 ###############################################################################
@@ -49,19 +52,19 @@ def botresponse(
 class Test_HauntedCastle(unittest.TestCase):
     """Test Haunted Castle"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Castles"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g.get_card_from_pile("Castles", "Haunted Castle")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a castle"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_score_details()["Haunted Castle"], 2)
 
-    def test_gain(self):
+    def test_gain(self) -> None:
         """Test gaining this card"""
         self.vic.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Province")
         self.vic.test_input = ["Silver", "Gold", "finish"]

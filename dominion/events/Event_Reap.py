@@ -3,50 +3,50 @@
 import unittest
 from typing import Optional
 
-from dominion import Card, Game, Piles, Event, PlayArea
+from dominion import Card, Game, Piles, Event, PlayArea, Player, OptionKeys
+
+REAP = "reap"
 
 
 ###############################################################################
 class Event_Reap(Event.Event):
     """Reap"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.MENAGERIE
         self.desc = """Gain a Gold. Set it aside. If you do, at the start of your next turn, play it."""
         self.name = "Reap"
         self.cost = 7
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         gold = player.gain_card("Gold")
-        if not hasattr(player, "_reap_reserve"):
-            player._reap_reserve = PlayArea.PlayArea("Reap", game)
-        player._reap_reserve.add(gold)
+        player.specials[REAP] = PlayArea.PlayArea("Reap", game)
+        player.specials[REAP].add(gold)
         player.secret_count += 1
         player.piles[Piles.DISCARD].remove(gold)
         gold.location = "reap_reserve"
 
-    def duration(self, game, player):
-        if not hasattr(player, "_reap_reserve"):
-            return
-        for card in player._reap_reserve:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
+        for card in player.specials[REAP]:
             player.play_card(card, cost_action=False, discard=False)
             player.add_card(card, Piles.PLAYED)
             player.secret_count -= 1
-        player._reap_reserve.empty()
+        player.specials[REAP].empty()
+        return {}
 
 
 ###############################################################################
 class TestReap(unittest.TestCase):
     """Test Reap"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, events=["Reap"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.event = self.g.events["Reap"]
 
-    def test_rush(self):
+    def test_rush(self) -> None:
         """Use Reap"""
         self.plr.coins.set(7)
         self.plr.perform_event(self.event)

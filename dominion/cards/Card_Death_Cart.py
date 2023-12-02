@@ -44,7 +44,7 @@ class Card_Deathcart(Card.Card):
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         for _ in range(2):
             try:
                 if card := player.gain_card("Ruins"):

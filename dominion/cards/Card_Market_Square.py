@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from typing import Any
+
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
 class Card_MarketSquare(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
         self.base = Card.CardExpansion.DARKAGES
@@ -19,29 +20,31 @@ class Card_MarketSquare(Card.Card):
         self.buys = 1
         self.cost = 3
 
-    def hook_trash_card(self, game, player, card):
+    def hook_trash_card(
+        self, game: Game.Game, player: Player.Player, card: Card.Card
+    ) -> dict[OptionKeys, Any]:
         """This should only activate if Market Square is in the hand"""
         if self.location != Piles.HAND:
-            return
-        gold = player.plr_choose_options(
+            return {}
+        if player.plr_choose_options(
             "Discard Market Square to gain a Gold?",
             ("Keep Market Square in hand", False),
             ("Discard and gain a Gold", True),
-        )
-        if gold:
+        ):
             player.discard_card(self)
             player.gain_card("Gold")
+        return {}
 
 
 ###############################################################################
 class TestMarketSquare(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Market Square"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Market Square")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play the card"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
@@ -49,14 +52,14 @@ class TestMarketSquare(unittest.TestCase):
         self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.actions.get(), 1)
 
-    def test_trash_and_keep(self):
+    def test_trash_and_keep(self) -> None:
         """Choose to keep MS after a trash"""
         self.plr.piles[Piles.HAND].set("Copper", "Market Square")
         self.plr.test_input = ["keep"]
         self.plr.trash_card(self.plr.piles[Piles.HAND]["Copper"])
         self.assertIn("Market Square", self.plr.piles[Piles.HAND])
 
-    def test_trash_and_discard(self):
+    def test_trash_and_discard(self) -> None:
         """Choose to keep MS after a trash"""
         self.plr.piles[Piles.HAND].set("Copper", "Market Square")
         self.plr.test_input = ["discard"]
@@ -64,7 +67,7 @@ class TestMarketSquare(unittest.TestCase):
         self.assertNotIn("Market Square", self.plr.piles[Piles.HAND])
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
 
-    def test_trash_in_played(self):
+    def test_trash_in_played(self) -> None:
         """Test trashing a card with MS not in hand"""
         self.plr.piles[Piles.HAND].set("Copper")
         self.plr.piles[Piles.PLAYED].set("Market Square")

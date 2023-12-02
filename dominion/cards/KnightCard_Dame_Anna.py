@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Piles, Card
+from dominion import Game, Piles, Card, Player
 from dominion.cards.Card_Knight import KnightCard
 
 
 ###############################################################################
 class Card_DameAnna(KnightCard):
-    def __init__(self):
+    def __init__(self) -> None:
         KnightCard.__init__(self)
         self.cardtype = [
             Card.CardType.ACTION,
@@ -22,7 +22,7 @@ class Card_DameAnna(KnightCard):
         If a Knight is trashed by this, trash this card."""
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         for _ in range(2):
             player.plr_trash_card()
         self.knight_special(game, player)
@@ -30,7 +30,7 @@ class Card_DameAnna(KnightCard):
 
 ###############################################################################
 class TestDameAnna(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Knights"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -39,7 +39,7 @@ class TestDameAnna(unittest.TestCase):
             if self.card.name == "Dame Anna":
                 break
 
-    def test_score(self):
+    def test_score(self) -> None:
         """Play the Dame"""
         tsize = self.g.trash_pile.size()
         self.plr.piles[Piles.HAND].set("Duchy", "Province")

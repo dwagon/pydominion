@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, PlayArea, Game, Piles, Phase, Player
+from dominion import Card, PlayArea, Game, Piles, Phase, Player, OptionKeys
 
 
 ###############################################################################
@@ -41,7 +41,7 @@ class Card_Ghost(Card.Card):
             player.output("No action cards in deck")
             return
 
-    def duration(self, game: Game.Game, player: Player.Player) -> None:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         for card in self._ghost_reserve:
             player.output(f"Ghost playing {card}")
             for _ in range(2):
@@ -49,6 +49,7 @@ class Card_Ghost(Card.Card):
             self._ghost_reserve.remove(card)
             player.secret_count -= 1
             player.add_card(card, Piles.PLAYED)
+            return {}
 
 
 ###############################################################################

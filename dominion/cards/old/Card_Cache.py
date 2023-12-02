@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Piles, Game, Card, Player, NoCardException, OptionKeys, Phase
 
@@ -23,7 +23,7 @@ class Card_Cache(Card.Card):
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         """When you gain this, gain two Coppers"""
         player.output("Gained 2 copper from cache")
         for _ in range(2):

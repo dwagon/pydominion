@@ -4,7 +4,7 @@
 import unittest
 from typing import Optional
 
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -28,14 +28,14 @@ class Card_LandingParty(Card.Card):
 
     def hook_post_play(
         self, game: "Game.Game", player: "Player.Player", card: "Card.Card"
-    ) -> Optional[dict[str, str]]:
+    ) -> dict[OptionKeys, str]:
         """The next time the first card you play on a turn is a Treasure,
         put this onto your deck afterwards."""
         if not card.isTreasure() or len(player.piles[Piles.PLAYED]) != 1:
-            return None
+            return {}
         player.output("Moving Landing Party back on deck")
         player.move_card(self, Piles.DECK)
-        return None
+        return {}
 
 
 ###############################################################################

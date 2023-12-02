@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Avanto"""
 import unittest
-from typing import Optional, Any
 
 from dominion import Card, Game, Piles, Player
 

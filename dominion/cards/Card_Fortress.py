@@ -3,7 +3,7 @@
 import unittest
 from typing import Optional, Any
 
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -22,7 +22,7 @@ class Card_Fortress(Card.Card):
 
     def hook_trash_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[str, Any]]:
+    ) -> dict[OptionKeys, Any]:
         player.output("Putting Fortress back in hand")
         player.move_card(self, Piles.HAND)
         return {"trash": False}

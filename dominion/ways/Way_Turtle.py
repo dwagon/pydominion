@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Way_of_the_Turtle"""
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Card, Game, Piles, Way, OptionKeys, Player
 
@@ -21,7 +21,7 @@ class Way_Turtle(Way.Way):
 
     def special_way(
         self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         player.defer_card(card)
         return {OptionKeys.DISCARD: False}
 

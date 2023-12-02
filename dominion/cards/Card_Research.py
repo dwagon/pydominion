@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, PlayArea, Player
+from dominion import Card, Game, Piles, PlayArea, Player, OptionKeys
 
 
 ###############################################################################
@@ -42,14 +42,16 @@ class Card_Research(Card.Card):
             player.secret_count += 1
 
     ###########################################################################
-    def duration(self, game: "Game.Game", player: "Player.Player") -> dict[str, str] | None:
+    def duration(
+        self, game: "Game.Game", player: "Player.Player"
+    ) -> dict[OptionKeys, str]:
         cards = list(self._research)
         for card in cards:
             player.output(f"Bringing {card.name} out from research")
             player.add_card(card, Piles.HAND)
             self._research.remove(card)
             player.secret_count -= 1
-        return None
+        return {}
 
 
 ###############################################################################

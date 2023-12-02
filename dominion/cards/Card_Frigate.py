@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Frigate"""
 import unittest
-from dominion import Game, Card, Piles
+from typing import Any
+
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
 class Card_Frigate(Card.Card):
     """Secluded Shrine"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
             Card.CardType.ACTION,
@@ -22,11 +24,18 @@ class Card_Frigate(Card.Card):
         self.cost = 5
         self.coin = 3
 
-    def hook_all_players_post_play(self, game, player, owner, card):
+    def hook_all_players_post_play(
+        self,
+        game: Game.Game,
+        player: Player.Player,
+        owner: Player.Player,
+        card: Card.Card,
+    ) -> dict[OptionKeys, Any]:
         """each time another player plays an Action card, they discard down to 4 cards in hand afterwards."""
         if player != owner:
             player.output(f"{owner.name}'s Frigate: Discard down to 4 cards")
             player.plr_discard_down_to(4)
+        return {}
 
 
 ###############################################################################
@@ -39,20 +48,20 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 class TestFrigate(unittest.TestCase):
     """Test Frigate"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Frigate", "Village"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g.get_card_from_pile("Frigate")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a Frigate"""
         self.plr.add_card(self.card, Piles.HAND)
         coins = self.plr.coins.get()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), coins + 3)
 
-    def test_attack(self):
+    def test_attack(self) -> None:
         """Another player plays action"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)

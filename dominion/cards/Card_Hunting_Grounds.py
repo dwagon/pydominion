@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Game, Card, Piles, Player, NoCardException, OptionKeys
 
@@ -19,7 +19,7 @@ class Card_HuntingGrounds(Card.Card):
 
     def hook_trash_this_card(
         self, game: Game.Game, player: Player.Player
-    ) -> Optional[dict[OptionKeys, Any]]:
+    ) -> dict[OptionKeys, Any]:
         choice = player.plr_choose_options(
             "What to gain?", ("Gain a duchy", "duchy"), ("Gain 3 Estates", "estates")
         )
@@ -32,7 +32,7 @@ class Card_HuntingGrounds(Card.Card):
                 except NoCardException:
                     player.output("No more Estates")
                     break
-        return None
+        return {}
 
 
 ###############################################################################
