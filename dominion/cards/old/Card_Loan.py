@@ -24,23 +24,32 @@ class Card_Loan(Card.Card):
         """When you play this, reveal cards from your deck until
         you reveal a Treasure. Discard it or trash it. Discard the
         other cards"""
+        max_count = player.count_cards()
+        count = 0
+        treasure = None
         while True:
+            count += 1
+            if count > max_count:
+                player.output("No treasures")
+                break
             try:
                 card = player.next_card()
             except NoCardException:
                 break
             player.reveal_card(card)
             if card.isTreasure():
+                treasure = card
                 break
             player.output(f"Revealed and discarded {card}")
             player.discard_card(card)
-        discard = player.plr_choose_options(
-            "What to do?", (f"Discard {card}", True), (f"Trash {card}", False)
-        )
-        if discard:
-            player.discard_card(card)
+        if not treasure:
+            return
+        if player.plr_choose_options(
+            "What to do?", (f"Discard {treasure}", True), (f"Trash {treasure}", False)
+        ):
+            player.discard_card(treasure)
         else:
-            player.trash_card(card)
+            player.trash_card(treasure)
 
 
 ###############################################################################
@@ -69,6 +78,13 @@ class Test_Loan(unittest.TestCase):
         self.assertEqual(self.g.trash_pile.size(), trash_size + 1)
         self.assertIn("Gold", self.g.trash_pile)
         self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
+
+    def test_no_treasures(self) -> None:
+        self.plr.piles[Piles.DECK].set("Estate", "Duchy", "Province")
+        self.plr.piles[Piles.HAND].set("Estate", "Duchy", "Province")
+        self.loan = self.plr.gain_card("Loan", Piles.HAND)
+        self.plr.play_card(self.loan)
+        self.assertIn("No treasures", self.plr.messages)
 
 
 ###############################################################################
