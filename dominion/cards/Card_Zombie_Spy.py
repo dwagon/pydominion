@@ -21,6 +21,7 @@ class Card_ZombieSpy(Card.Card):
 
     def setup(self, game: Game.Game) -> None:
         game.trash_pile.add(self)
+        self.location = Piles.TRASH
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         try:

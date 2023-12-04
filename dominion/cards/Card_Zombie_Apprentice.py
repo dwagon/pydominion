@@ -21,6 +21,7 @@ class Card_Zombie_Apprentice(Card.Card):
 
     def setup(self, game: Game.Game) -> None:
         game.trash_pile.add(self)
+        self.location = Piles.TRASH
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         actions = [_ for _ in player.piles[Piles.HAND] if _.isAction()]

@@ -20,6 +20,7 @@ class Card_Zombie_Mason(Card.Card):
 
     def setup(self, game):
         game.trash_pile.add(self)
+        self.location = Piles.TRASH
 
     def special(self, game, player):
         topdeck = player.top_card()

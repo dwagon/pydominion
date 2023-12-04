@@ -21,11 +21,11 @@ class Card_Shaman(Card.Card):
         self.actions = 1
         self.coin = 1
 
-    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """You may trash a card from your hand."""
         player.plr_trash_card(num=1)
 
-    def hook_start_every_turn(self, game: "Game.Game", player: "Player.Player") -> None:
+    def hook_start_every_turn(self, game: Game.Game, player: Player.Player) -> None:
         """In games using this, at the start of your turn, gain a card from the trash costing up to $6."""
         if game.trash_pile.is_empty():
             return

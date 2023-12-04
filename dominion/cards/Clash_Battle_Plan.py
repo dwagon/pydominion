@@ -40,9 +40,7 @@ class Card_BattlePlan(Card.Card):
                 player.reveal_card(reveal)
                 with contextlib.suppress(NoCardException):
                     player.pickup_card()
-        # Rotate pile selection
-        piles = list(game.card_piles.keys())
-        piles.sort()
+        piles = sorted(game.card_piles.keys())
         rot_options: list[tuple[str, Any]] = [("Don't do anything", False)]
         for pile in piles:
             rot_options.append((f"Rotate {pile}", pile))
