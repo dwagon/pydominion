@@ -28,8 +28,8 @@ class Card_Seahag(Card.Card):
             victim.output(f"Discarded your {card}")
             try:
                 victim.gain_card("Curse", destination="topdeck")
-                victim.output(f"Got cursed by {player.name}'s Sea Hag")
-                player.output("{pl.name} got cursed")
+                victim.output(f"Got cursed by {player}'s Sea Hag")
+                player.output(f"{victim} got cursed")
             except NoCardException:
                 player.output("No more curses")
 
