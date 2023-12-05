@@ -2,12 +2,14 @@
 
 import contextlib
 import unittest
-from dominion import Game, Card, Piles, NoCardException
+from typing import Any
+
+from dominion import Game, Card, Piles, NoCardException, Player, OptionKeys
 
 
 ###############################################################################
 class Card_Hireling(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
         self.base = Card.CardExpansion.ADVENTURE
@@ -16,24 +18,22 @@ class Card_Hireling(Card.Card):
         self.cost = 6
         self.permanent = True
 
-    def special(self, game, player):
-        pass
-
-    def duration(self, game, player):
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         with contextlib.suppress(NoCardException):
             player.pickup_card()
+        return {}
 
 
 ###############################################################################
 class Test_Hireling(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Hireling"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Hireling")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play_hireling(self):
+    def test_play_hireling(self) -> None:
         """Play a hireling"""
         self.plr.play_card(self.card)
         self.plr.end_turn()
