@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, NoCardException, PlayArea
 
 
 ###############################################################################
@@ -19,18 +19,22 @@ class Card_TreasureHunter(Card.Card):
         self.cost = 3
         self.numcards = 5
 
-    def special(self, game, player) -> None:
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Gain a Silver per card the player to your right gained in his last turn"""
         righty = game.playerToRight(player)
-        numsilver = len(righty.stats["gained"])
+        num_silver = len(righty.stats["gained"])
         player.output(
-            "Gaining %d silvers as %s gained %d cards"
-            % (numsilver, righty.name, numsilver)
+            f"Gaining {num_silver} silvers as {righty} gained {num_silver} cards"
         )
-        for _ in range(numsilver):
-            player.gain_card("Silver")
+        for _ in range(num_silver):
+            try:
+                player.gain_card("Silver")
+            except NoCardException:
+                player.output("No more Silvers")
 
-    def hook_discard_this_card(self, game, player, source):
+    def hook_discard_this_card(
+        self, game: Game.Game, player: Player.Player, source: PlayArea.PlayArea
+    ) -> None:
         """Replace with Warrior"""
         player.replace_traveller(self, "Warrior")
 
