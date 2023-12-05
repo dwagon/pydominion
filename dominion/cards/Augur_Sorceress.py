@@ -41,7 +41,11 @@ class Card_Sorceress(Card.Card):
         if card.name == o["card"]:
             game.output(f"Guessed {card} correctly")
             for plr in player.attack_victims():
-                plr.gain_card("Curse")
+                try:
+                    plr.gain_card("Curse")
+                except NoCardException:
+                    player.output("NO more Curses")
+                    break
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -31,7 +31,11 @@ class Card_Mystic(Card.Card):
         o = player.user_input(options, "Guess the top card")
         if not o["card"]:
             return
-        card = player.next_card()
+        try:
+            card = player.next_card()
+        except NoCardException:
+            player.output("No more cards")
+            return
         player.reveal_card(card)
         if o["card"] == card.name:
             player.output("You guessed correctly")
