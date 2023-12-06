@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Leprechaun(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DOOM]
         self.base = Card.CardExpansion.NOCTURNE
@@ -16,17 +15,23 @@ class Card_Leprechaun(Card.Card):
         self.required_cards = [("Card", "Wish")]
         self.cost = 5
 
-    def special(self, game, player):
-        player.gain_card("Gold")
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        try:
+            player.gain_card("Gold")
+        except NoCardException:  # pragma: no cover
+            player.output("No more Gold")
         if player.piles[Piles.PLAYED].size() + player.piles[Piles.DURATION].size() == 7:
-            player.gain_card("Wish")
+            try:
+                player.gain_card("Wish")
+            except NoCardException:  # pragma: no cover
+                player.output("No more Wishes")
         else:
             player.receive_hex()
 
 
 ###############################################################################
-class Test_Leprechaun(unittest.TestCase):
-    def setUp(self):
+class TestLeprechaun(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Leprechaun", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -37,15 +42,17 @@ class Test_Leprechaun(unittest.TestCase):
                 self.g.discarded_hexes.append(h)
                 self.g.hexes.remove(h)
 
-    def test_play_with_not_seven(self):
+    def test_play_with_not_seven(self) -> None:
         """Play a Leprechaun with not 7 cards"""
         self.plr.play_card(self.card)
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertTrue(self.plr.has_state("Deluded"))
 
-    def test_play_with_seven(self):
+    def test_play_with_seven(self) -> None:
         """Play a Leprechaun with 7 cards in play"""
-        self.plr.piles[Piles.PLAYED].set("Moat", "Moat", "Moat", "Moat", "Moat", "Moat")  # + Leprec
+        self.plr.piles[Piles.PLAYED].set(
+            "Moat", "Moat", "Moat", "Moat", "Moat", "Moat"
+        )  # + Leprec
         self.plr.play_card(self.card)
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertFalse(self.plr.has_state("Deluded"))

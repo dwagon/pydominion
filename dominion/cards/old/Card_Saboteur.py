@@ -23,28 +23,28 @@ class Card_Saboteur(Card.Card):
         self.cost = 5
 
     def special(
-        self, game: "Game.Game", player: "Player.Player"
+        self, game: Game.Game, player: Player.Player
     ) -> None:  # pylint: disable=unused-argument
         """Each other player reveals cards from the top of his
         deck until revealing one costing 3 or more. He trashes that
         card and may gain a card costing at most 2 less than it.
         He discards the other revealed cards."""
         for victim in player.attack_victims():
-            card = self.pickCard(victim, player)
+            card = self.pick_card(victim, player)
             if not card:
                 continue
-            victim.output(f"{player.name}'s saboteur trashed {card.name}")
+            victim.output(f"{player}'s saboteur trashed your {card}")
             victim.trash_card(card)
             victim.plr_gain_card(card.cost - 2)
 
-    def pickCard(
-        self, victim: "Player.Player", player: "Player.Player"
+    def pick_card(
+        self, victim: Player.Player, player: Player.Player
     ) -> Optional[Card.Card]:
         """Pick Card"""
         for _ in range(len(victim.all_cards())):
             try:
                 card = victim.next_card()
-            except NoCardException:
+            except NoCardException:  # pragma: no cover
                 break
             victim.reveal_card(card)
             if card.cost >= 3:
