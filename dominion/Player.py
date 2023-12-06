@@ -1165,7 +1165,9 @@ class Player:
         for card_name in self.game.card_instances:
             self.game.card_instances[card_name].hook_start_every_turn(self.game, self)
         for card in self.relevant_cards():
+            self.currcards.append(card)
             card.hook_start_turn(self.game, self)
+            self.currcards.pop()
 
     ###########################################################################
     def spend_coffer(self) -> None:
@@ -1682,6 +1684,7 @@ class Player:
 
         for player in self.game.player_list():
             for card in player.relevant_cards():
+                self.currcards.append(card)
                 try:
                     options |= card.hook_all_players_gain_card(
                         game=self.game, player=self, owner=player, card=gained_card
@@ -1689,6 +1692,7 @@ class Player:
                 except TypeError:
                     print(f"HAPGC: failed on {card}")
                     raise
+                self.currcards.pop()
 
         return options
 
