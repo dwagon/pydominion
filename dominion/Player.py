@@ -2006,8 +2006,12 @@ class Player:
             **kwargs,
         ):
             card_name = cards[0].name
-            new_card = recipient.gain_card(card_name, destination)
-            recipient.output(f"Got a {new_card}")
+            try:
+                new_card = recipient.gain_card(card_name, destination)
+                recipient.output(f"Got a {new_card}")
+            except NoCardException:
+                recipient.output("No more {new_card}")
+                return None
             return new_card
         return None
 
