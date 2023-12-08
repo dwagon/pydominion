@@ -28,7 +28,7 @@ class Card_Tools(Card.Card):
                 available.add(card.name)
         options: list[tuple[str, str | None]] = [("Gain nothing", None)]
         options.extend((f"Gain {card_name}", card_name) for card_name in available)
-        if to_gain := player.plr_choose_options("Gain a card", *options):
+        if to_gain := player.plr_choose_options("Gain which card?", *options):
             try:
                 player.gain_card(to_gain)
             except NoCardException:

@@ -153,6 +153,7 @@ def run_game(args: dict[str, Any]) -> None:  # pragma: no cover
                 continue
             if line.startswith("--oldcards"):
                 args["oldcards"] = True
+                continue
             cards.append(line.strip())
     args["initcards"] = cards
     g = Game.Game(**args)

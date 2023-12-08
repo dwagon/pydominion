@@ -40,10 +40,12 @@ class TextPlayer(Player):
         if not self.quiet:
             sys.stdout.write(f"{self.colour}{self.name}{colorama.Style.RESET_ALL}: ")
             try:
-                sys.stdout.write("%s: " % self.currcards[0].name)
+                current_card_stack = ""
+                for card in self.currcards:
+                    current_card_stack += f"{card.name}> "
             except IndexError:
                 pass
-            sys.stdout.write(f"{msg}{end}")
+            sys.stdout.write(f"{current_card_stack}{msg}{end}")
         self.messages.append(msg)
 
     ###########################################################################
