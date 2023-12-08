@@ -1,6 +1,10 @@
 """ https://wiki.dominionstrategy.com/index.php/Loot"""
 import random
-from dominion import Game, Card, CardPile, Keys, Piles
+from typing import TYPE_CHECKING
+from dominion import Card, CardPile, Keys, Piles
+
+if TYPE_CHECKING:
+    from dominion import Game
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Sack_of_Loot"""
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -20,7 +20,12 @@ class Card_SackOfLoot(Card.Card):
         self.buys = 1
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
-        player.gain_card("Loot")
+        try:
+            card = player.gain_card("Loot")
+        except NoCardException:
+            player.output("No more Loot")
+        else:
+            player.output(f"Gained a {card}")
 
 
 ###############################################################################
