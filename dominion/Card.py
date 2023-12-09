@@ -487,6 +487,13 @@ class Card:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
+    def hook_discard_any_card(
+        self, game: "Game.Game", player: "Player.Player", card: "Card"
+    ) -> dict[OptionKeys, Any]:
+        """Hook - overwritten in subclasses"""
+        return {}
+
+    ##########################################################################
     def hook_trash_this_card(
         self, game: "Game.Game", player: "Player.Player"
     ) -> dict[OptionKeys, Any]:
