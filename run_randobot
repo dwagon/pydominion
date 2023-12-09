@@ -5,7 +5,7 @@ import os
 import subprocess
 import sys
 import multiprocessing
-from collections import defaultdict
+from typing import Any
 
 
 ############################################################################################
@@ -45,7 +45,7 @@ def make_run(cardset: str | None = None, run: int | None = None) -> set[str]:
             args=cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
-            timeout=2,
+            timeout=4,
             encoding="UTF-8",
         )
         stdout = result.stdout
@@ -90,7 +90,7 @@ def fill_cardset_queue(queue: multiprocessing.Queue, card_sets: list[str]) -> No
 
 
 ############################################################################################
-def process_task(jq: multiprocessing.Queue, stats_dict: dict[str, int]):
+def process_task(jq: multiprocessing.Queue, stats_dict: dict[str, int]) -> None:
     """Pull jobs out of the queue and run them - runs in a thread"""
     while True:
         job = jq.get()
@@ -136,7 +136,7 @@ def main() -> None:
     else:
         card_sets = [os.path.join("cardset", _) for _ in os.listdir("cardset")]
 
-    job_queue = multiprocessing.Queue()
+    job_queue: multiprocessing.Queue[dict[str, Any]] = multiprocessing.Queue()
 
     if num_runs:
         fill_num_queue(job_queue, num_runs)

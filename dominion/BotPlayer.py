@@ -28,10 +28,18 @@ class BotPlayer(Player):
 
     ###########################################################################
     def output(self, msg: str, end: str = "\n") -> None:
-        if not self.quiet:
-            sys.stdout.write(f"{self.colour}{self.name}{colorama.Style.RESET_ALL}: ")
-            sys.stdout.write(f"{msg}{end}")
         self.messages.append(msg)
+        if self.quiet:
+            return
+        current_card_stack = ""
+
+        try:
+            for card in self.currcards:
+                current_card_stack += f"{card.name}> "
+        except IndexError:
+            pass
+        sys.stdout.write(f"{self.colour}{self.name}{colorama.Style.RESET_ALL}: ")
+        sys.stdout.write(f"{current_card_stack}{msg}{end}")
 
     ###########################################################################
     @classmethod
