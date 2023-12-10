@@ -27,7 +27,7 @@ class Card_Trickster(Card.Card):
             try:
                 victim.gain_card("Curse")
                 victim.output(f"{player}'s Trickster curses you")
-            except NoCardException:  # pragma: coverage
+            except NoCardException:  # pragma: no coverage
                 player.output("No more Curses")
 
     def hook_discard_any_card(
