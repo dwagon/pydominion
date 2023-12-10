@@ -790,7 +790,7 @@ class TestPlayableSelection(unittest.TestCase):
         self.assertEqual(len(opts), 1)
         self.assertEqual(opts[0]["selector"], "b")
         self.assertEqual(opts[0]["card"], self.moat)
-        self.assertTrue("[Tkn: +1 Card]" in opts[0]["notes"])
+        self.assertIn("[Tkn: +1 Card]", opts[0]["notes"])
         self.assertEqual(ind, 2)
 
 

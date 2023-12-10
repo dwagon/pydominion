@@ -473,6 +473,8 @@ class Player:
                 if crd != card:
                     continue
                 way.hook_way_discard_this_card(game=self.game, player=self, card=crd)
+            for other_card in self.relevant_cards():
+                other_card.hook_discard_any_card(game=self.game, player=self, card=card)
 
     ###########################################################################
     def discard_hand(self) -> None:
@@ -480,8 +482,14 @@ class Player:
         # players hand etc. before they get discarded
         for card in self.piles[Piles.HAND]:
             self.hook_discard_this_card(card, Piles.HAND)
+            for other_card in self.relevant_cards():
+                other_card.hook_discard_any_card(game=self.game, player=self, card=card)
         for card in self.piles[Piles.PLAYED]:
             self.hook_discard_this_card(card, Piles.PLAYED)
+            for other_card in self.relevant_cards():
+                self.currcards.append(other_card)
+                other_card.hook_discard_any_card(game=self.game, player=self, card=card)
+                self.currcards.pop()
         for way, card in self.played_ways:
             way.hook_way_discard_this_card(game=self.game, player=self, card=card)
         while self.piles[Piles.HAND]:

@@ -34,6 +34,10 @@ hook_discard_this_card
 ----------------------
 This is called when this card is discarded.
 
+hook_discard_any_card
+---------------------
+Called when any card is discarded
+
 hook_way_discard_this_card
 --------------------------
 This is called when a card that was played through a way
@@ -120,7 +124,7 @@ Called for every card after a card has been played
 
 hook_end_turn
 ------------
-Called at the end of the players buy phase
+Called at the end of the players turn
 
 hook_start_turn
 --------------
