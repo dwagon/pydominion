@@ -35,7 +35,7 @@ class Card_Trickster(Card.Card):
     ) -> dict[OptionKeys, Any]:
         """Once this turn, when you discard a Treasure from play,
         you may set it aside."""
-        if not card.isTreasure():
+        if not card.isTreasure() or self.location not in Piles.PLAYED:
             return {}
         if not self.set_aside:
             options = [(f"Set {card} aside", True), ("Discard as normal", False)]
@@ -47,7 +47,7 @@ class Card_Trickster(Card.Card):
 
     def hook_end_turn(self, game: Game.Game, player: Player.Player) -> None:
         """Put it in your hand at end of turn."""
-        if self.set_aside.size():
+        if self.set_aside:
             card = self.set_aside.next_card()
             player.output(f"Putting {card} back in hand from Trickster")
             player.add_card(card, Piles.HAND)
