@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Scrap """
 
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Scrap(Card.Card):
     """Scrap"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.MENAGERIE
@@ -20,16 +20,16 @@ class Card_Scrap(Card.Card):
         self.cost = 3
         self.required_cards = [("Card", "Horse")]
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         trc = player.plr_trash_card(
             printcost=True, prompt="Trash a card from your hand for benefits"
         )
-        if not trc:
+        if not trc:  # pragma: no coverage
             return
         cost = min(6, player.card_cost(trc[0]))
         if not cost:
             return
-        chosen = []
+        chosen: list[str] = []
         for _ in range(cost):
             choices = []
             if "card" not in chosen:
@@ -54,9 +54,15 @@ class Card_Scrap(Card.Card):
             if opt == "coin":
                 player.coins.add(1)
             if opt == "silver":
-                player.gain_card("Silver")
+                try:
+                    player.gain_card("Silver")
+                except NoCardException:  # pragma: no coverage
+                    player.output("No more Silvers")
             if opt == "horse":
-                player.gain_card("Horse")
+                try:
+                    player.gain_card("Horse")
+                except NoCardException:  # pragma: no coverage
+                    player.output("No more Horses")
             choices.append(opt)
 
 
@@ -64,13 +70,13 @@ class Card_Scrap(Card.Card):
 class TestScrap(unittest.TestCase):
     """Test Scrap"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Scrap"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Scrap")
 
-    def test_playcard_cost0(self):
+    def test_play_card_cost_0(self) -> None:
         """Play a scrap and trash something worth 0"""
         self.plr.piles[Piles.HAND].set("Copper")
         self.plr.add_card(self.card, Piles.HAND)
@@ -78,7 +84,7 @@ class TestScrap(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIn("Copper", self.g.trash_pile)
 
-    def test_playcard_cost3(self):
+    def test_play_card_cost_3(self) -> None:
         """Play a scrap and trash something worth 3"""
         self.plr.piles[Piles.HAND].set("Silver")
         self.plr.add_card(self.card, Piles.HAND)
@@ -98,7 +104,7 @@ class TestScrap(unittest.TestCase):
         self.assertEqual(self.plr.coins.get(), 1)
         self.assertIn("Silver", self.g.trash_pile)
 
-    def test_playcard_cost6(self):
+    def test_play_card_cost_6(self) -> None:
         """Play a scrap and trash something worth more than 4"""
         self.plr.piles[Piles.HAND].set("Province")
         self.plr.add_card(self.card, Piles.HAND)

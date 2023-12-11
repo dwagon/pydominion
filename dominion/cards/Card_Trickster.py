@@ -47,7 +47,9 @@ class Card_Trickster(Card.Card):
 
     def hook_end_turn(self, game: Game.Game, player: Player.Player) -> None:
         """Put it in your hand at end of turn."""
-        if card := self.set_aside.next_card():
+        if self.set_aside.size():
+            card = self.set_aside.next_card()
+            player.output(f"Putting {card} back in hand from Trickster")
             player.add_card(card, Piles.HAND)
 
 

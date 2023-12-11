@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """ Run a Dominion Game """
 import argparse
+import os
 import sys
 from typing import Any, Optional
 
@@ -158,6 +159,8 @@ def run_game(args: dict[str, Any]) -> None:  # pragma: no cover
     args["initcards"] = cards
     g = Game.Game(**args)
     g.start_game()
+    if os.getenv("PYDOMINION_DEBUG"):
+        g.print_state(card_dump=True)
     try:
         while not g.game_over:
             try:

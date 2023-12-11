@@ -2,12 +2,12 @@
 """https://wiki.dominionstrategy.com/index.php/Journeyman"""
 
 import unittest
-from dominion import Game, Card, Piles, NoCardException
+from dominion import Game, Card, Piles, NoCardException, Player
 
 
 ###############################################################################
 class Card_Journeyman(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.GUILDS
@@ -17,7 +17,7 @@ class Card_Journeyman(Card.Card):
         self.name = "Journeyman"
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         options = [{"selector": "0", "print": "No guess", "card": None}]
         index = 1
         for name, card_pile in sorted(game.get_card_piles()):
@@ -32,10 +32,12 @@ class Card_Journeyman(Card.Card):
         if o["card"] is None:
             return
         cards: list[Card.Card] = []
+        max_cards = player.count_cards()
+        count = max_cards
         while len(cards) < 3:
             try:
                 card = player.next_card()
-            except NoCardException:
+            except NoCardException:  # pragma: no coverage
                 break
             player.reveal_card(card)
             if card.name == o["card"]:
@@ -43,6 +45,10 @@ class Card_Journeyman(Card.Card):
                 player.discard_card(card)
             else:
                 cards.append(card)
+            count -= 1
+            if count <= 0:  # pragma: no coverage
+                player.output("Not enough suitable cards")
+                break
         for card in cards:
             player.add_card(card, Piles.HAND)
             player.output(f"Pulling {card} into hand")
@@ -50,14 +56,14 @@ class Card_Journeyman(Card.Card):
 
 ###############################################################################
 class TestJourneyman(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Journeyman"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Journeyman")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play_card(self):
+    def test_play_card(self) -> None:
         """Play the pawn - select card and action"""
         self.plr.piles[Piles.DECK].set("Copper", "Estate", "Duchy", "Province", "Gold")
         self.plr.test_input = ["Duchy"]
@@ -67,7 +73,7 @@ class TestJourneyman(unittest.TestCase):
         self.assertIn("Province", self.plr.piles[Piles.HAND])
         self.assertIn("Estate", self.plr.piles[Piles.HAND])
 
-    def test_play_guess_none(self):
+    def test_play_guess_none(self) -> None:
         """Chose not to guess"""
         self.plr.piles[Piles.DECK].set("Copper", "Estate", "Duchy", "Province", "Gold")
         self.plr.test_input = ["No guess"]
