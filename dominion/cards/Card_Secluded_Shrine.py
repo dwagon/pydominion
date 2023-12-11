@@ -23,11 +23,11 @@ class Card_SecludedShrine(Card.Card):
     def hook_gain_card(
         self, game: Game.Game, player: Player.Player, card: Card.Card
     ) -> dict[OptionKeys, Any]:
-        if self.location != Piles.DURATION:
+        if self.location != Piles.DURATION:  # pragma: no coverage
             return {}
-        if not card.isTreasure():
+        if not card.isTreasure():  # pragma: no coverage
             return {}
-        if player.piles[Piles.HAND].size() == 0:
+        if player.piles[Piles.HAND].size() == 0:  # pragma: no coverage
             return {}
         player.plr_trash_card(
             num=2,

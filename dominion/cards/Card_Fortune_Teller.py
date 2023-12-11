@@ -32,11 +32,9 @@ def fortune_attack(victim: "Player.Player", attacker: "Player.Player") -> None:
         victim.reveal_card(card)
         if card.isVictory() or card.name == "Curse":
             victim.add_card(card, "topdeck")
-            victim.output(
-                f"{attacker.name}'s Fortune Teller put {card} on top of your deck"
-            )
+            victim.output(f"{attacker}'s Fortune Teller put {card} on top of your deck")
             break
-        victim.output(f"{attacker.name}'s Fortune Teller discarded your {card}")
+        victim.output(f"{attacker}'s Fortune Teller discarded your {card}")
         victim.discard_card(card)
         max_cards -= 1  # So we don't do it forever
 

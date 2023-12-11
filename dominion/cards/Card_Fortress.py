@@ -24,12 +24,16 @@ class Card_Fortress(Card.Card):
         self, game: Game.Game, player: Player.Player
     ) -> dict[OptionKeys, Any]:
         player.output("Putting Fortress back in hand")
-        player.move_card(self, Piles.HAND)
-        return {"trash": False}
+        print(f"DBG {self.location=}")
+        if not self.location:
+            player.add_card(self, Piles.HAND)
+        else:
+            player.move_card(self, Piles.HAND)
+        return {OptionKeys.TRASH: False}
 
 
 ###############################################################################
-class Test_Fortress(unittest.TestCase):
+class TestFortress(unittest.TestCase):
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Fortress"])
         self.g.start_game()

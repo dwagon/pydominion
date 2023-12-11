@@ -1,42 +1,45 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Masquerade"""
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Masquerade(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.INTRIGUE
-        self.desc = "+2 cards. Every player passes a card on, and you trash a card"
+        self.desc = """+2 Cards; Each player with any cards in hand passes one to the next such player to 
+        their left, at once. Then you may trash a card from your hand."""
         self.name = "Masquerade"
         self.cards = 2
         self.cost = 3
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Each player passes a card from his hand to the left at
         once. Then you may trash a card from your hand"""
         xfer = {}
         for plr in game.player_list():
-            xfer[plr] = self.pickCardToXfer(plr, game)
+            if len(plr.piles[Piles.HAND]):
+                xfer[plr] = self.pick_card_to_xfer(game, plr)
         for plr in list(xfer.keys()):
-            newplr = game.player_to_left(plr)
-            newcrd = xfer[plr]
-            newplr.output(f"You gained a {newcrd.name} from {plr.name}")
-            newplr.add_card(newcrd, Piles.HAND)
+            new_player = game.player_to_left(plr)
+            new_card = xfer[plr]
+            new_card.player = new_player
+            new_player.output(f"You received a {new_card} from {plr}")
+            new_player.add_card(new_card, Piles.HAND)
         player.plr_trash_card()
 
-    def pickCardToXfer(self, plr, game):
+    def pick_card_to_xfer(self, game: Game.Game, plr: Player.Player) -> Card.Card:
         leftplr = game.player_to_left(plr).name
-        cards = plr.card_sel(
+        if cards := plr.card_sel(
             prompt=f"Which card to give to {leftplr}?", num=1, force=True
-        )
-        card = cards[0]
-        plr.piles[Piles.HAND].remove(card)
-        plr.output(f"Gave {card.name} to {leftplr}")
-        return card
+        ):
+            card = cards[0]
+            plr.piles[Piles.HAND].remove(card)
+            plr.output(f"Gave {card} to {leftplr}")
+            return card
 
 
 ###############################################################################
@@ -47,13 +50,13 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 ###############################################################################
 class TestMasquerade(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Masquerade"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.card = self.g.get_card_from_pile("Masquerade")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a masquerade"""
         tsize = self.g.trash_pile.size()
         self.other.piles[Piles.HAND].set("Copper", "Silver", "Gold")
@@ -68,7 +71,7 @@ class TestMasquerade(unittest.TestCase):
         self.assertIn("Silver", self.other.piles[Piles.HAND])
         self.assertEqual(self.g.trash_pile.size(), tsize)
 
-    def test_play_with_trash(self):
+    def test_play_with_trash(self) -> None:
         """Play a masquerade and trash after"""
         tsize = self.g.trash_pile.size()
         self.other.piles[Piles.HAND].set("Copper", "Silver", "Gold")

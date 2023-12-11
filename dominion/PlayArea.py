@@ -15,7 +15,10 @@ class PlayArea:
     """Area of play - such as a deck of cards"""
 
     def __init__(
-        self, name="", game=None, initial: Optional[list[Card]] = None
+        self,
+        name: str = "",
+        game: Optional["Game"] = None,
+        initial: Optional[list[Card]] = None,
     ) -> None:
         self.name: str = name
         self.game: Optional[Game] = game

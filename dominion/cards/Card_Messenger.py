@@ -38,16 +38,16 @@ class Card_Messenger(Card.Card):
     def hook_buy_this_card(self, game: Game.Game, player: Player.Player) -> None:
         if len(player.stats["bought"]) != 1:
             return
-        crd = player.plr_gain_card(4, prompt="Pick a card for everyone to gain")
-        if not crd:
+        card = player.plr_gain_card(4, prompt="Pick a card for everyone to gain")
+        if not card:
             return
         for plr in game.player_list():
             if plr != player:
                 try:
-                    plr.gain_card(crd.name)
-                    plr.output(f"Gained a {crd.name} from {player}'s Messenger")
+                    plr.gain_card(card.name)
+                    plr.output(f"Gained a {card} from {player}'s Messenger")
                 except NoCardException:
-                    player.output(f"No more {crd.name}s")
+                    player.output(f"No more {card}s")
 
 
 ###############################################################################

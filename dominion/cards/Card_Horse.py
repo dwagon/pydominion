@@ -22,7 +22,7 @@ class Card_Horse(Card.Card):
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         # Things like Throne Room can change the location
-        if self.location != Piles.CARDPILE:
+        if self.location not in (None, Piles.CARDPILE):
             player.move_card(self, Piles.CARDPILE)
 
 

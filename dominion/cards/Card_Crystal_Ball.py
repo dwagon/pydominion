@@ -22,7 +22,7 @@ class Card_CrystalBall(Card.Card):
     def special(self, game: Game.Game, player: Player.Player) -> None:
         try:
             next_card = player.next_card()
-        except NoCardException:
+        except NoCardException:  # pragma: no coverage
             return
         options = [
             (f"Ignore {next_card}", "ignore"),
@@ -40,8 +40,8 @@ class Card_CrystalBall(Card.Card):
             case "discard":
                 player.discard_card(next_card)
             case "play":
-                player.play_card(next_card, cost_action=False, discard=False)
-                player.add_card(next_card, Piles.DISCARD)
+                player.add_card(next_card, Piles.HAND)
+                player.play_card(next_card, cost_action=False)
 
 
 ###############################################################################
@@ -49,7 +49,9 @@ class TestCrystalBall(unittest.TestCase):
     """Test Crystal Ball"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=1, initcards=["Crystal Ball", "Moat"])
+        self.g = Game.TestGame(
+            numplayers=1, initcards=["Crystal Ball", "Moat", "Horse"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Crystal Ball")
@@ -90,10 +92,19 @@ class TestCrystalBall(unittest.TestCase):
         self.plr.test_input = ["Play"]
         hand_size = len(self.plr.piles[Piles.HAND])
         self.plr.play_card(self.card)
-        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Moat", self.plr.piles[Piles.PLAYED])
         self.assertEqual(
             len(self.plr.piles[Piles.HAND]), hand_size + 2 - 1
         )  # 2 from Moat, -1 played Crystal Ball
+
+    def test_play_horse(self) -> None:
+        """Play a card that moves itself (e.g. Horse)"""
+        self.plr.piles[Piles.DECK].set("Copper", "Copper", "Horse")
+        self.plr.add_card(self.card, Piles.HAND)
+        self.plr.test_input = ["Play"]
+        self.plr.play_card(self.card)
+        self.assertNotIn("Horse", self.plr.piles[Piles.DISCARD])
+        self.assertNotIn("Horse", self.plr.piles[Piles.PLAYED])
 
 
 ###############################################################################

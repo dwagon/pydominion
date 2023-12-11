@@ -941,7 +941,7 @@ class Game:  # pylint: disable=too-many-public-methods
             self.discarded_boons.append(boon)
 
     ###########################################################################
-    def print_state(self, card_dump=False) -> None:  # pragma: no cover
+    def print_state(self, card_dump: bool = False) -> None:  # pragma: no cover
         """This is used for debugging"""
         print("\n" + "#" * 80)
         print(f"Trash: {', '.join([_.name for _ in self.trash_pile])}")
@@ -962,6 +962,7 @@ class Game:  # pylint: disable=too-many-public-methods
 
         for plr in self.player_list():
             plr.print_state()
+        print()
         if card_dump:
             for v in self._cards.values():
                 print(f"    {v} ({v.uuid} {v._player}@{v._location})")

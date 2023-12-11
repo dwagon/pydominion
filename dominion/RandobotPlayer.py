@@ -92,18 +92,18 @@ class RandobotPlayer(Player):
         return " ".join(output)
 
     ###########################################################################
-    def user_input(self, options, prompt):
+    def user_input(self, options, prompt: str):
         """Handle user input"""
         for opt in options:
             print(self.selectorLine(opt))
         for opt in options:
             if "action" not in opt:
                 break
-            if opt["action"] == "spendall":
-                print(f"{opt=}")
+            if opt["action"] == "spendall" and random.randint(1, 10) < 7:
+                print(f"Default spendall {opt=}")
                 return opt
             if opt["action"] == "payback":
-                print(f"{opt=}")
+                print(f"Mandatory payback {opt=}")
                 return opt
 
         # Do anything but quit
@@ -116,13 +116,13 @@ class RandobotPlayer(Player):
             raise
         if avail:
             opt = random.choice(avail)
-            print(f"{opt=}")
+            print(f"Random: {opt=}")
             return opt
 
         # If only quit is available then quit
         for opt in options:
             if opt["action"] == "quit":
-                print(f"{opt=}")
+                print(f"Quit {opt=}")
                 return opt
 
         # How did we get here?
@@ -132,13 +132,13 @@ class RandobotPlayer(Player):
     ###########################################################################
     def card_sel(self, num: int = 1, **kwargs: Any) -> list[Card.Card] | None:
         """Select a card at random"""
-        print(f"card_sel {kwargs=}")
+        print(f"card_sel {self.currcards} {kwargs=}")
         cards = self.card_selSource(**kwargs)
         if not cards:
             return None
-        print(f"card_sel {cards=}")
+        print(f"card_sel choices: {cards=}")
         card = random.choice(cards)
-        print(f"card_sel {card=}")
+        print(f"card_sel chose: {card=}")
         return [card]
 
     ###########################################################################
@@ -155,13 +155,13 @@ class RandobotPlayer(Player):
 
     ###########################################################################
     def plr_choose_options(self, prompt, *choices):
-        print(f"plr_choose_options {prompt=} {choices=}")
+        print(f"plr_choose_options {self.currcards} {prompt=} {choices=}")
         choice = random.choice(choices)
-        print(f"plr_choose_options {choice=}")
+        print(f"plr_choose_options {self.currcards} {choice=}")
         return choice[1]
 
     ###########################################################################
-    def pick_to_discard(self, numtodiscard, keepvic=False):
+    def pick_to_discard(self, numtodiscard: int, keepvic: bool = False):
         """Many attacks require this sort of response.
         Return num cards to discard"""
         if numtodiscard <= 0:
