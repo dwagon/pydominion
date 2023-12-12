@@ -45,6 +45,8 @@ class Card_YoungWitch(Card.Card):
         game._use_card_pile(game.getAvailableCards(), game.specials[BANE])
         game.check_card_requirement(game.card_instances[bane])
         game.card_piles[bane].setup(game=game)
+        if game.hexes or game.boons:
+            game._load_states()
         game.output(f"Using {bane} as the bane for Young Witch")
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
