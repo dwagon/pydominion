@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, Player, OptionKeys
+from dominion import Game, Card, Piles, Player, OptionKeys, NoCardException
 from dominion.cards.Card_Castles import CastleCard
 
 
@@ -20,21 +20,24 @@ class Card_SprawlingCastle(CastleCard):
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
     ) -> dict[OptionKeys, str]:
-        ch = player.plr_choose_options(
+        if player.plr_choose_options(
             "Gain a Duchy or 3 Estates",
-            ("Gain a Duchy", "duchy"),
-            ("Gain 3 Estates", "estates"),
-        )
-        if ch == "duchy":
+            ("Gain a Duchy", True),
+            ("Gain 3 Estates", False),
+        ):
             player.gain_card("Duchy")
         else:
             for _ in range(3):
-                player.gain_card("Estate")
+                try:
+                    player.gain_card("Estate")
+                except NoCardException:  # pragma: no coverage
+                    player.output("No more Estates")
+                    break
         return {}
 
 
 ###############################################################################
-class Test_SprawlingCastle(unittest.TestCase):
+class TestSprawlingCastle(unittest.TestCase):
     def setUp(self) -> None:
         self.g = Game.TestGame(
             quiet=True, numplayers=2, initcards=["Castles"], badcards=["Duchess"]

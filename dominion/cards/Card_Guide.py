@@ -23,7 +23,7 @@ class Card_Guide(Card.Card):
 
 
 ###############################################################################
-class Test_Guide(unittest.TestCase):
+class TestGuide(unittest.TestCase):
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Guide"])
         self.g.start_game()

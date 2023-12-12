@@ -1190,6 +1190,7 @@ class Player:
     def spend_villager(self) -> None:
         """Spend a villager to gain an action"""
         if self.villagers.get() <= 0:
+            self.output("No villagers to spend")
             return
         self.villagers -= 1
         self.add_actions(1)

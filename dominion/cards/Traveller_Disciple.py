@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, Player, NoCardException
+from dominion import Game, Card, Piles, Player, NoCardException, PlayArea
 
 
 ###############################################################################
@@ -36,10 +36,12 @@ class Card_Disciple(Card.Card):
             try:
                 player.gain_card(card.name)
                 player.output(f"Gained a {card} from Disciple")
-            except NoCardException:
-                player.output(f"No more {card.name}")
+            except NoCardException:  # pragma: no coverage
+                player.output(f"No more {card}")
 
-    def hook_discard_this_card(self, game, player, source):
+    def hook_discard_this_card(
+        self, game: Game.Game, player: Player.Player, source: PlayArea.PlayArea
+    ) -> None:
         """Replace with Teacher"""
         player.replace_traveller(self, "Teacher")
 

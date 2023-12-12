@@ -3,7 +3,7 @@
 import unittest
 from typing import Any
 
-from dominion import Game, Card, Piles, Player, OptionKeys
+from dominion import Game, Card, Piles, Player, OptionKeys, NoCardException
 
 
 ###############################################################################
@@ -30,7 +30,11 @@ class Card_Feodum(Card.Card):
     ) -> dict[OptionKeys, Any]:
         """When you trash this gain 3 silvers"""
         for _ in range(3):
-            player.gain_card("Silver")
+            try:
+                player.gain_card("Silver")
+            except NoCardException:  # pragma: no coverage
+                player.output("No more Silvers")
+                break
         return {}
 
 
