@@ -66,7 +66,7 @@ class RandobotPlayer(Player):
         return select_from
 
     ###########################################################################
-    def selectorLine(self, o):
+    def selectorLine(self, o) -> str:
         """User-friendly representation of option"""
         output = []
         if isinstance(o, dict):
@@ -76,6 +76,9 @@ class RandobotPlayer(Player):
             o = newopt
         elif isinstance(o, Option):
             pass
+        else:
+            print(f"Fail: No idea what {o} {type(o)} is")
+            sys.exit(1)
         output.append(o["selector"])
         if o["verb"]:
             output.append(o["verb"])
@@ -94,6 +97,7 @@ class RandobotPlayer(Player):
     ###########################################################################
     def user_input(self, options, prompt: str):
         """Handle user input"""
+        print(self._generate_prompt())
         for opt in options:
             print(self.selectorLine(opt))
         for opt in options:
