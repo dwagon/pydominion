@@ -22,6 +22,9 @@ class Card_BandOfMisfits(Card.Card):
         options = []
         for action_pile in game.get_action_piles(self.cost - 1):
             options.append((f"Select {action_pile}", action_pile))
+        if not options:  # pragma: no coverage
+            player.output("No suitable cards")
+            return
         choice = player.plr_choose_options(
             "What action card do you want to play?", *options
         )

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Town_Crier"""
 import unittest
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -27,7 +27,10 @@ class Card_Town_Crier(Card.Card):
         if opt == "cash":
             player.coins.add(2)
         elif opt == "silver":
-            player.gain_card("Silver")
+            try:
+                player.gain_card("Silver")
+            except NoCardException:  # pragma: no coverage
+                player.output("No more Silvers")
         elif opt == "card":
             player.pickup_cards(1)
             player.add_actions(1)

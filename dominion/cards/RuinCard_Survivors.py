@@ -21,12 +21,14 @@ class Card_Survivors(Card.Card):
         """Look at the top 2 cards of your deck. Discard them or
         put them back in any order"""
         cards = player.pickup_cards(2)
-        ans = player.plr_choose_options(
+        if len(cards) < 2:  # pragma: no coverage
+            player.output("Insufficient cards")
+            return
+        if player.plr_choose_options(
             "What to do with survivors?",
-            (f"Discard {cards[0]} and {cards[1]}", "discard"),
-            (f"Return {cards[0]} and {cards[1]} to deck", "return"),
-        )
-        if ans == "discard":
+            (f"Discard {cards[0]} and {cards[1]}", True),
+            (f"Return {cards[0]} and {cards[1]} to deck", False),
+        ):
             player.discard_card(cards[0])
             player.discard_card(cards[1])
         else:
