@@ -613,16 +613,19 @@ class Game:  # pylint: disable=too-many-public-methods
     def _num_cards_in_pile(self, card: Card) -> int:
         """Return the number of cards that should be in a card pile"""
         if hasattr(card, "calc_numcards"):
-            num_cards = card.calc_numcards(self)
+            return card.calc_numcards(self)
         elif hasattr(card, "numcards"):
-            num_cards = card.numcards
+            return card.numcards
         else:
-            num_cards = 10
-        return num_cards
+            return 10
 
     ###########################################################################
     def _use_card_pile(
-        self, available, card_name: str, force=False, card_type="Card"
+        self,
+        available: list[str] | None,
+        card_name: str,
+        force: bool = False,
+        card_type: str = "Card",
     ) -> int:
         """Set up a card pile for use
         Return 1 if it counts against the number of card piles in use"""

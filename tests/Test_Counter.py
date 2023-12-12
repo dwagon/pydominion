@@ -10,24 +10,24 @@ from dominion.Counter import Counter
 class Test_Counter(unittest.TestCase):
     """Test Counter"""
 
-    def test_set(self):
+    def test_set(self) -> None:
         """Test set()"""
         cntr = Counter("Foo", 3)
         cntr.set(5)
         self.assertEqual(cntr._value, 5)
 
-    def test_get(self):
+    def test_get(self) -> None:
         """Test get()"""
         cntr = Counter("Foo", 3)
         self.assertEqual(cntr.get(), 3)
 
-    def test_add(self):
+    def test_add(self) -> None:
         """Test add()"""
         cntr = Counter("Foo", 3)
         cntr.add(5)
         self.assertEqual(cntr.get(), 8)
 
-    def test_add_dunder(self):
+    def test_add_dunder(self) -> None:
         """Test __add__()"""
         cntr = Counter("Foo", 3)
         cntr += 5
@@ -35,7 +35,7 @@ class Test_Counter(unittest.TestCase):
         cntr += Counter("Bar", 1)
         self.assertEqual(cntr.get(), 9)
 
-    def test_sub_dunder(self):
+    def test_sub_dunder(self) -> None:
         """Test __sub__()"""
         cntr = Counter("Foo", 5)
         cntr -= 2
@@ -43,7 +43,7 @@ class Test_Counter(unittest.TestCase):
         cntr -= Counter("Bar", 1)
         self.assertEqual(cntr.get(), 2)
 
-    def test_bool(self):
+    def test_bool(self) -> None:
         """Test __bool__"""
         self.assertTrue(Counter("Foo", 1))
         self.assertFalse(Counter("Foo", 0))

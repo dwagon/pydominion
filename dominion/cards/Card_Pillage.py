@@ -1,13 +1,13 @@
 #!/usr/bin/env python
+""" https://wiki.dominionstrategy.com/index.php/Pillage"""
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Pillage(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.DARKAGES
@@ -19,41 +19,45 @@ class Card_Pillage(Card.Card):
         self.cost = 5
 
     ###########################################################################
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         player.trash_card(self)
         for plr in player.attack_victims():
             if plr.piles[Piles.HAND].size() < 5:
-                player.output("Player %s has too small a hand size" % plr.name)
+                player.output(f"Player {plr} has too small a hand size")
                 continue
-            self.pickACard(plr, player)
+            self.pick_a_card(plr, player)
         for _ in range(2):
             player.gain_card("Spoils")
 
     ###########################################################################
-    def pickACard(self, victim, player):
+    def pick_a_card(self, victim: Player.Player, player: Player.Player) -> None:
+        """pillage a players hand"""
         for card in victim.piles[Piles.HAND]:
             victim.reveal_card(card)
-        cards = player.card_sel(
-            cardsrc=victim.piles[Piles.HAND], prompt="Which card to discard from %s" % victim.name
-        )
-        card = cards[0]
-        victim.discard_card(card)
-        victim.output("%s pillaged your %s" % (player.name, card.name))
+        if cards := player.card_sel(
+            cardsrc=victim.piles[Piles.HAND],
+            prompt=f"Which card to discard from {victim}",
+        ):
+            card = cards[0]
+            victim.discard_card(card)
+            victim.output(f"{player} pillaged your {card}")
 
 
 ###############################################################################
-class Test_Pillage(unittest.TestCase):
-    def setUp(self):
+class TestPillage(unittest.TestCase):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Pillage"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g.get_card_from_pile("Pillage")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play the Pillage"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["copper"]
-        self.victim.piles[Piles.HAND].set("Copper", "Estate", "Duchy", "Gold", "Silver", "Province")
+        self.victim.piles[Piles.HAND].set(
+            "Copper", "Estate", "Duchy", "Gold", "Silver", "Province"
+        )
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         for c in self.plr.piles[Piles.DISCARD]:
@@ -62,7 +66,7 @@ class Test_Pillage(unittest.TestCase):
         self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 1)
         self.assertEqual(self.victim.piles[Piles.DISCARD][0].name, "Copper")
 
-    def test_short_hand(self):
+    def test_short_hand(self) -> None:
         """Play the Pillage with the victim having a small hand"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["copper"]
