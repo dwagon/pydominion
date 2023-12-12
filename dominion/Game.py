@@ -202,6 +202,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self._check_card_requirements()
         self._setup_players(player_names, plr_class)
         self.card_setup()  # Has to be after players have been created
+        self._check_card_requirements()  # Again as setup can add requirements
         self.current_player = self.player_list()[0]
         if self.ally:
             for plr in self.player_list():
