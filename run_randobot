@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """ Run randobot tests - play a game very randomly to see what errors pop up"""
 
+import argparse
 import os
 import subprocess
 import sys
@@ -19,7 +20,11 @@ def get_card_name(input_string: str) -> str:
 
 
 ############################################################################################
-def make_run(cardset: str | None = None, run: int | None = None) -> set[str]:
+def make_run(
+    cardset: str | None = None,
+    run: int | None = None,
+    use_cards: list[str] | None = None,
+) -> set[str]:
     """Run the game"""
     cards: set[str] = set()
     if cardset:
@@ -28,6 +33,9 @@ def make_run(cardset: str | None = None, run: int | None = None) -> set[str]:
     else:
         cardset_name = f"{run}"
         cardset_args = []
+        if use_cards:
+            for card in use_cards:
+                cardset_args.extend(["--card", card])
     players = ["--randobot", "4", "--numplayers", "4"]
     env_args: dict[str, str] = {
         "PYDOMINION_DEBUG": "1",
@@ -74,14 +82,16 @@ def print_results(stats: dict[str, int]) -> None:
 
 
 ############################################################################################
-def fill_num_queue(queue: multiprocessing.Queue, num_runs: int = 0) -> None:
+def fill_num_queue(
+    queue: Any, num_runs: int = 0, cards: list[str] | None = None
+) -> None:
     """Fill the queue with a number of jobs"""
     for run in range(num_runs):
-        queue.put({"run": run})
+        queue.put({"run": run, "use_cards": cards})
 
 
 ############################################################################################
-def fill_cardset_queue(queue: multiprocessing.Queue, card_sets: list[str]) -> None:
+def fill_cardset_queue(queue: Any, card_sets: list[str]) -> None:
     """Fill the queue with cardset files"""
     for card_set_file in card_sets:
         if not os.path.isfile(card_set_file):
@@ -90,7 +100,7 @@ def fill_cardset_queue(queue: multiprocessing.Queue, card_sets: list[str]) -> No
 
 
 ############################################################################################
-def process_task(jq: multiprocessing.Queue, stats_dict: dict[str, int]) -> None:
+def process_task(jq: Any, stats_dict: dict[str, int]) -> None:
     """Pull jobs out of the queue and run them - runs in a thread"""
     while True:
         job = jq.get()
@@ -104,7 +114,7 @@ def process_task(jq: multiprocessing.Queue, stats_dict: dict[str, int]) -> None:
 
 
 ############################################################################################
-def run_queue(job_queue: multiprocessing.Queue) -> dict[str, int]:
+def run_queue(job_queue: Any) -> dict[str, int]:
     """Spawn a number of processes (one per cpu) and then use them to run the hobs in the job_queue"""
     processes = []
     with multiprocessing.Manager() as manager:
@@ -122,25 +132,31 @@ def run_queue(job_queue: multiprocessing.Queue) -> dict[str, int]:
 
 
 ############################################################################################
+def parse_args() -> argparse.Namespace:
+    """Parse command line args"""
+    parser = argparse.ArgumentParser()
+    parser.add_argument("numruns", type=int, nargs="?", help="How many random runs")
+    parser.add_argument(
+        "--cardsets",
+        action="store_true",
+        help="Run through all the cardsets defined",
+    )
+    parser.add_argument("--card", action="append", help="Specific cards to include")
+    args = parser.parse_args()
+    return args
+
+
+############################################################################################
 def main() -> None:
     """Do stuff"""
     os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
-    num_runs = 0
-    card_sets: list[str] = []
-
-    if len(sys.argv) > 1:
-        try:
-            num_runs = int(sys.argv[1])
-        except ValueError:
-            card_sets = sys.argv[1:]
-    else:
-        card_sets = [os.path.join("cardset", _) for _ in os.listdir("cardset")]
-
+    args = parse_args()
     job_queue: multiprocessing.Queue[dict[str, Any]] = multiprocessing.Queue()
 
-    if num_runs:
-        fill_num_queue(job_queue, num_runs)
+    if args.numruns:
+        fill_num_queue(job_queue, args.numruns, args.card)
     else:
+        card_sets = [os.path.join("cardset", _) for _ in os.listdir("cardset")]
         fill_cardset_queue(job_queue, card_sets)
     card_stats: dict[str, int] = run_queue(job_queue)
     print_results(card_stats)
