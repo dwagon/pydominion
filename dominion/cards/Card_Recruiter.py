@@ -20,7 +20,7 @@ class Card_Recruiter(Card.Card):
     ###########################################################################
     def special(self, game: Game.Game, player: Player.Player) -> None:
         if cards := player.plr_trash_card(force=True, num=1):
-            player.villagers.add(cards[0].cost)
+            player.villagers.add(max(cards[0].cost, 0))
 
 
 ###############################################################################
