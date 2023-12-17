@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-from dominion.Player import Phase
+from dominion import Game, Card, Piles, Player, NoCardException, Phase
 
 
 ###############################################################################
 class Card_DevilsWorkshop(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.NIGHT
         self.base = Card.CardExpansion.NOCTURNE
@@ -18,27 +17,35 @@ class Card_DevilsWorkshop(Card.Card):
         self.cost = 4
         self.required_cards = [("Card", "Imp")]
 
-    def night(self, game, player):
+    def night(self, game: Game.Game, player: Player.Player) -> None:
         num_cards = len(player.stats["gained"])
         player.output(f"You gained {num_cards} cards this turn")
         if num_cards >= 2:
-            player.gain_card("Imp")
+            try:
+                player.gain_card("Imp")
+                player.output("Gained an Imp")
+            except NoCardException:
+                player.output("No more Imps")
         elif num_cards == 1:
             player.plr_gain_card(4)
         else:
-            player.gain_card("Gold")
+            try:
+                player.gain_card("Gold")
+                player.output("Gained a Gold")
+            except NoCardException:
+                player.output("No more Golds")
 
 
 ###############################################################################
 class Test_DevilsWorkshop(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Devil's Workshop", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Devil's Workshop")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play_0(self):
+    def test_play_0(self) -> None:
         self.plr.phase = Phase.NIGHT
         self.plr.play_card(self.card)
         try:
@@ -47,7 +54,7 @@ class Test_DevilsWorkshop(unittest.TestCase):
             self.g.print_state()
             raise
 
-    def test_play_1(self):
+    def test_play_1(self) -> None:
         self.plr.phase = Phase.NIGHT
         self.plr.gain_card("Copper")
         self.plr.test_input = ["Moat"]
@@ -58,7 +65,7 @@ class Test_DevilsWorkshop(unittest.TestCase):
             self.g.print_state()
             raise
 
-    def test_play_2(self):
+    def test_play_2(self) -> None:
         self.plr.phase = Phase.NIGHT
         self.plr.gain_card("Copper")
         self.plr.gain_card("Estate")

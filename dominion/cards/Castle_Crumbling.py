@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, Player, OptionKeys
+from dominion import Game, Card, Piles, Player, OptionKeys, NoCardException
 from dominion.cards.Card_Castles import CastleCard
 
 
@@ -20,16 +20,23 @@ class Card_CrumblingCastle(CastleCard):
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
     ) -> dict[OptionKeys, str]:
-        player.add_score("Crumbling Castle", 1)
-        player.gain_card("Silver")
+        self.crumbling_special(player)
         return {}
 
     def hook_trash_this_card(
         self, game: Game.Game, player: Player.Player
     ) -> dict[OptionKeys, str]:
-        player.add_score("Crumbling Castle", 1)
-        player.gain_card("Silver")
+        self.crumbling_special(player)
         return {}
+
+    def crumbling_special(self, player: Player.Player) -> None:
+        """+1VP and gain a Silver."""
+        player.add_score("Crumbling Castle", 1)
+        try:  # pragma: no coverage
+            card = player.gain_card("Silver")
+            player.output(f"Gained a {card}")
+        except NoCardException:
+            player.output("No more Silvers")
 
 
 ###############################################################################
