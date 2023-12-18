@@ -30,7 +30,7 @@ class Card_Sunken_Treasure(Card.Card):
         to_gain = player.plr_choose_options("Gain a card", *options)
         try:
             player.gain_card(to_gain)
-        except NoCardException:
+        except NoCardException:  # pragma: no coverage
             player.output(f"No more {to_gain}")
 
 

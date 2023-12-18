@@ -24,13 +24,13 @@ class Card_Followers(Card.Card):
     def special(self, game: Game.Game, player: Player.Player) -> None:
         try:
             player.gain_card("Estate")
-        except NoCardException:
+        except NoCardException:  # pragma: no coverage
             player.output("No more Estates")
         for plr in player.attack_victims():
             try:
                 plr.gain_card("Curse")
                 plr.output(f"{player}'s Followers cursed you")
-            except NoCardException:
+            except NoCardException:  # pragma: no coverage
                 player.output("No more Curses")
             plr.plr_discard_down_to(3)
 

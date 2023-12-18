@@ -21,7 +21,7 @@ class Card_Miller(Card.Card):
         for _ in range(4):
             try:
                 card = player.next_card()
-            except NoCardException:
+            except NoCardException:  # pragma: no coverage
                 break
             cards.append(card)
         if ch := player.card_sel(

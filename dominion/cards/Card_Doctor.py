@@ -41,7 +41,7 @@ class Card_Doctor(Card.Card):
         for _ in range(3):
             try:
                 cards.append(player.next_card())
-            except NoCardException:
+            except NoCardException:  # pragma: no coverage
                 break
 
         for card in cards:
@@ -63,7 +63,7 @@ class Card_Doctor(Card.Card):
             player.output(f"Doctoring {i+1}/{amount}")
             try:
                 card = player.next_card()
-            except NoCardException:
+            except NoCardException:  # pragma: no coverage
                 continue
             options = []
             options.append(

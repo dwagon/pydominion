@@ -42,7 +42,7 @@ class Card_Duplicate(Card.Card):
         player.output(f"Gaining a {card} from Duplicate")
         try:
             player.gain_card(card.name, callhook=False)
-        except NoCardException:
+        except NoCardException:  # pragma: no coverage
             player.output(f"No more {card} left")
 
 

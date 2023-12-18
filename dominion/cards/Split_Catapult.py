@@ -30,7 +30,7 @@ class Card_Catapult(Card.Card):
                 try:
                     victim.gain_card("Curse")
                     victim.output(f"{player}'s Catapult Curses you")
-                except NoCardException:
+                except NoCardException:  # pragma: no coverage
                     player.output("No more Curses")
             if card.isTreasure():
                 victim.output(

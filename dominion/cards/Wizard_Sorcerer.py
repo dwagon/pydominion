@@ -42,7 +42,7 @@ class Card_Sorcerer(Card.Card):
             )
             try:
                 top_card = plr.piles[Piles.DECK].top_card()
-            except NoCardException:
+            except NoCardException:  # pragma: no coverage
                 player.output("No cards in deck")
                 continue
             player.reveal_card(top_card)
@@ -50,7 +50,7 @@ class Card_Sorcerer(Card.Card):
                 player.output(f"Top card is {top_card} not {pick}")
                 try:
                     plr.gain_card("Curse")
-                except NoCardException:
+                except NoCardException:  # pragma: no coverage
                     player.output("No more Curses")
             else:
                 player.output(f"Guessed {pick} correctly")

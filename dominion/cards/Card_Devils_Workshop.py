@@ -24,7 +24,7 @@ class Card_DevilsWorkshop(Card.Card):
             try:
                 player.gain_card("Imp")
                 player.output("Gained an Imp")
-            except NoCardException:
+            except NoCardException:  # pragma: no coverage
                 player.output("No more Imps")
         elif num_cards == 1:
             player.plr_gain_card(4)
@@ -32,7 +32,7 @@ class Card_DevilsWorkshop(Card.Card):
             try:
                 player.gain_card("Gold")
                 player.output("Gained a Gold")
-            except NoCardException:
+            except NoCardException:  # pragma: no coverage
                 player.output("No more Golds")
 
 
