@@ -29,12 +29,12 @@ class Card_SecludedShrine(Card.Card):
             return {}
         if player.piles[Piles.HAND].size() == 0:  # pragma: no coverage
             return {}
+        player.move_card(self, Piles.DISCARD)
         player.plr_trash_card(
             num=2,
             cardsrc=Piles.HAND,
             prompt="Secluded Shrine lets you trash up to two cards",
         )
-        player.move_card(self, Piles.DISCARD)
         return {}
 
 

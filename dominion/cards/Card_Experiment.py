@@ -26,7 +26,7 @@ class Card_Experiment(Card.Card):
         try:
             player.gain_card("Experiment", callhook=False)
             player.output("Gained a new experiment")
-        except NoCardException:
+        except NoCardException:  # pragma: no coverage
             player.output("No more Experiments")
         return {}
 

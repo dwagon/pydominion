@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Banquet"""
 import unittest
-from dominion import Card, Game, Piles, Event, Player
+from dominion import Card, Game, Piles, Event, Player, NoCardException
 
 
 ###############################################################################
@@ -15,7 +15,11 @@ class Event_Banquet(Event.Event):
 
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
         for _ in range(2):
-            player.gain_card("Copper")
+            try:
+                player.gain_card("Copper")
+            except NoCardException:
+                player.output("No more Coppers")
+                break
         player.plr_gain_card(
             5,
             types={

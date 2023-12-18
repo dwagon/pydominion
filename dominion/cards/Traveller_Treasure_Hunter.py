@@ -29,7 +29,7 @@ class Card_TreasureHunter(Card.Card):
         for _ in range(num_silver):
             try:
                 player.gain_card("Silver")
-            except NoCardException:
+            except NoCardException:  # pragma: no coverage
                 player.output("No more Silvers")
 
     def hook_discard_this_card(

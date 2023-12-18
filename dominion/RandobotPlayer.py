@@ -140,7 +140,6 @@ class RandobotPlayer(Player):
         cards = self.card_selSource(**kwargs)
         if not cards:
             return None
-        print(f"card_sel choices: {cards=}")
         card = random.choice(cards)
         print(f"card_sel chose: {card=}")
         return [card]

@@ -21,7 +21,7 @@ class Card_Patrician(Card.Card):
     def special(self, game, player) -> None:
         try:
             top_card = player.next_card()
-        except NoCardException:
+        except NoCardException:  # pragma: no coverage
             return
         player.reveal_card(top_card)
         if top_card.cost >= 5:

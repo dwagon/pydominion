@@ -39,7 +39,7 @@ class Card_Warrior(Card.Card):
             for _ in range(count):
                 try:
                     card = victim.next_card()
-                except NoCardException:
+                except NoCardException:  # pragma: no coverage
                     continue
                 if card.cost in (3, 4) and not card.potcost:
                     victim.output(f"Trashing {card} due to {player.name}'s Warrior")

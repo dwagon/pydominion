@@ -26,7 +26,7 @@ class Card_Distant_Shore(Card.Card):
     def special(self, game: Game.Game, player: Player.Player) -> None:
         try:
             player.gain_card("Estate")
-        except NoCardException:
+        except NoCardException:  # pragma: no coverage
             player.output("No more Estates")
 
 
