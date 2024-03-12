@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
-import unittest, random
+import random
+import unittest
 from typing import Optional
-from dominion import Card, Game, Piles, Landmark, Player
+from dominion import Card, Game, Landmark, Player
 
 
 ###############################################################################
