@@ -1171,6 +1171,8 @@ class Player:
             self.currcards.append(card)
             card.hook_end_turn(game=self.game, player=self)
             self.currcards.pop()
+        for trait in self.game.traits.values():
+            trait.hook_end_turn(game=self.game, player=self)
         self.newhandsize = 5
         self.played_events = PlayArea("played_events")
         self.messages = []
