@@ -894,6 +894,8 @@ class Player:
             + self.piles[Piles.DURATION]
         )
         self.game.cleanup_boons()
+        for trait in self.game.traits.values():
+            trait.hook_cleanup(self.game, self)
         for card in self.piles[Piles.PLAYED] + self.piles[Piles.RESERVE] + self.artifacts:
             card.hook_cleanup(self.game, self)
         self.discard_hand()
