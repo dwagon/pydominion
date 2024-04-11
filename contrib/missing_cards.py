@@ -47,11 +47,18 @@ def main() -> None:
         "format": "json",
     }
 
+    succeeded = failed = 0
+
     for result in get_html_data(url, params):
         for _, details in result["pages"].items():
             if ":" not in details["title"]:
                 if not validate_card(details["title"]):
                     print(details["title"])
+                    failed += 1
+                else:
+                    succeeded += 1
+
+    print(f"Implemented {succeeded}/{succeeded+failed}")
 
 
 ##############################################################################
