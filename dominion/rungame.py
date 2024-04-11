@@ -36,20 +36,12 @@ def parse_cli_args(args: Optional[list[str]] = None) -> argparse.Namespace:
         help="Use potions",
     )
     parser.add_argument("--shelters", type=bool, default=True, help="Allow shelters")
-    parser.add_argument(
-        "--num_events", type=int, default=0, help="Number of events to use"
-    )
-    parser.add_argument(
-        "--events", action="append", dest="events", default=[], help="Include event"
-    )
+    parser.add_argument("--num_events", type=int, default=0, help="Number of events to use")
+    parser.add_argument("--events", action="append", dest="events", default=[], help="Include event")
     parser.add_argument("--num_ways", type=int, default=0, help="Number of ways to use")
-    parser.add_argument(
-        "--ways", action="append", dest="ways", default=[], help="Include way"
-    )
+    parser.add_argument("--ways", action="append", dest="ways", default=[], help="Include way")
 
-    parser.add_argument(
-        "--num_landmarks", type=int, default=0, help="Number of landmarks to use"
-    )
+    parser.add_argument("--num_landmarks", type=int, default=0, help="Number of landmarks to use")
     parser.add_argument(
         "--landmark",
         action="append",
@@ -57,17 +49,11 @@ def parse_cli_args(args: Optional[list[str]] = None) -> argparse.Namespace:
         default=[],
         help="Include landmark",
     )
-    parser.add_argument(
-        "--landmark_path", default="dominion/landmarks", help=argparse.SUPPRESS
-    )
+    parser.add_argument("--landmark_path", default="dominion/landmarks", help=argparse.SUPPRESS)
 
-    parser.add_argument(
-        "--num_projects", type=int, default=0, help="Number of projects to use"
-    )
+    parser.add_argument("--num_projects", type=int, default=0, help="Number of projects to use")
 
-    parser.add_argument(
-        "--num_traits", type=int, default=0, help="Number of traits to use"
-    )
+    parser.add_argument("--num_traits", type=int, default=0, help="Number of traits to use")
     parser.add_argument(
         "--oldcards",
         action="store_true",
@@ -81,9 +67,7 @@ def parse_cli_args(args: Optional[list[str]] = None) -> argparse.Namespace:
         default=[],
         help="Include project",
     )
-    parser.add_argument(
-        "--project_path", default="dominion/projects", help=argparse.SUPPRESS
-    )
+    parser.add_argument("--project_path", default="dominion/projects", help=argparse.SUPPRESS)
     parser.add_argument(
         "--ally",
         dest="allies",
@@ -92,9 +76,7 @@ def parse_cli_args(args: Optional[list[str]] = None) -> argparse.Namespace:
         help="Include specific ally",
     )
 
-    parser.add_argument(
-        "--trait_path", default="dominion/traits", help=argparse.SUPPRESS
-    )
+    parser.add_argument("--trait_path", default="dominion/traits", help=argparse.SUPPRESS)
     parser.add_argument(
         "--trait",
         dest="traits",
@@ -109,9 +91,7 @@ def parse_cli_args(args: Optional[list[str]] = None) -> argparse.Namespace:
         help="File containing list of cards to use",
     )
     parser.add_argument("--card_path", default="dominion/cards", help=argparse.SUPPRESS)
-    parser.add_argument(
-        "--artifact_path", default="dominion/artifacts", help=argparse.SUPPRESS
-    )
+    parser.add_argument("--artifact_path", default="dominion/artifacts", help=argparse.SUPPRESS)
     parser.add_argument("--boon_path", default="dominion/boons", help=argparse.SUPPRESS)
     parser.add_argument("--num_stacks", default=10, help=argparse.SUPPRESS)
     parser.add_argument(
@@ -120,9 +100,7 @@ def parse_cli_args(args: Optional[list[str]] = None) -> argparse.Namespace:
         action="store_true",
         help="Use colonies and platinum coins",
     )
-    parser.add_argument(
-        "--bot", action="store_true", dest="bot", default=False, help="Bot Player"
-    )
+    parser.add_argument("--bot", action="store_true", dest="bot", default=False, help="Bot Player")
     parser.add_argument(
         "--randobot",
         type=int,
@@ -137,6 +115,7 @@ def parse_cli_args(args: Optional[list[str]] = None) -> argparse.Namespace:
         default=False,
         help="Supress a lot of output",
     )
+    parser.add_argument("--validate_only", default=False, action="store_true", help="Validate cards and quit")
     return parser.parse_args(args)
 
 
@@ -159,6 +138,8 @@ def run_game(args: dict[str, Any]) -> None:  # pragma: no cover
     args["initcards"] = cards
     g = Game.Game(**args)
     g.start_game()
+    if args["validate_only"]:
+        sys.exit(0)
     if os.getenv("PYDOMINION_DEBUG"):
         g.print_state(card_dump=True)
     try:
