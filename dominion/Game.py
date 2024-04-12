@@ -63,9 +63,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self._loaded_prizes = False
         self._allow_potions = True
         self.current_player = None
-        self.specials: dict[
-            str, Any
-        ] = {}  # Special areas for specific card related stuff
+        self.specials: dict[str, Any] = {}  # Special areas for specific card related stuff
         self.paths = {
             Keys.CARDS: "dominion/cards",
             Keys.ALLIES: "dominion/allies",
@@ -118,9 +116,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.paths[Keys.HEXES] = args.get("hex_path", self.paths[Keys.HEXES])
         self.paths[Keys.BOONS] = args.get("boon_path", self.paths[Keys.BOONS])
         self.paths[Keys.STATES] = args.get("state_path", self.paths[Keys.STATES])
-        self.paths[Keys.ARTIFACTS] = args.get(
-            "artifact_path", self.paths[Keys.ARTIFACTS]
-        )
+        self.paths[Keys.ARTIFACTS] = args.get("artifact_path", self.paths[Keys.ARTIFACTS])
         self.paths[Keys.PROJECTS] = args.get("project_path", self.paths[Keys.PROJECTS])
         self.paths[Keys.LANDMARK] = args.get("landmark_path", self.paths[Keys.LANDMARK])
         self.paths[Keys.EVENT] = args.get("event_path", self.paths[Keys.EVENT])
@@ -174,9 +170,7 @@ class Game:  # pylint: disable=too-many-public-methods
             for _ in range(self.numplayers):
                 shelters = ["Overgrown Estate", "Hovel", "Necropolis"]
                 for shelter in shelters:
-                    self.card_instances[shelter] = self.card_mapping["Shelter"][
-                        shelter
-                    ]()
+                    self.card_instances[shelter] = self.card_mapping["Shelter"][shelter]()
                     shelter_card = self.card_mapping["Shelter"][shelter]()
                     self.card_piles["Shelters"].add(shelter_card)
         return use_shelters
@@ -509,21 +503,24 @@ class Game:  # pylint: disable=too-many-public-methods
         available = self.getAvailableCards(prefix)
         if name in available:
             return name
+        lower_name = name.lower()
         for card_name in available:
-            newc = card_name.replace("'", "")
-            if newc.lower() == name.lower():
+            if card_name.lower() == lower_name:
                 return card_name
-            newc = newc.replace(" ", "")
-            if newc.lower() == name.lower():
+            newc = card_name.lower().replace("'", "")
+            if newc.lower() == lower_name:
                 return card_name
             newc = newc.replace(" ", "_")
-            if newc.lower() == name.lower():
+            if newc == lower_name:
                 return card_name
             newc = newc.replace(" ", "-")
-            if newc.lower() == name.lower():
+            if newc == lower_name:
                 return card_name
-            name = name.replace("_", "")
-            if newc.lower() == name.lower():
+            newc = newc.replace(" ", "")
+            if newc == lower_name:
+                return card_name
+            newc = newc.replace("_", "")
+            if newc == lower_name:
                 return card_name
         return None
 
@@ -535,41 +532,49 @@ class Game:  # pylint: disable=too-many-public-methods
         # If base cards are specified by initcards
         if card_name := self.guess_card_name(card, prefix="BaseCard"):
             self._use_card_pile(None, card_name, force=True, card_type="BaseCard")
-        elif card_name := self.guess_card_name(card):
+            return 0
+        if card_name := self.guess_card_name(card):
             return self._use_card_pile(available, card_name, force=True)
-        elif event_name := self.guess_card_name(card, "Event"):
+        if event_name := self.guess_card_name(card, "Event"):
             self.init[Keys.EVENT].append(event_name)
-        elif way_name := self.guess_card_name(card, "Way"):
+            return 0
+        if way_name := self.guess_card_name(card, "Way"):
             self.init[Keys.WAY].append(way_name)
-        elif landmark_name := self.guess_card_name(card, "Landmark"):
+            return 0
+        if landmark_name := self.guess_card_name(card, "Landmark"):
             self.init[Keys.LANDMARK].append(landmark_name)
-        elif project_name := self.guess_card_name(card, "Project"):
+            return 0
+        if project_name := self.guess_card_name(card, "Project"):
             self.init[Keys.PROJECTS].append(project_name)
-        elif ally_name := self.guess_card_name(card, "Ally"):
+            return 0
+        if ally_name := self.guess_card_name(card, "Ally"):
             self.init[Keys.ALLIES].append(ally_name)
-        elif trait_name := self.guess_card_name(card, "Trait"):
+            return 0
+        if trait_name := self.guess_card_name(card, "Trait"):
             self.init[Keys.TRAITS].append(trait_name)
-        elif self.guess_card_name(card, "Boon"):
+            return 0
+        if self.guess_card_name(card, "Boon"):
             self._load_boons()
-        elif self.guess_card_name(card, "Artifact"):
+            return 0
+        if self.guess_card_name(card, "Artifact"):
             # Artifacts should be loaded by the requiring card but can still be specified
             # in a card set
-            pass
-        elif card.lower() == "shelters":
+            return 0
+        if card.lower() == "shelters":
             # Use of shelters handled elsewhere
-            pass
-        else:
-            print(f"Can't guess what card '{card}' is")
-            return None
-        return 0
+            return 0
+        # Cards that exist but are handled elsewhere
+        for prefix in ("Traveller", "Castle", "Loot", "Heirloom", "State", "Hex", "PrizeCard"):
+            if self.guess_card_name(card, prefix):
+                return 0
+        print(f"Can't guess what card '{card}' is")
+        return None
 
     ###########################################################################
     def _load_decks(self, initcards: list[str], numstacks: int) -> None:
         """Determine what cards we are using this game"""
         for card in self._base_cards:
-            self._use_card_pile(
-                self._base_cards[:], card, force=True, card_type="BaseCard"
-            )
+            self._use_card_pile(self._base_cards[:], card, force=True, card_type="BaseCard")
         available = self.getAvailableCards()
         unfilled = numstacks
         found_all = True
@@ -650,9 +655,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.card_piles[card_name] = card_pile
         for card in card_pile:
             if card_name not in self.card_instances:
-                self.card_instances[card_name] = self.card_mapping[card_type][
-                    card_name
-                ]()
+                self.card_instances[card_name] = self.card_mapping[card_type][card_name]()
             self._cards[card.uuid] = card
             if not card.pile:
                 card.pile = card_name
@@ -738,9 +741,7 @@ class Game:  # pylint: disable=too-many-public-methods
             self.check_card_requirement(card)
 
         if self.init[Keys.ALLIES] and not self.ally:
-            print(
-                f"Need to specify a Liaison as well as an Ally {self.init[Keys.ALLIES]}"
-            )
+            print(f"Need to specify a Liaison as well as an Ally {self.init[Keys.ALLIES]}")
             sys.exit(1)
 
     ###########################################################################
@@ -770,44 +771,26 @@ class Game:  # pylint: disable=too-many-public-methods
             "Shelter",
             "Split",
         ):
-            mapping[prefix] = self.get_card_classes(
-                prefix, self.paths[Keys.CARDS], "Card_"
-            )
+            mapping[prefix] = self.get_card_classes(prefix, self.paths[Keys.CARDS], "Card_")
             if self.oldcards:
                 old_path = os.path.join(self.paths[Keys.CARDS], "old")
                 mapping[prefix].update(self.get_card_classes(prefix, old_path, "Card_"))
-        mapping["Event"] = self.get_card_classes(
-            "Event", self.paths[Keys.EVENT], "Event_"
-        )
+        mapping["Event"] = self.get_card_classes("Event", self.paths[Keys.EVENT], "Event_")
         mapping["Way"] = self.get_card_classes("Way", self.paths[Keys.WAY], "Way_")
-        mapping["Landmark"] = self.get_card_classes(
-            "Landmark", self.paths[Keys.LANDMARK], "Landmark_"
-        )
+        mapping["Landmark"] = self.get_card_classes("Landmark", self.paths[Keys.LANDMARK], "Landmark_")
         mapping["Boon"] = self.get_card_classes("Boon", self.paths[Keys.BOONS], "Boon_")
         mapping["Hex"] = self.get_card_classes("Hex", self.paths[Keys.HEXES], "Hex_")
-        mapping["State"] = self.get_card_classes(
-            "State", self.paths[Keys.STATES], "State_"
-        )
-        mapping["Artifact"] = self.get_card_classes(
-            "Artifact", self.paths[Keys.ARTIFACTS], "Artifact_"
-        )
-        mapping["Project"] = self.get_card_classes(
-            "Project", self.paths[Keys.PROJECTS], "Project_"
-        )
-        mapping["Ally"] = self.get_card_classes(
-            "Ally", self.paths[Keys.ALLIES], "Ally_"
-        )
-        mapping["Trait"] = self.get_card_classes(
-            "Trait", self.paths[Keys.TRAITS], "Trait_"
-        )
+        mapping["State"] = self.get_card_classes("State", self.paths[Keys.STATES], "State_")
+        mapping["Artifact"] = self.get_card_classes("Artifact", self.paths[Keys.ARTIFACTS], "Artifact_")
+        mapping["Project"] = self.get_card_classes("Project", self.paths[Keys.PROJECTS], "Project_")
+        mapping["Ally"] = self.get_card_classes("Ally", self.paths[Keys.ALLIES], "Ally_")
+        mapping["Trait"] = self.get_card_classes("Trait", self.paths[Keys.TRAITS], "Trait_")
         mapping["Loot"] = self.get_card_classes("Loot", self.paths[Keys.LOOT], "Loot_")
         return mapping
 
     ###########################################################################
     @classmethod
-    def get_card_classes(
-        cls, prefix: str, path: str, class_prefix: str = "Card_"
-    ) -> dict[str, type[Card]]:
+    def get_card_classes(cls, prefix: str, path: str, class_prefix: str = "Card_") -> dict[str, type[Card]]:
         """Import all the modules to determine the real name of the card
         This is slow, but it is the only way that I can think of
 
@@ -1043,9 +1026,7 @@ class Game:  # pylint: disable=too-many-public-methods
             print(f"{name} <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", file=sys.stderr)
             print(f" {name} Original:")
             try:
-                print(
-                    json.dumps(self._original["count"][name], indent=2), file=sys.stderr
-                )
+                print(json.dumps(self._original["count"][name], indent=2), file=sys.stderr)
             except KeyError:
                 print(f"Unhandled card {name}")
             print(f" {name} Now:")
