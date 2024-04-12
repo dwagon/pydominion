@@ -11,7 +11,7 @@ class Card_Moneylender(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DOMINION
         self.desc = "Trash a copper from hand for +3 coin"
-        self.name = "Money Lender"
+        self.name = "Moneylender"
         self.cost = 4
 
     def special(self, game, player):
@@ -21,9 +21,7 @@ class Card_Moneylender(Card.Card):
             player.output("No coppers in hand")
             return
         player.output("Trash a copper to gain +3 coin")
-        trash = player.plr_choose_options(
-            "Trash a copper?", ("Don't trash a copper", False), ("Trash a copper", True)
-        )
+        trash = player.plr_choose_options("Trash a copper?", ("Don't trash a copper", False), ("Trash a copper", True))
         if trash:
             player.trash_card(copper)
             player.coins.add(3)
@@ -32,10 +30,10 @@ class Card_Moneylender(Card.Card):
 ###############################################################################
 class Test_Moneylender(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Money Lender"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Moneylender"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.get_card_from_pile("Money Lender")
+        self.card = self.g.get_card_from_pile("Moneylender")
 
     def test_nocopper(self):
         tsize = self.g.trash_pile.size()
