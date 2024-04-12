@@ -64,17 +64,15 @@ class TestArgs(unittest.TestCase):
 class TestGuessCardname(unittest.TestCase):
     """TODO"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2)
         self.g.start_game()
 
-    def test_guesses(self):
+    def test_guesses(self) -> None:
         """TODO"""
         self.assertEqual(self.g.guess_card_name("moat"), "Moat")
         self.assertEqual(self.g.guess_card_name("grandmarket"), "Grand Market")
-        self.assertEqual(
-            self.g.guess_card_name("philosophersstone"), "Philosopher's Stone"
-        )
+        self.assertEqual(self.g.guess_card_name("philosophersstone"), "Philosopher's Stone")
         self.assertEqual(self.g.guess_card_name("colony", prefix="BaseCard"), "Colony")
         self.assertIsNone(self.g.guess_card_name("nosuchcard"))
 
