@@ -63,14 +63,16 @@ class Test_Walled_Village(unittest.TestCase):
 
     def test_play_no_return(self) -> None:
         """Play a Walled Village so that we don't get it back"""
+        # Fill discard so we don't need to shuffle the Walled Village back in to refill hand
+        self.plr.piles[Piles.DISCARD].set("Copper", "Silver", "Gold", "Estate", "Duchy")
         moat1 = self.g.get_card_from_pile("Moat")
         moat2 = self.g.get_card_from_pile("Moat")
         self.plr.play_card(self.card)
         self.plr.play_card(moat1)
         self.plr.play_card(moat2)
-        self.g.print_state()
         self.plr.end_turn()
         self.plr.start_turn()
+
         self.assertNotIn("Walled Village", self.plr.piles[Piles.HAND])
 
 
