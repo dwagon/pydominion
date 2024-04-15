@@ -15,7 +15,7 @@ class Card_Storeroom(Card.Card):
         self.desc = """+1 Buy; Discard any number of cards. +1 Card per card
             discarded. Discard any number of cards. +1 Coin per card discarded
             the second time """
-        self.name = "Store Room"
+        self.name = "Storeroom"
         self.buys = 1
         self.cost = 3
 
@@ -41,10 +41,10 @@ class TestStoreroom(unittest.TestCase):
     """Test Storeroom"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=1, initcards=["Store Room"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Storeroom"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.get_card_from_pile("Store Room")
+        self.card = self.g.get_card_from_pile("Storeroom")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self) -> None:
