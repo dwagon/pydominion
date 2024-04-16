@@ -1,4 +1,5 @@
 """ The master class for all cards """
+
 # pylint: disable=no-member
 
 import os
@@ -32,6 +33,7 @@ class CardExpansion(Enum):
     PROSPERITY = auto()
     RENAISSANCE = auto()
     SEASIDE = auto()
+    CORNUCOPIA_GUILDS = auto()
     TEST = auto()
 
 
@@ -147,13 +149,9 @@ class Card:
         if hasattr(self, "coins"):
             raise NotImplementedError(f"{self.__class__.__name__} has coins not coin")
         if hasattr(self, "action"):
-            raise NotImplementedError(
-                f"{self.__class__.__name__} has action not actions"
-            )
+            raise NotImplementedError(f"{self.__class__.__name__} has action not actions")
         if hasattr(self, "potions"):
-            raise NotImplementedError(
-                f"{self.__class__.__name__} has potions not potion"
-            )
+            raise NotImplementedError(f"{self.__class__.__name__} has potions not potion")
         if hasattr(self, "card"):
             raise NotImplementedError(f"{self.__class__.__name__} has card not cards")
         if hasattr(self, "buy"):
@@ -213,9 +211,7 @@ class Card:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_overpay(
-        self, game: "Game.Game", player: "Player.Player", amount: int
-    ) -> None:
+    def hook_overpay(self, game: "Game.Game", player: "Player.Player", amount: int) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
@@ -223,9 +219,7 @@ class Card:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def duration(
-        self, game: "Game.Game", player: "Player.Player"
-    ) -> dict[OptionKeys, str]:
+    def duration(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, str]:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
@@ -350,9 +344,7 @@ class Card:
         return self._is_type(CardType.RESERVE)
 
     ##########################################################################
-    def special_score(
-        self, game: "Game.Game", player: "Player.Player"
-    ) -> int:  # pylint: disable=no-self-use
+    def special_score(self, game: "Game.Game", player: "Player.Player") -> int:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return 0  # pragma: nocover
 
@@ -383,16 +375,12 @@ class Card:
         return {}
 
     ##########################################################################
-    def hook_pre_play(
-        self, game: "Game.Game", player: "Player.Player", card: "Card"
-    ) -> dict[OptionKeys, str]:
+    def hook_pre_play(self, game: "Game.Game", player: "Player.Player", card: "Card") -> dict[OptionKeys, str]:
         """Hook - overwritten in subclasses if required"""
         return {}
 
     ##########################################################################
-    def hook_post_play(
-        self, game: "Game.Game", player: "Player.Player", card: "Card"
-    ) -> dict[OptionKeys, str]:
+    def hook_post_play(self, game: "Game.Game", player: "Player.Player", card: "Card") -> dict[OptionKeys, str]:
         """Hook - overwritten in subclasses if required"""
         return {}
 
@@ -407,9 +395,7 @@ class Card:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_buy_card(
-        self, game: "Game.Game", player: "Player.Player", card: "Card"
-    ) -> None:
+    def hook_buy_card(self, game: "Game.Game", player: "Player.Player", card: "Card") -> None:
         """Hook - overwritten in subclasses"""
         return None
 
@@ -422,9 +408,7 @@ class Card:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_allowed_to_buy(
-        self, game: "Game.Game", player: "Player.Player"
-    ) -> bool:  # pylint: disable=no-self-use
+    def hook_allowed_to_buy(self, game: "Game.Game", player: "Player.Player") -> bool:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return True  # pragma: no cover
 
@@ -454,9 +438,7 @@ class Card:
         return 0  # pragma: no cover
 
     ##########################################################################
-    def hook_this_card_cost(
-        self, game: "Game.Game", player: "Player.Player"
-    ) -> int:  # pylint: disable=no-self-use
+    def hook_this_card_cost(self, game: "Game.Game", player: "Player.Player") -> int:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return 0  # pragma: no cover
 
@@ -475,35 +457,25 @@ class Card:
         return 0  # pragma: no cover
 
     ##########################################################################
-    def hook_under_attack(
-        self, game: "Game.Game", player: "Player.Player", attacker: "Player.Player"
-    ) -> None:
+    def hook_under_attack(self, game: "Game.Game", player: "Player.Player", attacker: "Player.Player") -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_discard_this_card(
-        self, game: "Game.Game", player: "Player.Player", source: "PlayArea.PlayArea"
-    ) -> None:
+    def hook_discard_this_card(self, game: "Game.Game", player: "Player.Player", source: "PlayArea.PlayArea") -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_discard_any_card(
-        self, game: "Game.Game", player: "Player.Player", card: "Card"
-    ) -> dict[OptionKeys, Any]:
+    def hook_discard_any_card(self, game: "Game.Game", player: "Player.Player", card: "Card") -> dict[OptionKeys, Any]:
         """Hook - overwritten in subclasses"""
         return {}
 
     ##########################################################################
-    def hook_trash_this_card(
-        self, game: "Game.Game", player: "Player.Player"
-    ) -> dict[OptionKeys, Any]:
+    def hook_trash_this_card(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
         """Hook - overwritten in subclasses"""
         return {}
 
     ##########################################################################
-    def hook_trash_card(
-        self, game: "Game.Game", player: "Player.Player", card: "Card"
-    ) -> dict[OptionKeys, Any]:
+    def hook_trash_card(self, game: "Game.Game", player: "Player.Player", card: "Card") -> dict[OptionKeys, Any]:
         """Hook - overwritten in subclasses"""
         return {}
 
