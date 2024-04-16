@@ -15,7 +15,7 @@ class Card_Farm(Card.Card):
         self.victory = 2
         self.cost = 6
 
-    def dynamic_description(self, player):
+    def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
             return "+2 coin; 2 VPs"
         return "+2 coin"
