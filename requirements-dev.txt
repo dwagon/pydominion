@@ -10,4 +10,4 @@ pytest-cov
 pytest-xdist
 pytest>=4.4.0
 python-coveralls
-setuptools~=68.0.0
+setuptools>=70.0.0
