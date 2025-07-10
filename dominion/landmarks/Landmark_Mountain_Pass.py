@@ -45,9 +45,7 @@ class Landmark_MountainPass(Landmark.Landmark):
         else:
             game.output("No one bid for Mountain Pass")
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         if self._state != "un":
             return {}
         if card.name == "Province":

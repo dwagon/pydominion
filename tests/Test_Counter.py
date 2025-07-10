@@ -3,6 +3,7 @@
 # pylint: disable=protected-access
 
 import unittest
+
 from dominion.Counter import Counter
 
 

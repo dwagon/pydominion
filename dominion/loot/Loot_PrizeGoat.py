@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Prize_Goat"""
 import unittest
+
 from dominion import Loot, Card, Game, Piles
 
 

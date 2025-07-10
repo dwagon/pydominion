@@ -1,4 +1,4 @@
-""" The master class for all cards """
+"""The master class for all cards"""
 
 # pylint: disable=no-member
 
@@ -6,6 +6,7 @@ import os
 import uuid
 from enum import Enum, auto
 from typing import Optional, TYPE_CHECKING, Any
+
 from dominion import Piles, Whens, OptionKeys
 
 if TYPE_CHECKING:

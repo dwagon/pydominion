@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Defiled_Shrine"""
+"""https://wiki.dominionstrategy.com/index.php/Defiled_Shrine"""
 import unittest
+
 from dominion import Card, Game, Landmark, Player
 
 
@@ -34,9 +35,7 @@ class Landmark_DefiledShrine(Landmark.Landmark):
             game.landmarks["Defiled Shrine"]._vp[card.name] -= 1
             self.stored_vp += 1
 
-    def hook_buy_card(
-        self, game: "Game.Game", player: "Player.Player", card: Card.Card
-    ) -> None:
+    def hook_buy_card(self, game: "Game.Game", player: "Player.Player", card: Card.Card) -> None:
         if card.name == "Curse":
             player.add_score("Defiled Shrine", self.stored_vp)
             self.stored_vp = 0

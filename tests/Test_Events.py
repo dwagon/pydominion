@@ -2,6 +2,7 @@
 """ Event based tests """
 
 import unittest
+
 from dominion import Game
 
 

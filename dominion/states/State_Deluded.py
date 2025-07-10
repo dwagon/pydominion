@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Deluded """
+"""https://wiki.dominionstrategy.com/index.php/Deluded"""
 
 import unittest
-from dominion import Card, Game, Piles, State
+
+from dominion import Card, Game, State
 
 
 ###############################################################################

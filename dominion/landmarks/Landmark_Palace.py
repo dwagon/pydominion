@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card, Game, Piles, Landmark
 
 
@@ -19,8 +20,7 @@ class Landmark_Palace(Landmark.Landmark):
                 num[card.name] += 1
         score = min(num.values()) * 3
         player.output(
-            "Palace scored %d VP (%d Copper, %d Silver, %d Gold)"
-            % (score, num["Copper"], num["Silver"], num["Gold"])
+            "Palace scored %d VP (%d Copper, %d Silver, %d Gold)" % (score, num["Copper"], num["Silver"], num["Gold"])
         )
         player.add_score("Palace", score)
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card, Game, Piles, Project, NoCardException, Player
 
 
@@ -23,9 +24,7 @@ class Project_Piazza(Project.Project):
             player.add_card(card, Piles.HAND)
             player.play_card(card)
         else:
-            player.output(
-                f"Piazza revealed {card} but it isn't an action - putting back"
-            )
+            player.output(f"Piazza revealed {card} but it isn't an action - putting back")
             player.add_card(card, "topdeck")
 
 
@@ -37,9 +36,7 @@ class TestPiazza(unittest.TestCase):
         self.plr = self.g.player_list()[0]
 
     def test_play(self) -> None:
-        self.plr.piles[Piles.DECK].set(
-            "Copper", "Copper", "Copper", "Copper", "Copper", "Moat"
-        )
+        self.plr.piles[Piles.DECK].set("Copper", "Copper", "Copper", "Copper", "Copper", "Moat")
         self.plr.assign_project("Piazza")
         self.plr.start_turn()
         self.assertIn("Moat", self.plr.piles[Piles.PLAYED])

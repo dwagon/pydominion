@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Boon
 from dominion import Card
 from dominion import Game, Piles

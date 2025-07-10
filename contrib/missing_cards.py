@@ -2,6 +2,7 @@
 """ Report on missing cards from wiki.dominionstrategy.com """
 import subprocess
 from typing import Any
+
 import requests
 
 

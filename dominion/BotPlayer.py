@@ -1,11 +1,13 @@
-""" Player is a non-interactive bot of dubious intelligence - big money strategy """
+"""Player is a non-interactive bot of dubious intelligence - big money strategy"""
+
 import inspect
 import sys
 from typing import Any, TYPE_CHECKING, Optional
 
 import colorama
-from dominion.Player import Player
+
 from dominion import Piles
+from dominion.Player import Player
 
 if TYPE_CHECKING:
     from dominion.Game import Game
@@ -18,9 +20,7 @@ if TYPE_CHECKING:
 class BotPlayer(Player):
     """The Bot"""
 
-    def __init__(
-        self, game: "Game", name: str = "", quiet: bool = False, **kwargs: Any
-    ):
+    def __init__(self, game: "Game", name: str = "", quiet: bool = False, **kwargs: Any):
         colorama.init()
         self.colour = f"{colorama.Back.BLACK}{colorama.Fore.RED}"
         self.quiet = quiet
@@ -71,9 +71,7 @@ class BotPlayer(Player):
             raise
 
     ###########################################################################
-    def user_input(
-        self, options, prompt: str
-    ):  # pylint: disable=too-many-return-statements
+    def user_input(self, options, prompt: str):  # pylint: disable=too-many-return-statements
         opts = self.get_options(options)
         if "spendall" in opts:
             return opts["spendall"]
@@ -131,9 +129,7 @@ class BotPlayer(Player):
         assert False, f"BigMoneyBot can't choose options from {mod.__name__} {choices=}"
 
     ###########################################################################
-    def pick_to_discard(
-        self, num_to_discard: int, keepvic: bool = False
-    ) -> list["Card"]:
+    def pick_to_discard(self, num_to_discard: int, keepvic: bool = False) -> list["Card"]:
         """Many attacks require this sort of response.
         Return num cards to discard"""
         if num_to_discard <= 0:
@@ -161,9 +157,7 @@ class BotPlayer(Player):
         sys.stderr.write(
             f"Couldn't find cards to discard {num_to_discard} from {', '.join([_.name for _ in self.piles[Piles.HAND]])}"
         )
-        sys.stderr.write(
-            f"Managed to get {(', '.join([_.name for _ in to_discard]))} so far\n"
-        )
+        sys.stderr.write(f"Managed to get {(', '.join([_.name for _ in to_discard]))} so far\n")
         return []
 
 

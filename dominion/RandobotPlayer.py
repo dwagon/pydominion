@@ -1,15 +1,14 @@
-""" Player is a non-interactive bot of no intelligence - randomly select option """
+"""Player is a non-interactive bot of no intelligence - randomly select option"""
 
-
-import sys
 import random
+import sys
 from typing import Any
 
 import colorama
-from dominion.Player import Player
-from dominion.Option import Option
-from dominion import Piles, Card
 
+from dominion import Piles, Card
+from dominion.Option import Option
+from dominion.Player import Player
 
 colours = [
     colorama.Fore.RED,
@@ -112,9 +111,7 @@ class RandobotPlayer(Player):
 
         # Do anything but quit
         try:
-            avail = [
-                _ for _ in options if _["selector"] != "-" and _.get("action") != "quit"
-            ]
+            avail = [_ for _ in options if _["selector"] != "-" and _.get("action") != "quit"]
         except KeyError:
             print(f"{options=}")
             raise
@@ -191,9 +188,7 @@ class RandobotPlayer(Player):
             return to_discard[:numtodiscard]
         hand = ", ".join([_.name for _ in self.piles[Piles.HAND]])
         sys.stderr.write(f"Couldn't find cards to discard {numtodiscard} from {hand}")
-        sys.stderr.write(
-            f"Managed to get {(', '.join([_.name for _ in to_discard]))} so far\n"
-        )
+        sys.stderr.write(f"Managed to get {(', '.join([_.name for _ in to_discard]))} so far\n")
 
 
 # EOF

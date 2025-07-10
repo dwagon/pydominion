@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" Run a Dominion Game """
+"""Run a Dominion Game"""
 import argparse
 import os
 import sys

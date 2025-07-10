@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-"""https://wiki.dominionstrategy.com/index.php/Colonnade """
+"""https://wiki.dominionstrategy.com/index.php/Colonnade"""
 import unittest
+
 from dominion import Card, Game, Piles, Landmark
 
 
@@ -14,8 +15,7 @@ class Landmark_Colonnade(Landmark.Landmark):
     def dynamic_description(self, player):
         if self._vp:
             return (
-                "When you buy an Action card, if you have a copy of it in play, take 2VP from here. %d left"
-                % self._vp
+                "When you buy an Action card, if you have a copy of it in play, take 2VP from here. %d left" % self._vp
             )
         return "No VP left"
 
@@ -36,9 +36,7 @@ class Landmark_Colonnade(Landmark.Landmark):
 ###############################################################################
 class TestColonnade(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, landmarks=["Colonnade"], initcards=["Moat"]
-        )
+        self.g = Game.TestGame(numplayers=1, landmarks=["Colonnade"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

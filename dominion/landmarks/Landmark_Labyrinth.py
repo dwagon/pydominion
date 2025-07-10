@@ -14,16 +14,12 @@ class Landmark_Labyrinth(Landmark.Landmark):
         self.name = "Labyrinth"
 
     def dynamic_description(self, player: Player.Player) -> str:
-        return "When you gain a 2nd card in one of your turns, take 2VP from here ({} left)".format(
-            self._vp
-        )
+        return "When you gain a 2nd card in one of your turns, take 2VP from here ({} left)".format(self._vp)
 
     def setup(self, game: Game.Game) -> None:
         self._vp = 6 * game.numplayers
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         if len(player.stats["gained"]) == 1:  # not including the current one
             player.add_score("Labyrinth", 2)
             player.output("Gained 2VP from Labyrinth")

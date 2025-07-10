@@ -2,6 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Project"""
 
 import unittest
+
 from dominion import Game
 
 

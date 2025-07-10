@@ -15,9 +15,7 @@ class Project_Sewers(Project.Project):
         self.name = "Sewers"
         self.cost = 3
 
-    def hook_trash_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_trash_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         player.plr_trash_card(prompt="Trash a card via Sewer", exclude_hook="Sewers")
         return {}
 

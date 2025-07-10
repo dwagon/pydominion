@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-"""https://wiki.dominionstrategy.com/index.php/Basilica """
+"""https://wiki.dominionstrategy.com/index.php/Basilica"""
 import unittest
+
 from dominion import Card, Game, Landmark, Player
 
 
@@ -20,9 +21,7 @@ class Landmark_Basilica(Landmark.Landmark):
             return "No effect"
         return f"When you buy a card, if you have 2 Coin or more left, take 2VP from here. ({self._vp} VP left)"
 
-    def hook_buy_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> None:
+    def hook_buy_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> None:
         if self._vp <= 0:
             return
         if player.coins.get() >= 2:

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Ambassador"""
 import unittest
+
 from dominion import Card, Game, Piles, Player, NoCardException
 
 

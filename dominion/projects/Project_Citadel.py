@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card, Game, Piles, Project
 
 
@@ -16,9 +17,7 @@ class Project_Citadel(Project.Project):
     def hook_post_play(self, game, player, card):
         if card.isAction() and player.piles[Piles.PLAYED].size() == 1:
             player.output(f"Citadel plays {card} again")
-            player.play_card(
-                card, discard=False, cost_action=False, post_action_hook=False
-            )
+            player.play_card(card, discard=False, cost_action=False, post_action_hook=False)
 
 
 ###############################################################################

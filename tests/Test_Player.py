@@ -4,8 +4,9 @@
 
 import operator
 import unittest
-from dominion.Counter import Counter
+
 from dominion import Card, Game, Phase, Piles, Limits, NoCardException
+from dominion.Counter import Counter
 
 
 ###############################################################################

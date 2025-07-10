@@ -2,6 +2,7 @@
 """ Test suite for Tokens """
 
 import unittest
+
 from dominion import Game, Piles
 
 

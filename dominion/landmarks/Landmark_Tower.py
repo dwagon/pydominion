@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Tower"""
+"""https://wiki.dominionstrategy.com/index.php/Tower"""
 import unittest
+
 from dominion import Card, Game, Piles, Landmark, Player, NoCardException
 
 
@@ -11,9 +12,7 @@ class Landmark_Tower(Landmark.Landmark):
     def __init__(self) -> None:
         Landmark.Landmark.__init__(self)
         self.base = Card.CardExpansion.EMPIRES
-        self.desc = (
-            "When scoring, 1VP per non-Victory card you have from an empty Supply pile."
-        )
+        self.desc = "When scoring, 1VP per non-Victory card you have from an empty Supply pile."
         self.name = "Tower"
 
     def hook_end_of_game(self, game: Game.Game, player: Player.Player) -> None:

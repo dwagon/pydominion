@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card, Game, Piles, Project
 
 
@@ -16,9 +17,7 @@ class Project_RoadNetwork(Project.Project):
     def hook_all_players_gain_card(self, game, player, owner, card):
         if card.isVictory() and owner != player:
             owner.pickup_cards(1)
-            owner.output(
-                f"Road Network gives card due to {player.name} picking up {card.name}"
-            )
+            owner.output(f"Road Network gives card due to {player.name} picking up {card.name}")
         return {}
 
 

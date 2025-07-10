@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card, Game, Piles, State, Player
 
 LOST_IN_WOODS = "Lost in the Woods"
@@ -12,16 +13,12 @@ class State_Lost_in_woods(State.State):
         State.State.__init__(self)
         self.cardtype = Card.CardType.STATE
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = (
-            "At the start of your turn, you may discard a card to receive a Boon."
-        )
+        self.desc = "At the start of your turn, you may discard a card to receive a Boon."
         self.name = "Lost in the Woods"
         self.unique_state = True
 
     def hook_start_turn(self, game: "Game.Game", player: "Player.Player") -> None:
-        if player.plr_discard_cards(
-            prompt="Lost in the Woods: Discard a card to receive a boon"
-        ):
+        if player.plr_discard_cards(prompt="Lost in the Woods: Discard a card to receive a boon"):
             player.specials[LOST_IN_WOODS] = True  # For testing
             player.receive_boon()
 
