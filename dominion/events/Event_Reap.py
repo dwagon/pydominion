@@ -1,7 +1,6 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Reap"""
+"""https://wiki.dominionstrategy.com/index.php/Reap"""
 import unittest
-from typing import Optional
 
 from dominion import Card, Game, Piles, Event, PlayArea, Player, OptionKeys
 
@@ -28,6 +27,8 @@ class Event_Reap(Event.Event):
         gold.location = "reap_reserve"
 
     def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
+        if REAP not in player.specials:
+            return {}
         for card in player.specials[REAP]:
             player.play_card(card, cost_action=False, discard=False)
             player.add_card(card, Piles.PLAYED)
