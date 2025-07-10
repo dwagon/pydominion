@@ -3,6 +3,7 @@
 import random
 import unittest
 from typing import Optional
+
 from dominion import Card, Game, Landmark, Player
 
 

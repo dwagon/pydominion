@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Cheap"""
+"""https://wiki.dominionstrategy.com/index.php/Cheap"""
 import unittest
+
 from dominion import Card, Game, Trait
 
 
@@ -22,9 +23,7 @@ class Trait_Cheap(Trait.Trait):
 ###############################################################################
 class Test_Cheap(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            quiet=True, numplayers=1, traits=["Cheap"], initcards=["Moat"]
-        )
+        self.g = Game.TestGame(quiet=True, numplayers=1, traits=["Cheap"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

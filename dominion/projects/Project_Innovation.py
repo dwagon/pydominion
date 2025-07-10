@@ -18,9 +18,7 @@ class Project_Innovation(Project.Project):
         self.name = "Innovation"
         self.cost = 6
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         """Gain a card"""
         if player.stats["gained"]:
             return {}
@@ -41,9 +39,7 @@ class Test_Innovation(unittest.TestCase):
     """Test Innovation"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            numplayers=1, projects=["Innovation"], initcards=["Moat"]
-        )
+        self.g = Game.TestGame(numplayers=1, projects=["Innovation"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

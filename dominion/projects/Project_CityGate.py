@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import contextlib
 import unittest
+
 from dominion import Card, Game, Piles, Project, Player, NoCardException
 
 
@@ -35,9 +36,7 @@ class TestCityGate(unittest.TestCase):
     def test_play(self) -> None:
         self.plr.assign_project("City Gate")
         self.plr.piles[Piles.DECK].set("Gold")
-        self.plr.piles[Piles.HAND].set(
-            "Copper", "Estate", "Province", "Silver", "Duchy"
-        )
+        self.plr.piles[Piles.HAND].set("Copper", "Estate", "Province", "Silver", "Duchy")
         self.plr.test_input = ["Select Province"]
         self.plr.start_turn()
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)

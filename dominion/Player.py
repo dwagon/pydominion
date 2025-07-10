@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" All the Player based stuff """
+"""All the Player based stuff"""
 # pylint: disable=too-many-instance-attributes, too-many-public-methods
 from __future__ import annotations
 

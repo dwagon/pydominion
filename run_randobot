@@ -1,11 +1,10 @@
 #!/usr/bin/env python
-""" Run randobot tests - play a game very randomly to see what errors pop up"""
+"""Run randobot tests - play a game very randomly to see what errors pop up"""
 
 import argparse
+import multiprocessing
 import os
 import subprocess
-import sys
-import multiprocessing
 from typing import Any
 
 
@@ -82,9 +81,7 @@ def print_results(stats: dict[str, int]) -> None:
 
 
 ############################################################################################
-def fill_num_queue(
-    queue: Any, num_runs: int = 0, cards: list[str] | None = None
-) -> None:
+def fill_num_queue(queue: Any, num_runs: int = 0, cards: list[str] | None = None) -> None:
     """Fill the queue with a number of jobs"""
     for run in range(num_runs):
         queue.put({"run": run, "use_cards": cards})
@@ -120,9 +117,7 @@ def run_queue(job_queue: Any) -> dict[str, int]:
     with multiprocessing.Manager() as manager:
         shared_dict = manager.dict()
         for cpu in range(multiprocessing.cpu_count()):
-            p = multiprocessing.Process(
-                target=process_task, args=(job_queue, shared_dict)
-            )
+            p = multiprocessing.Process(target=process_task, args=(job_queue, shared_dict))
             processes.append(p)
             p.start()
 

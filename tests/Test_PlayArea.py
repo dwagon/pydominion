@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import PlayArea
+
 
 ###############################################################################
 class CardTester(object):

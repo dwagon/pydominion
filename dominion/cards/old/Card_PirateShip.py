@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Pirate_Ship"""
 import unittest
-from typing import Any
 
 from dominion import Card, Game, Piles, Player, NoCardException
 

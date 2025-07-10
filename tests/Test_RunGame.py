@@ -2,6 +2,7 @@
 """ Test the run_game module """
 
 import unittest
+
 from dominion import Game, rungame
 
 

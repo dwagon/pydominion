@@ -15,9 +15,7 @@ class Project_Guildhall(Project.Project):
         self.name = "Guildhall"
         self.cost = 5
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         if card.isTreasure():
             player.coffers.add(1)
         return {}

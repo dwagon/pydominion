@@ -15,9 +15,7 @@ class Project_Academy(Project.Project):
         self.name = "Academy"
         self.cost = 5
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         if card.isAction():
             player.output("Gained a villager from Academy")
             player.villagers += 1

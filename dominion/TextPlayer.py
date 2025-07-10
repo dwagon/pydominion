@@ -1,12 +1,13 @@
 import sys
-import colorama
 from typing import Any, TYPE_CHECKING
 
+import colorama
+
 from dominion import Piles
+from dominion.Card import Card, CardType
+from dominion.Option import Option
 from dominion.PlayArea import PlayArea
 from dominion.Player import Player
-from dominion.Option import Option
-from dominion.Card import Card, CardType
 
 if TYPE_CHECKING:
     from dominion.Game import Game
@@ -50,9 +51,7 @@ class TextPlayer(Player):
 
     ###########################################################################
     @classmethod
-    def wrap(
-        cls, text: str, first: int = 0, indent: int = 15, max_width: int = 95
-    ) -> str:
+    def wrap(cls, text: str, first: int = 0, indent: int = 15, max_width: int = 95) -> str:
         """Wrap the text so that it doesn't take more than maxwidth chars.
         The first line already has "first" characters in it. Subsequent lines
         should be indented "indent" spaces
@@ -173,11 +172,7 @@ class TextPlayer(Player):
         selected: list[Any] = []
         while True:
             options: list[Option] = []
-            if (
-                anynum
-                or (force and num == len(selected))
-                or (not force and num >= len(selected))
-            ):
+            if anynum or (force and num == len(selected)) or (not force and num >= len(selected)):
                 o = Option(selector="0", verb="Finish Selecting", card=None)
                 options.append(o)
             index = 1
@@ -261,11 +256,7 @@ class TextPlayer(Player):
                 o = Option(selector="0", verb="Finish Selecting", card=None)
                 options.append(o)
             index = 1
-            options.extend(
-                self._card_sel_options(
-                    index, show_desc, selected, types, select_from, kwargs, verbs
-                )
-            )
+            options.extend(self._card_sel_options(index, show_desc, selected, types, select_from, kwargs, verbs))
             ui = self.user_input(options, "Select which card?")
             if not ui["card"]:
                 break

@@ -1,7 +1,6 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Friendly"""
+"""https://wiki.dominionstrategy.com/index.php/Friendly"""
 import unittest
-from typing import Any
 
 from dominion import Card, Game, Trait, Piles, Player
 

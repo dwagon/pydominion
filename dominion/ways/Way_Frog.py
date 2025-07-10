@@ -2,6 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Way_of_the_Frog """
 
 import unittest
+
 from dominion import Card, Game, Way, Piles
 
 

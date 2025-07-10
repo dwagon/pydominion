@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Cursed"""
+"""https://wiki.dominionstrategy.com/index.php/Cursed"""
 import unittest
 from typing import Any
 
@@ -18,9 +18,7 @@ class Trait_Cursed(Trait.Trait):
         self.name = "Cursed"
         self.required_cards = ["Loot", "Curse"]
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         """When you gain a Cursed card, +1 Buy."""
         if game.card_piles[card.pile].trait == self.name:
             player.gain_card("Curse")
@@ -33,9 +31,7 @@ class Test_Cursed(unittest.TestCase):
     """Test Cursed"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            quiet=True, numplayers=1, traits=["Cursed"], initcards=["Moat"]
-        )
+        self.g = Game.TestGame(quiet=True, numplayers=1, traits=["Cursed"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

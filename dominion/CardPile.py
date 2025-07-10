@@ -17,9 +17,7 @@ class CardPile:
         self.trait: Optional[str] = None
 
     ###########################################################################
-    def init_cards(
-        self, num_cards: int = 0, card_class: Optional[type["Card"]] = None
-    ) -> None:
+    def init_cards(self, num_cards: int = 0, card_class: Optional[type["Card"]] = None) -> None:
         """Can be overwritten for the more unusual piles"""
         if num_cards == 0 or not card_class:
             return

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """ Test the DONTADD function for gain card"""
 from typing import Optional, Any
+
 from dominion import Card, Game, Player, OptionKeys
 
 

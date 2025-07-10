@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Nearby"""
+"""https://wiki.dominionstrategy.com/index.php/Nearby"""
 import unittest
 from typing import Any
 
@@ -17,9 +17,7 @@ class Trait_Nearby(Trait.Trait):
         self.desc = "When you gain a Nearby card, +1 Buy."
         self.name = "Nearby"
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         """When you gain a Nearby card, +1 Buy."""
         if game.card_piles[card.pile].trait == self.name:
             player.buys.add(1)
@@ -31,9 +29,7 @@ class Test_Nearby(unittest.TestCase):
     """Test Nearby"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            quiet=True, numplayers=1, traits=["Nearby"], initcards=["Moat"]
-        )
+        self.g = Game.TestGame(quiet=True, numplayers=1, traits=["Nearby"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

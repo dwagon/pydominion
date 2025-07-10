@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Hasty"""
+"""https://wiki.dominionstrategy.com/index.php/Hasty"""
 import unittest
 from typing import Any
 
@@ -18,9 +18,7 @@ class Trait_Hasty(Trait.Trait):
         self.name = "Hasty"
         self._aside = PlayArea.PlayArea("Hasty")
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         """When you gain a Hasty card, gain a Silver"""
         if game.card_piles[card.pile].trait == self.name:
             player.defer_card(card)
@@ -33,9 +31,7 @@ class TestHasty(unittest.TestCase):
     """Test Hasty"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            quiet=True, numplayers=1, traits=["Hasty"], initcards=["Moat"]
-        )
+        self.g = Game.TestGame(quiet=True, numplayers=1, traits=["Hasty"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

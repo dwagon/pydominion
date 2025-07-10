@@ -2,6 +2,7 @@
 
 import unittest
 from collections import defaultdict
+
 from dominion import Card, Game, Piles, Landmark
 
 

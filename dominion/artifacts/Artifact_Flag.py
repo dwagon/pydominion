@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card
-from dominion import Game, Piles
+
 from dominion import Artifact
+from dominion import Card
+from dominion import Game
 
 
 ###############################################################################

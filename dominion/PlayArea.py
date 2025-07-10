@@ -1,10 +1,11 @@
-""" Class defining a PlayArea - such as a deck of cards, a player's hand of cards, etc """
+"""Class defining a PlayArea - such as a deck of cards, a player's hand of cards, etc"""
+
 import random
 import sys
 from typing import Any, Optional, Iterator, TYPE_CHECKING, Self
 
-from dominion.Card import Card
 from dominion import NoCardException
+from dominion.Card import Card
 
 if TYPE_CHECKING:
     from dominion.Game import Game

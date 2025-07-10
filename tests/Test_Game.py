@@ -3,6 +3,7 @@
 # pylint: disable=invalid-name, protected-access, fixme
 
 import unittest
+
 from dominion import Game, NoCardException
 
 

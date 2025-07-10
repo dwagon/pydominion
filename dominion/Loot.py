@@ -1,6 +1,8 @@
-""" https://wiki.dominionstrategy.com/index.php/Loot"""
+"""https://wiki.dominionstrategy.com/index.php/Loot"""
+
 import random
 from typing import TYPE_CHECKING
+
 from dominion import Card, CardPile, Keys, Piles
 
 if TYPE_CHECKING:

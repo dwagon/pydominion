@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Fawning"""
+"""https://wiki.dominionstrategy.com/index.php/Fawning"""
 import unittest
 from typing import Any
 
@@ -17,9 +17,7 @@ class Trait_Fawning(Trait.Trait):
         self.desc = "When you gain a Province, gain a Fawning card."
         self.name = "Fawning"
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         """When you gain a province get something extra"""
         if card.name == "Province":
             player.gain_card(self.card_pile)
@@ -31,9 +29,7 @@ class Test_Fawning(unittest.TestCase):
     """Test Fawning"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            quiet=True, numplayers=1, traits=["Fawning"], initcards=["Moat"]
-        )
+        self.g = Game.TestGame(quiet=True, numplayers=1, traits=["Fawning"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

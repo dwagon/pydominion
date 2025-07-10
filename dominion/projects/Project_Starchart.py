@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card, Game, Piles, Project
 
 
@@ -21,9 +22,7 @@ class Project_StarChart(Project.Project):
         if not choices:
             player.output("No suitable cards")
             return
-        opt = player.plr_choose_options(
-            "Pick a card to put on top of your deck", *choices
-        )
+        opt = player.plr_choose_options("Pick a card to put on top of your deck", *choices)
         card = player.piles[Piles.DISCARD][opt]
         player.move_card(card, "topdeck")
 
@@ -37,9 +36,7 @@ class TestStarChart(unittest.TestCase):
 
     def test_play(self):
         self.plr.assign_project("Star Chart")
-        self.plr.piles[Piles.DISCARD].set(
-            "Copper", "Copper", "Silver", "Gold", "Estate", "Gold"
-        )
+        self.plr.piles[Piles.DISCARD].set("Copper", "Copper", "Silver", "Gold", "Estate", "Gold")
         self.plr.piles[Piles.DECK].set()
         self.plr.test_input = ["Put Gold"]
         c = self.plr.next_card()

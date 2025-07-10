@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Tireless"""
+"""https://wiki.dominionstrategy.com/index.php/Tireless"""
 import unittest
 from typing import Any
 

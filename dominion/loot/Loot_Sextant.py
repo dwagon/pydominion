@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Sextant"""
 import unittest
+
 from dominion import Loot, Card, Piles, NoCardException, Game, Player
 
 

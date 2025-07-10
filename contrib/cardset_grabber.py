@@ -4,6 +4,7 @@ import argparse
 import string
 import sys
 from typing import Optional
+
 import requests
 from bs4 import BeautifulSoup
 

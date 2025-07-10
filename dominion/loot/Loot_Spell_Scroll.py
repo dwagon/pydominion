@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Spell_Scroll"""
 import unittest
+
 from dominion import Loot, Card, Game, Piles
 
 

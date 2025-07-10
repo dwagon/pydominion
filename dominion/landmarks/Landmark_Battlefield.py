@@ -17,9 +17,7 @@ class Landmark_Battlefield(Landmark.Landmark):
     def dynamic_description(self, player: Player.Player) -> str:
         return "When you gain a Victory card, take 2VP from here. (%d left)" % self._vp
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         if card.isVictory() and self._vp >= 0:
             self._vp -= 2
             player.output("Gained 2VP from Battlefield")

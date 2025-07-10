@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Shy"""
+"""https://wiki.dominionstrategy.com/index.php/Shy"""
 import unittest
+
 from dominion import Card, Game, Trait, Player, Piles
 
 
@@ -10,9 +11,7 @@ class Trait_Shy(Trait.Trait):
         Trait.Trait.__init__(self)
         self.cardtype = Card.CardType.TRAITS
         self.base = Card.CardExpansion.PLUNDER
-        self.desc = (
-            "At the start of your turn, you may discard one Shy card for +2 Cards."
-        )
+        self.desc = "At the start of your turn, you may discard one Shy card for +2 Cards."
         self.name = "Shy"
 
     def hook_start_turn(self, game: Game.Game, player: Player.Player) -> None:
@@ -32,9 +31,7 @@ class Trait_Shy(Trait.Trait):
 ###############################################################################
 class TestShy(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            quiet=True, numplayers=1, traits=["Shy"], initcards=["Moat"]
-        )
+        self.g = Game.TestGame(quiet=True, numplayers=1, traits=["Shy"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
