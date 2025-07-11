@@ -2064,7 +2064,7 @@ class Player:
         self.artifacts.remove([_ for _ in self.artifacts if _.name == name][0])
 
     ###########################################################################
-    def plr_discard_cards(self, num: int = 1, any_number: bool = False, **kwargs: Any) -> Optional[list[Card]]:
+    def plr_discard_cards(self, num: int = 1, any_number: bool = False, **kwargs: Any) -> list[Card]:
         """Get the player to discard exactly num cards"""
         if "prompt" not in kwargs:
             if any_number:
@@ -2073,7 +2073,7 @@ class Player:
                 kwargs["prompt"] = f"Discard {num} cards"
         discard = self.card_sel(num=num, anynum=any_number, verbs=("Discard", "Undiscard"), **kwargs)
         if discard is None:
-            return None
+            return []
         for card in discard:
             self.output(f"Discarding {card}")
             self.discard_card(card)
