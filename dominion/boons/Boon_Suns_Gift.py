@@ -28,7 +28,6 @@ class Boon_Suns_Gift(Boon.Boon):
             any_number=True,
             cardsrc=cards,
         )
-        assert to_discard is not None
         for card in cards:
             if card not in to_discard:
                 player.add_card(card, "topdeck")
@@ -37,9 +36,7 @@ class Boon_Suns_Gift(Boon.Boon):
 ###############################################################################
 class TestSunsGift(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"]
-        )
+        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         for b in self.g.boons:
