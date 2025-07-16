@@ -19,11 +19,7 @@ class Boon_Skys_Gift(Boon.Boon):
         if player.piles[Piles.HAND].is_empty():
             player.output("No cards to discard")
             return
-        dc = player.plr_discard_cards(
-            any_number=True, prompt="Discard 3 cards to gain a Gold"
-        )
-        if dc is None:
-            return
+        dc = player.plr_discard_cards(any_number=True, prompt="Discard 3 cards to gain a Gold")
         if len(dc) >= 3:
             player.gain_card("Gold")
             player.output("Gained a Gold")
@@ -32,9 +28,7 @@ class Boon_Skys_Gift(Boon.Boon):
 ###############################################################################
 class TestSkysGift(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"]
-        )
+        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         my_boon = None

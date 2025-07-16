@@ -20,13 +20,13 @@ class Card_CargoShip(Card.Card):
             put it into your hand."""
         self.cost = 3
         self.coin = 2
-        self._cargo_ship = PlayArea.PlayArea([])
+        self._cargo_ship = PlayArea.PlayArea("Cargo Ship", initial=[])
 
     ###########################################################################
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         if self not in player.piles[Piles.DURATION]:
+            return {}
+        if card.location != Piles.CARDPILE:
             return {}
         if not self._cargo_ship:
             if player.plr_choose_options(
@@ -34,8 +34,8 @@ class Card_CargoShip(Card.Card):
                 ("Yes", True),
                 ("No", False),
             ):
-                self._cargo_ship.add(card)
                 player.secret_count += 1
+                player.move_card(card, self._cargo_ship)
                 return {OptionKeys.DONTADD: True}
         return {}
 
@@ -53,9 +53,7 @@ class TestCargoShip(unittest.TestCase):
     """Test Cargo Ship"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            numplayers=1, initcards=["Cargo Ship", "Moat"], badcards=["Shaman"]
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Cargo Ship", "Moat"], badcards=["Shaman"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
@@ -84,6 +82,21 @@ class TestCargoShip(unittest.TestCase):
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertNotIn("Moat", self.plr.piles[Piles.HAND])
+
+    def test_play_cargo_twice(self) -> None:
+        """If we have two cargo ships active at the same time we shouldn't be able to set aside a card twice"""
+        self.plr.add_actions(2)
+        self.plr.test_input = ["Yes", "Yes"]
+        self.card1 = self.g.get_card_from_pile("Cargo Ship")
+        self.plr.add_card(self.card1, Piles.HAND)
+        self.plr.play_card(self.card1)
+        self.card2 = self.g.get_card_from_pile("Cargo Ship")
+        self.plr.add_card(self.card2, Piles.HAND)
+        self.assertEqual(len(self.card1._cargo_ship) + len(self.card2._cargo_ship), 0)
+        self.plr.play_card(self.card2)
+        self.plr.buy_card("Moat")
+        # Only one cargo ship should have the moat
+        self.assertEqual(len(self.card1._cargo_ship) + len(self.card2._cargo_ship), 1)
 
 
 ###############################################################################
