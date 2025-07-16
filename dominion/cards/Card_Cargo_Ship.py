@@ -35,7 +35,8 @@ class Card_CargoShip(Card.Card):
                 ("No", False),
             ):
                 player.secret_count += 1
-                player.move_card(card, self._cargo_ship)
+                self._cargo_ship.add(card)
+                card.location = "Cargo Ship"
                 return {OptionKeys.DONTADD: True}
         return {}
 
