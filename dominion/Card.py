@@ -515,5 +515,10 @@ class Card:
     def hook_reveal_this_card(self, game: "Game.Game", player: "Player.Player") -> None:
         """Hook - overwritten in subclasses"""
 
+    ##########################################################################
+    def debug_dump(self, player: "Player.Player") -> None:
+        """Dump any debug info"""
+        return
+
 
 # EOF

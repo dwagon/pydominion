@@ -1032,6 +1032,9 @@ class Game:  # pylint: disable=too-many-public-methods
             print(f" {name} Now:")
             print(json.dumps(now[name], indent=2), file=sys.stderr)
         print(f"{'- -' * 20}", file=sys.stderr)
+        for plr in self.players.values():
+            plr.debug_all_cards()
+        print(f"{'- -' * 20}", file=sys.stderr)
 
     ###########################################################################
     def _validate_cards(self) -> None:
