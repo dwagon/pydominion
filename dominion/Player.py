@@ -2113,5 +2113,10 @@ class Player:
     def card_pile_sel(self, num: int = 1, **kwargs: Any) -> list[str] | None:
         raise NotImplementedError
 
+    ###########################################################################
+    def debug_all_cards(self):
+        for card in self.all_cards():
+            card.debug_dump(self)
+
 
 # EOF
