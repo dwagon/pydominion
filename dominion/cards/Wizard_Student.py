@@ -29,9 +29,7 @@ class Card_Student(Card.Card):
             ("Rotate", True),
         ):
             game.card_piles["Wizards"].rotate()
-        if trashed := player.plr_trash_card(
-            prompt="Pick a card to trash", num=1, force=True
-        ):
+        if trashed := player.plr_trash_card(prompt="Pick a card to trash", num=1, force=True):
             if trashed[0].isTreasure():
                 player.favors.add(1)
                 player.move_card(self, Piles.DECK)
@@ -40,9 +38,7 @@ class Card_Student(Card.Card):
 ###############################################################################
 class TestStudent(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            numplayers=1, initcards=["Wizards", "Throne Room"], use_liaisons=True
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Wizards", "Throne Room", "Golem"], use_liaisons=True)
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
@@ -70,6 +66,16 @@ class TestStudent(unittest.TestCase):
         self.assertNotIn("Student", self.plr.piles[Piles.DECK])
         self.assertEqual(self.plr.favors.get(), favors)
 
+    def test_play_not_from_hand(self) -> None:
+        """Play student via a golem, so it isn't in the hand when played"""
+        card = self.g.get_card_from_pile("Wizards", "Student")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate")
+        self.plr.piles[Piles.DECK].set("Copper", "Student")
+        golem = self.g.get_card_from_pile("Golem")
+        self.plr.test_input = ["Don't change", "Copper"]
+        self.plr.play_card(golem)
+        self.assertIn("Copper", self.g.trash_pile)
+
     def test_play_trash_rotate(self) -> None:
         """Play a student - rotate, and trash a non treasure"""
         card = self.g.get_card_from_pile("Wizards", "Student")
@@ -96,7 +102,6 @@ class TestStudent(unittest.TestCase):
         ]
         favors = self.plr.favors.get()
         self.plr.play_card(throne)
-        self.g.print_state()
         self.assertIn("Copper", self.g.trash_pile)
         self.assertIn("Silver", self.g.trash_pile)
         self.assertEqual(self.plr.favors.get(), favors + 2)
