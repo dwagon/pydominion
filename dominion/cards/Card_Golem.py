@@ -38,8 +38,8 @@ class Card_Golem(Card.Card):
         # TODO - let the player choose the order
         for card in actions:
             player.output(f"Golem playing {card}")
-            player.play_card(card, cost_action=False, discard=False)
-            player.add_card(card, Piles.PLAYED)
+            player.add_card(card, Piles.HAND)
+            player.play_card(card, cost_action=False)
 
 
 ###############################################################################
@@ -53,9 +53,7 @@ class TestGolem(unittest.TestCase):
     def test_actions(self) -> None:
         """Ensure two actions are picked up and played, others are discarded"""
         self.plr.piles[Piles.HAND].set()
-        self.plr.piles[Piles.DECK].set(
-            "Gold", "Gold", "Gold", "Village", "Moat", "Estate", "Copper"
-        )
+        self.plr.piles[Piles.DECK].set("Gold", "Gold", "Gold", "Village", "Moat", "Estate", "Copper")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(
@@ -70,9 +68,7 @@ class TestGolem(unittest.TestCase):
     def test_golem(self) -> None:
         """Ensure golem isn't picked up"""
         self.plr.piles[Piles.HAND].set()
-        self.plr.piles[Piles.DECK].set(
-            "Gold", "Gold", "Gold", "Village", "Golem", "Moat", "Estate", "Copper"
-        )
+        self.plr.piles[Piles.DECK].set("Gold", "Gold", "Gold", "Village", "Golem", "Moat", "Estate", "Copper")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(
