@@ -115,7 +115,7 @@ class BotPlayer(Player):
             self.unexile(card_name)
 
     ###########################################################################
-    def card_sel(self, num=1, **kwargs):
+    def card_sel(self, num: int = 1, **kwargs: Any) -> list["Card"]:
         mod = self.get_calling_card()
         if hasattr(mod, "botresponse"):
             return mod.botresponse(self, "cards", kwargs=kwargs)

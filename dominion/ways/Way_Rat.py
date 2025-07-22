@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Way_of_the_Rat """
+"""http://wiki.dominionstrategy.com/index.php/Way_of_the_Rat"""
 
 import unittest
 
@@ -19,11 +19,9 @@ class Way_Rat(Way.Way):
         if not treas:
             player.output("No treasures to discard")
             return
-        t_to_disc = player.card_sel(prompt="Select Treasure to discard", cardsrc=treas)
-        if not t_to_disc:
-            return
-        player.discard_card(t_to_disc[0])
-        player.gain_card(card.name)
+        if t_to_disc := player.card_sel(prompt="Select Treasure to discard", cardsrc=treas):
+            player.discard_card(t_to_disc[0])
+            player.gain_card(card.name)
 
 
 ###############################################################################

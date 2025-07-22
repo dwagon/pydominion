@@ -19,14 +19,13 @@ class Card_Crypt(Card.Card):
         self._crypt_reserve = PlayArea.PlayArea([])
 
     def night(self, game, player):
-        cards = player.card_sel(
+        if cards := player.card_sel(
             prompt="Set aside any number of Treasures you have in play",
             verbs=("Set", "Unset"),
             anynum=True,
             types={Card.CardType.TREASURE: True},
             cardsrc="played",
-        )
-        if cards:
+        ):
             for card in cards:
                 self._crypt_reserve.add(card)
                 player.piles[Piles.PLAYED].remove(card)

@@ -22,11 +22,10 @@ class Card_Swap(Card.Card):
         acts = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not acts:
             return
-        choice = player.card_sel(
+        if choice := player.card_sel(
             prompt="Pick a card to return to its pile to gain a different one costing up to $5",
             cardsrc=acts,
-        )
-        if choice:
+        ):
             player.piles[Piles.HAND].remove(choice[0])
             game.card_piles[choice[0].pile].add(choice[0])
             player.plr_gain_card(5, "less")

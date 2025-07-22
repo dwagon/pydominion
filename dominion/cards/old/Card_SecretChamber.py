@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Secret_Chamber """
+"""http://wiki.dominionstrategy.com/index.php/Secret_Chamber"""
 
 import unittest
 from dominion import Card, Game, Piles, Player
@@ -20,9 +20,7 @@ class Card_SecretChamber(Card.Card):
         self.name = "Secret Chamber"
         self.cost = 2
 
-    def special(
-        self, game: "Game.Game", player: "Player.Player"
-    ) -> None:  # pylint: disable=unused-argument
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:  # pylint: disable=unused-argument
         """Discard any number of cards, +1 coin per card discarded"""
         to_discard = player.plr_discard_cards(
             any_number=True,
@@ -47,10 +45,9 @@ class Card_SecretChamber(Card.Card):
             num=2,
             verbs=("Put", "Unput"),
         )
-        if cards is not None:
-            for card in cards:
-                player.add_card(card, "topdeck")
-                player.piles[Piles.HAND].remove(card)
+        for card in cards:
+            player.add_card(card, "topdeck")
+            player.piles[Piles.HAND].remove(card)
 
     def do_reveal_card(self, player: "Player.Player") -> Card.Card:
         """TODO"""
@@ -71,9 +68,7 @@ class TestSecretChamber(unittest.TestCase):
     """Test Secret Chamber"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            numplayers=2, oldcards=True, initcards=["Secret Chamber", "Militia"]
-        )
+        self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Secret Chamber", "Militia"])
         self.g.start_game()
         self.plr, self.att = self.g.player_list()
         self.card = self.g.get_card_from_pile("Secret Chamber")

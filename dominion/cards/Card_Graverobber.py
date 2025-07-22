@@ -41,8 +41,7 @@ class Card_Graverobber(Card.Card):
             if not trash_cards:
                 player.output("No suitable cards in trash")
                 return
-            cards = player.card_sel(cardsrc=trash_cards)
-            if cards:
+            if cards := player.card_sel(cardsrc=trash_cards):
                 card = cards[0]
                 game.trash_pile.remove(card)
                 player.add_card(card, "topdeck")

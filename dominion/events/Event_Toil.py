@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Toil """
+"""http://wiki.dominionstrategy.com/index.php/Toil"""
 
 import unittest
 from dominion import Card, Game, Piles, Event
@@ -19,12 +19,11 @@ class Event_Toil(Event.Event):
 
     def special(self, game, player):
         """You may play an Action card from your hand."""
-        action = player.card_sel(
+        if action := player.card_sel(
             num=1,
             types={Card.CardType.ACTION: True},
             prompt="Play an action card?",
-        )
-        if action:
+        ):
             player.play_card(action[0], cost_action=False)
 
 

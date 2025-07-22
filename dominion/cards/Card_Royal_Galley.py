@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Royal_Galley"""
+"""http://wiki.dominionstrategy.com/index.php/Royal_Galley"""
 
 import unittest
 from dominion import Game, Card, PlayArea, Piles
@@ -21,16 +21,13 @@ class Card_Royal_Galley(Card.Card):
         self._reserve = PlayArea.PlayArea(name="Royal Gallery")
 
     def special(self, game, player):
-        acts = [
-            _ for _ in player.piles[Piles.HAND] if _.isAction() and not _.isDuration()
-        ]
+        acts = [_ for _ in player.piles[Piles.HAND] if _.isAction() and not _.isDuration()]
         if not acts:
             return
-        choice = player.card_sel(
+        if choice := player.card_sel(
             prompt="Pick a card to play next turn",
             cardsrc=acts,
-        )
-        if choice:
+        ):
             player.move_card(choice[0], self._reserve)
             player.secret_count += 1
 

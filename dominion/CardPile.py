@@ -97,6 +97,11 @@ class CardPile:
         self.cards.insert(0, card)
 
     ###########################################################################
+    def add_to_top(self, card: "Card") -> None:
+        """Add a card to the top of the deck"""
+        self.cards.append(card)
+
+    ###########################################################################
     def top_card(self) -> str:
         """What is the name of the top card of the card pile"""
         if self.is_empty():

@@ -21,8 +21,7 @@ class Card_Scheme(Card.Card):
 
     def hook_cleanup(self, game, player):
         actions = [c for c in player.piles[Piles.PLAYED] if c.isAction()]
-        card = player.card_sel(cardsrc=actions, prompt="Select an action to put back on your deck")
-        if card:
+        if card := player.card_sel(cardsrc=actions, prompt="Select an action to put back on your deck"):
             player.add_card(card[0], "topdeck")
             player.piles[Piles.PLAYED].remove(card[0])
 
