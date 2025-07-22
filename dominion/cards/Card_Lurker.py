@@ -39,9 +39,7 @@ class Card_Lurker(Card.Card):
         if not options:
             player.output("No suitable cards found")
             return
-        to_trash = player.plr_choose_options(
-            "Select Action from Supply to Trash", *options
-        )
+        to_trash = player.plr_choose_options("Select Action from Supply to Trash", *options)
         card = game.get_card_from_pile(to_trash)
         player.add_card(card, Piles.PLAYED)  # In order to trash
         player.trash_card(card)
@@ -52,8 +50,7 @@ class Card_Lurker(Card.Card):
         if not acts:
             player.output("No suitable cards found")
             return
-        cards = player.card_sel(cardsrc=acts, prompt="Select Action from the Trash")
-        if cards is not None:
+        if cards := player.card_sel(cardsrc=acts, prompt="Select Action from the Trash"):
             game.trash_pile.remove(cards[0])
             player.add_card(cards[0], Piles.DISCARD)
 

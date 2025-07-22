@@ -1,14 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card
-from dominion import PlayArea
-from dominion import Game, Piles
+from dominion import Game, Piles, Player, PlayArea, Card
 
 
 ###############################################################################
 class Card_Gear(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
         self.base = Card.CardExpansion.ADVENTURE
@@ -17,10 +15,10 @@ class Card_Gear(Card.Card):
         self.cards = 2
         self.cost = 3
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Set aside up to 2 cards from your hand face down..."""
         if not hasattr(player, "gear_reserve"):
-            player.gear_reserve = PlayArea.PlayArea([])
+            player.gear_reserve = PlayArea.PlayArea(initial=[])
         cards = player.card_sel(
             num=2,
             cardsrc=Piles.HAND,
@@ -32,7 +30,7 @@ class Card_Gear(Card.Card):
             player.piles[Piles.HAND].remove(card)
             player.secret_count += 1
 
-    def duration(self, game, player):
+    def duration(self, game: Game.Game, player: Player.Player) -> None:
         """... At the start of your next turn, put them into your hand"""
         for card in player.gear_reserve:
             player.output("Pulling %s reserved by Gear" % card.name)
@@ -43,13 +41,13 @@ class Card_Gear(Card.Card):
 
 ###############################################################################
 class Test_Gear(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Gear"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Gear")
 
-    def test_playcard(self):
+    def test_play_card(self) -> None:
         """Play a gear"""
         self.plr.piles[Piles.HAND].set("Duchy", "Silver", "Gold")
         self.plr.add_card(self.card, Piles.HAND)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Sanctuary """
+"""http://wiki.dominionstrategy.com/index.php/Sanctuary"""
 
 import unittest
 from dominion import Card, Game, Piles
@@ -21,8 +21,7 @@ class Card_Sanctuary(Card.Card):
         self.buys = 1
 
     def special(self, game, player):
-        crd = player.card_sel(prompt="Exile a card", verbs=("Exile", "Unexile"))
-        if crd:
+        if crd := player.card_sel(prompt="Exile a card", verbs=("Exile", "Unexile")):
             player.exile_card(crd[0])
 
 

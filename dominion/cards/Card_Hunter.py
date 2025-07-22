@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Hunter"""
+"""https://wiki.dominionstrategy.com/index.php/Hunter"""
 import unittest
 from dominion import Card, Game, Piles, Player, NoCardException
 
@@ -28,13 +28,12 @@ class Card_Hunter(Card.Card):
         """Abstract out repeat code"""
         if typed_cards:
             if len(typed_cards) > 1:
-                cards = player.card_sel(
+                if cards := player.card_sel(
                     num=1,
                     force=True,
                     prompt=f"Pick {card_description} to put in your hand",
                     cardsrc=typed_cards,
-                )
-                if cards is not None:
+                ):
                     card = cards[0]
             else:
                 card = typed_cards[0]
@@ -51,15 +50,9 @@ class Card_Hunter(Card.Card):
                 break
         for card in cards:
             player.reveal_card(card)
-        self.hunter_special(
-            cards, player, [_ for _ in cards if _.isAction()], "an action"
-        )
-        self.hunter_special(
-            cards, player, [_ for _ in cards if _.isTreasure()], "a treasure"
-        )
-        self.hunter_special(
-            cards, player, [_ for _ in cards if _.isVictory()], "a victory"
-        )
+        self.hunter_special(cards, player, [_ for _ in cards if _.isAction()], "an action")
+        self.hunter_special(cards, player, [_ for _ in cards if _.isTreasure()], "a treasure")
+        self.hunter_special(cards, player, [_ for _ in cards if _.isVictory()], "a victory")
         for card in cards:
             player.output(f"Discarding {card}")
             player.discard_card(card)

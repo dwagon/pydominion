@@ -1891,7 +1891,7 @@ class Player:
         anynum: bool = False,
         cardsrc: Piles = Piles.HAND,
         **kwargs: Any,
-    ) -> Optional[list[Card]]:
+    ) -> list[Card]:
         """Ask player to trash num cards"""
         if "prompt" not in kwargs:
             kwargs["prompt"] = "Trash any cards" if anynum else f"Trash {num} cards"
@@ -1899,10 +1899,10 @@ class Player:
             for pname, pile in self.piles.items():
                 if pname.lower() == cardsrc.lower() and len(pile) == 0:
                     self.output(f"No cards to trash from {cardsrc}")
-                    return None
+                    return []
         if isinstance(cardsrc, PlayArea) and len(cardsrc) == 0:
             self.output("No cards to trash")
-            return None
+            return []
         trash = self.card_sel(
             num=num,
             cardsrc=cardsrc,
@@ -1910,8 +1910,6 @@ class Player:
             verbs=("Trash", "Untrash"),
             **kwargs,
         )
-        if trash is None:
-            return None
         for crd in trash:
             self.trash_card(crd, **kwargs)
         return trash
@@ -1993,10 +1991,9 @@ class Player:
 
     ###########################################################################
     def plr_pick_card(self, force: bool = False, **kwargs: Any) -> Optional[Card]:
-        sel = self.card_sel(force=force, **kwargs)
-        if not sel:
-            return None
-        return sel[0]
+        if sel := self.card_sel(force=force, **kwargs):
+            return sel[0]
+        return None
 
     ###########################################################################
     def has_state(self, state: str) -> bool:
@@ -2072,8 +2069,6 @@ class Player:
             else:
                 kwargs["prompt"] = f"Discard {num} cards"
         discard = self.card_sel(num=num, anynum=any_number, verbs=("Discard", "Undiscard"), **kwargs)
-        if discard is None:
-            return []
         for card in discard:
             self.output(f"Discarding {card}")
             self.discard_card(card)
@@ -2106,7 +2101,7 @@ class Player:
         raise NotImplementedError
 
     ###########################################################################
-    def card_sel(self, num: int = 1, **kwargs: Any) -> list[Card] | None:
+    def card_sel(self, num: int = 1, **kwargs: Any) -> list[Card]:
         raise NotImplementedError
 
     ###########################################################################

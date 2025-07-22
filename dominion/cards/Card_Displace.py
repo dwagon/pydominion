@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Displace """
+"""http://wiki.dominionstrategy.com/index.php/Displace"""
 
 import unittest
 from dominion import Card, Game, Piles
@@ -19,11 +19,10 @@ class Card_Displace(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        crd = player.card_sel(
+        if crd := player.card_sel(
             prompt="Exile a card to gain a different one costing 2 more",
             verbs=("Exile", "Unexile"),
-        )
-        if crd:
+        ):
             player.exile_card(crd[0])
             player.plr_gain_card(cost=crd[0].cost + 2, exclude=[crd[0].name])
 

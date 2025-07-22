@@ -40,7 +40,7 @@ class RandobotPlayer(Player):
         Player.__init__(self, game, name, **kwargs)
 
     ###########################################################################
-    def output(self, msg, end="\n"):
+    def output(self, msg, end="\n") -> None:
         if not self.quiet:
             sys.stdout.write(f"{self.colour}{self.name}{colorama.Style.RESET_ALL}: ")
             sys.stdout.write(f"{msg}{end}")
@@ -131,12 +131,12 @@ class RandobotPlayer(Player):
         return None
 
     ###########################################################################
-    def card_sel(self, num: int = 1, **kwargs: Any) -> list[Card.Card] | None:
+    def card_sel(self, num: int = 1, **kwargs: Any) -> list[Card.Card]:
         """Select a card at random"""
         print(f"card_sel {self.currcards} {kwargs=}")
         cards = self.card_selSource(**kwargs)
         if not cards:
-            return None
+            return []
         card = random.choice(cards)
         print(f"card_sel chose: {card=}")
         return [card]

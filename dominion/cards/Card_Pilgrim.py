@@ -20,10 +20,7 @@ class Card_Pilgrim(Card.Card):
 
     def special(self, game, player):
         """Put a card from your hand onto your deck."""
-        card = player.card_sel(
-            prompt="Put a card from your hand onto your deck.", cardsrc="hand"
-        )
-        if card:
+        if card := player.card_sel(prompt="Put a card from your hand onto your deck.", cardsrc="hand"):
             player.move_card(card[0], Piles.DECK)
 
 
@@ -45,9 +42,7 @@ class Test_Pilgrim(unittest.TestCase):
         hand_size = len(self.plr.piles[Piles.HAND])
         self.plr.test_input = ["Province"]
         self.plr.play_card(self.card)
-        self.assertEqual(
-            len(self.plr.piles[Piles.HAND]), hand_size + 4 - 1 - 1
-        )  # One for playing, one moved to deck
+        self.assertEqual(len(self.plr.piles[Piles.HAND]), hand_size + 4 - 1 - 1)  # One for playing, one moved to deck
         self.assertIn("Province", self.plr.piles[Piles.DECK])
         self.assertNotIn("Province", self.plr.piles[Piles.HAND])
 

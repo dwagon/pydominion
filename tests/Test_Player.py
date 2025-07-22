@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # pylint: disable=protected-access
-""" Testing player code """
+"""Testing player code"""
 
 import operator
 import unittest
@@ -261,9 +261,7 @@ class TestTypeSelector(unittest.TestCase):
 
     def test_select_two(self) -> None:
         """Test selecting two types"""
-        x = self.plr._type_selector(
-            {Card.CardType.ACTION: True, Card.CardType.VICTORY: True}
-        )
+        x = self.plr._type_selector({Card.CardType.ACTION: True, Card.CardType.VICTORY: True})
         self.assertTrue(x[Card.CardType.ACTION])
         self.assertFalse(x[Card.CardType.TREASURE])
         self.assertTrue(x[Card.CardType.VICTORY])
@@ -339,7 +337,7 @@ class TestPlrTrashCard(unittest.TestCase):
         """Trash when there are no cards to trash"""
         self.plr.piles[Piles.HAND].set()
         trashed = self.plr.plr_trash_card()
-        self.assertIs(trashed, None)
+        self.assertEqual(trashed, [])
 
 
 ###############################################################################
@@ -396,9 +394,7 @@ class TestGainCard(unittest.TestCase):
     """Test the gain_card() function"""
 
     def setUp(self) -> None:
-        self.game = Game.TestGame(
-            numplayers=1, card_path="tests/cards", initcards=["Don't Add"]
-        )
+        self.game = Game.TestGame(numplayers=1, card_path="tests/cards", initcards=["Don't Add"])
         self.game.start_game()
         self.plr = self.game.player_list()[0]
 
@@ -414,18 +410,14 @@ class TestGainCard(unittest.TestCase):
         """Gain card by pile"""
         self.plr.gain_card("Copper")
         self.assertEqual(self.plr.piles[Piles.DISCARD].top_card().name, "Copper")
-        self.assertEqual(
-            self.plr.piles[Piles.DISCARD].top_card().player.name, self.plr.name
-        )
+        self.assertEqual(self.plr.piles[Piles.DISCARD].top_card().player.name, self.plr.name)
 
     def test_gain_specific(self) -> None:
         """Gain card by specific card"""
         cu = self.game.get_card_from_pile("Copper")
         self.plr.gain_card(new_card=cu)
         self.assertEqual(self.plr.piles[Piles.DISCARD].top_card().name, "Copper")
-        self.assertEqual(
-            self.plr.piles[Piles.DISCARD].top_card().player.name, self.plr.name
-        )
+        self.assertEqual(self.plr.piles[Piles.DISCARD].top_card().player.name, self.plr.name)
 
     def test_destination(self) -> None:
         """gain card to a specific destination"""
@@ -515,9 +507,7 @@ class TestMisc(unittest.TestCase):
     """Test misc functions"""
 
     def setUp(self) -> None:
-        self.game = Game.TestGame(
-            numplayers=1, initcards=["Golem", "Witch", "Engineer"]
-        )
+        self.game = Game.TestGame(numplayers=1, initcards=["Golem", "Witch", "Engineer"])
         self.game.start_game()
         self.plr = self.game.player_list()[0]
 
@@ -707,9 +697,7 @@ class TestDisplayOverview(unittest.TestCase):
 ###############################################################################
 class TestBuyableSelection(unittest.TestCase):
     def setUp(self) -> None:
-        self.game = Game.TestGame(
-            numplayers=1, initcards=["Moat"], badcards=["Coppersmith"]
-        )
+        self.game = Game.TestGame(numplayers=1, initcards=["Moat"], badcards=["Coppersmith"])
         self.game.start_game()
         self.plr = self.game.player_list()[0]
         self.moat = self.game.get_card_from_pile("Moat")
@@ -722,11 +710,7 @@ class TestBuyableSelection(unittest.TestCase):
             if i["name"] == "Moat":
                 self.assertEqual(i["verb"], "Buy")
                 self.assertEqual(i["action"], "buy")
-                self.assertTrue(
-                    isinstance(
-                        i["card"], self.game.get_card_from_pile("Moat").__class__
-                    )
-                )
+                self.assertTrue(isinstance(i["card"], self.game.get_card_from_pile("Moat").__class__))
                 break
         else:  # pragma: no coverage
             self.fail("Moat not buyable")
@@ -739,11 +723,7 @@ class TestBuyableSelection(unittest.TestCase):
             if i["name"].startswith("Copper"):
                 try:
                     self.assertEqual(i["action"], "buy")
-                    self.assertTrue(
-                        isinstance(
-                            i["card"], self.game.get_card_from_pile("Copper").__class__
-                        )
-                    )
+                    self.assertTrue(isinstance(i["card"], self.game.get_card_from_pile("Copper").__class__))
                 except AssertionError:  # pragma: no cover
                     print(f"Buy Copper {i}")
                     self.game.print_state()
@@ -824,9 +804,7 @@ class TestChoiceSelection(unittest.TestCase):
     def test_buy_phase(self) -> None:
         self.plr.piles[Piles.HAND].set("Copper")
         self.plr.phase = Phase.BUY
-        self.plr.coffers = Counter(
-            "Coffer", 0
-        )  # Stop card _choice_selection breaking test
+        self.plr.coffers = Counter("Coffer", 0)  # Stop card _choice_selection breaking test
         opts = self.plr._choice_selection()
 
         self.assertEqual(opts[0]["verb"], "End Phase")
@@ -1189,9 +1167,7 @@ class TestWay(unittest.TestCase):
     """Test way related functions"""
 
     def setUp(self) -> None:
-        self.game = Game.TestGame(
-            numplayers=1, ways=["Way of the Otter"], initcards=["Cellar"]
-        )
+        self.game = Game.TestGame(numplayers=1, ways=["Way of the Otter"], initcards=["Cellar"])
         self.game.start_game()
         self.plr = self.game.player_list()[0]
         self.way = self.game.ways["Way of the Otter"]

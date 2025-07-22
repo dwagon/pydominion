@@ -18,8 +18,7 @@ class Card_SecretPassage(Card.Card):
         self.cards = 2
 
     def special(self, game, player):
-        card = player.card_sel(prompt="Take a card from your hand and put into your deck", cardsrc=Piles.HAND)
-        if card:
+        if card := player.card_sel(prompt="Take a card from your hand and put into your deck", cardsrc=Piles.HAND):
             dest = player.plr_choose_options(
                 f"Put {card[0].name} into top or bottom of deck",
                 ("Top of deck", "topdeck"),
