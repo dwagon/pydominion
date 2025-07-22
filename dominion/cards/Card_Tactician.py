@@ -13,6 +13,7 @@ class Card_Tactician(Card.Card):
         self.desc = "Discard hand; +5 cards, +1 buy and +1 action next turn"
         self.name = "Tactician"
         self.cost = 5
+        self.discarded = False
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         self.discarded = False

@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
@@ -15,10 +14,12 @@ class Card_Ironworks(Card.Card):
         self.name = "Iron Works"
         self.cost = 4
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player):
         """Gain a card costing up to 4. If it is an action card:
         +1 action; treasure card +1 coin; victory card, +1 card"""
         c = player.plr_gain_card(4, force=True)
+        if not c:
+            return
         if c.isVictory():
             player.pickup_cards(1)
         if c.isAction():
@@ -29,7 +30,7 @@ class Card_Ironworks(Card.Card):
 
 ###############################################################################
 class Test_Ironworks(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         # Make most of the cards too expensive to ensure we can select what we want
         initcards = [
             "Iron Works",
@@ -49,7 +50,7 @@ class Test_Ironworks(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Iron Works")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play_great_hall(self):
+    def test_play_great_hall(self) -> None:
         """Use Ironworks to gain a Great Hall"""
         self.plr.test_input = ["Mill"]
         self.plr.play_card(self.card)
@@ -58,7 +59,7 @@ class Test_Ironworks(unittest.TestCase):
         self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
-    def test_play_silver(self):
+    def test_play_silver(self) -> None:
         """Use Ironworks to gain a Silver"""
         self.plr.test_input = ["Silver"]
         self.plr.play_card(self.card)
@@ -67,7 +68,7 @@ class Test_Ironworks(unittest.TestCase):
         self.assertEqual(self.plr.coins.get(), 1)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
 
-    def test_play_ironworks(self):
+    def test_play_ironworks(self) -> None:
         """Use Ironworks to gain an Ironworks"""
         self.plr.test_input = ["iron"]
         self.plr.play_card(self.card)

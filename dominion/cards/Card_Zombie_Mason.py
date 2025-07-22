@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+
 import dominion.Card as Card
+from dominion import Game, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Zombie_Mason(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ZOMBIE]
         self.base = Card.CardExpansion.NOCTURNE
@@ -18,26 +19,30 @@ class Card_Zombie_Mason(Card.Card):
         self.purchasable = False
         self.numcards = 1
 
-    def setup(self, game):
+    def setup(self, game: Game.Game) -> None:
         game.trash_pile.add(self)
         self.location = Piles.TRASH
 
-    def special(self, game, player):
-        topdeck = player.top_card()
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        try:
+            topdeck = player.top_card()
+        except NoCardException:
+            player.output("No more cards in deck")
+            return
         player.trash_card(topdeck)
-        player.output(f"Trashed {topdeck.name} from the top of your deck")
+        player.output(f"Trashed {topdeck} from the top of your deck")
         player.plr_gain_card(topdeck.cost + 1)
 
 
 ###############################################################################
 class Test_Zombie_Mason(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Zombie Mason", "Guide"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Zombie Mason")
 
-    def test_play(self):
+    def test_play(self) -> None:
         self.plr.piles[Piles.DECK].set("Estate")
         self.plr.test_input = ["Guide"]
         self.plr.play_card(self.card, discard=False, cost_action=False)

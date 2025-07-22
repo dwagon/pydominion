@@ -22,12 +22,10 @@ class Card_Haven(Card.Card):
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """Set aside a card from your hand face down."""
-        card = player.plr_pick_card(
-            force=True, prompt="Pick card to put into hand next turn"
-        )
-        player.add_card(card, "duration")
-        player.piles[Piles.HAND].remove(card)
-        self.savedHavenCard = card
+        if card := player.plr_pick_card(force=True, prompt="Pick card to put into hand next turn"):
+            player.add_card(card, "duration")
+            player.piles[Piles.HAND].remove(card)
+            self.savedHavenCard = card
 
     def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         """At the start of your next turn, put it into your hand." """
@@ -47,9 +45,7 @@ class TestHaven(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Haven")
-        self.plr.piles[Piles.DISCARD].set(
-            "Copper", "Copper", "Copper", "Copper", "Copper"
-        )
+        self.plr.piles[Piles.DISCARD].set("Copper", "Copper", "Copper", "Copper", "Copper")
         self.plr.piles[Piles.DECK].set("Estate", "Estate", "Estate", "Estate", "Gold")
         self.plr.add_card(self.card, Piles.HAND)
 

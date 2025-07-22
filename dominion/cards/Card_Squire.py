@@ -35,9 +35,7 @@ class Card_Squire(Card.Card):
             except NoCardException:
                 player.output("No more Silver")
 
-    def hook_trash_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, Any]:
+    def hook_trash_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         attacks = []
         for name, _ in game.get_card_piles():
             card = game.card_instances[name]
@@ -47,7 +45,11 @@ class Card_Squire(Card.Card):
         if not cards:
             player.output("No suitable cards")
             return {}
-        player.gain_card(cards[0].name)
+        try:
+            player.gain_card(cards[0].name)
+            player.output(f"No more {cards[0].name}")
+        except NoCardException:
+            return {}
         return {}
 
 
