@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+
 import dominion.Card as Card
+from dominion import Game, Piles, Player
 
 
 ###############################################################################
 class Card_Miningvillage(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.INTRIGUE
@@ -17,7 +18,7 @@ class Card_Miningvillage(Card.Card):
         self.actions = 2
         self.cost = 4
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """You may trash this card immediately. If you do +2 coin"""
         trash = player.plr_choose_options(
             "Choose one",
@@ -32,14 +33,14 @@ class Card_Miningvillage(Card.Card):
 
 ###############################################################################
 class Test_Miningvillage(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Mining Village"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Mining Village")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a Mining Village"""
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
@@ -49,7 +50,7 @@ class Test_Miningvillage(unittest.TestCase):
         self.assertNotIn("Mining Village", self.g.trash_pile)
         self.assertEqual(self.plr.piles[Piles.PLAYED][-1].name, "Mining Village")
 
-    def test_trash(self):
+    def test_trash(self) -> None:
         """Trash the mining village"""
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)

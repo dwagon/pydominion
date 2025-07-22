@@ -604,7 +604,7 @@ class Player:
         return whens
 
     ###########################################################################
-    def _reserve_selection(self, index: int) -> tuple[Optional[list[Option]], int]:
+    def _reserve_selection(self, index: int) -> tuple[list[Option], int]:
         whens = self._get_whens()
         options = []
         for card in self.piles[Piles.RESERVE]:
@@ -755,27 +755,27 @@ class Player:
 
         if self.phase == Phase.ACTION:
             if self.actions or self.villagers:
-                op, index = self._playable_selection(index)
-                options.extend(op)
+                op_p, index = self._playable_selection(index)
+                options.extend(op_p)
 
         if self.phase == Phase.BUY:
-            op = self._spendable_selection()
-            options.extend(op)
-            op, index = self._buyable_selection(index)
-            options.extend(op)
-            op, index = self._event_selection(index)
-            options.extend(op)
-            op, index = self._project_selection(index)
-            if op:
-                options.extend(op)
+            op_s = self._spendable_selection()
+            options.extend(op_s)
+            op_b, index = self._buyable_selection(index)
+            options.extend(op_b)
+            op_e, index = self._event_selection(index)
+            options.extend(op_e)
+            op_pr, index = self._project_selection(index)
+            if op_pr:
+                options.extend(op_pr)
 
         if self.phase == Phase.NIGHT:
             op, index = self._night_selection(index)
             options.extend(op)
 
         if self.piles[Piles.RESERVE].size():
-            op, index = self._reserve_selection(index)
-            options.extend(op)
+            op_r, index = self._reserve_selection(index)
+            options.extend(op_r)
 
         return options
 
@@ -1956,7 +1956,7 @@ class Player:
                 new_card = recipient.gain_card(card_name, destination)
                 recipient.output(f"Got a {new_card}")
             except NoCardException:
-                recipient.output("No more {new_card}")
+                recipient.output(f"No more {card_name}")
                 return None
             return new_card
         return None

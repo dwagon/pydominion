@@ -173,7 +173,7 @@ class Card:
         return self._player
 
     @player.setter
-    def player(self, val: "Player.Player") -> None:
+    def player(self, val: Optional["Player.Player"]) -> None:
         self._player = val
 
     ##########################################################################
