@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Butcher"""
+"""https://wiki.dominionstrategy.com/index.php/Butcher"""
 import unittest
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
@@ -15,7 +15,7 @@ class Card_Butcher(Card.Card):
         self.name = "Butcher"
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         player.coffers.add(2)
         trash = player.plr_choose_options(
             "Trash a card to buy a card?",
@@ -24,33 +24,43 @@ class Card_Butcher(Card.Card):
         )
         if not trash:
             return
-        card = player.plr_trash_card(force=True)[0]
+        cards = player.plr_trash_card(force=True)
+        if not cards:
+            return
         options = []
         for i in range(player.coffers.get() + 1):
             options.append({"selector": f"{i}", "print": f"Add {i} coins", "coins": i})
         o = player.user_input(options, "Spend extra coins?")
-        cost = card.cost + o["coins"]
+        cost = cards[0].cost + o["coins"]
         player.coffers -= o["coins"]
         player.plr_gain_card(cost=cost)
 
 
 ###############################################################################
 class TestButcher(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Butcher"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Butcher")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a butcher"""
         self.plr.coffers.set(0)
         self.plr.test_input = ["Don't trash"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coffers.get(), 2)
 
-    def test_trash_gold(self):
+    def test_nothing_to_trash(self) -> None:
+        self.plr.piles[Piles.HAND].set()
+        self.plr.add_card(self.card, Piles.HAND)
+        self.plr.coffers.set(0)
+        self.plr.test_input = ["trash a card"]
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.coffers.get(), 2)
+
+    def test_trash_gold(self) -> None:
         """Trash a gold"""
         self.plr.piles[Piles.HAND].set("Copper", "Gold", "Silver")
         self.plr.add_card(self.card, Piles.HAND)
