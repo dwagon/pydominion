@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+from typing import Any
+
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
 class Card_Lich(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
             Card.CardType.ACTION,
@@ -21,24 +23,26 @@ class Card_Lich(Card.Card):
         self.desc = """+6 Cards; +2 Actions; Skip a turn;
             When you trash this, discard it and gain a cheaper card from the trash."""
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         player.skip_turn = True
 
-    def hook_trash_this_card(self, game, player):
+    def hook_trash_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         """Discard rather than trash"""
         player.add_card(self, "discard")
         player.piles[Piles.HAND].remove(self)
-        intrash = [_ for _ in game.trash_pile if _.cost < self.cost]
-        if intrash:
-            crd = player.plr_pick_card(cardsrc=intrash, force=True, num=1)
+        in_trash = [_ for _ in game.trash_pile if _.cost < self.cost]
+        if in_trash:
+            crd = player.plr_pick_card(cardsrc=in_trash, force=True, num=1)
+            if not crd:
+                return {}
             player.gain_card(new_card=crd)
             game.trash_pile.remove(crd)
-        return {"trash": False}
+        return {OptionKeys.TRASH: False}
 
 
 ###############################################################################
 class Test_Lich(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Wizards"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
@@ -49,19 +53,17 @@ class Test_Lich(unittest.TestCase):
                 break
         self.card = card
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a lich"""
         hndsz = self.plr.piles[Piles.HAND].size()
         self.plr.add_card(self.card, Piles.HAND)
-        self.plr.piles[Piles.DISCARD].set(
-            "Estate", "Duchy", "Province", "Silver", "Gold"
-        )
+        self.plr.piles[Piles.DISCARD].set("Estate", "Duchy", "Province", "Silver", "Gold")
         self.plr.play_card(self.card)
         self.g.print_state()
         self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsz + 6)
         self.assertEqual(self.plr.actions.get(), 2)
 
-    def test_trash(self):
+    def test_trash(self) -> None:
         """Trash the lich"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Silver"]
