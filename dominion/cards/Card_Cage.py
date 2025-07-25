@@ -27,7 +27,7 @@ class Card_Cage(Card.Card):
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """Set aside up to 4 cards from your hand face down"""
         if CAGE not in player.specials:
-            player.specials[CAGE] = PlayArea.PlayArea([])
+            player.specials[CAGE] = PlayArea.PlayArea(initial=[])
         player.output("Set aside up to 4 cards on Cage")
         for _ in range(4):
             if not self._set_aside(player):
@@ -60,7 +60,7 @@ class Card_Cage(Card.Card):
             player.output(f"Pulling {card} out of {self}")
             player.add_card(card, Piles.HAND)
             player.secret_count -= 1
-        player.specials[CAGE] = PlayArea.PlayArea([])
+        player.specials[CAGE] = PlayArea.PlayArea(initial=[])
         # We have to trash here rather than the gain card hook otherwise this card won't be considered for running hooks
         player.trash_card(self)
         self._active = False
