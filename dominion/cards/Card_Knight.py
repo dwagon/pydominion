@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Knight"""
+"""https://wiki.dominionstrategy.com/index.php/Knight"""
 
 import random
 import unittest
-from dominion import Card, CardPile, Game, Piles, Player, NoCardException
+from dominion import Card, CardPile, Game, Piles, Player, NoCardException, game_setup
 
 
 ###############################################################################
@@ -27,7 +27,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class KnightCardPile(CardPile.CardPile):
     def __init__(self, game: Game.Game) -> None:
-        self.mapping = game.get_card_classes("KnightCard", game.paths["cards"], "Card_")
+        self.mapping = game_setup.get_card_classes("KnightCard", game.paths["cards"], "Card_")
         for name, class_ in self.mapping.items():
             game.card_instances[name] = class_()
         super().__init__()
@@ -55,9 +55,7 @@ class KnightCard(Card.Card):
         for pl in player.attack_victims():
             self.knight_attack(game, player, pl)
 
-    def knight_attack(
-        self, game: Game.Game, player: Player.Player, victim: Player.Player
-    ) -> None:
+    def knight_attack(self, game: Game.Game, player: Player.Player, victim: Player.Player) -> None:
         cards: list[Card.Card] = []
         for _ in range(2):
             try:
@@ -85,9 +83,7 @@ class KnightCard(Card.Card):
         player.output(f"{victim.name} trashed a {to_trash}")
 
         if to_trash.isKnight():
-            player.output(
-                f"{victim.name} trashed a knight: {to_trash} - trashing your {self}"
-            )
+            player.output(f"{victim.name} trashed a knight: {to_trash} - trashing your {self}")
             player.trash_card(self)
 
         for card in cards:

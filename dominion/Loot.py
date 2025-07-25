@@ -3,7 +3,7 @@
 import random
 from typing import TYPE_CHECKING
 
-from dominion import Card, CardPile, Keys, Piles
+from dominion import Card, CardPile, Keys, Piles, game_setup
 
 if TYPE_CHECKING:
     from dominion import Game
@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 ###############################################################################
 class LootPile(CardPile.CardPile):
     def __init__(self, game: "Game.Game") -> None:
-        self.mapping = game.get_card_classes("Loot", game.paths[Keys.LOOT], "Loot_")
+        self.mapping = game_setup.get_card_classes("Loot", game.paths[Keys.LOOT], "Loot_")
         for name, class_ in self.mapping.items():
             game.card_instances[name] = class_()
         super().__init__()

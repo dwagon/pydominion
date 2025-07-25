@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Band_of_misfits"""
+"""http://wiki.dominionstrategy.com/index.php/Band_of_misfits"""
 
 import unittest
 from dominion import Card, Game, Piles, Player
@@ -13,26 +13,31 @@ class Card_BandOfMisfits(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.COMMAND]
         self.base = Card.CardExpansion.DARKAGES
-        self.desc = """Play a non-Command Action card from the Supply that costs
-            less than this, leaving it there."""
+        self.desc = """Play a non-Command non-Duration Action card from the Supply that costs less than this, leaving it there."""
         self.name = "Band of Misfits"
         self.cost = 5
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         options = []
         for action_pile in game.get_action_piles(self.cost - 1):
+            card = game.card_instances[action_pile]
+            if card.isDuration() or card.isCommand():
+                continue
+            if len(game.card_piles[action_pile]) == 0:
+                continue
             options.append((f"Select {action_pile}", action_pile))
         if not options:  # pragma: no coverage
             player.output("No suitable cards")
             return
-        choice = player.plr_choose_options(
-            "What action card do you want to play?", *options
-        )
-        action = game.card_instances[choice]
-        player.card_benefits(action)
+        choice = player.plr_choose_options("What action card do you want to play?", *options)
+        action_card = game.card_piles[choice].remove()
+        assert action_card is not None
+        player.output(f"Playing {action_card} from supply")
+        player.card_benefits(action_card)
         # If the card moved itself somewhere
-        if action.location and action.location != Piles.CARDPILE:
-            player.remove_card(action)
+        if action_card.location and action_card.location != Piles.CARDPILE:
+            player.move_card(action_card, Piles.CARDPILE)
+        game.card_piles[choice].add_to_top(action_card)
 
 
 ###############################################################################

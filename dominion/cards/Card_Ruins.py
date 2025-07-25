@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Ruin """
+"""https://wiki.dominionstrategy.com/index.php/Ruin"""
 
 import random
 import unittest
-from dominion import Card, CardPile, Game, Piles
+from dominion import Card, CardPile, Game, Piles, game_setup
 
 
 ###############################################################################
@@ -31,7 +31,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class RuinCardPile(CardPile.CardPile):
     def __init__(self, game):
-        self.mapping = game.get_card_classes("RuinCard", game.paths["cards"], "Card_")
+        self.mapping = game_setup.get_card_classes("RuinCard", game.paths["cards"], "Card_")
         for name, class_ in self.mapping.items():
             game.card_instances[name] = class_()
         super().__init__(game=game)

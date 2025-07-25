@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Fort"""
+"""http://wiki.dominionstrategy.com/index.php/Fort"""
 
 import unittest
-from dominion import Card, Game, CardPile, Keys
+from dominion import Card, Game, CardPile, Keys, game_setup
 
 
 ###############################################################################
@@ -20,7 +20,7 @@ class Card_Forts(Card.Card):
 ###############################################################################
 class FortCardPile(CardPile.CardPile):
     def __init__(self, game: Game.Game) -> None:
-        self.mapping = game.get_card_classes("Fort", game.paths[Keys.CARDS], "Card_")
+        self.mapping = game_setup.get_card_classes("Fort", game.paths[Keys.CARDS], "Card_")
         for name, class_ in self.mapping.items():
             game.card_instances[name] = class_()
         super().__init__()
