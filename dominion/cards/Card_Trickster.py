@@ -30,18 +30,17 @@ class Card_Trickster(Card.Card):
             except NoCardException:  # pragma: no coverage
                 player.output("No more Curses")
 
-    def hook_discard_any_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_discard_any_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         """Once this turn, when you discard a Treasure from play,
         you may set it aside."""
         if not card.isTreasure() or self.location not in Piles.PLAYED:
             return {}
+        if card.location != Piles.DISCARD:
+            return {}
+        print(f"# DBG {card=} {card.location}")
         if not self.set_aside:
             options = [(f"Set {card} aside", True), ("Discard as normal", False)]
-            if player.plr_choose_options(
-                "Set treasure aside to put in hand at end of turn?", *options
-            ):
+            if player.plr_choose_options("Set treasure aside to put in hand at end of turn?", *options):
                 player.move_card(card, self.set_aside)
         return {}
 
@@ -74,6 +73,21 @@ class TestTrickster(unittest.TestCase):
         self.assertNotIn("Silver", self.plr.piles[Piles.HAND])
         self.plr.end_turn()
         self.assertIn("Silver", self.plr.piles[Piles.HAND])
+
+    def test_play_two_tricksters(self) -> None:
+        """Play two tricksters with one treasure"""
+        self.card2 = self.g.get_card_from_pile("Trickster")
+        self.plr.piles[Piles.HAND].set("Gold")
+        self.plr.actions.set(2)
+        self.plr.add_card(self.card, Piles.HAND)
+        self.plr.add_card(self.card2, Piles.HAND)
+        self.plr.play_card(self.card)
+        self.plr.play_card(self.card2)
+        self.plr.test_input = ["Set Gold", "Set Gold"]
+        self.plr.discard_card(self.plr.piles[Piles.HAND]["Gold"])
+        self.assertNotIn("Gold", self.plr.piles[Piles.HAND])
+        self.plr.end_turn()
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

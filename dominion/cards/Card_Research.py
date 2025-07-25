@@ -18,12 +18,12 @@ class Card_Research(Card.Card):
             At the start of your next turn, put those cards into your hand."""
         self.cost = 4
         self.actions = 1
-        self._research = PlayArea.PlayArea([])
+        self._research = PlayArea.PlayArea(initial=[])
 
     ###########################################################################
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
         tc = player.plr_trash_card(num=1, force=True, printcost=True)
-        if tc is None:
+        if not tc:
             return
         cost = tc[0].cost
         if cost == 0:
@@ -42,9 +42,7 @@ class Card_Research(Card.Card):
             player.secret_count += 1
 
     ###########################################################################
-    def duration(
-        self, game: "Game.Game", player: "Player.Player"
-    ) -> dict[OptionKeys, str]:
+    def duration(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, str]:
         cards = list(self._research)
         for card in cards:
             player.output(f"Bringing {card.name} out from research")
@@ -59,9 +57,7 @@ class TestResearch(unittest.TestCase):
     """Test Research"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            numplayers=1, initcards=["Research", "Moat"], badcards=["Shaman"]
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Research", "Moat"], badcards=["Shaman"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Research")

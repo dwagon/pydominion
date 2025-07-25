@@ -20,9 +20,7 @@ class Card_Experiment(Card.Card):
         self.actions = 1
 
     ###########################################################################
-    def hook_gain_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         try:
             player.gain_card("Experiment", callhook=False)
             player.output("Gained a new experiment")
@@ -55,9 +53,7 @@ class TestExperiment(unittest.TestCase):
 
     def test_gain_card(self) -> None:
         self.plr.gain_card("Experiment")
-        count = sum(
-            1 for card in self.plr.piles[Piles.DISCARD] if card.name == "Experiment"
-        )
+        count = sum(1 for card in self.plr.piles[Piles.DISCARD] if card.name == "Experiment")
         self.assertEqual(count, 2)
 
     def test_gain_none_left(self) -> None:

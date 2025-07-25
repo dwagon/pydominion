@@ -19,7 +19,10 @@ class Card_Adventurer(Card.Card):
         """Reveal cards from your deck until you reveal two treasure cards
         Add those to your hand and discard the other revealed cards"""
         treasures: list[Card.Card] = []
-        while len(treasures) < 2:
+        max_cards = player.count_cards()
+        count = 0
+        while len(treasures) < 2 and count <= max_cards:
+            count += 1
             try:
                 card = player.pickup_card(verbose=False)
             except NoCardException:
