@@ -3,14 +3,13 @@
 # pylint: disable=too-many-arguments, too-many-branches, too-many-instance-attributes, invalid-name
 
 import json
-import os
 import random
 import sys
 import uuid
 from typing import List, Optional, Any
-from enum import StrEnum, auto
 
-from dominion import Piles, Keys, NoCardException
+import dominion.game_setup as game_setup
+from dominion import Keys, NoCardException
 from dominion.Artifact import Artifact
 from dominion.Boon import Boon
 from dominion.BotPlayer import BotPlayer
@@ -28,14 +27,7 @@ from dominion.State import State
 from dominion.TextPlayer import TextPlayer
 from dominion.Trait import Trait
 from dominion.Way import Way
-import dominion.game_setup as game_setup
-
-
-class Flags(StrEnum):
-    ALLOW_SHELTERS = auto()
-    LOADED_TRAVELLERS = auto()
-    LOADED_PRIZES = auto()
-    ALLOW_POTIONS = auto()
+from dominion.game_setup import Flags
 
 
 ###############################################################################
@@ -65,7 +57,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.discarded_hexes: list[Hex] = []
         self.trash_pile = PlayArea("trash", game=self)
         self.game_over = False
-        self._heirlooms: list[str] = []
+        self.heirlooms: list[str] = []
         self.flags: dict[Flags, bool] = {
             Flags.ALLOW_SHELTERS: True,
             Flags.LOADED_TRAVELLERS: False,
@@ -112,7 +104,7 @@ class Game:  # pylint: disable=too-many-public-methods
             self._base_cards.append("Colony")
             self._base_cards.append("Platinum")
 
-        self.card_mapping = self._get_available_card_classes()
+        self.card_mapping = game_setup.get_available_card_classes(self)
         self._original: dict[str, int | dict[str, dict[str, int]]] = {}
         self._cards: dict[str, Card] = {}
         self.card_instances: dict[str, Card] = {}
@@ -165,7 +157,7 @@ class Game:  # pylint: disable=too-many-public-methods
     ) -> None:
         """Initialise game bits"""
 
-        self._load_decks(self.init[Keys.CARDS], self.num_stacks)
+        game_setup.load_decks(self, self.init[Keys.CARDS], self.num_stacks)
         self.events = game_setup.load_events(self, self.init[Keys.EVENT], self.init_numbers[Keys.EVENT])
         self.ways = game_setup.load_ways(self, self.init[Keys.WAY], self.init_numbers[Keys.WAY])
         self.landmarks = game_setup.load_landmarks(self, self.init[Keys.LANDMARK], self.init_numbers[Keys.LANDMARK])
@@ -175,10 +167,10 @@ class Game:  # pylint: disable=too-many-public-methods
 
         if self.hexes or self.boons:
             game_setup.load_states(self)
-        self._check_card_requirements()
+        game_setup.check_card_requirements(self)
         self._setup_players(player_names, plr_class)
         self.card_setup()  # Has to be after players have been created
-        self._check_card_requirements()  # Again as setup can add requirements
+        game_setup.check_card_requirements(self)  # Again as setup can add requirements
         self.current_player = self.player_list()[0]
         if self.ally:
             for plr in self.player_list():
@@ -211,7 +203,7 @@ class Game:  # pylint: disable=too-many-public-methods
                     game=self,
                     quiet=self.quiet,
                     name=f"{name}Bot",
-                    heirlooms=self._heirlooms,
+                    heirlooms=self.heirlooms,
                     use_shelters=use_shelters,
                 )
                 self.bot = False
@@ -220,7 +212,7 @@ class Game:  # pylint: disable=too-many-public-methods
                     game=self,
                     quiet=self.quiet,
                     name=f"{name}RandoBot",
-                    heirlooms=self._heirlooms,
+                    heirlooms=self.heirlooms,
                     use_shelters=use_shelters,
                 )
                 self.randobot -= 1
@@ -230,7 +222,7 @@ class Game:  # pylint: disable=too-many-public-methods
                     quiet=self.quiet,
                     name=name,
                     number=player_num,
-                    heirlooms=self._heirlooms,
+                    heirlooms=self.heirlooms,
                     use_shelters=use_shelters,
                 )
             self.players[the_uuid].uuid = the_uuid
@@ -278,235 +270,9 @@ class Game:  # pylint: disable=too-many-public-methods
         self.traits[trait].card_pile = card_pile
 
     ###########################################################################
-    def good_names(self, specified: list[str], cardtype: str) -> list[str]:
-        """Replace specified names with ones that are good"""
-        answer: list[str] = []
-        for name in specified:
-            if name in self.card_mapping[cardtype]:
-                answer.append(name)
-            else:
-                good_name = self.guess_card_name(name, cardtype)
-                if good_name is None:
-                    sys.stderr.write(f"Unknown {cardtype} '{name}'\n")
-                    sys.exit(1)
-                answer.append(good_name)
-        return answer
-
-    ###########################################################################
-    def load_non_kingdom_pile(self, cardtype: str, pileClass) -> dict[str, CardPile]:
-        """Load non kingdom cards into a pile
-        Returns a dictionary; key is the name, value is the instance
-        """
-        dest: dict[str, CardPile] = {}
-        available = self.getAvailableCards(cardtype)
-        # To make up the numbers
-        for nkc in available:
-            klass = self.card_mapping[cardtype][nkc]
-            dest[nkc] = pileClass(nkc, klass)
-        return dest
-
-    ###########################################################################
-    def instantiate_non_kingdom_card(self, cardtype: str, card_name: str) -> Card:
-        klass = self.card_mapping[cardtype][card_name]
-        return klass()
-
-    ###########################################################################
-    def load_non_kingdom_cards(
-        self, cardtype: str, specified: list[str], num_required: Optional[int] = None
-    ) -> dict[str, Card]:
-        """Load non kingdom cards into the game
-        If specific cards are required they need to be in `specified`
-        Up to numrequired cards will be used
-
-        Returns a dictionary; key is the name, value is the instance
-        """
-        dest: dict[str, Card] = {}
-        available = self.getAvailableCards(cardtype)
-        # Specified cards
-        if specified is not None:
-            names = self.good_names(specified, cardtype)
-            for nkc in names:
-                dest[nkc] = self.instantiate_non_kingdom_card(cardtype, nkc)
-                available.remove(nkc)
-
-        # To make up the numbers
-        if num_required is not None:
-            while len(dest) < num_required:
-                nkc = random.choice(available)
-                dest[nkc] = self.instantiate_non_kingdom_card(cardtype, nkc)
-                available.remove(nkc)
-        else:  # Do them all
-            for nkc in available:
-                dest[nkc] = self.instantiate_non_kingdom_card(cardtype, nkc)
-
-        return dest
-
-    ###########################################################################
-    def guess_card_name(self, name: str, prefix: str = "Card") -> Optional[str]:
-        """Don't force the user to give the exact card name on the command
-        line - maybe we can guess it"""
-        available = self.getAvailableCards(prefix)
-        if name in available:
-            return name
-        lower_name = name.lower()
-        for card_name in available:
-            if card_name.lower() == lower_name:
-                return card_name
-            newc = card_name.lower().replace("'", "")
-            if newc.lower() == lower_name:
-                return card_name
-            newc = newc.replace(" ", "_")
-            if newc == lower_name:
-                return card_name
-            newc = newc.replace(" ", "-")
-            if newc == lower_name:
-                return card_name
-            newc = newc.replace(" ", "")
-            if newc == lower_name:
-                return card_name
-            newc = newc.replace("_", "")
-            if newc == lower_name:
-                return card_name
-        return None
-
-    ###########################################################################
-    def _place_init_card(self, card: str, available: list[str]) -> Optional[int]:
-        """For the specified card, load it into the correct deck
-        Return the number of kingdom card piles used or None for not found
-        """
-        # If base cards are specified by initcards
-        if card_name := self.guess_card_name(card, prefix="BaseCard"):
-            self.use_card_pile(None, card_name, force=True, card_type="BaseCard")
-            return 0
-        if card_name := self.guess_card_name(card):
-            return self.use_card_pile(available, card_name, force=True)
-        if event_name := self.guess_card_name(card, "Event"):
-            self.init[Keys.EVENT].append(event_name)
-            return 0
-        if way_name := self.guess_card_name(card, "Way"):
-            self.init[Keys.WAY].append(way_name)
-            return 0
-        if landmark_name := self.guess_card_name(card, "Landmark"):
-            self.init[Keys.LANDMARK].append(landmark_name)
-            return 0
-        if project_name := self.guess_card_name(card, "Project"):
-            self.init[Keys.PROJECTS].append(project_name)
-            return 0
-        if ally_name := self.guess_card_name(card, "Ally"):
-            self.init[Keys.ALLIES].append(ally_name)
-            return 0
-        if trait_name := self.guess_card_name(card, "Trait"):
-            self.init[Keys.TRAITS].append(trait_name)
-            return 0
-        if self.guess_card_name(card, "Boon"):
-            game_setup.load_boons(self)
-            return 0
-        if self.guess_card_name(card, "Artifact"):
-            # Artifacts should be loaded by the requiring card but can still be specified
-            # in a card set
-            return 0
-        if card.lower() == "shelters":
-            # Use of shelters handled elsewhere
-            return 0
-        # Cards that exist but are handled elsewhere
-        for prefix in ("Traveller", "Castle", "Loot", "Heirloom", "State", "Hex", "PrizeCard"):
-            if self.guess_card_name(card, prefix):
-                return 0
-        print(f"Can't guess what card '{card}' is")
-        return None
-
-    ###########################################################################
-    def _load_decks(self, initcards: list[str], numstacks: int) -> None:
-        """Determine what cards we are using this game"""
-        for card in self._base_cards:
-            self.use_card_pile(self._base_cards[:], card, force=True, card_type="BaseCard")
-        available = self.getAvailableCards()
-        unfilled = numstacks
-        found_all = True
-        for crd in initcards:
-            # These cards get loaded by other things
-            if crd in ("Boons", "Hexes"):
-                continue
-            result = self._place_init_card(crd, available)
-            if result is None:
-                found_all = False
-            else:
-                unfilled -= result
-
-        if not found_all:
-            sys.exit(1)
-
-        while unfilled > 0:
-            if not available:
-                # Not enough cards to fill the hand - almost certainly in a test
-                break
-            crd = random.choice(available)
-            if crd in self.init[Keys.BAD_CARDS]:
-                continue
-            unfilled -= self.use_card_pile(available, crd)
-
-        self._check_card_requirements()
-
-    ###########################################################################
-    def _add_prizes(self) -> None:
-        """TODO"""
-        for prize in self.getAvailableCards("PrizeCard"):
-            self.use_card_pile(None, prize, False, "PrizeCard")
-        self.flags[Flags.LOADED_PRIZES] = True
-
-    ###########################################################################
     def getPrizes(self) -> list[str]:
         """TODO"""
         return list(self.card_mapping["PrizeCard"].keys())
-
-    ###########################################################################
-    def _num_cards_in_pile(self, card: Card) -> int:
-        """Return the number of cards that should be in a card pile"""
-        if hasattr(card, "calc_numcards"):
-            return card.calc_numcards(self)
-        elif hasattr(card, "numcards"):
-            return card.numcards
-        else:
-            return 10
-
-    ###########################################################################
-    def use_card_pile(
-        self,
-        available: list[str] | None,
-        card_name: str,
-        force: bool = False,
-        card_type: str = "Card",
-    ) -> int:
-        """Set up a card pile for use
-        Return 1 if it counts against the number of card piles in use"""
-        try:
-            if available is not None:
-                available.remove(card_name)
-        except ValueError:  # pragma: no cover
-            print(f"Unknown card '{card_name}'\n", file=sys.stderr)
-            sys.exit(1)
-        card = self.card_mapping[card_type][card_name]()
-        if not self.flags[Flags.ALLOW_POTIONS] and card.potcost:
-            return 0
-        if hasattr(card, "cardpile_setup"):
-            card_pile = card.cardpile_setup(self)
-        else:
-            card_pile = CardPile(self)
-        num_cards = self._num_cards_in_pile(card)
-        card_pile.init_cards(num_cards, self.card_mapping[card_type][card_name])
-        if not force and not card.insupply:
-            return 0
-
-        self.card_piles[card_name] = card_pile
-        for card in card_pile:
-            if card_name not in self.card_instances:
-                self.card_instances[card_name] = self.card_mapping[card_type][card_name]()
-            self._cards[card.uuid] = card
-            if not card.pile:
-                card.pile = card_name
-            card.location = Piles.CARDPILE
-        self.output(f"Playing with {card_name}")
-        return 1
 
     ###########################################################################
     def get_card_from_pile(self, pile: str, name: str = "") -> Card:
@@ -517,78 +283,6 @@ class Game:  # pylint: disable=too-many-public-methods
         if card is None:
             raise NoCardException
         return card
-
-    ###########################################################################
-    def _use_ruins(self, card: Card) -> None:
-        """Use Ruins"""
-        self.output(f"Playing with Ruins as required by {card}")
-        self.use_card_pile(None, "Ruins", True)
-
-    ###########################################################################
-    def check_card_requirement(self, card: Card) -> None:
-        for x in card.required_cards:
-            card_type = "Card"
-            if x == "Loot":
-                game_setup.load_loot(self)
-                continue
-            if isinstance(x, tuple):
-                card_type, card_name = x
-            else:
-                card_type, card_name = "BaseCard", x
-            if card_name not in self.card_piles:
-                self.use_card_pile(None, card_name, force=True, card_type=card_type)
-                self.output(f"Playing with {card_name} as required by {card}")
-
-        if card.heirloom is not None and card.heirloom not in self._heirlooms:
-            self.use_card_pile(None, card.heirloom, force=True, card_type="Heirloom")
-            self._heirlooms.append(card.heirloom)
-            self.output(f"Playing with {card.heirloom} as required by {card}")
-
-        if card.isLooter() and "Ruins" not in self.card_piles:
-            self._use_ruins(card)
-        if card.isFate() and not self.boons:
-            game_setup.load_boons(self)
-        if card.isDoom() and not self.hexes:
-            game_setup.load_hexes(self)
-            self.output(f"Using hexes as required by {card}")
-        if card.isLiaison() and not self.ally:
-            self.ally = game_setup.load_ally(self, self.init[Keys.ALLIES])
-            self.output(f"Using Allies as required by {card}")
-        if card.traveller and not self.flags[Flags.LOADED_TRAVELLERS]:
-            game_setup.load_travellers(self)
-            self.flags[Flags.LOADED_TRAVELLERS] = True
-        if card.needs_prizes and not self.flags[Flags.LOADED_PRIZES]:
-            self._add_prizes()
-            self.output(f"Playing with Prizes as required by {card}")
-        if card.needsartifacts and not self.artifacts:
-            game_setup.load_artifacts(self)
-            self.output(f"Using artifacts as required by {card}")
-        if card.needsprojects and not self.projects:
-            game_setup.load_projects(self, self.init[Keys.PROJECTS], self.init_numbers[Keys.PROJECTS])
-            self.output(f"Using projects as required by {card}")
-
-    ###########################################################################
-    def _check_card_requirements(self) -> None:
-        """If any card we are playing requires another card (e.g. Curse) then
-        ensure that is loaded as well"""
-
-        check_cards = (
-            list(self._cards.values())
-            + list(self.events.values())
-            + list(self.traits.values())
-            + list(self.hexes)
-            + list(self.boons)
-            + list(self.landmarks.values())
-        )
-        if self.ally:
-            check_cards.append(self.ally)
-
-        for card in check_cards:
-            self.check_card_requirement(card)
-
-        if self.init[Keys.ALLIES] and not self.ally:
-            print(f"Need to specify a Liaison as well as an Ally {self.init[Keys.ALLIES]}")
-            sys.exit(1)
 
     ###########################################################################
     def get_card_piles(self) -> list[tuple[str, CardPile]]:
@@ -602,37 +296,6 @@ class Game:  # pylint: disable=too-many-public-methods
     def __contains__(self, key: str) -> bool:
         """TODO"""
         return key in self.card_piles
-
-    ###########################################################################
-    def _get_available_card_classes(self) -> dict[str, dict[str, type[Card]]]:
-        """Create a mapping between the card name and the module of that card"""
-        mapping: dict[str, dict[str, type[Card]]] = {}
-        for prefix in (
-            "Card",
-            "BaseCard",
-            "Traveller",
-            "PrizeCard",
-            "Castle",
-            "Heirloom",
-            "Shelter",
-            "Split",
-        ):
-            mapping[prefix] = game_setup.get_card_classes(prefix, self.paths[Keys.CARDS], "Card_")
-            if self.oldcards:
-                old_path = os.path.join(self.paths[Keys.CARDS], "old")
-                mapping[prefix].update(game_setup.get_card_classes(prefix, old_path, "Card_"))
-        mapping["Event"] = game_setup.get_card_classes("Event", self.paths[Keys.EVENT], "Event_")
-        mapping["Way"] = game_setup.get_card_classes("Way", self.paths[Keys.WAY], "Way_")
-        mapping["Landmark"] = game_setup.get_card_classes("Landmark", self.paths[Keys.LANDMARK], "Landmark_")
-        mapping["Boon"] = game_setup.get_card_classes("Boon", self.paths[Keys.BOONS], "Boon_")
-        mapping["Hex"] = game_setup.get_card_classes("Hex", self.paths[Keys.HEXES], "Hex_")
-        mapping["State"] = game_setup.get_card_classes("State", self.paths[Keys.STATES], "State_")
-        mapping["Artifact"] = game_setup.get_card_classes("Artifact", self.paths[Keys.ARTIFACTS], "Artifact_")
-        mapping["Project"] = game_setup.get_card_classes("Project", self.paths[Keys.PROJECTS], "Project_")
-        mapping["Ally"] = game_setup.get_card_classes("Ally", self.paths[Keys.ALLIES], "Ally_")
-        mapping["Trait"] = game_setup.get_card_classes("Trait", self.paths[Keys.TRAITS], "Trait_")
-        mapping["Loot"] = game_setup.get_card_classes("Loot", self.paths[Keys.LOOT], "Loot_")
-        return mapping
 
     ###########################################################################
     def getAvailableCards(self, prefix: str = "Card") -> List[str]:

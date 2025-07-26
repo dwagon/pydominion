@@ -42,8 +42,8 @@ class Card_YoungWitch(Card.Card):
             banes.append(card.name)
         bane = random.choice(banes)
         game.specials[BANE] = bane
-        game.use_card_pile(game.getAvailableCards(), game.specials[BANE])
-        game.check_card_requirement(game.card_instances[bane])
+        game_setup.use_card_pile(game, game.getAvailableCards(), game.specials[BANE])
+        game_setup.check_card_requirement(game, game.card_instances[bane])
         game.card_piles[bane].setup(game=game)
         if game.hexes or game.boons:
             game_setup.load_states(game)
