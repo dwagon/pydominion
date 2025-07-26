@@ -222,6 +222,7 @@ class Card:
     ##########################################################################
     def duration(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, str]:
         """Hook - overwritten in subclasses"""
+        return {}
 
     ##########################################################################
     def setup(self, game: "Game.Game") -> None:

@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Young_Witch """
+"""http://wiki.dominionstrategy.com/index.php/Young_Witch"""
 # pylint: disable=no-member, protected-access
 
 import unittest
 import random
-from dominion import Card, Game, Piles, Keys, Player, NoCardException
+from dominion import Card, Game, Piles, Keys, Player, NoCardException, game_setup
 
 BANE = "young witch bane"
 
@@ -42,11 +42,11 @@ class Card_YoungWitch(Card.Card):
             banes.append(card.name)
         bane = random.choice(banes)
         game.specials[BANE] = bane
-        game._use_card_pile(game.getAvailableCards(), game.specials[BANE])
-        game.check_card_requirement(game.card_instances[bane])
+        game_setup.use_card_pile(game, game.getAvailableCards(), game.specials[BANE])
+        game_setup.check_card_requirement(game, game.card_instances[bane])
         game.card_piles[bane].setup(game=game)
         if game.hexes or game.boons:
-            game._load_states()
+            game_setup.load_states(game)
         game.output(f"Using {bane} as the bane for Young Witch")
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
@@ -80,9 +80,7 @@ class TestYoungWitch(unittest.TestCase):
     def test_play_nobane(self) -> None:
         """Play the young witch without a bane"""
         self.victim.piles[Piles.HAND].set("Copper", "Silver")
-        self.attacker.piles[Piles.HAND].set(
-            "Copper", "Silver", "Gold", "Duchy", "Province"
-        )
+        self.attacker.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Duchy", "Province")
         self.attacker.add_card(self.card, Piles.HAND)
         self.attacker.test_input = ["Duchy", "Province", "finish"]
         self.attacker.play_card(self.card)
@@ -99,9 +97,7 @@ class TestYoungWitch(unittest.TestCase):
     def test_play_bane(self) -> None:
         """Play the young witch with a bane"""
         self.victim.piles[Piles.HAND].set("Copper", "Silver", self.g.specials[BANE])
-        self.attacker.piles[Piles.HAND].set(
-            "Copper", "Silver", "Gold", "Duchy", "Province"
-        )
+        self.attacker.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Duchy", "Province")
         self.attacker.add_card(self.card, Piles.HAND)
         self.attacker.test_input = ["Duchy", "Province", "finish"]
         self.attacker.play_card(self.card)

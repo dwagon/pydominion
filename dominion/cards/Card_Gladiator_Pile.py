@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Gladiator
-    https://wiki.dominionstrategy.com/index.php/Fortune"""
+"""https://wiki.dominionstrategy.com/index.php/Gladiator
+https://wiki.dominionstrategy.com/index.php/Fortune"""
 import unittest
-from dominion import Card, Game, CardPile, Keys
+from dominion import Card, Game, CardPile, Keys, game_setup
 
 
 ###############################################################################
@@ -20,14 +20,12 @@ class Card_GladiatorSplit(Card.Card):
 ###############################################################################
 class GladiatorCardPile(CardPile.CardPile):
     def __init__(self, game: Game.Game) -> None:
-        mapping = game.get_card_classes("Split", game.paths[Keys.CARDS], "Card_")
+        mapping = game_setup.get_card_classes("Split", game.paths[Keys.CARDS], "Card_")
         for name, class_ in mapping.items():
             game.card_instances[name] = class_()
         super().__init__()
 
-    def init_cards(
-        self, num_cards: int = 0, card_class: type[Card.Card] | None = None
-    ) -> None:
+    def init_cards(self, num_cards: int = 0, card_class: type[Card.Card] | None = None) -> None:
         # pylint: disable=import-outside-toplevel
         from dominion.cards.Split_Gladiator import Card_Gladiator
         from dominion.cards.Split_Fortune import Card_Fortune

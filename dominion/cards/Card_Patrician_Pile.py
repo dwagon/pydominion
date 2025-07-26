@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Patrician
-    https://wiki.dominionstrategy.com/index.php/Emporium"""
+"""https://wiki.dominionstrategy.com/index.php/Patrician
+https://wiki.dominionstrategy.com/index.php/Emporium"""
 import unittest
-from dominion import Card, Game, CardPile
+from dominion import Card, Game, CardPile, game_setup
 
 
 ###############################################################################
@@ -21,7 +21,7 @@ class Card_PatricianSplit(Card.Card):
 ###############################################################################
 class PatricianCardPile(CardPile.CardPile):
     def __init__(self, game):
-        mapping = game.get_card_classes("Split", game.paths["cards"], "Card_")
+        mapping = game_setup.get_card_classes("Split", game.paths["cards"], "Card_")
         for name, class_ in mapping.items():
             game.card_instances[name] = class_()
         super().__init__()
