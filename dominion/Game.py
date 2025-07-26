@@ -5,24 +5,20 @@
 import json
 import random
 import sys
-import uuid
 from typing import List, Optional, Any
 
 import dominion.game_setup as game_setup
 from dominion import Keys, NoCardException
 from dominion.Artifact import Artifact
 from dominion.Boon import Boon
-from dominion.BotPlayer import BotPlayer
 from dominion.Card import Card
 from dominion.CardPile import CardPile
 from dominion.Event import Event
 from dominion.Hex import Hex
 from dominion.Landmark import Landmark
-from dominion.Names import playerNames
 from dominion.PlayArea import PlayArea
 from dominion.Player import Player
 from dominion.Project import Project
-from dominion.RandobotPlayer import RandobotPlayer
 from dominion.State import State
 from dominion.TextPlayer import TextPlayer
 from dominion.Trait import Trait
@@ -168,7 +164,7 @@ class Game:  # pylint: disable=too-many-public-methods
         if self.hexes or self.boons:
             game_setup.load_states(self)
         game_setup.check_card_requirements(self)
-        self._setup_players(player_names, plr_class)
+        game_setup.setup_players(self, player_names, plr_class)
         self.card_setup()  # Has to be after players have been created
         game_setup.check_card_requirements(self)  # Again as setup can add requirements
         self.current_player = self.player_list()[0]
@@ -176,56 +172,6 @@ class Game:  # pylint: disable=too-many-public-methods
             for plr in self.player_list():
                 plr.favors.add(1)
         self._save_original()
-
-    ###########################################################################
-    def _setup_players(
-        self,
-        playernames: Optional[list[str]] = None,
-        plr_class: type[Player] = TextPlayer,
-    ) -> None:
-        if use_shelters := game_setup.use_shelters_in_game(
-            self, self.flags[Flags.ALLOW_SHELTERS], self.init[Keys.CARDS]
-        ):
-            game_setup.setup_shelters(self)
-        names = playerNames[:]
-        if playernames is None:
-            playernames = []
-
-        for player_num in range(self.numplayers):
-            try:
-                name = playernames.pop()
-            except IndexError:
-                name = random.choice(names)
-                names.remove(name)
-            the_uuid = uuid.uuid4().hex
-            if self.bot:
-                self.players[the_uuid] = BotPlayer(
-                    game=self,
-                    quiet=self.quiet,
-                    name=f"{name}Bot",
-                    heirlooms=self.heirlooms,
-                    use_shelters=use_shelters,
-                )
-                self.bot = False
-            elif self.randobot:
-                self.players[the_uuid] = RandobotPlayer(
-                    game=self,
-                    quiet=self.quiet,
-                    name=f"{name}RandoBot",
-                    heirlooms=self.heirlooms,
-                    use_shelters=use_shelters,
-                )
-                self.randobot -= 1
-            else:
-                self.players[the_uuid] = plr_class(
-                    game=self,
-                    quiet=self.quiet,
-                    name=name,
-                    number=player_num,
-                    heirlooms=self.heirlooms,
-                    use_shelters=use_shelters,
-                )
-            self.players[the_uuid].uuid = the_uuid
 
     ###########################################################################
     def _save_original(self) -> None:

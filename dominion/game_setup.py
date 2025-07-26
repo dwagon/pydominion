@@ -5,20 +5,25 @@ import importlib
 import os
 import random
 import sys
+import uuid
 from enum import StrEnum, auto
-
 from typing import TYPE_CHECKING, cast, Optional
 
 from dominion import Keys
+from dominion import Piles
 from dominion.Boon import BoonPile
+from dominion.BotPlayer import BotPlayer
 from dominion.Card import CardExpansion, Card
 from dominion.CardPile import CardPile
 from dominion.Event import Event
 from dominion.Hex import HexPile
 from dominion.Landmark import Landmark
 from dominion.Loot import LootPile
+from dominion.Names import playerNames
+from dominion.Player import Player
+from dominion.RandobotPlayer import RandobotPlayer
+from dominion.TextPlayer import TextPlayer
 from dominion.Way import Way
-from dominion import Piles
 
 if TYPE_CHECKING:  # pragma: no coverage
     from dominion.Game import Game
@@ -586,6 +591,55 @@ def place_init_card(game: "Game", card: str, available: list[str]) -> Optional[i
             return 0
     print(f"Can't guess what card '{card}' is")
     return None
+
+
+###########################################################################
+def setup_players(
+    game: "Game",
+    playernames: Optional[list[str]] = None,
+    plr_class: type[Player] = TextPlayer,
+) -> None:
+    if use_shelters := use_shelters_in_game(game, game.flags[Flags.ALLOW_SHELTERS], game.init[Keys.CARDS]):
+        setup_shelters(game)
+    names = playerNames[:]
+    if playernames is None:
+        playernames = []
+
+    for player_num in range(game.numplayers):
+        try:
+            name = playernames.pop()
+        except IndexError:
+            name = random.choice(names)
+            names.remove(name)
+        the_uuid = uuid.uuid4().hex
+        if game.bot:
+            game.players[the_uuid] = BotPlayer(
+                game=game,
+                quiet=game.quiet,
+                name=f"{name}Bot",
+                heirlooms=game.heirlooms,
+                use_shelters=use_shelters,
+            )
+            game.bot = False
+        elif game.randobot:
+            game.players[the_uuid] = RandobotPlayer(
+                game=game,
+                quiet=game.quiet,
+                name=f"{name}RandoBot",
+                heirlooms=game.heirlooms,
+                use_shelters=use_shelters,
+            )
+            game.randobot -= 1
+        else:
+            game.players[the_uuid] = plr_class(
+                game=game,
+                quiet=game.quiet,
+                name=name,
+                number=player_num,
+                heirlooms=game.heirlooms,
+                use_shelters=use_shelters,
+            )
+        game.players[the_uuid].uuid = the_uuid
 
 
 # EOF
