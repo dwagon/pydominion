@@ -3,7 +3,7 @@
 
 import random
 import unittest
-from dominion import Card, CardPile, Game, Piles, game_setup
+from dominion import Card, CardPile, Game, Piles, game_setup, Keys
 
 
 ###############################################################################
@@ -31,7 +31,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class RuinCardPile(CardPile.CardPile):
     def __init__(self, game):
-        self.mapping = game_setup.get_card_classes("RuinCard", game.paths["cards"], "Card_")
+        self.mapping = game_setup.get_card_classes("RuinCard", game_setup.PATHS[Keys.CARDS], "Card_")
         for name, class_ in self.mapping.items():
             game.card_instances[name] = class_()
         super().__init__(game=game)

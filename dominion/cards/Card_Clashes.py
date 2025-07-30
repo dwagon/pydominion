@@ -2,7 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Clashes"""
 
 import unittest
-from dominion import Card, Game, CardPile, game_setup
+from dominion import Card, Game, CardPile, game_setup, Keys
 
 
 ###############################################################################
@@ -28,7 +28,7 @@ class ClashCardPile(CardPile.CardPile):
     """Pile of Clashes"""
 
     def __init__(self, game):
-        mapping = game_setup.get_card_classes("Clash", game.paths["cards"], "Card_")
+        mapping = game_setup.get_card_classes("Clash", game_setup.PATHS[Keys.CARDS], "Card_")
         for name, class_ in mapping.items():
             game.card_instances[name] = class_()
         super().__init__()

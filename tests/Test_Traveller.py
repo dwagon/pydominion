@@ -2,8 +2,8 @@
 
 import unittest
 
-from dominion import Game, Piles
-from dominion.Game import Flags
+from dominion import Game, Piles, game_setup
+from dominion.game_setup import Flag
 
 
 ###############################################################################
@@ -11,7 +11,7 @@ class TestLoadTravellers(unittest.TestCase):
     def test_need_travellers(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Page"])
         self.g.start_game()
-        self.assertTrue(self.g.flags[Flags.LOADED_TRAVELLERS])
+        self.assertTrue(game_setup.FLAGS[Flag.LOADED_TRAVELLERS])
 
 
 ###############################################################################

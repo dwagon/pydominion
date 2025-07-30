@@ -20,7 +20,7 @@ class Card_Forts(Card.Card):
 ###############################################################################
 class FortCardPile(CardPile.CardPile):
     def __init__(self, game: Game.Game) -> None:
-        self.mapping = game_setup.get_card_classes("Fort", game.paths[Keys.CARDS], "Card_")
+        self.mapping = game_setup.get_card_classes("Fort", game_setup.PATHS[Keys.CARDS], "Card_")
         for name, class_ in self.mapping.items():
             game.card_instances[name] = class_()
         super().__init__()

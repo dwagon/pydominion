@@ -20,7 +20,7 @@ class Card_GladiatorSplit(Card.Card):
 ###############################################################################
 class GladiatorCardPile(CardPile.CardPile):
     def __init__(self, game: Game.Game) -> None:
-        mapping = game_setup.get_card_classes("Split", game.paths[Keys.CARDS], "Card_")
+        mapping = game_setup.get_card_classes("Split", game_setup.PATHS[Keys.CARDS], "Card_")
         for name, class_ in mapping.items():
             game.card_instances[name] = class_()
         super().__init__()

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Dominion Game Code"""
-# pylint: disable=too-many-arguments, too-many-branches, too-many-instance-attributes, invalid-name
 
 import json
 import random
 import sys
+from uuid import UUID
 from typing import List, Optional, Any
 
 import dominion.game_setup as game_setup
@@ -23,19 +23,17 @@ from dominion.State import State
 from dominion.TextPlayer import TextPlayer
 from dominion.Trait import Trait
 from dominion.Way import Way
-from dominion.game_setup import Flags
 
 
 ###############################################################################
 ###############################################################################
 ###############################################################################
-class Game:  # pylint: disable=too-many-public-methods
+class Game:
     """Game class"""
 
     def __init__(self, **kwargs: Any) -> None:
         self.players: dict[str, Player] = {}
-        self.bot = False
-        self.randobot = 0
+        self._cards: dict[UUID, Card] = {}
         self.card_piles: dict[str, CardPile] = {}
         self.states: dict[str, State] = {}
         self.artifacts: dict[str, Artifact] = {}
@@ -53,125 +51,19 @@ class Game:  # pylint: disable=too-many-public-methods
         self.discarded_hexes: list[Hex] = []
         self.trash_pile = PlayArea("trash", game=self)
         self.game_over = False
+        self.quiet = False
         self.heirlooms: list[str] = []
-        self.flags: dict[Flags, bool] = {
-            Flags.ALLOW_SHELTERS: True,
-            Flags.LOADED_TRAVELLERS: False,
-            Flags.LOADED_PRIZES: False,
-            Flags.ALLOW_POTIONS: True,
-        }
         self.current_player = None
         self.specials: dict[str, Any] = {}  # Special areas for specific card related stuff
-        self.paths = {
-            Keys.CARDS: "dominion/cards",
-            Keys.ALLIES: "dominion/allies",
-            Keys.HEXES: "dominion/hexes",
-            Keys.BOONS: "dominion/boons",
-            Keys.STATES: "dominion/states",
-            Keys.ARTIFACTS: "dominion/artifacts",
-            Keys.PROJECTS: "dominion/projects",
-            Keys.LOOT: "dominion/loot",
-            Keys.LANDMARK: "dominion/landmarks",
-            Keys.EVENT: "dominion/events",
-            Keys.TRAITS: "dominion/traits",
-            Keys.WAY: "dominion/ways",
-        }
-        self.init_numbers = {
-            Keys.EVENT: 0,
-            Keys.LANDMARK: 0,
-            Keys.PROJECTS: 0,
-            Keys.TRAITS: 0,
-            Keys.WAY: 0,
-        }
-        self.init: dict[Keys, list[Any]] = {
-            Keys.CARDS: [],
-            Keys.BAD_CARDS: [],
-            Keys.ALLIES: [],
-            Keys.EVENT: [],
-            Keys.PROJECTS: [],
-            Keys.LANDMARK: [],
-            Keys.TRAITS: [],
-            Keys.WAY: [],
-        }
-        # The _base_cards are in every game
-        self._base_cards = ["Copper", "Silver", "Gold", "Estate", "Duchy", "Province"]
-        self.parse_args(**kwargs)
-        if self.prosperity:
-            self._base_cards.append("Colony")
-            self._base_cards.append("Platinum")
+        game_setup.parse_args(self, **kwargs)
 
         self.card_mapping = game_setup.get_available_card_classes(self)
         self._original: dict[str, int | dict[str, dict[str, int]]] = {}
-        self._cards: dict[str, Card] = {}
         self.card_instances: dict[str, Card] = {}
 
     ###########################################################################
-    def parse_args(self, **args: Any) -> None:
-        """Parse the arguments passed to the class"""
-        self.paths[Keys.CARDS] = args.get("card_path", self.paths[Keys.CARDS])
-        self.paths[Keys.ALLIES] = args.get("ally_path", self.paths[Keys.ALLIES])
-        self.paths[Keys.HEXES] = args.get("hex_path", self.paths[Keys.HEXES])
-        self.paths[Keys.BOONS] = args.get("boon_path", self.paths[Keys.BOONS])
-        self.paths[Keys.STATES] = args.get("state_path", self.paths[Keys.STATES])
-        self.paths[Keys.ARTIFACTS] = args.get("artifact_path", self.paths[Keys.ARTIFACTS])
-        self.paths[Keys.PROJECTS] = args.get("project_path", self.paths[Keys.PROJECTS])
-        self.paths[Keys.LANDMARK] = args.get("landmark_path", self.paths[Keys.LANDMARK])
-        self.paths[Keys.EVENT] = args.get("event_path", self.paths[Keys.EVENT])
-        self.paths[Keys.TRAITS] = args.get("trait_path", self.paths[Keys.TRAITS])
-        self.paths[Keys.WAY] = args.get("way_path", self.paths[Keys.WAY])
-
-        self.init_numbers[Keys.EVENT] = args.get("num_events", 0)
-        self.init_numbers[Keys.WAY] = args.get("num_ways", 0)
-        self.init_numbers[Keys.LANDMARK] = args.get("num_landmarks", 0)
-        self.init_numbers[Keys.PROJECTS] = args.get("num_projects", 0)
-        self.init_numbers[Keys.TRAITS] = args.get("num_traits", 0)
-
-        self.init[Keys.CARDS] = args.get("initcards", [])
-        self.init[Keys.BAD_CARDS] = args.get("badcards", [])
-        self.init[Keys.EVENT] = args.get("events", [])
-        self.init[Keys.WAY] = args.get("ways", [])
-        self.init[Keys.LANDMARK] = args.get("landmarks", [])
-        self.init[Keys.PROJECTS] = args.get("projects", [])
-        self.init[Keys.ALLIES] = args.get("allies", [])
-        self.init[Keys.TRAITS] = args.get("traits", [])
-
-        self.num_stacks = args.get("num_stacks", 10)
-        self.flags[Flags.ALLOW_POTIONS] = args.get("potions", True)
-        self.prosperity = args.get("prosperity", False)
-        self.oldcards = args.get("oldcards", False)
-        self.quiet = args.get("quiet", False)
-        self.numplayers = args.get("numplayers", 2)
-        self.bot = args.get("bot", False)
-        self.randobot = args.get("randobot", 0)
-        self.flags[Flags.ALLOW_SHELTERS] = args.get("shelters", True)
-
-    ###########################################################################
-    def start_game(
-        self,
-        player_names: Optional[list[str]] = None,
-        plr_class: type[Player] = TextPlayer,
-    ) -> None:
-        """Initialise game bits"""
-
-        game_setup.load_decks(self, self.init[Keys.CARDS], self.num_stacks)
-        self.events = game_setup.load_events(self, self.init[Keys.EVENT], self.init_numbers[Keys.EVENT])
-        self.ways = game_setup.load_ways(self, self.init[Keys.WAY], self.init_numbers[Keys.WAY])
-        self.landmarks = game_setup.load_landmarks(self, self.init[Keys.LANDMARK], self.init_numbers[Keys.LANDMARK])
-        game_setup.load_artifacts(self)
-        game_setup.load_projects(self, self.init[Keys.PROJECTS], self.init_numbers[Keys.PROJECTS])
-        game_setup.load_traits(self, self.init[Keys.TRAITS], self.init_numbers[Keys.TRAITS])
-
-        if self.hexes or self.boons:
-            game_setup.load_states(self)
-        game_setup.check_card_requirements(self)
-        game_setup.setup_players(self, player_names, plr_class)
-        self.card_setup()  # Has to be after players have been created
-        game_setup.check_card_requirements(self)  # Again as setup can add requirements
-        self.current_player = self.player_list()[0]
-        if self.ally:
-            for plr in self.player_list():
-                plr.favors.add(1)
-        self._save_original()
+    def start_game(self, player_names: Optional[list[str]] = None, plr_class: type[Player] = TextPlayer) -> None:
+        game_setup.start_game(self, player_names, plr_class)
 
     ###########################################################################
     def _save_original(self) -> None:

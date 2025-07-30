@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, CardPile, game_setup
+from dominion import Card, Game, CardPile, game_setup, Keys
 
 
 ###############################################################################
@@ -22,7 +22,7 @@ class Card_Wizards(Card.Card):
 ###############################################################################
 class WizardCardPile(CardPile.CardPile):
     def __init__(self, game: Game.Game) -> None:
-        mapping = game_setup.get_card_classes("Wizard", game.paths["cards"], "Card_")
+        mapping = game_setup.get_card_classes("Wizard", game_setup.PATHS[Keys.CARDS], "Card_")
         for name, class_ in mapping.items():
             game.card_instances[name] = class_()
         super().__init__()
