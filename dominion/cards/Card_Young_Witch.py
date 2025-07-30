@@ -35,7 +35,7 @@ class Card_YoungWitch(Card.Card):
                 continue
             if not card.insupply or not card.purchasable:
                 continue
-            if card.name in game.init[Keys.BAD_CARDS]:
+            if card.name in game_setup.INIT_CARDS[Keys.BAD_CARDS]:
                 continue
             if card.cost not in (2, 3):
                 continue

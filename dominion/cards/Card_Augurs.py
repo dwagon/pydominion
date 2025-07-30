@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, CardPile, game_setup
+from dominion import Card, Game, CardPile, game_setup, Keys
 
 
 ###############################################################################
@@ -23,7 +23,7 @@ class Card_Augurs(Card.Card):
 ###############################################################################
 class AugurCardPile(CardPile.CardPile):
     def __init__(self, game):
-        mapping = game_setup.get_card_classes("Augur", game.paths["cards"])
+        mapping = game_setup.get_card_classes("Augur", game_setup.PATHS[Keys.CARDS])
         for name, class_ in mapping.items():
             game.card_instances[name] = class_()
         super().__init__()

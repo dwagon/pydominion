@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 ###############################################################################
 class LootPile(CardPile.CardPile):
     def __init__(self, game: "Game.Game") -> None:
-        self.mapping = game_setup.get_card_classes("Loot", game.paths[Keys.LOOT], "Loot_")
+        self.mapping = game_setup.get_card_classes("Loot", game_setup.PATHS[Keys.LOOT], "Loot_")
         for name, class_ in self.mapping.items():
             game.card_instances[name] = class_()
         super().__init__()

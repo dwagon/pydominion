@@ -2,7 +2,7 @@
 """https://wiki.dominionstrategy.com/index.php/Odyssey"""
 
 import unittest
-from dominion import Card, Game, CardPile, game_setup
+from dominion import Card, Game, CardPile, game_setup, Keys
 
 
 ###############################################################################
@@ -24,7 +24,7 @@ class Card_Odysseys(Card.Card):
 ###############################################################################
 class OdysseyCardPile(CardPile.CardPile):
     def __init__(self, game):
-        mapping = game_setup.get_card_classes("Odyssey", game.paths["cards"], "Card_")
+        mapping = game_setup.get_card_classes("Odyssey", game_setup.PATHS[Keys.CARDS], "Card_")
         for name, class_ in mapping.items():
             game.card_instances[name] = class_()
         super().__init__()
