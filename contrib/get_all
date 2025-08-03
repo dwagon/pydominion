@@ -1,13 +1,11 @@
 #!/bin/bash
-./cardset_grabber.py 'Dominion_(Base_Set)'
+./cardset_grabber.py Dominion
 ./cardset_grabber.py Intrigue
 ./cardset_grabber.py Seaside
 ./cardset_grabber.py Alchemy
 ./cardset_grabber.py Prosperity
-./cardset_grabber.py Cornucopia
 ./cardset_grabber.py Hinterlands
 ./cardset_grabber.py Dark_Ages
-./cardset_grabber.py Guilds
 ./cardset_grabber.py Adventures
 ./cardset_grabber.py Empires
 ./cardset_grabber.py Nocturne
@@ -15,4 +13,5 @@
 ./cardset_grabber.py Menagerie
 ./cardset_grabber.py Allies
 ./cardset_grabber.py 'Cornucopia_%26_Guilds'
-./cardset_grabber.py 'Plunder_(expansion)'
+./cardset_grabber.py Plunder
+./cardset_grabber.py 'Rising_Sun'
