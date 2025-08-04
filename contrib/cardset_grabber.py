@@ -61,6 +61,8 @@ def parse_table(table: bs4.PageElement, expansion: str) -> None:
         return
     for item in table.find_all("a"):
         if card_name := item.string:
+            if "/" in card_name:
+                card_name = card_name.split("/")[0]
             cards.append(card_name.strip())
     if set_name[0] in string.ascii_uppercase:
         save_set(set_name, cards, expansion)
