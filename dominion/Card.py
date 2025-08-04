@@ -35,6 +35,7 @@ class CardExpansion(Enum):
     RENAISSANCE = auto()
     SEASIDE = auto()
     CORNUCOPIA_GUILDS = auto()
+    RISING_SUN = auto()
     TEST = auto()
 
 
@@ -65,11 +66,13 @@ class CardType(Enum):
     LOOTER = auto()
     NIGHT = auto()
     ODYSSEY = auto()
+    OMEN = auto()
     PRIZE = auto()
     PROJECT = auto()
     REACTION = auto()
     RESERVE = auto()
     RUIN = auto()
+    SHADOW = auto()
     SHELTER = auto()
     SPIRIT = auto()
     STATE = auto()
