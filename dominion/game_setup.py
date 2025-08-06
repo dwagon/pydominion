@@ -338,7 +338,7 @@ def check_card_requirement(game: "Game", card: Card) -> None:
 
 ###########################################################################
 def get_num_sun_tokens(game: "Game") -> int:
-    return {2: 5, 3: 8, 4: 10, 5: 12, 6: 13}[game.numplayers]
+    return {1: 3, 2: 5, 3: 8, 4: 10, 5: 12, 6: 13}[game.numplayers]
 
 
 ###########################################################################
