@@ -126,7 +126,7 @@ hook_end_turn
 ------------
 Called at the end of the players turn
 
-hook_start_turn
+hook_start_turn(game, player) -> None
 --------------
 Called at the start of a players turn
 

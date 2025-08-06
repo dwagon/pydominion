@@ -56,7 +56,7 @@ class Game:
         self.game_over = False
         self.quiet = False
         self.heirlooms: list[str] = []
-        self.current_player = None
+        self.current_player: Optional[Player] = None
         self.sun_tokens: int = 0
         self.numplayers = 0
         self.specials: dict[str, Any] = {}  # Special areas for specific card related stuff
