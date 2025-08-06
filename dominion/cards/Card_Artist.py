@@ -2,7 +2,7 @@
 """https://wiki.dominionstrategy.com/index.php/Artist"""
 import unittest
 from collections import Counter
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -23,7 +23,10 @@ class Card_Artist(Card.Card):
             card_counts[card.name] += 1
         for count in card_counts.values():
             if count == 1:
-                player.pickup_card()
+                try:
+                    player.pickup_card()
+                except NoCardException:
+                    player.output("No more cards")
 
 
 ###############################################################################
