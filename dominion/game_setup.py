@@ -289,6 +289,7 @@ def use_ruins(game: "Game") -> None:
 
 ###########################################################################
 def check_card_requirement(game: "Game", card: Card) -> None:
+    """Ensure all the requirements (e.g Curses) for a card are also loaded"""
     for x in card.required_cards:
         if x == "Loot":
             load_loot(game)
@@ -406,11 +407,14 @@ def check_card_requirements(game: "Game") -> None:
         + list(game.hexes)
         + list(game.boons)
         + list(game.landmarks.values())
+        + [game.inactive_prophecy]
     )
     if game.ally:
         check_cards.append(game.ally)
 
     for card in check_cards:
+        if card is None:
+            continue
         check_card_requirement(game, card)
 
     if INIT_CARDS[Keys.ALLIES] and not game.ally:
@@ -618,6 +622,9 @@ def place_init_card(game: "Game", card: str, available: list[str]) -> Optional[i
         # Artifacts should be loaded by the requiring card but can still be specified
         # in a card set
         return 0
+    if prophecy_name := guess_card_name(game, card, "Prophecies"):
+        INIT_CARDS[Keys.PROPHECIES].append(prophecy_name)
+        return 0
     if card.lower() == "shelters":
         # Use of shelters handled elsewhere
         return 0
@@ -712,6 +719,8 @@ def parse_args(game: "Game", **args: Any) -> None:
     INIT_CARDS[Keys.LANDMARK] = args.get("landmarks", [])
     INIT_CARDS[Keys.PROJECTS] = args.get("projects", [])
     INIT_CARDS[Keys.PROPHECIES] = args.get("prophecies", [])
+    if "prophecies" not in args:  # pragma: no coverage
+        INIT_CARDS[Keys.PROPHECIES] = args.get("prophecy", [])
     INIT_CARDS[Keys.TRAITS] = args.get("traits", [])
     INIT_CARDS[Keys.WAY] = args.get("ways", [])
 

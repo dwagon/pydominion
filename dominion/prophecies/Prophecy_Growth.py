@@ -46,7 +46,7 @@ def botresponse(player, kind, args=None, kwargs=None) -> list["Card.Card"]:  # p
 ###############################################################################
 class Test_Growth(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=1, prophecy=["Growth"], initcards=["Mountain Shrine"])
+        self.g = Game.TestGame(numplayers=1, prophecies=["Growth"], initcards=["Mountain Shrine"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.g.reveal_prophecy()
