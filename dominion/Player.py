@@ -968,7 +968,7 @@ class Player:
         for landmark in self.game.landmarks.values():
             self.output(f"| Landmark {landmark.name}: {landmark.description(self)}")
         self.output(f"| Tokens: {self._display_tokens()}")
-        if self.game.inactive_prophecy:
+        if self.game.inactive_prophecy and not self.game.prophecy:
             self.output(f"| Inactive Prophecy: {self.game.inactive_prophecy} ({self.game.sun_tokens} Sun Tokens)")
         if self.game.prophecy:
             self.output(f"| Prophecy: {self.game.prophecy}: {self.game.prophecy.description(self)}")

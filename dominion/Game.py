@@ -81,13 +81,13 @@ class Game:
         self.sun_tokens -= 1
         if self.sun_tokens <= 0:
             self.reveal_prophecy()
+            self.sun_tokens = 0
         return self.sun_tokens
 
     ###########################################################################
     def reveal_prophecy(self) -> None:
         self.output(f"Prophecy {self.inactive_prophecy} is now active")
         self.prophecy = self.inactive_prophecy
-        self.inactive_prophecy = None
 
     ###########################################################################
     def player_list(self) -> list[Player]:
