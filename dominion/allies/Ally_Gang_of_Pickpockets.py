@@ -1,19 +1,19 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Gang_of_Pickpockets"""
+"""http://wiki.dominionstrategy.com/index.php/Gang_of_Pickpockets"""
 
 import unittest
-from dominion import Card, Game, Piles, Ally
+from dominion import Card, Game, Piles, Ally, Player
 
 
 ###############################################################################
 class Ally_Gang_Pickpockets(Ally.Ally):
-    def __init__(self):
+    def __init__(self) -> None:
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
         self.desc = """At the start of your turn, discard down to 4 cards in hand unless you spend a Favor."""
         self.name = "Gang of Pickpockets"
 
-    def hook_start_turn(self, game, player):
+    def hook_start_turn(self, game: "Game.Game", player: "Player.Player") -> None:
         if not player.favors.get():
             player.plr_discard_down_to(4)
             return
@@ -29,13 +29,22 @@ class Ally_Gang_Pickpockets(Ally.Ally):
 
 
 ###############################################################################
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+    print(f"DBG {kind=} {args=} {kwargs=}")
+    if kind == "choices":
+        return False
+    num_to_discard = len(player.piles[Piles.HAND]) - 4
+    return player.pick_to_discard(num_to_discard)
+
+
+###############################################################################
 class Test_Gang_Pickpockets(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, allies="Gang of Pickpockets", initcards=["Underling"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_spend_favor(self):
+    def test_spend_favor(self) -> None:
         """Spend a favor"""
         self.plr.favors.set(1)
         self.plr.test_input = ["Spend"]
@@ -43,7 +52,7 @@ class Test_Gang_Pickpockets(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertEqual(self.plr.favors.get(), 0)
 
-    def test_discard(self):
+    def test_discard(self) -> None:
         """Discard"""
         self.plr.piles[Piles.HAND].set("Estate", "Duchy", "Silver", "Gold", "Copper")
         self.plr.favors.set(1)
