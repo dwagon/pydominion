@@ -4,11 +4,11 @@
 import json
 import random
 import sys
-from uuid import UUID
 from typing import List, Optional, Any
+from uuid import UUID
 
 import dominion.game_setup as game_setup
-from dominion import Keys, NoCardException
+from dominion import NoCardException
 from dominion.Artifact import Artifact
 from dominion.Boon import Boon
 from dominion.Card import Card
@@ -19,6 +19,7 @@ from dominion.Landmark import Landmark
 from dominion.PlayArea import PlayArea
 from dominion.Player import Player
 from dominion.Project import Project
+from dominion.Prophecy import Prophecy
 from dominion.State import State
 from dominion.TextPlayer import TextPlayer
 from dominion.Trait import Trait
@@ -50,10 +51,14 @@ class Game:
         self.ally = None
         self.discarded_hexes: list[Hex] = []
         self.trash_pile = PlayArea("trash", game=self)
+        self.inactive_prophecy: Optional[Prophecy] = None
+        self.prophecy: Optional[Prophecy] = None
         self.game_over = False
         self.quiet = False
         self.heirlooms: list[str] = []
         self.current_player = None
+        self.sun_tokens: int = 0
+        self.numplayers = 0
         self.specials: dict[str, Any] = {}  # Special areas for specific card related stuff
         game_setup.parse_args(self, **kwargs)
 
@@ -70,6 +75,19 @@ class Game:
         """Save original card state for debugging purposes"""
         self._original["count"] = self._count_all_cards()
         self._original["total_cards"] = self.count_cards()
+
+    ###########################################################################
+    def remove_sun_token(self) -> int:
+        self.sun_tokens -= 1
+        if self.sun_tokens <= 0:
+            self.reveal_prophecy()
+            self.sun_tokens = 0
+        return self.sun_tokens
+
+    ###########################################################################
+    def reveal_prophecy(self) -> None:
+        self.output(f"Prophecy {self.inactive_prophecy} is now active")
+        self.prophecy = self.inactive_prophecy
 
     ###########################################################################
     def player_list(self) -> list[Player]:
@@ -370,6 +388,7 @@ class Game:
         """TODO"""
         self._validate_cards()
         self.current_player = self.player_to_left(self.current_player)
+        assert self.current_player is not None
         self.current_player.start_turn()
         self.current_player.turn()
         self.current_player.end_turn()

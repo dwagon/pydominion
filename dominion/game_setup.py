@@ -23,6 +23,7 @@ from dominion.Loot import LootPile
 from dominion.Names import playerNames
 from dominion.Player import Player
 from dominion.Project import Project
+from dominion.Prophecy import Prophecy
 from dominion.RandobotPlayer import RandobotPlayer
 from dominion.TextPlayer import TextPlayer
 from dominion.Way import Way
@@ -151,6 +152,19 @@ def load_projects(game: "Game", specified: list[str], num_required: int) -> dict
     if projects:
         game.output(f"Playing with Project {projects}")
     return cast(dict[str, Project], projects)
+
+
+###########################################################################
+def load_prophecies(game: "Game", specified: list[str]) -> Prophecy:
+    """Load all the prophecies and return one"""
+    prophecies = load_non_kingdom_cards(
+        game,
+        "Prophecies",
+        specified,
+        1,
+    )
+    prophecy = prophecies[list(prophecies.keys())[0]]
+    return cast(Prophecy, prophecy)
 
 
 ###########################################################################
@@ -316,6 +330,15 @@ def check_card_requirement(game: "Game", card: Card) -> None:
     if card.needsprojects and not game.projects:
         game.projects = load_projects(game, INIT_CARDS[Keys.PROJECTS], INIT_NUMBERS[Keys.PROJECTS])
         game.output(f"Using projects as required by {card}")
+    if card.isOmen() and not game.inactive_prophecy:
+        game.inactive_prophecy = load_prophecies(game, INIT_CARDS[Keys.PROPHECIES])
+        game.output(f"Playing with Prophecy {game.inactive_prophecy}")
+        game.sun_tokens = get_num_sun_tokens(game)
+
+
+###########################################################################
+def get_num_sun_tokens(game: "Game") -> int:
+    return {1: 3, 2: 5, 3: 8, 4: 10, 5: 12, 6: 13}[game.numplayers]
 
 
 ###########################################################################
@@ -344,6 +367,7 @@ def get_available_card_classes(game: "Game") -> dict[str, dict[str, type[Card]]]
     mapping["State"] = get_card_classes("State", PATHS[Keys.STATES], "State_")
     mapping["Artifact"] = get_card_classes("Artifact", PATHS[Keys.ARTIFACTS], "Artifact_")
     mapping["Project"] = get_card_classes("Project", PATHS[Keys.PROJECTS], "Project_")
+    mapping["Prophecies"] = get_card_classes("Prophecy", PATHS[Keys.PROPHECIES], "Prophecy_")
     mapping["Ally"] = get_card_classes("Ally", PATHS[Keys.ALLIES], "Ally_")
     mapping["Trait"] = get_card_classes("Trait", PATHS[Keys.TRAITS], "Trait_")
     mapping["Loot"] = get_card_classes("Loot", PATHS[Keys.LOOT], "Loot_")
@@ -661,33 +685,36 @@ def parse_args(game: "Game", **args: Any) -> None:
     """Parse the arguments passed to the class"""
     global RANDOBOT, BOT
 
-    PATHS[Keys.CARDS] = args.get("card_path", "dominion/cards")
     PATHS[Keys.ALLIES] = args.get("ally_path", "dominion/allies")
-    PATHS[Keys.HEXES] = args.get("hex_path", "dominion/hexes")
-    PATHS[Keys.BOONS] = args.get("boon_path", "dominion/boons")
-    PATHS[Keys.STATES] = args.get("state_path", "dominion/states")
     PATHS[Keys.ARTIFACTS] = args.get("artifact_path", "dominion/artifacts")
-    PATHS[Keys.PROJECTS] = args.get("project_path", "dominion/projects")
-    PATHS[Keys.LOOT] = args.get("loot_oath", "dominion/loot")
-    PATHS[Keys.LANDMARK] = args.get("landmark_path", "dominion/landmarks")
+    PATHS[Keys.BOONS] = args.get("boon_path", "dominion/boons")
+    PATHS[Keys.CARDS] = args.get("card_path", "dominion/cards")
     PATHS[Keys.EVENT] = args.get("event_path", "dominion/events")
+    PATHS[Keys.HEXES] = args.get("hex_path", "dominion/hexes")
+    PATHS[Keys.LANDMARK] = args.get("landmark_path", "dominion/landmarks")
+    PATHS[Keys.LOOT] = args.get("loot_oath", "dominion/loot")
+    PATHS[Keys.PROJECTS] = args.get("project_path", "dominion/projects")
+    PATHS[Keys.PROPHECIES] = args.get("prophecies_path", "dominion/prophecies")
+    PATHS[Keys.STATES] = args.get("state_path", "dominion/states")
     PATHS[Keys.TRAITS] = args.get("trait_path", "dominion/traits")
     PATHS[Keys.WAY] = args.get("way_path", "dominion/ways")
 
     INIT_NUMBERS[Keys.EVENT] = args.get("num_events", 0)
-    INIT_NUMBERS[Keys.WAY] = args.get("num_ways", 0)
     INIT_NUMBERS[Keys.LANDMARK] = args.get("num_landmarks", 0)
     INIT_NUMBERS[Keys.PROJECTS] = args.get("num_projects", 0)
     INIT_NUMBERS[Keys.TRAITS] = args.get("num_traits", 0)
+    INIT_NUMBERS[Keys.WAY] = args.get("num_ways", 0)
 
-    INIT_CARDS[Keys.CARDS] = args.get("initcards", [])
+    INIT_CARDS[Keys.ALLIES] = args.get("allies", [])
     INIT_CARDS[Keys.BAD_CARDS] = args.get("badcards", [])
+    INIT_CARDS[Keys.CARDS] = args.get("initcards", [])
     INIT_CARDS[Keys.EVENT] = args.get("events", [])
-    INIT_CARDS[Keys.WAY] = args.get("ways", [])
     INIT_CARDS[Keys.LANDMARK] = args.get("landmarks", [])
     INIT_CARDS[Keys.PROJECTS] = args.get("projects", [])
-    INIT_CARDS[Keys.ALLIES] = args.get("allies", [])
+    INIT_CARDS[Keys.PROPHECIES] = args.get("prophecies", [])
     INIT_CARDS[Keys.TRAITS] = args.get("traits", [])
+    INIT_CARDS[Keys.WAY] = args.get("ways", [])
+
     global NUM_STACKS
     NUM_STACKS = args.get("num_stacks", 10)
     FLAGS[Flag.ALLOW_POTIONS] = args.get("potions", True)

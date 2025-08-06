@@ -247,6 +247,10 @@ class Card:
         return self._is_type(CardType.GATHERING)
 
     ##########################################################################
+    def isOmen(self) -> bool:
+        return self._is_type(CardType.OMEN)
+
+    ##########################################################################
     def isCommand(self) -> bool:
         """http://wiki.dominionstrategy.com/index.php/Command"""
         return self._is_type(CardType.COMMAND)

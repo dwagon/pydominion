@@ -968,6 +968,10 @@ class Player:
         for landmark in self.game.landmarks.values():
             self.output(f"| Landmark {landmark.name}: {landmark.description(self)}")
         self.output(f"| Tokens: {self._display_tokens()}")
+        if self.game.inactive_prophecy and not self.game.prophecy:
+            self.output(f"| Inactive Prophecy: {self.game.inactive_prophecy} ({self.game.sun_tokens} Sun Tokens)")
+        if self.game.prophecy:
+            self.output(f"| Prophecy: {self.game.prophecy}: {self.game.prophecy.description(self)}")
         if self.states:
             self.output(f"| States: {', '.join([_.name for _ in self.states])}")
         if self.piles[Piles.DEFER]:
@@ -1319,6 +1323,8 @@ class Player:
         options |= self.hook_all_players_pre_play(card)
 
         self._play_card_tokens(card)
+        if card.isOmen():
+            self.game.remove_sun_token()
 
         if not self._play_enough_actions(card, cost_action):
             self.currcards.pop()
@@ -1589,6 +1595,7 @@ class Player:
             + self.artifacts
             + self.game.ally
             + self.game.traits
+            + self.game.prophecy
         )
 
     ###########################################################################

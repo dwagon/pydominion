@@ -51,6 +51,15 @@ def parse_cli_args(args: Optional[list[str]] = None) -> argparse.Namespace:
     )
     parser.add_argument("--landmark_path", default="dominion/landmarks", help=argparse.SUPPRESS)
 
+    parser.add_argument(
+        "--prophecy",
+        action="append",
+        dest="prophecies",
+        default=[],
+        help="Include prophecy",
+    )
+    parser.add_argument("--prophecies_path", default="dominion/prophecies", help=argparse.SUPPRESS)
+
     parser.add_argument("--num_projects", type=int, default=0, help="Number of projects to use")
 
     parser.add_argument("--num_traits", type=int, default=0, help="Number of traits to use")

@@ -192,6 +192,27 @@ class TestWhoWon(unittest.TestCase):
 
 
 ###############################################################################
+class TestProphecies(unittest.TestCase):
+    def setUp(self) -> None:
+        self.g = Game.TestGame(numplayers=2, initcards=["Mountain Shrine"])
+        self.g.start_game()
+
+    def test_sun_counters(self) -> None:
+        self.assertIsNotNone(self.g.inactive_prophecy)
+        self.assertIsNone(self.g.prophecy)
+        self.assertEqual(self.g.sun_tokens, 5)
+        self.g.remove_sun_token()
+        self.assertEqual(self.g.sun_tokens, 4)
+
+    def test_reveal_prophecy(self) -> None:
+        self.assertIsNotNone(self.g.inactive_prophecy)
+        self.assertIsNone(self.g.prophecy)
+        for i in range(6):
+            self.g.remove_sun_token()
+        self.assertIsNotNone(self.g.prophecy)
+
+
+###############################################################################
 class TestAssignTrait(unittest.TestCase):
     """Test assign_trait()"""
 

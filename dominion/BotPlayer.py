@@ -2,7 +2,8 @@
 
 import inspect
 import sys
-from typing import Any, TYPE_CHECKING, Optional
+from types import ModuleType
+from typing import Any, TYPE_CHECKING, Optional, cast
 
 import colorama
 
@@ -95,7 +96,7 @@ class BotPlayer(Player):
 
     ###########################################################################
     @classmethod
-    def get_calling_card(cls) -> Optional[Any]:  # Should be type module
+    def get_calling_card(cls) -> Optional[ModuleType]:  # Should be type module
         """Get the module that represents the card doing requiring the response"""
         stack = inspect.stack()
         for rec in stack:
@@ -118,15 +119,15 @@ class BotPlayer(Player):
     def card_sel(self, num: int = 1, **kwargs: Any) -> list["Card"]:
         mod = self.get_calling_card()
         if hasattr(mod, "botresponse"):
-            return mod.botresponse(self, "cards", kwargs=kwargs)
-        assert False, f"BigMoneyBot can't select cards from {mod.__name__} {kwargs=}"
+            return cast(list["Card"], mod.botresponse(self, "cards", kwargs=kwargs))  # type: ignore
+        assert False, f"BigMoneyBot can't select cards from {mod.__name__} {kwargs=}"  # type: ignore
 
     ###########################################################################
-    def plr_choose_options(self, prompt, *choices):
+    def plr_choose_options(self, prompt, *choices) -> Any:
         mod = self.get_calling_card()
         if hasattr(mod, "botresponse"):
-            return mod.botresponse(self, "choices", args=choices)
-        assert False, f"BigMoneyBot can't choose options from {mod.__name__} {choices=}"
+            return mod.botresponse(self, "choices", args=choices)  # type: ignore
+        assert False, f"BigMoneyBot can't choose options from {mod.__name__} {choices=}"  # type: ignore
 
     ###########################################################################
     def pick_to_discard(self, num_to_discard: int, keepvic: bool = False) -> list["Card"]:
