@@ -1,6 +1,6 @@
 .PHONY: venv
 
-VENV_HOME := ${WORKON_HOME}/pydominion
+VENV_HOME := .venv
 
 all:
 
