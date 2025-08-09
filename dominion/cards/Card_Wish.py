@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card, Game, Piles
 
 
@@ -33,7 +34,7 @@ class Card_Wish(Card.Card):
 ###############################################################################
 class TestWish(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Wish"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Wish"], badcards=["Gold Mine"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Wish")

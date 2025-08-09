@@ -2,7 +2,8 @@
 # pylint: disable=protected-access
 
 import unittest
-from dominion import Card, Game, PlayArea, Piles, Player, NoCardException, OptionKeys
+
+from dominion import Card, Game, PlayArea, Piles, Player, OptionKeys
 
 GROTTO = "grotto"
 
@@ -21,7 +22,7 @@ class Card_Grotto(Card.Card):
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         if GROTTO not in player.specials:
-            player.specials[GROTTO] = PlayArea.PlayArea([])
+            player.specials[GROTTO] = PlayArea.PlayArea(initial=[])
         player.output("Set aside up to 4 cards on Grotto")
         for _ in range(4):
             if not self._set_aside(player):

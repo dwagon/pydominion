@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Sea_Witch"""
+"""http://wiki.dominionstrategy.com/index.php/Sea_Witch"""
 
 import unittest
+
 from dominion import Card, Game, Piles, Player, NoCardException, OptionKeys
 
 
@@ -28,7 +29,7 @@ class Card_SeaWitch(Card.Card):
         for victim in player.attack_victims():
             try:
                 victim.gain_card("Curse")
-                player.output(f"{player}'s Sea Witch cursed you")
+                victim.output(f"{player}'s Sea Witch cursed you")
                 player.output(f"{victim} got cursed")
             except NoCardException:
                 player.output("No more Curses")
