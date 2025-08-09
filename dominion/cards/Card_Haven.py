@@ -12,7 +12,7 @@ class Card_Haven(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
         self.base = Card.CardExpansion.SEASIDE
-        self.desc = """+1 Card; +1 Action; Set aside a card from your hand face down (under this). 
+        self.desc = """+1 Card; +1 Action; Set aside a card from your hand face down (under this).
         At the start of your next turn, put it into your hand."""
         self.name = "Haven"
         self.cards = 1
@@ -23,7 +23,7 @@ class Card_Haven(Card.Card):
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """Set aside a card from your hand face down."""
         if card := player.plr_pick_card(force=True, prompt="Pick card to put into hand next turn"):
-            player.add_card(card, "duration")
+            player.secret_count += 1
             player.piles[Piles.HAND].remove(card)
             self.savedHavenCard = card
 
@@ -32,7 +32,8 @@ class Card_Haven(Card.Card):
         card = self.savedHavenCard
         if not card:
             return {}
-        player.move_card(card, Piles.HAND)
+        player.secret_count -= 1
+        player.add_card(card, Piles.HAND)
         player.output(f"Pulling {card} out of from haven")
         self.savedHavenCard = None
         return {}
@@ -55,7 +56,6 @@ class TestHaven(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.piles[Piles.DURATION].size(), 2)
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.piles[Piles.PLAYED].size(), 1)
