@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
 class Card_StoneMason(Card.Card):
-    """ Stonemason"""
+    """Stonemason"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -38,27 +40,22 @@ class Card_StoneMason(Card.Card):
     def hook_overpay(self, game, player, amount):
         if amount:
             player.plr_gain_card(
-                amount,
-                "less",
-                types={Card.CardType.ACTION: True},
-                prompt=f"Gain a card costing up to {amount}"
+                amount, "less", types={Card.CardType.ACTION: True}, prompt=f"Gain a card costing up to {amount}"
             )
             player.plr_gain_card(
-                amount,
-                "less",
-                types={Card.CardType.ACTION: True},
-                prompt=f"Gain another card costing up to {amount}"
+                amount, "less", types={Card.CardType.ACTION: True}, prompt=f"Gain another card costing up to {amount}"
             )
 
 
 ###############################################################################
 class TestStoneMason(unittest.TestCase):
-    """ Test Stonemason"""
+    """Test Stonemason"""
+
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
             initcards=["Stonemason", "Moat"],
-            badcards=["Fool's Gold", "Silver Mine"],
+            badcards=["Fool's Gold", "Silver Mine", "Gold Mine"],
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
