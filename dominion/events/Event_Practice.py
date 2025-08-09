@@ -17,16 +17,14 @@ class Event_Practice(Event.Event):
     def special(self, game, player):
         """You may play an Action card from your hand twice."""
         actions = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
-        if not actions:
+        if not actions:  # pragma: no coverage
             player.output("No suitable actions to perform")
             return
-        cards = player.card_sel(cardsrc=actions)
-        if not cards:
-            return
-        card = cards[0]
-        for i in range(1, 3):
-            player.output(f"Number {i} play of {card}")
-            player.play_card(card, discard=False, cost_action=False)
+        if cards := player.card_sel(cardsrc=actions):
+            card = cards[0]
+            for i in range(1, 3):
+                player.output(f"Number {i} play of {card}")
+                player.play_card(card, discard=False, cost_action=False)
 
 
 ###############################################################################
