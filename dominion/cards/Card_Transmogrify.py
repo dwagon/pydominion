@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Whens
 
 
@@ -34,7 +35,7 @@ class Test_Transmogrify(unittest.TestCase):
         self.g = Game.TestGame(
             numplayers=1,
             initcards=["Transmogrify"],
-            badcards=["Duchess", "Fool's Gold"],
+            badcards=["Duchess", "Fool's Gold", "Gold Mine"],
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
