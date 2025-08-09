@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, NoCardException
 
 
@@ -23,9 +24,7 @@ class Card_WishingWell(Card.Card):
         options = [{"selector": "0", "print": "No guess", "card": None}]
         index = 1
         for name, card_pile in sorted(game.get_card_piles()):
-            options.append(
-                {"selector": f"{index}", "print": f"Guess {name}", "card": name}
-            )
+            options.append({"selector": f"{index}", "print": f"Guess {name}", "card": name})
             index += 1
         o = player.user_input(options, "Guess the top card")
         if not o["card"]:
@@ -49,7 +48,7 @@ class TestWishingWell(unittest.TestCase):
         self.g = Game.TestGame(
             numplayers=1,
             initcards=["Wishing Well"],
-            badcards=["Fool's Gold", "Tournament", "Pooka", "Silver Mine"],
+            badcards=["Fool's Gold", "Tournament", "Pooka", "Silver Mine", "Gold Mine"],
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
