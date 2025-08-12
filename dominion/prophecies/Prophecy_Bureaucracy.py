@@ -3,7 +3,7 @@
 import unittest
 from typing import Any
 
-from dominion import Card, Game, Prophecy, Player, OptionKeys, Piles
+from dominion import Card, Game, Prophecy, Player, OptionKeys, Piles, NoCardException
 
 
 ###############################################################################
@@ -16,8 +16,11 @@ class Prophecy_Bureaucracy(Prophecy.Prophecy):
 
     def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         if card.cost != 0 or card.debtcost:
-            player.output(f"Gaining a Copper from Bureaucracy")
-            player.gain_card("Copper")
+            try:
+                player.gain_card("Copper")
+                player.output(f"Gaining a Copper from Bureaucracy from gaining {card} with cost {card.cost}")
+            except NoCardException:  # pragma: no coverage
+                player.output("No more Coppers")
         return {}
 
 
