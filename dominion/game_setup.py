@@ -737,6 +737,17 @@ def parse_args(game: "Game", **args: Any) -> None:
 
 
 ###########################################################################
+def card_setup(game: "Game") -> None:
+    """Run the setup() method for all cards"""
+    for name, card_pile in list(game.card_piles.items()):
+        card_pile.setup(game=game)
+    for landmark in list(game.landmarks.values()):
+        landmark.setup(game=game)
+    if game.inactive_prophecy:
+        game.inactive_prophecy.setup(game=game)
+
+
+###########################################################################
 def start_game(
     game: "Game",
     player_names: Optional[list[str]] = None,
@@ -758,7 +769,7 @@ def start_game(
         load_states(game)
     check_card_requirements(game)
     setup_players(game, player_names, plr_class)
-    game.card_setup()  # Has to be after players have been created
+    card_setup(game)  # Has to be after players have been created
     check_card_requirements(game)  # Again as setup can add requirements
     game.current_player = game.player_list()[0]
     if game.ally:
