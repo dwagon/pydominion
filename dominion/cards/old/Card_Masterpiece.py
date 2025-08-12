@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card, Game, Piles, Player, Phase, NoCardException
 
 
@@ -34,7 +35,7 @@ class Card_Masterpiece(Card.Card):
 ###############################################################################
 class TestMasterpiece(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=1, initcards=["Masterpiece"])
+        self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Masterpiece"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Masterpiece")

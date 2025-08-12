@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -38,16 +39,14 @@ class Card_Followers(Card.Card):
 ###############################################################################
 class TestFollowers(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Tournament"])
+        self.g = Game.TestGame(quiet=True, oldcards=True, numplayers=2, initcards=["Tournament"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g.get_card_from_pile("Followers")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self) -> None:
-        self.victim.piles[Piles.HAND].set(
-            "Copper", "Copper", "Copper", "Silver", "Gold"
-        )
+        self.victim.piles[Piles.HAND].set("Copper", "Copper", "Copper", "Silver", "Gold")
         self.victim.test_input = ["silver", "gold", "finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)

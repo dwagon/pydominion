@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+
 import dominion.Card as Card
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -31,7 +32,7 @@ class Card_Horsetraders(Card.Card):
 ###############################################################################
 class Test_Horsetraders(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Horse Traders"])
+        self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Horse Traders"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Horse Traders")
