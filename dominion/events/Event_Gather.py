@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Gather """
+"""https://wiki.dominionstrategy.com/index.php/Gather"""
 
 import unittest
+
 from dominion import Card, Game, Piles, Event
 
 
@@ -35,9 +36,9 @@ class Test_Gather(unittest.TestCase):
     def test_play(self):
         """Perform a Gather"""
         self.plr.coins.add(7)
-        self.plr.test_input=["Silver", "Militia", "Duchy"]
+        self.plr.test_input = ["Get Silver", "Get Militia", "Get Duchy"]
         self.plr.perform_event(self.card)
-        self.assertIn("Silver", self.plr.piles[Piles.DISCARD] )
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
         self.assertIn("Militia", self.plr.piles[Piles.DISCARD])
         self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
 
