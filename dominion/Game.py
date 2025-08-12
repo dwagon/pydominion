@@ -95,14 +95,6 @@ class Game:
         return list(self.players.values())
 
     ###########################################################################
-    def card_setup(self) -> None:
-        """Run the setup() method for all cards"""
-        for name, card_pile in list(self.card_piles.items()):
-            card_pile.setup(game=self)
-        for landmark in list(self.landmarks.values()):
-            landmark.setup(game=self)
-
-    ###########################################################################
     def count_cards(self) -> int:
         """Count the number of cards in the game"""
         count = {"trash": self.trash_pile.size()}

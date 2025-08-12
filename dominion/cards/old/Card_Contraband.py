@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Contraband"""
+"""http://wiki.dominionstrategy.com/index.php/Contraband"""
 
 import unittest
 
@@ -31,9 +31,7 @@ class Card_Contraband(Card.Card):
             if not card or not card.purchasable:
                 continue
             options.append((name, name))
-        forbid = plr.plr_choose_options(
-            f"Contraband: Pick a stack that {player.name} can't buy this turn", *options
-        )
+        forbid = plr.plr_choose_options(f"Contraband: Pick a stack that {player.name} can't buy this turn", *options)
         player.output(f"Forbidden to buy {forbid}")
         player.forbidden_to_buy.append(forbid)
 
@@ -53,7 +51,7 @@ class TestContraband(unittest.TestCase):
             numplayers=2,
             oldcards=True,
             initcards=["Contraband"],
-            badcards=["Fool's Gold"],
+            badcards=["Fool's Gold", "Gold Mine"],
         )
         self.g.start_game()
         self.plr, self.nbr = self.g.player_list()
