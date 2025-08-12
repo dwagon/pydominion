@@ -2,7 +2,6 @@
 """http://wiki.dominionstrategy.com/index.php/Rope"""
 
 import unittest
-from typing import Optional
 
 from dominion import Game, Card, Piles, OptionKeys
 
@@ -50,7 +49,7 @@ class Test_Rope(unittest.TestCase):
     def test_duration(self):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.plr.test_input = ["Silver"]
+        self.plr.test_input = ["Trash Silver"]
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Duchy")
         self.plr.start_turn()
         self.assertIn("Silver", self.g.trash_pile)
