@@ -1,38 +1,40 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles
 
 
 ###############################################################################
-class Card_BagOfGold(Card.Card):
+class Card_Princess(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.PRIZE]
         self.base = Card.CardExpansion.CORNUCOPIA
-        self.name = "Bag of Gold"
+        self.name = "Princess"
         self.purchasable = False
         self.cost = 0
-        self.desc = "+1 Action. Gain a Gold, putting it on top of your deck."
-        self.actions = 1
+        self.desc = "+1 Buy; While this is in play, cards cost 2 less, but not less than 0."
+        self.buys = 1
 
-    def special(self, game, player):
-        player.gain_card("Gold", "topdeck")
+    def hook_card_cost(self, game, player, card):
+        return -2
 
 
 ###############################################################################
-class TestBagOfGold(unittest.TestCase):
+class TestPrincess(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Tournament"])
+        self.g = Game.TestGame(quiet=True, oldcards=True, numplayers=1, initcards=["Tournament"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.get_card_from_pile("Bag of Gold")
+        self.card = self.g.get_card_from_pile("Princess")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Gold")
-        self.assertEqual(self.plr.actions.get(), 1)
+        self.assertEqual(self.plr.buys.get(), 2)
+        gold = self.g.get_card_from_pile("Gold")
+        self.assertEqual(self.plr.card_cost(gold), 4)
 
 
 ###############################################################################

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -42,7 +43,7 @@ def fortune_attack(victim: "Player.Player", attacker: "Player.Player") -> None:
 ###############################################################################
 class Test_FortuneTeller(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=2, initcards=["Fortune Teller"])
+        self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Fortune Teller"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g.get_card_from_pile("Fortune Teller")

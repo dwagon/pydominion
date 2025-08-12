@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 
@@ -24,7 +25,7 @@ class Card_Diadem(Card.Card):
 ###############################################################################
 class TestDiadem(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Tournament"])
+        self.g = Game.TestGame(quiet=True, oldcards=True, numplayers=1, initcards=["Tournament"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Diadem")

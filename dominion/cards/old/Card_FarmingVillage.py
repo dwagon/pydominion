@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -38,7 +39,7 @@ class Card_FarmingVillage(Card.Card):
 ###############################################################################
 class TestFarmingVillage(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=1, initcards=["Farming Village"])
+        self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Farming Village"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Farming Village")
@@ -55,9 +56,7 @@ class TestFarmingVillage(unittest.TestCase):
 
     def test_play_action(self) -> None:
         """Play farming village with an action in deck"""
-        self.plr.piles[Piles.DECK].set(
-            "Estate", "Estate", "Farming Village", "Estate", "Estate"
-        )
+        self.plr.piles[Piles.DECK].set("Estate", "Estate", "Farming Village", "Estate", "Estate")
         self.plr.play_card(self.card)
         self.assertIn("Farming Village", self.plr.piles[Piles.HAND])
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)

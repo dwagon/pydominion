@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -10,7 +11,9 @@ class Card_Harvest(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.CORNUCOPIA
-        self.desc = """Reveal the top 4 cards of your deck, then discard them. Coin per differently named card revealed."""
+        self.desc = (
+            """Reveal the top 4 cards of your deck, then discard them. Coin per differently named card revealed."""
+        )
         self.name = "Harvest"
         self.cost = 5
 
@@ -32,7 +35,7 @@ class Card_Harvest(Card.Card):
 ###############################################################################
 class Test_Harvest(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=1, initcards=["Harvest"])
+        self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Harvest"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Harvest")

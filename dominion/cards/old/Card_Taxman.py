@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 
@@ -42,9 +43,7 @@ class Card_Taxman(Card.Card):
 ###############################################################################
 class Test_Taxman(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            numplayers=2, initcards=["Taxman"], badcards=["Fool's Gold"]
-        )
+        self.g = Game.TestGame(numplayers=2, initcards=["Taxman"], oldcards=True, badcards=["Fool's Gold"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g.get_card_from_pile("Taxman")
@@ -52,9 +51,7 @@ class Test_Taxman(unittest.TestCase):
     def test_play(self) -> None:
         """Play a Taxman"""
         self.plr.piles[Piles.HAND].set("Silver")
-        self.victim.piles[Piles.HAND].set(
-            "Copper", "Copper", "Estate", "Duchy", "Silver"
-        )
+        self.victim.piles[Piles.HAND].set("Copper", "Copper", "Estate", "Duchy", "Silver")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Silver", "Get Gold"]
         self.plr.play_card(self.card)

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card, Game, Piles, Player, Phase, NoCardException
 
 
@@ -34,9 +35,7 @@ class Card_Doctor(Card.Card):
             sel = f"{index}"
             options.append({"selector": sel, "print": f"Guess {name}", "card": name})
             index += 1
-        o = player.user_input(
-            options, "Pick which card to trash if it is in the top 3 of your deck"
-        )
+        o = player.user_input(options, "Pick which card to trash if it is in the top 3 of your deck")
         cards: list[Card.Card] = []
         for _ in range(3):
             try:
@@ -54,9 +53,7 @@ class Card_Doctor(Card.Card):
                 player.output(f"Putting {card} back")
                 player.add_card(card, Piles.DECK)
 
-    def hook_overpay(
-        self, game: "Game.Game", player: "Player.Player", amount: int
-    ) -> None:
+    def hook_overpay(self, game: "Game.Game", player: "Player.Player", amount: int) -> None:
         """For each 1 you overpaid, look at the top card of your deck; trash it,
         discard it, or put it back."""
         for i in range(amount):
@@ -105,7 +102,7 @@ class TestDoctor(unittest.TestCase):
     """Test Doctor"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=1, initcards=["Doctor"])
+        self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Doctor"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Doctor")

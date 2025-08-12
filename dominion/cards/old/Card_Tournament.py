@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles
 
 
@@ -39,7 +40,7 @@ class Card_Tournament(Card.Card):
 ###############################################################################
 class TestTournament(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, initcards=["Tournament"])
+        self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Tournament"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.card = self.g.get_card_from_pile("Tournament")
