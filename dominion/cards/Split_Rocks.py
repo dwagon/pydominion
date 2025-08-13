@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Rocks"""
+"""https://wiki.dominionstrategy.com/index.php/Rocks"""
 import unittest
-from dominion import Card, Game, Piles, Player, OptionKeys, Phase
+
+from dominion import Card, Game, Piles, Player, OptionKeys, Phase, NoCardException
 
 
 ###############################################################################
@@ -18,25 +19,24 @@ class Card_Rocks(Card.Card):
         otherwise gain a Silver to your hand."""
 
     ###########################################################################
-    def hook_gain_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, str]:
+    def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         self.rocks_special(player)
         return {}
 
     ###########################################################################
-    def hook_trash_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, str]:
+    def hook_trash_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         self.rocks_special(player)
         return {}
 
     ###########################################################################
     def rocks_special(self, player: Player.Player) -> None:
-        if player.phase == Phase.BUY:
-            player.gain_card("Silver", Piles.DECK)
-        else:
-            player.gain_card("Silver", Piles.HAND)
+        try:
+            if player.phase == Phase.BUY:
+                player.gain_card("Silver", Piles.DECK)
+            else:
+                player.gain_card("Silver", Piles.HAND)
+        except NoCardException:  # pragma: no coverage
+            player.output("No more Silvers")
 
 
 ###############################################################################
