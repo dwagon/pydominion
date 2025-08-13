@@ -1762,10 +1762,13 @@ class Player:
         num_potions: int,
         types: Optional[dict[CardType, bool]],
     ) -> list[Card]:
-        """Return the list of cards for under cost
+        """Return the list of cards for under|equal|over cost
         {coin} {num_potions} are the resources constraints we have
         """
         affordable = PlayArea("affordable")
+        if types is None:
+            types = {}
+        types = self._type_selector(types)
         for name, pile in self.game.get_card_piles():
             if not pile:
                 continue
@@ -1786,7 +1789,7 @@ class Player:
             if card.debtcost and not card.cost:
                 affordable.add(card)
                 continue
-            if oper(cost, coin) and oper(card.potcost, num_potions):
+            if oper(cost, coin):
                 affordable.add(card)
                 continue
         affordable.sort(key=self.card_cost)
@@ -1801,9 +1804,6 @@ class Player:
         types: Optional[dict[CardType, bool]] = None,
     ) -> list[Card]:
         """Return the list of cards for under cost"""
-        if types is None:
-            types = {}
-        types = self._type_selector(types)
         return self.cards_affordable(operator.le, coin, num_potions, types)
 
     ###########################################################################
@@ -1814,10 +1814,17 @@ class Player:
         types: Optional[dict[CardType, bool]] = None,
     ) -> list[Card]:
         """Return the list of cards that are exactly cost"""
-        if types is None:
-            types = {}
-        types = self._type_selector(types)
         return self.cards_affordable(operator.eq, coin, num_potions, types)
+
+    ###########################################################################
+    def cards_over(
+        self,
+        coin: int,
+        num_potions: int = 0,
+        types: Optional[dict[CardType, bool]] = None,
+    ) -> list[Card]:
+        """Return the list of cards that cost more than"""
+        return self.cards_affordable(operator.gt, coin, num_potions, types)
 
     ###########################################################################
     def get_cards(self) -> dict[str, int]:
@@ -1970,24 +1977,30 @@ class Player:
     def _get_buyable_prompt(self, cost: int, modifier: str) -> str:
         """Return the prompt for buying cards"""
         prompt = "Gain a card "
-        assert modifier in ("less", "equal")
+        assert modifier in ("less", "equal", "greater")
         if cost:
             if modifier == "less":
                 prompt += f"costing up to {cost}"
             elif modifier == "equal":
                 prompt += f"costing exactly {cost}"
+            elif modifier == "greater":
+                prompt += f"costing more than {cost}"
         return prompt
 
     ###########################################################################
-    def _get_buyable(self, cost: int, modifier: str, **kwargs: Any) -> list[str]:
+    def _get_buyable(self, cost: int, modifier: str, **kwargs: Any) -> list[Card]:
         """Return the list of cards that are buyable for cost"""
         types = kwargs.get("types", {})
-        buyable: list[str] = []
+        buyable: list[Card] = []
+        assert modifier in ("less", "equal", "greater")
         types = self._type_selector(types)
-        if modifier == "less":
-            buyable = self.cards_under(cost, types=types)
-        elif modifier == "equal":
-            buyable = self.cards_worth(cost, types=types)
+        match modifier:
+            case "less":
+                buyable = self.cards_under(cost, types=types)
+            case "equal":
+                buyable = self.cards_worth(cost, types=types)
+            case "greater":
+                buyable = self.cards_over(cost, types=types)
         buyable = [_ for _ in buyable if _.purchasable]
         if not kwargs.get("ignore_debt", False):
             buyable = [_ for _ in buyable if not _.debtcost]
