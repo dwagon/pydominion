@@ -32,7 +32,7 @@ class Test_Craftsman(unittest.TestCase):
     def test_play(self) -> None:
         self.plr.add_card(self.card, Piles.HAND)
         debt = self.plr.debt.get()
-        self.plr.test_input = ["Duchy"]
+        self.plr.test_input = ["Get Duchy"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.debt.get(), debt + 2)
         self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
