@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+"""https://wiki.dominionstrategy.com/index.php/Mine"""
 
 import unittest
 from typing import Any
@@ -12,15 +13,15 @@ class Card_Mine(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DOMINION
-        self.desc = "Trash a treasure, gain a better treasure"
+        self.desc = (
+            "You may trash a Treasure from your hand. Gain a Treasure to your hand costing up to $3 more than it."
+        )
         self.name = "Mine"
         self.cost = 5
 
     def _generate_options(self, player: "Player.Player") -> list[dict[str, Any]]:
         """Generate the options for player dialog"""
-        options: list[dict[str, Any]] = [
-            {"selector": "0", "print": "Don't trash a card", "card": None}
-        ]
+        options: list[dict[str, Any]] = [{"selector": "0", "print": "Don't trash a card", "card": None}]
         index = 1
         for card in player.piles[Piles.HAND]:
             if card.isTreasure():
@@ -42,24 +43,11 @@ class Card_Mine(Card.Card):
         o = player.user_input(options, "Trash which treasure?")
         if o["card"]:
             val = o["card"].cost
-            # Make an assumption and pick the best treasure card
-            # TODO - let user pick
-            for card_name, _ in game.get_card_piles():
-                card = game.card_instances[card_name]
-                if not card:
-                    continue
-                if not card.isTreasure():
-                    continue
-                if card.cost == val + 3:
-                    gained_card = player.gain_card(card_name, Piles.HAND)
-                    if not gained_card:
-                        player.output("No suitable cards left")
-                        break
-                    player.output(f"Converted to {gained_card.name}")
-                    player.trash_card(o["card"])
-                    break
-            else:  # pragma: no cover
-                player.output("No appropriate treasure card exists")
+            if gained_card := player.plr_gain_card(
+                cost=val + 3, modifier="equal", destination=Piles.HAND, types={Card.CardType.TREASURE: True}
+            ):
+                player.output(f"Converted to {gained_card.name}")
+                player.trash_card(o["card"])
 
 
 ###############################################################################
@@ -73,9 +61,9 @@ class TestMine(unittest.TestCase):
     def test_convert_copper(self) -> None:
         self.plr.piles[Piles.HAND].set("Copper")
         self.plr.add_card(self.card, Piles.HAND)
-        self.plr.test_input = ["1"]
+        self.plr.test_input = ["Upgrade Copper", "Get Silver"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.piles[Piles.HAND][0].name, "Silver")
+        self.assertIn("Silver", self.plr.piles[Piles.HAND])
         self.assertTrue(self.plr.piles[Piles.DISCARD].is_empty())
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
         self.assertEqual(self.plr.coins.get(), 0)

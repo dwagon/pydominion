@@ -18,16 +18,12 @@ class Card_ThroneRoom(Card.Card):
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """You may choose an Action card in your hand. Play it twice"""
-        options: list[dict[str, Any]] = [
-            {"selector": "0", "print": "Don't play a card", "card": None}
-        ]
+        options: list[dict[str, Any]] = [{"selector": "0", "print": "Don't play a card", "card": None}]
         index = 1
         for card in player.piles[Piles.HAND]:
             if not card.isAction():
                 continue
-            options.append(
-                {"selector": f"{index}", "print": f"Play {card} twice", "card": card}
-            )
+            options.append({"selector": f"{index}", "print": f"Play {card} twice", "card": card})
             index += 1
         if index == 1:
             return
@@ -52,7 +48,7 @@ class TestThroneRoom(unittest.TestCase):
         self.plr.piles[Piles.HAND].set("Copper", "Mine")
         card = self.plr.gain_card("Throne Room", Piles.HAND)
         assert card is not None
-        self.plr.test_input = ["1", "1", "1"]
+        self.plr.test_input = ["Play Mine", "Upgrade Copper", "Get Silver", "Upgrade Silver", "Get Gold"]
         self.plr.play_card(card)
         self.assertIn("Gold", self.plr.piles[Piles.HAND])
         self.assertIn("Mine", self.plr.piles[Piles.PLAYED])
