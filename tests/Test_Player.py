@@ -220,6 +220,14 @@ class TestCardsAffordable(unittest.TestCase):
             self.assertEqual(a.cost, price)
             self.assertTrue(a.isVictory())
 
+    def test_over(self) -> None:
+        """Test cards over a cost"""
+        price = 4
+        ans = self.plr.cards_over(price)
+        for a in ans:
+            self.assertGreater(a.cost, price)
+        self.assertIn("Gold", [_.name for _ in ans])
+
     def test_no_cost(self) -> None:
         """Test with no cost"""
         ans = self.plr.cards_affordable(
