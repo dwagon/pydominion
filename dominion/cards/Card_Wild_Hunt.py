@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -16,25 +17,32 @@ class Card_WildHunt(Card.Card):
         self.cost = 5
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
+        try:
+            curr_vp = game.card_piles["Wild Hunt"].getVP()
+        except KeyError:  # pragma: no coverage
+            curr_vp = 0
         if player.plr_choose_options(
             "Choose one:",
             ("+3 Cards and add 1 VP to the Wild Hunt Supply pile", True),
             (
-                "Gain an Estate, and if you do, take %d VP from the pile."
-                % game.card_piles["Wild Hunt"].getVP(),
+                f"Gain an Estate, and if you do, take {curr_vp} VP from the pile.",
                 False,
             ),
         ):
             player.pickup_cards(3)
-            game.card_piles["Wild Hunt"].addVP()
+            if "Wild Hunt" in game.card_piles:  # Riverboat requires this check
+                game.card_piles["Wild Hunt"].addVP()
         else:
             try:
                 player.gain_card("Estate")
             except NoCardException:
                 player.output("No more Estates")
-            score = game.card_piles["Wild Hunt"].drainVP()
-            player.output(f"Gaining {score} VP from Wild Hunt")
-            player.add_score("Wild Hunt", score)
+            try:
+                score = game.card_piles["Wild Hunt"].drainVP()
+                player.output(f"Gaining {score} VP from Wild Hunt")
+                player.add_score("Wild Hunt", score)
+            except KeyError:  # pragma: no coverage
+                player.output("No VP from Wild Hunt as not real")
 
 
 ###############################################################################
