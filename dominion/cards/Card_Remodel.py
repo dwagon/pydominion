@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Remodel"""
 import unittest
+
 from dominion import Card, Game, Piles, Player
 
 
@@ -12,7 +13,7 @@ class Card_Remodel(Card.Card):
         self.base = Card.CardExpansion.DOMINION
         self.desc = "Trash a card and gain one costing 2 more"
         self.name = "Remodel"
-        self.cost = 2
+        self.cost = 4
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """Trash a card from your hand. Gain a card costing up to
