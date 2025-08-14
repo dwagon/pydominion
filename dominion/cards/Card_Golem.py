@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 """https://wiki.dominionstrategy.com/index.php/Golem"""
 import unittest
-from dominion import Card, Game, Piles, Player
+
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -24,7 +25,10 @@ class Card_Golem(Card.Card):
         max_num = len(player.all_cards())
         count = 0
         while len(actions) != 2:
-            card = player.next_card()
+            try:
+                card = player.next_card()
+            except NoCardException:  # pragma: no coverage
+                break
             player.reveal_card(card)
             count += 1
             if card.isAction() and card.name != "Golem":

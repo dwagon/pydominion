@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Pillage"""
+"""https://wiki.dominionstrategy.com/index.php/Pillage"""
 
 import unittest
-from dominion import Game, Card, Piles, Player
+
+from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -27,7 +28,11 @@ class Card_Pillage(Card.Card):
                 continue
             self.pick_a_card(plr, player)
         for _ in range(2):
-            player.gain_card("Spoils")
+            try:
+                player.gain_card("Spoils")
+            except NoCardException:
+                player.output("No more Spoils")
+                break
 
     ###########################################################################
     def pick_a_card(self, victim: Player.Player, player: Player.Player) -> None:
@@ -55,9 +60,7 @@ class TestPillage(unittest.TestCase):
         """Play the Pillage"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["copper"]
-        self.victim.piles[Piles.HAND].set(
-            "Copper", "Estate", "Duchy", "Gold", "Silver", "Province"
-        )
+        self.victim.piles[Piles.HAND].set("Copper", "Estate", "Duchy", "Gold", "Silver", "Province")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         for c in self.plr.piles[Piles.DISCARD]:

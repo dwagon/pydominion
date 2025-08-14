@@ -771,6 +771,8 @@ def start_game(
     setup_players(game, player_names, plr_class)
     card_setup(game)  # Has to be after players have been created
     check_card_requirements(game)  # Again as setup can add requirements
+    if game.hexes or game.boons:
+        load_states(game)
     game.current_player = game.player_list()[0]
     if game.ally:
         for plr in game.player_list():
