@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" Report on missing cards from wiki.dominionstrategy.com """
+"""Report on missing cards from wiki.dominionstrategy.com"""
 import subprocess
 from typing import Any
 
@@ -21,9 +21,9 @@ def get_html_data(url: str, request: dict[str, Any]) -> Any:
             print(result["warnings"])
         if "query" in result:
             yield result["query"]
-        if "query-continue" not in result:
+        if "continue" not in result:
             break
-        lastContinue = result["query-continue"]["categorymembers"]
+        lastContinue = result["continue"]
 
 
 ##############################################################################
