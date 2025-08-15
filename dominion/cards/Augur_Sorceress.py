@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Sorceress"""
+"""http://wiki.dominionstrategy.com/index.php/Sorceress"""
 
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -29,9 +30,7 @@ class Card_Sorceress(Card.Card):
         options = [{"selector": "0", "print": "No guess", "card": None}]
         index = 1
         for name, card_pile in sorted(game.get_card_piles()):
-            options.append(
-                {"selector": f"{index}", "print": f"Guess {name}", "card": name}
-            )
+            options.append({"selector": f"{index}", "print": f"Guess {name}", "card": name})
             index += 1
         o = player.user_input(options, "Guess the top card")
         if not o["card"]:
@@ -51,7 +50,7 @@ class Card_Sorceress(Card.Card):
 ###############################################################################
 class TestSorceress(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=2, initcards=["Augurs"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Augurs"], badcards=["Gold Mine"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
 
