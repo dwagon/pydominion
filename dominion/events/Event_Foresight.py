@@ -57,7 +57,6 @@ class TestForesight(unittest.TestCase):
     def test_play(self) -> None:
         """Use Foresight"""
         self.plr.piles[Piles.DECK].set("Copper", "Silver", "Moat", "Estate", "Duchy")
-        self.plr.coins.set(2)
         self.plr.perform_event(self.card)
         self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
         self.plr.end_turn()
@@ -67,7 +66,6 @@ class TestForesight(unittest.TestCase):
     def test_play_no_actions(self) -> None:
         """Use Foresight with no actions"""
         self.plr.piles[Piles.DECK].set("Copper", "Silver", "Estate", "Duchy")
-        self.plr.coins.set(2)
         self.plr.perform_event(self.card)
         self.plr.end_turn()
         self.assertEqual(len(self.plr.piles[Piles.HAND]), 5)
