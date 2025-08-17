@@ -1,6 +1,8 @@
 #!/usr/bin/env python
+"""https://wiki.dominionstrategy.com/index.php/Apothecary"""
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -10,7 +12,9 @@ class Card_Apothecary(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ALCHEMY
-        self.desc = "+1 card, +1 action, Take coppers and potions out of top 4 of deck"
+        self.desc = """+1 Card; +1 Action; Reveal the top 4 cards of your deck.
+            Put the Coppers and Potions into your hand.
+            Put the rest back in any order."""
         self.name = "Apothecary"
         self.cards = 1
         self.actions = 1
@@ -49,9 +53,7 @@ class TestApothecary(unittest.TestCase):
     def test_none(self) -> None:
         self.plr.piles[Piles.HAND].set("Apothecary")
         apoth = self.plr.piles[Piles.HAND][0]
-        self.plr.piles[Piles.DECK].set(
-            "Duchy", "Estate", "Estate", "Estate", "Province"
-        )
+        self.plr.piles[Piles.DECK].set("Duchy", "Estate", "Estate", "Estate", "Province")
         self.plr.play_card(apoth)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)  # P
         self.assertEqual(self.plr.piles[Piles.DECK].size(), 4)  # D + E + E + E
@@ -59,9 +61,7 @@ class TestApothecary(unittest.TestCase):
     def test_some(self) -> None:
         self.plr.piles[Piles.HAND].set("Apothecary")
         apoth = self.plr.piles[Piles.HAND][0]
-        self.plr.piles[Piles.DECK].set(
-            "Duchy", "Potion", "Copper", "Estate", "Province"
-        )
+        self.plr.piles[Piles.DECK].set("Duchy", "Potion", "Copper", "Estate", "Province")
         self.plr.play_card(apoth)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)  # P + C + Pot
         self.assertEqual(self.plr.piles[Piles.DECK].size(), 2)  # E + D
