@@ -79,7 +79,7 @@ class TestCardsAffordable(unittest.TestCase):
 
 ###############################################################################
 class TestTypeSelector(unittest.TestCase):
-    """Test _type_selector()"""
+    """Test type_selector()"""
 
     def setUp(self) -> None:
         self.game = Game.TestGame(numplayers=1)
@@ -369,6 +369,35 @@ class TestNightSelection(unittest.TestCase):
         self.plr.piles[Piles.HAND].set("Copper", "Moat")
         opts = Prompt.night_selection(self.plr, 0)
         self.assertEqual(opts, ([], 0))
+
+
+###############################################################################
+class TestProjectSelection(unittest.TestCase):
+    """Test project_selection()"""
+
+    def setUp(self) -> None:
+        self.game = Game.TestGame(
+            numplayers=1,
+            project_path="tests/projects",
+            projects=["ProjectA"],
+        )
+        self.game.start_game()
+        self.plr = self.game.player_list()[0]
+
+    def test_projects_no_buy(self) -> None:
+        opts, idx = Prompt.project_selection(self.plr, 0)
+        self.assertEqual(idx, 1)
+        self.assertEqual(opts[0]["selector"], "-")
+        self.assertIsNone(opts[0]["action"])
+        self.assertEqual(opts[0]["card"].name, "ProjectA")
+
+    def test_projects_buy(self) -> None:
+        self.plr.coins.add(5)
+        opts, idx = Prompt.project_selection(self.plr, 0)
+        self.assertEqual(idx, 1)
+        self.assertEqual(opts[0]["selector"], "b")
+        self.assertEqual(opts[0]["action"], "project")
+        self.assertEqual(opts[0]["card"].name, "ProjectA")
 
 
 ###############################################################################
