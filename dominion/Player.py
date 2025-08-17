@@ -6,7 +6,6 @@ from __future__ import annotations
 import contextlib
 import json
 import operator
-import os
 import sys
 from collections import defaultdict
 from typing import Any, Optional, TYPE_CHECKING, Callable
@@ -14,7 +13,7 @@ from typing import Any, Optional, TYPE_CHECKING, Callable
 if TYPE_CHECKING:
     from dominion.Game import Game
 
-from dominion import Piles, Phase, Limits, NoCardException, Whens, OptionKeys
+from dominion import Piles, Phase, Limits, NoCardException, Whens, OptionKeys, Prompt
 from dominion.Card import Card, CardType
 from dominion.CardPile import CardPile
 from dominion.Counter import Counter
@@ -482,117 +481,6 @@ class Player:
             self.discard_card(card, Piles.PLAYED, hook=False)
 
     ###########################################################################
-    def _playable_selection(self, index: int) -> tuple[list[Option], int]:
-        options = []
-        playable = [_ for _ in self.piles[Piles.HAND] if _.playable and _.isAction()]
-        if self.villagers:
-            o = Option(
-                selector="1",
-                verb="Spend Villager (1 action)",
-                card=None,
-                action="villager",
-            )
-            options.append(o)
-
-        for p in playable:
-            sel = chr(ord("a") + index)
-            details = p.get_cardtype_repr()
-            o = Option(
-                verb="Play",
-                selector=sel,
-                name=p.name,
-                desc=p.description(self).strip(),
-                action="play",
-                card=p,
-                details=details,
-            )
-            notes = ""
-            for tkn in self.which_token(p.name):
-                notes += f"[Tkn: {tkn}]"
-            o["notes"] = notes
-            options.append(o)
-            index += 1
-            for way in self.game.ways.values():
-                sel = chr(ord("a") + index)
-                o = Option(
-                    verb="Play",
-                    selector=sel,
-                    name=way.name,
-                    desc=f"{p.name}: {way.description(self)}",
-                    action="way",
-                    card=p,
-                    way=way,
-                )
-                options.append(o)
-                index += 1
-        return options, index
-
-    ###########################################################################
-    def _night_selection(self, index: int) -> tuple[list[Option], int]:
-        options = []
-        nights = [c for c in self.piles[Piles.HAND] if c.isNight()]
-        if nights:
-            for n in nights:
-                sel = chr(ord("a") + index)
-                details = n.get_cardtype_repr()
-                o = Option(
-                    verb="Play",
-                    selector=sel,
-                    name=n.name,
-                    details=details,
-                    card=n,
-                    action="play",
-                    desc=n.description(self),
-                )
-                options.append(o)
-                index += 1
-        return options, index
-
-    ###########################################################################
-    def _spendable_selection(self) -> list[Option]:
-        options = []
-        spendable = [_ for _ in self.piles[Piles.HAND] if _.isTreasure()]
-        spendable.sort(key=lambda x: x.name)
-        total_coin = sum(self.hook_spend_value(_) for _ in spendable)
-        numpots = sum(1 for _ in spendable if _.name == "Potion")
-        potstr = f", {numpots} potions" if numpots else ""
-        details = f"{total_coin} coin{potstr}"
-        if spendable:
-            o = Option(
-                selector="1",
-                verb="Spend all treasures",
-                details=details,
-                card=None,
-                action="spendall",
-            )
-            options.append(o)
-
-        if self.coffers:
-            o = Option(selector="2", verb="Spend Coffer (1 coin)", card=None, action="coffer")
-            options.append(o)
-
-        if self.debt and self.coins:
-            o = Option(selector="3", verb="Payback Debt", card=None, action="payback")
-            options.append(o)
-
-        index = 4
-        for card in spendable:
-            tp = f"{self.hook_spend_value(card)} coin; {card.get_cardtype_repr()}"
-            o = Option(
-                selector=str(index),
-                name=card.name,
-                details=tp,
-                verb="Spend",
-                card=card,
-                action="spend",
-                desc=card.description(self),
-            )
-            options.append(o)
-            index += 1
-
-        return options
-
-    ###########################################################################
     def _get_whens(self) -> list[Whens]:
         """Return when we are for calling reserve cards"""
         whens: list[Whens] = [Whens.ANY]
@@ -604,201 +492,10 @@ class Player:
         return whens
 
     ###########################################################################
-    def _reserve_selection(self, index: int) -> tuple[list[Option], int]:
-        whens = self._get_whens()
-        options = []
-        for card in self.piles[Piles.RESERVE]:
-            if not card.callable:
-                continue
-            if card.when not in whens:
-                continue
-            index += 1
-            sel = chr(ord("a") + index)
-            details = card.get_cardtype_repr()
-            o = Option(
-                selector=sel,
-                name=card.name,
-                verb="Call",
-                details=details,
-                card=card,
-                action="reserve",
-                desc=card.description(self),
-            )
-            options.append(o)
-
-        return options, index
-
-    ###########################################################################
-    def _project_selection(self, index: int) -> tuple[Optional[list[Option]], int]:
-        """Allow player to select projects"""
-        if not self.game.projects:
-            return None, index
-        # Can only have two projects
-        if len(self.projects) == 2:
-            return None, index
-        options = []
-        for op in self.game.projects.values():
-            index += 1
-            if (op.cost <= self.coins.get() and self.buys) and (op not in self.projects):
-                sel = chr(ord("a") + index)
-                action = "project"
-            else:
-                sel = "-"
-                action = None
-            details = f"Project; {self._cost_string(op)}"
-            o = Option(
-                selector=sel,
-                verb="Buy",
-                desc=op.description(self),
-                name=op.name,
-                details=details,
-                card=op,
-                action=action,
-            )
-            options.append(o)
-
-        return options, index
-
-    ###########################################################################
-    def _event_selection(self, index: int) -> tuple[list[Option], int]:
-        """Generate player options for selecting events"""
-        options = []
-        for op in self.game.events.values():
-            index += 1
-            if op.cost <= self.coins.get() and self.buys:
-                sel = chr(ord("a") + index)
-                action = "event"
-            else:
-                sel = "-"
-                action = None
-            details = f"Event; {self._cost_string(op)}"
-            o = Option(
-                selector=sel,
-                verb="Use",
-                desc=op.description(self),
-                name=op.name,
-                details=details,
-                card=op,
-                action=action,
-            )
-            options.append(o)
-
-        return options, index
-
-    ###########################################################################
     def _card_check(self) -> None:
         for pile in self.piles:
             for card in self.piles[pile]:
                 assert card.location == pile, f"{self.name} {card=} {pile=} {card.location=}"
-
-    ###########################################################################
-    def _get_all_purchasable(self) -> PlayArea:
-        """Return all potentially purchasable cards"""
-        all_cards = PlayArea("all_purchasable")
-        for name, pile in self.game.get_card_piles():
-            if pile.is_empty():
-                continue
-            card = pile.get_top_card()
-            if card is None:
-                continue
-            if not card.purchasable:
-                continue
-            all_cards.add(card)
-        all_cards.sort(key=self.card_cost)
-        all_cards.sort(key=lambda x: x.basecard)
-        return all_cards
-
-    ###########################################################################
-    def _buyable_selection(self, index: int) -> tuple[list[Option], int]:
-        options = []
-        all_cards = self._get_all_purchasable()
-        buyable = self.cards_under(coin=self.coins.get(), num_potions=self.potions.get())
-        for card in all_cards:
-            if not self.hook_allowed_to_buy(card):
-                if card in buyable:
-                    buyable.remove(card)
-            sel = chr(ord("a") + index)
-            if not self.debt and self.buys and card in buyable and card not in self.forbidden_to_buy:
-                action = "buy"
-                verb = "Buy"
-            else:
-                sel = "-"
-                verb = ""
-                action = None
-            details = [self._cost_string(card)]
-            if self.game.card_piles[card.pile].embargo_level:
-                details.append(f"Embargo {self.game.card_piles[card.pile].embargo_level}")
-            if self.game.card_piles[card.pile].getVP():
-                details.append(f"Gathered {self.game.card_piles[card.name].getVP()} VP")
-            details.append(card.get_cardtype_repr())
-            details.append(f"{len(self.game.card_piles[card.pile])} left")
-            for tkn in self.which_token(card.name):
-                details.append(f"[Tkn: {tkn}]")
-            o = Option(
-                selector=sel,
-                verb=verb,
-                desc=card.description(self),
-                name=card.name,
-                details="; ".join(details),
-                card=card,
-                action=action,
-            )
-            options.append(o)
-            index += 1
-        return options, index
-
-    ###########################################################################
-    def _choice_selection(self) -> list[Option]:
-        index = 0
-        o = Option(selector="0", verb="End Phase", card=None, action="quit")
-        options: list[Option] = [o]
-
-        if self.phase == Phase.ACTION:
-            if self.actions or self.villagers:
-                op_p, index = self._playable_selection(index)
-                options.extend(op_p)
-
-        if self.phase == Phase.BUY:
-            op_s = self._spendable_selection()
-            options.extend(op_s)
-            op_b, index = self._buyable_selection(index)
-            options.extend(op_b)
-            op_e, index = self._event_selection(index)
-            options.extend(op_e)
-            op_pr, index = self._project_selection(index)
-            if op_pr:
-                options.extend(op_pr)
-
-        if self.phase == Phase.NIGHT:
-            op, index = self._night_selection(index)
-            options.extend(op)
-
-        if self.piles[Piles.RESERVE].size():
-            op_r, index = self._reserve_selection(index)
-            options.extend(op_r)
-
-        return options
-
-    ###########################################################################
-    def _generate_prompt(self) -> str:
-        """Return the prompt to give to the user"""
-        status = f"Actions={self.actions.get()} Buys={self.buys.get()}"
-        if self.coins:
-            status += f" Coins={self.coins.get()}"
-        if self.debt:
-            status += f" Debt={self.debt.get()}"
-        if self.potions:
-            status += " Potion"
-        if self.favors:
-            status += f" Favours={self.favors.get()}"
-        if self.coffers:
-            status += f" Coffer={self.coffers.get()}"
-        if self.villagers:
-            status += f" Villager={self.villagers.get()}"
-        if self.limits[Limits.PLAY] is not None:
-            status += f" Play Limit={self.limits[Limits.PLAY]}"
-        prompt = f"What to do ({status})?"
-        return prompt
 
     ###########################################################################
     def turn(self) -> None:
@@ -841,9 +538,9 @@ class Player:
             return
         self.output("************ Night Phase ************")
         while True:
-            self._display_overview()
-            options = self._choice_selection()
-            prompt = self._generate_prompt()
+            Prompt.display_overview(self)
+            options = Prompt.choice_selection(self)
+            prompt = Prompt.generate_prompt(self)
 
             opt = self.user_input(options, prompt)
             self._perform_action(opt)
@@ -854,9 +551,9 @@ class Player:
     def action_phase(self) -> None:
         self.output("************ Action Phase ************")
         while True:
-            self._display_overview()
-            options = self._choice_selection()
-            prompt = self._generate_prompt()
+            Prompt.display_overview(self)
+            options = Prompt.choice_selection(self)
+            prompt = Prompt.generate_prompt(self)
 
             opt = self.user_input(options, prompt)
             self._perform_action(opt)
@@ -868,9 +565,9 @@ class Player:
         self.output("************ Buy Phase ************")
         self.hook_pre_buy()
         while True:
-            self._display_overview()
-            options = self._choice_selection()
-            prompt = self._generate_prompt()
+            Prompt.display_overview(self)
+            options = Prompt.choice_selection(self)
+            prompt = Prompt.generate_prompt(self)
 
             opt = self.user_input(options, prompt)
             self._perform_action(opt)
@@ -943,81 +640,6 @@ class Player:
         self.misc["is_start"] = False
 
     ###########################################################################
-    def _display_tokens(self) -> str:
-        """Generate the overview display for tokens"""
-        token_output = []
-        for tkn, tkv in self.tokens.items():
-            if tkv:
-                token_output.append(f"{tkn}: {tkv}")
-        if self.card_token:
-            token_output.append("-1 Card")
-        if self.coin_token:
-            token_output.append("-1 Coin")
-        if self.journey_token:
-            token_output.append("Journey Faceup")
-        else:
-            token_output.append("Journey Facedown")
-        return "; ".join(token_output)
-
-    ###########################################################################
-    def _display_overview(self) -> None:
-        """Display turn summary overview to player"""
-        self.output("")
-        self.output("-" * 50)
-        self.output(f"| Phase: {self.phase.name.title()}")
-        for landmark in self.game.landmarks.values():
-            self.output(f"| Landmark {landmark.name}: {landmark.description(self)}")
-        self.output(f"| Tokens: {self._display_tokens()}")
-        if self.game.inactive_prophecy and not self.game.prophecy:
-            self.output(f"| Inactive Prophecy: {self.game.inactive_prophecy} ({self.game.sun_tokens} Sun Tokens)")
-        if self.game.prophecy:
-            self.output(f"| Prophecy: {self.game.prophecy}: {self.game.prophecy.description(self)}")
-        if self.states:
-            self.output(f"| States: {', '.join([_.name for _ in self.states])}")
-        if self.piles[Piles.DEFER]:
-            self.output(f"| Defer: {', '.join([str(_) for _ in self.piles[Piles.DEFER]])}")
-        if self.piles[Piles.DURATION]:
-            self.output(f"| Duration: {', '.join([str(_) for _ in self.piles[Piles.DURATION]])}")
-        if self.projects:
-            self.output(f"| Project: {', '.join([p.name for p in self.projects])}")
-        if self.piles[Piles.RESERVE]:
-            self.output(f"| Reserve: {', '.join([str(_) for _ in self.piles[Piles.RESERVE]])}")
-        if self.piles[Piles.HAND]:
-            self.output(
-                f"| Hand ({len(self.piles[Piles.HAND])}): {', '.join([str(_) for _ in self.piles[Piles.HAND]])}"
-            )
-        else:
-            self.output("| Hand: <EMPTY>")
-        if self.artifacts:
-            self.output(f"| Artifacts: {', '.join([_.name for _ in self.artifacts])}")
-        for trait_name, trait in self.game.traits.items():
-            self.output(f"| Trait {trait_name} on {trait.card_pile}: {trait.desc}")
-        if self.piles[Piles.EXILE]:
-            self.output(f"| Exile: {', '.join([str(_) for _ in self.piles[Piles.EXILE]])}")
-        if self.piles[Piles.PLAYED]:
-            self.output(
-                f"| Played ({len(self.piles[Piles.PLAYED])}): {', '.join([str(_) for _ in self.piles[Piles.PLAYED]])}"
-            )
-        else:
-            self.output("| Played: <NONE>")
-        if os.getenv("PYDOMINION_DEBUG"):
-            self.output(
-                f"| Deck ({len(self.piles[Piles.DECK])}): {', '.join([str(_) for _ in self.piles[Piles.DECK]])}"
-            )
-        else:
-            self.output(f"| Deck Size: {len(self.piles[Piles.DECK])}")
-        if self.game.ally:
-            self.output(f"| Ally: {self.game.ally.name}: {self.game.ally.description(self)}")
-        self.output(
-            f"| Discard ({len(self.piles[Piles.DISCARD])}): {', '.join([str(_) for _ in self.piles[Piles.DISCARD]])}"
-        )  # Debug
-        self.output(
-            f"| Trash ({len(self.game.trash_pile)}): {', '.join([str(_) for _ in self.game.trash_pile])}"
-        )  # Debug
-        self.output(f"| {self.piles[Piles.DISCARD].size()} cards in discard pile")
-        self.output("-" * 50)
-
-    ###########################################################################
     def add_score(self, reason: str, points: int = 1) -> None:
         """Add score to the player"""
         if reason not in self.score:
@@ -1087,7 +709,7 @@ class Player:
         self.played_ways = []
         self.misc = {"is_start": True, "cleaned": False}
         self.stats = {"gained": [], "bought": [], "trashed": []}
-        self._display_overview()
+        Prompt.display_overview(self)
         self._hook_start_turn()
         self._duration_start_turn()
         self._defer_start_turn()

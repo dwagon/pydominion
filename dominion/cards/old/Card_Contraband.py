@@ -4,6 +4,7 @@
 import unittest
 
 from dominion import Card, Game, Piles
+from dominion.Prompt import choice_selection
 
 
 ###############################################################################
@@ -64,7 +65,7 @@ class TestContraband(unittest.TestCase):
         self.plr.coins.set(6)
         self.plr.play_card(self.card)
         self.plr.phase = "buy"
-        options = self.plr._choice_selection()  # pylint: disable=protected-access
+        options = choice_selection(self.plr)  # pylint: disable=protected-access
         for msg in options:
             if "Buy Gold" in msg["line"]:
                 self.fail("Allowed to buy Gold")
