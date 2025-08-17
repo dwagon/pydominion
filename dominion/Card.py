@@ -390,7 +390,7 @@ class Card:
 
     ##########################################################################
     def hook_post_play(self, game: "Game.Game", player: "Player.Player", card: "Card") -> dict[OptionKeys, str]:
-        """Hook - overwritten in subclasses if required"""
+        """Called after a card is played"""
         return {}
 
     ##########################################################################
