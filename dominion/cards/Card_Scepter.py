@@ -1,24 +1,24 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Scepter"""
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Scepter(Card.Card):
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
-        self.cardtype = Card.CardType.TREASURE
+        self.cardtype = [Card.CardType.TREASURE, Card.CardType.COMMAND]
         self.base = Card.CardExpansion.RENAISSANCE
-        self.desc = "When you play this, choose one: 2 coin; or replay an Action card you played this turn that's still in play."
+        self.desc = "Choose one: +$2; or replay a non-Command Action card you played this turn that's still in play."
         self.name = "Scepter"
         self.cost = 5
 
-    def special(self, game, player):
-        acts = [_ for _ in player.piles[Piles.PLAYED] if _.isAction()]
+    def special(self, game: Game.Game, player: Player.Player) -> None:
+        acts = [_ for _ in player.piles[Piles.PLAYED] if _.isAction() and not _.isCommand()]
         if acts:
-            get_coin = player.plr_choose_options("Pick one? ", ("2 Coin", True), ("Replay an action card", False))
+            get_coin = player.plr_choose_options("Choose one? ", ("2 Coin", True), ("Replay an action card", False))
         else:
             get_coin = True
             player.output("No suitable cards - gaining coin")
@@ -33,19 +33,19 @@ class Card_Scepter(Card.Card):
 
 ###############################################################################
 class Test_Scepter(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Scepter", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Scepter")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play_coin(self):
+    def test_play_coin(self) -> None:
         self.plr.test_input = ["2 Coin"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
 
-    def test_play_replay(self):
+    def test_play_replay(self) -> None:
         self.plr.piles[Piles.PLAYED].set("Moat")
         self.plr.test_input = ["Replay", "Moat"]
         self.plr.play_card(self.card)
