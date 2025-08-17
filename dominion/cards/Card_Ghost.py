@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, PlayArea, Game, Piles, Phase, Player, OptionKeys
+
+from dominion import Card, PlayArea, Game, Piles, Phase, Player, OptionKeys, NoCardException
 
 
 ###############################################################################
@@ -22,13 +23,14 @@ class Card_Ghost(Card.Card):
         self.insupply = False
         self.numcards = 6
         self.cost = 4
-        self._ghost_reserve = PlayArea.PlayArea([])
+        self._ghost_reserve = PlayArea.PlayArea(initial=[])
 
     def night(self, game: Game.Game, player: Player.Player) -> None:
         count = len(player.all_cards())
         while count:
-            card = player.next_card()
-            if not card:
+            try:
+                card = player.next_card()
+            except NoCardException:  # pragma: no coverage
                 break
             player.reveal_card(card)
             if card.isAction():
@@ -69,19 +71,13 @@ class TestGhost(unittest.TestCase):
 
     def test_duration(self) -> None:
         try:
-            self.plr.piles[Piles.DECK].set(
-                "Silver", "Gold", "Estate", "Silver", "Moat", "Copper"
-            )
-            self.plr.piles[Piles.DISCARD].set(
-                "Silver", "Gold", "Estate", "Silver", "Moat", "Copper"
-            )
+            self.plr.piles[Piles.DECK].set("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
+            self.plr.piles[Piles.DISCARD].set("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
             self.plr.phase = Phase.NIGHT
             self.plr.play_card(self.card)
             self.plr.end_turn()
             self.plr.start_turn()
-            self.assertEqual(
-                self.plr.piles[Piles.HAND].size(), 5 + 2 * 2
-            )  # Hand + Moat *2
+            self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2 * 2)  # Hand + Moat *2
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

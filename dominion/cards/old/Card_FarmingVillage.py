@@ -22,7 +22,8 @@ class Card_FarmingVillage(Card.Card):
         """Reveal cards from the top of your deck until you revel
         an Action or Treasure card. Put that card into your hand
         and discard the other cards."""
-        while True:
+        count = player.count_cards()
+        while count:
             try:
                 card = player.next_card()
             except NoCardException:
@@ -34,6 +35,9 @@ class Card_FarmingVillage(Card.Card):
                 break
             player.output(f"Picked up and discarded {card}")
             player.discard_card(card)
+            count -= 1
+        else:  # pragma: no coverage
+            player.output("Not enough suitable cards")
 
 
 ###############################################################################
