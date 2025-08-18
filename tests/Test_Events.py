@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-""" Event based tests """
+"""Event based tests"""
 
 import unittest
 
-from dominion import Game
+from dominion import Game, Prompt
 
 
 ###############################################################################
@@ -53,7 +53,7 @@ class TestEventSelection(unittest.TestCase):
 
     def test_events(self):
         self.plr.coins.set(4)
-        output, index = self.plr._event_selection(3)
+        output, index = Prompt.event_selection(self.plr, 3)
         self.assertEqual(index, 6)
         self.assertEqual(len(output), 3)
         num_affordable = 0

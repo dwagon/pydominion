@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Phase
+from dominion.Prompt import choice_selection
 
 
 ###############################################################################
@@ -47,11 +49,9 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.coins.add(6)
         self.plr.test_input = ["0"]
         self.plr.phase = Phase.BUY
-        options = self.plr._choice_selection()
+        options = choice_selection(self.plr)
         for opt in options:
-            if (
-                opt["name"] == "Grand Market" and opt["verb"] == "Buy"
-            ):  # pragma: no cover
+            if opt["name"] == "Grand Market" and opt["verb"] == "Buy":  # pragma: no cover
                 self.fail("Allowed to buy with copper")
 
     def test_nobuy_played(self):
@@ -60,11 +60,9 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.coins.add(6)
         self.plr.test_input = ["0"]
         self.plr.phase = Phase.BUY
-        options = self.plr._choice_selection()
+        options = choice_selection(self.plr)
         for opt in options:
-            if (
-                opt["name"] == "Grand Market" and opt["verb"] == "Buy"
-            ):  # pragma: no cover
+            if opt["name"] == "Grand Market" and opt["verb"] == "Buy":  # pragma: no cover
                 self.fail("Allowed to buy with copper")
 
     def test_buy(self):
@@ -72,11 +70,9 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.coins.add(6)
         self.plr.test_input = ["0"]
         self.plr.phase = Phase.BUY
-        options = self.plr._choice_selection()
+        options = choice_selection(self.plr)
         for opt in options:
-            if (
-                opt["name"] == "Grand Market" and opt["verb"] == "Buy"
-            ):  # pragma: no cover
+            if opt["name"] == "Grand Market" and opt["verb"] == "Buy":  # pragma: no cover
                 break
         else:  # pragma: no cover
             self.fail("Not allowed to buy grand market")

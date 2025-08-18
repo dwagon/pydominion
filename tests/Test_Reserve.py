@@ -2,7 +2,7 @@
 
 import unittest
 
-from dominion import Game, Piles, Whens, Phase
+from dominion import Game, Piles, Whens, Phase, Prompt
 
 
 ###############################################################################
@@ -105,7 +105,7 @@ class Test_reserveSelection(unittest.TestCase):
     def test_callable(self) -> None:
         gold = self.g.get_card_from_pile("Gold")
         self.plr.add_card(gold, "reserve")
-        output, index = self.plr._reserve_selection(1)
+        output, index = Prompt.reserve_selection(self.plr, 1)
         self.assertEqual(len(output), 1)
         self.assertEqual(output[0]["action"], "reserve")
         self.assertEqual(output[0]["card"], gold)
@@ -116,7 +116,7 @@ class Test_reserveSelection(unittest.TestCase):
         """Copper is not callable (Due to miser)"""
         copper = self.g.get_card_from_pile("Copper")
         self.plr.add_card(copper, "reserve")
-        output, index = self.plr._reserve_selection(1)
+        output, index = Prompt.reserve_selection(self.plr, 1)
         self.assertEqual(len(output), 0)
         self.assertEqual(index, 1)
 
