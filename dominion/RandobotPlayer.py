@@ -6,7 +6,7 @@ from typing import Any
 
 import colorama
 
-from dominion import Piles, Card
+from dominion import Piles, Card, Prompt
 from dominion.Option import Option
 from dominion.Player import Player
 
@@ -96,7 +96,7 @@ class RandobotPlayer(Player):
     ###########################################################################
     def user_input(self, options, prompt: str):
         """Handle user input"""
-        print(self._generate_prompt())
+        print(Prompt.generate_prompt(self))
         for opt in options:
             print(self.selectorLine(opt))
         for opt in options:
