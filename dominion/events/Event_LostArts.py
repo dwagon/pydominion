@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Lost_Arts"""
+"""https://wiki.dominionstrategy.com/index.php/Lost_Arts"""
 import unittest
-from dominion import Card, Game, Event
+
+from dominion import Card, Game, Event, Token
 
 
 ###############################################################################
@@ -21,15 +22,13 @@ class Event_LostArts(Event.Event):
             cardsrc=game.get_action_piles(),
         )
         if stacks:
-            player.place_token("+1 Action", stacks[0])
+            player.place_token(Token.PLUS_1_ACTION, stacks[0])
 
 
 ###############################################################################
 class TestLostArts(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, events=["Lost Arts"], initcards=["Moat"]
-        )
+        self.g = Game.TestGame(numplayers=1, events=["Lost Arts"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.events["Lost Arts"]
@@ -39,7 +38,7 @@ class TestLostArts(unittest.TestCase):
         self.plr.coins.add(6)
         self.plr.test_input = ["moat"]
         self.plr.perform_event(self.card)
-        self.assertEqual(self.plr.tokens["+1 Action"], "Moat")
+        self.assertEqual(self.plr.tokens[Token.PLUS_1_ACTION], "Moat")
         self.assertEqual(self.plr.coins.get(), 0)
 
 

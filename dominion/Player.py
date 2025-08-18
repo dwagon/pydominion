@@ -13,7 +13,7 @@ from typing import Any, Optional, TYPE_CHECKING, Callable
 if TYPE_CHECKING:
     from dominion.Game import Game
 
-from dominion import Piles, Phase, Limits, NoCardException, Whens, OptionKeys, Prompt
+from dominion import Piles, Phase, Limits, NoCardException, Whens, OptionKeys, Prompt, Token
 from dominion.Card import Card, CardType
 from dominion.CardPile import CardPile
 from dominion.Counter import Counter
@@ -154,14 +154,14 @@ class Player:
 
     ###########################################################################
     def _initial_tokens(self) -> None:
-        self.tokens: dict[str, Optional[str]] = {
-            "Trashing": None,
-            "Estate": None,
-            "+1 Card": None,
-            "+1 Action": None,
-            "+1 Buy": None,
-            "+1 Coin": None,
-            "-2 Cost": None,
+        self.tokens: dict[Token, Optional[str]] = {
+            Token.TRASHING: None,
+            Token.ESTATE: None,
+            Token.PLUS_1_CARD: None,
+            Token.PLUS_1_ACTION: None,
+            Token.PLUS_1_BUY: None,
+            Token.PLUS_1_COIN: None,
+            Token.MINUS_2_COST: None,
             # '-1 Card': Handled by card_token
             # 'Journey': Handled by journey_token
             # '-1 Coin': Handled by coin_token
@@ -257,16 +257,16 @@ class Player:
         return True
 
     ###########################################################################
-    def place_token(self, token: str, pilename: str) -> None:
+    def place_token(self, token: Token, pilename: str) -> None:
         """Place a token on the specified pile"""
+        assert isinstance(token, Token)
         self.tokens[token] = pilename
 
     ###########################################################################
-    def which_token(self, pilename: str) -> list[str]:
+    def which_token(self, pilename: str) -> list[Token]:
         """Return which token(s) are on a cardstack"""
         assert isinstance(pilename, str)
-        onstack: list[str] = [token_name for token_name, token in self.tokens.items() if token == pilename]
-        return onstack
+        return [token for token, location in self.tokens.items() if location == pilename]
 
     ###########################################################################
     def call_reserve(self, card: str | Card) -> Optional[Card]:
@@ -844,19 +844,19 @@ class Player:
     ###########################################################################
     def _play_card_tokens(self, card: Card) -> None:
         tkns = self.which_token(card.name)
-        if "+1 Action" in tkns:
+        if Token.PLUS_1_ACTION in tkns:
             self.output("Gaining action from +1 Action token")
             self.add_actions(1)
-        if "+1 Card" in tkns:
+        if Token.PLUS_1_CARD in tkns:
             try:
                 if c := self.pickup_card():
                     self.output(f"Picked up {c} from +1 Card token")
             except NoCardException:
                 pass
-        if "+1 Coin" in tkns:
+        if Token.PLUS_1_COIN in tkns:
             self.output("Gaining coin from +1 Coin token")
             self.coins += 1
-        if "+1 Buy" in tkns:
+        if Token.PLUS_1_BUY in tkns:
             self.output("Gaining buy from +1 Buy token")
             self.buys += 1
 
@@ -1018,7 +1018,7 @@ class Player:
     def card_cost(self, card: Card) -> int:
         assert isinstance(card, (Card, Project, Event)), f"Card{card=} {type(card)=}"
         cost = card.cost
-        if "-Cost" in self.which_token(card.name):
+        if Token.MINUS_2_COST in self.which_token(card.name):
             cost -= 2
         for crd in self.relevant_cards():
             cost += crd.hook_card_cost(game=self.game, player=self, card=card)
@@ -1072,6 +1072,10 @@ class Player:
 
         self.stats["gained"].append(new_card)
         destination = options.get(OptionKeys.DESTINATION, destination)
+
+        if Token.TRASHING in self.which_token(new_card.name):
+            self.output("Trashing token allows you to trash a card")
+            self.plr_trash_card()
 
         if options.get(OptionKeys.TRASH, False):
             self.add_card(new_card, Piles.HAND)
@@ -1175,9 +1179,6 @@ class Player:
 
         self.stats["bought"].append(new_card)
         self.output(f"Bought {new_card} for {cost} coin")
-        if "Trashing" in self.which_token(new_card.name):
-            self.output("Trashing token allows you to trash a card")
-            self.plr_trash_card()
         self.hook_buy_card(new_card)
         new_card.hook_buy_this_card(game=self.game, player=self)
         self.hook_all_players_buy_card(new_card)

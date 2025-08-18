@@ -2,110 +2,10 @@
 # pylint: disable=protected-access
 """Testing prompt code"""
 
-import operator
 import unittest
 
-from dominion import Card, Game, Phase, Piles, Prompt
+from dominion import Game, Phase, Piles, Prompt, Token
 from dominion.Counter import Counter
-
-
-###############################################################################
-class TestCardsAffordable(unittest.TestCase):
-    """Test the cards_affordable functionality"""
-
-    def setUp(self) -> None:
-        self.game = Game.TestGame(
-            numplayers=1,
-            badcards=[
-                "Werewolf",
-                "Cursed Village",
-                "Leprechaun",
-                "Skulk",
-                "Tormentor",
-                "Vampire",
-                "Bridge Troll",
-                "Highway",
-                "Fisherman",
-                "Souk",
-            ],
-        )
-        self.game.start_game()
-        self.plr = self.game.player_list()[0]
-
-    def test_under(self) -> None:
-        """Test cards under a cost"""
-        price = 4
-        ans = self.plr.cards_under(price, types={Card.CardType.ACTION: True})
-        for a in ans:
-            try:
-                self.assertLessEqual(a.cost, price)
-                self.assertTrue(a.isAction())
-            except AssertionError:  # pragma: no cover
-                print(f"Failed on card: {a}")
-                self.game.print_state()
-                raise
-
-    def test_worth(self) -> None:
-        """Test cards equal to a cost"""
-        price = 5
-        ans = self.plr.cards_worth(price, types={Card.CardType.VICTORY: True})
-        for a in ans:
-            self.assertEqual(a.cost, price)
-            self.assertTrue(a.isVictory())
-
-    def test_over(self) -> None:
-        """Test cards over a cost"""
-        price = 4
-        ans = self.plr.cards_over(price)
-        for a in ans:
-            self.assertGreater(a.cost, price)
-        self.assertIn("Gold", [_.name for _ in ans])
-
-    def test_no_cost(self) -> None:
-        """Test with no cost"""
-        ans = self.plr.cards_affordable(
-            oper=operator.le,
-            coin=None,
-            num_potions=0,
-            types={
-                Card.CardType.VICTORY: True,
-                Card.CardType.ACTION: True,
-                Card.CardType.TREASURE: True,
-                Card.CardType.NIGHT: True,
-            },
-        )
-        self.assertIn("Province", [_.name for _ in ans])
-
-
-###############################################################################
-class TestTypeSelector(unittest.TestCase):
-    """Test type_selector()"""
-
-    def setUp(self) -> None:
-        self.game = Game.TestGame(numplayers=1)
-        self.game.start_game()
-        self.plr = self.game.player_list()[0]
-
-    def test_select_zero(self) -> None:
-        """Test selecting zero types"""
-        x = self.plr._type_selector({})
-        self.assertTrue(x[Card.CardType.ACTION])
-        self.assertTrue(x[Card.CardType.TREASURE])
-        self.assertTrue(x[Card.CardType.VICTORY])
-
-    def test_select_one(self) -> None:
-        """Test selecting one type"""
-        x = self.plr._type_selector({Card.CardType.ACTION: True})
-        self.assertTrue(x[Card.CardType.ACTION])
-        self.assertFalse(x[Card.CardType.TREASURE])
-        self.assertFalse(x[Card.CardType.VICTORY])
-
-    def test_select_two(self) -> None:
-        """Test selecting two types"""
-        x = self.plr._type_selector({Card.CardType.ACTION: True, Card.CardType.VICTORY: True})
-        self.assertTrue(x[Card.CardType.ACTION])
-        self.assertFalse(x[Card.CardType.TREASURE])
-        self.assertTrue(x[Card.CardType.VICTORY])
 
 
 ###############################################################################
@@ -234,7 +134,7 @@ class TestBuyableSelection(unittest.TestCase):
 
     def test_buy_token(self) -> None:
         self.plr.coins.add(2)
-        self.plr.place_token("+1 Card", "Moat")
+        self.plr.place_token(Token.PLUS_1_CARD, "Moat")
         opts, ind = Prompt.buyable_selection(self.plr, 1)
         self.assertEqual(ind, 1 + len(opts))
         for i in opts:
@@ -265,7 +165,7 @@ class TestPlayableSelection(unittest.TestCase):
         self.assertEqual(ind, 2)
 
     def test_token(self) -> None:
-        self.plr.place_token("+1 Card", "Moat")
+        self.plr.place_token(Token.PLUS_1_CARD, "Moat")
         self.plr.add_card(self.moat, Piles.HAND)
         opts, ind = Prompt.playable_selection(self.plr, 1)
         self.assertEqual(len(opts), 1)

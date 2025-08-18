@@ -2,7 +2,8 @@
 """http://wiki.dominionstrategy.com/index.php/Teacher"""
 
 import unittest
-from dominion import Card, Game, Piles
+
+from dominion import Card, Game, Piles, Token
 
 
 ###############################################################################
@@ -25,7 +26,7 @@ class Card_Teacher(Card.Card):
         """At the start of your turn, you may call this, to move your +1 Card,
         +1 Action, +1 Buy or +1 Coin token to an Action Supply pile you have
         no tokens on"""
-        for token in ("+1 Card", "+1 Action", "+1 Buy", "+1 Coin"):
+        for token in (Token.PLUS_1_CARD, Token.PLUS_1_ACTION, Token.PLUS_1_BUY, Token.PLUS_1_COIN):
             options = []
             for pile in game.get_action_piles():
                 if player.which_token(pile):
@@ -70,10 +71,10 @@ class TestTeacher(unittest.TestCase):
             "Select Village",
         ]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.tokens["+1 Card"], "Cellar")
-        self.assertEqual(self.plr.tokens["+1 Action"], "Chapel")
-        self.assertEqual(self.plr.tokens["+1 Buy"], "Moat")
-        self.assertEqual(self.plr.tokens["+1 Coin"], "Village")
+        self.assertEqual(self.plr.tokens[Token.PLUS_1_CARD], "Cellar")
+        self.assertEqual(self.plr.tokens[Token.PLUS_1_ACTION], "Chapel")
+        self.assertEqual(self.plr.tokens[Token.PLUS_1_BUY], "Moat")
+        self.assertEqual(self.plr.tokens[Token.PLUS_1_COIN], "Village")
 
 
 ###############################################################################
