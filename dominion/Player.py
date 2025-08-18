@@ -13,7 +13,7 @@ from typing import Any, Optional, TYPE_CHECKING, Callable
 if TYPE_CHECKING:
     from dominion.Game import Game
 
-from dominion import Piles, Phase, Limits, NoCardException, Whens, OptionKeys, Token
+from dominion import Piles, Phase, Limits, NoCardException, Whens, OptionKeys, Prompt, Token
 from dominion.Card import Card, CardType
 from dominion.CardPile import CardPile
 from dominion.Counter import Counter
