@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Ferry"""
+"""https://wiki.dominionstrategy.com/index.php/Ferry"""
 import unittest
-from dominion import Card, Game, Event
+
+from dominion import Card, Game, Event, Token
 
 
 ###############################################################################
@@ -21,7 +22,7 @@ class Event_Ferry(Event.Event):
             cardsrc=action_piles,
         )
         if piles:
-            player.place_token("-2 Cost", piles[0])
+            player.place_token(Token.MINUS_2_COST, piles[0])
 
 
 ###############################################################################
@@ -36,7 +37,7 @@ class TestFerry(unittest.TestCase):
         self.plr.coins.add(3)
         self.plr.test_input = ["moat"]
         self.plr.perform_event(self.card)
-        self.assertEqual(self.plr.tokens["-2 Cost"], "Moat")
+        self.assertEqual(self.plr.tokens[Token.MINUS_2_COST], "Moat")
         self.assertEqual(self.plr.coins.get(), 0)
 
 

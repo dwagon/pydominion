@@ -93,4 +93,18 @@ class OptionKeys(StrEnum):
     EXILE = auto()
 
 
+###############################################################################
+class Token(StrEnum):
+    PLUS_1_ACTION = "+1 Action"
+    PLUS_1_BUY = "+1 Buy"
+    PLUS_1_COIN = "+1 Coin"
+    PLUS_1_CARD = "+1 Card"
+    MINUS_2_COST = "-2 Cost"
+    TRASHING = "Trashing"
+    MINUS_1_CARD = "-1 Card"
+    MINUS_1_COIN = "-1 Coin"
+    JOURNEY = "Journey"
+    ESTATE = "Estate"
+
+
 # EOF

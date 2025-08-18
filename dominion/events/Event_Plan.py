@@ -3,7 +3,7 @@
 
 import unittest
 
-from dominion import Card, Game, Event
+from dominion import Card, Game, Event, Token
 
 
 ###############################################################################
@@ -22,7 +22,7 @@ class Event_Plan(Event.Event):
             prompt="What stack to add the Trashing Token to?",
             cardsrc=game.get_action_piles(),
         ):
-            player.place_token("Trashing", stacks[0])
+            player.place_token(Token.TRASHING, stacks[0])
 
 
 ###############################################################################
@@ -38,7 +38,7 @@ class TestPlan(unittest.TestCase):
         self.plr.coins.add(3)
         self.plr.test_input = ["Moat"]
         self.plr.perform_event(self.card)
-        self.assertEqual(self.plr.tokens["Trashing"], "Moat")
+        self.assertEqual(self.plr.tokens[Token.TRASHING], "Moat")
         self.assertEqual(self.plr.coins.get(), 0)
 
 

@@ -5,7 +5,7 @@
 import operator
 import unittest
 
-from dominion import Card, Game, Phase, Piles, Limits, NoCardException
+from dominion import Card, Game, Phase, Piles, Limits, NoCardException, Token
 from dominion.Counter import Counter
 
 
@@ -742,7 +742,7 @@ class TestBuyableSelection(unittest.TestCase):
 
     def test_buy_token(self) -> None:
         self.plr.coins.add(2)
-        self.plr.place_token("+1 Card", "Moat")
+        self.plr.place_token(Token.PLUS_1_CARD, "Moat")
         opts, ind = self.plr._buyable_selection(1)
         self.assertEqual(ind, 1 + len(opts))
         for i in opts:
@@ -773,7 +773,7 @@ class TestPlayableSelection(unittest.TestCase):
         self.assertEqual(ind, 2)
 
     def test_token(self) -> None:
-        self.plr.place_token("+1 Card", "Moat")
+        self.plr.place_token(Token.PLUS_1_CARD, "Moat")
         self.plr.add_card(self.moat, Piles.HAND)
         opts, ind = self.plr._playable_selection(1)
         self.assertEqual(len(opts), 1)

@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Training"""
+"""https://wiki.dominionstrategy.com/index.php/Training"""
 
 import unittest
-from dominion import Card, Game, Event
+
+from dominion import Card, Game, Event, Token
 
 
 ###############################################################################
@@ -23,15 +24,13 @@ class Event_Training(Event.Event):
             cardsrc=action_piles,
         )
         if stacks:
-            player.place_token("+1 Coin", stacks[0])
+            player.place_token(Token.PLUS_1_COIN, stacks[0])
 
 
 ###############################################################################
 class TestTraining(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, events=["Training"], initcards=["Moat"]
-        )
+        self.g = Game.TestGame(numplayers=1, events=["Training"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.events["Training"]
@@ -41,7 +40,7 @@ class TestTraining(unittest.TestCase):
         self.plr.coins.add(6)
         self.plr.test_input = ["moat"]
         self.plr.perform_event(self.card)
-        self.assertEqual(self.plr.tokens["+1 Coin"], "Moat")
+        self.assertEqual(self.plr.tokens[Token.PLUS_1_COIN], "Moat")
         self.assertEqual(self.plr.coins.get(), 0)
 
 
