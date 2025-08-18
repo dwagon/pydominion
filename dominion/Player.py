@@ -1451,6 +1451,10 @@ class Player:
         self.stats["gained"].append(new_card)
         destination = options.get(OptionKeys.DESTINATION, destination)
 
+        if "Trashing" in self.which_token(new_card.name):
+            self.output("Trashing token allows you to trash a card")
+            self.plr_trash_card()
+
         if options.get(OptionKeys.TRASH, False):
             self.add_card(new_card, Piles.HAND)
             self.trash_card(new_card)
@@ -1553,9 +1557,6 @@ class Player:
 
         self.stats["bought"].append(new_card)
         self.output(f"Bought {new_card} for {cost} coin")
-        if "Trashing" in self.which_token(new_card.name):
-            self.output("Trashing token allows you to trash a card")
-            self.plr_trash_card()
         self.hook_buy_card(new_card)
         new_card.hook_buy_this_card(game=self.game, player=self)
         self.hook_all_players_buy_card(new_card)

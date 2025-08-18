@@ -1,6 +1,8 @@
 #!/usr/bin/env python
+"""https://wiki.dominionstrategy.com/index.php/Plan"""
 
 import unittest
+
 from dominion import Card, Game, Event
 
 
@@ -9,18 +11,17 @@ class Event_Plan(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.ADVENTURE
-        self.desc = "Move your Trashing token to an Action Supply pile"
+        self.desc = "Move your Trashing token to an Action Supply pile."
         self.name = "Plan"
         self.cost = 3
 
     def special(self, game, player):
         """Move your Trashing token to an Action Supply pile"""
-        stacks = player.card_pile_sel(
+        if stacks := player.card_pile_sel(
             num=1,
             prompt="What stack to add the Trashing Token to?",
             cardsrc=game.get_action_piles(),
-        )
-        if stacks:
+        ):
             player.place_token("Trashing", stacks[0])
 
 

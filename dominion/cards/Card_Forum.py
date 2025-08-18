@@ -1,7 +1,10 @@
 #!/usr/bin/env python
+"""https://wiki.dominionstrategy.com/index.php/Forum"""
 
 import unittest
-from dominion import Card, Game, Piles, Player
+from typing import Any
+
+from dominion import Card, Game, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -17,14 +20,15 @@ class Card_Forum(Card.Card):
 
     def dynamic_description(self, player):
         if player.phase == Player.Phase.BUY:
-            return "+3 Cards, +1 Action, Discard 2 cards. When you buy this, +1 Buy."
+            return "+3 Cards, +1 Action, Discard 2 cards. When you gain this, +1 Buy."
         return "+3 Cards, +1 Action, Discard 2 cards."
 
     def special(self, game, player):
         player.plr_discard_cards(num=2, force=True)
 
-    def hook_buy_this_card(self, game, player):
+    def hook_gain_this_card(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
         player.buys.add(1)
+        return {}
 
 
 ###############################################################################

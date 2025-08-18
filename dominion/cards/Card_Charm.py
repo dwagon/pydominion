@@ -2,7 +2,9 @@
 """https://wiki.dominionstrategy.com/index.php/Charm"""
 
 import unittest
-from dominion import Game, Card, Piles
+from typing import Any
+
+from dominion import Game, Card, Piles, OptionKeys, Player
 
 
 ###############################################################################
@@ -11,9 +13,8 @@ class Card_Charm(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.EMPIRES
-        self.desc = """When you play this, choose one: +1 Buy and +2 Coin; or
-            the next time you buy a card this turn, you may also gain a differently
-            named card with the same cost."""
+        self.desc = """Choose one: +1 Buy and +$2; or the next time you gain a card this turn,
+        you may also gain a differently named card with the same cost."""
         self.name = "Charm"
         self.cost = 5
         self.buy_trigger = False
@@ -23,7 +24,7 @@ class Card_Charm(Card.Card):
             "Pick One",
             ("+1 Buy and +2 Coin", True),
             (
-                "Next time you buy a card this turn, you may also gain a differently named card with the same cost.",
+                "Next time you gain a card this turn, you may also gain a differently named card with the same cost.",
                 False,
             ),
         )
@@ -33,12 +34,13 @@ class Card_Charm(Card.Card):
         else:
             self.buy_trigger = True
 
-    def hook_buy_card(self, game, player, card):
+    def hook_gain_card(self, game: "Game.Game", player: "Player.Player", card: "Card.Card") -> dict[OptionKeys, Any]:
         if not self.buy_trigger:
-            return
+            return {}
         self.buy_trigger = False
         cost = card.cost
         player.plr_gain_card(cost=cost, modifier="equal", exclude=[card.name])
+        return {}
 
 
 ###############################################################################
@@ -52,9 +54,11 @@ class TestCharm(unittest.TestCase):
 
     def test_play_choose_one(self):
         self.plr.test_input = ["+1 Buy"]
+        buys = self.plr.buys.get()
+        coins = self.plr.coins.get()
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.buys.get(), 2)
-        self.assertEqual(self.plr.coins.get(), 2)
+        self.assertEqual(self.plr.buys.get(), buys + 1)
+        self.assertEqual(self.plr.coins.get(), coins + 2)
 
     def test_play_choose_two(self):
         self.plr.test_input = ["next time"]

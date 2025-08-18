@@ -1,7 +1,9 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Mint"""
+"""https://wiki.dominionstrategy.com/index.php/Mint"""
 import unittest
-from dominion import Card, Game, Piles, Player, Phase, NoCardException
+from typing import Any
+
+from dominion import Card, Game, Piles, Player, Phase, NoCardException, OptionKeys
 
 
 ###############################################################################
@@ -16,7 +18,7 @@ class Card_Mint(Card.Card):
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
             return """You may reveal a Treasure card from your hand. Gain a copy of it.
-            When you buy this, trash all Treasures you have in play."""
+            When you gain this, trash all non-Duration Treasures you have in play."""
         return "You may reveal a Treasure card from your hand. Gain a copy of it."
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
@@ -24,9 +26,7 @@ class Card_Mint(Card.Card):
         if not treasures:
             player.output("No treasures to reveal")
             return
-        if to_get := player.card_sel(
-            num=1, cardsrc=treasures, prompt="Reveal a treasure to gain a copy of"
-        ):
+        if to_get := player.card_sel(num=1, cardsrc=treasures, prompt="Reveal a treasure to gain a copy of"):
             player.reveal_card(to_get[0])
             player.output(f"Gained a {to_get[0]} from the Mint")
             try:
@@ -34,12 +34,13 @@ class Card_Mint(Card.Card):
             except NoCardException:
                 player.output(f"No more {to_get[0].name}")
 
-    def hook_buy_this_card(self, game: Game.Game, player: Player.Player) -> None:
-        """Trash all Treasures you have in play"""
-        to_trash = [_ for _ in player.piles[Piles.PLAYED] if _.isTreasure()]
+    def hook_gain_this_card(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
+        """Trash all non-Duration Treasures you have in play"""
+        to_trash = [_ for _ in player.piles[Piles.PLAYED] if _.isTreasure() and not _.isDuration()]
         for card in to_trash:
-            player.output(f"Mint trashing {card.name}")
+            player.output(f"Mint trashing {card}")
             player.trash_card(card)
+        return {}
 
 
 ###############################################################################
