@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Counterfeit"""
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 
@@ -10,7 +11,7 @@ class Card_Counterfeit(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.DARKAGES
-        self.desc = "+1 Coin, +1 Buy; May play a treasure twice and trash it"
+        self.desc = "+1 Coin, +1 Buy; You may play a non-Duration Treasure from your hand twice. Trash it."
         self.name = "Counterfeit"
         self.cost = 5
         self.coin = 1
@@ -22,7 +23,7 @@ class Card_Counterfeit(Card.Card):
         options = [{"selector": "0", "print": "Do nothing", "card": None}]
         index = 1
         for card in player.piles[Piles.HAND]:
-            if card.isTreasure():
+            if card.isTreasure() and not card.isDuration():
                 options.append(
                     {
                         "selector": f"{index}",

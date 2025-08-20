@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Crypt"""
 import unittest
-from dominion import Game, Piles, Card, PlayArea
+
+from dominion import Game, Piles, Card, PlayArea, Player, OptionKeys
 from dominion.Player import Phase
 
 
@@ -11,20 +12,23 @@ class Card_Crypt(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.NIGHT, Card.CardType.DURATION]
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = """Set aside any number of Treasures you have in play, face down
-            (under this). While any remain, at the start of each of your turns,
-            put one of them into your hand."""
+        self.desc = """Set aside any number of non-Duration Treasures you have in play, face down (under this).
+                    While any remain, at the start of each of your turns, put one of them into your hand."""
         self.name = "Crypt"
         self.cost = 5
-        self._crypt_reserve = PlayArea.PlayArea([])
+        self._crypt_reserve = PlayArea.PlayArea(initial=[])
 
-    def night(self, game, player):
+    def night(self, game: Game.Game, player: Player.Player) -> None:
+        relevant_cards = PlayArea.PlayArea(initial=[])
+        for card in player.piles[Piles.PLAYED]:
+            if card.isTreasure() and not card.isDuration():
+                relevant_cards.add(card)
         if cards := player.card_sel(
             prompt="Set aside any number of Treasures you have in play",
             verbs=("Set", "Unset"),
             anynum=True,
             types={Card.CardType.TREASURE: True},
-            cardsrc="played",
+            cardsrc=relevant_cards,
         ):
             for card in cards:
                 self._crypt_reserve.add(card)
@@ -32,9 +36,9 @@ class Card_Crypt(Card.Card):
                 player.secret_count += 1
             self.permanent = True
 
-    def duration(self, game, player):
+    def duration(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, str]:
         if self._crypt_reserve.is_empty():
-            return
+            return {}
         options = []
         index = 0
         for card in self._crypt_reserve:
@@ -48,18 +52,19 @@ class Card_Crypt(Card.Card):
         player.secret_count -= 1
         if self._crypt_reserve.is_empty():
             self.permanent = False
+        return {}
 
 
 ###############################################################################
 class TestCrypt(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Crypt"], badcards=["Duchess"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g.get_card_from_pile("Crypt")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         self.plr.phase = Phase.NIGHT
         self.plr.piles[Piles.PLAYED].set("Silver", "Gold", "Estate")
         self.plr.test_input = ["Set Gold", "Set Silver", "Finish"]
