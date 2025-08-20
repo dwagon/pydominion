@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles
 
 
@@ -10,7 +11,7 @@ class Card_Quarry(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.PROSPERITY
-        self.desc = "+1 Coin. While this is in play, Action cards cost 2 less, but not less than 0."
+        self.desc = "+1 Coin. This turn, Actions cost $2 less."
         self.name = "Quarry"
         self.coin = 1
         self.cost = 4

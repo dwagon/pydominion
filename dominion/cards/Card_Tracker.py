@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Tracker"""
+"""https://wiki.dominionstrategy.com/index.php/Tracker"""
 import unittest
 from typing import Any
 
@@ -12,7 +12,7 @@ class Card_Tracker(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.FATE]
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = "+1 Coin, Receive a boon; While this is in play, when you gain a card, you may put that card onto your deck"
+        self.desc = "+1 Coin. This turn, when you gain a card, you may put it onto your deck. Receive a Boon."
         self.name = "Tracker"
         self.cost = 2
         self.coin = 1
@@ -23,9 +23,7 @@ class Card_Tracker(Card.Card):
         if not hasattr(player, "_tracker_dont_boon"):
             player.receive_boon()
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         """While this is in play, when you gain a card, you may
         put that card on top of your deck"""
         mod = {}
@@ -45,7 +43,7 @@ class TestTracker(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Tracker"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.plr._tracker_dont_boon = True
+        self.plr._tracker_dont_boon = True  # type: ignore
         self.card = self.g.get_card_from_pile("Tracker")
 
     def test_play(self) -> None:

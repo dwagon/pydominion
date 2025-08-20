@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, OptionKeys
 
 
@@ -14,9 +15,9 @@ class Card_BridgeTroll(Card.Card):
             Card.CardType.DURATION,
         ]
         self.base = Card.CardExpansion.ADVENTURE
-        self.desc = """Each other player takes his -1 Coin token.
-            Now and at the start of your next turn: +1 Buy.
-            While this is in play cards cost 1 less"""
+        self.desc = """Each other player takes their –$1 token.
+            On this turn and your next turn, cards cost $1 less.
+            Now and at the start of your next turn: +1 Buy."""
         self.name = "Bridge Troll"
         self.buys = 1
         self.cost = 5
@@ -28,9 +29,7 @@ class Card_BridgeTroll(Card.Card):
             plr.output(f"{player.name}'s Bridge Troll set your -1 Coin token")
             plr.coin_token = True
 
-    def hook_card_cost(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> int:
+    def hook_card_cost(self, game: Game.Game, player: Player.Player, card: Card.Card) -> int:
         if self._played:
             return -1
         return 0

@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+
 import dominion.Card as Card
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -10,8 +11,8 @@ class Card_Lighthouse(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
-        self.desc = """+1 Action. Now and at the start of your next turn: +1 Coin.
-        While this is in play, when another player plays an Attack card, it doesn't affect you."""
+        self.desc = """+1 Action. +$1. At the start of your next turn, +$1.
+        Until then, when another player plays an Attack card, it doesn't affect you."""
         self.name = "Lighthouse"
         self.base = Card.CardExpansion.SEASIDE
         self.defense = True

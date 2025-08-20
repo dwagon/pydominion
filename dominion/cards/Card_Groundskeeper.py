@@ -12,15 +12,13 @@ class Card_Groundskeeper(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.EMPIRES
-        self.desc = "+1 Card. +1 Action. While this is in play, when you gain a Victory card, +1VP"
+        self.desc = "+1 Card. +1 Action. This turn, when you gain a Victory card, +1VP."
         self.name = "Groundskeeper"
         self.cards = 1
         self.actions = 1
         self.cost = 5
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         if card.isVictory():
             player.add_score("Groundskeeper", 1)
             player.output("Scored 1 from Groundskeeper")
@@ -30,9 +28,7 @@ class Card_Groundskeeper(Card.Card):
 ###############################################################################
 class TestGroundskeeper(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            numplayers=1, initcards=["Groundskeeper"], badcards=["Duchess"]
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Groundskeeper"], badcards=["Duchess"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Groundskeeper")

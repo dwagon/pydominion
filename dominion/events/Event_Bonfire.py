@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Event
+
+from dominion import Card, Game, Piles, Event, PlayArea
 
 
 ###############################################################################
@@ -9,13 +10,17 @@ class Event_Bonfire(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.ADVENTURE
-        self.desc = "Trash up to two cards you have in play"
+        self.desc = "Trash up to 2 Coppers you have in play."
         self.name = "Bonfire"
         self.cost = 3
 
     def special(self, game, player):
-        """Trash up to two cards you have in play"""
-        player.plr_trash_card(num=2, cardsrc="played")
+        """Trash up to two Coppers you have in play"""
+        coppers = PlayArea.PlayArea(initial=[])
+        for card in player.piles[Piles.PLAYED]:
+            if card.name == "Copper":
+                coppers.add(card)
+        player.plr_trash_card(num=2, cardsrc=coppers)
 
 
 ###############################################################################
@@ -33,14 +38,13 @@ class Test_Bonfire(unittest.TestCase):
         """Use Bonfire"""
         tsize = self.g.trash_pile.size()
         self.plr.coins.add(3)
-        self.plr.piles[Piles.HAND].set("Estate")
-        self.plr.add_card(self.copper, Piles.HAND)
-        self.plr.play_card(self.copper)
-        self.plr.add_card(self.gold, Piles.HAND)
-        self.plr.play_card(self.gold)
-        self.plr.test_input = ["Copper", "Gold", "Finish"]
+        self.plr.piles[Piles.PLAYED].set("Copper", "Silver", "Gold")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate")
+        self.plr.test_input = ["Copper", "Finish"]
         self.plr.perform_event(self.card)
-        self.assertEqual(self.g.trash_pile.size(), tsize + 2)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 1)
+        self.assertIn("Copper", self.plr.piles[Piles.HAND])
+        self.assertNotIn("Copper", self.plr.piles[Piles.PLAYED])
 
 
 ###############################################################################

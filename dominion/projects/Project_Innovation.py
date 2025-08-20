@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Innovation"""
 import unittest
 from typing import Any
 
@@ -13,16 +13,16 @@ class Project_Innovation(Project.Project):
     def __init__(self) -> None:
         Project.Project.__init__(self)
         self.base = Card.CardExpansion.RENAISSANCE
-        self.desc = """The first time you gain an Action card in each of your turns,
-            you may set it aside. If you do, play it."""
+        self.desc = """Once during each of your turns, when you gain an Action card, you may play it."""
         self.name = "Innovation"
         self.cost = 6
 
     def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         """Gain a card"""
-        if player.stats["gained"]:
-            return {}
         if not card.isAction():
+            return {}
+        if not player.do_once("Innovation"):
+            player.output("Already used Innovation this turn")
             return {}
         if player.plr_choose_options(
             f"Play {card.name} through Innovation?",

@@ -1,7 +1,9 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Port"""
 import unittest
-from dominion import Card, Game, Piles, Phase, Player, NoCardException
+from typing import Any
+
+from dominion import Card, Game, Piles, Phase, Player, NoCardException, OptionKeys
 
 
 ###############################################################################
@@ -18,15 +20,16 @@ class Card_Port(Card.Card):
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return "+1 Card, +2 Actions; When you buy this, gain another Port"
+            return "+1 Card, +2 Actions; When you gain this, gain another Port"
         return "+1 Card, +2 Actions"
 
-    def hook_buy_this_card(self, game: Game.Game, player: Player.Player) -> None:
+    def hook_gain_this_card(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
         """Gain another Port"""
         try:
-            player.gain_card("Port")
+            player.gain_card("Port", callhook=False)
         except NoCardException:
             player.output("No more ports")
+        return {}
 
 
 ###############################################################################

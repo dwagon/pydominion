@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Treasury"""
 import unittest
+
 from dominion import Card, Game, Piles
 
 
@@ -8,13 +9,12 @@ from dominion import Card, Game, Piles
 class Card_Treasury(Card.Card):
     """Treasury"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.SEASIDE
-        self.desc = """+1 Card +1 Action +1 Coin; When you discard this from play,
-            if you didn't buy a Victory card this turn, you may put this on top
-            of your deck."""
+        self.desc = """+1 Card +1 Action +1 Coin; At the end of your Buy phase this turn,
+        if you didn't gain a Victory card in it, you may put this onto your deck."""
         self.name = "Treasury"
         self.cost = 5
         self.cards = 1
@@ -23,7 +23,7 @@ class Card_Treasury(Card.Card):
 
     def hook_discard_this_card(self, game, player, source):
         vict = False
-        for card in player.stats["bought"]:
+        for card in player.stats["gained"]:
             if card.isVictory():
                 vict = True
         if vict:
@@ -40,23 +40,21 @@ class Card_Treasury(Card.Card):
 class TestTreasury(unittest.TestCase):
     """Test Treasury"""
 
-    def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, initcards=["Treasury"], badcards=["Duchess"]
-        )
+    def setUp(self) -> None:
+        self.g = Game.TestGame(numplayers=1, initcards=["Treasury"], badcards=["Duchess"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Treasury")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a trader - trashing an estate"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 1)
 
-    def test_buy_top_deck(self):
+    def test_buy_top_deck(self) -> None:
         self.plr.test_input = ["put on top"]
         self.plr.coins.set(5)
         self.plr.buy_card("Duchy")

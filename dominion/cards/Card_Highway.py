@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Highway"""
+"""https://wiki.dominionstrategy.com/index.php/Highway"""
 import unittest
+
 from dominion import Game, Card, Piles
 
 
@@ -10,7 +11,7 @@ class Card_Highway(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.HINTERLANDS
-        self.desc = "+1 Card +1 Action. While this is in play, cards cost 1 less, but not less than 0."
+        self.desc = "+1 Card +1 Action. This turn, cards cost $1 less."
         self.name = "Highway"
         self.cards = 1
         self.actions = 1

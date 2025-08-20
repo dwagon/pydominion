@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from typing import Any
+from typing import Any, Optional
 
 from dominion import Card, Game, Landmark, Player, OptionKeys
 
@@ -12,51 +12,48 @@ class Landmark_MountainPass(Landmark.Landmark):
         Landmark.Landmark.__init__(self)
         self.base = Card.CardExpansion.EMPIRES
         self.name = "Mountain Pass"
-        self._state = "un"
+        self.had_auction = False
 
     def dynamic_description(self, player: Player.Player) -> str:
-        if self._state == "done":
+        if self.had_auction:
             return "Mountain Pass already claimed"
-        return """When you are the first player to gain a Province, after that turn,
+        return """When you are the first player to gain a Province,
             each player bids once, up to 40 Debt, ending with you.
             High bidder gets +8VP and takes the Debt they bid."""
 
-    def hook_end_turn(self, game: Game.Game, player: Player.Player) -> None:
-        if self._state != "do":
-            return
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
+        if card.name != "Province":
+            return {}
+        if self.had_auction:
+            return {}
         plr = player
-        curbid = 0
-        winning_plr = None
+        curr_bid = 0
+        winning_plr: Optional[Player.Player] = None
         while True:
             plr = game.playerToRight(plr)
-            opts = self.generate_bids(curbid)
+            opts = generate_bids(curr_bid)
             bid = plr.plr_choose_options("What to bid for 8VP?", *opts)
-            if bid > curbid:
-                curbid = bid
+            if bid > curr_bid:
+                curr_bid = bid
                 winning_plr = plr
             if plr == player:
                 break
 
         if winning_plr:
-            winning_plr.debt += curbid
+            winning_plr.debt += curr_bid
             winning_plr.add_score("Mountain Pass", 8)
-            game.output("%s won with a bid of %d for 8VP" % (winning_plr.name, curbid))
-            self._state = "done"
+            game.output(f"{winning_plr} won with a bid of {curr_bid} for 8VP")
+            self.had_auction = True
         else:
             game.output("No one bid for Mountain Pass")
-
-    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
-        if self._state != "un":
-            return {}
-        if card.name == "Province":
-            self._state = "do"
         return {}
 
-    def generate_bids(self, minbid: int) -> list[tuple[str, int]]:
-        options = [("Don't bid", -1)]
-        for i in range(minbid + 1, 41):
-            options.append((f"Bid {i}", i))
-        return options
+
+def generate_bids(minbid: int) -> list[tuple[str, int]]:
+    options = [("Don't bid", -1)]
+    for i in range(minbid + 1, 41):
+        options.append((f"Bid {i}", i))
+    return options
 
 
 ###############################################################################
@@ -74,17 +71,15 @@ class TestMountainPass(unittest.TestCase):
 
     def test_play(self) -> None:
         """Test Mountain Pass"""
-        self.assertEqual(self.mp._state, "un")
-        self.plr.gain_card("Province")
-        self.assertEqual(self.mp._state, "do")
+        self.assertFalse(self.mp.had_auction)  # type: ignore
         self.other.test_input = ["24"]
         self.plr.test_input = ["25"]
-        self.plr.end_turn()
+        self.plr.gain_card("Province")
         self.assertEqual(self.plr.debt.get(), 25)
         self.assertEqual(self.other.debt.get(), 0)
         self.assertEqual(self.plr.get_score_details()["Mountain Pass"], 8)
         self.assertNotIn("Mountain Pass", self.other.get_score_details())
-        self.assertEqual(self.mp._state, "done")
+        self.assertTrue(self.mp.had_auction)  # type: ignore
 
 
 ###############################################################################
