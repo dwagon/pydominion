@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Herald"""
+"""http://wiki.dominionstrategy.com/index.php/Herald"""
 
 import unittest
+
 from dominion import Card, Game, Piles, Player, NoCardException, Phase
 
 
@@ -19,13 +20,12 @@ class Card_Herald(Card.Card):
         self.actions = 1
         self.cost = 4
 
-    def dynamic_description(self, player) -> str:
+    def dynamic_description(self, player: Player.Player) -> str:
         """Variable description"""
         if player.phase == Phase.BUY:
             return """+1 Card +1 Action. Reveal the top card of your deck.
-                If it is an Action, play it.  When you buy this, you may overpay
-                for it. For each Coin you overpaid, look through your discard pile
-                and put a card from it on top of your deck."""
+                If it is an Action, play it.
+                Overpay: Per $1 overpaid, put any card from your discard pile onto your deck."""
         return "+1 Card +1 Action. Reveal the top card of your deck. If it is an Action, play it."
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
@@ -40,7 +40,7 @@ class Card_Herald(Card.Card):
 
     def hook_overpay(
         self, game: Game.Game, player: Player.Player, amount: int
-    ) -> None:    # pylint: disable=unused-argument
+    ) -> None:  # pylint: disable=unused-argument
         """If we overpay"""
         for _ in range(amount):
             if card := player.card_sel(
@@ -68,9 +68,7 @@ class TestHerald(unittest.TestCase):
         self.plr.piles[Piles.DECK].set("Province", "Estate", "Copper", "Moat", "Duchy")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(
-            self.plr.piles[Piles.HAND].size(), 5 + 1 + 2
-        )  # 5 for hand, 1 for herald, 2 for moat
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1 + 2)  # 5 for hand, 1 for herald, 2 for moat
         self.assertEqual(self.plr.actions.get(), 1 + 1)
         self.assertIn("Duchy", self.plr.piles[Piles.HAND])
         self.assertIn("Moat", self.plr.piles[Piles.PLAYED])

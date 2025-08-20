@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Exploration"""
 import unittest
 
 from dominion import Card, Game, Project
@@ -10,13 +10,14 @@ class Project_Exploration(Project.Project):
     def __init__(self):
         Project.Project.__init__(self)
         self.base = Card.CardExpansion.RENAISSANCE
-        self.desc = """At the end of your Buy phase, if you didn't buy any cards,
-            +1 Coffers and +1 Villager."""
+        self.desc = (
+            """At the end of your Buy phase, if you didn't gain any cards during it, +1 Coffers and +1 Villager."""
+        )
         self.name = "Exploration"
         self.cost = 4
 
     def hook_end_buy_phase(self, game, player):
-        if player.stats["bought"]:
+        if player.stats["gained"]:
             return
         player.coffers.add(1)
         player.villagers += 1

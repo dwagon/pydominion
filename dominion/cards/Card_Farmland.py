@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Farmland"""
 import unittest
+
 from dominion import Game, Card, Piles, Player, OptionKeys
 
 
@@ -10,18 +11,21 @@ class Card_Farmland(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.VICTORY
         self.base = Card.CardExpansion.HINTERLANDS
-        self.desc = """2VP; When you buy this, trash a card from your hand.
-            Gain a card costing exactly 2 more than the trashed card."""
+        self.desc = """2VP; When you gain this, trash a card from your hand and gain a non-Farmland card costing
+        exactly $2 more than it."""
         self.name = "Farmland"
         self.cost = 6
         self.victory = 2
 
-    def hook_gain_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, str]:
+    def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         if card := player.plr_trash_card(force=True):
-            player.plr_gain_card(cost=card[0].cost + 2, modifier="equal")
+            player.plr_gain_card(cost=card[0].cost + 2, modifier="equal", exclude="Farmland")
         return {}
+
+    def calc_numcards(self, game: Game.Game) -> int:
+        if game.numplayers == 2:
+            return 8
+        return 12
 
 
 ###############################################################################
@@ -34,7 +38,9 @@ class TestFarmland(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.get_card_from_pile("Farmland")
+
+    def test_num_cards(self) -> None:
+        self.assertEqual(len(self.g.card_piles["Farmland"]), 12)
 
     def test_gain(self) -> None:
         """Gain a farmland"""

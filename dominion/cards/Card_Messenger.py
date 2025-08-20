@@ -1,7 +1,9 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Messenger"""
 import unittest
-from dominion import Card, Game, Piles, Player, Phase, NoCardException
+from typing import Any
+
+from dominion import Card, Game, Piles, Player, Phase, NoCardException, OptionKeys
 
 
 ###############################################################################
@@ -21,7 +23,7 @@ class Card_Messenger(Card.Card):
         """Variable description"""
         if player.phase == Phase.BUY:
             return """+1 Buy, +2 Coin, You may put your deck into your discard pile;
-                When this is your first buy in a turn, gain a card costing up to 4,
+                When this is the first card you gain in your Buy phase, gain a card costing up to $4,
                 and each other player gains a copy of it."""
         return "+1 Buy, +2 Coin, You may put your deck into your discard pile"
 
@@ -35,12 +37,12 @@ class Card_Messenger(Card.Card):
                 player.add_card(crd, "discard")
                 player.piles[Piles.DECK].remove(crd)
 
-    def hook_buy_this_card(self, game: Game.Game, player: Player.Player) -> None:
-        if len(player.stats["bought"]) != 1:
-            return
+    def hook_gain_this_card(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
+        if player.stats["gained"]:
+            return {}
         card = player.plr_gain_card(4, prompt="Pick a card for everyone to gain")
         if not card:
-            return
+            return {}
         for plr in game.player_list():
             if plr != player:
                 try:
@@ -48,6 +50,7 @@ class Card_Messenger(Card.Card):
                     plr.output(f"Gained a {card} from {player}'s Messenger")
                 except NoCardException:
                     player.output(f"No more {card}s")
+        return {}
 
 
 ###############################################################################
@@ -87,6 +90,16 @@ class TestMessenger(unittest.TestCase):
             self.assertIn("Silver", plr.piles[Piles.DISCARD])
             ag = plr.piles[Piles.DISCARD]["Silver"]
             self.assertEqual(ag.player.name, plr.name)
+
+    def test_gained_already(self) -> None:
+        """Buy a messenger second"""
+        self.plr.test_input = ["get silver"]
+        self.plr.coins.set(5)
+        self.plr.buys.set(2)
+        self.plr.buy_card("Copper")
+        self.plr.buy_card("Messenger")
+        for plr in self.g.player_list():
+            self.assertNotIn("Silver", plr.piles[Piles.DISCARD])
 
 
 ###############################################################################
