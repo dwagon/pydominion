@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Citadel"""
 import unittest
 
-from dominion import Card, Game, Piles, Project
+from dominion import Card, Game, Piles, Project, Player
 
 
 ###############################################################################
@@ -10,11 +10,11 @@ class Project_Citadel(Project.Project):
     def __init__(self):
         Project.Project.__init__(self)
         self.base = Card.CardExpansion.RENAISSANCE
-        self.desc = "The first time you play an Action card during each of your turns, play it again afterward."
+        self.desc = "The first time you play an Action card during each of your turns, replay it afterwards."
         self.name = "Citadel"
         self.cost = 8
 
-    def hook_post_play(self, game, player, card):
+    def hook_post_play(self, game: Game.Game, player: Player.Player, card: Card.Card):
         if card.isAction() and player.piles[Piles.PLAYED].size() == 1:
             player.output(f"Citadel plays {card} again")
             player.play_card(card, discard=False, cost_action=False, post_action_hook=False)
