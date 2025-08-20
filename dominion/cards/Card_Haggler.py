@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Haggler"""
+"""https://wiki.dominionstrategy.com/index.php/Haggler"""
 import unittest
-from dominion import Game, Card, Piles
+
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
@@ -10,13 +11,13 @@ class Card_Haggler(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.HINTERLANDS
-        self.desc = """+2 Coin. 
-        While this is in play, when you buy a card, gain a card costing less than it that is not a Victory card."""
+        self.desc = """+2 Coin.
+        This turn, when you gain a card, if you bought it, gain a cheaper non-Victory card."""
         self.name = "Haggler"
         self.coin = 2
         self.cost = 5
 
-    def hook_buy_card(self, game, player, card):
+    def hook_buy_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> None:
         cost = card.cost - 1
         player.plr_gain_card(
             cost=cost,
@@ -27,18 +28,18 @@ class Card_Haggler(Card.Card):
 
 ###############################################################################
 class Test_Haggler(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Haggler"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Haggler")
 
-    def test_play(self):
+    def test_play(self) -> None:
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
 
-    def test_buy(self):
+    def test_buy(self) -> None:
         """Buy a Gold and haggle a silver"""
         self.plr.piles[Piles.PLAYED].set("Haggler")
         self.plr.test_input = ["Get Silver -"]
