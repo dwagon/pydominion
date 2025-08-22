@@ -10,7 +10,7 @@ class Card_Ninja(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.SHADOW]
-        self.base = Card.CardExpansion.DOMINION
+        self.base = Card.CardExpansion.RISING_SUN
         self.desc = "+1 Card; Each other player discards down to 3 cards in hand."
         self.name = "Ninja"
         self.cards = 1
