@@ -33,7 +33,7 @@ class Card_Change(Card.Card):
 ###############################################################################
 class TestChange(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=1, initcards=["Change"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Change", "Gold Mine"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Change")
