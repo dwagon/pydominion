@@ -35,16 +35,16 @@ class TestNinja(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Ninja"])
         self.g.start_game()
         self.attacker, self.defender = self.g.player_list()
-        self.mcard = self.g.get_card_from_pile("Ninja")
+        self.card = self.g.get_card_from_pile("Ninja")
 
     def test_attack(self):
-        self.attacker.add_card(self.mcard, Piles.HAND)
+        self.attacker.add_card(self.card, Piles.HAND)
         self.defender.test_input = ["1", "2", "0"]
-        num_cards = len(self.attacker.piles[Piles.HAND])
-        self.attacker.play_card(self.mcard)
+        hand_size = len(self.attacker.piles[Piles.HAND])
+        self.attacker.play_card(self.card)
         self.assertEqual(self.defender.piles[Piles.HAND].size(), 3)  # Normal  - 2
         self.assertEqual(self.defender.piles[Piles.DISCARD].size(), 2)
-        self.assertEqual(len(self.attacker.piles[Piles.HAND]), num_cards + 1 - 1)  # -1 for playing
+        self.assertEqual(len(self.attacker.piles[Piles.HAND]), hand_size + 1 - 1)  # -1 for playing
 
 
 ###############################################################################
