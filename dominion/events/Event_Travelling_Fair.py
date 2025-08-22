@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Travelling_Fair """
+"""http://wiki.dominionstrategy.com/index.php/Travelling_Fair"""
 
 import unittest
 from typing import Any
@@ -12,20 +12,16 @@ class Event_TravellingFair(Event.Event):
     def __init__(self) -> None:
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.ADVENTURE
-        self.desc = (
-            "+2 Buys; When you gain a card this turn, you may put it onto your deck."
-        )
+        self.desc = "+2 Buys; When you gain a card this turn, you may put it onto your deck."
         self.name = "Travelling Fair"
         self.cost = 2
         self.buys = 2
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         choice = player.plr_choose_options(
             f"Do you want to put {card} on the top of your deck?",
-            (f"Put {card} on deck", "topdeck"),
-            (f"Discard {card}", "discard"),
+            (f"Put {card} on deck", Piles.TOPDECK),
+            (f"Discard {card}", Piles.DISCARD),
         )
         return {OptionKeys.DESTINATION: choice}
 

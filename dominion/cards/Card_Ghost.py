@@ -37,7 +37,7 @@ class Card_Ghost(Card.Card):
                 self._ghost_reserve.add(card)
                 player.secret_count += 1
                 break
-            player.add_card(card, "discard")
+            player.add_card(card, Piles.DISCARD)
             count -= 1
         else:
             player.output("No action cards in deck")

@@ -30,7 +30,7 @@ class Boon_Suns_Gift(Boon.Boon):
         )
         for card in cards:
             if card not in to_discard:
-                player.add_card(card, "topdeck")
+                player.add_card(card, Piles.TOPDECK)
 
 
 ###############################################################################

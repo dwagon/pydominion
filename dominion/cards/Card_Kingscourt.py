@@ -35,7 +35,7 @@ class Card_Kingscourt(Card.Card):
         for i in range(1, 4):
             player.output("Number %d play of %s" % (i, o["card"].name))
             player.card_benefits(o["card"])
-        player.add_card(o["card"], "played")
+        player.add_card(o["card"], Piles.PLAYED)
 
 
 ###############################################################################

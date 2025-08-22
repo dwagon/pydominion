@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, NoCardException
 
 
@@ -31,7 +32,7 @@ class Card_Cartographer(Card.Card):
         )
         for card in cards:
             if card not in to_discard:
-                player.add_card(card, "topdeck")
+                player.add_card(card, Piles.TOPDECK)
 
 
 ###############################################################################

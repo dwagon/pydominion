@@ -25,7 +25,7 @@ class Hex_Famine(Hex.Hex):
                 player.discard_card(card)
             else:
                 player.output(f"Putting {card} back in deck")
-                player.add_card(card, "topdeck")
+                player.add_card(card, Piles.TOPDECK)
         player.piles[Piles.DECK].shuffle()
 
 

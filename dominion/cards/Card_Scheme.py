@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+
 import dominion.Card as Card
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -22,7 +23,7 @@ class Card_Scheme(Card.Card):
     def hook_cleanup(self, game, player):
         actions = [c for c in player.piles[Piles.PLAYED] if c.isAction()]
         if card := player.card_sel(cardsrc=actions, prompt="Select an action to put back on your deck"):
-            player.add_card(card[0], "topdeck")
+            player.add_card(card[0], Piles.TOPDECK)
             player.piles[Piles.PLAYED].remove(card[0])
 
 

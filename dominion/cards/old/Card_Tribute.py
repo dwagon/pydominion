@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""http://wiki.dominionstrategy.com/index.php/Tribute """
+"""http://wiki.dominionstrategy.com/index.php/Tribute"""
 
 import unittest
 
@@ -36,7 +36,7 @@ class Card_Tribute(Card.Card):
         for card in cards:
             player.output(f"Looking at {card} from {victim.name}")
             victim.output(f"{player.name}'s Tribute discarded {card}")
-            victim.add_card(card, "discard")
+            victim.add_card(card, Piles.DISCARD)
             if card.name == card_name:
                 player.output("Duplicate - no extra")
                 continue

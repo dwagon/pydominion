@@ -71,7 +71,7 @@ class TestHermit(unittest.TestCase):
     def test_discard(self) -> None:
         """Discard a Hermit and gain a Madman"""
         self.plr.test_input = ["End Phase"]
-        self.plr.add_card(self.card, "played")
+        self.plr.add_card(self.card, Piles.PLAYED)
         self.plr.buy_phase()
         self.plr.discard_hand()
         self.assertIn("Madman", self.plr.piles[Piles.DISCARD])

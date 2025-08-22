@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -18,7 +19,7 @@ class Card_Bureaucrat(Card.Card):
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         try:
-            player.gain_card("Silver", "topdeck")
+            player.gain_card("Silver", Piles.TOPDECK)
             player.output("Added silver to deck")
         except NoCardException:
             player.output("No more Silver")
@@ -27,10 +28,8 @@ class Card_Bureaucrat(Card.Card):
             for card in victim.piles[Piles.HAND]:
                 if card.isVictory():
                     victim.reveal_card(card)
-                    victim.move_card(card, "topdeck")
-                    victim.output(
-                        f"Moved {card.name} to deck due to Bureaucrat played by {player}"
-                    )
+                    victim.move_card(card, Piles.TOPDECK)
+                    victim.output(f"Moved {card.name} to deck due to Bureaucrat played by {player}")
                     player.output(f"Player {victim} moved a {card} to the top")
                     break
             else:

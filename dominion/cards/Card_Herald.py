@@ -49,7 +49,7 @@ class Card_Herald(Card.Card):
                 cardsrc="discard",
                 prompt="Look through your discard pile and put a card from it on top of your deck",
             ):
-                player.add_card(card[0], "topdeck")
+                player.add_card(card[0], Piles.TOPDECK)
                 player.piles[Piles.DISCARD].remove(card[0])
 
 

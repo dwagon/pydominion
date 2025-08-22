@@ -30,7 +30,7 @@ class Card_Magpie(Card.Card):
             player.output(f"Putting revealed {card} into hand")
             player.add_card(card, Piles.HAND)
         else:
-            player.add_card(card, "deck")
+            player.add_card(card, Piles.DECK)
             if card.isAction() or card.isVictory():
                 try:
                     player.gain_card("Magpie")

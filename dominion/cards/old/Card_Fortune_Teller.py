@@ -32,7 +32,7 @@ def fortune_attack(victim: "Player.Player", attacker: "Player.Player") -> None:
             break
         victim.reveal_card(card)
         if card.isVictory() or card.name == "Curse":
-            victim.add_card(card, "topdeck")
+            victim.add_card(card, Piles.TOPDECK)
             victim.output(f"{attacker}'s Fortune Teller put {card} on top of your deck")
             break
         victim.output(f"{attacker}'s Fortune Teller discarded your {card}")

@@ -36,7 +36,7 @@ class Card_Harbinger(Card.Card):
         o = player.user_input(options, "Which Card? ")
         if not o["card"]:
             return
-        player.add_card(o["card"], "topdeck")
+        player.add_card(o["card"], Piles.TOPDECK)
         player.piles[Piles.DISCARD].remove(o["card"])
 
 

@@ -343,7 +343,7 @@ class Player:
             if card.isShadow():
                 self.add_card(card, Piles.DECK)
             else:
-                self.add_card(card, "topdeck")
+                self.add_card(card, Piles.TOPDECK)
 
         for card in self.relevant_cards():
             if hasattr(card, "hook_post_shuffle"):
@@ -419,14 +419,15 @@ class Player:
         return self.add_card(card, dest)
 
     ###########################################################################
-    def add_card(self, card: Card, pile: Piles | PlayArea | str = Piles.DISCARD) -> Card:
+    def add_card(self, card: Card, pile: Piles | PlayArea = Piles.DISCARD) -> Card:
         """Add an existing card to a new location"""
         assert isinstance(card, Card), f"{card=} {type(card)=}"
+        assert isinstance(pile, (Piles, PlayArea)), f"{pile=} {type(pile)=}"
         card.player = self
 
         # There can be custom PlayAreas (such as part of  card)
         if isinstance(pile, PlayArea):
-            card.location = pile.name
+            card.location = Piles.SPECIAL
             pile.add(card)
             return card
 
@@ -437,9 +438,10 @@ class Player:
             return card
 
         if pile in self.piles:
+            assert isinstance(pile, Piles)
             self.piles[pile].add(card)
             card.location = pile
-        elif pile == "topdeck":
+        elif pile == Piles.TOPDECK:
             card.location = Piles.DECK
             self.piles[Piles.DECK].addToTop(card)
         else:

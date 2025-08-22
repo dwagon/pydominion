@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Sleigh """
+"""http://wiki.dominionstrategy.com/index.php/Sleigh"""
 
 import unittest
 from typing import Any
@@ -28,15 +28,13 @@ class Card_Sleigh(Card.Card):
         except NoCardException:
             player.output("No more Horses")
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         # Discard self if choice == hand or deck
         choice = player.plr_choose_options(
             f"What to do with {card}?",
             ("Discard by default", Piles.DISCARD),
             (f"Put {card} into hand and discard Sleigh", Piles.HAND),
-            (f"Put {card} onto your deck and discard Sleigh", "topdeck"),
+            (f"Put {card} onto your deck and discard Sleigh", Piles.TOPDECK),
         )
         if choice != Piles.DISCARD:
             if self in player.piles[Piles.PLAYED]:

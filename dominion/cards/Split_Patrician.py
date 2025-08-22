@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, NoCardException
 
 
@@ -28,7 +29,7 @@ class Card_Patrician(Card.Card):
             player.add_card(top_card, Piles.HAND)
             player.output(f"Adding {top_card} to hand")
         else:
-            player.add_card(top_card, "topdeck")
+            player.add_card(top_card, Piles.TOPDECK)
             player.output(f"{top_card} too cheap to bother with")
 
 

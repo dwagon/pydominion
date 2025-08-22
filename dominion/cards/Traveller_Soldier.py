@@ -71,7 +71,7 @@ class TestSoldier(unittest.TestCase):
         """Play a soldier with no extra attacks"""
         self.vic.piles[Piles.HAND].set("Copper")
         mil = self.g.get_card_from_pile("Militia")
-        self.plr.add_card(mil, "played")
+        self.plr.add_card(mil, Piles.PLAYED)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 3)
 

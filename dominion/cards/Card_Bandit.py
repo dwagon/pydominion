@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Bandit"""
+"""http://wiki.dominionstrategy.com/index.php/Bandit"""
 
 import unittest
 from typing import Any
@@ -39,15 +39,13 @@ class Card_Bandit(Card.Card):
             if card.isTreasure() and card.name != "Copper":
                 treasures.append(card)
             else:
-                card.location = "cardpile"
-                victim.add_card(card, "discard")
+                card.location = Piles.CARDPILE
+                victim.add_card(card, Piles.DISCARD)
         if not treasures:
             bandit.output(f"Player {victim.name} has no suitable treasures")
             return
         index = 1
-        options: list[dict[str, Any]] = [
-            {"selector": "0", "print": "Don't trash any card", "card": None}
-        ]
+        options: list[dict[str, Any]] = [{"selector": "0", "print": "Don't trash any card", "card": None}]
         for card in treasures:
             to_print = f"Trash {card} from {victim.name}"
             options.append({"selector": f"{index}", "print": to_print, "card": card})
@@ -61,7 +59,7 @@ class Card_Bandit(Card.Card):
                 bandit.output(f"Trashed {card} from {victim.name}")
                 victim.output(f"{bandit.name}'s Bandit trashed your {card}")
             else:
-                victim.add_card(card, "discard")
+                victim.add_card(card, Piles.DISCARD)
 
 
 ###############################################################################

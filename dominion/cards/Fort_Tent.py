@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles
 
 
@@ -38,7 +39,7 @@ class Card_Tent(Card.Card):
             ("Put it on to deck", True),
         )
         if opt:
-            player.move_card(self, "topdeck")
+            player.move_card(self, Piles.TOPDECK)
 
 
 ###############################################################################

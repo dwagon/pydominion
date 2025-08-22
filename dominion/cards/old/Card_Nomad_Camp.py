@@ -24,7 +24,7 @@ class Card_NomadCamp(Card.Card):
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player
     ) -> dict[OptionKeys, str]:
-        return {OptionKeys.DESTINATION: "topdeck"}
+        return {OptionKeys.DESTINATION: Piles.TOPDECK}
 
 
 ###############################################################################

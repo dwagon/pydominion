@@ -28,7 +28,7 @@ class Ally_Trappers_Lodge(Ally.Ally):
             ("Put on to deck", True),
         ):
             player.favors.add(-1)
-            return {OptionKeys.DESTINATION: "topdeck"}
+            return {OptionKeys.DESTINATION: Piles.TOPDECK}
         return {}
 
 

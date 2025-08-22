@@ -51,7 +51,7 @@ class Test_Cauldron(unittest.TestCase):
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
         self.card = self.g.get_card_from_pile("Cauldron")
-        self.plr.add_card(self.card, "played")
+        self.plr.add_card(self.card, Piles.PLAYED)
 
     def test_play(self) -> None:
         """Play the Cauldron"""

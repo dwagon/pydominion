@@ -72,7 +72,7 @@ class Card_Count(Card.Card):
             return
         o = player.user_input(options, "Select card to put on top of your deck")
         player.output(f"Moving {o['card']} to top of deck")
-        player.move_card(o["card"], "topdeck")
+        player.move_card(o["card"], Piles.TOPDECK)
 
 
 ###############################################################################

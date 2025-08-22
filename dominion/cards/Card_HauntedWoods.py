@@ -30,7 +30,7 @@ class Card_HauntedWoods(Card.Card):
             return
         player.output("%s's Haunted Woods puts your hand onto your deck" % owner.name)
         for crd in player.piles[Piles.HAND]:
-            player.add_card(crd, "topdeck")
+            player.add_card(crd, Piles.TOPDECK)
             player.piles[Piles.HAND].remove(crd)
             player.output("Moving %s to deck" % crd.name)
 

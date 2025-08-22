@@ -11,9 +11,7 @@ class Boon_Moons_Gift(Boon.Boon):
         Boon.Boon.__init__(self)
         self.cardtype = Card.CardType.BOON
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = (
-            "Look through your discard pile. You may put a card from it onto your deck"
-        )
+        self.desc = "Look through your discard pile. You may put a card from it onto your deck"
         self.name = "The Moon's Gift"
         self.purchasable = False
 
@@ -26,20 +24,14 @@ class Boon_Moons_Gift(Boon.Boon):
             if c.name not in card_names:
                 cards.append(c)
                 card_names.add(c.name)
-        if card := player.card_sel(
-            cardsrc=cards, prompt="Pull card from discard and add to top of your deck"
-        ):
-            # player.add_card(card[0], "topdeck")
-            # player.piles[Piles.DISCARD].remove(card[0])
-            player.move_card(card[0], "topdeck")
+        if card := player.card_sel(cardsrc=cards, prompt="Pull card from discard and add to top of your deck"):
+            player.move_card(card[0], Piles.TOPDECK)
 
 
 ###############################################################################
 class TestMoonsGift(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"]
-        )
+        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         for b in self.g.boons:

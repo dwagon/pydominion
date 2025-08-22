@@ -27,7 +27,7 @@ class Card_RoyalSeal(Card.Card):
         )
         if deck:
             player.output(f"Putting {card} on deck due to Royal Seal")
-            mod[OptionKeys.DESTINATION] = "topdeck"
+            mod[OptionKeys.DESTINATION] = Piles.TOPDECK
         return mod
 
 

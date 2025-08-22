@@ -39,7 +39,7 @@ class Card_Spy(Card.Card):
             victim.add_card(card, Piles.DISCARD)
             victim.output("f{attacker.name}'s Spy discarded your {card}")
         else:
-            victim.add_card(card, "topdeck")
+            victim.add_card(card, Piles.TOPDECK)
 
 
 ###############################################################################

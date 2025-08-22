@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+
 import dominion.Card as Card
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -21,8 +22,8 @@ class Card_SecretPassage(Card.Card):
         if card := player.card_sel(prompt="Take a card from your hand and put into your deck", cardsrc=Piles.HAND):
             dest = player.plr_choose_options(
                 f"Put {card[0].name} into top or bottom of deck",
-                ("Top of deck", "topdeck"),
-                ("Bottom of deck", "deck"),
+                ("Top of deck", Piles.TOPDECK),
+                ("Bottom of deck", Piles.DECK),
             )
             player.add_card(card[0], dest)
             player.piles[Piles.HAND].remove(card[0])

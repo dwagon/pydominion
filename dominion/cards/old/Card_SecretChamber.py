@@ -46,7 +46,7 @@ class Card_SecretChamber(Card.Card):
             verbs=("Put", "Unput"),
         )
         for card in cards:
-            player.add_card(card, "topdeck")
+            player.add_card(card, Piles.TOPDECK)
             player.piles[Piles.HAND].remove(card)
 
     def do_reveal_card(self, player: "Player.Player") -> Card.Card:

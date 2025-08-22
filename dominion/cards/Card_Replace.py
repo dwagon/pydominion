@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card, Game, Piles, Player, NoCardException
 
 
@@ -26,7 +27,7 @@ class Card_Replace(Card.Card):
         if not gain:
             return
         if gain.isAction() or gain.isTreasure():
-            player.move_card(gain, "topdeck")
+            player.move_card(gain, Piles.TOPDECK)
         if gain.isVictory():
             for victim in player.attack_victims():
                 try:

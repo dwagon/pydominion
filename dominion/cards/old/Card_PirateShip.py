@@ -73,7 +73,7 @@ class Card_PirateShip(Card.Card):
             trashed = True
             for card in cards:
                 if card not in to_trash:
-                    victim.add_card(card, "discard")
+                    victim.add_card(card, Piles.DISCARD)
                     victim.output(f"Discarded {card}")
                 else:
                     victim.output(f"Trashed {card}")

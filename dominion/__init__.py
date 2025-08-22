@@ -19,6 +19,8 @@ class Piles(StrEnum):
     HAND = auto()
     PLAYED = auto()
     RESERVE = auto()
+    SPECIAL = auto()
+    TOPDECK = auto()  # Not a real location, but the DECK
     TRASH = auto()
 
 

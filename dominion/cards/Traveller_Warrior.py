@@ -47,7 +47,7 @@ class Card_Warrior(Card.Card):
                     victim.trash_card(card)
                 else:
                     victim.output(f"Discarding {card} due to {player.name}'s Warrior")
-                    victim.add_card(card, "discard")
+                    victim.add_card(card, Piles.DISCARD)
 
     def hook_discard_this_card(self, game, player, source):
         """Replace with Hero"""

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, NoCardException, Player
 
 
@@ -33,7 +34,7 @@ class Card_Jack_of_all_Trades(Card.Card):
                 (f"Discard {card}", False),
                 (f"Keep {card} on top of your deck", True),
             ):
-                player.add_card(card, "topdeck")
+                player.add_card(card, Piles.TOPDECK)
             else:
                 player.discard_card(card)
 
@@ -56,9 +57,7 @@ class Test_Jack_of_all_Trades(unittest.TestCase):
     def test_play(self) -> None:
         """Play a Jack of all Trades"""
         tsize = self.g.trash_pile.size()
-        self.plr.piles[Piles.DECK].set(
-            "Copper", "Copper", "Copper", "Copper", "Copper", "Gold"
-        )
+        self.plr.piles[Piles.DECK].set("Copper", "Copper", "Copper", "Copper", "Copper", "Gold")
         self.plr.piles[Piles.HAND].set("Duchy")
         self.plr.test_input = ["keep", "duchy"]
         self.plr.add_card(self.card, Piles.HAND)
@@ -66,9 +65,7 @@ class Test_Jack_of_all_Trades(unittest.TestCase):
 
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])  # Gain a Silver
 
-        self.assertIn(
-            "Gold", self.plr.piles[Piles.HAND]
-        )  # Keep on deck, then picked up
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])  # Keep on deck, then picked up
 
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 - 1)  # One trashed
         self.assertEqual(self.g.trash_pile.size(), tsize + 1)

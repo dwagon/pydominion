@@ -21,7 +21,7 @@ class Card_Artisan(Card.Card):
             cardsrc=Piles.HAND,
             prompt="Put a card from your hand on top of your deck",
         )
-        player.move_card(card[0], "topdeck")
+        player.move_card(card[0], Piles.TOPDECK)
 
 
 ###############################################################################

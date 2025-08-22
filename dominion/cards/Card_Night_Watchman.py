@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, NoCardException, Phase, Player, OptionKeys
 
 
@@ -21,9 +22,7 @@ class Card_NightWatchman(Card.Card):
                 cards.append(player.next_card())
             except NoCardException:
                 break
-        player.output(
-            f'Top 5 cards on the deck are: {", ".join([_.name for _ in cards])}'
-        )
+        player.output(f'Top 5 cards on the deck are: {", ".join([_.name for _ in cards])}')
         for card in cards:
             if discard := player.plr_choose_options(
                 "What do you want to do?",
@@ -32,11 +31,9 @@ class Card_NightWatchman(Card.Card):
             ):
                 player.discard_card(card)
             else:
-                player.add_card(card, "topdeck")
+                player.add_card(card, Piles.TOPDECK)
 
-    def hook_gain_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, str]:
+    def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         return {OptionKeys.DESTINATION: Piles.HAND}
 
 

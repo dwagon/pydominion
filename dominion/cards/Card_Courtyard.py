@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 
@@ -17,13 +18,11 @@ class Card_Courtyard(Card.Card):
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """Put a card from your hand on top of your deck"""
-        cards = player.card_sel(
-            prompt="Put which card on top of deck?", num=1, verbs=("Put", "Unput")
-        )
+        cards = player.card_sel(prompt="Put which card on top of deck?", num=1, verbs=("Put", "Unput"))
         if not cards:
             return
         card = cards[0]
-        player.move_card(card, "topdeck")
+        player.move_card(card, Piles.TOPDECK)
         player.output(f"Put {card} on top of deck")
 
 

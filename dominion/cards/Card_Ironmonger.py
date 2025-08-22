@@ -2,6 +2,7 @@
 
 import contextlib
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -35,7 +36,7 @@ class Card_Ironmonger(Card.Card):
         ):
             player.discard_card(card)
         else:
-            player.add_card(card, "topdeck")
+            player.add_card(card, Piles.TOPDECK)
         if card.isVictory():
             player.output(f"Picking up card as {card} was a victory card")
             with contextlib.suppress(NoCardException):

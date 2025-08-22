@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""https://wiki.dominionstrategy.com/index.php/Tiara """
+"""https://wiki.dominionstrategy.com/index.php/Tiara"""
 import unittest
 from typing import Any
 
@@ -33,16 +33,14 @@ class Card_Tiara(Card.Card):
             if treasure[0].location == Piles.HAND:
                 player.move_card(treasure[0], Piles.PLAYED)
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         """when you gain a card, you may put it onto your deck."""
         if player.plr_choose_options(
             f"Tiara lets you put {card} on top of your deck.",
             (f"Put {card} on top of your deck?", True),
             (f"Discard {card} as per normal?", False),
         ):
-            return {OptionKeys.DESTINATION: "topdeck"}
+            return {OptionKeys.DESTINATION: Piles.TOPDECK}
         return {}
 
 

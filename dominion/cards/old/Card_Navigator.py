@@ -38,7 +38,7 @@ class Card_Navigator(Card.Card):
                 player.discard_card(card)
         else:
             for card in cards:
-                player.add_card(card, "topdeck")
+                player.add_card(card, Piles.TOPDECK)
 
 
 ###############################################################################

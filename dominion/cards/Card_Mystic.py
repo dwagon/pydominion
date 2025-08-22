@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -10,7 +11,7 @@ class Card_Mystic(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DARKAGES
-        self.desc = """+2 coin, +1 action; Name a card. Reveal the top card of your deck. 
+        self.desc = """+2 coin, +1 action; Name a card. Reveal the top card of your deck.
         If it's the named card, put it into your hand."""
         self.name = "Mystic"
         self.actions = 1
@@ -24,9 +25,7 @@ class Card_Mystic(Card.Card):
         options = [{"selector": "0", "print": "No guess", "card": None}]
         index = 1
         for name, card_pile in sorted(game.get_card_piles()):
-            options.append(
-                {"selector": f"{index}", "print": f"Guess {name}", "card": name}
-            )
+            options.append({"selector": f"{index}", "print": f"Guess {name}", "card": name})
             index += 1
         o = player.user_input(options, "Guess the top card")
         if not o["card"]:
@@ -42,7 +41,7 @@ class Card_Mystic(Card.Card):
             player.add_card(card, Piles.HAND)
         else:
             player.output(f"You chose poorly - it was a {card}")
-            player.add_card(card, "topdeck")
+            player.add_card(card, Piles.TOPDECK)
 
 
 ###############################################################################

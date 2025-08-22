@@ -11,7 +11,7 @@ class Card_Oracle(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.HINTERLANDS
-        self.desc = """Each player (including you) reveals the top 2 cards of their deck, and discards them 
+        self.desc = """Each player (including you) reveals the top 2 cards of their deck, and discards them
         or puts them back, your choice (they choose the order). Then, +2 Cards."""
         self.name = "Oracle"
         self.cost = 3
@@ -22,9 +22,7 @@ class Card_Oracle(Card.Card):
         self.attack(player, player, "your")
         player.pickup_cards(2)
 
-    def attack(
-        self, player: "Player.Player", victim: "Player.Player", name: str
-    ) -> None:
+    def attack(self, player: "Player.Player", victim: "Player.Player", name: str) -> None:
         """reveals the top 2 cards of their deck, and discards them or puts them back, your choice"""
         cards = []
         for _ in range(2):
@@ -46,10 +44,8 @@ class Card_Oracle(Card.Card):
             victim.output(f"{player.name}'s Oracle discarded your {card_names}")
         else:
             for card in cards:
-                victim.add_card(card, "topdeck")
-            victim.output(
-                f"{player.name}'s Oracle put {card_names} on top of your deck"
-            )
+                victim.add_card(card, Piles.TOPDECK)
+            victim.output(f"{player.name}'s Oracle put {card_names} on top of your deck")
 
 
 ###############################################################################

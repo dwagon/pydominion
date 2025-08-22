@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -36,7 +37,7 @@ class Card_ZombieSpy(Card.Card):
             player.add_card(card, Piles.DISCARD)
             player.output(f"Zombie Spy discarded your {card}")
         else:
-            player.add_card(card, "topdeck")
+            player.add_card(card, Piles.TOPDECK)
 
 
 ###############################################################################

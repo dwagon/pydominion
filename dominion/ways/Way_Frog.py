@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Way_of_the_Frog """
+"""http://wiki.dominionstrategy.com/index.php/Way_of_the_Frog"""
 
 import unittest
 
@@ -16,7 +16,7 @@ class Way_Frog(Way.Way):
         self.name = "Way of the Frog"
 
     def hook_way_discard_this_card(self, game, player, card):
-        player.add_card(card, "topdeck")
+        player.add_card(card, Piles.TOPDECK)
         player.piles[Piles.PLAYED].remove(card)
 
 

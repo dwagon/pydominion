@@ -28,7 +28,7 @@ class Card_Alchemist(Card.Card):
             ("Discard alchemist", False),
             ("Put on top of deck", True),
         ):
-            player.move_card(self, "topdeck")
+            player.move_card(self, Piles.TOPDECK)
 
 
 ###############################################################################

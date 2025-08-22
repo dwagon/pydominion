@@ -30,7 +30,7 @@ class Card_Duchess(Card.Card):
                 (f"Keep {card} on top of deck", True),
                 (f"Discard {card}", False),
             ):
-                plr.add_card(card, "topdeck")
+                plr.add_card(card, Piles.TOPDECK)
             else:
                 plr.output(f"Discarding {card}")
                 plr.discard_card(card)

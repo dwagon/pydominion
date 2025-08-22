@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -33,7 +34,7 @@ class Card_Seer(Card.Card):
                 drawn.append(card)
         for card in drawn:
             player.output(f"Putting {card} back on deck")
-            player.add_card(card, "topdeck")
+            player.add_card(card, Piles.TOPDECK)
 
 
 ###############################################################################

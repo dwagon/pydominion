@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles
 
 
@@ -21,9 +22,8 @@ class Card_Merchant_Camp(Card.Card):
         self.cost = 3
 
     def hook_discard_this_card(self, game, player, source):
-        opt = player.plr_choose_options("Put Merchant Camp onto deck?", ("Onto deck", True), ("Onto discard", False))
-        if opt:
-            player.move_card(self, "topdeck")
+        if player.plr_choose_options("Put Merchant Camp onto deck?", ("Onto deck", True), ("Onto discard", False)):
+            player.move_card(self, Piles.TOPDECK)
 
 
 ###############################################################################

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Haunted_Castle """
+"""http://wiki.dominionstrategy.com/index.php/Haunted_Castle"""
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, OptionKeys
 from dominion.cards.Card_Castles import CastleCard
 
@@ -22,9 +23,7 @@ class Card_HauntedCastle(CastleCard):
         self.name = "Haunted Castle"
         self.pile = "Castles"
 
-    def hook_gain_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, str]:
+    def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         player.gain_card("Gold")
         for plr in list(game.players.values()):
             if plr == player:
@@ -36,14 +35,12 @@ class Card_HauntedCastle(CastleCard):
                     prompt=f"{player.name}'s Haunted Castle: Select 2 cards to put onto your deck",
                 )
                 for card in cards:
-                    plr.move_card(card, "topdeck")
+                    plr.move_card(card, Piles.TOPDECK)
         return {}
 
 
 ###############################################################################
-def botresponse(
-    player, kind, args=None, kwargs=None
-):  # pragma: no cover pylint: disable=unused-argument
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover pylint: disable=unused-argument
     """Bot Response"""
     return player.pick_to_discard(2)
 

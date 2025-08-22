@@ -37,7 +37,7 @@ class TestPlayer(unittest.TestCase):
         estate = self.game.get_card_from_pile("Estate")
         gold = self.game.get_card_from_pile("Gold")
         self.plr.add_card(estate, Piles.DECK)
-        self.plr.add_card(gold, "topdeck")
+        self.plr.add_card(gold, Piles.TOPDECK)
         crd = self.plr.next_card()
         self.assertEqual(crd.name, "Gold")
 
@@ -828,7 +828,7 @@ class TestAddCard(unittest.TestCase):
         self.plr.piles[Piles.PLAYED].set()
         card = self.game.get_card_from_pile("Copper")
         card.location = Piles.PLAYED
-        self.plr.add_card(card, "played")
+        self.plr.add_card(card, Piles.PLAYED)
         self.assertIn("Copper", self.plr.piles[Piles.PLAYED])
 
     def test_return_to_pile(self) -> None:

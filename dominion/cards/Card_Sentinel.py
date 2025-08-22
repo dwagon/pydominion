@@ -2,6 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Sentinel"""
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -30,7 +31,7 @@ class Card_Sentinel(Card.Card):
         if trashed := player.plr_trash_card(num=2, cardsrc=cards):
             for card in cards:
                 if card not in trashed:
-                    player.add_card(card, "topdeck")
+                    player.add_card(card, Piles.TOPDECK)
 
 
 ###############################################################################
@@ -44,9 +45,7 @@ class TestSentinel(unittest.TestCase):
 
     def test_play(self) -> None:
         """Play the card"""
-        self.plr.piles[Piles.DECK].set(
-            "Province", "Copper", "Silver", "Gold", "Estate", "Duchy"
-        )
+        self.plr.piles[Piles.DECK].set("Province", "Copper", "Silver", "Gold", "Estate", "Duchy")
         self.plr.test_input = ["Trash Copper", "Finish"]
         self.plr.play_card(self.card)
         self.assertIn("Copper", self.g.trash_pile)

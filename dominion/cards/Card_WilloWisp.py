@@ -31,7 +31,7 @@ class Card_WilloWisp(Card.Card):
             player.add_card(card, Piles.HAND)
             player.output(f"Moving {card} from your deck to your hand")
         else:
-            player.add_card(card, "topdeck")
+            player.add_card(card, Piles.TOPDECK)
             player.output(f"Keep {card} on top of your deck")
 
 

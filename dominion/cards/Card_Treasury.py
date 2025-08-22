@@ -33,7 +33,7 @@ class Card_Treasury(Card.Card):
                 ("Put on top of your deck", True),
             )
             if topdeck:
-                player.move_card(self, "topdeck")
+                player.move_card(self, Piles.TOPDECK)
 
 
 ###############################################################################

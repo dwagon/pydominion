@@ -28,7 +28,7 @@ class Card_Seahag(Card.Card):
             victim.discard_card(card)
             victim.output(f"Discarded your {card}")
             try:
-                victim.gain_card("Curse", destination="topdeck")
+                victim.gain_card("Curse", destination=Piles.TOPDECK)
                 victim.output(f"Got cursed by {player}'s Sea Hag")
                 player.output(f"{victim} got cursed")
             except NoCardException:
@@ -38,9 +38,7 @@ class Card_Seahag(Card.Card):
 ###############################################################################
 class Test_Seahag(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            numplayers=2, oldcards=True, initcards=["Sea Hag", "Moat"]
-        )
+        self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Sea Hag", "Moat"])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
         self.seahag = self.g.get_card_from_pile("Sea Hag")

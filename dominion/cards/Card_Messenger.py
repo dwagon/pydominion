@@ -34,7 +34,7 @@ class Card_Messenger(Card.Card):
             ("Yes - dump it", True),
         ):
             for crd in player.piles[Piles.DECK]:
-                player.add_card(crd, "discard")
+                player.add_card(crd, Piles.DISCARD)
                 player.piles[Piles.DECK].remove(crd)
 
     def hook_gain_this_card(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:

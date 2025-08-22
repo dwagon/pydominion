@@ -44,7 +44,7 @@ class Card_Rogue(Card.Card):
                 victim.output(
                     f"{player.name}'s Rogue discarded {card.name} as unsuitable"
                 )
-                victim.add_card(card, "discard")
+                victim.add_card(card, Piles.DISCARD)
         if not cards:
             player.output(f"No suitable cards from {victim.name}")
             return

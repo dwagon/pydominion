@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -37,10 +38,8 @@ class Card_ChariotRace(Card.Card):
             player.coins.add(1)
             player.add_score("Chariot Race")
         else:
-            player.output(
-                f"Your {card} costs less than {other.name}'s {other_card} - Getting nothing"
-            )
-        other.add_card(other_card, "topdeck")
+            player.output(f"Your {card} costs less than {other.name}'s {other_card} - Getting nothing")
+        other.add_card(other_card, Piles.TOPDECK)
 
 
 ###############################################################################
