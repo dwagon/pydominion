@@ -8,6 +8,7 @@ import json
 import operator
 import sys
 from collections import defaultdict
+from types import NoneType
 from typing import Any, Optional, TYPE_CHECKING, Callable
 
 if TYPE_CHECKING:
@@ -409,11 +410,13 @@ class Player:
             self.game.card_piles[card.pile].remove()
         elif card.location == Piles.TRASH:
             self.game.trash_pile.remove(card)
+        elif card.location == Piles.SPECIAL:  # Ignore location
+            pass
         else:
             raise AssertionError(f"Trying to remove_card {card} from unknown location: {card.location}")
 
     ###########################################################################
-    def move_card(self, card: Card, dest: Piles | PlayArea | str) -> Card:
+    def move_card(self, card: Card, dest: Piles | PlayArea) -> Card:
         """Move a card to {dest} card pile"""
         self.remove_card(card)
         return self.add_card(card, dest)
@@ -829,8 +832,9 @@ class Player:
         self.had_cards = []
 
     ###########################################################################
-    def hook_discard_this_card(self, card: Card, source: Optional[PlayArea] = None) -> None:
+    def hook_discard_this_card(self, card: Card, source: Optional[PlayArea | Piles] = None) -> None:
         """A card has been discarded"""
+        assert isinstance(source, (PlayArea, Piles, NoneType)), f"hook_discard_this_card {source=} {type(source)=}"
         self.currcards.append(card)
         card.hook_discard_this_card(game=self.game, player=self, source=source)
         self.currcards.pop()

@@ -5,7 +5,7 @@
 import os
 import uuid
 from enum import Enum, auto
-from typing import Optional, TYPE_CHECKING, Any
+from typing import Optional, TYPE_CHECKING, Any, Union
 
 from dominion import Piles, Whens, OptionKeys
 
@@ -475,7 +475,9 @@ class Card:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_discard_this_card(self, game: "Game.Game", player: "Player.Player", source: "PlayArea.PlayArea") -> None:
+    def hook_discard_this_card(
+        self, game: "Game.Game", player: "Player.Player", source: Optional[Union[Piles, "PlayArea.PlayArea"]]
+    ) -> None:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
