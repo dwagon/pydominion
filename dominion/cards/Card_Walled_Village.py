@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Walled_Village"""
+"""https://wiki.dominionstrategy.com/index.php/Walled_Village"""
 
 import unittest
-from dominion import Game, Card, Piles, Player, PlayArea
 
+from dominion import Game, Card, Piles, Player, PlayArea
 
 WALLED_VILLAGE = "walled village"
 
@@ -14,7 +14,7 @@ class Card_Walled_Village(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.PROMO
-        self.desc = """+1 Card, +2 Actions; At the start of Clean-up, 
+        self.desc = """+1 Card, +2 Actions; At the start of Clean-up,
         if you have this and no more than one other Action card in play, you may put this onto your deck"""
         self.name = "Walled Village"
         self.cards = 1
@@ -29,7 +29,7 @@ class Card_Walled_Village(Card.Card):
         num_actions = sum(1 for card in player.piles[Piles.PLAYED] if card.isAction())
         if num_actions > 2:
             return
-        if self.name not in player.piles[Piles.PLAYED]:
+        if self not in player.piles[Piles.PLAYED]:
             return
         player.move_card(self, player.specials[WALLED_VILLAGE])
         player.secret_count += 1
@@ -39,7 +39,8 @@ class Card_Walled_Village(Card.Card):
             return
         for card in player.specials[WALLED_VILLAGE]:
             player.secret_count -= 1
-            player.add_card(card, player.piles[Piles.HAND])
+            player.output(f"Returning {card} to deck")
+            player.move_card(card, Piles.HAND)
         player.specials[WALLED_VILLAGE] = PlayArea.PlayArea(initial=None)
 
 
