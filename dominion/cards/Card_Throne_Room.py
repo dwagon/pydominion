@@ -20,9 +20,7 @@ class Card_ThroneRoom(Card.Card):
         """You may choose an Action card in your hand. Play it twice"""
         options: list[dict[str, Any]] = [{"selector": "0", "print": "Don't play a card", "card": None}]
         index = 1
-        for card in player.piles[Piles.HAND]:
-            if not card.isAction():
-                continue
+        for card in player.playable_actions():
             options.append({"selector": f"{index}", "print": f"Play {card} twice", "card": card})
             index += 1
         if index == 1:

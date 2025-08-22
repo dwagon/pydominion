@@ -353,6 +353,11 @@ class Card:
         return self._is_type(CardType.RESERVE)
 
     ##########################################################################
+    def isShadow(self) -> bool:
+        """http://wiki.dominionstrategy.com/index.php/Shadow"""
+        return self._is_type(CardType.SHADOW)
+
+    ##########################################################################
     def special_score(self, game: "Game.Game", player: "Player.Player") -> int:  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return 0  # pragma: nocover

@@ -778,6 +778,35 @@ class TestPlrDiscardDownTo(unittest.TestCase):
 
 
 ###############################################################################
+class TestPlayableActions(unittest.TestCase):
+    """Test playable_actions()"""
+
+    def setUp(self) -> None:
+        self.game = Game.TestGame(numplayers=1, initcards=["Moat", "Alley"])
+        self.game.start_game()
+        self.plr = self.game.player_list()[0]
+
+    ###############################################################################
+    def test_no_actions(self) -> None:
+        self.plr.piles[Piles.DECK].set("Moat", "Copper", "Estate")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate", "Duchy")
+        self.assertEqual(self.plr.playable_actions(), [])
+
+    ###############################################################################
+    def test_actions(self) -> None:
+        self.plr.piles[Piles.DECK].set("Moat", "Copper", "Estate")
+        self.plr.piles[Piles.HAND].set("Copper", "Moat", "Estate", "Duchy")
+        self.assertEqual(self.plr.playable_actions()[0].name, "Moat")
+
+    ###############################################################################
+    def test_shadows(self) -> None:
+        self.plr.piles[Piles.DECK].set("Alley", "Copper", "Estate")
+        self.plr.piles[Piles.HAND].set("Copper", "Moat", "Estate", "Duchy")
+        self.assertEqual(self.plr.playable_actions()[0].name, "Moat")
+        self.assertEqual(self.plr.playable_actions()[1].name, "Alley")
+
+
+###############################################################################
 class TestAddCard(unittest.TestCase):
     """Test add_card()"""
 

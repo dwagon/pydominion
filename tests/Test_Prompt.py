@@ -148,10 +148,11 @@ class TestBuyableSelection(unittest.TestCase):
 ###############################################################################
 class TestPlayableSelection(unittest.TestCase):
     def setUp(self) -> None:
-        self.game = Game.TestGame(numplayers=1, initcards=["Moat"])
+        self.game = Game.TestGame(numplayers=1, initcards=["Moat", "Alley"])
         self.game.start_game()
         self.plr = self.game.player_list()[0]
         self.moat = self.game.get_card_from_pile("Moat")
+        self.alley = self.game.get_card_from_pile("Alley")
 
     def test_play(self) -> None:
         self.plr.add_card(self.moat, Piles.HAND)
@@ -172,6 +173,18 @@ class TestPlayableSelection(unittest.TestCase):
         self.assertEqual(opts[0]["selector"], "b")
         self.assertEqual(opts[0]["card"], self.moat)
         self.assertIn("[Tkn: +1 Card]", opts[0]["notes"])
+        self.assertEqual(ind, 2)
+
+    def test_shadow(self) -> None:
+        """Shadows should be playable from deck"""
+        self.plr.add_card(self.alley, Piles.DECK)
+        opts, ind = Prompt.playable_selection(self.plr, 1)
+        self.assertEqual(len(opts), 1)
+        self.assertEqual(opts[0]["selector"], "b")
+        self.assertEqual(opts[0]["card"], self.alley)
+        self.assertEqual(opts[0]["desc"], "+1 Card. +1 Action. Discard a card.")
+        self.assertEqual(opts[0]["verb"], "Play")
+        self.assertEqual(opts[0]["name"], "Alley")
         self.assertEqual(ind, 2)
 
 
