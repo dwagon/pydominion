@@ -3,7 +3,7 @@
 import os
 from typing import Optional, TYPE_CHECKING
 
-from dominion import Limits, Piles, Phase
+from dominion import Limits, Piles, Phase, Card
 from dominion.Option import Option
 from dominion.PlayArea import PlayArea
 
@@ -256,23 +256,9 @@ def playable_selection(player: "Player", index: int) -> tuple[list[Option], int]
         )
         options.append(o)
 
-    for p in playable:
+    for card in playable:
         sel = chr(ord("a") + index)
-        details = p.get_cardtype_repr()
-        o = Option(
-            verb="Play",
-            selector=sel,
-            name=p.name,
-            desc=p.description(player).strip(),
-            action="play",
-            card=p,
-            details=details,
-        )
-        notes = ""
-        for tkn in player.which_token(p.name):
-            notes += f"[Tkn: {tkn}]"
-        o["notes"] = notes
-        options.append(o)
+        options.append(card_option(card, player, sel))
         index += 1
         for way in player.game.ways.values():
             sel = chr(ord("a") + index)
@@ -280,14 +266,38 @@ def playable_selection(player: "Player", index: int) -> tuple[list[Option], int]
                 verb="Play",
                 selector=sel,
                 name=way.name,
-                desc=f"{p.name}: {way.description(player)}",
+                desc=f"{card.name}: {way.description(player)}",
                 action="way",
-                card=p,
+                card=card,
                 way=way,
             )
             options.append(o)
             index += 1
+    shadows = [_ for _ in player.piles[Piles.DECK] if _.isShadow() and _.isAction()]
+    for shadow in shadows:
+        sel = chr(ord("a") + index)
+        options.append(card_option(shadow, player, sel))
+        index += 1
     return options, index
+
+
+###########################################################################
+def card_option(card: Card.Card, player: "Player", selector: str) -> Option:
+    details = card.get_cardtype_repr()
+    o = Option(
+        verb="Play",
+        selector=selector,
+        name=card.name,
+        desc=card.description(player).strip(),
+        action="play",
+        card=card,
+        details=details,
+    )
+    notes = ""
+    for tkn in player.which_token(card.name):
+        notes += f"[Tkn: {tkn}]"
+    o["notes"] = notes
+    return o
 
 
 ###########################################################################

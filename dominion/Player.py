@@ -339,7 +339,12 @@ class Player:
         """Refill the player deck - shuffling if required"""
         self._shuffle_discard()
         while self.piles[Piles.DISCARD]:
-            self.add_card(self.piles[Piles.DISCARD].next_card(), Piles.DECK)
+            card = self.piles[Piles.DISCARD].next_card()
+            if card.isShadow():
+                self.add_card(card, Piles.DECK)
+            else:
+                self.add_card(card, "topdeck")
+
         for card in self.relevant_cards():
             if hasattr(card, "hook_post_shuffle"):
                 card.hook_post_shuffle(game=self.game, player=self)
@@ -574,6 +579,18 @@ class Player:
             if opt["action"] == "quit":
                 break
         self.hook_end_buy_phase()
+
+    ###########################################################################
+    def playable_actions(self) -> list[Card]:
+        """Return a list of playable actions from hand, shadows from deck etc"""
+        actions = []
+        for card in self.piles[Piles.HAND]:
+            if card.isAction():
+                actions.append(card)
+        for card in self.piles[Piles.DECK]:
+            if card.isAction() and card.isShadow():
+                actions.append(card)
+        return actions
 
     ###########################################################################
     def hook_end_buy_phase(self) -> None:
