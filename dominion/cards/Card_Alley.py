@@ -11,7 +11,7 @@ class Card_Alley(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.SHADOW]
         self.base = Card.CardExpansion.RISING_SUN
-        self.desc = """+1 Card. +1 Action. Discard a card. You can play this from your deck as if in your hand."""
+        self.desc = """+1 Card. +1 Action. Discard a card."""
         self.name = "Alley"
         self.cost = 4
         self.cards = 1
@@ -19,7 +19,7 @@ class Card_Alley(Card.Card):
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """Discard a card."""
-        player.plr_discard_cards(1)
+        player.plr_discard_cards(1, force=True)
 
 
 ###############################################################################
@@ -32,6 +32,7 @@ class Test_Alley(unittest.TestCase):
 
     def test_play(self) -> None:
         """Play card"""
+        self.plr.piles[Piles.DECK].set("Duchy", "Province", "Gold")
         self.plr.piles[Piles.HAND].set("Copper", "Estate")
         self.plr.add_card(self.card, Piles.HAND)
         hand_size = len(self.plr.piles[Piles.HAND])
