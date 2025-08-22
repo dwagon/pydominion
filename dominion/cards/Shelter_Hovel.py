@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Hovel """
+"""http://wiki.dominionstrategy.com/index.php/Hovel"""
 
 import unittest
 from typing import Any
@@ -22,22 +22,16 @@ class Card_Hovel(Card.Card):
         self.victory = 0
         self.pile = "Shelters"
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         if not card.isVictory():
             return {}
-        if to_trash := player.plr_choose_options(
-            "Trash Hovel?", ("Trash it", True), ("Keep it", False)
-        ):
+        if player.plr_choose_options("Trash Hovel?", ("Trash it", True), ("Keep it", False)):
             player.trash_card(self)
         return {}
 
 
 ###############################################################################
-def botresponse(
-    player, kind, args=None, kwargs=None
-):  # pragma: no cover, pylint: disable=unused-argument
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
     """bot response"""
     return True
 
