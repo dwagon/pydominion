@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
+from typing import Optional
 
-from dominion import Card, Game, Piles
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -15,30 +16,23 @@ class Card_Feast(Card.Card):
         self.name = "Feast"
         self.cost = 4
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Trash this card. Gain a card costing up to 5"""
         if self.trash_card(player):
             self.selectNewCard(game, player)
 
-    def selectNewCard(self, game, player):
+    def selectNewCard(self, game: Game.Game, player: Player.Player):
         player.output("Gain a card costing up to 5")
-        options = [{"selector": "0", "print": "Nothing", "card": None}]
-        buyable = player.cards_under(5)
-        index = 1
-        for p in buyable:
-            to_print = "Get %s (%d coin)" % (p.name, p.cost)
-            options.append({"selector": f"{index}", "print": to_print, "card": p})
-            index += 1
+        choices: list[tuple[str, Optional[Card.Card]]] = [("Nothing", None)]
+        for buyable in player.cards_under(5):
+            choices.append((f"Get {buyable} ({buyable.cost} coin)", buyable))
 
-        o = player.user_input(options, "What card do you wish?")
-        if o["card"]:
-            player.gain_card(o["card"].name)
-            player.output(f"Took {o['card']}")
+        if card := player.plr_choose_options("What card do you wish?", *choices):
+            player.gain_card(card.name)
+            player.output(f"Took {card}")
 
     def trash_card(self, player):
-        ans = player.plr_choose_options(
-            "Trash this card?", ("Keep this card", False), ("Trash this card", True)
-        )
+        ans = player.plr_choose_options("Trash this card?", ("Keep this card", False), ("Trash this card", True))
         if ans:
             player.trash_card(self)
             return True

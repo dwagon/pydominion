@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Count"""
+"""https://wiki.dominionstrategy.com/index.php/Count"""
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -62,17 +63,12 @@ class Card_Count(Card.Card):
     ###########################################################################
     def put_card(self, player: Player.Player) -> None:
         """Put a card from your hand on top of your deck"""
-        index = 1
-        options = []
-        for card in player.piles[Piles.HAND]:
-            pr = f"Put {card} on top of your deck"
-            options.append({"selector": f"{index}", "print": pr, "card": card})
-            index += 1
-        if not options:
-            return
-        o = player.user_input(options, "Select card to put on top of your deck")
-        player.output(f"Moving {o['card']} to top of deck")
-        player.move_card(o["card"], Piles.TOPDECK)
+        choices = []
+        for _ in player.piles[Piles.HAND]:
+            choices.append((f"Put {_} on top of your deck", _))
+        if card := player.plr_choose_options("Select card to put on top of your deck", *choices):
+            player.output(f"Moving {card} to top of deck")
+            player.move_card(card, Piles.TOPDECK)
 
 
 ###############################################################################

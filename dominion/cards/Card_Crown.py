@@ -1,7 +1,9 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Crown """
+"""http://wiki.dominionstrategy.com/index.php/Crown"""
 
 import unittest
+from typing import Any
+
 from dominion import Card, Game, Piles, Player
 
 
@@ -18,33 +20,28 @@ class Card_Crown(Card.Card):
         self.name = "Crown"
         self.cost = 5
 
-    def special(self, game: Game.Game, player: Player.Player)->None:
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         if player.phase == Player.Phase.ACTION:
             cards = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
-            self._do_twice(player, cards)
+            _do_twice(player, cards)
         if player.phase == Player.Phase.BUY:
             cards = [_ for _ in player.piles[Piles.HAND] if _.isTreasure()]
-            self._do_twice(player, cards)
+            _do_twice(player, cards)
 
-    def _do_twice(self, player, cards):
-        """Do something twice"""
-        if not cards:
-            player.output("No suitable cards")
-            return
-        options = [{"selector": "0", "print": "Don't play a card", "card": None}]
-        index = 1
-        for crd in cards:
-            sel = f"{index}"
-            pr = f"Play {crd.name} twice"
-            options.append({"selector": sel, "print": pr, "card": crd})
-            index += 1
-        o = player.user_input(options, "Play which card twice?")
-        if not o["card"]:
-            return
-        player.move_after_play(o["card"])
+
+def _do_twice(player: Player.Player, cards: list[Card.Card]):
+    """Do something twice"""
+    if not cards:
+        player.output("No suitable cards")
+        return
+    choices: list[tuple[str, Any]] = [("Don't play a card", None)]
+    for _ in cards:
+        choices.append((f"Play {_} twice", _))
+    if card := player.plr_choose_options("Play which card twice?", *choices):
+        player.move_after_play(card)
         for i in range(1, 3):
-            player.output(f"Number {i} play of {o['card'].name}")
-            player.play_card(o["card"], discard=False, cost_action=False)
+            player.output(f"Number {i} play of {card}")
+            player.play_card(card, discard=False, cost_action=False)
 
 
 ###############################################################################

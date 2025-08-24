@@ -1,5 +1,7 @@
 from enum import auto, Enum, StrEnum
 
+from dominion.Option import Option
+
 
 ###############################################################################
 class NoCardException(Exception):

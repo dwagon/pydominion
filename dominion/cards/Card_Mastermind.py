@@ -18,24 +18,19 @@ class Card_Mastermind(Card.Card):
         self.cost = 5
 
     def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
-        options = [{"selector": "0", "print": "Don't play a card", "card": None}]
-        index = 1
+        choices: list[tuple[str, Any]] = [("Don't play a card", None)]
         for card in player.piles[Piles.HAND]:
             if not card.isAction():
                 continue
-            pr = f"Play {card} thrice"
-            options.append({"selector": f"{index}", "print": pr, "card": card})
-            index += 1
-        if index == 1:
+            choices.append((f"Play {card} thrice", card))
+        if len(choices) == 1:
             player.output("No action cards to repeat")
             return {}
-        o = player.user_input(options, "Play which action card three times?")
-        if not o["card"]:
-            return {}
-        for i in range(1, 4):
-            player.output(f"Number {i} play of {o['card']}")
-            player.play_card(o["card"], discard=False, cost_action=False)
-        player.move_card(o["card"], Piles.PLAYED)
+        if card := player.plr_choose_options("Play which action card three times?", *choices):
+            for i in range(1, 4):
+                player.output(f"Number {i} play of {card}")
+                player.play_card(card, discard=False, cost_action=False)
+            player.move_card(card, Piles.PLAYED)
         return {}
 
 

@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+from typing import Any
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -10,7 +12,8 @@ class Card_Transmute(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ALCHEMY
-        self.desc = "Trash a card from hand to gain others"
+        self.desc = """Trash a card from your hand. If it is an… Action card, gain a Duchy;
+            Treasure card, gain a Transmute; Victory card, gain a Gold"""
         self.name = "Transmute"
         self.cost = 0
         self.required_cards = ["Potion"]
@@ -21,10 +24,7 @@ class Card_Transmute(Card.Card):
         Action card, gain a Duchy, Treasure card, gain a Transmute,
         Victory card, gain a gold"""
         player.output("Trash a card to gain...")
-        options = [
-            {"selector": "0", "print": "Trash Nothing", "card": None, "gain": None}
-        ]
-        index = 1
+        choices: list[tuple[str, Any]] = [("Trash Nothing", (None, None))]
         for card in player.piles[Piles.HAND]:
             trash_tag = None
             if card.isAction():
@@ -35,28 +35,24 @@ class Card_Transmute(Card.Card):
                 trash_tag = "Gold"
             if trash_tag is None:
                 continue
-            pr = f"Trash {card} for {trash_tag}"
-            options.append(
-                {"selector": f"{index}", "print": pr, "card": card, "gain": trash_tag}
-            )
-            index += 1
-        o = player.user_input(options, "Trash which card?")
-        if not o["card"]:
+            choices.append((f"Trash {card} for {trash_tag}", (card, trash_tag)))
+        to_trash, to_gain = player.plr_choose_options("Trash which card?", *choices)
+
+        if not to_trash:
             return
-        player.trash_card(o["card"])
-        if o["gain"] != "Nothing":
+        player.trash_card(to_trash)
+
+        if to_gain:
             try:
-                player.gain_card(o["gain"])
+                player.gain_card(to_gain)
             except NoCardException:
-                player.output(f"No more {o['gain']}")
+                player.output(f"No more {to_gain}")
 
 
 ###############################################################################
 class TestTransmute(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            numplayers=1, initcards=["Transmute"], badcards=["Duchess"]
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Transmute"], badcards=["Duchess"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Transmute")

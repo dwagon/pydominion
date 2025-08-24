@@ -1763,7 +1763,7 @@ class Player:
         raise NotImplementedError
 
     ###########################################################################
-    def user_input(self, options: list[Option | dict[str, Any]], prompt: str) -> Any:
+    def user_input(self, options: list[Option], prompt: str) -> Any:
         raise NotImplementedError
 
     ###########################################################################

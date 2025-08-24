@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Card, Game, Piles, Phase, OptionKeys, Player, NoCardException
 
@@ -17,9 +17,7 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
         self.name = "Changeling"
         self.cost = 3
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         if card.cost < 3:
             return {}
         if game.card_piles["Changeling"].is_empty():
@@ -33,19 +31,19 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
         return {}
 
     def night(self, game: Game.Game, player: Player.Player) -> None:
-        options = [{"selector": "0", "print": "Keep Changeling", "card": None}]
-        index = 1
+        selected = set()
+        choices: list[tuple[str, Any]] = [("Keep Changeling", None)]
         for card in player.piles[Piles.PLAYED] + player.piles[Piles.HAND]:
-            pr = f"Exchange for {card}"
-            options.append({"selector": f"{index}", "print": pr, "card": card})
-            index += 1
-        o = player.user_input(options, "Trash Changeling to gain a card")
-        if o["card"]:
+            if card.name not in selected:
+                selected.add(card.name)
+                choices.append((f"Exchange for {card}", card.name))
+
+        if to_gain := player.plr_choose_options("Trash Changeling to gain a card", *choices):
             player.trash_card(self)
             try:
-                player.gain_card(o["card"].name)
+                player.gain_card(to_gain)
             except NoCardException:
-                player.output(f"No more {o['card']}")
+                player.output(f"No more {to_gain}")
 
 
 ###############################################################################

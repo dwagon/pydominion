@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card, Game, Piles, Event
 
 
@@ -24,22 +25,22 @@ class Event_Pilgrimage(Event.Event):
         cardnames = {c.name for c in player.piles[Piles.PLAYED] if c.purchasable}
         selected = []
         while True:
-            options = [{"selector": "0", "print": "Finish", "opt": None}]
-            index = 1
-            for cn in cardnames:
-                options.append({"selector": "%d" % index, "print": cn, "opt": cn})
-                index += 1
-            choice = player.user_input(options, "Select a card to gain - up to 3!")
-            if choice["opt"]:
-                selected.append(choice["opt"])
-                cardnames.remove(choice["opt"])
+            choices = [
+                ("Finish", None),
+            ]
+            for card_name in cardnames:
+                choices.append((card_name, card_name))
+
+            if choice := player.plr_choose_options("Select a card to gain - up to 3!", *choices):
+                selected.append(choice)
+                cardnames.remove(choice)
             else:
                 break
             if len(selected) == 3:
                 break
         for card in selected:
             player.gain_card(card)
-            player.output("Gained a %s" % card)
+            player.output(f"Gained {card}")
 
 
 ###############################################################################

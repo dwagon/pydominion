@@ -2,9 +2,8 @@
 """http://wiki.dominionstrategy.com/index.php/Thief"""
 
 import unittest
-from typing import Any
 
-from dominion import Card, Game, Piles, Player, NoCardException
+from dominion import Card, Game, Piles, Player, NoCardException, Option
 
 
 ###############################################################################
@@ -48,23 +47,16 @@ class Card_Thief(Card.Card):
             thief.output(f"Player {victim} has no treasures")
             return
         index = 1
-        options: list[dict[str, Any]] = [
-            {
-                "selector": "0",
-                "print": "Don't trash any card",
-                "card": None,
-                "steal": False,
-            }
-        ]
+        options: list[Option] = [Option(selector="0", print="Don't trash any card", card=None, steal=False)]
         for card in treasures:
             pr = f"Trash {card} from {victim}"
-            options.append({"selector": f"{index}", "print": pr, "card": card, "steal": False})
+            options.append(Option(selector=f"{index}", print=pr, card=card, steal=False))
             index += 1
             sel = f"{index}"
             pr = f"Steal {card} from {victim}"
-            options.append({"selector": sel, "print": pr, "card": card, "steal": True})
+            options.append(Option(selector=sel, print=pr, card=card, steal=True))
             index += 1
-        o = thief.user_input(options, f"What to do to {victim.name}'s cards?")
+        o = thief.user_input(options, f"What to do to {victim}'s cards?")
         # Discard the ones we don't care about
         for tc in treasures:
             if o["card"] != tc:

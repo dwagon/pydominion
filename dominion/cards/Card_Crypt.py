@@ -39,16 +39,11 @@ class Card_Crypt(Card.Card):
     def duration(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, str]:
         if self._crypt_reserve.is_empty():
             return {}
-        options = []
-        index = 0
-        for card in self._crypt_reserve:
-            to_print = f"Bring back {card.name}"
-            options.append({"selector": f"{index}", "print": to_print, "card": card})
-            index += 1
 
-        o = player.user_input(options, "What card to bring back from the crypt?")
-        player.add_card(o["card"], Piles.HAND)
-        self._crypt_reserve.remove(o["card"])
+        choices = [(f"Bring back {card}", card) for card in self._crypt_reserve]
+        card = player.plr_choose_options("What card to bring back from the crypt?", *choices)
+        player.add_card(card, Piles.HAND)
+        self._crypt_reserve.remove(card)
         player.secret_count -= 1
         if self._crypt_reserve.is_empty():
             self.permanent = False

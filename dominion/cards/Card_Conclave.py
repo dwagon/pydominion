@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+from typing import Any
+
 from dominion import Game, Card, Piles, Player
 
 
@@ -24,15 +26,11 @@ class Card_Conclave(Card.Card):
         if not sac:
             player.output("No suitable actions to play")
             return
-        options = [{"selector": "0", "print": "Nothing", "card": None}]
-        index = 1
-        for card in sac:
-            toprint = f"Play {card}"
-            options.append({"selector": f"{index}", "print": toprint, "card": card})
-            index += 1
-        o = player.user_input(options, "What card do you want to play?")
-        if o["card"]:
-            player.play_card(o["card"], cost_action=False)
+        choices: list[tuple[str, Any]] = [("Nothing", None)]
+        for _ in sac:
+            choices.append((f"Play {_}", _))
+        if card := player.plr_choose_options("What card do you want to play?", *choices):
+            player.play_card(card, cost_action=False)
             player.add_actions(1)
 
 

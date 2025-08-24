@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from typing import Any
 
-from dominion import Game, Card, Piles, Phase, Player, NoCardException
+from dominion import Game, Card, Piles, Phase, Player
 
 
 ###############################################################################
@@ -29,26 +28,18 @@ class Card_Exorcist(Card.Card):
         if not trashed:
             return
         cost = trashed[0].cost
-        options: list[dict[str, Any]] = []
-        idx = 0
+        choices = []
         for card_name in ("Ghost", "Imp", "Will-o'-Wisp"):
             card = game.card_instances[card_name]
             if game.card_piles[card_name].is_empty():
                 continue
             if card.cost < cost:
-                options.append(
-                    {
-                        "selector": f"{idx}",
-                        "print": f"Get {card_name}",
-                        "card": card_name,
-                    }
-                )
-                idx += 1
-        if idx:
-            o = player.user_input(options, "Gain a spirit")
-            player.gain_card(o["card"])
-        else:
+                choices.append((f"Get {card_name}", card_name))
+        if not choices:
             player.output("No spirits available at that price")
+            return
+        choice = player.plr_choose_options("Gain a spirit", *choices)
+        player.gain_card(choice)
 
 
 ###############################################################################

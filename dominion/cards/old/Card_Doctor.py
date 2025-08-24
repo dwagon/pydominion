@@ -29,13 +29,11 @@ class Card_Doctor(Card.Card):
             Trash the matches. Put the rest back on top in any order."""
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
-        options = []
-        index = 1
+        choices = []
         for name, pile in sorted(game.get_card_piles()):
-            sel = f"{index}"
-            options.append({"selector": sel, "print": f"Guess {name}", "card": name})
-            index += 1
-        o = player.user_input(options, "Pick which card to trash if it is in the top 3 of your deck")
+            choices.append((f"Guess {name}", name))
+        o = player.plr_choose_options("Pick which card to trash if it is in the top 3 of your deck", *choices)
+
         cards: list[Card.Card] = []
         for _ in range(3):
             try:
@@ -45,7 +43,7 @@ class Card_Doctor(Card.Card):
 
         for card in cards:
             player.reveal_card(card)
-            if card.name == o["card"]:
+            if card.name == o:
                 player.output(f"Trashing {card}")
                 card.location = None
                 player.trash_card(card)
@@ -62,37 +60,20 @@ class Card_Doctor(Card.Card):
                 card = player.next_card()
             except NoCardException:  # pragma: no coverage
                 continue
-            options = []
-            options.append(
-                {
-                    "selector": "0",
-                    "print": f"Put {card} back on top",
-                    "action": "put back",
-                }
-            )
-            options.append(
-                {
-                    "selector": "1",
-                    "print": f"Trash {card}",
-                    "action": "trash",
-                }
-            )
-            options.append(
-                {
-                    "selector": "2",
-                    "print": f"Discard {card}",
-                    "action": "discard",
-                }
-            )
-            o = player.user_input(options, f"What to do with the top card {card}?")
-            if o["action"] == "trash":
+            choices = [
+                (f"Put {card} back on top", "put back"),
+                (f"Trash {card}", "trash"),
+                (f"Discard {card}", "discard"),
+            ]
+            choice = player.plr_choose_options(f"What to do with the top card {card}?", *choices)
+            if choice == "trash":
                 card.location = None
                 player.trash_card(card)
                 player.output(f"Trashing {card}")
-            elif o["action"] == "discard":
+            elif choice == "discard":
                 player.add_card(card, Piles.DISCARD)
                 player.output(f"Discarding {card}")
-            elif o["action"] == "put back":
+            elif choice == "put back":
                 player.add_card(card, Piles.DECK)
                 player.output(f"Putting {card} back")
 

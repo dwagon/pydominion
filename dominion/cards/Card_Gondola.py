@@ -2,9 +2,9 @@
 """http://wiki.dominionstrategy.com/index.php/Gondola"""
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
-from dominion import Game, Card, Piles, Player, Option, OptionKeys
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -15,7 +15,7 @@ class Card_Gondola(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.TREASURE, Card.CardType.DURATION]
         self.base = Card.CardExpansion.PLUNDER
-        self.desc = """Either now or at the start of your next turn: +$2. When you gain this, 
+        self.desc = """Either now or at the start of your next turn: +$2. When you gain this,
         you may play an Action card from your hand."""
         self.name = "Gondola"
         self.cost = 4
@@ -34,32 +34,23 @@ class Card_Gondola(Card.Card):
         else:
             self._choice = "then"
 
-    def duration(
-        self, game: "Game.Game", player: "Player.Player"
-    ) -> dict[OptionKeys, Any]:
+    def duration(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
         if self._choice == "then":
             player.coins.add(2)
         self._choice = "undef"
         return {}
 
-    def hook_gain_this_card(
-        self, game: "Game.Game", player: "Player.Player"
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_this_card(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
         """When you gain this, you may play an Action card from your hand."""
         actions = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not actions:
             player.output("No action cards in hand")
             return {}
-        options: list[Option.Option | dict[str, Any]] = [
-            {"selector": "0", "print": "Don't play a card", "card": None}
-        ]
-        options.extend(
-            {"selector": f"{index}", "print": f"Play {card}", "card": card}
-            for index, card in enumerate(actions, start=1)
-        )
-        o = player.user_input(options, "Play a card from your hand")
-        if o["card"]:
-            player.play_card(o["card"], cost_action=False)
+        choices: list[tuple[str, Any]] = [("Don't play a card", None)]
+        for _ in actions:
+            choices.append((f"Play {_}", _))
+        if card := player.plr_choose_options("Play a card from your hand", *choices):
+            player.play_card(card, cost_action=False)
 
         return {}
 
@@ -81,9 +72,7 @@ class TestGondola(unittest.TestCase):
         hand_size = len(self.plr.piles[Piles.HAND])
         self.plr.gain_card("Gondola")
         self.assertIn("Moat", self.plr.piles[Piles.PLAYED])
-        self.assertEqual(
-            len(self.plr.piles[Piles.HAND]), hand_size + 2 - 1
-        )  # -1 for using moat; +2 for playing moat
+        self.assertEqual(len(self.plr.piles[Piles.HAND]), hand_size + 2 - 1)  # -1 for using moat; +2 for playing moat
 
     def test_gain_no_actions(self) -> None:
         """Gain Card but with no actions"""
