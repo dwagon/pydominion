@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+
 import dominion.Card as Card
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -20,27 +21,25 @@ class Card_Pawn(Card.Card):
         choices must be different)"""
         selectable = [
             ("card", "+1 card"),
-            (Card.CardType.ACTION, "+1 action"),
+            ("action", "+1 action"),
             ("buy", "+1 buy"),
             ("coin", "+1 coin"),
         ]
         chosen = []
         player.output("Pick two options")
         for _ in range(2):
-            options = []
-            index = 1
+            choices = []
             for k, v in selectable:
                 if k in chosen:
                     continue
-                options.append({"selector": f"{index}", "print": v, "opt": k})
-                index += 1
-            o = player.user_input(options, "What do you want to do?")
-            chosen.append(o["opt"])
+                choices.append((v, k))
+            choice = player.plr_choose_options("What do you want to do?", *choices)
+            chosen.append(choice)
 
         for choice in chosen:
             if choice == "card":
                 player.pickup_cards(1)
-            elif choice == Card.CardType.ACTION:
+            elif choice == "action":
                 player.add_actions(1)
             elif choice == "buy":
                 player.buys.add(1)

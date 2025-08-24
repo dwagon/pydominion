@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -29,11 +30,11 @@ class Card_WanderingMinstrel(Card.Card):
                 cards.append(card)
                 player.output(f"Revealed a {card} and put on top of deck")
             else:
-                player.add_card(card, "discard")
+                player.add_card(card, Piles.DISCARD)
                 player.output(f"Discarded {card}")
 
         for card in cards:
-            player.add_card(card, "topdeck")
+            player.add_card(card, Piles.TOPDECK)
 
 
 ###############################################################################

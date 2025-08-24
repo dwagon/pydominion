@@ -21,7 +21,7 @@ class Card_Herb_Gatherer(Card.Card):
 
     def special(self, game, player):
         for crd in player.piles[Piles.DECK]:
-            player.move_card(crd, "discard")
+            player.move_card(crd, Piles.DISCARD)
             player.output(f"Discarding {crd.name} from deck")
         treasures = []
         for crd in player.piles[Piles.DISCARD]:

@@ -28,7 +28,7 @@ class Card_Miser(Card.Card):
             )
             if deposit:
                 cu = player.piles[Piles.HAND]["Copper"]
-                player.add_card(cu, "reserve")
+                player.add_card(cu, Piles.RESERVE)
                 player.piles[Piles.HAND].remove(cu)
         if not deposit:
             player.output("Adding %d coins from tavern" % coins)

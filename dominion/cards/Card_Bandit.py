@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Bandit"""
+"""http://wiki.dominionstrategy.com/index.php/Bandit"""
 
 import unittest
 from typing import Any
@@ -24,44 +24,43 @@ class Card_Bandit(Card.Card):
     def special(self, game: Game.Game, player: Player.Player) -> None:
         player.gain_card("Gold")
         for plr in player.attack_victims():
-            self.thieve_on(victim=plr, bandit=player)
+            thieve_on(victim=plr, bandit=player)
 
-    def thieve_on(self, victim: Player.Player, bandit: Player.Player) -> None:
-        """Thieve on the victim"""
-        # Each other player reveals the top 2 cards of their deck
-        treasures = []
-        for _ in range(2):
-            try:
-                card = victim.next_card()
-            except NoCardException:
-                continue
-            victim.reveal_card(card)
-            if card.isTreasure() and card.name != "Copper":
-                treasures.append(card)
-            else:
-                card.location = "cardpile"
-                victim.add_card(card, "discard")
-        if not treasures:
-            bandit.output(f"Player {victim.name} has no suitable treasures")
-            return
-        index = 1
-        options: list[dict[str, Any]] = [
-            {"selector": "0", "print": "Don't trash any card", "card": None}
-        ]
-        for card in treasures:
-            to_print = f"Trash {card} from {victim.name}"
-            options.append({"selector": f"{index}", "print": to_print, "card": card})
-            index += 1
-        o = bandit.user_input(options, f"What to do to {victim.name}'s cards?")
-        # Discard the ones we don't care about
-        for card in treasures:
-            if o["card"] == card:
-                card.location = None
-                victim.trash_card(card)
-                bandit.output(f"Trashed {card} from {victim.name}")
-                victim.output(f"{bandit.name}'s Bandit trashed your {card}")
-            else:
-                victim.add_card(card, "discard")
+
+def thieve_on(victim: Player.Player, bandit: Player.Player) -> None:
+    """Each other player reveals the top 2 cards of their deck,
+    trashes a revealed Treasure other than Copper, and discards the rest."""
+    # Each other player reveals the top 2 cards of their deck
+    treasures = []
+    for _ in range(2):
+        try:
+            card = victim.next_card()
+        except NoCardException:
+            continue
+        victim.reveal_card(card)
+        if card.isTreasure() and card.name != "Copper":
+            treasures.append(card)
+        else:
+            card.location = Piles.CARDPILE
+            victim.add_card(card, Piles.DISCARD)
+    if not treasures:
+        bandit.output(f"Player {victim} has no suitable treasures")
+        return
+
+    choices: list[tuple[str, Any]] = [("Don't trash any card", None)]
+    for _ in treasures:
+        choices.append((f"Trash {_} from {victim}", _))
+
+    card = bandit.plr_choose_options(f"What to do to {victim}'s cards?", *choices)
+    # Discard the ones we don't care about
+    for treasure in treasures:
+        if card == treasure:
+            card.location = None
+            victim.trash_card(card)
+            bandit.output(f"Trashed {card} from {victim}")
+            victim.output(f"{bandit}'s Bandit trashed your {card}")
+        else:
+            victim.add_card(treasure, Piles.DISCARD)
 
 
 ###############################################################################

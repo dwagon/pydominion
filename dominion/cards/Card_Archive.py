@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Archive"""
+"""https://wiki.dominionstrategy.com/index.php/Archive"""
 import unittest
-from dominion import Card, Game, PlayArea, Piles, NoCardException
+
+from dominion import Card, Game, PlayArea, Piles, NoCardException, Player, Option
 
 
 ###############################################################################
@@ -18,9 +19,9 @@ class Card_Archive(Card.Card):
         self.name = "Archive"
         self.actions = 1
         self.cost = 5
-        self._archive_reserve = PlayArea.PlayArea([])
+        self._archive_reserve = PlayArea.PlayArea(initial=[])
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player):
         for _ in range(3):
             try:
                 card = player.next_card()
@@ -31,12 +32,11 @@ class Card_Archive(Card.Card):
             player.secret_count += 1
         self.permanent = True
 
-    def duration(self, game, player):
+    def duration(self, game: Game.Game, player: Player.Player):
         options = []
         index = 0
         for card in self._archive_reserve:
-            to_print = f"Bring back {card.name}"
-            options.append({"selector": f"{index}", "print": to_print, "card": card})
+            options.append(Option(selector=f"{index}", print=f"Bring back {card}", card=card))
             index += 1
         if o := player.user_input(options, "What card to bring back from the Archive?"):
             player.add_card(o["card"], Piles.HAND)

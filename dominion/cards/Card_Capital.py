@@ -37,7 +37,7 @@ class Test_Capital(unittest.TestCase):
         self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.coins.get(), 6)
         self.plr.coins.set(3)
-        self.plr.discard_card(self.card, "played")
+        self.plr.discard_card(self.card, Piles.PLAYED)
         self.assertEqual(self.plr.debt.get(), 3)
         self.assertEqual(self.plr.coins.get(), 0)
 

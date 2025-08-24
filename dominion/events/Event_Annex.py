@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card, Game, Piles, Event
 
 
@@ -25,11 +26,11 @@ class Event_Annex(Event.Event):
             if card in cards:
                 keep.append(card)
             else:
-                player.add_card(card, "deck")
+                player.add_card(card, Piles.DECK)
         player.piles[Piles.DECK].shuffle()
         player.piles[Piles.DISCARD].set()
         for card in keep:
-            player.add_card(card, "discard")
+            player.add_card(card, Piles.DISCARD)
         if player.gain_card("Duchy"):
             player.output("Gained a Duchy")
 

@@ -1,5 +1,7 @@
 from enum import auto, Enum, StrEnum
 
+from dominion.Option import Option
+
 
 ###############################################################################
 class NoCardException(Exception):
@@ -19,6 +21,8 @@ class Piles(StrEnum):
     HAND = auto()
     PLAYED = auto()
     RESERVE = auto()
+    SPECIAL = auto()
+    TOPDECK = auto()  # Not a real location, but the DECK
     TRASH = auto()
 
 

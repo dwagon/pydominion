@@ -1,9 +1,10 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Supplies """
+"""http://wiki.dominionstrategy.com/index.php/Supplies"""
 
 import unittest
-from dominion import Game, Card, Piles
+
 import dominion.Card as Card
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -19,7 +20,7 @@ class Card_Supplies(Card.Card):
         self.required_cards = [("Card", "Horse")]
 
     def special(self, game, player):
-        player.gain_card("Horse", "topdeck")
+        player.gain_card("Horse", Piles.TOPDECK)
 
 
 ###############################################################################

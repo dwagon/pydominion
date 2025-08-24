@@ -11,17 +11,13 @@ class Way_Seal(Way.Way):
     def __init__(self) -> None:
         Way.Way.__init__(self)
         self.base = Card.CardExpansion.MENAGERIE
-        self.desc = (
-            "+1 Coin; This turn, when you gain a card, you may put it onto your deck."
-        )
+        self.desc = "+1 Coin; This turn, when you gain a card, you may put it onto your deck."
         self.name = "Way of the Seal"
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         player.coins.add(1)
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         mod = {}
         if deck := player.plr_choose_options(
             f"Seal: Where to put {card}?",
@@ -29,7 +25,7 @@ class Way_Seal(Way.Way):
             (f"Put {card} on top of deck", True),
         ):
             player.output(f"Putting {card} on deck due to Way of the Seal")
-            mod[OptionKeys.DESTINATION] = "topdeck"
+            mod[OptionKeys.DESTINATION] = Piles.TOPDECK
         return mod
 
 

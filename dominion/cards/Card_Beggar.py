@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -24,11 +25,9 @@ class Card_Beggar(Card.Card):
             except NoCardException:
                 player.output("No more Copper")
 
-    def hook_under_attack(
-        self, game: Game.Game, player: Player.Player, attacker: Player.Player
-    ) -> None:
+    def hook_under_attack(self, game: Game.Game, player: Player.Player, attacker: Player.Player) -> None:
         try:
-            player.gain_card("Silver", "topdeck")
+            player.gain_card("Silver", Piles.TOPDECK)
             player.gain_card("Silver")
             player.output(f"Gaining silvers as under attack from {attacker}")
         except NoCardException:

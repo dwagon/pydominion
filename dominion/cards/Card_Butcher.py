@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """https://wiki.dominionstrategy.com/index.php/Butcher"""
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 
@@ -27,12 +28,10 @@ class Card_Butcher(Card.Card):
         cards = player.plr_trash_card(force=True)
         if not cards:
             return
-        options = []
-        for i in range(player.coffers.get() + 1):
-            options.append({"selector": f"{i}", "print": f"Add {i} coins", "coins": i})
-        o = player.user_input(options, "Spend extra coins?")
-        cost = cards[0].cost + o["coins"]
-        player.coffers -= o["coins"]
+        choices = [(f"Add {i} coins", i) for i in range(player.coffers.get() + 1)]
+        coins = player.plr_choose_options("Spend extra coins?", *choices)
+        cost = cards[0].cost + coins
+        player.coffers -= coins
         player.plr_gain_card(cost=cost)
 
 

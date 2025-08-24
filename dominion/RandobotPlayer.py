@@ -94,7 +94,7 @@ class RandobotPlayer(Player):
         return " ".join(output)
 
     ###########################################################################
-    def user_input(self, options, prompt: str):
+    def user_input(self, options: list[Option], prompt: str) -> Option:
         """Handle user input"""
         print(Prompt.generate_prompt(self))
         for opt in options:

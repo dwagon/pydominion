@@ -26,7 +26,7 @@ class Card_Artificer(Card.Card):
         player.plr_gain_card(
             cost=cost,
             modifier="equal",
-            destination="topdeck",
+            destination=Piles.TOPDECK,
             prompt="Gain a card costing %d" % cost,
         )
 

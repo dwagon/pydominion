@@ -26,7 +26,7 @@ class Card_Library(Card.Card):
             except NoCardException:
                 break
             if card.isAction() and self.discard_choice(player, card):
-                player.add_card(card, "discard")
+                player.add_card(card, Piles.DISCARD)
                 continue
             player.pickup_card(card)
 

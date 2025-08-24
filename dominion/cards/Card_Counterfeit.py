@@ -18,29 +18,18 @@ class Card_Counterfeit(Card.Card):
         self.buys = 1
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
-        """When you play this, you may play a Treasure from your
-        hand twice. If you do, trash that Treasure"""
-        options = [{"selector": "0", "print": "Do nothing", "card": None}]
-        index = 1
+        """You may play a non-Duration Treasure from your hand twice. Trash it."""
+        choices = [("Do nothing", None)]
         for card in player.piles[Piles.HAND]:
             if card.isTreasure() and not card.isDuration():
-                options.append(
-                    {
-                        "selector": f"{index}",
-                        "print": f"Play {card} twice",
-                        "card": card,
-                    }
-                )
-                index += 1
-
-        if index == 1:
+                choices.append((f"Play {card} twice", card))
+        if len(choices) == 1:
+            player.output("No suitable cards")
             return
-        o = player.user_input(options, "What to do?")
-        if not o["card"]:
-            return
-        for _ in range(2):
-            player.play_card(o["card"], cost_action=False, discard=False)
-        player.trash_card(o["card"])
+        if card := player.plr_choose_options("What to do?", *choices):
+            for _ in range(2):
+                player.play_card(card, cost_action=False, discard=False)
+            player.trash_card(card)
 
 
 ###############################################################################

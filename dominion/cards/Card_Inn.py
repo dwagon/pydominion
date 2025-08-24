@@ -44,9 +44,9 @@ class Card_Inn(Card.Card):
         )
         for card in back:
             if card.name == "Inn":
-                return {OptionKeys.DESTINATION: "deck", OptionKeys.SHUFFLE: True}
+                return {OptionKeys.DESTINATION: Piles.DECK, OptionKeys.SHUFFLE: True}
             player.piles[Piles.DISCARD].remove(card)
-            player.add_card(card, "deck")
+            player.add_card(card, Piles.DECK)
             player.piles[Piles.DECK].shuffle()
         return {}
 

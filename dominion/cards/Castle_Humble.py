@@ -44,7 +44,7 @@ class Test_HumbleCastle(unittest.TestCase):
         self.assertEqual(self.plr.coins.get(), 1)
 
     def test_score(self):
-        self.plr.add_card(self.card, "discard")
+        self.plr.add_card(self.card, Piles.DISCARD)
         score = self.plr.get_score_details()
         self.assertEqual(score["Humble Castle"], 1)
 

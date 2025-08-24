@@ -35,7 +35,7 @@ class Card_Scout(Card.Card):
                 cards.append(card)
         for card in cards:
             player.output(f"Putting {card} back on deck")
-            player.add_card(card, "deck")
+            player.add_card(card, Piles.DECK)
 
 
 ###############################################################################

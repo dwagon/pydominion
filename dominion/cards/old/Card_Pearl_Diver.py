@@ -33,7 +33,7 @@ class Card_PearlDiver(Card.Card):
         if top:
             player.output(f"Putting {bottom_card} on top of deck")
             player.piles[Piles.DECK].remove(bottom_card)
-            player.add_card(bottom_card, "topdeck")
+            player.add_card(bottom_card, Piles.TOPDECK)
 
 
 ###############################################################################

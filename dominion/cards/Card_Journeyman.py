@@ -2,6 +2,8 @@
 """https://wiki.dominionstrategy.com/index.php/Journeyman"""
 
 import unittest
+from typing import Any
+
 from dominion import Game, Card, Piles, NoCardException, Player
 
 
@@ -18,18 +20,13 @@ class Card_Journeyman(Card.Card):
         self.cost = 5
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
-        options = [{"selector": "0", "print": "No guess", "card": None}]
-        index = 1
+        choices: list[tuple[str, Any]] = [("No guess", None)]
         for name, card_pile in sorted(game.get_card_piles()):
-            options.append(
-                {"selector": f"{index}", "print": f"Guess {name}", "card": name}
-            )
-            index += 1
-        o = player.user_input(
-            options,
-            "Name a card. Reveal cards from your deck until you have 3 that aren't the named card",
+            choices.append((f"Guess {name}", name))
+        opt = player.plr_choose_options(
+            "Name a card. Reveal cards from your deck until you have 3 that aren't the named card", *choices
         )
-        if o["card"] is None:
+        if not opt:
             return
         cards: list[Card.Card] = []
         max_cards = player.count_cards()
@@ -40,7 +37,7 @@ class Card_Journeyman(Card.Card):
             except NoCardException:  # pragma: no coverage
                 break
             player.reveal_card(card)
-            if card.name == o["card"]:
+            if card.name == opt:
                 player.output(f"Discarding {card}")
                 player.discard_card(card)
             else:

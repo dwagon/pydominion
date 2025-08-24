@@ -29,7 +29,7 @@ class Card_Treasuremap(Card.Card):
         if t:
             player.output("Gaining 4 Gold")
             for _ in range(4):
-                player.gain_card("Gold", destination="topdeck")
+                player.gain_card("Gold", destination=Piles.TOPDECK)
         else:
             player.output("Didn't trash two so no Gold")
 

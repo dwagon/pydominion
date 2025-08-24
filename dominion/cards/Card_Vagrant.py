@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -25,16 +26,11 @@ class Card_Vagrant(Card.Card):
         except NoCardException:
             return
         player.reveal_card(card)
-        if (
-            card.isVictory()
-            or card.isRuin()
-            or card.isShelter()
-            or card.name == "Ruins"
-        ):
+        if card.isVictory() or card.isRuin() or card.isShelter() or card.name == "Ruins":
             player.add_card(card, Piles.HAND)
             player.output(f"Adding {card} to hand")
         else:
-            player.add_card(card, "topdeck")
+            player.add_card(card, Piles.TOPDECK)
             player.output(f"Top card {card} still on deck")
 
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles
 
 
@@ -23,7 +24,7 @@ class Card_Sibyl(Card.Card):
             prompt="Put a card from your hand on top of your deck",
             cardsrc=player.piles[Piles.HAND],
         )
-        player.move_card(tcard[0], "topdeck")
+        player.move_card(tcard[0], Piles.TOPDECK)
 
         bcard = player.card_sel(
             prompt="Put a card from your hand on bottom of your deck",

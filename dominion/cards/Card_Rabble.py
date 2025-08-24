@@ -35,7 +35,7 @@ class Card_Rabble(Card.Card):
         for card in cards:
             victim.output(f"Putting {card} back on deck")
             attacker.output(f"{victim.name} keeping {card}")
-            victim.add_card(card, "deck")
+            victim.add_card(card, Piles.DECK)
 
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Each other player reveals the top 3 cards of his deck,

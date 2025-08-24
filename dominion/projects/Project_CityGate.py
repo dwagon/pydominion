@@ -22,7 +22,7 @@ class Project_CityGate(Project.Project):
             cardsrc=Piles.HAND,
             prompt="Put a card from your hand onto your deck",
         )
-        player.add_card(card[0], "topdeck")
+        player.add_card(card[0], Piles.TOPDECK)
         player.piles[Piles.HAND].remove(card[0])
 
 

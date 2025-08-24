@@ -1,12 +1,11 @@
 #!/usr/bin/env python
+"""https://wiki.dominionstrategy.com/index.php/Druid"""
 # pylint: disable=protected-access
 
-import unittest
 import random
-from typing import Any
+import unittest
 
 from dominion import Card, PlayArea, Game, Piles, Player
-from dominion.Option import Option
 
 DRUID = "druid"
 
@@ -25,19 +24,15 @@ class Card_Druid(Card.Card):
         self.cost = 2
 
     def setup(self, game: Game.Game) -> None:
-        game.specials[DRUID] = PlayArea.PlayArea([])
+        game.specials[DRUID] = PlayArea.PlayArea(initial=[])
         random.shuffle(game.boons)
         for _ in range(3):
             game.specials[DRUID].add(game.boons.pop())
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
-        options: list[Option | dict[str, Any]] = []
-        for i in range(3):
-            boon = list(game.specials[DRUID])[i]
-            to_print = f"Receive {boon.name}: {boon.description(player)}"
-            options.append({"selector": f"{i}", "print": to_print, "boon": boon})
-        b = player.user_input(options, "Which boon? ")
-        player.receive_boon(boon=b["boon"], discard=False)
+        choices = [(f"Receive {_}: {_.description(player)}", _) for _ in list(game.specials[DRUID])]
+        boon = player.plr_choose_options("Which boon?", *choices)
+        player.receive_boon(boon, discard=False)
 
 
 ###############################################################################
@@ -59,9 +54,7 @@ class TestDruid(unittest.TestCase):
 
     def test_set_aside(self) -> None:
         """Test that we don't get a set aside boon"""
-        set_aside = {
-            _.name for _ in self.g.specials[DRUID]
-        }  # pylint: disable=no-member
+        set_aside = {_.name for _ in self.g.specials[DRUID]}  # pylint: disable=no-member
         left = {_.name for _ in self.g.boons}
         if set_aside.intersection(left):
             self.fail("Set aside boons not set aside")

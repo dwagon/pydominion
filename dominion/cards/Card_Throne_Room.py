@@ -18,20 +18,17 @@ class Card_ThroneRoom(Card.Card):
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """You may choose an Action card in your hand. Play it twice"""
-        options: list[dict[str, Any]] = [{"selector": "0", "print": "Don't play a card", "card": None}]
-        index = 1
-        for card in player.playable_actions():
-            options.append({"selector": f"{index}", "print": f"Play {card} twice", "card": card})
-            index += 1
-        if index == 1:
+        choices: list[tuple[str, Any]] = [(f"Play {_} twice", _) for _ in player.playable_actions()]
+        if not choices:
+            player.output("No suitable cards")
             return
-        o = player.user_input(options, "Play which action card twice?")
-        if not o["card"]:
-            return
-        player.output(f"Play 1 of {o['card']}")
-        player.play_card(o["card"], discard=False, cost_action=False)
-        player.output(f"Play 2 of {o['card']}")
-        player.play_card(o["card"], cost_action=False)
+        choices.insert(0, ("Don't play a card", None))
+
+        if choice := player.plr_choose_options("Play which action card twice?", *choices):
+            player.output(f"Play 1 of {choice}")
+            player.play_card(choice, discard=False, cost_action=False)
+            player.output(f"Play 2 of {choice}")
+            player.play_card(choice, cost_action=False)
 
 
 ###############################################################################

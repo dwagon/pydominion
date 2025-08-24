@@ -1,10 +1,9 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Thief"""
+"""http://wiki.dominionstrategy.com/index.php/Thief"""
 
 import unittest
-from typing import Any
 
-from dominion import Card, Game, Piles, Player, NoCardException
+from dominion import Card, Game, Piles, Player, NoCardException, Option
 
 
 ###############################################################################
@@ -22,9 +21,7 @@ class Card_Thief(Card.Card):
         self.name = "Thief"
         self.cost = 4
 
-    def special(
-        self, game: "Game.Game", player: "Player.Player"
-    ) -> None:  # pylint: disable=unused-argument
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:  # pylint: disable=unused-argument
         """Each other player reveals the top 2 cards of his deck.
         If they revealed any Treasure cards, they trash one them
         that you choose. You may gain any or all of these trashed
@@ -47,41 +44,32 @@ class Card_Thief(Card.Card):
             else:
                 victim.add_card(card, Piles.DISCARD)
         if not treasures:
-            thief.output(f"Player {victim.name} has no treasures")
+            thief.output(f"Player {victim} has no treasures")
             return
         index = 1
-        options: list[dict[str, Any]] = [
-            {
-                "selector": "0",
-                "print": "Don't trash any card",
-                "card": None,
-                "steal": False,
-            }
-        ]
+        options: list[Option] = [Option(selector="0", print="Don't trash any card", card=None, steal=False)]
         for card in treasures:
-            pr = f"Trash {card} from {victim.name}"
-            options.append(
-                {"selector": f"{index}", "print": pr, "card": card, "steal": False}
-            )
+            pr = f"Trash {card} from {victim}"
+            options.append(Option(selector=f"{index}", print=pr, card=card, steal=False))
             index += 1
             sel = f"{index}"
-            pr = f"Steal {card} from {victim.name}"
-            options.append({"selector": sel, "print": pr, "card": card, "steal": True})
+            pr = f"Steal {card} from {victim}"
+            options.append(Option(selector=sel, print=pr, card=card, steal=True))
             index += 1
-        o = thief.user_input(options, f"What to do to {victim.name}'s cards?")
+        o = thief.user_input(options, f"What to do to {victim}'s cards?")
         # Discard the ones we don't care about
         for tc in treasures:
             if o["card"] != tc:
-                victim.add_card(tc, "discard")
+                victim.add_card(tc, Piles.DISCARD)
         if o["card"]:
             if o["steal"]:
                 thief.add_card(o["card"])
-                thief.output(f"Stealing {o['card']} from {victim.name}")
-                victim.output(f"{thief.name} stole your {o['card']}")
+                thief.output(f"Stealing {o['card']} from {victim}")
+                victim.output(f"{thief} stole your {o['card']}")
             else:
                 victim.trash_card(o["card"])
-                thief.output(f"Trashed {o['card'].name} from {victim.name}")
-                victim.output(f"{thief.name} trashed your {o['card']}")
+                thief.output(f"Trashed {o['card']} from {victim}")
+                victim.output(f"{thief} trashed your {o['card']}")
 
 
 ###############################################################################

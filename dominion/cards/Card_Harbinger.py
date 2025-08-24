@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+
 import dominion.Card as Card
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -18,26 +19,20 @@ class Card_Harbinger(Card.Card):
         self.cost = 3
 
     def special(self, game, player):
-        index = 1
-        options = [{"selector": "0", "print": "Don't look through discard pile", "card": None}]
-        already = []
-        for c in player.piles[Piles.DISCARD]:
-            sel = f"{index}"
-            pr = f"Put {c.name} back in your deck"
-            if c.name in already:
+        choices = [("Don't look through discard pile", None)]
+        already = set()
+        for card in player.piles[Piles.DISCARD]:
+            if card.name in already:
                 continue
-            options.append({"selector": sel, "print": pr, "card": c})
-            already.append(c.name)
-            index += 1
+            choices.append((f"Put {card} back in your deck", card))
+            already.add(card.name)
         if not already:
             player.output("No suitable cards")
-            return
         player.output("Look through your discard pile. You may put a card from it onto your deck.")
-        o = player.user_input(options, "Which Card? ")
-        if not o["card"]:
-            return
-        player.add_card(o["card"], "topdeck")
-        player.piles[Piles.DISCARD].remove(o["card"])
+
+        if choice := player.plr_choose_options("Which Card? ", *choices):
+            player.add_card(choice, Piles.TOPDECK)
+            player.piles[Piles.DISCARD].remove(choice)
 
 
 ###############################################################################

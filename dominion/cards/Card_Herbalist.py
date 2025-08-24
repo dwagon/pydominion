@@ -32,7 +32,7 @@ class Card_Herbalist(Card.Card):
                 (f"Discard {card} as normal", False),
                 (f"Put {card} onto your deck", True),
             ):
-                player.move_card(card, "topdeck")
+                player.move_card(card, Piles.TOPDECK)
         return {}
 
 

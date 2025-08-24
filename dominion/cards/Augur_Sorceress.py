@@ -3,6 +3,7 @@
 
 
 import unittest
+from typing import Any
 
 from dominion import Game, Card, Piles, Player, NoCardException
 
@@ -27,23 +28,22 @@ class Card_Sorceress(Card.Card):
             card = player.pickup_card()
         except NoCardException:
             return
-        options = [{"selector": "0", "print": "No guess", "card": None}]
-        index = 1
+        choices: list[tuple[str, Any]] = [("No guess", None)]
         for name, card_pile in sorted(game.get_card_piles()):
-            options.append({"selector": f"{index}", "print": f"Guess {name}", "card": name})
-            index += 1
-        o = player.user_input(options, "Guess the top card")
-        if not o["card"]:
+            choices.append((f"Guess {name}", name))
+        guess = player.plr_choose_options("Guess the top card", *choices)
+        if not guess:
             player.output("No suitable cards")
             return
-        player.output(f"Next card = {card}, Guess = {o['card']}")
-        if card.name == o["card"]:
+
+        player.output(f"Next card = {card}, Guess = {guess}")
+        if card.name == guess:
             game.output(f"Guessed {card} correctly")
             for plr in player.attack_victims():
                 try:
                     plr.gain_card("Curse")
                 except NoCardException:
-                    player.output("NO more Curses")
+                    player.output("No more Curses")
                     break
 
 

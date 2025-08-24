@@ -30,7 +30,7 @@ class Card_Miller(Card.Card):
             player.add_card(ch[0], Piles.HAND)
             cards.remove(ch[0])
         for card in cards:
-            player.add_card(card, "discard")
+            player.add_card(card, Piles.DISCARD)
 
 
 ###############################################################################

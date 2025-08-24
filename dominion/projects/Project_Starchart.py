@@ -31,7 +31,7 @@ class Project_StarChart(Project.Project):
 
     def hook_post_shuffle(self, game: Game.Game, player: Player.Player) -> None:
         if card := player.specials.get(STARCHART):
-            player.move_card(card, "topdeck")
+            player.move_card(card, Piles.TOPDECK)
             player.secret_count -= 1
 
 

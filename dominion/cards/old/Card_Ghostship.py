@@ -22,16 +22,12 @@ class Card_Ghostship(Card.Card):
         for vic in player.attack_victims():
             if vic.piles[Piles.HAND].size() >= 4:
                 to_discard = vic.piles[Piles.HAND].size() - 3
-                vic.output(
-                    f"Select {to_discard} cards to put on top of your deck because of {player.name}'s Ghost Ship"
-                )
-                discard = vic.card_sel(
-                    num=to_discard, prompt="Select cards to put on top of deck"
-                )
+                vic.output(f"Select {to_discard} cards to put on top of your deck because of {player}'s Ghost Ship")
+                discard = vic.card_sel(num=to_discard, prompt="Select cards to put on top of deck")
                 for card in discard:
                     vic.output(f"Putting {card.name} back on deck")
                     vic.piles[Piles.HAND].remove(card)
-                    vic.add_card(card, "topdeck")
+                    vic.add_card(card, Piles.TOPDECK)
 
 
 ###############################################################################

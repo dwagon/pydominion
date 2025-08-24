@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -16,26 +16,20 @@ class Card_Kingscourt(Card.Card):
         self.base = Card.CardExpansion.PROSPERITY
 
     def special(self, game, player):
-        """You may chose an Action card in your hand. Play it three times"""
+        """You may choose an Action card in your hand. Play it three times"""
         actions = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not actions:
             player.output("No action cards to repeat")
             return
-        index = 1
-        options = [{"selector": "0", "print": "Don't play a card", "card": None}]
-        for c in actions:
-            sel = "%d" % index
-            pr = "Play %s thrice" % c.name
-            options.append({"selector": sel, "print": pr, "card": c})
-            index += 1
-        o = player.user_input(options, "Play which action card three times?")
-        if not o["card"]:
-            return
-        player.piles[Piles.HAND].remove(o["card"])
-        for i in range(1, 4):
-            player.output("Number %d play of %s" % (i, o["card"].name))
-            player.card_benefits(o["card"])
-        player.add_card(o["card"], "played")
+        choices = [("Don't play a card", None)]
+        for card in actions:
+            choices.append((f"Play {card} thrice", card))
+        if choice := player.plr_choose_options("Play which action card three times?", *choices):
+            player.piles[Piles.HAND].remove(choice)
+            for i in range(1, 4):
+                player.output(f"Number {i} play of {choice}")
+                player.card_benefits(choice)
+            player.add_card(choice, Piles.PLAYED)
 
 
 ###############################################################################

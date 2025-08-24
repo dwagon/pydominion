@@ -28,7 +28,7 @@ class Card_Lich(Card.Card):
 
     def hook_trash_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         """Discard rather than trash"""
-        player.add_card(self, "discard")
+        player.add_card(self, Piles.DISCARD)
         player.piles[Piles.HAND].remove(self)
         in_trash = [_ for _ in game.trash_pile if _.cost < self.cost]
         if in_trash:

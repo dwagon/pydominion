@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card, Game, Piles, Event
 
 
@@ -18,15 +19,13 @@ class Event_ScoutingParty(Event.Event):
         cards = []
         for _ in range(5):
             cards.append(player.next_card())
-        discards = player.card_sel(
-            num=3, cardsrc=cards, force=True, prompt="Select cards to discard"
-        )
+        discards = player.card_sel(num=3, cardsrc=cards, force=True, prompt="Select cards to discard")
         # TODO - Put cards back in specific order
         for card in cards:
             if card not in discards:
-                player.add_card(card, "topdeck")
+                player.add_card(card, Piles.TOPDECK)
             else:
-                player.add_card(card, "discard")
+                player.add_card(card, Piles.DISCARD)
 
 
 ###############################################################################

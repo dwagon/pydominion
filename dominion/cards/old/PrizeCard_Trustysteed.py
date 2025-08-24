@@ -2,7 +2,7 @@
 
 import unittest
 
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Option
 
 
 ###############################################################################
@@ -30,7 +30,7 @@ class Card_TrustySteed(Card.Card):
             for p, o in selectable:
                 if o in chosen:
                     continue
-                options.append({"selector": "%d" % index, "print": p, "opt": o})
+                options.append(Option(selector=str(index), print=p, opt=o))
                 index += 1
             choice = player.user_input(options, "What do you want to do?")
             chosen.append(choice["opt"])

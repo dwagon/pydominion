@@ -2,6 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Secret_Chamber"""
 
 import unittest
+
 from dominion import Card, Game, Piles, Player
 
 
@@ -34,7 +35,11 @@ class Card_SecretChamber(Card.Card):
     ) -> None:  # pylint: disable=unused-argument
         """TODO"""
         player.output(f"Under attack from {attacker.name}")
-        if not self.do_reveal_card(player):
+        if player.plr_choose_options(
+            "Reveal Secret Chamber?",
+            ("Do Nothing", True),
+            ("Reveal for +2 cards then put 2 cards from you hand on top of your deck", False),
+        ):
             return
         player.reveal_card(self)
         player.pickup_cards(2)
@@ -46,21 +51,8 @@ class Card_SecretChamber(Card.Card):
             verbs=("Put", "Unput"),
         )
         for card in cards:
-            player.add_card(card, "topdeck")
+            player.add_card(card, Piles.TOPDECK)
             player.piles[Piles.HAND].remove(card)
-
-    def do_reveal_card(self, player: "Player.Player") -> Card.Card:
-        """TODO"""
-        options = [
-            {"selector": "0", "print": "Do nothing", "reveal": False},
-            {
-                "selector": "1",
-                "print": "Reveal for +2 cards then put 2 cards from you hand on top of your deck",
-                "reveal": True,
-            },
-        ]
-        o = player.user_input(options, "Reveal Secret Chamber?")
-        return o["reveal"]
 
 
 ###############################################################################

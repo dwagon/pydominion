@@ -36,7 +36,7 @@ class Card_CaravanGuard(Card.Card):
     ) -> None:
         player.output(f"Under attack from {attacker}")
         player.pickup_cards(1)
-        player.move_card(player.piles[Piles.HAND]["Caravan Guard"], "played")
+        player.move_card(player.piles[Piles.HAND]["Caravan Guard"], Piles.PLAYED)
 
 
 ###############################################################################

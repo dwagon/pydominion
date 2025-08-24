@@ -33,7 +33,7 @@ class Card_Tracker(Card.Card):
             (f"Put {card} on top of deck", True),
         ):
             player.output(f"Putting {card} on deck due to Tracker")
-            mod[OptionKeys.DESTINATION] = "topdeck"
+            mod[OptionKeys.DESTINATION] = Piles.TOPDECK
         return mod
 
 

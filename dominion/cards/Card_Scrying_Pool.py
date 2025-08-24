@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -55,10 +56,10 @@ def discard_or_put_back(victim: Player.Player, player: Player.Player) -> None:
         (f"Putback {top_card}", True),
     ):
         victim.output(f"Put {top_card} back on {name[1]} deck")
-        victim.add_card(top_card, "topdeck")
+        victim.add_card(top_card, Piles.TOPDECK)
     else:
         victim.output(f"Discarded {top_card}")
-        victim.add_card(top_card, "discard")
+        victim.add_card(top_card, Piles.DISCARD)
 
 
 ###############################################################################

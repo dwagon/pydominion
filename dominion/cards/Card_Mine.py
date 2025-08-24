@@ -19,35 +19,21 @@ class Card_Mine(Card.Card):
         self.name = "Mine"
         self.cost = 5
 
-    def _generate_options(self, player: "Player.Player") -> list[dict[str, Any]]:
-        """Generate the options for player dialog"""
-        options: list[dict[str, Any]] = [{"selector": "0", "print": "Don't trash a card", "card": None}]
-        index = 1
-        for card in player.piles[Piles.HAND]:
-            if card.isTreasure():
-                options.append(
-                    {
-                        "selector": f"{index}",
-                        "print": f"Trash/Upgrade {card.name}",
-                        "card": card,
-                    }
-                )
-                index += 1
-        return options
-
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Trash a treasure card from your hand. Gain a treasure card
         costing up to 3 more, put it in your hand"""
-        options = self._generate_options(player)
+        choices: list[tuple[str, Any]] = [(f"Trash/Upgrade {_}", _) for _ in player.piles[Piles.HAND] if _.isTreasure()]
+        if not choices:
+            return
+        choices.insert(0, ("Don't trash a card", None))
         player.output("Trash a treasure to gain a better one")
-        o = player.user_input(options, "Trash which treasure?")
-        if o["card"]:
-            val = o["card"].cost
+        if card := player.plr_choose_options("Trash which treasure?", *choices):
+            val = card.cost
             if gained_card := player.plr_gain_card(
                 cost=val + 3, modifier="equal", destination=Piles.HAND, types={Card.CardType.TREASURE: True}
             ):
-                player.output(f"Converted to {gained_card.name}")
-                player.trash_card(o["card"])
+                player.output(f"Converted to {gained_card}")
+                player.trash_card(card)
 
 
 ###############################################################################

@@ -25,7 +25,7 @@ class Card_Vassal(Card.Card):
             player.add_card(card, Piles.HAND)
             player.play_card(card, cost_action=False)
         else:
-            player.add_card(card, "discard")
+            player.add_card(card, Piles.DISCARD)
 
 
 ###############################################################################

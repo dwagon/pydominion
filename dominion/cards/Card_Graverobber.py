@@ -45,7 +45,7 @@ class Card_Graverobber(Card.Card):
             if cards := player.card_sel(cardsrc=trash_cards):
                 card = cards[0]
                 game.trash_pile.remove(card)
-                player.add_card(card, "topdeck")
+                player.add_card(card, Piles.TOPDECK)
 
 
 ###############################################################################

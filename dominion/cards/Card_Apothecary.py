@@ -40,7 +40,7 @@ class Card_Apothecary(Card.Card):
                 unput.append(card)
         for card in unput:
             player.output(f"Putting {card} back in deck")
-            player.add_card(card, "deck")
+            player.add_card(card, Piles.DECK)
 
 
 ###############################################################################

@@ -28,7 +28,7 @@ class Card_WineMerchant(Card.Card):
         if player.coins.get() >= 2 and self in player.piles[Piles.RESERVE]:
             player.output("Discarding Wine Merchant")
             player.piles[Piles.RESERVE].remove(self)
-            player.add_card(self, "discard")
+            player.add_card(self, Piles.DISCARD)
 
 
 ###############################################################################

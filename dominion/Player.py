@@ -8,6 +8,7 @@ import json
 import operator
 import sys
 from collections import defaultdict
+from types import NoneType
 from typing import Any, Optional, TYPE_CHECKING, Callable
 
 if TYPE_CHECKING:
@@ -343,7 +344,7 @@ class Player:
             if card.isShadow():
                 self.add_card(card, Piles.DECK)
             else:
-                self.add_card(card, "topdeck")
+                self.add_card(card, Piles.TOPDECK)
 
         for card in self.relevant_cards():
             if hasattr(card, "hook_post_shuffle"):
@@ -409,24 +410,27 @@ class Player:
             self.game.card_piles[card.pile].remove()
         elif card.location == Piles.TRASH:
             self.game.trash_pile.remove(card)
+        elif card.location == Piles.SPECIAL:  # Ignore location
+            pass
         else:
             raise AssertionError(f"Trying to remove_card {card} from unknown location: {card.location}")
 
     ###########################################################################
-    def move_card(self, card: Card, dest: Piles | PlayArea | str) -> Card:
+    def move_card(self, card: Card, dest: Piles | PlayArea) -> Card:
         """Move a card to {dest} card pile"""
         self.remove_card(card)
         return self.add_card(card, dest)
 
     ###########################################################################
-    def add_card(self, card: Card, pile: Piles | PlayArea | str = Piles.DISCARD) -> Card:
+    def add_card(self, card: Card, pile: Piles | PlayArea = Piles.DISCARD) -> Card:
         """Add an existing card to a new location"""
         assert isinstance(card, Card), f"{card=} {type(card)=}"
+        assert isinstance(pile, (Piles, PlayArea)), f"{pile=} {type(pile)=}"
         card.player = self
 
         # There can be custom PlayAreas (such as part of  card)
         if isinstance(pile, PlayArea):
-            card.location = pile.name
+            card.location = Piles.SPECIAL
             pile.add(card)
             return card
 
@@ -437,9 +441,10 @@ class Player:
             return card
 
         if pile in self.piles:
+            assert isinstance(pile, Piles)
             self.piles[pile].add(card)
             card.location = pile
-        elif pile == "topdeck":
+        elif pile == Piles.TOPDECK:
             card.location = Piles.DECK
             self.piles[Piles.DECK].addToTop(card)
         else:
@@ -827,8 +832,9 @@ class Player:
         self.had_cards = []
 
     ###########################################################################
-    def hook_discard_this_card(self, card: Card, source: Optional[PlayArea] = None) -> None:
+    def hook_discard_this_card(self, card: Card, source: Optional[PlayArea | Piles] = None) -> None:
         """A card has been discarded"""
+        assert isinstance(source, (PlayArea, Piles, NoneType)), f"hook_discard_this_card {source=} {type(source)=}"
         self.currcards.append(card)
         card.hook_discard_this_card(game=self.game, player=self, source=source)
         self.currcards.pop()
@@ -1757,7 +1763,7 @@ class Player:
         raise NotImplementedError
 
     ###########################################################################
-    def user_input(self, options: list[Option | dict[str, Any]], prompt: str) -> Any:
+    def user_input(self, options: list[Option], prompt: str) -> Any:
         raise NotImplementedError
 
     ###########################################################################

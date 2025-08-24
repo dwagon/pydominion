@@ -71,18 +71,11 @@ class TextPlayer(Player):
         return "\n".join(out_str)
 
     ###########################################################################
-    def selector_line(self, o: Option | dict[str, Any]) -> str:
+    def selector_line(self, o: Option) -> str:
         output: list[str] = []
-        if isinstance(o, dict):
-            verb = o["print"]
-            del o["print"]
-            newopt = Option(verb=verb, **o)
-            o = newopt
-        elif isinstance(o, Option):
-            pass
-        else:
-            sys.stderr.write("o is %s\n" % type(o))
         output.append(f"{o['selector']})")
+        if o["print"]:
+            output.append(o["print"])
         if o["verb"]:
             output.append(o["verb"])
         if o["name"]:
@@ -105,8 +98,10 @@ class TextPlayer(Player):
         return " ".join(output)
 
     ###########################################################################
-    def user_input(self, options: list[Option | dict[str, Any]], prompt: str) -> Any:
-        """Get input from the user"""
+    def user_input(self, options: list[Option], prompt: str) -> Option:
+        """Get input from the user - pick one of the options and return it"""
+        for opt in options:
+            assert isinstance(opt, Option), f"user_input {opt=} {type(opt)=}"
         for o in options:
             line = self.selector_line(o)
             o["line"] = line

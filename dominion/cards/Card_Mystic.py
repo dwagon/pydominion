@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -10,7 +11,7 @@ class Card_Mystic(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DARKAGES
-        self.desc = """+2 coin, +1 action; Name a card. Reveal the top card of your deck. 
+        self.desc = """+2 coin, +1 action; Name a card. Reveal the top card of your deck.
         If it's the named card, put it into your hand."""
         self.name = "Mystic"
         self.actions = 1
@@ -21,15 +22,11 @@ class Card_Mystic(Card.Card):
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """Name a card. Reveal the top card of your deck. If it's
         the named card, put it into your hand"""
-        options = [{"selector": "0", "print": "No guess", "card": None}]
-        index = 1
-        for name, card_pile in sorted(game.get_card_piles()):
-            options.append(
-                {"selector": f"{index}", "print": f"Guess {name}", "card": name}
-            )
-            index += 1
-        o = player.user_input(options, "Guess the top card")
-        if not o["card"]:
+        choices = [("No guess", None)]
+        for name, _ in sorted(game.get_card_piles()):
+            choices.append((f"Guess {name}", name))
+        choice = player.plr_choose_options("Guess the top card", *choices)
+        if not choice:
             return
         try:
             card = player.next_card()
@@ -37,12 +34,12 @@ class Card_Mystic(Card.Card):
             player.output("No more cards")
             return
         player.reveal_card(card)
-        if o["card"] == card.name:
+        if choice == card.name:
             player.output("You guessed correctly")
             player.add_card(card, Piles.HAND)
         else:
             player.output(f"You chose poorly - it was a {card}")
-            player.add_card(card, "topdeck")
+            player.add_card(card, Piles.TOPDECK)
 
 
 ###############################################################################

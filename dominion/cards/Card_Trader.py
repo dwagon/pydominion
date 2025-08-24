@@ -39,7 +39,7 @@ class Card_Trader(Card.Card):
             (f"Still gain {card}", False),
             ("Instead gain Silver", True),
         ):
-            return {OptionKeys.REPLACE: "Silver", OptionKeys.DESTINATION: "discard"}
+            return {OptionKeys.REPLACE: "Silver", OptionKeys.DESTINATION: Piles.DISCARD}
         return {}
 
 

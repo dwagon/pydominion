@@ -18,9 +18,7 @@ class Card_Bauble(Card.Card):
         self.cost = 2
         self._gain_hook = False
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         if not self._gain_hook:
             return {}
         mod = {}
@@ -31,7 +29,7 @@ class Card_Bauble(Card.Card):
         )
         if deck:
             player.output(f"Putting {card} on deck due to Royal Seal")
-            mod[OptionKeys.DESTINATION] = "topdeck"
+            mod[OptionKeys.DESTINATION] = Piles.TOPDECK
         return mod
 
     def special(self, game: Game.Game, player: Player.Player) -> None:

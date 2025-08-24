@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, NoCardException, Player
 
 
@@ -32,7 +33,7 @@ class Card_Patrol(Card.Card):
                 cards.add(card)
         for card in cards:
             player.output(f"Putting {card} back on deck")
-            player.add_card(card, "topdeck")
+            player.add_card(card, Piles.TOPDECK)
 
 
 ###############################################################################
@@ -46,9 +47,7 @@ class Test_Patrol(unittest.TestCase):
     def test_play(self) -> None:
         self.plr.piles[Piles.HAND].set()
         self.plr.add_card(self.card, Piles.HAND)
-        self.plr.piles[Piles.DECK].set(
-            "Duchy", "Province", "Silver", "Gold", "Copper", "Copper", "Gold"
-        )
+        self.plr.piles[Piles.DECK].set("Duchy", "Province", "Silver", "Gold", "Copper", "Copper", "Gold")
         self.plr.play_card(self.card)
         self.g.print_state()
         self.assertIn("Province", self.plr.piles[Piles.HAND])

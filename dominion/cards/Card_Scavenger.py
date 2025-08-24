@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+
 import dominion.Card as Card
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -26,7 +27,7 @@ class Card_Scavenger(Card.Card):
         )
         if dumpdeck:
             for card in player.piles[Piles.DECK]:
-                player.add_card(card, "discard")
+                player.add_card(card, Piles.DISCARD)
                 player.piles[Piles.DECK].remove(card)
         if player.piles[Piles.DISCARD].size():
             cards = []
@@ -40,7 +41,7 @@ class Card_Scavenger(Card.Card):
                 cardsrc=cards,
                 prompt="Pull card from discard and add to top of your deck",
             )
-            player.add_card(card[0], "topdeck")
+            player.add_card(card[0], Piles.TOPDECK)
             player.piles[Piles.DISCARD].remove(card[0])
 
 

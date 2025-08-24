@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import contextlib
 import unittest
-from typing import Optional, Any
+from typing import Optional
 
 from dominion import Game, Card, Piles, Player, NoCardException
 
@@ -38,39 +38,23 @@ class Card_Lookout(Card.Card):
             cards.remove(discard_card)
         if cards:
             player.output(f"Putting {cards[0]} on top of deck")
-            player.add_card(cards[0], "topdeck")
+            player.add_card(cards[0], Piles.TOPDECK)
 
-    def _trash(
-        self, player: Player.Player, cards: list[Card.Card]
-    ) -> Optional[Card.Card]:
-        index = 1
-        options: list[dict[str, Any]] = []
+    def _trash(self, player: Player.Player, cards: list[Card.Card]) -> Optional[Card.Card]:
+        choices = []
         for card in cards:
-            index += 1
-            options.append(
-                {"selector": f"{index}", "print": f"Trash {card}", "card": card}
-            )
-        o = player.user_input(options, "Select a card to trash")
-        if not o:
-            return None
-        player.trash_card(o["card"])
-        return o["card"]
+            choices.append((f"Trash {card}", card))
+        if card := player.plr_choose_options("Select a card to trash", *choices):
+            player.trash_card(card)
+            return card
+        return None
 
-    def _discard(
-        self, player: Player.Player, cards: list[Card.Card]
-    ) -> Optional[Card.Card]:
-        index = 1
-        options: list[dict[str, Any]] = []
-        for card in cards:
-            index += 1
-            options.append(
-                {"selector": f"{index}", "print": f"Discard {card}", "card": card}
-            )
-        o = player.user_input(options, "Select a card to discard")
-        if not o:
-            return None
-        player.discard_card(o["card"])
-        return o["card"]
+    def _discard(self, player: Player.Player, cards: list[Card.Card]) -> Optional[Card.Card]:
+        choices = [(f"Discard {card}", card) for card in cards]
+        if choice := player.plr_choose_options("Select a card to discard", *choices):
+            player.discard_card(choice)
+            return choice
+        return None
 
 
 ###############################################################################

@@ -25,7 +25,7 @@ class Project_Piazza(Project.Project):
             player.play_card(card)
         else:
             player.output(f"Piazza revealed {card} but it isn't an action - putting back")
-            player.add_card(card, "topdeck")
+            player.add_card(card, Piles.TOPDECK)
 
 
 ###############################################################################

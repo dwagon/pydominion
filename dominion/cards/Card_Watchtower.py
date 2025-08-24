@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Watchtower"""
+"""https://wiki.dominionstrategy.com/index.php/Watchtower"""
 import unittest
 from typing import Any
 
@@ -24,9 +24,7 @@ class Card_Watchtower(Card.Card):
         """Draw until you have 6 cards in hand."""
         player.pick_up_hand(6)
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         """When you gain a card, you may reveal this from your
         hand. If you do, either trash that card, or put it on top
         of your deck"""
@@ -40,7 +38,7 @@ class Card_Watchtower(Card.Card):
         if act == "trash":
             options = {OptionKeys.TRASH: True}
         elif act == "topdeck":
-            options = {OptionKeys.DESTINATION: "topdeck"}
+            options = {OptionKeys.DESTINATION: Piles.TOPDECK}
         return options
 
 
@@ -49,9 +47,7 @@ class TestWatchtower(unittest.TestCase):
     """Test Watchtower"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            numplayers=1, initcards=["Watchtower"], badcards=["Necromancer"]
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Watchtower"], badcards=["Necromancer"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Watchtower")

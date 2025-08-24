@@ -84,7 +84,7 @@ class TestReserve(unittest.TestCase):
 
     def test_addcard_reserve(self) -> None:
         gold = self.g.get_card_from_pile("Gold")
-        self.plr.add_card(gold, "reserve")
+        self.plr.add_card(gold, Piles.RESERVE)
         self.assertEqual(self.plr.piles[Piles.RESERVE].size(), 1)
         self.assertEqual(self.plr.piles[Piles.RESERVE][0].name, "Gold")
 
@@ -104,7 +104,7 @@ class Test_reserveSelection(unittest.TestCase):
 
     def test_callable(self) -> None:
         gold = self.g.get_card_from_pile("Gold")
-        self.plr.add_card(gold, "reserve")
+        self.plr.add_card(gold, Piles.RESERVE)
         output, index = Prompt.reserve_selection(self.plr, 1)
         self.assertEqual(len(output), 1)
         self.assertEqual(output[0]["action"], "reserve")
@@ -115,7 +115,7 @@ class Test_reserveSelection(unittest.TestCase):
     def test_not_callable(self) -> None:
         """Copper is not callable (Due to miser)"""
         copper = self.g.get_card_from_pile("Copper")
-        self.plr.add_card(copper, "reserve")
+        self.plr.add_card(copper, Piles.RESERVE)
         output, index = Prompt.reserve_selection(self.plr, 1)
         self.assertEqual(len(output), 0)
         self.assertEqual(index, 1)
