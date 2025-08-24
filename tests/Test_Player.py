@@ -183,6 +183,7 @@ class TestCardsAffordable(unittest.TestCase):
     def setUp(self) -> None:
         self.game = Game.TestGame(
             numplayers=1,
+            initcards=["Vineyard"],
             badcards=[
                 "Werewolf",
                 "Cursed Village",
@@ -242,6 +243,13 @@ class TestCardsAffordable(unittest.TestCase):
             },
         )
         self.assertIn("Province", [_.name for _ in ans])
+
+    def test_potcost(self) -> None:
+        """Test potion cost"""
+        ans = self.plr.cards_affordable(oper=operator.le, coin=0, num_potions=0, types=None)
+        self.assertNotIn("Vineyard", [_.name for _ in ans])
+        ans = self.plr.cards_affordable(oper=operator.le, coin=0, num_potions=1, types=None)
+        self.assertIn("Vineyard", [_.name for _ in ans])
 
 
 ###############################################################################
