@@ -9,7 +9,7 @@ import operator
 import sys
 from collections import defaultdict
 from types import NoneType
-from typing import Any, Optional, TYPE_CHECKING, Callable
+from typing import Any, Optional, TYPE_CHECKING, Callable, cast
 
 if TYPE_CHECKING:
     from dominion.Game import Game
@@ -631,21 +631,21 @@ class Player:
     ###########################################################################
     def _perform_action(self, opt: Option) -> None:
         if opt["action"] == "buy":
-            self.buy_card(opt["name"])
+            self.buy_card(cast(str, opt["name"]))
         elif opt["action"] == "event":
-            self.perform_event(opt["card"])
+            self.perform_event(cast(Event, opt["card"]))
         elif opt["action"] == "project":
-            self.buy_project(opt["card"])
+            self.buy_project(cast(Project, opt["card"]))
         elif opt["action"] == "reserve":
-            self.call_reserve(opt["card"])
+            self.call_reserve(cast(Card, opt["card"]))
         elif opt["action"] == "coffer":
             self.spend_coffer()
         elif opt["action"] == "villager":
             self.spend_villager()
         elif opt["action"] == "play":
-            self.play_card(opt["card"])
+            self.play_card(cast(Card, opt["card"]))
         elif opt["action"] == "spend":
-            self.play_card(opt["card"])
+            self.play_card(cast(Card, opt["card"]))
         elif opt["action"] == "payback":
             self.payback()
         elif opt["action"] == "spendall":
@@ -653,7 +653,7 @@ class Player:
         elif opt["action"] == "quit":
             return
         elif opt["action"] == "way":
-            self.perform_way(opt["way"], opt["card"])
+            self.perform_way(cast(Way, opt["way"]), cast(Card, opt["card"]))
         elif opt["action"] is None:
             return
         else:  # pragma: no cover
@@ -1434,6 +1434,8 @@ class Player:
                 continue
             if card.debtcost and not card.cost:
                 affordable.add(card)
+                continue
+            if card.potcost and num_potions == 0:
                 continue
             if oper(cost, coin):
                 affordable.add(card)
