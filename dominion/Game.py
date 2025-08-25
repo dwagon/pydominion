@@ -86,8 +86,12 @@ class Game:
 
     ###########################################################################
     def reveal_prophecy(self) -> None:
+        if self.prophecy is not None:
+            return
         self.output(f"Prophecy {self.inactive_prophecy} is now active")
         self.prophecy = self.inactive_prophecy
+        assert self.prophecy is not None
+        self.prophecy.hook_reveal_prophecy(self)
 
     ###########################################################################
     def player_list(self) -> list[Player]:
