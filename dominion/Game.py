@@ -145,11 +145,6 @@ class Game:
         return [(key, value) for key, value in piles if key not in ("Loot", "Shelters")]
 
     ###########################################################################
-    def __contains__(self, key: str) -> bool:
-        """TODO"""
-        return key in self.card_piles
-
-    ###########################################################################
     def getAvailableCards(self, prefix: str = "Card") -> List[str]:
         """TODO"""
         return list(self.card_mapping[prefix].keys())
@@ -161,7 +156,7 @@ class Game:
         for name, pile in self.card_piles.items():
             try:
                 card = pile.get_top_card()
-            except NoCardException:
+            except NoCardException:  # pragma: no coverage
                 continue
             if not card.purchasable:
                 continue
@@ -269,6 +264,7 @@ class Game:
         print(f"Trash: {', '.join([_.name for _ in self.trash_pile])}")
         print(f"Boons: {', '.join([_.name for _ in self.boons])}")
         print(f"Hexes: {', '.join([_.name for _ in self.hexes])}")
+        print(f"Prophecy: {self.inactive_prophecy} Tokens: {self.sun_tokens}")
         if self.ally:
             print(f"Ally: {self.ally.name}")
         print(f"Projects: {', '.join([_.name for _ in self.projects.values()])}")
@@ -347,7 +343,7 @@ class Game:
         return tmp
 
     ###########################################################################
-    def _card_loc_debug(self) -> None:
+    def _card_loc_debug(self) -> None:  # pragma: no coverage
         """Dump info to help debug card location errors"""
         now = self._count_all_cards()
         print(f"{'- -' * 20}", file=sys.stderr)
@@ -372,7 +368,7 @@ class Game:
         print(f"{'- -' * 20}", file=sys.stderr)
 
     ###########################################################################
-    def _validate_cards(self) -> None:
+    def _validate_cards(self) -> None:  # pragma: no coverage
         try:
             assert self.count_cards() == self._original["total_cards"]
         except AssertionError:
