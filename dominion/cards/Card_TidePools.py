@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Tide_Pools"""
+"""http://wiki.dominionstrategy.com/index.php/Tide_Pools"""
 
 import unittest
+
 from dominion import Card, Game, Piles
 
 
@@ -20,8 +21,8 @@ class Card_Tide_Pools(Card.Card):
         self.cost = 4
 
     def duration(self, game, player):
-        """Discard 2 carps"""
-        player.plr_discard_cards(num=2)
+        """Discard 2 cards"""
+        player.plr_discard_cards(num=2, force=True)
 
 
 ###############################################################################
