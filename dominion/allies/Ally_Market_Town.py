@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Market_Towns """
+"""http://wiki.dominionstrategy.com/index.php/Market_Towns"""
 
 import unittest
 from typing import Any
@@ -24,12 +24,10 @@ class Ally_Market_Towns(Ally.Ally):
             acts = [_ for _ in player.piles[Piles.HAND] if _.playable and _.isAction()]
             if not acts:
                 break
-            opts = [("Do Nothing", None)]
+            opts: list[tuple[str, Any]] = [("Do Nothing", None)]
             for act in acts:
-                opts.append((f"Play {act.name}", act))
-            if chc := player.plr_choose_options(
-                "Spend an favor to play an action?", *opts
-            ):
+                opts.append((f"Play {act.name}: {act.description(player)}", act))
+            if chc := player.plr_choose_options("Spend an favor to play an action?", *opts):
                 player.play_card(chc, cost_action=False)
                 acts.remove(chc)
                 player.favors.add(-1)
@@ -52,9 +50,7 @@ class TestMarketTowns(unittest.TestCase):
     """Test Market Towns"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            numplayers=1, allies="Market Towns", initcards=["Underling", "Moat"]
-        )
+        self.g = Game.TestGame(numplayers=1, allies="Market Towns", initcards=["Underling", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
@@ -68,9 +64,7 @@ class TestMarketTowns(unittest.TestCase):
         self.assertIn("Moat", self.plr.piles[Piles.PLAYED])
         self.assertNotIn("Moat", self.plr.piles[Piles.HAND])
         self.assertEqual(self.plr.favors.get(), 2)
-        self.assertEqual(
-            self.plr.piles[Piles.HAND].size(), hand_size + 2 - 1
-        )  # Moat - played
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hand_size + 2 - 1)  # Moat - played
 
 
 ###############################################################################
