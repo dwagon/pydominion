@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-"""https://wiki.dominionstrategy.com/index.php/SicknessØ"""
+"""https://wiki.dominionstrategy.com/index.php/Sickness"""
 
 import unittest
 from typing import Any
 
-from dominion import Card, Game, Prophecy, Player, OptionKeys, Piles, NoCardException
+from dominion import Card, Game, Prophecy, Player, Piles, NoCardException
 
 
 ###############################################################################
@@ -30,7 +30,6 @@ class Prophecy_Sickness(Prophecy.Prophecy):
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None) -> Any:  # pragma: no cover
     """"""
-    print(f"DBG {kwargs=} {args=} {kind=}")
     return "curse"
 
 
