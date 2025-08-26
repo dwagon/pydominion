@@ -5,11 +5,13 @@ special(game, player)
 ---------------------
 Almost every card has this - it is what makes the cards special.
 Called when the card is played during the action phase
+
 * player - current player
 
 night(game, player)
 -------------------
 In night cards only - called when the card is active during the night phase
+
 * player - current player
 
 hook_allowed_to_buy
@@ -70,8 +72,8 @@ another card.
 It returns a dictionary of modifiers.
 
 Currently:
-    destination - if set then put the card in the destination pile
-    trash - if true then trash card instead of gaining card
+destination - if set then put the card in the destination pile
+trash - if true then trash card instead of gaining card
 
 hook_gain_this_card
 -------------
@@ -104,16 +106,18 @@ Called before actions are played
 hook_all_players_pre_play(game, player, owner, card)
 ----------------------------------------------------
 Called before action cards are played.
+
 * player - current player
 * owner - owner of the card with the hook
 * card - action card being played
 
 Returns None or a dictionary with keys:
-    skip_card - if true then the benefits of the card is skipped
+skip_card - if true then the benefits of the card is skipped
 
 hook_all_players_post_play(game, player, owner, card)
 ----------------------------------------------------
 Called after action cards are played by anyone,
+
 * player - current player
 * owner - owner of the card with the hook
 * card - action card played
@@ -174,5 +178,8 @@ hook_start_every_turn(game, player)
 -----------------------------------
 Called at the start of every turn, no matter the state of the card
 
+hook_reveal_prophecy(game)
+-----------------------------------
+Called whenever the prophecy card is revealed
 
 #EOF

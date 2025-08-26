@@ -531,6 +531,10 @@ class Card:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
+    def hook_reveal_prophecy(self, game: "Game.Game") -> None:
+        """Prophecy is revealed for the first time"""
+
+    ##########################################################################
     def debug_dump(self, player: "Player.Player") -> None:
         """Dump any debug info"""
         return

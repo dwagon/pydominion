@@ -194,7 +194,7 @@ class TestWhoWon(unittest.TestCase):
 ###############################################################################
 class TestProphecies(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=2, initcards=["Mountain Shrine"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Mountain Shrine"], badcards=["Kind Emperor"])
         self.g.start_game()
 
     def test_sun_counters(self) -> None:
