@@ -194,7 +194,8 @@ class TestWhoWon(unittest.TestCase):
 ###############################################################################
 class TestProphecies(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=2, initcards=["Mountain Shrine"], badcards=["Kind Emperor"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Mountain Shrine", "Progress"])
+        # Progress picked so we don't get Kind Emperor which asks for user input on reveal
         self.g.start_game()
 
     def test_sun_counters(self) -> None:
