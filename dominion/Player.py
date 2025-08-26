@@ -708,7 +708,9 @@ class Player:
     def hook_pre_buy(self) -> None:
         """Hook that fires off before the buy phase"""
         for card in self.relevant_cards():
+            self.currcards.append(card)
             card.hook_pre_buy(game=self.game, player=self)
+            self.currcards.pop()
 
     ###########################################################################
     def hook_allowed_to_buy(self, card: Card) -> bool:
