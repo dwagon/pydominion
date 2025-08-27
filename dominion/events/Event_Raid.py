@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Event
+
+from dominion import Card, Game, Piles, Event, NoCardException
 
 
 ###############################################################################
@@ -9,7 +10,9 @@ class Event_Raid(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.ADVENTURE
-        self.desc = "Gain a Silver per Silver that you have in play. Each other player puts his -1 Card token on his deck"
+        self.desc = (
+            "Gain a Silver per Silver that you have in play. Each other player puts his -1 Card token on his deck"
+        )
         self.name = "Raid"
         self.cost = 5
 
@@ -18,13 +21,16 @@ class Event_Raid(Event.Event):
         puts his -1 Card token on his deck"""
         for victim in player.attack_victims():
             victim.card_token = True
-            victim.output("-1 Card token active due to Raid event by %s" % player.name)
+            victim.output(f"-1 Card token active due to Raid event by {player}")
         count = 0
         for c in player.piles[Piles.HAND] + player.piles[Piles.PLAYED]:
             if c.name == "Silver":
-                player.gain_card("Silver")
+                try:
+                    player.gain_card("Silver")
+                except NoCardException:
+                    player.output("No more Silvers")
                 count += 1
-        player.output("Gained %d Silvers from Raid" % count)
+        player.output(f"Gained {count} Silvers from Raid")
 
 
 ###############################################################################

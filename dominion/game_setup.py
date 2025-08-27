@@ -114,7 +114,7 @@ def load_ways(game: "Game", specified: list[str], num_required: int) -> dict[str
         num_required=num_required,
     )
     if ways:
-        game.output(f"Playing with {ways}")
+        game.output(f"Playing with {', '.join(ways)}")
     return cast(dict[str, Way], ways)
 
 
@@ -150,7 +150,7 @@ def load_projects(game: "Game", specified: list[str], num_required: int) -> dict
         num_required,
     )
     if projects:
-        game.output(f"Playing with Project {projects}")
+        game.output(f"Playing with Project: {', '.join(projects)}")
     return cast(dict[str, Project], projects)
 
 
@@ -185,8 +185,8 @@ def load_landmarks(game: "Game", specified: list[str], num_required: int) -> dic
         num_required,
     )
     if landmarks:
-        game.output(f"Playing with Landmarks {landmarks}")
-    return landmarks
+        game.output(f"Playing with Landmarks: {', '.join(landmarks)}")
+    return cast(dict[str, Landmark], landmarks)
 
 
 ###########################################################################

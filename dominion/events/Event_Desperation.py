@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Event
+
+from dominion import Card, Game, Piles, Event, NoCardException
 
 
 ###############################################################################
@@ -15,19 +16,20 @@ class Event_Desperation(Event.Event):
         self.required_cards = ["Curse"]
 
     def special(self, game, player):
-        opt = player.plr_choose_options(
+        if opt := player.plr_choose_options(
             "Gain a curse to get +1 Buy and +2 Coin",
             ("Nope", False),
             ("Gain a curse", True),
-        )
-        if opt:
+        ):
             if player.do_once("Desperation"):
-                curse = player.gain_card("Curse")
-                if curse:
-                    player.buys.add(1)
-                    player.coins.add(2)
-                else:
-                    player.output("Didn't get a Curse so no benefits")
+                try:
+                    if player.gain_card("Curse"):
+                        player.buys.add(1)
+                        player.coins.add(2)
+                    else:
+                        player.output("Didn't get a Curse so no benefits")
+                except NoCardException:
+                    player.output("No more Curses")
             else:
                 player.output("You've already done Desperation this turn")
 

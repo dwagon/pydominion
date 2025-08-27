@@ -2,7 +2,7 @@
 
 import unittest
 
-from dominion import Card, Game, Piles, Event
+from dominion import Card, Game, Piles, Event, NoCardException
 
 
 ###############################################################################
@@ -31,8 +31,11 @@ class Event_Annex(Event.Event):
         player.piles[Piles.DISCARD].set()
         for card in keep:
             player.add_card(card, Piles.DISCARD)
-        if player.gain_card("Duchy"):
-            player.output("Gained a Duchy")
+        try:
+            if player.gain_card("Duchy"):
+                player.output("Gained a Duchy")
+        except NoCardException:
+            player.output("No more Duchies")
 
 
 ###############################################################################

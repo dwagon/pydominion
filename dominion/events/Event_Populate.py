@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Event, Player
+
+from dominion import Card, Game, Piles, Event, Player, NoCardException
 
 
 ###############################################################################
@@ -20,7 +21,10 @@ class Event_Populate(Event.Event):
                 continue
             if card.isAction() and card.insupply:
                 player.output(f"Gained {card_name} from Populate")
-                player.gain_card(card_name)
+                try:
+                    player.gain_card(card_name)
+                except NoCardException:
+                    player.output(f"No more {card_name}")
 
 
 ###############################################################################

@@ -51,6 +51,9 @@ class Card_Lookout(Card.Card):
 
     def _discard(self, player: Player.Player, cards: list[Card.Card]) -> Optional[Card.Card]:
         choices = [(f"Discard {card}", card) for card in cards]
+        if not choices:
+            player.output("No suitable cards to discard")
+            return None
         if choice := player.plr_choose_options("Select a card to discard", *choices):
             player.discard_card(choice)
             return choice

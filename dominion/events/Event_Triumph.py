@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Event
+
+from dominion import Card, Game, Piles, Event, NoCardException
 
 
 ###############################################################################
@@ -14,10 +15,12 @@ class Event_Triumph(Event.Event):
         self.debtcost = 5
 
     def special(self, game, player):
-        new = player.gain_card("Estate")
-        if new:
-            vps = len(player.stats["gained"])
-            player.add_score("Triumph", vps)
+        try:
+            if player.gain_card("Estate"):
+                vps = len(player.stats["gained"])
+                player.add_score("Triumph", vps)
+        except NoCardException:
+            player.output("No more Estates")
 
 
 ###############################################################################

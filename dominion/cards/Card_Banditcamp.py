@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+
+from dominion import Game, Card, Piles, NoCardException, Player
 
 
 ###############################################################################
@@ -17,10 +18,13 @@ class Card_Banditcamp(Card.Card):
         self.actions = 2
         self.cards = 1
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         """Gain a spoils"""
         player.output("Gained a Spoils")
-        player.gain_card("Spoils")
+        try:
+            player.gain_card("Spoils")
+        except NoCardException:
+            player.output("No more Spoils")
 
 
 ###############################################################################
@@ -30,7 +34,7 @@ class Test_Banditcamp(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_play(self):
+    def test_play(self) -> None:
         bc = self.g.get_card_from_pile("Bandit Camp")
         self.plr.add_card(bc, Piles.HAND)
         self.plr.play_card(bc)

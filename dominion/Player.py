@@ -1197,7 +1197,7 @@ class Player:
         try:
             new_card = self.gain_card(card.name)
         except NoCardException:
-            self.output(f"Couldn't buy card - no more {card}s available")
+            self.output(f"Couldn't buy card - no more {card.name}s available")
             return
         if self.game.card_piles[new_card.pile].embargo_level:
             self._buy_card_embargo(new_card)

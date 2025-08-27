@@ -3,7 +3,7 @@
 import unittest
 from typing import Any
 
-from dominion import Card, Game, Trait, Piles, Player, OptionKeys
+from dominion import Card, Game, Trait, Piles, Player, OptionKeys, NoCardException
 
 
 ###############################################################################
@@ -21,8 +21,14 @@ class Trait_Cursed(Trait.Trait):
     def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         """When you gain a Cursed card, +1 Buy."""
         if game.card_piles[card.pile].trait == self.name:
-            player.gain_card("Curse")
-            player.gain_card("Loot")
+            try:
+                player.gain_card("Curse")
+            except NoCardException:
+                player.output("No more Curses")
+            try:
+                player.gain_card("Loot")
+            except NoCardException:
+                player.output("No more Loot")
         return {}
 
 
@@ -41,6 +47,20 @@ class Test_Cursed(unittest.TestCase):
         buys = self.plr.buys.get()
         self.plr.gain_card("Moat")
         self.assertIn("Curse", self.plr.piles[Piles.DISCARD])
+
+    def test_no_more_curses(self) -> None:
+        """Check gaining a cursed card where there are no more curses"""
+        self.g.assign_trait("Cursed", "Moat")
+        while True:
+            try:
+                self.g.get_card_from_pile("Curse")
+            except NoCardException:
+                break
+        self.plr.gain_card("Moat")
+        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
+        self.assertNotIn("Curse", self.plr.piles[Piles.DISCARD])
+
+        self.g.print_state()
 
 
 ###############################################################################

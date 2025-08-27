@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Goatherd """
+"""http://wiki.dominionstrategy.com/index.php/Goatherd"""
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
@@ -18,7 +18,7 @@ class Card_Goatherd(Card.Card):
         self.cost = 3
         self.actions = 1
 
-    def special(self, game, player):
+    def special(self, game: Game.Game, player: Player.Player) -> None:
         player.plr_trash_card()
         ptr = game.playerToRight(player)
         ctr = len(ptr.stats["trashed"])
@@ -29,17 +29,17 @@ class Card_Goatherd(Card.Card):
 
 ###############################################################################
 class Test_Goatherd(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Goatherd"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.card = self.g.get_card_from_pile("Goatherd")
 
-    def test_play_this_turn(self):
+    def test_play_this_turn(self) -> None:
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Province", "Estate")
         self.plr.piles[Piles.DECK].set("Duchy")
         self.plr.add_card(self.card, Piles.HAND)
-        self.other.stats["trashed"] = ["Silver"]
+        self.other.stats["trashed"] = [self.g.get_card_from_pile("Silver")]
         self.plr.test_input = ["Trash Province"]
         self.plr.play_card(self.card)
         self.g.print_state()

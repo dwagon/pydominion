@@ -2,7 +2,7 @@
 
 import unittest
 
-from dominion import Card, Game, Piles, Event
+from dominion import Card, Game, Piles, Event, NoCardException
 
 
 ###############################################################################
@@ -18,7 +18,10 @@ class Event_ScoutingParty(Event.Event):
     def special(self, game, player):
         cards = []
         for _ in range(5):
-            cards.append(player.next_card())
+            try:
+                cards.append(player.next_card())
+            except NoCardException:
+                player.output("No more cards")
         discards = player.card_sel(num=3, cardsrc=cards, force=True, prompt="Select cards to discard")
         # TODO - Put cards back in specific order
         for card in cards:

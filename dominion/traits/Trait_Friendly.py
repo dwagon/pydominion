@@ -2,7 +2,7 @@
 """https://wiki.dominionstrategy.com/index.php/Friendly"""
 import unittest
 
-from dominion import Card, Game, Trait, Piles, Player
+from dominion import Card, Game, Trait, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -22,7 +22,10 @@ class Trait_Friendly(Trait.Trait):
                 if player.plr_choose_options(
                     f"Friendly Trait lets you to gain another {card}.", ("Do nothing", False), (f"Gain a {card}", True)
                 ):
-                    player.gain_card(card.name)
+                    try:
+                        player.gain_card(card.name)
+                    except NoCardException:
+                        player.output(f"No more {card.name}")
                 break
 
 

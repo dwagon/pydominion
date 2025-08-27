@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Deliver"""
+"""http://wiki.dominionstrategy.com/index.php/Deliver"""
 
 import unittest
 from typing import Any
@@ -27,7 +27,7 @@ class Event_Deliver(Event.Event):
 
     def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         if DELIVER not in player.specials:
-            player.specials[DELIVER] = PlayArea.PlayArea([])
+            player.specials[DELIVER] = PlayArea.PlayArea(initial=[])
         player.specials[DELIVER].add(card)
         player.secret_count += 1
         return {OptionKeys.DONTADD: True}
@@ -36,7 +36,7 @@ class Event_Deliver(Event.Event):
         for card in player.specials[DELIVER]:
             player.add_card(card, Piles.HAND)
             player.secret_count -= 1
-        player.specials[DELIVER] = PlayArea.PlayArea([])
+        player.specials[DELIVER] = PlayArea.PlayArea(initial=[])
 
 
 ###############################################################################
