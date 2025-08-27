@@ -5,7 +5,7 @@ import sys
 from types import ModuleType
 from typing import Any, TYPE_CHECKING, Optional, cast
 
-import colorama
+from rich.console import Console
 
 from dominion import Piles
 from dominion.Player import Player
@@ -22,9 +22,9 @@ class BotPlayer(Player):
     """The Bot"""
 
     def __init__(self, game: "Game", name: str = "", quiet: bool = False, **kwargs: Any):
-        colorama.init()
-        self.colour = f"{colorama.Back.BLACK}{colorama.Fore.RED}"
+        self.colour = "red on black"
         self.quiet = quiet
+        self.console = Console()
         Player.__init__(self, game, name, **kwargs)
 
     ###########################################################################
@@ -32,15 +32,14 @@ class BotPlayer(Player):
         self.messages.append(msg)
         if self.quiet:
             return
+        prompt = f"[{self.colour}]{self.name}[/]: "
         current_card_stack = ""
-
         try:
             for card in self.currcards:
                 current_card_stack += f"{card.name}> "
         except IndexError:
             pass
-        sys.stdout.write(f"{self.colour}{self.name}{colorama.Style.RESET_ALL}: ")
-        sys.stdout.write(f"{current_card_stack}{msg}{end}")
+        self.console.print(f"{prompt}{current_card_stack}{msg}", end=end)
 
     ###########################################################################
     @classmethod

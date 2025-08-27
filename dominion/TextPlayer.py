@@ -1,7 +1,7 @@
 import sys
 from typing import Any, TYPE_CHECKING
 
-import colorama
+from rich.console import Console
 
 from dominion import Piles
 from dominion.Card import Card, CardType
@@ -16,12 +16,12 @@ if sys.version[0] == "3":
     raw_input = input
 
 colours = [
-    colorama.Fore.RED,
-    colorama.Fore.GREEN,
-    colorama.Fore.YELLOW,
-    colorama.Fore.BLUE,
-    colorama.Fore.MAGENTA,
-    colorama.Fore.CYAN,
+    "red",
+    "green",
+    "yellow",
+    "blue",
+    "magenta",
+    "cyan",
 ]
 
 
@@ -30,24 +30,25 @@ colours = [
 ###############################################################################
 class TextPlayer(Player):
     def __init__(self, game: "Game", name="", quiet=False, **kwargs: Any) -> None:
-        colorama.init()
         self.colour = colours[kwargs["number"]]
         self.quiet = quiet
+        self.console = Console()
         del kwargs["number"]
         Player.__init__(self, game, name, **kwargs)
 
     ###########################################################################
     def output(self, msg: str, end: str = "\n") -> None:
-        if not self.quiet:
-            sys.stdout.write(f"{self.colour}{self.name}{colorama.Style.RESET_ALL}: ")
-            try:
-                current_card_stack = ""
-                for card in self.currcards:
-                    current_card_stack += f"{card.name}> "
-            except IndexError:
-                pass
-            sys.stdout.write(f"{current_card_stack}{msg}{end}")
         self.messages.append(msg)
+        if self.quiet:
+            return
+        prompt = f"[{self.colour}]{self.name}[/]: "
+        current_card_stack = ""
+        try:
+            for card in self.currcards:
+                current_card_stack += f"{card.name}> "
+        except IndexError:
+            pass
+        self.console.print(f"{prompt}{current_card_stack}{msg}", end=end)
 
     ###########################################################################
     @classmethod

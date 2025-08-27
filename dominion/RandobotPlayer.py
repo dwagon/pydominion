@@ -4,27 +4,9 @@ import random
 import sys
 from typing import Any
 
-import colorama
-
 from dominion import Piles, Card, Prompt
 from dominion.Option import Option
 from dominion.Player import Player
-
-colours = [
-    colorama.Fore.RED,
-    colorama.Fore.GREEN,
-    colorama.Fore.YELLOW,
-    colorama.Fore.BLUE,
-    colorama.Fore.MAGENTA,
-    colorama.Fore.CYAN,
-    colorama.Fore.WHITE,
-    colorama.Fore.LIGHTBLUE_EX,
-    colorama.Fore.LIGHTCYAN_EX,
-    colorama.Fore.LIGHTGREEN_EX,
-    colorama.Fore.LIGHTMAGENTA_EX,
-    colorama.Fore.LIGHTRED_EX,
-    colorama.Fore.LIGHTYELLOW_EX,
-]
 
 
 ###############################################################################
@@ -34,15 +16,13 @@ class RandobotPlayer(Player):
     """The Bot"""
 
     def __init__(self, game, name="", quiet=False, **kwargs):
-        colorama.init()
-        self.colour = f"{colorama.Back.BLACK}{random.choice(colours)}"
         self.quiet = quiet
         Player.__init__(self, game, name, **kwargs)
 
     ###########################################################################
     def output(self, msg, end="\n") -> None:
         if not self.quiet:
-            sys.stdout.write(f"{self.colour}{self.name}{colorama.Style.RESET_ALL}: ")
+            sys.stdout.write(f"{self.name}: ")
             sys.stdout.write(f"{msg}{end}")
         self.messages.append(msg)
 
