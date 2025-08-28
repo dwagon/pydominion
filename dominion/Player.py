@@ -826,7 +826,7 @@ class Player:
         for trait in self.game.traits.values():
             trait.hook_end_turn(game=self.game, player=self)
         self.newhandsize = 5
-        self.played_events = PlayArea("played_events")
+        self.played_events = PlayArea("played_events", initial=[])
         self.messages = []
         self.forbidden_to_buy = []
         self.once = {}
@@ -1197,7 +1197,7 @@ class Player:
         try:
             new_card = self.gain_card(card.name)
         except NoCardException:
-            self.output(f"Couldn't buy card - no more {card}s available")
+            self.output(f"Couldn't buy card - no more {card.name}s available")
             return
         if self.game.card_piles[new_card.pile].embargo_level:
             self._buy_card_embargo(new_card)
@@ -1264,11 +1264,7 @@ class Player:
         options: dict[OptionKeys, Any] = {}
         for card in self.relevant_cards():
             self.currcards.append(card)
-            try:
-                options |= card.hook_gain_card(game=self.game, player=self, card=gained_card)
-            except TypeError:
-                print(f"HCG: failed on {card}")
-                raise
+            options |= card.hook_gain_card(game=self.game, player=self, card=gained_card)
             self.currcards.pop()
         return options
 
@@ -1374,6 +1370,7 @@ class Player:
             return False
         if self.debt:
             self.output("Must pay off debt first")
+            return False
         if self.coins < event.cost:
             self.output(f"Need {event.cost} coins to perform this event")
             return False

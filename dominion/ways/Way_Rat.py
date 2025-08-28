@@ -3,7 +3,7 @@
 
 import unittest
 
-from dominion import Card, Game, Way, Piles
+from dominion import Card, Game, Way, Piles, NoCardException
 
 
 ###############################################################################
@@ -21,7 +21,10 @@ class Way_Rat(Way.Way):
             return
         if t_to_disc := player.card_sel(prompt="Select Treasure to discard", cardsrc=treas):
             player.discard_card(t_to_disc[0])
-            player.gain_card(card.name)
+            try:
+                player.gain_card(card.name)
+            except NoCardException:
+                player.output(f"No more {card.name}")
 
 
 ###############################################################################

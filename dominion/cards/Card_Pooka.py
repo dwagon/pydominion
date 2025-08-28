@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -18,8 +18,7 @@ class Card_Pooka(Card.Card):
 
     def special(self, game, player):
         treasures = [_ for _ in player.piles[Piles.HAND] if _.isTreasure() and _.name != "Cursed Gold"]
-        tr = player.plr_trash_card(prompt="Trash a treasure from your hand for +4 Cards", cardsrc=treasures)
-        if tr:
+        if player.plr_trash_card(prompt="Trash a treasure from your hand for +4 Cards", cardsrc=treasures):
             player.pickup_cards(4)
 
 

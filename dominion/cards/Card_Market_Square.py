@@ -3,7 +3,7 @@
 import unittest
 from typing import Any
 
-from dominion import Game, Card, Piles, Player, OptionKeys
+from dominion import Game, Card, Piles, Player, OptionKeys, NoCardException
 
 
 ###############################################################################
@@ -20,9 +20,7 @@ class Card_MarketSquare(Card.Card):
         self.buys = 1
         self.cost = 3
 
-    def hook_trash_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_trash_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         """This should only activate if Market Square is in the hand"""
         if self.location != Piles.HAND:
             return {}
@@ -32,7 +30,10 @@ class Card_MarketSquare(Card.Card):
             ("Discard and gain a Gold", True),
         ):
             player.discard_card(self)
-            player.gain_card("Gold")
+            try:
+                player.gain_card("Gold")
+            except NoCardException:
+                player.output("No more Gold")
         return {}
 
 

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Event
+
+from dominion import Card, Game, Piles, Event, NoCardException
 
 
 ###############################################################################
@@ -15,11 +16,13 @@ class Event_Ritual(Event.Event):
         self.required_cards = ["Curse"]
 
     def special(self, game, player):
-        card = player.gain_card("Curse")
-        if card:
-            tc = player.plr_trash_card(prompt="Trash a card, +1 VP per coin it costs")
-            if tc:
-                player.add_score("Ritual", tc[0].cost)
+        try:
+            if card := player.gain_card("Curse"):
+                tc = player.plr_trash_card(prompt="Trash a card, +1 VP per coin it costs")
+                if tc:
+                    player.add_score("Ritual", tc[0].cost)
+        except NoCardException:
+            player.output("No more Curses")
 
 
 ###############################################################################

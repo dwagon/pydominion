@@ -346,7 +346,7 @@ class Game:
     def _card_loc_debug(self) -> None:  # pragma: no coverage
         """Dump info to help debug card location errors"""
         now = self._count_all_cards()
-        print(f"{'- -' * 20}", file=sys.stderr)
+        print(f"\n{'- -' * 15} Card Loc Debug: {'- -' * 15}", file=sys.stderr)
         print(
             f"current={self.count_cards()} original={self._original['total_cards']}\n",
             file=sys.stderr,

@@ -2,7 +2,7 @@
 
 import unittest
 
-from dominion import Card, Game, Piles, Event
+from dominion import Card, Game, Piles, Event, NoCardException
 
 
 ###############################################################################
@@ -22,7 +22,7 @@ class Event_Pilgrimage(Event.Event):
         if not player.flip_journey_token():
             player.output("Flipped Journey token to face down")
             return
-        cardnames = {c.name for c in player.piles[Piles.PLAYED] if c.purchasable}
+        cardnames = {_.name for _ in player.piles[Piles.PLAYED] if _.purchasable}
         selected = []
         while True:
             choices = [
@@ -39,8 +39,11 @@ class Event_Pilgrimage(Event.Event):
             if len(selected) == 3:
                 break
         for card in selected:
-            player.gain_card(card)
-            player.output(f"Gained {card}")
+            try:
+                player.gain_card(card)
+                player.output(f"Gained {card}")
+            except NoCardException:
+                player.output(f"No more {card}")
 
 
 ###############################################################################
