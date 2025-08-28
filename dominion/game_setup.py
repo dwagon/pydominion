@@ -113,8 +113,8 @@ def load_ways(game: "Game", specified: list[str], num_required: int) -> dict[str
         specified=way_cards,
         num_required=num_required,
     )
-    if ways:
-        game.output(f"Playing with {', '.join(ways)}")
+    for way in ways:
+        game.output(f"Playing with {way}")
     return cast(dict[str, Way], ways)
 
 
@@ -127,8 +127,8 @@ def load_events(game: "Game", specified: list[str], num_required: int) -> dict[s
         specified=specified,
         num_required=num_required,
     )
-    if events:
-        game.output(f"Playing with Events: {', '.join(events)}")
+    for event in events:
+        game.output(f"Playing with Events: {event}")
     return cast(dict[str, Event], events)
 
 
@@ -150,7 +150,8 @@ def load_projects(game: "Game", specified: list[str], num_required: int) -> dict
         num_required,
     )
     if projects:
-        game.output(f"Playing with Project: {', '.join(projects)}")
+        for project in projects:
+            game.output(f"Playing with Project: {project}")
     return cast(dict[str, Project], projects)
 
 
@@ -185,7 +186,8 @@ def load_landmarks(game: "Game", specified: list[str], num_required: int) -> dic
         num_required,
     )
     if landmarks:
-        game.output(f"Playing with Landmarks: {', '.join(landmarks)}")
+        for landmark in landmarks:
+            game.output(f"Playing with Landmark: {landmark}")
     return cast(dict[str, Landmark], landmarks)
 
 
@@ -215,6 +217,7 @@ def load_traits(game: "Game", specified: list[str], num_required: int) -> None:
             card_piles.append(pile)
         card_pile = random.choice(card_piles)
         game.assign_trait(trait, card_pile)
+        game.output(f"Playing with Trait: {trait}")
 
 
 ###########################################################################
@@ -300,16 +303,16 @@ def check_card_requirement(game: "Game", card: Card) -> None:
             card_type, card_name = "BaseCard", x
         if card_name not in game.card_piles:
             use_card_pile(game, None, card_name, force=True, card_type=card_type)
-            game.output(f"Playing with {card_name} as required by {card}")
+            game.output(f"Using {card_name} as required by {card}")
 
     if card.heirloom is not None and card.heirloom not in game.heirlooms:
         use_card_pile(game, None, card.heirloom, force=True, card_type="Heirloom")
         game.heirlooms.append(card.heirloom)
-        game.output(f"Playing with {card.heirloom} as required by {card}")
+        game.output(f"Using {card.heirloom} as required by {card}")
 
     if card.isLooter() and "Ruins" not in game.card_piles:
         use_ruins(game)
-        game.output(f"Playing with Ruins as required by {card}")
+        game.output(f"Using Ruins as required by {card}")
     if card.isFate() and not game.boons:
         load_boons(game)
     if card.isDoom() and not game.hexes:
@@ -324,7 +327,7 @@ def check_card_requirement(game: "Game", card: Card) -> None:
     if card.needs_prizes and not FLAGS[Flag.LOADED_PRIZES]:
         add_prizes(game)
         FLAGS[Flag.LOADED_PRIZES] = True
-        game.output(f"Playing with Prizes as required by {card}")
+        game.output(f"Using Prizes as required by {card}")
     if card.needsartifacts and not game.artifacts:
         game.artifacts = load_artifacts(game)
         game.output(f"Using artifacts as required by {card}")
