@@ -21,8 +21,7 @@ class Trait_Hasty(Trait.Trait):
     def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         """When you gain a Hasty card, set it aside, and play it at the start of your next turn."""
         if game.card_piles[card.pile].trait == self.name:
-            player.defer_card(card)
-            return {OptionKeys.DONTADD: True}
+            return {OptionKeys.DESTINATION: Piles.DEFER}
         return {}
 
 
