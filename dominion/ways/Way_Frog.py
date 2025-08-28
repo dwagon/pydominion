@@ -3,7 +3,7 @@
 
 import unittest
 
-from dominion import Card, Game, Way, Piles
+from dominion import Card, Game, Way, Piles, Player
 
 
 ###############################################################################
@@ -15,7 +15,7 @@ class Way_Frog(Way.Way):
         self.actions = 1
         self.name = "Way of the Frog"
 
-    def hook_way_discard_this_card(self, game, player, card):
+    def hook_way_discard_this_card(self, game: Game.Game, player: Player.Player, card: Card.Card):
         player.add_card(card, Piles.TOPDECK)
         player.piles[Piles.PLAYED].remove(card)
 
