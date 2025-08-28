@@ -118,7 +118,7 @@ class RandobotPlayer(Player):
         if not cards:
             return []
         card = random.choice(cards)
-        print(f"card_sel chose: {card=}")
+        print(f"Random: card_sel chose: {card=}")
         return [card]
 
     ###########################################################################
@@ -130,14 +130,14 @@ class RandobotPlayer(Player):
             return None
         print(f"card_pile_sel {cards=}")
         card = random.choice(cards)
-        print(f"card_pile_sel {card=}")
+        print(f"Random: card_pile_sel {card=}")
         return [card]
 
     ###########################################################################
     def plr_choose_options(self, prompt, *choices):
         print(f"plr_choose_options {self.currcards} {prompt=} {choices=}")
         choice = random.choice(choices)
-        print(f"plr_choose_options {self.currcards} {choice=}")
+        print(f"Random: plr_choose_options {self.currcards} {choice=}")
         return choice[1]
 
     ###########################################################################
