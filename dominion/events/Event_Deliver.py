@@ -28,14 +28,19 @@ class Event_Deliver(Event.Event):
     def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         if DELIVER not in player.specials:
             player.specials[DELIVER] = PlayArea.PlayArea(initial=[])
+        if card.location == Piles.SPECIAL:  # Already added
+            return {}
         player.specials[DELIVER].add(card)
+        card.location = Piles.SPECIAL
         player.secret_count += 1
         return {OptionKeys.DONTADD: True}
 
     def hook_end_turn(self, game: Game.Game, player: Player.Player) -> None:
-        for card in player.specials[DELIVER]:
-            player.add_card(card, Piles.HAND)
-            player.secret_count -= 1
+        if DELIVER in player.specials:
+            for card in player.specials[DELIVER]:
+                player.output(f"Deliver putting {card} back into hand")
+                player.add_card(card, Piles.HAND)
+                player.secret_count -= 1
         player.specials[DELIVER] = PlayArea.PlayArea(initial=[])
 
 
@@ -62,6 +67,19 @@ class TestDeliver(unittest.TestCase):
         self.plr.gain_card("Moat")
         self.assertEqual(self.plr.buys.get(), buys)  # -1 for performing event
         self.assertNotIn("Moat", self.plr.piles[Piles.HAND])
+        self.plr.end_turn()
+        self.assertIn("Moat", self.plr.piles[Piles.HAND])
+
+    def test_twice(self) -> None:
+        """Perform Deliver twice"""
+        self.plr.coins.add(4)
+        buys = self.plr.buys.get()
+        self.plr.perform_event(self.event)
+        self.plr.perform_event(self.event)
+        self.plr.gain_card("Moat")
+        self.assertEqual(self.plr.buys.get(), buys)
+        self.assertNotIn("Moat", self.plr.piles[Piles.HAND])
+        self.assertEqual(len(self.plr.specials[DELIVER]), 1, "Only gets added to specials once")
         self.plr.end_turn()
         self.assertIn("Moat", self.plr.piles[Piles.HAND])
 
