@@ -18,7 +18,7 @@ class Event_SaltEarth(Event.Event):
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
         player.add_score("Salt the Earth", 1)
         options: list[tuple[str, Any]] = [("Select nothing", None)]
-        options.extend((f"Select {stack}", stack) for stack in game.get_victory_piles())
+        options.extend((f"Select {stack}", stack) for stack in game.get_victory_piles() if len(game.card_piles[stack]))
         if pile := player.plr_choose_options("Trash a Victory card from the Supply", *options):
             card = game.get_card_from_pile(pile)
             card.location = None  # To prevent another card being trashed
