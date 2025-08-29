@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Game, Card, Piles, Player, OptionKeys
 
@@ -12,19 +12,14 @@ class Card_Fortress(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DARKAGES
-        self.desc = (
-            """+1 Card; +2 Actions. When you trash this, put it into your hand."""
-        )
+        self.desc = """+1 Card; +2 Actions. When you trash this, put it into your hand."""
         self.name = "Fortress"
         self.cards = 1
         self.actions = 2
         self.cost = 4
 
-    def hook_trash_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, Any]:
+    def hook_trash_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         player.output("Putting Fortress back in hand")
-        print(f"DBG {self.location=}")
         if not self.location:
             player.add_card(self, Piles.HAND)
         else:

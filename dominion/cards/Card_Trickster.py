@@ -37,7 +37,6 @@ class Card_Trickster(Card.Card):
             return {}
         if card.location != Piles.DISCARD:
             return {}
-        print(f"# DBG {card=} {card.location}")
         if not self.set_aside:
             options = [(f"Set {card} aside", True), ("Discard as normal", False)]
             if player.plr_choose_options("Set treasure aside to put in hand at end of turn?", *options):

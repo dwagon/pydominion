@@ -2,6 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Gang_of_Pickpockets"""
 
 import unittest
+
 from dominion import Card, Game, Piles, Ally, Player
 
 
@@ -30,7 +31,6 @@ class Ally_Gang_Pickpockets(Ally.Ally):
 
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    print(f"DBG {kind=} {args=} {kwargs=}")
     if kind == "choices":
         return False
     num_to_discard = len(player.piles[Piles.HAND]) - 4
