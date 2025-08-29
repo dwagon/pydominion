@@ -27,17 +27,19 @@ def make_run(
 ) -> set[str]:
     """Run the game"""
     cmd: list[str] = ["./dominion/rungame.py", "--oldcards"]
-
+    output_filename = "/tmp/randobot"
     cards: set[str] = set()
     if cardset:
         cardset_name = cardset.replace("cardset/", "")
         cardset_args = ["--cardset", cardset]
+        output_filename += f"_{cardset_name}"
     else:
         cardset_name = f"{run}"
         cardset_args = []
         if use_cards:
             for card in use_cards:
                 cardset_args.extend(["--card", card])
+                output_filename += f"_{card}"
         if random.randint(1, 10) == 1:  # Use events
             cmd.extend(["--num_events", str(random.randint(1, 2))])
         if random.randint(1, 10) == 1:  # Use landmarks
@@ -74,7 +76,7 @@ def make_run(
     else:
         if result.returncode == 0:
             return set()
-    output_file = f"/tmp/randobot_{cardset_name}.{os.getpid()}"
+    output_file = f"{output_filename}.{os.getpid()}"
     with open(output_file, "w") as outfh:
         for line in stdout.splitlines():
             outfh.write(f"{line}\n")

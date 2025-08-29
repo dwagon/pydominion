@@ -309,9 +309,9 @@ class Player:
             self.game.trash_pile.add(card)
             card.player = None
             card.location = Piles.TRASH
-        for crd in self.relevant_cards():
-            if crd.name not in kwargs.get("exclude_hook", []):
-                trash_opts |= crd.hook_trash_card(game=self.game, player=self, card=card)
+        for hook_card in self.relevant_cards():
+            if hook_card.name not in kwargs.get("exclude_hook", []):
+                trash_opts |= hook_card.hook_trash_card(game=self.game, player=self, card=card)
 
     ###########################################################################
     def next_card(self) -> Card:
@@ -418,6 +418,7 @@ class Player:
     ###########################################################################
     def move_card(self, card: Card, dest: Piles | PlayArea) -> Card:
         """Move a card to {dest} card pile"""
+        assert isinstance(card, Card), f"move_card({card=}) {type(card)}"
         self.remove_card(card)
         return self.add_card(card, dest)
 

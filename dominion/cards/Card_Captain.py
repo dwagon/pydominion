@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+from typing import Any
+
 from dominion import Game, Card, Piles, Player, OptionKeys
 
 
@@ -21,36 +23,32 @@ class Card_Captain(Card.Card):
         self.cost = 6
 
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
-        self.special_sauce(game, player)
+        special_sauce(game, player)
 
-    def duration(
-        self, game: "Game.Game", player: "Player.Player"
-    ) -> dict[OptionKeys, str]:
-        self.special_sauce(game, player)
+    def duration(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, str]:
+        special_sauce(game, player)
         return {}
 
-    def special_sauce(self, game: "Game.Game", player: "Player.Player") -> None:
-        options: list[tuple[str, Card.Card | None]] = [("None", None)]
-        for name in game.get_action_piles(4):
-            card = game.card_instances[name]
-            if card.isDuration():
-                continue
-            if card.isCommand():
-                continue
-            options.append((f"Play {name}", card))
 
-        if action := player.plr_choose_options(
-            "What action card do you want to imitate?", *options
-        ):
-            player.card_benefits(action)
+def special_sauce(game: "Game.Game", player: "Player.Player") -> None:
+    options: list[tuple[str, Any]] = [("None", None)]
+    for name in game.get_action_piles(4):
+        card = game.card_instances[name]
+        if card.isDuration():
+            continue
+        if card.isCommand():
+            continue
+        options.append((f"Play {name}", card))
+
+    if action := player.plr_choose_options("What action card do you want to imitate?", *options):
+        player.output(f"Playing {action} through Captain")
+        player.card_benefits(action)
 
 
 ###############################################################################
 class TestCaptain(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            numplayers=1, initcards=["Captain", "Workshop", "Bureaucrat"]
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Captain", "Workshop", "Bureaucrat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Captain")

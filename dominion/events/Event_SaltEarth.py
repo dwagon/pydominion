@@ -1,6 +1,8 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Salt_the_Earth"""
+"""https://wiki.dominionstrategy.com/index.php/Salt_the_Earth"""
 import unittest
+from typing import Any
+
 from dominion import Card, Game, Player, Event
 
 
@@ -15,16 +17,12 @@ class Event_SaltEarth(Event.Event):
 
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
         player.add_score("Salt the Earth", 1)
-        stacks = game.get_victory_piles()
-        options: list[tuple[str, str | None]] = [("Select nothing", None)]
-        options.extend((f"Select {stack}", stack) for stack in game.get_victory_piles())
-        pile = player.plr_choose_options(
-            "Trash a Victory card from the Supply", *options
-        )
-        if not pile:
-            return
-        card = game.get_card_from_pile(pile)
-        player.trash_card(card)
+        options: list[tuple[str, Any]] = [("Select nothing", None)]
+        options.extend((f"Select {stack}", stack) for stack in game.get_victory_piles() if len(game.card_piles[stack]))
+        if pile := player.plr_choose_options("Trash a Victory card from the Supply", *options):
+            card = game.get_card_from_pile(pile)
+            card.location = None  # To prevent another card being trashed
+            player.trash_card(card)
 
 
 ###############################################################################
@@ -38,10 +36,12 @@ class Test_SaltEarth(unittest.TestCase):
     def test_event(self) -> None:
         """Use Salt the Earth"""
         self.plr.coins.add(4)
+        num_provices = len(self.g.card_piles["Province"])
         self.plr.test_input = ["Province"]
         self.plr.perform_event(self.event)
         self.assertEqual(self.plr.get_score_details()["Salt the Earth"], 1)
         self.assertIn("Province", self.g.trash_pile)
+        self.assertEqual(len(self.g.card_piles["Province"]), num_provices - 1)
 
 
 ###############################################################################

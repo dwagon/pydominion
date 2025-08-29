@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Transport"""
+"""https://wiki.dominionstrategy.com/index.php/Transport"""
 import unittest
+
 from dominion import Card, Game, Piles, Event, Player
 
 
@@ -9,7 +10,7 @@ class Event_Transport(Event.Event):
     def __init__(self) -> None:
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.MENAGERIE
-        self.desc = """Choose one: Exile an Action card from the Supply; 
+        self.desc = """Choose one: Exile an Action card from the Supply;
         or put an Action card you have in Exile onto your deck."""
         self.name = "Transport"
         self.cost = 3
@@ -20,27 +21,26 @@ class Event_Transport(Event.Event):
             ("Put an Action card you have in Exile onto you deck", False),
         ]
         if player.plr_choose_options("What to do with Transport?", *options):
-            self.exile_action(game, player)
+            exile_action(game, player)
         else:
-            self.exile_to_deck(player)
+            exile_to_deck(player)
 
-    def exile_action(self, game: "Game.Game", player: "Player.Player") -> None:
-        """Exile an Action card from the Supply"""
-        action_piles = game.get_action_piles()
-        if piles := player.card_pile_sel(
-            num=1, prompt="Exile an Action card from Supply", crdsrc=action_piles
-        ):
-            player.exile_card_from_supply(piles[0])
 
-    def exile_to_deck(self, player: "Player.Player") -> None:
-        """put an Action card you have in Exile onto your deck"""
+def exile_action(game: "Game.Game", player: "Player.Player") -> None:
+    """Exile an Action card from the Supply"""
+    action_piles = game.get_action_piles()
+    if piles := player.card_pile_sel(num=1, prompt="Exile an Action card from Supply", cardsrc=action_piles):
+        player.exile_card_from_supply(piles[0])
 
-        if action := player.card_sel(
-            prompt="Put an exiled action onto your deck",
-            cardsrc=Piles.EXILE,
-            types={Card.CardType.ACTION: True},
-        ):
-            player.move_card(action[0], Piles.DECK)
+
+def exile_to_deck(player: "Player.Player") -> None:
+    """put an Action card you have in Exile onto your deck"""
+    if action := player.card_sel(
+        prompt="Put an exiled action onto your deck",
+        cardsrc=Piles.EXILE,
+        types={Card.CardType.ACTION: True},
+    ):
+        player.move_card(action[0], Piles.DECK)
 
 
 ###############################################################################

@@ -46,7 +46,7 @@ class Card_Herald(Card.Card):
             if card := player.card_sel(
                 num=1,
                 force=True,
-                cardsrc="discard",
+                cardsrc=Piles.DISCARD,
                 prompt="Look through your discard pile and put a card from it on top of your deck",
             ):
                 player.add_card(card[0], Piles.TOPDECK)

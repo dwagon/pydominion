@@ -23,10 +23,7 @@ class Event_Credit(Event.Event):
 ###############################################################################
 class TestCredit(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            numplayers=1,
-            events=["Credit"],
-        )
+        self.g = Game.TestGame(numplayers=1, events=["Credit"], badcards=["Gold Mine"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.events["Credit"]
