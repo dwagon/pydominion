@@ -32,12 +32,8 @@ class RandobotPlayer(Player):
         text description of the source, a list of cards, or by default
         the players hand"""
         if "cardsrc" in kwargs:
-            if kwargs["cardsrc"] == "hand":
-                select_from = self.piles[Piles.HAND]
-            elif kwargs["cardsrc"] == "played":
-                select_from = self.piles[Piles.PLAYED]
-            elif kwargs["cardsrc"] == "discard":
-                select_from = self.piles[Piles.DISCARD]
+            if isinstance(kwargs["cardsrc"], Piles):
+                select_from = self.piles[kwargs["cardsrc"]]
             else:
                 select_from = kwargs["cardsrc"]
         else:
@@ -125,13 +121,18 @@ class RandobotPlayer(Player):
     def card_pile_sel(self, num: int = 1, **kwargs: Any) -> list[str] | None:
         """Select a card pile at random"""
         print(f"card_pile_sel {kwargs=}")
-        cards = list(self.game.card_piles.keys())
-        if not cards:
+
+        if kwargs.get("cardsrc"):
+            piles = [(key, value) for key, value in self.game.get_card_piles() if key in kwargs["cardsrc"]]
+        else:
+            piles = self.game.get_card_piles()
+
+        if not piles:
             return None
-        print(f"card_pile_sel {cards=}")
-        card = random.choice(cards)
-        print(f"Random: card_pile_sel {card=}")
-        return [card]
+        print(f"card_pile_sel {piles=}")
+        pile = random.choice(piles)
+        print(f"Random: card_pile_sel {pile=}")
+        return [pile[0]]
 
     ###########################################################################
     def plr_choose_options(self, prompt, *choices):

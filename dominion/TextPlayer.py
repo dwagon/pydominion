@@ -159,20 +159,25 @@ class TextPlayer(Player):
         if "prompt" in kwargs:
             self.output(kwargs["prompt"])
 
-        if "anynum" in kwargs and kwargs["anynum"]:
-            anynum = True
+        if kwargs.get("anynum", False):
+            any_num = True
             num = 0
         else:
-            anynum = False
+            any_num = False
+
+        if kwargs.get("cardsrc"):
+            piles = [(key, value) for key, value in self.game.get_card_piles() if key in kwargs["cardsrc"]]
+        else:
+            piles = self.game.get_card_piles()
 
         selected: list[Any] = []
         while True:
             options: list[Option] = []
-            if anynum or (force and num == len(selected)) or (not force and num >= len(selected)):
+            if any_num or (force and num == len(selected)) or (not force and num >= len(selected)):
                 o = Option(selector="0", verb="Finish Selecting", card=None)
                 options.append(o)
             index = 1
-            for name, card_pile in self.game.get_card_piles():
+            for name, card_pile in piles:
                 card = self.game.card_instances[name]
                 if "exclude" in kwargs and card.name in kwargs["exclude"]:
                     continue
