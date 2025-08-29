@@ -51,7 +51,7 @@ class Test_Innovation(unittest.TestCase):
         self.plr.start_turn()
         self.plr.gain_card("Moat")
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
-        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Moat", self.plr.piles[Piles.PLAYED])
 
     def test_dontplay(self) -> None:
         """Don't play a card through innovation"""
@@ -61,7 +61,7 @@ class Test_Innovation(unittest.TestCase):
         self.plr.gain_card("Moat")
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertNotIn("Moat", self.plr.piles[Piles.HAND])
-        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Moat"])
+        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################
