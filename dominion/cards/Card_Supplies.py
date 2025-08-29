@@ -4,7 +4,7 @@
 import unittest
 
 import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, NoCardException, Player
 
 
 ###############################################################################
@@ -19,20 +19,23 @@ class Card_Supplies(Card.Card):
         self.cost = 2
         self.required_cards = [("Card", "Horse")]
 
-    def special(self, game, player):
-        player.gain_card("Horse", Piles.TOPDECK)
+    def special(self, game: Game.Game, player: Player.Player):
+        try:
+            player.gain_card("Horse", Piles.TOPDECK)
+        except NoCardException:
+            player.output("No more Horses")
 
 
 ###############################################################################
 class Test_Supplies(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Supplies"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Supplies")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_playcard(self):
+    def test_playcard(self) -> None:
         """Play a supplies"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)
