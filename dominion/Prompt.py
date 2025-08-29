@@ -142,7 +142,7 @@ def event_selection(player: "Player", index: int) -> tuple[list[Option], int]:
     options = []
     for op in player.game.events.values():
         index += 1
-        if op.cost <= player.coins.get() and player.buys:
+        if op.cost <= player.coins.get() and player.buys and not player.debt:
             sel = chr(ord("a") + index)
             action = "event"
         else:

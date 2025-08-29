@@ -14,7 +14,7 @@ class Trait_Cursed(Trait.Trait):
         Trait.Trait.__init__(self)
         self.cardtype = Card.CardType.TRAITS
         self.base = Card.CardExpansion.PLUNDER
-        self.desc = " When you gain a Cursed card, gain a Loot and a Curse."
+        self.desc = "When you gain a Cursed card, gain a Loot and a Curse."
         self.name = "Cursed"
         self.required_cards = ["Loot", "Curse"]
 

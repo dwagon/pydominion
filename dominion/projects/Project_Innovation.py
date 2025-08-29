@@ -25,12 +25,13 @@ class Project_Innovation(Project.Project):
             player.output("Already used Innovation this turn")
             return {}
         if player.plr_choose_options(
-            f"Play {card.name} through Innovation?",
+            f"Play {card} through Innovation?",
             ("Play card", True),
             ("Don't play", False),
         ):
             player.add_card(card, Piles.HAND)
             player.play_card(card, cost_action=False)
+            return {OptionKeys.DONTADD: True}
         return {}
 
 
