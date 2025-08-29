@@ -2,6 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Pilgrim"""
 
 import unittest
+
 from dominion import Game, Card, Piles
 
 
@@ -20,7 +21,7 @@ class Card_Pilgrim(Card.Card):
 
     def special(self, game, player):
         """Put a card from your hand onto your deck."""
-        if card := player.card_sel(prompt="Put a card from your hand onto your deck.", cardsrc="hand"):
+        if card := player.card_sel(prompt="Put a card from your hand onto your deck.", cardsrc=Piles.HAND):
             player.move_card(card[0], Piles.DECK)
 
 
