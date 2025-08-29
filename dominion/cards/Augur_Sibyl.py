@@ -22,7 +22,7 @@ class Card_Sibyl(Card.Card):
     def special(self, game, player):
         tcard = player.card_sel(
             prompt="Put a card from your hand on top of your deck",
-            cardsrc=player.piles[Piles.HAND],
+            cardsrc=Piles.HAND,
         )
         player.move_card(tcard[0], Piles.TOPDECK)
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -11,7 +11,9 @@ class Card_MountainVillage(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.RENAISSANCE
-        self.desc = "+2 Actions; Look through your discard pile and put a card from it into your hand; if you can't, +1 Card."
+        self.desc = (
+            "+2 Actions; Look through your discard pile and put a card from it into your hand; if you can't, +1 Card."
+        )
         self.name = "Mountain Village"
         self.cost = 4
         self.actions = 2
@@ -19,7 +21,7 @@ class Card_MountainVillage(Card.Card):
     def special(self, game, player):
         if player.piles[Piles.DISCARD].size():
             card = player.card_sel(
-                cardsrc="discard",
+                cardsrc=Piles.DISCARD,
                 force=True,
                 prompt="Look through your discard pile and put a card from it into your hand",
             )
