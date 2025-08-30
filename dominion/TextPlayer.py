@@ -135,14 +135,8 @@ class TextPlayer(Player):
         text description of the source, a list of cards, or by default
         the players hand"""
         if "cardsrc" in kwargs:
-            if kwargs["cardsrc"] == "hand":
-                select_from = self.piles[Piles.HAND]
-            elif kwargs["cardsrc"] == "played":
-                select_from = self.piles[Piles.PLAYED]
-            elif kwargs["cardsrc"] == "discard":
-                select_from = self.piles[Piles.DISCARD]
-            elif kwargs["cardsrc"] == "exile":
-                select_from = self.piles[Piles.EXILE]
+            if isinstance(kwargs["cardsrc"], Piles):
+                select_from = self.piles[kwargs["cardsrc"]]
             else:
                 select_from = kwargs["cardsrc"]
         else:
