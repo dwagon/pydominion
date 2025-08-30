@@ -2,7 +2,7 @@
 """https://wiki.dominionstrategy.com/index.php/Foresight"""
 import unittest
 
-from dominion import Card, Game, Piles, Event, Player
+from dominion import Card, Game, Piles, Event, Player, NoCardException
 
 FORESIGHT = "foresight"
 
@@ -23,9 +23,11 @@ class Event_Foresight(Event.Event):
         player.specials[FORESIGHT] = []
         count = len(player.all_cards())
         while count:
-            card = player.next_card()
-            if not card:  # pragma: no coverage
+            try:  # pragma: no coverage
+                card = player.next_card()
+            except NoCardException:
                 break
+
             if card.isAction():
                 player.output(f"Setting aside {card}")
                 player.specials[FORESIGHT].append(card)
