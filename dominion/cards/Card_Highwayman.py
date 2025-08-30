@@ -2,7 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Highwayman"""
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Game, Card, Piles, Player, OptionKeys
 
@@ -38,6 +38,8 @@ Until then, the first Treasure each other player plays each turn does nothing.""
     ) -> dict[OptionKeys, Any]:
         """Until then the first Treasure each other player plays each turn does nothing."""
         if not card.isTreasure():
+            return {}
+        if player == owner:
             return {}
         treas_played = any(True for _ in player.piles[Piles.PLAYED] if _.isTreasure())
         if treas_played:
