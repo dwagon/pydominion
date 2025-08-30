@@ -20,7 +20,7 @@ class Event_Annex(Event.Event):
         if player.piles[Piles.DISCARD].size() <= 5:
             player.output("Not enough cards to choose")
             return
-        cards = player.card_sel(num=5, cardsrc="discard", prompt="Select 5 cards to leave in discard pile")
+        cards = player.card_sel(num=5, cardsrc=Piles.DISCARD, prompt="Select 5 cards to leave in discard pile")
         keep = []
         for card in player.piles[Piles.DISCARD]:
             if card in cards:
