@@ -19,8 +19,9 @@ class Trait_Shy(Trait.Trait):
             return
         assert self.card_pile is not None
         shy_card = player.piles[Piles.HAND][self.card_pile]
+        desc = game.card_instances[self.card_pile].description(player)
         if player.plr_choose_options(
-            f"Discard a {self.card_pile} to pickup two cards",
+            f"Discard a {self.card_pile} ({desc}) to pickup two cards",
             (f"Discard {self.card_pile}", True),
             ("Keep Card", False),
         ):
