@@ -2,7 +2,7 @@
 
 from typing import Any, Optional
 
-from dominion import Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -10,10 +10,15 @@ class Trait(Card.Card):
     """Class representing traits - mostly just card code"""
 
     def __init__(self, cardname: Optional[str] = None, klass=None) -> None:
-        self.card_pile: Optional[Card.Card] = None  # Which card pile this trait is associated with
+        self.card_pile: Optional[str] = None  # Which card pile this trait is associated with
         Card.Card.__init__(self)
         if cardname:
             self.name = cardname
+
+    ###########################################################################
+    def isTraitCard(self, game: "Game.Game", card: Card.Card) -> bool:
+        """Return if this card is the trait"""
+        return game.card_piles[card.pile].trait == self.name
 
     ###########################################################################
     def __repr__(self) -> str:

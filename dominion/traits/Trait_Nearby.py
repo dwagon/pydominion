@@ -19,7 +19,7 @@ class Trait_Nearby(Trait.Trait):
 
     def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         """When you gain a Nearby card, +1 Buy."""
-        if game.card_piles[card.pile].trait == self.name:
+        if self.isTraitCard(game, card):
             player.buys.add(1)
         return {}
 
