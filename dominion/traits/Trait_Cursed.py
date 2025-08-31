@@ -23,11 +23,11 @@ class Trait_Cursed(Trait.Trait):
         if self.isTraitCard(game, card):
             try:
                 player.gain_card("Curse")
-            except NoCardException:
+            except NoCardException:  # pragma: no coverage
                 player.output("No more Curses")
             try:
                 player.gain_card("Loot")
-            except NoCardException:
+            except NoCardException:  # pragma: no coverage
                 player.output("No more Loot")
         return {}
 

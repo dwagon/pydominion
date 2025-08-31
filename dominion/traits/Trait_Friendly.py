@@ -24,8 +24,8 @@ class Trait_Friendly(Trait.Trait):
                 ):
                     try:
                         player.gain_card(card.name)
-                    except NoCardException:
-                        player.output(f"No more {card.name}")
+                    except NoCardException:  # pragma: no coverage
+                        player.output(f"No more {card}")
                 break
 
 
