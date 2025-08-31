@@ -702,7 +702,7 @@ def parse_args(game: "Game", **args: Any) -> None:
     PATHS[Keys.EVENT] = args.get("event_path", "dominion/events")
     PATHS[Keys.HEXES] = args.get("hex_path", "dominion/hexes")
     PATHS[Keys.LANDMARK] = args.get("landmark_path", "dominion/landmarks")
-    PATHS[Keys.LOOT] = args.get("loot_oath", "dominion/loot")
+    PATHS[Keys.LOOT] = args.get("loot_path", "dominion/loot")
     PATHS[Keys.PROJECTS] = args.get("project_path", "dominion/projects")
     PATHS[Keys.PROPHECIES] = args.get("prophecies_path", "dominion/prophecies")
     PATHS[Keys.STATES] = args.get("state_path", "dominion/states")
