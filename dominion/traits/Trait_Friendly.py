@@ -18,14 +18,14 @@ class Trait_Friendly(Trait.Trait):
 
     def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> None:
         for card in player.piles[Piles.HAND]:
-            if self.name == game.card_piles[card.pile].trait:
+            if self.isTraitCard(game, card):
                 if player.plr_choose_options(
                     f"Friendly Trait lets you to gain another {card}.", ("Do nothing", False), (f"Gain a {card}", True)
                 ):
                     try:
                         player.gain_card(card.name)
-                    except NoCardException:
-                        player.output(f"No more {card.name}")
+                    except NoCardException:  # pragma: no coverage
+                        player.output(f"No more {card}")
                 break
 
 

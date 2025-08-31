@@ -20,14 +20,14 @@ class Trait_Cursed(Trait.Trait):
 
     def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         """When you gain a Cursed card, +1 Buy."""
-        if game.card_piles[card.pile].trait == self.name:
+        if self.isTraitCard(game, card):
             try:
                 player.gain_card("Curse")
-            except NoCardException:
+            except NoCardException:  # pragma: no coverage
                 player.output("No more Curses")
             try:
                 player.gain_card("Loot")
-            except NoCardException:
+            except NoCardException:  # pragma: no coverage
                 player.output("No more Loot")
         return {}
 

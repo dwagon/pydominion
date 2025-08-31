@@ -15,7 +15,7 @@ class Trait_Cheap(Trait.Trait):
         self.name = "Cheap"
 
     def hook_card_cost(self, game: Game.Game, player: Player.Player, card: Card.Card) -> int:
-        if card.pile in game.card_piles and game.card_piles[card.pile].trait == self.name:
+        if self.isTraitCard(game, card):
             return -1
         return 0
 

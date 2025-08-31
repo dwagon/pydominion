@@ -23,7 +23,7 @@ class Trait_Tireless(Trait.Trait):
     def hook_discard_any_card(
         self, game: "Game.Game", player: "Player.Player", card: "Card.Card"
     ) -> dict[OptionKeys, Any]:
-        if game.card_piles[card.pile].trait == self.name:
+        if self.isTraitCard(game, card):
             player.move_card(card, self.set_aside)
             player.secret_count += 1
             player.output(f"Setting Tireless {card} aside")

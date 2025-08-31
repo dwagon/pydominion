@@ -19,7 +19,7 @@ class Trait_Rich(Trait.Trait):
 
     def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         """When you gain a Rich card, gain a Silver"""
-        if game.card_piles[card.pile].trait == self.name:
+        if self.isTraitCard(game, card):
             player.gain_card("Silver")
         return {}
 
