@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Jewelled_Egg"""
+"""https://wiki.dominionstrategy.com/index.php/Jewelled_Egg"""
 import unittest
 from typing import Any
 
@@ -8,7 +8,7 @@ from dominion import Game, Card, Piles, Player, OptionKeys
 
 ###############################################################################
 class Card_JewelledEgg(Card.Card):
-    """Secluded Shrine"""
+    """Jewelled Egg"""
 
     def __init__(self) -> None:
         Card.Card.__init__(self)
@@ -21,16 +21,14 @@ class Card_JewelledEgg(Card.Card):
         self.coin = 1
         self.buys = 1
 
-    def hook_trash_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, Any]:
+    def hook_trash_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         player.gain_card("Loot")
         return {}
 
 
 ###############################################################################
 class TestJewelledEgg(unittest.TestCase):
-    """Test Secluded Shrine"""
+    """Test Jewelled Egg"""
 
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Jewelled Egg"])
