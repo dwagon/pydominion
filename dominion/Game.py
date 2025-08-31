@@ -396,6 +396,8 @@ class Game:
 class TestGame(Game):
     """Game for testing purposes"""
 
+    __test__ = False
+
     def __init__(self, **kwargs: Any) -> None:
         if "allies" not in kwargs:
             kwargs["allies"] = []
