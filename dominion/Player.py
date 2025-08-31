@@ -1254,9 +1254,20 @@ class Player:
         """
         assert isinstance(gained_card, Card)
         options: dict[OptionKeys, Any] = {}
+        options |= self._hook_any_gain_card(gained_card)
         options |= self._hook_gain_card(gained_card)
         options |= self._hook_gain_this_card(gained_card)
         options |= self._hook_all_players_gain_card(gained_card)
+        return options
+
+    ###########################################################################
+    def _hook_any_gain_card(self, gained_card: Card) -> dict[OptionKeys, Any]:
+        """Trigger any game wide rather than in-play hard"""
+        options: dict[OptionKeys, Any] = {}
+        for card in self.game.card_instances.values():
+            self.currcards.append(card)
+            options |= card.hook_any_gain_card(self.game, self, gained_card)
+            self.currcards.pop()
         return options
 
     ###########################################################################

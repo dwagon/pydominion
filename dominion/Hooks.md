@@ -53,9 +53,18 @@ Return the delta. So 0 for no change.
 
 hook_all_players_gain_card(game, player, owner, card)
 ---------------
-If any player gains a card call this for any card in everyone's hand.
+If any player gains a card call this for every card in everyone's hand.
+
 Player is the player who picked up the card
-Owner is the player whos card has the hook
+
+Owner is the player whose card has the hook
+
+hook_any_gain_card(game, player, card)
+----------------
+Call this for every card in the game whether in play or not
+
+Player is the player who picked up the card
+
 
 hook_pre_buy
 -----------
