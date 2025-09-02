@@ -354,16 +354,18 @@ def display_tokens(player: "Player") -> str:
 ###########################################################################
 def display_overview(player: "Player") -> None:
     """Display turn summary overview to player"""
-    player.output("")
+    player.output("\n")
     player.output("-" * 50)
     player.output(f"| Phase: {player.phase.name.title()}")
     for landmark in player.game.landmarks.values():
         player.output(f"| Landmark {landmark.name}: {landmark.description(player)}")
     player.output(f"| Tokens: {display_tokens(player)}")
     if player.game.inactive_prophecy and not player.game.prophecy:
-        player.output(f"| Inactive Prophecy: {player.game.inactive_prophecy} ({player.game.sun_tokens} Sun Tokens)")
+        player.output(
+            f"| Inactive Prophecy: {player.game.inactive_prophecy.name} ({player.game.sun_tokens} Sun Tokens)"
+        )
     if player.game.prophecy:
-        player.output(f"| Prophecy: {player.game.prophecy}: {player.game.prophecy.description(player)}")
+        player.output(f"| Prophecy: {player.game.prophecy.name}: {player.game.prophecy.description(player)}")
     if player.states:
         player.output(f"| States: {', '.join([_.name for _ in player.states])}")
     if player.piles[Piles.DEFER]:
@@ -396,6 +398,7 @@ def display_overview(player: "Player") -> None:
         player.output(
             f"| Deck ({len(player.piles[Piles.DECK])}): {', '.join([str(_) for _ in player.piles[Piles.DECK]])}"
         )
+        player.output(f"| Cards Elsewhere: {player.secret_count}")
     else:
         player.output(f"| Deck Size: {len(player.piles[Piles.DECK])}")
     if player.game.ally:
