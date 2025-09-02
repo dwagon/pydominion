@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-"""  http://wiki.dominionstrategy.com/index.php/Plateau_Shepherds"""
+"""http://wiki.dominionstrategy.com/index.php/Plateau_Shepherds"""
 
 import unittest
+
 from dominion import Card, Game, Piles, Ally
 
 
@@ -16,7 +17,7 @@ class Ally_Plateau_Shepherds(Ally.Ally):
     def special_score(self, game, player):
         twos = [_.name for _ in player.all_cards() if _.cost == 2]
         score = min(len(twos), player.favors.get()) * 2
-        player.output(f"Gaining {score} from cards {', '.join(twos)})")
+        player.output(f"Gaining {score} from cards ({', '.join(twos)})")
         return score
 
 
