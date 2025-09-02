@@ -65,7 +65,6 @@ Call this for every card in the game whether in play or not
 
 Player is the player who picked up the card
 
-
 hook_pre_buy
 -----------
 Fires off before the buy phase
@@ -190,5 +189,9 @@ Called at the start of every turn, no matter the state of the card
 hook_reveal_prophecy(game)
 -----------------------------------
 Called whenever the prophecy card is revealed
+
+debug_dump(player)
+------------------
+Dump anything interesting for debugging purposes
 
 #EOF
