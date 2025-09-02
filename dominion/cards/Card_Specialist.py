@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Specialist"""
+"""https://wiki.dominionstrategy.com/index.php/Specialist"""
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -16,14 +17,12 @@ class Card_Specialist(Card.Card):
         self.cost = 5
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
-        from_cards = [
-            _ for _ in player.piles[Piles.HAND] if _.isAction() or _.isTreasure()
-        ]
+        from_cards = [_ for _ in player.piles[Piles.HAND] if _.isAction() or _.isTreasure()]
         if cards := player.card_sel(cardsrc=from_cards, prompt="Play which card?"):
             chosen = cards[0]
             player.play_card(chosen, discard=False, cost_action=False)
             if player.plr_choose_options(
-                f"What to do with {chosen.name}?",
+                f"What to do with {chosen}?",
                 ("Play it again?", True),
                 ("Gain a copy of it?", False),
             ):
@@ -31,8 +30,8 @@ class Card_Specialist(Card.Card):
             else:
                 try:
                     player.gain_card(chosen.name)
-                except NoCardException:
-                    player.output(f"No more {chosen.name}")
+                except NoCardException:  # pragma: no coverage
+                    player.output(f"No more {chosen}")
 
 
 ###############################################################################
