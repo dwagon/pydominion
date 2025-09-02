@@ -22,7 +22,7 @@ class Card_Replace(Card.Card):
         tr = player.plr_trash_card()
         if not tr:
             return
-        cost = tr[0].cost
+        cost = tr[0].cost + 2
         gain = player.plr_gain_card(cost, prompt=f"Gain a card costing up to {cost}")
         if not gain:
             return
@@ -33,7 +33,7 @@ class Card_Replace(Card.Card):
                 try:
                     victim.gain_card("Curse")
                     victim.output(f"Gained a Curse due to {player}'s Replace")
-                except NoCardException:
+                except NoCardException:  # pragma: no coverage
                     player.output("No more Curses")
 
 
