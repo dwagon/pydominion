@@ -63,7 +63,7 @@ class Game:
         game_setup.parse_args(self, **kwargs)
 
         self.card_mapping = game_setup.get_available_card_classes(self)
-        self._original: dict[str, int | dict[str, dict[str, int]]] = {}
+        self._original: dict[str, Any] = {}
         self.card_instances: dict[str, Card] = {}
 
     ###########################################################################
@@ -88,7 +88,7 @@ class Game:
     def reveal_prophecy(self) -> None:
         if self.prophecy is not None:
             return
-        self.output(f"Prophecy {self.inactive_prophecy} is now active")
+        self.output(f"Prophecy {self.inactive_prophecy.name} is now active")
         self.prophecy = self.inactive_prophecy
         assert self.prophecy is not None
         self.prophecy.hook_reveal_prophecy(self)
@@ -346,7 +346,7 @@ class Game:
     def _card_loc_debug(self) -> None:  # pragma: no coverage
         """Dump info to help debug card location errors"""
         now = self._count_all_cards()
-        print(f"\n{'- -' * 15} Card Loc Debug: {'- -' * 15}", file=sys.stderr)
+        print(f"\n{'- -' * 10} Card Loc Debug {'- -' * 10}", file=sys.stderr)
         print(
             f"current={self.count_cards()} original={self._original['total_cards']}\n",
             file=sys.stderr,
@@ -365,6 +365,8 @@ class Game:
         print(f"{'- -' * 20}", file=sys.stderr)
         for plr in self.players.values():
             plr.debug_all_cards()
+            if self.inactive_prophecy:
+                self.inactive_prophecy.debug_dump(plr)
         print(f"{'- -' * 20}", file=sys.stderr)
 
     ###########################################################################
