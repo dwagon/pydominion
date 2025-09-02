@@ -2,7 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Siren"""
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Game, Card, Piles, Player, Phase, NoCardException, OptionKeys
 
@@ -25,10 +25,10 @@ class Card_Siren(Card.Card):
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return """Each other player gains a Curse. 
+            return """Each other player gains a Curse.
             At the start of your next turn, draw until you have 8 cards in hand.
             When you gain this, trash it unless you trash an Action from your hand."""
-        return """Each other player gains a Curse. 
+        return """Each other player gains a Curse.
         At the start of your next turn, draw until you have 8 cards in hand."""
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
@@ -36,7 +36,7 @@ class Card_Siren(Card.Card):
         for victim in player.attack_victims():
             try:
                 victim.gain_card("Curse")
-            except NoCardException:
+            except NoCardException:  # pragma: no coverage
                 player.output("No more Curses")
 
     def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
@@ -48,9 +48,7 @@ class Card_Siren(Card.Card):
                 break
         return {}
 
-    def hook_gain_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         """When you gain this, trash it unless you trash an Action from your hand."""
         if actions := [_ for _ in player.piles[Piles.HAND] if _.isAction()]:
             if player.plr_trash_card(
