@@ -169,26 +169,26 @@ class Player:
         }
 
     ###########################################################################
-    def replace_traveller(self, src: Card, dst: str) -> None:
+    def replace_traveller(self, src: Card, replace_with: str) -> None:
         """For traveller cards replace the src card with a copy of the
         dst card"""
         assert isinstance(src, Card)
-        assert isinstance(dst, str)
+        assert isinstance(replace_with, str)
 
         if src not in self.piles[Piles.PLAYED]:
             self.output(f"Not activating {src} traveller as not played")
             return
 
-        if self.game.card_piles[dst].is_empty():
-            self.output(f"No more {dst} cards")
+        if self.game.card_piles[replace_with].is_empty():
+            self.output(f"No more {replace_with} cards")
             return
 
         if self.plr_choose_options(
             "Replace Traveller",
             (f"Keep {src}", False),
-            (f"Replace with a {dst}?", True),
+            (f"Replace with a {replace_with}?", True),
         ):
-            self.replace_card(src, dst, destination=Piles.HAND)
+            self.replace_card(src, replace_with, destination=Piles.HAND)
 
     ###########################################################################
     def replace_card(self, src: Card, dst: str, **kwargs: Any) -> None:
@@ -201,6 +201,8 @@ class Player:
         if self.gain_card(card_name=dst, destination=destination, callhook=False):
             card_pile = self.game.card_piles[src.name]
             card_pile.add(src)
+            src.player = None
+            src.location = Piles.CARDPILE
             self.piles[Piles.PLAYED].remove(src)
 
     ###########################################################################
@@ -483,7 +485,11 @@ class Player:
                 other_card.hook_discard_any_card(game=self.game, player=self, card=card)
                 self.currcards.pop()
         for way, card in self.played_ways:
+            self.currcards.append(way)
             way.hook_way_discard_this_card(game=self.game, player=self, card=card)
+            self.currcards.pop()
+
+        # Now do the discarding
         while self.piles[Piles.HAND]:
             card = self.piles[Piles.HAND].next_card()
             self.discard_card(card, Piles.HAND, hook=False)
@@ -958,10 +964,6 @@ class Player:
             OptionKeys.SKIP_CARD: False,
             OptionKeys.DISCARD: discard,
         }
-        # if card not in self.piles[Piles.HAND] and options["discard"]:
-        #    raise AssertionError(
-        #        f"Playing {card} which is not in hand ({card.location})"
-        #    )
         if not self._play_limit():
             self.output(f"Can't play {card} due to limits in number of plays")
             return
