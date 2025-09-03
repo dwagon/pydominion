@@ -2,13 +2,13 @@
 
 import random
 import sys
-from typing import Any, Optional, Iterator, TYPE_CHECKING, Self
+from typing import Any, Optional, Iterator, TYPE_CHECKING
 
 from dominion import NoCardException
 from dominion.Card import Card
 
 if TYPE_CHECKING:
-    from dominion.Game import Game
+    from dominion import Game
 
 
 ###############################################################################
@@ -18,18 +18,18 @@ class PlayArea:
     def __init__(
         self,
         name: str = "",
-        game: Optional["Game"] = None,
+        game: Optional["Game.Game"] = None,
         initial: Optional[list[Card]] = None,
     ) -> None:
         self.name: str = name
-        self.game: Optional[Game] = game
+        self.game: Optional[Game.Game] = game
         if initial is None:
             initial = []
         self._cards: list[Card] = initial
 
     ###########################################################################
     def __repr__(self) -> str:
-        return f"<PlayArea {self.name}: {', '.join([_.name for _ in self._cards])}>"
+        return f"<PlayArea {self.name}: {', '.join([str(_) for _ in self._cards])}>"
 
     ###########################################################################
     def __contains__(self, obj: Any) -> bool:
@@ -85,7 +85,7 @@ class PlayArea:
         except ValueError:
             sys.stderr.write(
                 f"Trying to remove a card ({card}) that doesn't exist."
-                f" Contents of {self.name} are: {', '.join([_.name for _ in self._cards])}\n"
+                f" Contents of {self.name} are: {', '.join([str(_) for _ in self._cards])}\n"
             )
             raise
 
@@ -136,7 +136,7 @@ class PlayArea:
         return self._cards == a.cards if hasattr(a, "cards") else self._cards == a
 
     ###########################################################################
-    def __add__(self, a: Any) -> Self:
+    def __add__(self, a: Any) -> "PlayArea":
         x = self._cards[:]
         if a is None:
             pass
