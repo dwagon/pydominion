@@ -33,9 +33,7 @@ class Card_Hermit(Card.Card):
         exchange this for a Madman."""
         if player.stats["gained"]:
             return
-        player.piles[Piles.PLAYED].remove(self)
-        game.card_piles["Hermit"].add(self)
-        player.gain_card("Madman")
+        player.replace_card(self, "Madman")
 
 
 ###############################################################################
