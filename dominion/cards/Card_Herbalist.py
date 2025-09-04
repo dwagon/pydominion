@@ -28,7 +28,7 @@ class Card_Herbalist(Card.Card):
             return {}
         if player.do_once(self.uuid):
             if player.plr_choose_options(
-                "Herbalist lets you put treasures on top of deck",
+                "Herbalist lets you put a treasure on top of deck",
                 (f"Discard {card} as normal", False),
                 (f"Put {card} onto your deck", True),
             ):

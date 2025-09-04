@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 
@@ -17,7 +18,7 @@ class Card_Modify(Card.Card):
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         tc = player.plr_trash_card(force=True)
-        if tc is None:  # pragma: no coverage
+        if not tc:  # pragma: no coverage
             return
         cost = tc[0].cost + 2
         choice = player.plr_choose_options(

@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card
-from dominion import PlayArea, Player
 from dominion import Game, Piles
+from dominion import PlayArea, Player
+
+ISLAND = "island"
 
 
 ###############################################################################
@@ -20,28 +23,29 @@ class Card_Island(Card.Card):
         self.victory = 2
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
-        if not hasattr(player, "_island_reserve"):
-            player._island_reserve = PlayArea.PlayArea(initial=[])
+        if ISLAND not in player.specials:
+            player.specials[ISLAND] = PlayArea.PlayArea(initial=[])
         if c := player.card_sel(prompt="Select a card to set aside for the rest of the game"):
             card = c[0]
-            player._island_reserve.add(card)
+            player.specials[ISLAND].add(card)
             player.end_of_game_cards.append(card)
             player.piles[Piles.HAND].remove(card)
             player.secret_count += 1
         if self in player.piles[Piles.PLAYED]:  # If Island is not played from hand
             player.piles[Piles.PLAYED].remove(self)
             player.end_of_game_cards.append(self)
-            player._island_reserve.add(self)
+            player.specials[ISLAND].add(self)
             player.secret_count += 1
 
     def hook_end_of_game(self, game: Game.Game, player: Player.Player) -> None:
-        for card in player._island_reserve:
+        for card in player.specials[ISLAND]:
             player.output(f"Returning {card} from Island")
             player.add_card(card)
-            player._island_reserve.remove(card)
+            player.specials[ISLAND].remove(card)
 
     def debug_dump(self, player: Player.Player) -> None:
-        print(f"Island Reserve: {self}: {self.player._island_reserve}")
+        if ISLAND in player.specials:
+            player.output(f"Island Reserve: {self}: {player.specials[ISLAND]}")
 
 
 ###############################################################################

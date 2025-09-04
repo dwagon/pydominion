@@ -16,8 +16,11 @@ class Way_Frog(Way.Way):
         self.name = "Way of the Frog"
 
     def hook_way_discard_this_card(self, game: Game.Game, player: Player.Player, card: Card.Card):
-        player.add_card(card, Piles.TOPDECK)
-        player.piles[Piles.PLAYED].remove(card)
+        if card.location == Piles.PLAYED:
+            player.output(f"Way of the Frog moving {card} to top of deck")
+            player.move_card(card, Piles.TOPDECK)
+        else:
+            player.output(f"{card} already moved")
 
 
 ###############################################################################

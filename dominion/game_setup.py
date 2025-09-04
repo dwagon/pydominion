@@ -303,40 +303,40 @@ def check_card_requirement(game: "Game", card: Card) -> None:
             card_type, card_name = "BaseCard", x
         if card_name not in game.card_piles:
             use_card_pile(game, None, card_name, force=True, card_type=card_type)
-            game.output(f"Using {card_name} as required by {card}")
+            game.output(f"Using {card_name} as required by {card.name}")
 
     if card.heirloom is not None and card.heirloom not in game.heirlooms:
         use_card_pile(game, None, card.heirloom, force=True, card_type="Heirloom")
         game.heirlooms.append(card.heirloom)
-        game.output(f"Using {card.heirloom} as required by {card}")
+        game.output(f"Using {card.heirloom} as required by {card.name}")
 
     if card.isLooter() and "Ruins" not in game.card_piles:
         use_ruins(game)
-        game.output(f"Using Ruins as required by {card}")
+        game.output(f"Using Ruins as required by {card.name}")
     if card.isFate() and not game.boons:
         load_boons(game)
     if card.isDoom() and not game.hexes:
         game.hexes = load_hexes(game)
-        game.output(f"Using hexes as required by {card}")
+        game.output(f"Using hexes as required by {card.name}")
     if card.isLiaison() and not game.ally:
         game.ally = load_ally(game, INIT_CARDS[Keys.ALLIES])
-        game.output(f"Using Allies as required by {card}")
+        game.output(f"Using Allies as required by {card.name}")
     if card.traveller and not FLAGS[Flag.LOADED_TRAVELLERS]:
         load_travellers(game)
         FLAGS[Flag.LOADED_TRAVELLERS] = True
     if card.needs_prizes and not FLAGS[Flag.LOADED_PRIZES]:
         add_prizes(game)
         FLAGS[Flag.LOADED_PRIZES] = True
-        game.output(f"Using Prizes as required by {card}")
+        game.output(f"Using Prizes as required by {card.name}")
     if card.needsartifacts and not game.artifacts:
         game.artifacts = load_artifacts(game)
-        game.output(f"Using artifacts as required by {card}")
+        game.output(f"Using artifacts as required by {card.name}")
     if card.needsprojects and not game.projects:
         game.projects = load_projects(game, INIT_CARDS[Keys.PROJECTS], INIT_NUMBERS[Keys.PROJECTS])
-        game.output(f"Using projects as required by {card}")
+        game.output(f"Using projects as required by {card.name}")
     if card.isOmen() and not game.inactive_prophecy:
         game.inactive_prophecy = load_prophecies(game, INIT_CARDS[Keys.PROPHECIES])
-        game.output(f"Playing with Prophecy {game.inactive_prophecy}")
+        game.output(f"Playing with Prophecy {game.inactive_prophecy.name}")
         game.sun_tokens = get_num_sun_tokens(game)
 
 

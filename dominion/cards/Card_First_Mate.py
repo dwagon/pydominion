@@ -2,6 +2,8 @@
 """http://wiki.dominionstrategy.com/index.php/First_Mate"""
 
 import unittest
+from typing import Any
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -13,18 +15,17 @@ class Card_FirstMate(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.PLUNDER
-        self.desc = """Play any number of Action cards with the same name from your hand, 
+        self.desc = """Play any number of Action cards with the same name from your hand,
         then draw until you have 6 cards in hand."""
         self.name = "First Mate"
         self.cost = 5
 
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
         actions = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
-        options = [(f"Play {_.name}", _) for _ in actions]
+        options: list[tuple[str, Any]] = [(f"Play {_}", _) for _ in actions]
         if actions:
             options.insert(0, ("Play nothing", None))
-            to_play = player.plr_choose_options("Play which action?", *options)
-            if to_play:
+            if to_play := player.plr_choose_options("Play which action?", *options):
                 for card in actions:
                     if card.name == to_play.name:
                         player.play_card(card, cost_action=False, discard=False)
@@ -33,7 +34,7 @@ class Card_FirstMate(Card.Card):
         while len(player.piles[Piles.HAND]) < 6:
             try:
                 player.pickup_card()
-            except NoCardException:
+            except NoCardException:  # pragma: no coverage
                 break
 
 

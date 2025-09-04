@@ -6,6 +6,7 @@ import multiprocessing
 import os
 import random
 import subprocess
+import uuid
 from typing import Any
 
 
@@ -29,6 +30,7 @@ def make_run(
     cmd: list[str] = ["./dominion/rungame.py", "--oldcards"]
     output_filename = "/tmp/randobot"
     cards: set[str] = set()
+    uid = uuid.uuid4()
     if cardset:
         cardset_name = cardset.replace("cardset/", "")
         cardset_args = ["--cardset", cardset]
@@ -76,7 +78,7 @@ def make_run(
     else:
         if result.returncode == 0:
             return set()
-    output_file = f"{output_filename}.{os.getpid()}"
+    output_file = f"{output_filename}.{uid.hex}"
     with open(output_file, "w") as outfh:
         for line in stdout.splitlines():
             outfh.write(f"{line}\n")

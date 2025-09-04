@@ -10,6 +10,8 @@ class Trait(Card.Card):
     ###########################################################################
     def isTraitCard(self, game: "Game.Game", card: Card.Card) -> bool:
         """Return if this card is the trait"""
+        if card.pile not in game.card_piles:
+            return False
         return game.card_piles[card.pile].trait == self.name
 
     ###########################################################################
