@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Player
+
+from dominion import Card, Game, Piles, Player, NoCardException
 
 
 ###############################################################################
@@ -18,11 +19,12 @@ class Card_Tunnel(Card.Card):
     def hook_discard_this_card(self, game, player, source):
         if player.phase == Player.Phase.CLEANUP:
             return
-        gain = player.plr_choose_options(
-            "Gain a Gold from your Tunnel?", ("No thanks", False), ("Gain Gold?", True)
-        )
+        gain = player.plr_choose_options("Gain a Gold from your Tunnel?", ("No thanks", False), ("Gain Gold?", True))
         if gain:
-            player.gain_card("Gold")
+            try:
+                player.gain_card("Gold")
+            except NoCardException:
+                player.output("No more Gold")
 
 
 ###############################################################################
