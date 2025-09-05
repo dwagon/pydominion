@@ -539,6 +539,7 @@ class Card:
         """Dump any debug info"""
         return
 
+    ##########################################################################
     def hook_any_gain_card(self, game: "Game.Game", player: "Player.Player", card: "Card") -> dict[OptionKeys, Any]:
         """Call this for every card in the game whether in play or not"""
         return {}

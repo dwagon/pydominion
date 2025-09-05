@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """https://wiki.dominionstrategy.com/index.php/Snake_Witch"""
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -19,7 +20,8 @@ class Card_Snake_Witch(Card.Card):
         self.cost = 2
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
-        """If your hand has no duplicate cards, you may reveal it and return this to its pile, to have each other player gain a Curse."""
+        """If your hand has no duplicate cards, you may reveal it and return this to its pile,
+        to have each other player gain a Curse."""
         if has_duplicate(player):
             return
         if not player.plr_choose_options(
@@ -50,7 +52,7 @@ def has_duplicate(player: Player.Player) -> bool:
     hand = set()
     for card in player.piles[Piles.HAND]:
         hand.add(card.name)
-    if len(hand) != player.piles[Piles.HAND].size():
+    if len(hand) != len(player.piles[Piles.HAND]):
         return True
     return False
 
