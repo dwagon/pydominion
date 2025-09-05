@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+from typing import Any
+
 from dominion import Game, Card, Piles, Player
 
 
@@ -19,10 +21,10 @@ class Card_Shop(Card.Card):
         self.cost = 3
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
-        actions = [_ for _ in player.piles[Piles.HAND] if _.isAction() and _.name not in player.piles[Piles.PLAYED]]
+        actions = [_ for _ in player.playable_actions() if _.name not in player.piles[Piles.PLAYED]]
         if not actions:
             return
-        options = [("Play nothing", None)]
+        options: list[tuple[str, Any]] = [("Play nothing", None)]
         for card in actions:
             options.append((f"Play {card}", card))
         if to_play := player.plr_choose_options("What action do you want to play?", *options):
