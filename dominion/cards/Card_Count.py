@@ -66,6 +66,9 @@ class Card_Count(Card.Card):
         choices = []
         for _ in player.piles[Piles.HAND]:
             choices.append((f"Put {_} on top of your deck", _))
+        if not choices:
+            player.output("No suitable cards for Count")
+            return
         if card := player.plr_choose_options("Select card to put on top of your deck", *choices):
             player.output(f"Moving {card} to top of deck")
             player.move_card(card, Piles.TOPDECK)

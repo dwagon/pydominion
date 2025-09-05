@@ -381,6 +381,9 @@ class Player:
     ###########################################################################
     def _shuffle_discard(self) -> None:
         num_cards = len(self.piles[Piles.DISCARD])
+        if num_cards == 0:
+            self.output("No more cards to use")
+            raise NoCardException
         self.output(f"Shuffling Pile of {num_cards} cards")
         for project in self.projects:
             if hasattr(project, "hook_pre_shuffle"):
@@ -1349,6 +1352,10 @@ class Player:
 
     ###########################################################################
     def __str__(self) -> str:
+        return self.name
+
+    ###########################################################################
+    def __repr__(self) -> str:
         return self.name
 
     ###########################################################################
