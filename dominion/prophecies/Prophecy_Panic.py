@@ -56,7 +56,7 @@ class Test_Panic(unittest.TestCase):
         self.assertEqual(len(self.g.card_piles["Gold"]), num_gold)
         self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertNotIn("Copper", self.plr.piles[Piles.DISCARD])
-        self.assertIn("Ducht", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################
