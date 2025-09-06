@@ -42,10 +42,11 @@ class Event_Foresight(Event.Event):
     def hook_end_turn(self, game: "Game.Game", player: "Player.Player") -> None:
         if not player.specials[FORESIGHT]:
             return
-        card = player.specials[FORESIGHT][0]
-        player.secret_count -= 1
-        player.output(f"Adding {card} to hand from Foresight")
-        player.add_card(card, Piles.HAND)
+        for card in player.specials[FORESIGHT]:
+            player.secret_count -= 1
+            player.output(f"Adding {card} to hand from Foresight")
+            player.add_card(card, Piles.HAND)
+        player.specials[FORESIGHT] = []
 
 
 ###############################################################################
