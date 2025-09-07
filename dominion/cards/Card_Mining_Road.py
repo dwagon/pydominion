@@ -22,15 +22,16 @@ class Card_MiningRoad(Card.Card):
         self.name = "Mining Road"
         self.cost = 5
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         """Once this turn, when you gain a Treasure, you may play it."""
         if not card.isTreasure():
             return {}
-        if not player.do_once("Mining Road"):
+        if player.has_done_once(self.uuid):
             return {}
-        player.play_card(card, cost_action=False, discard=False)
+        choices = [("Do nothing", False), (f"Play {card}", True)]
+        if player.plr_choose_options(f"Play {card} from Mining Road?", *choices):
+            player.do_once(self.uuid)
+            player.play_card(card, cost_action=False, discard=False)
         return {}
 
 
@@ -60,6 +61,25 @@ class Test_MiningRoad(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         coins = self.plr.coins.get()
+        self.plr.test_input = ["Play Gold"]
+        self.plr.gain_card("Gold")
+        self.assertEqual(self.plr.coins.get(), coins + 3)
+
+    def test_gain_non_treasure(self) -> None:
+        """Gain not a treasure"""
+        self.plr.add_card(self.card, Piles.HAND)
+        self.plr.play_card(self.card)
+        coins = self.plr.coins.get()
+        self.plr.gain_card("Estate")
+        self.assertEqual(self.plr.coins.get(), coins)
+
+    def test_gain_twice(self) -> None:
+        """Gain a treasure twice"""
+        self.plr.add_card(self.card, Piles.HAND)
+        self.plr.play_card(self.card)
+        coins = self.plr.coins.get()
+        self.plr.test_input = ["Play Gold"]
+        self.plr.gain_card("Gold")
         self.plr.gain_card("Gold")
         self.assertEqual(self.plr.coins.get(), coins + 3)
 

@@ -50,10 +50,11 @@ class Test_Footpad(unittest.TestCase):
     def test_attack(self):
         self.plr.add_card(self.card, Piles.HAND)
         self.vic.test_input = ["1", "2", "0"]
+        coffers = self.plr.coffers.get()
         self.plr.play_card(self.card)
         self.assertEqual(self.vic.piles[Piles.HAND].size(), 3)  # Normal  - 2
         self.assertEqual(self.vic.piles[Piles.DISCARD].size(), 2)
-        self.assertEqual(self.plr.coffers.get(), 2)
+        self.assertEqual(self.plr.coffers.get(), coffers + 2)
 
     def test_any_hook(self):
         self.plr.phase = Phase.ACTION

@@ -175,6 +175,11 @@ class TestPlayOnce(unittest.TestCase):
         x = self.plr.do_once("test")
         self.assertFalse(x)
 
+    def test_has_done_once(self) -> None:
+        self.assertFalse(self.plr.has_done_once("test"))
+        self.assertTrue(self.plr.do_once("test"))
+        self.assertTrue(self.plr.has_done_once("test"))
+
 
 ###############################################################################
 class TestCardsAffordable(unittest.TestCase):

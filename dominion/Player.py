@@ -254,10 +254,15 @@ class Player:
     ###########################################################################
     def do_once(self, name: str) -> bool:
         """Allow a player to do something once per turn"""
-        if name in self.once:
+        if self.has_done_once(name):
             return False
         self.once[name] = True
         return True
+
+    ###########################################################################
+    def has_done_once(self, name: str) -> bool:
+        """Check if the player has done the thing already"""
+        return name in self.once
 
     ###########################################################################
     def place_token(self, token: Token, pilename: str) -> None:
