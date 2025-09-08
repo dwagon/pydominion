@@ -628,10 +628,18 @@ class Player:
             + self.piles[Piles.DURATION]
         )
         self.game.cleanup_boons()
+        if self.game.prophecy:
+            self.currcards.append(self.game.prophecy)
+            self.game.prophecy.hook_cleanup(self.game, self)
+            self.currcards.pop()
         for trait in self.game.traits.values():
+            self.currcards.append(trait)
             trait.hook_cleanup(self.game, self)
+            self.currcards.pop()
         for card in self.piles[Piles.PLAYED] + self.piles[Piles.RESERVE] + self.artifacts:
+            self.currcards.append(card)
             card.hook_cleanup(self.game, self)
+            self.currcards.pop()
         self.discard_hand()
         self.pick_up_hand()
         self.misc["cleaned"] = True
