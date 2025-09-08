@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Paddock """
+"""http://wiki.dominionstrategy.com/index.php/Paddock"""
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -18,8 +19,11 @@ class Card_Paddock(Card.Card):
         self.required_cards = [("Card", "Horse")]
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
-        player.gain_card("Horse")
-        player.gain_card("Horse")
+        try:
+            player.gain_card("Horse")
+            player.gain_card("Horse")
+        except NoCardException:
+            player.output("No more Horses")
         empties = sum([1 for _, st in game.get_card_piles() if st.is_empty()])
         player.add_actions(empties)
 
