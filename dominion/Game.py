@@ -131,10 +131,21 @@ class Game:
         """Get and return a card from pile (with name if specified)"""
         assert isinstance(pile, str), f"{pile=} {type(pile)=}"
         assert pile in self.card_piles, f"{pile=} not in {self.card_piles=}"
+        num_cards = len(self.card_piles[pile])
         card = self.card_piles[pile].remove(name)
         if card is None:
             raise NoCardException
+        new_num_cards = len(self.card_piles[pile])
+        if num_cards > 0 and new_num_cards == 0:
+            self.emptied_pile(card)
         return card
+
+    ###########################################################################
+    def emptied_pile(self, card: Card) -> None:
+        """A Card pile has been emptied"""
+        for player in self.players.values():
+            for card in player.relevant_cards():
+                card.hook_emptied_pile(self, player, card)
 
     ###########################################################################
     def get_card_piles(self) -> list[tuple[str, CardPile]]:

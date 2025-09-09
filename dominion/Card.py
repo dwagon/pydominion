@@ -544,5 +544,9 @@ class Card:
         """Call this for every card in the game whether in play or not"""
         return {}
 
+    ##########################################################################
+    def hook_emptied_pile(self, game: "Game.Game", player: "Player.Player", card: "Card") -> None:
+        """A cardpile has been emptied"""
+
 
 # EOF
