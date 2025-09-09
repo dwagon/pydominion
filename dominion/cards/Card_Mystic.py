@@ -48,7 +48,7 @@ class TestMystic(unittest.TestCase):
         self.g = Game.TestGame(
             numplayers=1,
             initcards=["Mystic"],
-            badcards=["Tournament", "Fool's Gold", "Pooka"],
+            badcards=["Tournament", "Fool's Gold", "Pooka", "Gold Mine"],
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]

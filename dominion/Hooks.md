@@ -190,6 +190,10 @@ hook_reveal_prophecy(game)
 -----------------------------------
 Called whenever the prophecy card is revealed
 
+hook_emptied_pile(game, player, card)
+--------------------------
+A cardpile has been emptied
+
 debug_dump(player)
 ------------------
 Dump anything interesting for debugging purposes

@@ -10,6 +10,9 @@ import uuid
 from typing import Any
 
 
+KEEP = True
+
+
 ############################################################################################
 def get_card_name(input_string: str) -> str:
     card = input_string.replace("ALL: Playing with ", "")
@@ -61,7 +64,7 @@ def make_run(
     cmd.extend(players)
     cmd.extend(cardset_args)
     print(f"Playing with {cardset_name}")
-
+    returncode = 0
     try:
         result = subprocess.run(
             env=env_args,
@@ -72,21 +75,24 @@ def make_run(
             encoding="UTF-8",
         )
         stdout = result.stdout
+        returncode = result.returncode
     except subprocess.TimeoutExpired as exc:
         print(f"Timed out on {cardset_name}")
         stdout = "\n".join(str(exc.stdout).split(r"\n"))
     else:
-        if result.returncode == 0:
+        if result.returncode == 0 and not KEEP:
             return set()
-    output_file = f"{output_filename}.{uid.hex}"
+    output_file = f"{output_filename}.{uid.hex}.{returncode}"
     with open(output_file, "w") as outfh:
         for line in stdout.splitlines():
             outfh.write(f"{line}\n")
             if line.startswith("ALL: Playing with"):
                 card = get_card_name(line)
                 cards.add(card)
-    print(f"Broke playing with {cardset_name}")
-    return cards
+    if returncode != 0:
+        print(f"Broke playing with {cardset_name}")
+        return cards
+    return set()
 
 
 ############################################################################################
