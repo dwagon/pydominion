@@ -20,13 +20,15 @@ class Card_Miningvillage(Card.Card):
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """You may trash this card immediately. If you do +2 coin"""
-        trash = player.plr_choose_options(
+        if self.location != Piles.PLAYED:
+            player.output(f"{self} not in played - can't trash")
+            return
+        if player.plr_choose_options(
             "Choose one",
             ("Do nothing", False),
-            ("Trash mining village for +2 coin", True),
-        )
-        if trash:
-            player.output("Trashing mining village")
+            (f"Trash {self} for +2 coin", True),
+        ):
+            player.output(f"Trashing {self}")
             player.coins.add(2)
             player.trash_card(self)
 
@@ -42,7 +44,7 @@ class Test_Miningvillage(unittest.TestCase):
 
     def test_play(self) -> None:
         """Play a Mining Village"""
-        self.plr.test_input = ["0"]
+        self.plr.test_input = ["Do nothing"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
         self.assertEqual(self.plr.actions.get(), 2)
@@ -52,7 +54,7 @@ class Test_Miningvillage(unittest.TestCase):
 
     def test_trash(self) -> None:
         """Trash the mining village"""
-        self.plr.test_input = ["1"]
+        self.plr.test_input = ["Trash"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
         self.assertTrue(self.plr.piles[Piles.PLAYED].is_empty())

@@ -10,9 +10,6 @@ import uuid
 from typing import Any
 
 
-KEEP = True
-
-
 ############################################################################################
 def get_card_name(input_string: str) -> str:
     card = input_string.replace("ALL: Playing with ", "")
@@ -25,9 +22,7 @@ def get_card_name(input_string: str) -> str:
 
 ############################################################################################
 def make_run(
-    cardset: str | None = None,
-    run: int | None = None,
-    use_cards: list[str] | None = None,
+    cardset: str | None = None, run: int | None = None, use_cards: list[str] | None = None, keep: bool = False
 ) -> set[str]:
     """Run the game"""
     cmd: list[str] = ["./dominion/rungame.py", "--oldcards"]
@@ -80,7 +75,7 @@ def make_run(
         print(f"Timed out on {cardset_name}")
         stdout = "\n".join(str(exc.stdout).split(r"\n"))
     else:
-        if result.returncode == 0 and not KEEP:
+        if result.returncode == 0 and not keep:
             return set()
     output_file = f"{output_filename}.{uid.hex}.{returncode}"
     with open(output_file, "w") as outfh:
@@ -103,19 +98,19 @@ def print_results(stats: dict[str, int]) -> None:
 
 
 ############################################################################################
-def fill_num_queue(queue: Any, num_runs: int = 0, cards: list[str] | None = None) -> None:
+def fill_num_queue(queue: Any, num_runs: int = 0, cards: list[str] | None = None, keep: bool = False) -> None:
     """Fill the queue with a number of jobs"""
     for run in range(num_runs):
-        queue.put({"run": run, "use_cards": cards})
+        queue.put({"run": run, "use_cards": cards, "keep": keep})
 
 
 ############################################################################################
-def fill_cardset_queue(queue: Any, card_sets: list[str]) -> None:
+def fill_cardset_queue(queue: Any, card_sets: list[str], keep: bool = False) -> None:
     """Fill the queue with cardset files"""
     for card_set_file in card_sets:
         if not os.path.isfile(card_set_file):
             continue
-        queue.put({"cardset": card_set_file})
+        queue.put({"cardset": card_set_file, "keep": keep})
 
 
 ############################################################################################
@@ -158,6 +153,7 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Run through all the cardsets defined",
     )
+    parser.add_argument("--keep", action="store_true", help="Keep successful runs as well")
     parser.add_argument("--card", action="append", help="Specific cards to include")
     args = parser.parse_args()
     return args
@@ -171,10 +167,10 @@ def main() -> None:
     job_queue: multiprocessing.Queue[dict[str, Any]] = multiprocessing.Queue()
 
     if args.numruns:
-        fill_num_queue(job_queue, args.numruns, args.card)
+        fill_num_queue(job_queue, args.numruns, args.card, args.keep)
     else:
         card_sets = [os.path.join("cardset", _) for _ in os.listdir("cardset")]
-        fill_cardset_queue(job_queue, card_sets)
+        fill_cardset_queue(job_queue, card_sets, args.keep)
     card_stats: dict[str, int] = run_queue(job_queue)
     print_results(card_stats)
 

@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Delve """
+"""http://wiki.dominionstrategy.com/index.php/Delve"""
 
 import unittest
-from dominion import Card, Game, Piles, Event
+
+from dominion import Card, Game, Piles, Event, NoCardException
 
 
 ###############################################################################
@@ -18,7 +19,10 @@ class Event_Delve(Event.Event):
 
     def special(self, game, player):
         player.buys.add(1)
-        player.gain_card("Silver")
+        try:  # pragma: no coverage
+            player.gain_card("Silver")
+        except NoCardException:
+            player.output("No more Silvers")
 
 
 ###############################################################################
