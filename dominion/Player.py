@@ -1011,7 +1011,9 @@ class Player:
         """Do all the post play hooks"""
         self.hook_all_players_post_play(card)
         for other_card in self.relevant_cards():
+            self.currcards.append(other_card)
             other_card.hook_post_play(game=self.game, player=self, card=card)
+            self.currcards.pop()
 
     ###########################################################################
     def perform_way(self, way: Way, card: Card) -> None:
