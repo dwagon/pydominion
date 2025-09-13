@@ -1,4 +1,6 @@
+import shutil
 import sys
+import textwrap
 from typing import Any, TYPE_CHECKING
 
 from rich.console import Console
@@ -51,27 +53,6 @@ class TextPlayer(Player):
         self.console.print(f"{prompt}{current_card_stack}{msg}", end=end)
 
     ###########################################################################
-    @classmethod
-    def wrap(cls, text: str, first: int = 0, indent: int = 15, max_width: int = 95) -> str:
-        """Wrap the text so that it doesn't take more than maxwidth chars.
-        The first line already has "first" characters in it. Subsequent lines
-        should be indented "indent" spaces
-        """
-        out_str: list[str] = []
-        sentence: list[str] = []
-        if not text:
-            return ""
-        for word in text.split():
-            if len(" ".join(sentence)) + len(word) + first > max_width:
-                out_str.append(" ".join(sentence))
-                sentence = [" " * indent, word]
-                first = 0
-            else:
-                sentence.append(word.strip())
-        out_str.append(" ".join(sentence))
-        return "\n".join(out_str)
-
-    ###########################################################################
     def selector_line(self, o: Option) -> str:
         output: list[str] = []
         output.append(f"{o['selector']})")
@@ -88,15 +69,18 @@ class TextPlayer(Player):
         if o["notes"]:
             output.append(o["notes"])
 
-        first = len(" ".join(output))
-        indent = len(self.name) + 4
+        indent = len(self.name) + 5
         try:
             indent += len(self.currcards[0].name)
         except IndexError:
             pass
-        strout = self.wrap(o["desc"], first=first, indent=indent)
-        output.append(strout)
-        return " ".join(output)
+        desc = ""
+        for line in o["desc"].splitlines():
+            desc += line.strip() + " "
+        output.append(desc)
+        text = " ".join(output)
+        (cols, lines) = shutil.get_terminal_size((80, 24))
+        return textwrap.fill(text, subsequent_indent=" " * indent, width=cols - indent)
 
     ###########################################################################
     def user_input(self, options: list[Option], prompt: str) -> Option:
