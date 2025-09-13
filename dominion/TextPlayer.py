@@ -71,7 +71,7 @@ class TextPlayer(Player):
 
         indent = len(self.name) + 5
         try:
-            indent += len(self.currcards[0].name)
+            indent += len(self.currcards[0].name) + 2
         except IndexError:
             pass
         desc = ""
