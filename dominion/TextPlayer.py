@@ -97,7 +97,7 @@ class TextPlayer(Player):
                 inp = self.test_input.pop(0)
                 self.output(f"Using '{inp}' test input")
             else:
-                try:
+                try:  # pragma: no coverage
                     inp = raw_input()
                 except (IOError, KeyboardInterrupt):
                     self.game.print_state()
