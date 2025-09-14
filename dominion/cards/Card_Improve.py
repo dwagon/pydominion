@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+from typing import Any
+
+from dominion import Game, Card, Piles, OptionKeys, Player
 
 
 ###############################################################################
@@ -18,27 +19,28 @@ class Card_Improve(Card.Card):
         self.cost = 3
         self.coin = 2
 
-    def hook_cleanup(self, game, player):
+    def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
         acts = [_ for _ in player.piles[Piles.HAND] + player.piles[Piles.DISCARD] if _.isAction()]
         if not acts:
-            return
+            return {}
         tt = player.plr_trash_card(cardsrc=acts, prompt="Trash a card through Improve")
         if not tt:
-            return
+            return {}
         cost = tt[0].cost
         player.plr_gain_card(cost + 1, modifier="equal")
+        return {}
 
 
 ###############################################################################
 class Test_Improve(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Improve", "Moat", "Guide"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Improve")
         self.card.player = self.plr
 
-    def test_play(self):
+    def test_play(self) -> None:
         self.plr.piles[Piles.HAND].set("Moat")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)

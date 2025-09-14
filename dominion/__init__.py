@@ -88,13 +88,14 @@ class OptionKeys(StrEnum):
     """Keys for option returns"""
 
     DESTINATION = auto()
-    SKIP_CARD = auto()
     DISCARD = auto()
-    REPLACE = auto()
-    TRASH = auto()
+    DISCARD_PLAYED = auto()
     DONTADD = auto()
-    SHUFFLE = auto()
     EXILE = auto()
+    REPLACE = auto()
+    SHUFFLE = auto()
+    SKIP_CARD = auto()
+    TRASH = auto()
 
 
 ###############################################################################

@@ -2,7 +2,7 @@
 
 import unittest
 
-from dominion import Card, Game, Way, Piles
+from dominion import Card, Game, Way, Piles, Player
 
 
 ###############################################################################
@@ -13,7 +13,7 @@ class Way_Squirrel(Way.Way):
         self.desc = "+2 Cards at the end of this turn."
         self.name = "Way of the Squirrel"
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         player.newhandsize += 2
 
 
@@ -31,7 +31,7 @@ class Test_Squirrel(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Moat")
         self.way = self.g.ways["Way of the Squirrel"]
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Perform a Squirrel"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.perform_way(self.way, self.card)

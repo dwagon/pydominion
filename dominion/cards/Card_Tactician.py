@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, OptionKeys
 
 
@@ -22,7 +23,7 @@ class Card_Tactician(Card.Card):
         )
         if discard and player.piles[Piles.HAND].size():
             self.discarded = True
-            player.discard_hand()
+            player.discard_hand({})
 
     def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         """+5 Cards, +1 Buy, +1 Action"""

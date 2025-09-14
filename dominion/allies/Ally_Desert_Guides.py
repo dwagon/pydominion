@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Desert_Guides """
+"""http://wiki.dominionstrategy.com/index.php/Desert_Guides"""
 
 import unittest
-from dominion import Card, Game, Piles, Ally
+
+from dominion import Card, Game, Piles, Ally, Player
 
 
 ###############################################################################
@@ -10,10 +11,11 @@ class Ally_Desert_Guides(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
-        self.desc = """At the start of your turn, you may spend a Favor to discard your hand and draw 5 cards. Repeat as desired."""
+        self.desc = """At the start of your turn, you may spend a Favor to discard your hand and draw 5 cards.
+        Repeat as desired."""
         self.name = "Desert Guides"
 
-    def hook_start_turn(self, game, player):
+    def hook_start_turn(self, game: "Game.Game", player: "Player.Player") -> None:
         while True:
             if not player.favors.get():
                 return
@@ -24,7 +26,7 @@ class Ally_Desert_Guides(Ally.Ally):
             )
             if not choice:
                 return
-            player.discard_hand()
+            player.discard_hand({})
             player.pickup_cards(5)
             player.favors.add(-1)
 

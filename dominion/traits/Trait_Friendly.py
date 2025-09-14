@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 """https://wiki.dominionstrategy.com/index.php/Friendly"""
 import unittest
+from typing import Any
 
-from dominion import Card, Game, Trait, Piles, Player, NoCardException
+from dominion import Card, Game, Trait, Piles, Player, NoCardException, OptionKeys
 
 
 ###############################################################################
@@ -16,7 +17,7 @@ class Trait_Friendly(Trait.Trait):
         self.desc = "At the start of your Clean-up phase, you may discard a Friendly card to gain a Friendly card."
         self.name = "Friendly"
 
-    def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> None:
+    def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
         for card in player.piles[Piles.HAND]:
             if self.isTraitCard(game, card):
                 if player.plr_choose_options(
@@ -27,6 +28,7 @@ class Trait_Friendly(Trait.Trait):
                     except NoCardException:  # pragma: no coverage
                         player.output(f"No more {card}")
                 break
+        return {}
 
 
 ###############################################################################

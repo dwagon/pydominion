@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, Player
+from typing import Any
+
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -21,14 +23,15 @@ class Card_WineMerchant(Card.Card):
         self.cost = 5
         self.callable = False
 
-    def hook_cleanup(self, game: Game.Game, player: Player.Player) -> None:
+    def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
         """At the end of your Buy phase, if you have at least 2 Coin unspent, you
         may discard this from your Tavern mat."""
         # Merchant might not be in RESERVE if, for example, intercepted by Enchantress
         if player.coins.get() >= 2 and self in player.piles[Piles.RESERVE]:
-            player.output("Discarding Wine Merchant")
+            player.output(f"Discarding {self}")
             player.piles[Piles.RESERVE].remove(self)
             player.add_card(self, Piles.DISCARD)
+        return {}
 
 
 ###############################################################################

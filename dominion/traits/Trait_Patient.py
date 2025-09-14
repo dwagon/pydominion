@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 """https://wiki.dominionstrategy.com/index.php/Patient"""
 import unittest
+from typing import Any
 
-from dominion import Card, Game, Trait, Player, Piles, PlayArea
+from dominion import Card, Game, Trait, Player, Piles, PlayArea, OptionKeys
 
 PATIENT = "patient"
 
@@ -17,7 +18,7 @@ class Trait_Patient(Trait.Trait):
             to play them at the start of your next turn."""
         self.name = "Patient"
 
-    def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> None:
+    def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
         if PATIENT not in player.specials:
             player.specials[PATIENT] = PlayArea.PlayArea(initial=[])
         for card in player.piles[Piles.HAND]:
@@ -29,6 +30,7 @@ class Trait_Patient(Trait.Trait):
                 player.output(f"Setting aside {card}")
                 player.move_card(card, player.specials[PATIENT])
                 player.secret_count += 1
+        return {}
 
     def hook_start_turn(self, game: "Game.Game", player: "Player.Player") -> None:
         if PATIENT in player.specials:

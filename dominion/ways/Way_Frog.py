@@ -43,7 +43,7 @@ class Test_Frog(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.plr.discard_hand()
+        self.plr.discard_hand({})
         self.assertIn("Moat", self.plr.piles[Piles.DECK])
 
 

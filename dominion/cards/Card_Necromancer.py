@@ -1,8 +1,10 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Necromancer"""
+"""https://wiki.dominionstrategy.com/index.php/Necromancer"""
 
 import unittest
-from dominion import Card, PlayArea, Game, Piles, Player
+from typing import Any
+
+from dominion import Card, PlayArea, Game, Piles, Player, OptionKeys
 
 NECROMANCER = "necromancer"
 
@@ -25,15 +27,9 @@ class Card_Necromancer(Card.Card):
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """Play a non-Duration Action card from the trash, leaving it there."""
         action_cards = [
-            _
-            for _ in game.trash_pile
-            if _.isAction()
-            and not _.isDuration()
-            and _ not in game.specials[NECROMANCER]
+            _ for _ in game.trash_pile if _.isAction() and not _.isDuration() and _ not in game.specials[NECROMANCER]
         ]
-        if card := player.card_sel(
-            cardsrc=action_cards, prompt="Select Action card from Trash"
-        ):
+        if card := player.card_sel(cardsrc=action_cards, prompt="Select Action card from Trash"):
             game.specials[NECROMANCER].add(card[0])
             player.play_card(card[0], discard=False, cost_action=False)
 
@@ -41,9 +37,10 @@ class Card_Necromancer(Card.Card):
         """Use a play area to keep track of what has been played by Necromancer this turn"""
         game.specials[NECROMANCER] = PlayArea.PlayArea()
 
-    def hook_cleanup(self, game: Game.Game, player: Player.Player) -> None:
+    def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
         """Reset what has been played by Necromancer"""
         game.specials[NECROMANCER].empty()
+        return {}
 
 
 ###############################################################################

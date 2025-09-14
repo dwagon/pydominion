@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
+from typing import Any
 
-from dominion import Artifact
-from dominion import Card
-from dominion import Game
+from dominion import Artifact, Card, Game, Player, OptionKeys
 
 
 ###############################################################################
@@ -15,19 +14,20 @@ class Artifact_Flag(Artifact.Artifact):
         self.desc = "When drawing your hand, +1 Card"
         self.name = "Flag"
 
-    def hook_cleanup(self, game, player):
+    def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
         player.newhandsize += 1
+        return {}
 
 
 ###############################################################################
 class Test_Flag(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initartifacts=["Flag"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.artifact = self.g.artifacts["Flag"]
 
-    def test_flag(self):
+    def test_flag(self) -> None:
         self.plr.assign_artifact("Flag")
         self.plr.end_turn()
 

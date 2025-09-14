@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 """https://wiki.dominionstrategy.com/index.php/River_Shrine"""
 import unittest
+from typing import Any
 
-from dominion import Game, Card, Piles, Player
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -21,11 +22,12 @@ class Card_River_Shrine(Card.Card):
         """Trash up to 2 cards from your hand."""
         player.plr_trash_card(num=2)
 
-    def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> None:
+    def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
         """At the start of Clean-up, if you didn't gain any cards in your
         Buy phase this turn, gain a card costing up to $4."""
         if not player.stats["bought"]:
             player.plr_gain_card(cost=4)
+        return {}
 
 
 ###############################################################################

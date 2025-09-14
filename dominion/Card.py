@@ -363,8 +363,9 @@ class Card:
         return 0  # pragma: nocover
 
     ##########################################################################
-    def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> None:
+    def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
         """Hook - overwritten in subclasses"""
+        return {}
 
     ##########################################################################
     def hook_all_players_pre_play(

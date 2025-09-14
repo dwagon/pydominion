@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Way_of_the_Mole """
+"""http://wiki.dominionstrategy.com/index.php/Way_of_the_Mole"""
 
 import unittest
 
-from dominion import Card, Game, Way, Piles
+from dominion import Card, Game, Way, Piles, Player
 
 
 ###############################################################################
@@ -15,8 +15,8 @@ class Way_Mole(Way.Way):
         self.actions = 1
         self.name = "Way of the Mole"
 
-    def special(self, game, player):
-        player.discard_hand()
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+        player.discard_hand({})
         player.pickup_cards(3)
 
 
