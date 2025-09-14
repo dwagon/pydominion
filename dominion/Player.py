@@ -642,6 +642,10 @@ class Player:
             self.currcards.append(card)
             options |= card.hook_cleanup(self.game, self)
             self.currcards.pop()
+        for event in self.played_events:
+            self.currcards.append(event)
+            options |= event.hook_cleanup(self.game, self)
+            self.currcards.pop()
         self.discard_hand(options)
         self.pick_up_hand()
         self.misc["cleaned"] = True
