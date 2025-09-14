@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
+from typing import Any
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, OptionKeys, Card, Player
 
 
 ###############################################################################
@@ -20,22 +20,23 @@ class Card_Scheme(Card.Card):
         self.actions = 1
         self.cost = 3
 
-    def hook_cleanup(self, game, player):
+    def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
         actions = [c for c in player.piles[Piles.PLAYED] if c.isAction()]
         if card := player.card_sel(cardsrc=actions, prompt="Select an action to put back on your deck"):
             player.add_card(card[0], Piles.TOPDECK)
             player.piles[Piles.PLAYED].remove(card[0])
+        return {}
 
 
 ###############################################################################
 class Test_Scheme(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Scheme", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Scheme")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a scheme"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.piles[Piles.PLAYED].set("Moat")

@@ -71,7 +71,7 @@ class TestHermit(unittest.TestCase):
         self.plr.test_input = ["End Phase"]
         self.plr.add_card(self.card, Piles.PLAYED)
         self.plr.buy_phase()
-        self.plr.discard_hand()
+        self.plr.discard_hand({})
         self.assertIn("Madman", self.plr.piles[Piles.DISCARD])
         self.assertNotIn("Hermit", self.plr.piles[Piles.HAND])
 

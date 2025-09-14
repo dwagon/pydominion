@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 """https://wiki.dominionstrategy.com/index.php/Biding_Time"""
 import unittest
+from typing import Any
 
-from dominion import Card, Game, Prophecy, Piles, Player, PlayArea
+from dominion import Card, Game, Prophecy, Piles, Player, PlayArea, OptionKeys
 
 BIDING_TIME = "biding_time"
 
@@ -25,7 +26,7 @@ class Prophecy_Biding_Time(Prophecy.Prophecy):
             player.secret_count -= 1
             player.specials[BIDING_TIME] = PlayArea.PlayArea(initial=[])
 
-    def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> None:
+    def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
         if BIDING_TIME not in player.specials:
             player.specials[BIDING_TIME] = PlayArea.PlayArea(initial=[])
         for card in player.piles[Piles.HAND]:
@@ -33,6 +34,7 @@ class Prophecy_Biding_Time(Prophecy.Prophecy):
             player.output(f"Biding Time setting aside {card}")
             player.secret_count += 1
         player.piles[Piles.HAND].empty()
+        return {}
 
     def debug_dump(self, player: Player.Player) -> None:
         if BIDING_TIME in player.specials:

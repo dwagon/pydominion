@@ -479,7 +479,7 @@ class Player:
                 other_card.hook_discard_any_card(game=self.game, player=self, card=card)
 
     ###########################################################################
-    def discard_hand(self) -> None:
+    def discard_hand(self, options: dict[OptionKeys, Any]) -> None:
         # Activate hooks first, so they can still access contents of the
         # players hand etc. before they get discarded
         for card in self.piles[Piles.HAND]:
@@ -501,9 +501,10 @@ class Player:
         while self.piles[Piles.HAND]:
             card = self.piles[Piles.HAND].next_card()
             self.discard_card(card, Piles.HAND, hook=False)
-        while self.piles[Piles.PLAYED]:
-            card = self.piles[Piles.PLAYED].next_card()
-            self.discard_card(card, Piles.PLAYED, hook=False)
+        if options.get(OptionKeys.DISCARD_PLAYED, True):
+            while self.piles[Piles.PLAYED]:
+                card = self.piles[Piles.PLAYED].next_card()
+                self.discard_card(card, Piles.PLAYED, hook=False)
 
     ###########################################################################
     def _get_whens(self) -> list[Whens]:
@@ -620,6 +621,7 @@ class Player:
     ###########################################################################
     def cleanup_phase(self) -> None:
         # Save the cards we had so that the hook_end_turn has something to apply against
+        options: dict[OptionKeys, Any] = {}
         self.had_cards = (
             self.piles[Piles.PLAYED]
             + self.piles[Piles.RESERVE]
@@ -634,13 +636,13 @@ class Player:
             self.currcards.pop()
         for trait in self.game.traits.values():
             self.currcards.append(trait)
-            trait.hook_cleanup(self.game, self)
+            options |= trait.hook_cleanup(self.game, self)
             self.currcards.pop()
         for card in self.piles[Piles.PLAYED] + self.piles[Piles.RESERVE] + self.artifacts:
             self.currcards.append(card)
-            card.hook_cleanup(self.game, self)
+            options |= card.hook_cleanup(self.game, self)
             self.currcards.pop()
-        self.discard_hand()
+        self.discard_hand(options)
         self.pick_up_hand()
         self.misc["cleaned"] = True
 

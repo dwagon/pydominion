@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 
@@ -18,7 +19,7 @@ class Card_Guide(Card.Card):
 
     def hook_call_reserve(self, game: Game.Game, player: Player.Player) -> None:
         player.output("Discarding current hand and picking up 5 new cards")
-        player.discard_hand()
+        player.discard_hand({})
         player.pickup_cards(5)
 
 
@@ -39,9 +40,7 @@ class TestGuide(unittest.TestCase):
     def test_call(self) -> None:
         """Call Guide from reserve"""
         self.plr.piles[Piles.HAND].set("Estate", "Estate")
-        self.plr.piles[Piles.DECK].set(
-            "Copper", "Copper", "Copper", "Copper", "Copper", "Copper"
-        )
+        self.plr.piles[Piles.DECK].set("Copper", "Copper", "Copper", "Copper", "Copper", "Copper")
         self.plr.piles[Piles.RESERVE].set("Guide")
         self.plr.call_reserve("Guide")
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)

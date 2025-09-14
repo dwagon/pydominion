@@ -2,8 +2,9 @@
 """https://wiki.dominionstrategy.com/index.php/Walled_Village"""
 
 import unittest
+from typing import Any
 
-from dominion import Game, Card, Piles, Player, PlayArea
+from dominion import Game, Card, Piles, Player, PlayArea, OptionKeys
 
 WALLED_VILLAGE = "walled village"
 
@@ -21,18 +22,19 @@ class Card_Walled_Village(Card.Card):
         self.actions = 2
         self.cost = 4
 
-    def hook_cleanup(self, game: Game.Game, player: Player.Player) -> None:
+    def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
         """At the start of Clean-up, if you have this and no more than one other Action card in play,
         you may put this onto your deck"""
         if WALLED_VILLAGE not in player.specials:
             player.specials[WALLED_VILLAGE] = PlayArea.PlayArea(initial=None)
         num_actions = sum(1 for card in player.piles[Piles.PLAYED] if card.isAction())
         if num_actions > 2:
-            return
+            return {}
         if self not in player.piles[Piles.PLAYED]:
-            return
+            return {}
         player.move_card(self, player.specials[WALLED_VILLAGE])
         player.secret_count += 1
+        return {}
 
     def hook_end_turn(self, game: "Game.Game", player: "Player.Player") -> None:
         if WALLED_VILLAGE not in player.specials:

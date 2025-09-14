@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Event
+
+from dominion import Card, Game, Piles, Event, Player
 
 
 ###############################################################################
@@ -16,13 +17,18 @@ class Event_Donate(Event.Event):
         self.cost = 0
         self.debtcost = 8
 
-    def hook_end_turn(self, game, player):
-        for area in (player.piles[Piles.HAND], player.piles[Piles.DECK], player.piles[Piles.PLAYED], player.piles[Piles.DISCARD]):
+    def hook_end_turn(self, game: "Game.Game", player: "Player.Player") -> None:
+        for area in (
+            player.piles[Piles.HAND],
+            player.piles[Piles.DECK],
+            player.piles[Piles.PLAYED],
+            player.piles[Piles.DISCARD],
+        ):
             for card in area:
                 player.add_card(card, Piles.HAND)
                 area.remove(card)
         player.plr_trash_card(anynum=True, prompt="Donate allows you to trash any cards")
-        player.discard_hand()
+        player.discard_hand({})
         player.pickup_cards(5)
 
 

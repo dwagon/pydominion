@@ -5,7 +5,7 @@
 import operator
 import unittest
 
-from dominion import Card, Game, Phase, Piles, Limits, NoCardException
+from dominion import Card, Game, Phase, Piles, Limits, NoCardException, OptionKeys
 from dominion.Counter import Counter
 
 
@@ -89,10 +89,19 @@ class TestDiscardHand(unittest.TestCase):
         """Test discard_hand()"""
         self.plr.piles[Piles.HAND].set("Copper", "Silver")
         self.plr.piles[Piles.PLAYED].set("Estate", "Duchy")
-        self.plr.discard_hand()
+        self.plr.discard_hand({})
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 0)
         self.assertEqual(self.plr.piles[Piles.PLAYED].size(), 0)
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 4)
+
+    def test_discard_keep_played(self) -> None:
+        """Test discard_hand() with keeping played"""
+        self.plr.piles[Piles.HAND].set("Copper", "Silver")
+        self.plr.piles[Piles.PLAYED].set("Estate", "Duchy")
+        self.plr.discard_hand({OptionKeys.DISCARD_PLAYED: False})
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 0)
+        self.assertEqual(self.plr.piles[Piles.PLAYED].size(), 2)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
 
 
 ###############################################################################

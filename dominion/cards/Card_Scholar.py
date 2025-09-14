@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 
@@ -16,7 +17,7 @@ class Card_Scholar(Card.Card):
 
     ###########################################################################
     def special(self, game: Game.Game, player: Player.Player) -> None:
-        player.discard_hand()
+        player.discard_hand({})
         player.pickup_cards(7)
 
 

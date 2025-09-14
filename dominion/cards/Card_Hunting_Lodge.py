@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Hunting_Lodge """
+"""http://wiki.dominionstrategy.com/index.php/Hunting_Lodge"""
 
 import unittest
-from dominion import Game, Card, Piles
+
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
@@ -17,12 +18,10 @@ class Card_Hunting_Lodge(Card.Card):
         self.actions = 2
         self.cost = 5
 
-    def special(self, game, player):
-        disc = player.plr_choose_options(
-            "Discard hand?", ("Nope", False), ("Discard hand and draw 5 cards", True)
-        )
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+        disc = player.plr_choose_options("Discard hand?", ("Nope", False), ("Discard hand and draw 5 cards", True))
         if disc:
-            player.discard_hand()
+            player.discard_hand({})
             player.pickup_cards(5)
 
 

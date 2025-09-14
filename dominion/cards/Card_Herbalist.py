@@ -50,7 +50,7 @@ class Test_Herbalist(unittest.TestCase):
         self.plr.add_card(self.herbalist, Piles.HAND)
         self.plr.play_card(self.herbalist)
         self.plr.test_input = ["Discard Gold"]
-        self.plr.discard_hand()
+        self.plr.discard_hand({})
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
 
     def test_put_gold(self):
@@ -59,7 +59,7 @@ class Test_Herbalist(unittest.TestCase):
         self.plr.add_card(self.herbalist, Piles.HAND)
         self.plr.play_card(self.herbalist)
         self.plr.test_input = ["onto your deck"]
-        self.plr.discard_hand()
+        self.plr.discard_hand({})
         self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Gold")
         self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
 

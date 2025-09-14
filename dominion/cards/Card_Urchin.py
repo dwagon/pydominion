@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, Player
+from typing import Any
+
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
@@ -24,7 +26,7 @@ class Card_Urchin(Card.Card):
             plr.output(f"Discard down to 4 cards from {player.name}'s Urchin")
             plr.plr_discard_down_to(4)
 
-    def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> None:
+    def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
         attacks = sum(1 for card in player.piles[Piles.PLAYED] if card.isAttack())
         if attacks >= 2:
             if player.plr_choose_options(
@@ -34,6 +36,7 @@ class Card_Urchin(Card.Card):
             ):
                 player.trash_card(self)
                 player.gain_card("Mercenary")
+        return {}
 
 
 ###############################################################################

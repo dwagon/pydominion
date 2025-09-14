@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
@@ -17,7 +18,7 @@ class Card_Minion(Card.Card):
         self.cost = 5
         self.actions = 1
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Choose one: +2 coin or
         discard your hand, +4 cards and each other player with
         at least 5 card in hand discards his hand and draws 4
@@ -41,22 +42,22 @@ class Card_Minion(Card.Card):
             if victim.piles[Piles.HAND].size() >= 5:
                 self.dropAndDraw(victim)
 
-    def dropAndDraw(self, plr):
+    def dropAndDraw(self, plr: "Player.Player"):
         # TODO: Do you discard the minion as well?
-        plr.discard_hand()
+        plr.discard_hand({})
         plr.pickup_cards(4)
 
 
 ###############################################################################
 class Test_Minion(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Minion", "Moat"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g.get_card_from_pile("Minion")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play_gold(self):
+    def test_play_gold(self) -> None:
         """Play a minion and gain two gold"""
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
@@ -64,7 +65,7 @@ class Test_Minion(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
 
-    def test_play_discard(self):
+    def test_play_discard(self) -> None:
         """Play a minion and discard hand"""
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)
@@ -76,7 +77,7 @@ class Test_Minion(unittest.TestCase):
         self.assertEqual(self.victim.piles[Piles.HAND].size(), 4)
         self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 5)
 
-    def test_play_victim_smallhand(self):
+    def test_play_victim_smallhand(self) -> None:
         """Play a minion and discard hand - the other player has a small hand"""
         self.victim.piles[Piles.HAND].set("Estate", "Estate", "Estate", "Estate")
         self.plr.test_input = ["1"]
@@ -89,7 +90,7 @@ class Test_Minion(unittest.TestCase):
         self.assertEqual(self.victim.piles[Piles.HAND].size(), 4)
         self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 0)
 
-    def test_play_defended(self):
+    def test_play_defended(self) -> None:
         """Play a minion and discard hand - the other player is defended"""
         self.victim.piles[Piles.HAND].set("Estate", "Estate", "Estate", "Estate", "Moat")
         self.plr.test_input = ["1"]
