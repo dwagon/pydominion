@@ -49,6 +49,7 @@ class Test_Obelisk(unittest.TestCase):
         self.plr.pickup_card(card)
 
         self.plr.game_over()
+        self.g.print_state()
         self.assertEqual(self.plr.get_score_details()["Obelisk"], 4)
 
 

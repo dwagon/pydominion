@@ -198,4 +198,8 @@ debug_dump(player)
 ------------------
 Dump anything interesting for debugging purposes
 
+hook_card_description(game, player, card) -> str
+---------------------
+Add string to a cards description
+
 #EOF

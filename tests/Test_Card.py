@@ -2,7 +2,7 @@
 
 import unittest
 
-from dominion import Game
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -15,6 +15,15 @@ class Test_is_card(unittest.TestCase):
         moat = g.get_card_from_pile("Moat")
         self.assertTrue(caravan.isDuration())
         self.assertFalse(moat.isDuration())
+
+    def test_description(self):
+        g = Game.TestGame(numplayers=1, initcards=["Description"], card_path="tests/cards")
+        g.start_game()
+        plr = g.player_list()[0]
+        g.start_game()
+        card = g.get_card_from_pile("Description")
+        plr.add_card(card, Piles.HAND)
+        self.assertEqual(card.description(plr), "Foo Bar")
 
     def test_isTreasure(self) -> None:
         """Test isTreasure"""
