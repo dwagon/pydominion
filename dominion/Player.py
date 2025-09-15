@@ -433,33 +433,33 @@ class Player:
         return self.add_card(card, dest)
 
     ###########################################################################
-    def add_card(self, card: Card, pile: Piles | PlayArea = Piles.DISCARD) -> Card:
+    def add_card(self, card: Card, dest: Piles | PlayArea = Piles.DISCARD) -> Card:
         """Add an existing card to a new location"""
         assert isinstance(card, Card), f"{card=} {type(card)=}"
-        assert isinstance(pile, (Piles, PlayArea)), f"{pile=} {type(pile)=}"
+        assert isinstance(dest, (Piles, PlayArea)), f"{dest=} {type(dest)=}"
         card.player = self
 
-        # There can be custom PlayAreas (such as part of  card)
-        if isinstance(pile, PlayArea):
+        # There can be custom PlayAreas (such as part of card)
+        if isinstance(dest, PlayArea):
             card.location = Piles.SPECIAL
-            pile.add(card)
+            dest.add(card)
             return card
 
         # Return card to a card pile
-        if pile == Piles.CARDPILE or isinstance(pile, CardPile):
+        if dest == Piles.CARDPILE or isinstance(dest, CardPile):
             self.game.card_piles[card.pile].add(card)
             card.location = Piles.CARDPILE
             return card
 
-        if pile in self.piles:
-            assert isinstance(pile, Piles)
-            self.piles[pile].add(card)
-            card.location = pile
-        elif pile == Piles.TOPDECK:
+        if dest in self.piles:
+            assert isinstance(dest, Piles)
+            self.piles[dest].add(card)
+            card.location = dest
+        elif dest == Piles.TOPDECK:
             card.location = Piles.DECK
             self.piles[Piles.DECK].addToTop(card)
         else:
-            raise AssertionError(f"Adding card {card} to unknown location: {pile}")
+            raise AssertionError(f"Adding card {card} to unknown location: {dest}")
         return card
 
     ###########################################################################
@@ -802,6 +802,8 @@ class Player:
         """Start of turn hooks"""
         for card_name in self.game.card_instances:
             self.game.card_instances[card_name].hook_start_every_turn(self.game, self)
+        for event_name in self.game.events:
+            self.game.events[event_name].hook_start_every_turn(self.game, self)
         for card in self.relevant_cards():
             self.currcards.append(card)
             card.hook_start_turn(self.game, self)
