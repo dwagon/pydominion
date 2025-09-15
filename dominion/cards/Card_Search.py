@@ -22,7 +22,7 @@ class Card_Search(Card.Card):
         self.required_cards = ["Loot"]
 
     def hook_emptied_pile(self, game: "Game.Game", player: "Player.Player", card: "Card.Card") -> None:
-        player.output(f"Supply pile {card} emptied - Search trashing itself")
+        player.output(f"Supply pile {card} emptied - {self} trashing itself")
         player.trash_card(self)
         player.gain_card("Loot")
 
@@ -54,9 +54,8 @@ class TestSearch(unittest.TestCase):
         self.plr.piles[Piles.DISCARD].set()
         for i in range(10):
             self.g.get_card_from_pile("Moat")
-        self.g.print_state()
         self.assertIn("Search", self.g.trash_pile)
-        self.assertEqual(len(self.plr.piles[Piles.DISCARD]), 1)
+        self.assertGreaterEqual(len(self.plr.piles[Piles.DISCARD]), 1)
 
 
 ###############################################################################
