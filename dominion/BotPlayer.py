@@ -64,6 +64,9 @@ class BotPlayer(Player):
                     opts["quit"] = opt
                 if opt["action"] == "spendall":
                     opts["spendall"] = opt
+                if opt["action"] == "payback":
+                    opts["payback"] = opt
+
             return opts
         except KeyError as exc:  # pragma: no cover
             print(f"Options={options}")
@@ -75,6 +78,8 @@ class BotPlayer(Player):
         opts = self.get_options(options)
         if "spendall" in opts:
             return opts["spendall"]
+        if "payback" in opts:
+            return opts["payback"]
         if self.buys.get() == 0:
             return opts["quit"]
         coin = self.coins.get()
