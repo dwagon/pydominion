@@ -42,6 +42,7 @@ class Test_Harsh_Winter(unittest.TestCase):
         """Play when prophecy active"""
         self.plr.test_input = ["Get Moat", "Get Mountain Shrine"]
         self.g.reveal_prophecy()
+        self.plr.phase = Phase.BUY
         debt = self.plr.debt.get()
         self.assertEqual(self.g.get_card_from_pile("Copper").description(self.plr), "+1 coin")
         self.plr.gain_card("Copper")
