@@ -470,13 +470,17 @@ class Player:
             self.piles[Piles.HAND].remove(card)
         self.add_card(card, Piles.DISCARD)
         if hook:
+            self.currcards.append(card)
             self.hook_discard_this_card(card, source)
+            self.currcards.pop()
             for way, crd in self.played_ways:
                 if crd != card:
                     continue
                 way.hook_way_discard_this_card(game=self.game, player=self, card=crd)
             for other_card in self.relevant_cards():
+                self.currcards.append(other_card)
                 other_card.hook_discard_any_card(game=self.game, player=self, card=card)
+                self.currcards.pop()
 
     ###########################################################################
     def discard_hand(self, options: dict[OptionKeys, Any]) -> None:
