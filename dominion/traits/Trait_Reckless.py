@@ -49,8 +49,9 @@ class Test_Reckless(unittest.TestCase):
         moat = self.plr.gain_card("Moat", Piles.HAND)
         self.plr.move_card(moat, Piles.HAND)
         self.plr.play_card(moat)
-        self.assertEqual(len(self.g.card_piles["Moat"]), num_moats)
         self.assertEqual(len(self.plr.piles[Piles.HAND]), 4)  # Moat twice
+        self.plr.end_turn()
+        self.assertEqual(len(self.g.card_piles["Moat"]), num_moats)
 
 
 ###############################################################################
