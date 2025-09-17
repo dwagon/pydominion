@@ -854,12 +854,7 @@ class Player:
             self.cleanup_phase()
         self.limits[Limits.PLAY] = None
         self.limits[Limits.BUY] = 999
-        for card in self.had_cards:
-            self.currcards.append(card)
-            card.hook_end_turn(game=self.game, player=self)
-            self.currcards.pop()
-        for trait in self.game.traits.values():
-            trait.hook_end_turn(game=self.game, player=self)
+        self.end_turn_hooks()
         self.newhandsize = 5
         self.played_events = PlayArea("played_events", initial=[])
         self.messages = []
@@ -867,6 +862,19 @@ class Player:
         self.once = {}
         self.phase = Phase.NONE
         self.had_cards = []
+
+    ###########################################################################
+    def end_turn_hooks(self):
+        for card in self.had_cards:
+            self.currcards.append(card)
+            card.hook_end_turn(game=self.game, player=self)
+            self.currcards.pop()
+        for trait in self.game.traits.values():
+            trait.hook_end_turn(game=self.game, player=self)
+        if self.game.ally:
+            self.currcards.append(self.game.ally)
+            self.game.ally.hook_end_turn(game=self.game, player=self)
+            self.currcards.pop()
 
     ###########################################################################
     def hook_discard_this_card(self, card: Card, source: Optional[PlayArea | Piles] = None) -> None:
