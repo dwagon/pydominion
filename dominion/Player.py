@@ -529,6 +529,12 @@ class Player:
 
     ###########################################################################
     def turn(self) -> None:
+        self.start_turn()
+        self.do_turn()
+        self.end_turn()
+
+    ###########################################################################
+    def do_turn(self) -> None:
         """Have a turn as the player"""
         self.turn_number += 1
         print()
