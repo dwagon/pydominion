@@ -59,7 +59,7 @@ class TestWineMerchant(unittest.TestCase):
         for crd in self.plr.piles[Piles.RESERVE]:
             crd.player = self.plr
         self.plr.test_input = ["end phase", "end phase"]
-        self.plr.turn()
+        self.plr.do_turn()
         self.assertEqual(self.plr.piles[Piles.RESERVE].size(), 0)
 
 
