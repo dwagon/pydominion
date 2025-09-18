@@ -529,6 +529,12 @@ class Player:
 
     ###########################################################################
     def turn(self) -> None:
+        self.start_turn()
+        self.do_turn()
+        self.end_turn()
+
+    ###########################################################################
+    def do_turn(self) -> None:
         """Have a turn as the player"""
         self.turn_number += 1
         print()
@@ -1808,8 +1814,10 @@ class Player:
     ###########################################################################
     def game_over(self) -> None:
         """Game is over - do anything special required"""
-        for card in self.end_of_game_cards + list(self.game.landmarks.values()):
+        for card in self.end_of_game_cards + list(self.game.landmarks.values()) + self.projects:
+            self.currcards.append(card)
             card.hook_end_of_game(game=self.game, player=self)
+            self.currcards.pop()
 
     ###########################################################################
     def output(self, msg: str, end: str = "") -> None:

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Event
+
+from dominion import Card, Game, Piles, Event, NoCardException
 
 
 ###############################################################################
@@ -19,7 +20,10 @@ class Event_Trade(Event.Event):
         if not trash:
             return
         for _ in trash:
-            player.gain_card("Silver")
+            try:
+                player.gain_card("Silver")
+            except NoCardException:  # pragma: no coverage
+                player.output("Not more Silver")
 
 
 ###############################################################################

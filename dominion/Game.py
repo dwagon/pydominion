@@ -394,9 +394,7 @@ class Game:
         self._validate_cards()
         self.current_player = self.player_to_left(self.current_player)
         assert self.current_player is not None
-        self.current_player.start_turn()
         self.current_player.turn()
-        self.current_player.end_turn()
         self._validate_cards()
         self._turns.append(self.current_player.uuid)
         if self.isGameOver():
