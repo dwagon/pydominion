@@ -2,6 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Charlatan"""
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 

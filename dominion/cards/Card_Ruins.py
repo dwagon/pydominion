@@ -3,7 +3,8 @@
 
 import random
 import unittest
-from dominion import Card, CardPile, Game, Piles, game_setup, Keys
+
+from dominion import Card, CardPile, game_setup, Keys
 
 
 ###############################################################################

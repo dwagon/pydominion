@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card, Game, Piles
 
 
@@ -24,14 +25,14 @@ class Card_Miser(Card.Card):
             deposit = player.plr_choose_options(
                 "Which to do?",
                 ("Put a copper onto tavern mat?", True),
-                ("%d coins from mat" % coins, False),
+                (f"{coins} coins from mat", False),
             )
             if deposit:
                 cu = player.piles[Piles.HAND]["Copper"]
                 player.add_card(cu, Piles.RESERVE)
                 player.piles[Piles.HAND].remove(cu)
         if not deposit:
-            player.output("Adding %d coins from tavern" % coins)
+            player.output(f"Adding {coins} coins from tavern")
             player.coins.add(coins)
 
 

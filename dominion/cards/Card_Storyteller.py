@@ -14,7 +14,8 @@ class Card_Storyteller(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ADVENTURE
-        self.desc = """+1 Action. Play up to 3 Treasures from your hand. Then, +1 Card, and pay all of your $ for +1 Card per $1 you paid."""
+        self.desc = """+1 Action. Play up to 3 Treasures from your hand.
+                Then, +1 Card, and pay all of your $ for +1 Card per $1 you paid."""
         self.name = "Storyteller"
         self.actions = 1
         self.cost = 5

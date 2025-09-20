@@ -2,6 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Guard_Dog """
 
 import unittest
+
 from dominion import Card, Game, Piles, Player
 
 

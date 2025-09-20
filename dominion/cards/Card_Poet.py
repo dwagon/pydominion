@@ -11,7 +11,8 @@ class Card_Poet(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.OMEN]
         self.base = Card.CardExpansion.RISING_SUN
-        self.desc = """+1 Sun; +1 Card; +1 Action; Reveal the top card of your deck. If it costs $3 or less, put it into your hand."""
+        self.desc = """+1 Sun; +1 Card; +1 Action; Reveal the top card of your deck.
+            If it costs $3 or less, put it into your hand."""
         self.name = "Poet"
         self.cost = 4
         self.cards = 1

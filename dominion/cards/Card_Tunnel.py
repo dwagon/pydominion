@@ -11,7 +11,8 @@ class Card_Tunnel(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.VICTORY, Card.CardType.REACTION]
         self.base = Card.CardExpansion.HINTERLANDS
-        self.desc = """2VP. When you discard this other than during a Clean-up phase, you may reveal it. If you do, gain a Gold."""
+        self.desc = """2VP. When you discard this other than during a Clean-up phase, you may reveal it.
+            If you do, gain a Gold."""
         self.name = "Tunnel"
         self.cost = 3
         self.victory = 2
@@ -19,8 +20,7 @@ class Card_Tunnel(Card.Card):
     def hook_discard_this_card(self, game, player, source):
         if player.phase == Player.Phase.CLEANUP:
             return
-        gain = player.plr_choose_options("Gain a Gold from your Tunnel?", ("No thanks", False), ("Gain Gold?", True))
-        if gain:
+        if player.plr_choose_options("Gain a Gold from your Tunnel?", ("No thanks", False), ("Gain Gold?", True)):
             try:
                 player.gain_card("Gold")
             except NoCardException:

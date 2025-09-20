@@ -14,7 +14,7 @@ class Landmark_Labyrinth(Landmark.Landmark):
         self.name = "Labyrinth"
 
     def dynamic_description(self, player: Player.Player) -> str:
-        return "When you gain a 2nd card in one of your turns, take 2VP from here ({} left)".format(self._vp)
+        return f"When you gain a 2nd card in one of your turns, take 2VP from here ({self._vp} left)"
 
     def setup(self, game: Game.Game) -> None:
         self._vp = 6 * game.numplayers

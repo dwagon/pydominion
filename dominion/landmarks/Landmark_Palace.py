@@ -19,9 +19,7 @@ class Landmark_Palace(Landmark.Landmark):
             if card.name in num:
                 num[card.name] += 1
         score = min(num.values()) * 3
-        player.output(
-            "Palace scored %d VP (%d Copper, %d Silver, %d Gold)" % (score, num["Copper"], num["Silver"], num["Gold"])
-        )
+        player.output(f"Palace scored {score} VP ({num['Copper']} Copper, {num['Silver']} Silver, {num['Gold']} Gold)")
         player.add_score("Palace", score)
 
 

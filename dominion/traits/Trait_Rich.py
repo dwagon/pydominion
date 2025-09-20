@@ -36,7 +36,6 @@ class Test_Rich(unittest.TestCase):
     def test_cost(self) -> None:
         """Check gaining Rich cards"""
         self.g.assign_trait("Rich", "Moat")
-        buys = self.plr.buys.get()
         self.plr.gain_card("Moat")
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 

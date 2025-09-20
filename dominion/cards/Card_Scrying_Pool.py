@@ -50,7 +50,7 @@ def discard_or_put_back(victim: Player.Player, player: Player.Player) -> None:
     except NoCardException:
         return
     victim.reveal_card(top_card)
-    if putback := player.plr_choose_options(
+    if player.plr_choose_options(
         f"For {name[0]} which one?",
         (f"Discard {top_card}", False),
         (f"Putback {top_card}", True),

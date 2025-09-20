@@ -11,3 +11,4 @@ pytest-xdist
 pytest>=4.4.0
 python-coveralls
 setuptools>=70.0.0
+radon

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Sorcerer"""
+"""https://wiki.dominionstrategy.com/index.php/Sorcerer"""
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -28,7 +29,7 @@ class Card_Sorcerer(Card.Card):
     def _generate_options(self, game: Game.Game) -> list[tuple[str, str]]:
         """Generate the options for user interaction"""
         options: list[tuple[str, str]] = []
-        for name, card_pile in game.get_card_piles():
+        for name, _ in game.get_card_piles():
             card = game.card_instances[name]
             if card and card.purchasable:
                 options.append((name, name))
@@ -37,9 +38,7 @@ class Card_Sorcerer(Card.Card):
     def special(self, game: Game.Game, player: Player.Player) -> None:
         for plr in player.attack_victims():
             options = self._generate_options(game)
-            pick = plr.plr_choose_options(
-                "Sorcerer: Guess the top card correctly or get a curse", *options
-            )
+            pick = plr.plr_choose_options("Sorcerer: Guess the top card correctly or get a curse", *options)
             try:
                 top_card = plr.piles[Piles.DECK].top_card()
             except NoCardException:  # pragma: no coverage

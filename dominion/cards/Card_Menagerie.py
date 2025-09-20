@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+
 import dominion.Card as Card
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -11,7 +12,8 @@ class Card_Menagerie(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.CORNUCOPIA
-        self.desc = """+1 Action. Reveal your hand. If there are no duplicate cards in it, +3 Cards. Otherwise, +1 Card."""
+        self.desc = """+1 Action. Reveal your hand. If there are no duplicate cards in it,
+            +3 Cards. Otherwise, +1 Card."""
         self.name = "Menagerie"
         self.actions = 1
         self.cost = 3

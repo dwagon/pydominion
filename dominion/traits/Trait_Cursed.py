@@ -19,7 +19,7 @@ class Trait_Cursed(Trait.Trait):
         self.required_cards = ["Loot", "Curse"]
 
     def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
-        """When you gain a Cursed card, +1 Buy."""
+        """When you gain a Cursed card, gain a Loot and a Curse."""
         if self.isTraitCard(game, card):
             try:
                 player.gain_card("Curse")
@@ -44,7 +44,6 @@ class Test_Cursed(unittest.TestCase):
     def test_cost(self) -> None:
         """Check gaining Cursed cards"""
         self.g.assign_trait("Cursed", "Moat")
-        buys = self.plr.buys.get()
         self.plr.gain_card("Moat")
         self.assertIn("Curse", self.plr.piles[Piles.DISCARD])
 
@@ -59,8 +58,6 @@ class Test_Cursed(unittest.TestCase):
         self.plr.gain_card("Moat")
         self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
         self.assertNotIn("Curse", self.plr.piles[Piles.DISCARD])
-
-        self.g.print_state()
 
 
 ###############################################################################

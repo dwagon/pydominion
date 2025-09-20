@@ -2,6 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Figurine"""
 
 import unittest
+
 from dominion import Game, Card, Piles
 
 

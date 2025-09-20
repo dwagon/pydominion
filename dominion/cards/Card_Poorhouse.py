@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 
@@ -20,7 +21,7 @@ class Card_Poorhouse(Card.Card):
             player.reveal_card(card)
             if card.isTreasure():
                 coins -= 1
-        player.output("Gaining %d coins" % max(coins, 0))
+        player.output(f"Gaining {max(coins,0)} coins")
         player.coins.add(max(coins, 0))
 
 

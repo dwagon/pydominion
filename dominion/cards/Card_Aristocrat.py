@@ -12,7 +12,8 @@ class Card_Aristocrat(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.RISING_SUN
-        self.desc = """If the number of Aristocrats you have in play is: 1 or 5: +3 Actions; 2 or 6: +3 Cards; 3 or 7: +$3; 4 or 8: +3 Buys."""
+        self.desc = """If the number of Aristocrats you have in play is: 1 or 5: +3 Actions;
+            2 or 6: +3 Cards; 3 or 7: +$3; 4 or 8: +3 Buys."""
         self.name = "Aristocrat"
         self.cost = 3
 

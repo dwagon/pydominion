@@ -12,7 +12,8 @@ class Card_Alchemist(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ALCHEMY
-        self.desc = "+2 cards, +1 action; At the start of Clean-up this turn, if you have a Potion in play, you may put this onto your deck."
+        self.desc = """+2 cards, +1 action; At the start of Clean-up this turn, if you have a Potion in play,
+            you may put this onto your deck."""
         self.name = "Alchemist"
         self.cards = 2
         self.actions = 1

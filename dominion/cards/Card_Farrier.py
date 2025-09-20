@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 """https://wiki.dominionstrategy.com/index.php/Farrier"""
 import unittest
-from dominion import Card, Game, Piles, Player, Phase, NoCardException
+
+from dominion import Card, Game, Piles, Player, Phase
 
 
 ###############################################################################

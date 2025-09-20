@@ -2,6 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Enclave """
 
 import unittest
+
 from dominion import Card, Game, Piles, Event, Player
 
 

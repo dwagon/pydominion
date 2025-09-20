@@ -2,6 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Distant_Shore"""
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 

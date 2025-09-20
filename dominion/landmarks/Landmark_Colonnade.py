@@ -16,7 +16,8 @@ class Landmark_Colonnade(Landmark.Landmark):
 
     def dynamic_description(self, player: "Player.Player") -> str:
         if self.vp:
-            return f"When you gain an Action card in your Buy phase, if you have a copy of it in play, take 2VP from here. {self.vp} left"
+            return f"""When you gain an Action card in your Buy phase, if you have a copy of it in play,
+                take 2VP from here. {self.vp} left."""
         return "No VP left"
 
     def setup(self, game: "Game.Game") -> None:

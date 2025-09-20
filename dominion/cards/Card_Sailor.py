@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Sailor"""
+"""http://wiki.dominionstrategy.com/index.php/Sailor"""
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Card, Game, Piles, Player, OptionKeys
 
@@ -21,14 +21,12 @@ class Card_Sailor(Card.Card):
         self.name = "Sailor"
         self.cost = 4
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         """Once this turn, when you gain a Duration card, you may play it."""
         if not card.isDuration():
             return {}
         if player.do_once("Sailor"):
-            if to_play := player.plr_choose_options(
+            if player.plr_choose_options(
                 f"Sailor lets you play {card} now",
                 ("Don't play", False),
                 ("Play now", True),

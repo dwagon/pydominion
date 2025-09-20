@@ -89,7 +89,6 @@ class TestTiara(unittest.TestCase):
         """Test playing a card that trashes itself"""
         self.plr.piles[Piles.HAND].set("Investment", "Copper", "Estate")
         self.plr.add_card(self.card, Piles.HAND)
-        coins = self.plr.coins.get()
         self.plr.test_input = [
             "Select Investment",
             "Trash Copper",

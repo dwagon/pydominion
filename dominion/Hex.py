@@ -1,5 +1,6 @@
 """ https://wiki.dominionstrategy.com/index.php/Hex"""
 from typing import Any
+
 from dominion import Card
 
 

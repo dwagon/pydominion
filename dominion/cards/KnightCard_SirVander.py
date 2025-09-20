@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Piles, Card
 from dominion.cards.Card_Knight import KnightCard
 

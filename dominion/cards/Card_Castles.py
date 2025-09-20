@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles, game_setup, Keys
+
 import dominion.CardPile as CardPile
+from dominion import Game, Card, Piles, game_setup, Keys
 
 
 ###############################################################################

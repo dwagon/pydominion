@@ -90,8 +90,34 @@ class TestDisplayOverview(unittest.TestCase):
         for line in self.plr.messages:
             if line.startswith("| Landmark Baths"):
                 break
-        else:
+        else:  # pragma: no coverage
             self.fail("Landmark message not in display")
+
+
+###############################################################################
+class TestCanBuy(unittest.TestCase):
+    """Test can_buy()"""
+
+    def setUp(self) -> None:
+        self.game = Game.TestGame(numplayers=1, initcards=["Moat"])
+        self.game.start_game()
+        self.plr = self.game.player_list()[0]
+        self.moat = self.game.get_card_from_pile("Moat")
+
+    def test_debt(self) -> None:
+        self.assertTrue(Prompt.can_buy(self.plr, self.moat, [self.moat]))
+        self.plr.debt.set(1)
+        self.assertFalse(Prompt.can_buy(self.plr, self.moat, [self.moat]))
+
+    def test_buys(self) -> None:
+        self.plr.buys.set(1)
+        self.assertTrue(Prompt.can_buy(self.plr, self.moat, [self.moat]))
+        self.plr.buys.set(0)
+        self.assertFalse(Prompt.can_buy(self.plr, self.moat, [self.moat]))
+
+    def test_not_affordable(self) -> None:
+        self.assertTrue(Prompt.can_buy(self.plr, self.moat, [self.moat]))
+        self.assertFalse(Prompt.can_buy(self.plr, self.moat, []))
 
 
 ###############################################################################
@@ -146,7 +172,39 @@ class TestBuyableSelection(unittest.TestCase):
 
 
 ###############################################################################
+class TestWaySelection(unittest.TestCase):
+    """Test way_selection()"""
+
+    def setUp(self) -> None:
+        self.game = Game.TestGame(numplayers=1, initcards=["Moat", "Way of the Camel"])
+        self.game.start_game()
+        self.plr = self.game.player_list()[0]
+        self.moat = self.game.get_card_from_pile("Moat")
+
+    def test_selection(self) -> None:
+        opts, ind = Prompt.way_selection(self.plr, self.moat, 1)
+        self.assertEqual(len(opts), 1)
+        self.assertEqual(opts[0]["selector"], "b")  # "a" is for Moat
+        self.assertEqual(opts[0]["name"], "Way of the Camel")
+        self.assertEqual(opts[0]["desc"], "Moat: Exile a Gold from the Supply.")
+        self.assertEqual(opts[0]["action"], "way")
+
+    def test_no_ways(self) -> None:
+        """No way should return emptiness"""
+        game = Game.TestGame(numplayers=1, initcards=["Moat"])
+        game.start_game()
+        plr = game.player_list()[0]
+        moat = game.get_card_from_pile("Moat")
+        opts, ind = Prompt.way_selection(plr, moat, 1)
+
+        self.assertEqual(len(opts), 0)
+        self.assertEqual(ind, 1)
+
+
+###############################################################################
 class TestPlayableSelection(unittest.TestCase):
+    """Test playable_selection()"""
+
     def setUp(self) -> None:
         self.game = Game.TestGame(numplayers=1, initcards=["Moat", "Alley"])
         self.game.start_game()
@@ -175,6 +233,16 @@ class TestPlayableSelection(unittest.TestCase):
         self.assertIn("[Tkn: +1 Card]", opts[0]["notes"])
         self.assertEqual(ind, 2)
 
+    def test_villager(self) -> None:
+        """Test using a villager"""
+        self.plr.villagers.set(1)
+        opts, ind = Prompt.playable_selection(self.plr, 1)
+        self.assertEqual(len(opts), 1)
+        self.assertEqual(opts[0]["selector"], "1")
+        self.assertIsNone(opts[0]["card"])
+        self.assertEqual(opts[0]["action"], "villager")
+        self.assertEqual(ind, 1)
+
     def test_shadow(self) -> None:
         """Shadows should be playable from deck"""
         self.plr.add_card(self.alley, Piles.DECK)
@@ -191,7 +259,7 @@ class TestPlayableSelection(unittest.TestCase):
 ###############################################################################
 class TestChoiceSelection(unittest.TestCase):
     def setUp(self) -> None:
-        self.game = Game.TestGame(numplayers=1, initcards=["Moat", "Alchemist"])
+        self.game = Game.TestGame(numplayers=1, initcards=["Moat", "Alchemist", "Guardian"])
         self.game.start_game()
         self.plr = self.game.player_list()[0]
         self.moat = self.game.get_card_from_pile("Moat")
@@ -217,7 +285,7 @@ class TestChoiceSelection(unittest.TestCase):
     def test_buy_phase(self) -> None:
         self.plr.piles[Piles.HAND].set("Copper")
         self.plr.phase = Phase.BUY
-        self.plr.coffers = Counter("Coffer", 0)  # Stop card _choice_selection breaking test
+        self.plr.coffers = Counter("Coffer", 0)  # Stop card choice_selection breaking test
         opts = Prompt.choice_selection(self.plr)
 
         self.assertEqual(opts[0]["verb"], "End Phase")
@@ -228,6 +296,21 @@ class TestChoiceSelection(unittest.TestCase):
         self.assertEqual(opts[1]["action"], "spendall")
         self.assertEqual(opts[2]["action"], "spend")
 
+    def test_night_phase(self) -> None:
+        self.plr.piles[Piles.HAND].set("Copper", "Guardian")
+        self.plr.phase = Phase.NIGHT
+        self.plr.coffers = Counter("Coffer", 0)  #
+        opts = Prompt.choice_selection(self.plr)
+
+        self.assertEqual(opts[0]["verb"], "End Phase")
+        self.assertEqual(opts[0]["action"], "quit")
+        self.assertEqual(opts[0]["selector"], "0")
+        self.assertIsNone(opts[0]["card"])
+
+        self.assertEqual(opts[1]["action"], "play")
+        self.assertEqual(opts[1]["name"], "Guardian")
+        self.assertEqual(opts[1]["selector"], "a")
+
     def test_prompt(self) -> None:
         """Test prompt generation"""
         self.plr.actions.set(3)
@@ -235,6 +318,7 @@ class TestChoiceSelection(unittest.TestCase):
         self.plr.potions.set(9)
         self.plr.coins.set(5)
         self.plr.coffers.set(1)
+        self.plr.villagers.set(3)
         self.plr.phase = Phase.BUY
         self.plr.debt = Counter("Debt", 2)
         prompt = Prompt.generate_prompt(self.plr)
@@ -244,6 +328,7 @@ class TestChoiceSelection(unittest.TestCase):
         self.assertIn("Debt=2", prompt)
         self.assertIn("Potion", prompt)
         self.assertIn("Coffer=1", prompt)
+        self.assertIn("Villager=3", prompt)
 
     def test_nothing_prompt(self) -> None:
         """Test that if we don't have something it doesn't appear in the prompt"""
@@ -314,8 +399,76 @@ class TestProjectSelection(unittest.TestCase):
 
 
 ###############################################################################
+class TestSpendAllDetails(unittest.TestCase):
+    """Test spend_all_details()"""
+
+    def setUp(self) -> None:
+        self.game = Game.TestGame(
+            numplayers=1,
+            initcards=["Moat", "Alchemist"],
+        )
+        self.game.start_game()
+        self.plr = self.game.player_list()[0]
+
+    def test_total(self) -> None:
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
+        spendable = [_ for _ in self.plr.piles[Piles.HAND] if _.isTreasure()]
+        self.assertEqual(Prompt.spend_all_details(self.plr, spendable), "6 coin")
+
+    def test_potion(self) -> None:
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Potion")
+        spendable = [_ for _ in self.plr.piles[Piles.HAND] if _.isTreasure()]
+        self.assertEqual(Prompt.spend_all_details(self.plr, spendable), "3 coin, 1 potions")
+
+
+###############################################################################
+class TestDisplayTokens(unittest.TestCase):
+    """Test display_tokens()"""
+
+    def setUp(self) -> None:
+        self.game = Game.TestGame(numplayers=1, initcards=["Moat"])
+        self.game.start_game()
+        self.plr = self.game.player_list()[0]
+
+    def test_display_journey(self) -> None:
+        self.assertEqual(Prompt.display_tokens(self.plr), "Journey Faceup")
+        self.plr.flip_journey_token()
+        self.assertEqual(Prompt.display_tokens(self.plr), "Journey Facedown")
+
+    def test_plus_card_token(self) -> None:
+        self.assertNotIn("+1 Card: Moat", Prompt.display_tokens(self.plr))
+        self.plr.place_token(Token.PLUS_1_CARD, "Moat")
+        self.assertIn("+1 Card: Moat", Prompt.display_tokens(self.plr))
+
+    def test_plus_one_action(self) -> None:
+        self.assertNotIn("+1 Action: Moat", Prompt.display_tokens(self.plr))
+        self.plr.place_token(Token.PLUS_1_ACTION, "Moat")
+        self.assertIn("+1 Action: Moat", Prompt.display_tokens(self.plr))
+
+    def test_plus_one_buy(self) -> None:
+        self.assertNotIn("+1 Buy: Moat", Prompt.display_tokens(self.plr))
+        self.plr.place_token(Token.PLUS_1_BUY, "Moat")
+        self.assertIn("+1 Buy: Moat", Prompt.display_tokens(self.plr))
+
+    def test_plus_one_coin(self) -> None:
+        self.assertNotIn("+1 Coin: Moat", Prompt.display_tokens(self.plr))
+        self.plr.place_token(Token.PLUS_1_COIN, "Moat")
+        self.assertIn("+1 Coin: Moat", Prompt.display_tokens(self.plr))
+
+    def test_minus_one_card(self) -> None:
+        self.assertNotIn("-1 Card: Moat", Prompt.display_tokens(self.plr))
+        self.plr.place_token(Token.MINUS_1_CARD, "Moat")
+        self.assertIn("-1 Card: Moat", Prompt.display_tokens(self.plr))
+
+    def test_minus_one_coin(self) -> None:
+        self.assertNotIn("-1 Coin: Moat", Prompt.display_tokens(self.plr))
+        self.plr.place_token(Token.MINUS_1_COIN, "Moat")
+        self.assertIn("-1 Coin: Moat", Prompt.display_tokens(self.plr))
+
+
+###############################################################################
 class TestSpendableSelection(unittest.TestCase):
-    """Test _spendable_selection()"""
+    """Test spendable_selection()"""
 
     def setUp(self) -> None:
         self.game = Game.TestGame(
@@ -341,7 +494,7 @@ class TestSpendableSelection(unittest.TestCase):
         self.assertIsNone(opts[0]["card"])
 
         self.assertEqual(opts[1]["selector"], "2")
-        self.assertEqual(opts[1]["verb"], "Spend Coffer (1 coin)")
+        self.assertEqual(opts[1]["verb"], "Spend Coffer (+1 coin)")
         self.assertEqual(opts[1]["action"], "coffer")
         self.assertIsNone(opts[1]["card"])
 

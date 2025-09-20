@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Villa"""
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Card, Game, Piles, Player, OptionKeys, Phase
 

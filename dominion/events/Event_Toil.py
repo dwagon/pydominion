@@ -2,6 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Toil"""
 
 import unittest
+
 from dominion import Card, Game, Piles, Event
 
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 
@@ -23,7 +24,7 @@ class Card_Student(Card.Card):
             Trash a card from your hand. If it's a Treasure, +1 Favor and put this onto your deck."""
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
-        if opt := player.plr_choose_options(
+        if player.plr_choose_options(
             "Do you want to rotate the Wizards?",
             ("Don't change", False),
             ("Rotate", True),
@@ -68,7 +69,7 @@ class TestStudent(unittest.TestCase):
 
     def test_play_not_from_hand(self) -> None:
         """Play student via a golem, so it isn't in the hand when played"""
-        card = self.g.get_card_from_pile("Wizards", "Student")
+        self.g.get_card_from_pile("Wizards", "Student")
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate")
         self.plr.piles[Piles.DECK].set("Copper", "Student")
         golem = self.g.get_card_from_pile("Golem")

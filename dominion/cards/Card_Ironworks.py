@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 
@@ -10,7 +11,8 @@ class Card_Ironworks(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.INTRIGUE
-        self.desc = "Gain a card costing up to 4. If it is an ... Action card, +1 Action; Treasure card, +1 Coin; Victory card, +1 Card"
+        self.desc = """Gain a card costing up to 4. If it is an ... Action card, +1 Action;
+                Treasure card, +1 Coin; Victory card, +1 Card"""
         self.name = "Iron Works"
         self.cost = 4
 

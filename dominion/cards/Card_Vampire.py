@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+
 import dominion.Card as Card
+from dominion import Game, Piles
 from dominion.Player import Phase
 
 
@@ -12,7 +13,8 @@ class Card_Vampire(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.NIGHT, Card.CardType.ATTACK, Card.CardType.DOOM]
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = "Each other player receives the next Hex.  Gain a card costing up to 5 other than a Vampire.  Exchange this for a Bat."
+        self.desc = """Each other player receives the next Hex. Gain a card costing up to 5 other than a Vampire.
+            Exchange this for a Bat."""
         self.name = "Vampire"
         self.cost = 5
         self.required_cards = [("Card", "Bat")]

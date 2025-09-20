@@ -4,7 +4,7 @@
 
 import contextlib
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Game, Card, Piles, Player, NoCardException, OptionKeys
 
@@ -21,7 +21,7 @@ class Card_Corsair(Card.Card):
             Card.CardType.ATTACK,
         ]
         self.base = Card.CardExpansion.SEASIDE
-        self.desc = """+$2; At the start of your next turn, +1 Card. 
+        self.desc = """+$2; At the start of your next turn, +1 Card.
         Until then, each other player trashes the first Silver or Gold they play each turn."""
         self.coin = 2
         self.name = "Corsair"

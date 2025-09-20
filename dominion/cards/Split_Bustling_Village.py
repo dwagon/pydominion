@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Bustling_Village"""
 import unittest
-from dominion import Card, Game, Piles, Player
+
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -15,7 +16,7 @@ class Card_BustlingVillage(Card.Card):
         self.cards = 1
         self.cost = 5
         self.pile = "Settlers"
-        self.desc = """+1 Card; +3 Actions; Look through your discard pile. 
+        self.desc = """+1 Card; +3 Actions; Look through your discard pile.
         You may reveal a Settlers from it and put it into your hand."""
 
     ###########################################################################

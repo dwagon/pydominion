@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Piles, Player, PlayArea, Card
+
+GEAR = "gear"
 
 
 ###############################################################################
@@ -18,7 +21,7 @@ class Card_Gear(Card.Card):
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """Set aside up to 2 cards from your hand face down..."""
         if not hasattr(player, "gear_reserve"):
-            player.gear_reserve = PlayArea.PlayArea(initial=[])
+            player.specials[GEAR] = PlayArea.PlayArea(initial=[])
         cards = player.card_sel(
             num=2,
             cardsrc=Piles.HAND,
@@ -26,16 +29,16 @@ class Card_Gear(Card.Card):
             verbs=("Set", "Unset"),
         )
         for card in cards:
-            player.gear_reserve.add(card)
+            player.specials[GEAR].add(card)
             player.piles[Piles.HAND].remove(card)
             player.secret_count += 1
 
     def duration(self, game: Game.Game, player: Player.Player) -> None:
         """... At the start of your next turn, put them into your hand"""
-        for card in player.gear_reserve:
-            player.output("Pulling %s reserved by Gear" % card.name)
+        for card in player.specials[GEAR]:
+            player.output(f"Pulling {card} reserved by Gear")
             player.add_card(card, Piles.HAND)
-            player.gear_reserve.remove(card)
+            player.specials[GEAR].remove(card)
             player.secret_count -= 1
 
 

@@ -28,7 +28,7 @@ class Card_Develop(Card.Card):
         if player.cards_worth(card.cost - 1):
             player.plr_gain_card(cost=card.cost - 1, modifier="equal", destination=Piles.TOPDECK)
         else:
-            player.output("No cards worth %s" % (card.cost - 1))
+            player.output(f"No cards worth {card.cost-1}")
 
 
 ###############################################################################

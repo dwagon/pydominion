@@ -2,6 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Horse """
 
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 

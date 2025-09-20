@@ -13,7 +13,7 @@ class Landmark_Baths(Landmark.Landmark):
         self.name = "Baths"
 
     def dynamic_description(self, player):
-        return "When you end your turn without having gained a card, take 2VP from here. (%d left)" % self._vp
+        return f"When you end your turn without having gained a card, take 2VP from here. ({self._vp} left)"
 
     def hook_end_turn(self, game, player):
         if not player.stats["gained"]:

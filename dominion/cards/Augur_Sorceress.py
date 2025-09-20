@@ -29,7 +29,7 @@ class Card_Sorceress(Card.Card):
         except NoCardException:
             return
         choices: list[tuple[str, Any]] = [("No guess", None)]
-        for name, card_pile in sorted(game.get_card_piles()):
+        for name, _ in sorted(game.get_card_piles()):
             choices.append((f"Guess {name}", name))
         guess = player.plr_choose_options("Guess the top card", *choices)
         if not guess:

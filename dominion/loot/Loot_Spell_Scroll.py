@@ -56,7 +56,6 @@ class TestSpellScroll(unittest.TestCase):
         """Test playing a spell scroll"""
         spell = self.g.get_card_from_pile("Loot", "Spell Scroll")
         self.plr.add_card(spell, Piles.HAND)
-        coins = self.plr.coins.get()
         self.plr.test_input = ["Trash", "Get Gold", "Play"]
         self.plr.play_card(spell)
         self.assertIn("Spell Scroll", self.g.trash_pile)

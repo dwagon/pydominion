@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card, Game, Piles
 
 
@@ -10,7 +11,8 @@ class Card_SpiceMerchant(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.HINTERLANDS
-        self.desc = """You may trash a Treasure from your hand. If you do, choose one: +2 Cards and +1 Action; or +2 Coins and +1 Buy."""
+        self.desc = """You may trash a Treasure from your hand. If you do, choose one:
+            +2 Cards and +1 Action; or +2 Coins and +1 Buy."""
         self.name = "Spice Merchant"
         self.cost = 4
 

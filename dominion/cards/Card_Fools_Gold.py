@@ -12,8 +12,9 @@ class Card_Fools_Gold(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.TREASURE, Card.CardType.REACTION]
         self.base = Card.CardExpansion.HINTERLANDS
-        self.desc = """If this is the first time you played a Fool's Gold this turn, this is worth 1 Coin, otherwise it's worth 4 Coin.
-        When another player gains a Province, you may trash this from your hand. If you do, gain a Gold, putting it on your deck."""
+        self.desc = """If this is the first time you played a Fool's Gold this turn, this is worth 1 Coin,
+            otherwise it's worth 4 Coin. When another player gains a Province, you may trash this from your hand.
+            If you do, gain a Gold, putting it on your deck."""
         self.name = "Fool's Gold"
         self.cost = 2
 
@@ -38,7 +39,7 @@ class Card_Fools_Gold(Card.Card):
         if owner == player:
             return {}
         if owner.plr_choose_options(
-            "%s gained a Province. Trash this card to gain a gold?" % player.name,
+            f"{player} gained a Province. Trash this card to gain a gold?",
             ("Keep Fool's Gold", False),
             ("Trash and gain a Gold?", True),
         ):

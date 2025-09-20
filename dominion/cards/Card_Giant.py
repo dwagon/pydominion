@@ -2,6 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Giant"""
 
 import unittest
+
 from dominion import Card, Game, Piles, Player, NoCardException
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Secluded_Shrine"""
+"""https://wiki.dominionstrategy.com/index.php/Secluded_Shrine"""
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Game, Card, Piles, Player, OptionKeys
 
@@ -20,9 +20,7 @@ class Card_SecludedShrine(Card.Card):
         self.coin = 1
         self.permanent = True
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         if self.location != Piles.DURATION:  # pragma: no coverage
             return {}
         if not card.isTreasure():  # pragma: no coverage

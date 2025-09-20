@@ -4,7 +4,7 @@
 import unittest
 from typing import Any
 
-from dominion import Game, Event, Piles, Card, OptionKeys, Player, PlayArea
+from dominion import Game, Event, Piles, Card, OptionKeys, Player
 
 MIRROR = "mirror"
 

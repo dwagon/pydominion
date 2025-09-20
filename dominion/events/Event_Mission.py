@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Mission"""
+"""https://wiki.dominionstrategy.com/index.php/Mission"""
 import unittest
-from dominion import Card, Game, Event, Limits, Phase
+
+from dominion import Card, Game, Event, Limits, Player
 
 
 ###############################################################################
@@ -9,17 +10,16 @@ class Event_Mission(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.ADVENTURE
-        self.desc = """Once per turn: If the previous turn wasn't yours, take another turn after this one, 
+        self.desc = """Once per turn: If the previous turn wasn't yours, take another turn after this one,
         during which you can't buy cards."""
         self.name = "Mission"
         self.cost = 4
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         if not game.last_turn(player):
             player.output("You had the previous turn")
-            return
 
-    def hook_end_turn(self, game, player):
+    def hook_end_turn(self, game: "Game.Game", player: "Player.Player") -> None:
         if game.last_turn(player):
             game.current_player = game.playerToRight(player)
             player.limits[Limits.BUY] = 0

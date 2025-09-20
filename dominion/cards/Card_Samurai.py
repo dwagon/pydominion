@@ -12,8 +12,8 @@ class Card_Samurai(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.RISING_SUN
-        self.desc = """Each other player discards down to 3 cards in hand. At the start of each of your turns this game, +$1.
-(This stays in play.)"""
+        self.desc = """Each other player discards down to 3 cards in hand.
+            At the start of each of your turns this game, +$1. (This stays in play.)"""
         self.name = "Samurai"
         self.cost = 6
         self.permanent = True

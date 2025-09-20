@@ -22,7 +22,7 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
             return {}
         if game.card_piles["Changeling"].is_empty():
             return {}
-        if swap := player.plr_choose_options(
+        if player.plr_choose_options(
             f"Swap {card} for a Changeling?",
             (f"Swap {card}", True),
             (f"Keep {card}", False),

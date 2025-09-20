@@ -2,6 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/League_of_Shopkeepers"""
 
 import unittest
+
 from dominion import Card, Game, Piles, Ally
 
 

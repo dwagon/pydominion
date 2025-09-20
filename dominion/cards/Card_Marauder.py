@@ -2,6 +2,7 @@
 """ https://wiki.dominionstrategy.com/index.php/Marauder"""
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 

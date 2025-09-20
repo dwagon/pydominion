@@ -3,9 +3,9 @@
 
 import unittest
 
-from dominion.Game import Game, TestGame
-from dominion.Card import Card, CardType, CardExpansion
 from dominion import Piles, OptionKeys
+from dominion.Card import Card, CardType, CardExpansion
+from dominion.Game import Game, TestGame
 from dominion.Player import Player
 
 

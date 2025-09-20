@@ -2,6 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Crafters%27_Guild"""
 
 import unittest
+
 from dominion import Card, Game, Piles, Ally, Player
 
 
@@ -10,7 +11,8 @@ class Ally_Crafters_Guild(Ally.Ally):
     def __init__(self) -> None:
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
-        self.desc = """At the start of your turn, you may spend 2 Favors to gain a card costing up to $4 onto your deck."""
+        self.desc = """At the start of your turn, you may spend 2 Favors to gain a card costing up
+            to $4 onto your deck."""
         self.name = "Crafters' Guild"
 
     def hook_start_turn(self, game: Game.Game, player: Player.Player) -> None:
@@ -29,9 +31,7 @@ def botresponse(player, kind, args=None, kwargs=None):
 ###############################################################################
 class TestCraftersGuild(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            numplayers=1, allies="Crafters' Guild", initcards=["Underling"]
-        )
+        self.g = Game.TestGame(numplayers=1, allies="Crafters' Guild", initcards=["Underling"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

@@ -2,6 +2,7 @@
 """ https://wiki.dominionstrategy.com/index.php/Swamp_Hag"""
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException, OptionKeys
 
 
@@ -15,7 +16,7 @@ class Card_SwampHag(Card.Card):
             Card.CardType.DURATION,
         ]
         self.base = Card.CardExpansion.ADVENTURE
-        self.desc = """Until your next turn, when any other player buys a card, he gains a Curse. 
+        self.desc = """Until your next turn, when any other player buys a card, he gains a Curse.
         At the start of your next turn: +3 Coin"""
         self.required_cards = ["Curse"]
         self.name = "Swamp Hag"

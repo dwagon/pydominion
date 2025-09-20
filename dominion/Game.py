@@ -34,7 +34,7 @@ class Game:
 
     def __init__(self, **kwargs: Any) -> None:
         self.players: dict[str, Player] = {}
-        self._cards: dict[UUID, Card] = {}
+        self.cards: dict[UUID, Card] = {}
         self.card_piles: dict[str, CardPile] = {}
         self.states: dict[str, State] = {}
         self.artifacts: dict[str, Artifact] = {}
@@ -48,7 +48,7 @@ class Game:
         self.retained_boons: list[Boon] = []
         self.hexes: list[Hex] = []
         self._turns: list[str] = []
-        self.ally = None
+        self.ally: Optional[Card] = None
         self.discarded_hexes: list[Hex] = []
         self.trash_pile = PlayArea("trash", game=self)
         self.inactive_prophecy: Optional[Prophecy] = None
@@ -62,7 +62,7 @@ class Game:
         self.specials: dict[str, Any] = {}  # Special areas for specific card related stuff
         game_setup.parse_args(self, **kwargs)
 
-        self.card_mapping = game_setup.get_available_card_classes(self)
+        self.card_mapping = game_setup.get_available_card_classes()
         self._original: dict[str, Any] = {}
         self.card_instances: dict[str, Card] = {}
 
@@ -71,7 +71,7 @@ class Game:
         game_setup.start_game(self, player_names, plr_class)
 
     ###########################################################################
-    def _save_original(self) -> None:
+    def save_original(self) -> None:
         """Save original card state for debugging purposes"""
         self._original["count"] = self._count_all_cards()
         self._original["total_cards"] = self.count_cards()
@@ -287,13 +287,13 @@ class Game:
                     tokens += f"{plr.name}[{','.join(tkns)}]"
 
             print(f"CardPile {name}: {len(card_pile)} cards {tokens}")
-        print(f"Instances: {', '.join([_ for _ in self.card_instances])}")
+        print(f"Instances: {', '.join(self.card_instances)}")
 
         for plr in self.player_list():
             plr.print_state()
         print()
         if card_dump:
-            for v in self._cards.values():
+            for v in self.cards.values():
                 print(f"    {v} ({v.uuid} {v._player}@{v._location})")
 
     ###########################################################################
@@ -362,7 +362,7 @@ class Game:
             f"current={self.count_cards()} original={self._original['total_cards']}\n",
             file=sys.stderr,
         )
-        for name, pile in self.card_piles.items():
+        for name in self.card_piles:
             if self._original["count"][name]["total"] == now[name]["total"]:
                 continue
             print(f"{name} <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", file=sys.stderr)

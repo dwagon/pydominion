@@ -11,7 +11,8 @@ class Event_Continue(Event.Event):
     def __init__(self) -> None:
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.RISING_SUN
-        self.desc = """Once per turn: Gain a non-Attack Action card costing up to $4. Return to your Action phase and play it. +1 Action and +1 Buy."""
+        self.desc = """Once per turn: Gain a non-Attack Action card costing up to $4.
+            Return to your Action phase and play it. +1 Action and +1 Buy."""
         self.name = "Continue"
         self.cost = 0
         self.debtcost = 8

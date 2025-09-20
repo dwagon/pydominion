@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, PlayArea
 
 
@@ -32,15 +33,13 @@ class Card_Soldier(Card.Card):
             if c.isAttack():
                 count += 1
         player.coins.add(count)
-        player.output("Gained %d extra coins" % count)
+        player.output(f"Gained {count} extra coins")
         for plr in player.attack_victims():
             if plr.piles[Piles.HAND].size() >= 4:
                 plr.output(f"{player}'s Soldier: Discard a card")
                 plr.plr_discard_cards(force=True)
 
-    def hook_discard_this_card(
-        self, game: Game.Game, player: Player.Player, source: PlayArea.PlayArea
-    ) -> None:
+    def hook_discard_this_card(self, game: Game.Game, player: Player.Player, source: PlayArea.PlayArea) -> None:
         """Replace with Hero"""
         player.replace_traveller(self, "Fugitive")
 
@@ -53,9 +52,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class TestSoldier(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            quiet=True, numplayers=2, initcards=["Peasant", "Militia"]
-        )
+        self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Peasant", "Militia"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g.get_card_from_pile("Soldier")

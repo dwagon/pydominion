@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+
 import dominion.Card as Card
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -21,7 +22,7 @@ class Card_Relic(Card.Card):
         on his deck."""
         for victim in player.attack_victims():
             victim.card_token = True
-            victim.output("-1 Card token active due to Relic by %s" % player.name)
+            victim.output(f"-1 Card token active due to Relic by {player}")
 
 
 ###############################################################################

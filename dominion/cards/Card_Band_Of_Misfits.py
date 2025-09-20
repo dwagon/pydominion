@@ -2,6 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Band_of_misfits"""
 
 import unittest
+
 from dominion import Card, Game, Piles, Player
 
 
@@ -13,7 +14,8 @@ class Card_BandOfMisfits(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.COMMAND]
         self.base = Card.CardExpansion.DARKAGES
-        self.desc = """Play a non-Command non-Duration Action card from the Supply that costs less than this, leaving it there."""
+        self.desc = """Play a non-Command non-Duration Action card from the Supply that costs less than this,
+            leaving it there."""
         self.name = "Band of Misfits"
         self.cost = 5
 

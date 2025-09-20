@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
@@ -16,14 +16,14 @@ class Card_RoyalBlacksmith(Card.Card):
         self.debtcost = 8
         self.cards = 5
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         count = 0
         for card in player.piles[Piles.HAND]:
             player.reveal_card(card)
             if card.name == "Copper":
                 player.discard_card(card)
                 count += 1
-        player.output("Discarding %d coppers" % count)
+        player.output(f"Discarding {count} coppers")
 
 
 ###############################################################################

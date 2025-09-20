@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 
@@ -11,7 +12,8 @@ class Card_Treasurer(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.RENAISSANCE
         self.name = "Treasurer"
-        self.desc = "+3 Coin; Choose one: Trash a Treasure from your hand; or gain a Treasure from the trash to your hand; or take the Key."
+        self.desc = """+3 Coin; Choose one: Trash a Treasure from your hand;
+                or gain a Treasure from the trash to your hand; or take the Key."""
         self.cost = 5
         self.coin = 3
         self.needsartifacts = True
@@ -32,9 +34,7 @@ class Card_Treasurer(Card.Card):
             treas = [_ for _ in player.piles[Piles.HAND] if _.isTreasure()]
             player.plr_trash_card(cardsrc=treas)
         elif choice == "gain":
-            if card := player.card_sel(
-                cardsrc=gain_treas, prompt="Select Treasure from the Trash"
-            ):
+            if card := player.card_sel(cardsrc=gain_treas, prompt="Select Treasure from the Trash"):
                 game.trash_pile.remove(card[0])
                 player.add_card(card[0], Piles.HAND)
         elif choice == "key":
