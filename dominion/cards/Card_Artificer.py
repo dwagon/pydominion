@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles
 
 
@@ -24,10 +25,7 @@ class Card_Artificer(Card.Card):
         todiscard = player.plr_discard_cards(any_number=True, prompt="Select which card(s) to discard")
         cost = len(todiscard)
         player.plr_gain_card(
-            cost=cost,
-            modifier="equal",
-            destination=Piles.TOPDECK,
-            prompt="Gain a card costing %d" % cost,
+            cost=cost, modifier="equal", destination=Piles.TOPDECK, prompt=f"Gain a card costing {cost}"
         )
 
 

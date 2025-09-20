@@ -12,7 +12,9 @@ class Card_Forager(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DARKAGES
-        self.desc = """+1 Action +1 Buy;Trash a card from your hand. A coin per differently named Treasure in the trash."""
+        self.desc = (
+            """+1 Action +1 Buy;Trash a card from your hand. A coin per differently named Treasure in the trash."""
+        )
         self.name = "Forager"
         self.actions = 1
         self.buys = 1
@@ -26,7 +28,7 @@ class Card_Forager(Card.Card):
             if card.isTreasure():
                 treas.add(card.name)
         player.coins.add(len(treas))
-        player.output("Gained %s from Forager" % len(treas))
+        player.output(f"Gained {len(treas)} from Forager")
 
 
 ###############################################################################

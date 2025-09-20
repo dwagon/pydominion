@@ -3,7 +3,7 @@
 import unittest
 
 import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Player
 
 
 ###############################################################################
@@ -17,19 +17,19 @@ class Card_Cutpurse(Card.Card):
         self.cost = 4
         self.base = Card.CardExpansion.SEASIDE
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Each other player discard a Copper card (or reveals a
         hand with no copper)."""
         for victim in player.attack_victims():
             c = victim.piles[Piles.HAND]["Copper"]
             if c:
-                player.output("%s discarded a copper" % victim.name)
-                victim.output("Discarded a copper due to %s's Cutpurse" % player.name)
+                player.output(f"{victim} discarded a copper")
+                victim.output(f"Discarded a copper due to {player}'s Cutpurse")
                 victim.discard_card(c)
             else:
                 for card in victim.piles[Piles.HAND]:
                     victim.reveal_card(card)
-                player.output("%s had no coppers" % victim.name)
+                player.output(f"{victim} had no coppers")
 
 
 ###############################################################################

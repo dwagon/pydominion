@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles
 
 
@@ -28,11 +29,11 @@ class Card_HauntedWoods(Card.Card):
             return
         if player.has_defense(owner):
             return
-        player.output("%s's Haunted Woods puts your hand onto your deck" % owner.name)
+        player.output(f"{owner}'s Haunted Woods puts your hand onto your deck")
         for crd in player.piles[Piles.HAND]:
             player.add_card(crd, Piles.TOPDECK)
             player.piles[Piles.HAND].remove(crd)
-            player.output("Moving %s to deck" % crd.name)
+            player.output(f"Moving {crd} to deck")
 
 
 ###############################################################################

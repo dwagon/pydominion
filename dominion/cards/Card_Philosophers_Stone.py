@@ -23,7 +23,7 @@ class Card_Philosophersstone(Card.Card):
         Worth 1 per 5 cards total between them (rounded down)"""
         numcards = player.piles[Piles.DECK].size() + player.piles[Piles.DISCARD].size()
         extracoin = numcards / 5
-        player.output("Gained %d coins from Philosopher's Stone" % extracoin)
+        player.output(f"Gained {extracoin} coins from Philosopher's Stone")
         return int(extracoin)
 
 

@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
-class Card_Hornofplenty(Card.Card):
+class Card_HornOfPlenty(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
@@ -23,15 +23,14 @@ class Card_Hornofplenty(Card.Card):
 
         card = player.plr_gain_card(
             len(cards),
-            prompt="Gain a card costing up to %d. If it is a victory then this card will be trashed"
-            % len(cards),
+            prompt=f"Gain a card costing up to {len(cards)}. If it is a victory then this card will be trashed",
         )
         if card and card.isVictory():
             player.trash_card(self)
 
 
 ###############################################################################
-class Test_Hornofplenty(unittest.TestCase):
+class Test_HornOfPlenty(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,

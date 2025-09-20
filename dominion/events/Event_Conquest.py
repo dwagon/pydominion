@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card, Game, Piles, Event
 
 
@@ -20,7 +21,7 @@ class Event_Conquest(Event.Event):
         for card in player.stats["gained"]:
             if card.name == "Silver":
                 sc += 1
-        player.output("Gained %d VP from Conquest" % sc)
+        player.output(f"Gained {sc} VP from Conquest")
         player.add_score("Conquest", sc)
 
 

@@ -22,7 +22,7 @@ class Landmark_WolfDen(Landmark.Landmark):
         for card, num in cards.items():
             if num == 1:
                 score -= 3
-                player.output("Wolf Den: -3 due to only one %s" % card)
+                player.output(f"Wolf Den: -3 due to only one {card}")
         player.add_score("Wolf Den", score)
 
 

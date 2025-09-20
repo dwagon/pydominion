@@ -13,10 +13,7 @@ class Landmark_Arena(Landmark.Landmark):
         self.name = "Arena"
 
     def dynamic_description(self, player):
-        return (
-            "At the start of your Buy phase, you may discard an Action card. If you do, take 2VP from here. (%d left)"
-            % self._vp
-        )
+        return f"At the start of your Buy phase, you may discard an Action card. If you do, take 2VP from here. ({self._vp} left)"
 
     def setup(self, game):
         self._vp = 6 * game.numplayers

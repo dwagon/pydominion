@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card, Piles
+
 import dominion.Card as Card
+from dominion import Game, Piles, Player
 
 
 ###############################################################################
@@ -17,13 +18,13 @@ class Card_CityQuarter(Card.Card):
         self.actions = 2
         self.coin = 1
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         actions = 0
         for c in player.piles[Piles.HAND]:
             player.reveal_card(c)
             if c.isAction():
                 actions += 1
-        player.output("Revealed %d actions" % actions)
+        player.output(f"Revealed {actions} actions")
         player.pickup_cards(actions)
 
 
