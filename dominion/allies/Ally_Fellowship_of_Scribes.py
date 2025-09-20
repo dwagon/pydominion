@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Fellowship_of_Scribes """
+"""http://wiki.dominionstrategy.com/index.php/Fellowship_of_Scribes"""
 
 import unittest
 
@@ -11,7 +11,8 @@ class Ally_Fellowship_of_Scribes(Ally.Ally):
     def __init__(self) -> None:
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
-        self.desc = """After playing an Action, if you have 4 or fewer cards in hand, you may spend a Favor for +1 Card."""
+        self.desc = """After playing an Action, if you have 4 or fewer cards in hand,
+            you may spend a Favor for +1 Card."""
         self.name = "Fellowship of Scribes"
 
     def hook_post_play(self, game, player, card):

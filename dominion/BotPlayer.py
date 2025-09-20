@@ -159,9 +159,8 @@ class BotPlayer(Player):
                         to_discard.append(card)
         if len(to_discard) >= num_to_discard:
             return to_discard[:num_to_discard]
-        sys.stderr.write(
-            f"Couldn't find cards to discard {num_to_discard} from {', '.join([_.name for _ in self.piles[Piles.HAND]])}"
-        )
+        hand_contents = ", ".join([_.name for _ in self.piles[Piles.HAND]])
+        sys.stderr.write(f"Couldn't find cards to discard {num_to_discard} from {hand_contents}")
         sys.stderr.write(f"Managed to get {(', '.join([_.name for _ in to_discard]))} so far\n")
         return []
 

@@ -2,8 +2,7 @@
 
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Player, Card
 
 
 ###############################################################################
@@ -13,11 +12,12 @@ class Card_Villain(Card.Card):
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.RENAISSANCE
         self.name = "Villain"
-        self.desc = "+2 Coffers; Each other player with 5 or more cards in hand discards one costing 2 or more (or reveals they can't)."
+        self.desc = """+2 Coffers; Each other player with 5 or more cards in hand discards one costing 2 or more
+                (or reveals they can't)."""
         self.cost = 5
 
     ###########################################################################
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         player.coffers.add(2)
         for vic in player.attack_victims():
             if vic.piles[Piles.HAND].size() >= 5:

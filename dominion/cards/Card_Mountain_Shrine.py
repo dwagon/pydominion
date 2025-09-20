@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """https://wiki.dominionstrategy.com/index.php/Mountain_Shrine"""
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 
@@ -10,7 +11,8 @@ class Card_Mountain_Shrine(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.OMEN]
         self.base = Card.CardExpansion.RISING_SUN
-        self.desc = """+1 Sun; +$2; You may trash a card from your hand. Then if there are any Action cards in the trash, +2 Cards."""
+        self.desc = """+1 Sun; +$2; You may trash a card from your hand.
+                Then if there are any Action cards in the trash, +2 Cards."""
         self.name = "Mountain Shrine"
         self.coin = 2
         self.debtcost = 5

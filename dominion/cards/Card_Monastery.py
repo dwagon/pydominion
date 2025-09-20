@@ -13,7 +13,8 @@ class Card_Monastery(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.NIGHT
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = "For each card you've gained this turn, you may trash a card from your hand or a Copper you have in play."
+        self.desc = """For each card you've gained this turn, you may trash a card from your hand or a
+            Copper you have in play."""
         self.name = "Monastery"
         self.cost = 2
 

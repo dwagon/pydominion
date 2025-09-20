@@ -11,7 +11,8 @@ class Card_HornOfPlenty(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.CORNUCOPIA
-        self.desc = """When you play this, gain a card costing up to 1 per differently named card you have in play, counting this.
+        self.desc = """When you play this, gain a card costing up to 1 per differently named card you have in play,
+            counting this.
         If it's a Victory card, trash this."""
         self.name = "Horn of Plenty"
         self.cost = 5

@@ -11,7 +11,8 @@ class Card_Leprechaun(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DOOM]
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = "Gain a Gold. If you have exactly 7 cards in play, gain a Wish from its pile. Otherwise, receive a Hex."
+        self.desc = """Gain a Gold. If you have exactly 7 cards in play, gain a Wish from its pile.
+            Otherwise, receive a Hex."""
         self.name = "Leprechaun"
         self.required_cards = [("Card", "Wish")]
         self.cost = 5
@@ -51,9 +52,7 @@ class TestLeprechaun(unittest.TestCase):
 
     def test_play_with_seven(self) -> None:
         """Play a Leprechaun with 7 cards in play"""
-        self.plr.piles[Piles.PLAYED].set(
-            "Moat", "Moat", "Moat", "Moat", "Moat", "Moat"
-        )  # + Leprec
+        self.plr.piles[Piles.PLAYED].set("Moat", "Moat", "Moat", "Moat", "Moat", "Moat")  # + Leprec
         self.plr.play_card(self.card)
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertFalse(self.plr.has_state("Deluded"))

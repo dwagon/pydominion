@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Wayfarer """
+"""http://wiki.dominionstrategy.com/index.php/Wayfarer"""
 
 import unittest
 
@@ -12,7 +12,8 @@ class Card_Wayfarer(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.MENAGERIE
-        self.desc = "+3 Cards; You may gain a Silver. This has the same cost as the last other card gained this turn, if any."
+        self.desc = """+3 Cards; You may gain a Silver. This has the same cost as the last other
+            card gained this turn, if any."""
         self.name = "Wayfarer"
         self.cards = 3
         self.cost = 6

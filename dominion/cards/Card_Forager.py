@@ -12,9 +12,8 @@ class Card_Forager(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DARKAGES
-        self.desc = (
-            """+1 Action +1 Buy;Trash a card from your hand. A coin per differently named Treasure in the trash."""
-        )
+        self.desc = """+1 Action +1 Buy;Trash a card from your hand.
+            A coin per differently named Treasure in the trash."""
         self.name = "Forager"
         self.actions = 1
         self.buys = 1

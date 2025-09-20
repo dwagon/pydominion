@@ -11,7 +11,8 @@ class Event_Invasion(Event.Event):
     def __init__(self) -> None:
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.PLUNDER
-        self.desc = """You may play an Attack from your hand. Gain a Duchy. Gain an Action onto your deck. Gain a Loot; play it."""
+        self.desc = """You may play an Attack from your hand. Gain a Duchy. Gain an Action onto your deck.
+            Gain a Loot; play it."""
         self.name = "Invasion"
         self.required_cards = ["Loot"]
         self.cost = 10

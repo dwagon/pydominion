@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Cave_Dwellers """
+"""http://wiki.dominionstrategy.com/index.php/Cave_Dwellers"""
 
 import unittest
 
@@ -11,7 +11,8 @@ class Ally_CaveDwellers(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
-        self.desc = """At the start of your turn, you may spend a Favor to discard a card, then draw a card. Repeat as desired."""
+        self.desc = """At the start of your turn, you may spend a Favor to discard a card, then draw a card.
+            Repeat as desired."""
         self.name = "Cave Dwellers"
 
     def hook_start_turn(self, game, player):

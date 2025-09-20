@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Mission"""
+"""https://wiki.dominionstrategy.com/index.php/Mission"""
 import unittest
 
-from dominion import Card, Game, Event, Limits
+from dominion import Card, Game, Event, Limits, Player
 
 
 ###############################################################################
@@ -15,12 +15,11 @@ class Event_Mission(Event.Event):
         self.name = "Mission"
         self.cost = 4
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         if not game.last_turn(player):
             player.output("You had the previous turn")
-            return
 
-    def hook_end_turn(self, game, player):
+    def hook_end_turn(self, game: "Game.Game", player: "Player.Player") -> None:
         if game.last_turn(player):
             game.current_player = game.playerToRight(player)
             player.limits[Limits.BUY] = 0

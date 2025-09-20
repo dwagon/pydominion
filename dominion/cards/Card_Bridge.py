@@ -11,7 +11,8 @@ class Card_Bridge(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.INTRIGUE
-        self.desc = "+1 Buy +1 Coin. All cards (including cards in players hands) cost 1 less this turn, but not less than 0."
+        self.desc = """+1 Buy +1 Coin. All cards (including cards in players hands) cost 1 less this turn,
+            but not less than 0."""
         self.name = "Bridge"
         self.buys = 1
         self.coin = 1

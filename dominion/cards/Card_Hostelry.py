@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Hostelry """
+"""http://wiki.dominionstrategy.com/index.php/Hostelry"""
 
 import unittest
 
@@ -20,12 +20,11 @@ class Card_Hostelry(Card.Card):
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return "+1 Card; +2 Actions; When you gain this, you may discard any number of Treasures, revealed, to gain that many Horses."
+            return """+1 Card; +2 Actions;
+                When you gain this, you may discard any number of Treasures, revealed, to gain that many Horses."""
         return "+1 Card; +2 Actions"
 
-    def hook_gain_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, str]:
+    def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         treas = [_ for _ in player.piles[Piles.HAND] if _.isTreasure()]
         if not treas:
             player.output("No suitable cards for Hostelry")

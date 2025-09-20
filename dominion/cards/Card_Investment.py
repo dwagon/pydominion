@@ -26,7 +26,7 @@ class Card_Investment(Card.Card):
             "Choose One? ",
             ("+1 Coin", True),
             (
-                f"Trash this to reveal your hand for +1 VP per differently named Treasure there (currently {num_treas})",
+                f"Trash this to reveal your hand for +1 VP per differently named Treasure there ({num_treas})",
                 False,
             ),
         ):

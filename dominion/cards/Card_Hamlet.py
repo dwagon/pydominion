@@ -11,7 +11,8 @@ class Card_Hamlet(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.CORNUCOPIA
-        self.desc = "+1 Card +1 Action. You may discard a card; if you do, +1 Action.  You may discard a card; if you do, +1 Buy."
+        self.desc = """+1 Card +1 Action. You may discard a card; if you do, +1 Action.
+                You may discard a card; if you do, +1 Buy."""
         self.name = "Hamlet"
         self.cards = 1
         self.actions = 1

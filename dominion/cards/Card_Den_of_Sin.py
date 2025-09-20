@@ -18,9 +18,8 @@ class Card_Den_of_Sin(Card.Card):
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return (
-                "At the start of your next turn, +2 Cards; This is gained to your hand (instead of your discard pile)."
-            )
+            return """At the start of your next turn, +2 Cards;
+                    This is gained to your hand (instead of your discard pile)."""
         return "At the start of your next turn, +2 Cards"
 
     def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:

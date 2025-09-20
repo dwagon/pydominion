@@ -10,12 +10,14 @@ class Event_Kintsugi(Event.Event):
     def __init__(self) -> None:
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.RISING_SUN
-        self.desc = "Trash a card from your hand. If you've gained a Gold this game, gain a card costing up to $2 more than the trashed card."
+        self.desc = """Trash a card from your hand. If you've gained a Gold this game, gain a card
+            costing up to $2 more than the trashed card."""
         self.name = "Kintsugi"
         self.cost = 3
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
-        """Trash a card from your hand. If you've gained a Gold this game, gain a card costing up to $2 more than the trashed card."""
+        """Trash a card from your hand. If you've gained a Gold this game, gain a card
+        costing up to $2 more than the trashed card."""
         if card := player.plr_trash_card():
             # Should check if we ever have had a gold, rather than currently have Gold
             if "Gold" in player.all_cards():

@@ -15,7 +15,8 @@ class Card_Settlers(Card.Card):
         self.cards = 1
         self.actions = 1
         self.cost = 2
-        self.desc = """+1 Card; +1 Action. Look through your discard pile. You may reveal a Copper from it and put it into your hand."""
+        self.desc = """+1 Card; +1 Action. Look through your discard pile.
+                    You may reveal a Copper from it and put it into your hand."""
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         if discarded_copper := player.piles[Piles.DISCARD]["Copper"]:

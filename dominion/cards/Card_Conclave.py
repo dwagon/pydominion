@@ -12,7 +12,8 @@ class Card_Conclave(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION]
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = "+2 Coin; You may play an Action card from your hand that you don't have a copy of in play. If you do, +1 Action."
+        self.desc = """+2 Coin; You may play an Action card from your hand that you don't have a copy of in play.
+                If you do, +1 Action."""
         self.name = "Conclave"
         self.cost = 4
         self.coin = 2

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card, Piles, Event
 
 
@@ -17,7 +18,7 @@ class Event_Summon(Event.Event):
 
     def special(self, game, player):
         """Gain an Action card costing up to 4"""
-        player.plr_gain_card(4, types={Card.ACTION: True}, destination=Piles.DURATION)
+        player.plr_gain_card(4, types={Card.CardType.ACTION: True}, destination=Piles.DURATION)
         print("Unimplemented")
 
 
