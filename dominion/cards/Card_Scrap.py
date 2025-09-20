@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Scrap """
+"""http://wiki.dominionstrategy.com/index.php/Scrap"""
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -21,9 +22,7 @@ class Card_Scrap(Card.Card):
         self.required_cards = [("Card", "Horse")]
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
-        trc = player.plr_trash_card(
-            printcost=True, prompt="Trash a card from your hand for benefits"
-        )
+        trc = player.plr_trash_card(printcost=True, prompt="Trash a card from your hand for benefits")
         if not trc:  # pragma: no coverage
             return
         cost = min(6, player.card_cost(trc[0]))
@@ -45,25 +44,31 @@ class Card_Scrap(Card.Card):
             if "horse" not in chosen:
                 choices.append(("Gain a Horse", "horse"))
             opt = player.plr_choose_options("Select one", *choices)
-            if opt == "card":
-                player.pickup_cards(1)
-            if opt == "action":
-                player.add_actions(1)
-            if opt == "buy":
-                player.buys.add(1)
-            if opt == "coin":
-                player.coins.add(1)
-            if opt == "silver":
-                try:
-                    player.gain_card("Silver")
-                except NoCardException:  # pragma: no coverage
-                    player.output("No more Silvers")
-            if opt == "horse":
-                try:
-                    player.gain_card("Horse")
-                except NoCardException:  # pragma: no coverage
-                    player.output("No more Horses")
+            do_scrap_options(player, opt)
             choices.append(opt)
+
+
+###############################################################################
+def do_scrap_options(player: Player.Player, opt: str) -> None:
+    match opt:
+        case "card":
+            player.pickup_cards(1)
+        case "action":
+            player.add_actions(1)
+        case "buy":
+            player.buys.add(1)
+        case "coin":
+            player.coins.add(1)
+        case "silver":
+            try:
+                player.gain_card("Silver")
+            except NoCardException:  # pragma: no coverage
+                player.output("No more Silvers")
+        case "horse":
+            try:
+                player.gain_card("Horse")
+            except NoCardException:  # pragma: no coverage
+                player.output("No more Horses")
 
 
 ###############################################################################
