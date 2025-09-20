@@ -28,31 +28,16 @@ class Card_Bauble(Card.Card):
             (f"Put {card} on top of deck", True),
         )
         if deck:
-            player.output(f"Putting {card} on deck due to Royal Seal")
+            player.output(f"Putting {card} on deck due to Bauble")
             mod[OptionKeys.DESTINATION] = Piles.TOPDECK
         return mod
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
+        """Choose two different options: +1 Buy; +$1; +1 Favor;this turn, when you gain a card,
+        you may put it onto your deck."""
         self._gain_hook = False
-        chosen = []
         player.output("Choose two different options")
-        for _ in range(2):
-            options = []
-            if "buy" not in chosen:
-                options.append(("+1 Buy", "buy"))
-            if "cash" not in chosen:
-                options.append(("+$1 cash", "cash"))
-            if "favor" not in chosen:
-                options.append(("+1 Favor", "favor"))
-            if "deck" not in chosen:
-                options.append(
-                    (
-                        "This turn when you gain a card, you may put it onto your deck",
-                        "deck",
-                    )
-                )
-            choice = player.plr_choose_options("Choose an option.", *options)
-            chosen.append(choice)
+        chosen = choose_bauble_options(player)
         for choice in chosen:
             if choice == "buy":
                 player.buys.add(1)
@@ -64,6 +49,30 @@ class Card_Bauble(Card.Card):
                 self._gain_hook = True
             else:
                 raise Exception(f"Unsupported {choice=}")
+
+
+###############################################################################
+def choose_bauble_options(player: "Player.Player") -> list[str]:
+    """Player to choose which two options to take"""
+    chosen = []
+    for _ in range(2):
+        options = []
+        if "buy" not in chosen:
+            options.append(("+1 Buy", "buy"))
+        if "cash" not in chosen:
+            options.append(("+$1 cash", "cash"))
+        if "favor" not in chosen:
+            options.append(("+1 Favor", "favor"))
+        if "deck" not in chosen:
+            options.append(
+                (
+                    "This turn when you gain a card, you may put it onto your deck",
+                    "deck",
+                )
+            )
+        choice = player.plr_choose_options("Choose an option.", *options)
+        chosen.append(choice)
+    return chosen
 
 
 ###############################################################################

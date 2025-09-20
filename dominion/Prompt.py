@@ -34,14 +34,21 @@ def generate_prompt(player: "Player") -> str:
 
 
 ###########################################################################
-def spendable_selection(player: "Player") -> list[Option]:
-    options = []
-    spendable = [_ for _ in player.piles[Piles.HAND] if _.isTreasure()]
-    spendable.sort(key=lambda x: x.name)
+def spend_all_details(player: "Player", spendable: list[Card.Card]) -> str:
+    """Return the details of how much to gain if the player spends all the treasures"""
     total_coin = sum(player.hook_spend_value(_) for _ in spendable)
     numpots = sum(1 for _ in spendable if _.name == "Potion")
     potstr = f", {numpots} potions" if numpots else ""
-    details = f"{total_coin} coin{potstr}"
+    return f"{total_coin} coin{potstr}"
+
+
+###########################################################################
+def spendable_selection(player: "Player") -> list[Option]:
+    """Handle selection of what to spend"""
+    options: list[Option] = []
+    spendable = [_ for _ in player.piles[Piles.HAND] if _.isTreasure()]
+    spendable.sort(key=lambda x: x.name)
+    details = spend_all_details(player, spendable)
     if spendable:
         o = Option(
             selector="1",
@@ -53,7 +60,7 @@ def spendable_selection(player: "Player") -> list[Option]:
         options.append(o)
 
     if player.coffers:
-        o = Option(selector="2", verb="Spend Coffer (1 coin)", card=None, action="coffer")
+        o = Option(selector="2", verb="Spend Coffer (+1 coin)", card=None, action="coffer")
         options.append(o)
 
     if player.debt and player.coins:
@@ -97,8 +104,22 @@ def get_all_purchasable(player) -> PlayArea:
 
 
 ###########################################################################
+def can_buy(player: "Player", card: Card.Card, buyable: list[Card.Card]) -> bool:
+    if player.debt:
+        return False
+    if player.buys.get() <= 0:
+        return False
+    if card not in buyable:
+        return False
+    if card in player.forbidden_to_buy:
+        return False
+    return True
+
+
+###########################################################################
 def buyable_selection(player: "Player", index: int) -> tuple[list[Option], int]:
-    options = []
+    """Handle selection of what to buy"""
+    options: list[Option] = []
     all_cards = get_all_purchasable(player)
     buyable = player.cards_under(coin=player.coins.get(), num_potions=player.potions.get())
     for card in all_cards:
@@ -106,7 +127,7 @@ def buyable_selection(player: "Player", index: int) -> tuple[list[Option], int]:
             if card in buyable:
                 buyable.remove(card)
         sel = chr(ord("a") + index)
-        if not player.debt and player.buys and card in buyable and card not in player.forbidden_to_buy:
+        if can_buy(player, card, buyable):
             action = "buy"
             verb = "Buy"
         else:
@@ -139,7 +160,7 @@ def buyable_selection(player: "Player", index: int) -> tuple[list[Option], int]:
 ###########################################################################
 def event_selection(player: "Player", index: int) -> tuple[list[Option], int]:
     """Generate player options for selecting events"""
-    options = []
+    options: list[Option] = []
     for op in player.game.events.values():
         index += 1
         if op.cost <= player.coins.get() and player.buys and not player.debt:
@@ -171,7 +192,7 @@ def project_selection(player: "Player", index: int) -> tuple[Optional[list[Optio
     # Can only have two projects
     if len(player.projects) == 2:
         return None, index
-    options = []
+    options: list[Option] = []
     for op in player.game.projects.values():
         index += 1
         if (op.cost <= player.coins.get() and player.buys) and (op not in player.projects):
@@ -197,8 +218,9 @@ def project_selection(player: "Player", index: int) -> tuple[Optional[list[Optio
 
 ###########################################################################
 def reserve_selection(player: "Player", index: int) -> tuple[list[Option], int]:
+    """Handle selection of calling from reserve"""
     whens = player._get_whens()
-    options = []
+    options: list[Option] = []
     for card in player.piles[Piles.RESERVE]:
         if not card.callable:
             continue
@@ -223,8 +245,9 @@ def reserve_selection(player: "Player", index: int) -> tuple[list[Option], int]:
 
 ###########################################################################
 def night_selection(player: "Player", index: int) -> tuple[list[Option], int]:
-    options = []
-    nights = [c for c in player.piles[Piles.HAND] if c.isNight()]
+    """Handle selection of what night cards to play"""
+    options: list[Option] = []
+    nights = [_ for _ in player.piles[Piles.HAND] if _.isNight()]
     if nights:
         for n in nights:
             sel = chr(ord("a") + index)
@@ -245,12 +268,13 @@ def night_selection(player: "Player", index: int) -> tuple[list[Option], int]:
 
 ###########################################################################
 def playable_selection(player: "Player", index: int) -> tuple[list[Option], int]:
-    options = []
+    """Handle selection of what to play"""
+    options: list[Option] = []
     playable = [_ for _ in player.piles[Piles.HAND] if _.playable and _.isAction()]
     if player.villagers:
         o = Option(
             selector="1",
-            verb="Spend Villager (1 action)",
+            verb="Spend Villager (+1 action)",
             card=None,
             action="villager",
         )
@@ -260,19 +284,36 @@ def playable_selection(player: "Player", index: int) -> tuple[list[Option], int]
         sel = chr(ord("a") + index)
         options.append(card_option(card, player, sel))
         index += 1
-        for way in player.game.ways.values():
-            sel = chr(ord("a") + index)
-            o = Option(
-                verb="Play",
-                selector=sel,
-                name=way.name,
-                desc=f"{card.name}: {way.description(player)}",
-                action="way",
-                card=card,
-                way=way,
-            )
-            options.append(o)
-            index += 1
+        way_options, index = way_selection(player, card, index)
+        options.extend(way_options)
+    shadow_options, index = shadow_selection(player, index)
+    options.extend(shadow_options)
+    return options, index
+
+
+###########################################################################
+def way_selection(player: "Player", card: "Card.Card", index: int) -> tuple[list[Option], int]:
+    options: list[Option] = []
+    for way in player.game.ways.values():
+        sel = chr(ord("a") + index)
+        o = Option(
+            verb="Play",
+            selector=sel,
+            name=way.name,
+            desc=f"{card.name}: {way.description(player)}",
+            action="way",
+            card=card,
+            way=way,
+        )
+        options.append(o)
+        index += 1
+    return options, index
+
+
+###########################################################################
+def shadow_selection(player: "Player", index: int) -> tuple[list[Option], int]:
+    """Play shadow cards"""
+    options: list[Option] = []
     shadows = [_ for _ in player.piles[Piles.DECK] if _.isShadow() and _.isAction()]
     for shadow in shadows:
         sel = chr(ord("a") + index)
@@ -352,6 +393,53 @@ def display_tokens(player: "Player") -> str:
 
 
 ###########################################################################
+def display_prophecy_overview(player: "Player") -> None:
+    if player.game.inactive_prophecy and not player.game.prophecy:
+        player.output(
+            f"| Inactive Prophecy: {player.game.inactive_prophecy.name} ({player.game.sun_tokens} Sun Tokens)"
+        )
+    if player.game.prophecy:
+        player.output(f"| Prophecy: {player.game.prophecy.name}: {player.game.prophecy.description(player)}")
+
+
+###########################################################################
+def pile_display(pile: PlayArea) -> str:
+    """Return contents of a pile"""
+    return ", ".join([str(_) for _ in pile])
+
+
+###########################################################################
+def display_piles_overview(player: "Player") -> None:
+    """Display the player piles"""
+    if player.piles[Piles.DEFER]:
+        player.output(f"| Defer: {pile_display(player.piles[Piles.DEFER])}")
+    if player.piles[Piles.DURATION]:
+        player.output(f"| Duration: {pile_display(player.piles[Piles.DURATION])}")
+    if player.piles[Piles.RESERVE]:
+        player.output(f"| Reserve: {pile_display(player.piles[Piles.RESERVE])}")
+    if player.piles[Piles.HAND]:
+        player.output(f"| Hand ({len(player.piles[Piles.HAND])}): {pile_display(player.piles[Piles.HAND])}")
+    else:
+        player.output("| Hand: <EMPTY>")
+    if player.piles[Piles.EXILE]:
+        player.output(f"| Exile: {pile_display(player.piles[Piles.EXILE])}")
+    if player.piles[Piles.PLAYED]:
+        player.output(f"| Played ({len(player.piles[Piles.PLAYED])}): {pile_display(player.piles[Piles.PLAYED])}")
+    else:
+        player.output("| Played: <NONE>")
+
+    if os.getenv("PYDOMINION_DEBUG"):  # pragma: no coverage
+        player.output(f"| Deck ({len(player.piles[Piles.DECK])}): {pile_display(player.piles[Piles.DECK])}")
+        player.output(f"| Cards Elsewhere: {player.secret_count}")
+    else:
+        player.output(f"| Deck Size: {len(player.piles[Piles.DECK])}")
+
+    player.output(
+        f"| Discard ({len(player.piles[Piles.DISCARD])}): {pile_display(player.piles[Piles.DISCARD])}"
+    )  # Debug
+
+
+###########################################################################
 def display_overview(player: "Player") -> None:
     """Display turn summary overview to player"""
     player.output("\n")
@@ -360,55 +448,21 @@ def display_overview(player: "Player") -> None:
     for landmark in player.game.landmarks.values():
         player.output(f"| Landmark {landmark.name}: {landmark.description(player)}")
     player.output(f"| Tokens: {display_tokens(player)}")
-    if player.game.inactive_prophecy and not player.game.prophecy:
-        player.output(
-            f"| Inactive Prophecy: {player.game.inactive_prophecy.name} ({player.game.sun_tokens} Sun Tokens)"
-        )
-    if player.game.prophecy:
-        player.output(f"| Prophecy: {player.game.prophecy.name}: {player.game.prophecy.description(player)}")
+    display_prophecy_overview(player)
     if player.states:
         player.output(f"| States: {', '.join([_.name for _ in player.states])}")
-    if player.piles[Piles.DEFER]:
-        player.output(f"| Defer: {', '.join([str(_) for _ in player.piles[Piles.DEFER]])}")
-    if player.piles[Piles.DURATION]:
-        player.output(f"| Duration: {', '.join([str(_) for _ in player.piles[Piles.DURATION]])}")
     if player.projects:
         player.output(f"| Project: {', '.join([p.name for p in player.projects])}")
-    if player.piles[Piles.RESERVE]:
-        player.output(f"| Reserve: {', '.join([str(_) for _ in player.piles[Piles.RESERVE]])}")
-    if player.piles[Piles.HAND]:
-        player.output(
-            f"| Hand ({len(player.piles[Piles.HAND])}): {', '.join([str(_) for _ in player.piles[Piles.HAND]])}"
-        )
-    else:
-        player.output("| Hand: <EMPTY>")
     if player.artifacts:
         player.output(f"| Artifacts: {', '.join([_.name for _ in player.artifacts])}")
     for trait_name, trait in player.game.traits.items():
         player.output(f"| Trait {trait_name} on {trait.card_pile}: {trait.desc}")
-    if player.piles[Piles.EXILE]:
-        player.output(f"| Exile: {', '.join([str(_) for _ in player.piles[Piles.EXILE]])}")
-    if player.piles[Piles.PLAYED]:
-        player.output(
-            f"| Played ({len(player.piles[Piles.PLAYED])}): {', '.join([str(_) for _ in player.piles[Piles.PLAYED]])}"
-        )
-    else:
-        player.output("| Played: <NONE>")
-    if os.getenv("PYDOMINION_DEBUG"):
-        player.output(
-            f"| Deck ({len(player.piles[Piles.DECK])}): {', '.join([str(_) for _ in player.piles[Piles.DECK]])}"
-        )
-        player.output(f"| Cards Elsewhere: {player.secret_count}")
-    else:
-        player.output(f"| Deck Size: {len(player.piles[Piles.DECK])}")
     if player.game.ally:
         player.output(f"| Ally: {player.game.ally.name}: {player.game.ally.description(player)}")
-    player.output(
-        f"| Discard ({len(player.piles[Piles.DISCARD])}): {', '.join([str(_) for _ in player.piles[Piles.DISCARD]])}"
-    )  # Debug
-    player.output(
-        f"| Trash ({len(player.game.trash_pile)}): {', '.join([str(_) for _ in player.game.trash_pile])}"
-    )  # Debug
+
+    display_piles_overview(player)
+
+    player.output(f"| Trash ({len(player.game.trash_pile)}): {pile_display(player.game.trash_pile)}")  # Debug
     player.output(f"| {player.piles[Piles.DISCARD].size()} cards in discard pile")
     player.output("-" * 50)
 

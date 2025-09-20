@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles
+
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -16,15 +17,12 @@ class Card_Courtier(Card.Card):
         self.name = "Courtier"
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         cards = player.card_sel(prompt="Select card to reveal", printtypes=True)
         if not cards:
             return
         player.reveal_card(cards[0])
-        if isinstance(cards[0].cardtype, list):
-            num_types = len(cards[0].cardtype)
-        else:
-            num_types = 1
+        num_types = get_num_types(cards[0])
         chosen = []
         for _ in range(num_types):
             choices = []
@@ -38,14 +36,27 @@ class Card_Courtier(Card.Card):
                 choices.append(("Gain Gold", "gold"))
             opt = player.plr_choose_options("Select one", *choices)
             chosen.append(opt)
-            if opt == "action":
-                player.add_actions(1)
-            if opt == "buy":
-                player.buys.add(1)
-            if opt == "coin":
-                player.coins.add(3)
-            if opt == "gold":
-                player.gain_card("Gold")
+            do_courtier_option(player, opt)
+
+
+###############################################################################
+def do_courtier_option(player: Player.Player, opt: str) -> None:
+    match opt:
+        case "action":
+            player.add_actions(1)
+        case "buy":
+            player.buys.add(1)
+        case "coin":
+            player.coins.add(3)
+        case "gold":
+            player.gain_card("Gold")
+
+
+###############################################################################
+def get_num_types(card: Card.Card) -> int:
+    if isinstance(card.cardtype, list):
+        return len(card.cardtype)
+    return 1
 
 
 ###############################################################################

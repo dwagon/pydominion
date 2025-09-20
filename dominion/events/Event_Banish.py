@@ -1,8 +1,10 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Banish """
+"""http://wiki.dominionstrategy.com/index.php/Banish"""
 
 import unittest
-from dominion import Card, Game, Piles, Event
+from typing import Any
+
+from dominion import Card, Game, Piles, Event, Player
 
 
 ###############################################################################
@@ -16,36 +18,38 @@ class Event_Banish(Event.Event):
         self.name = "Banish"
         self.cost = 4
 
-    def special(self, game, player):
-        cardnames = {_.name for _ in player.piles[Piles.HAND]}
-        options = [("Exile nothing", None)]
-        for cname in cardnames:
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+        card_names = {_.name for _ in player.piles[Piles.HAND]}
+        options: list[tuple[str, Any]] = [("Exile nothing", None)]
+        for cname in card_names:
             options.append((f"Exile {cname} ({player.piles[Piles.HAND].count(cname)} in hand)", cname))
-        card = player.plr_choose_options("Pick a card to exile", *options)
-        if card is None:
+        card_name = player.plr_choose_options("Pick a card to exile", *options)
+        if card_name is None:
             return
-        if player.piles[Piles.HAND].count(card) == 1:
-            for crd in player.piles[Piles.HAND]:
-                if crd.name == card:
-                    player.exile_card(crd)
-                    break
+        if player.piles[Piles.HAND].count(card_name) == 1:
+            count = 1
         else:
             options = []
-            for i in range(player.piles[Piles.HAND].count(card) + 1):
-                options.append((f"Exile {i} {card}", i))
+            for i in range(player.piles[Piles.HAND].count(card_name) + 1):
+                options.append((f"Exile {i} {card_name}", i))
             count = player.plr_choose_options("How many to exile", *options)
-            for _ in range(count):
-                for crd in player.piles[Piles.HAND]:
-                    if crd.name == card:
-                        player.exile_card(crd)
-                        break
+        for _ in range(count):
+            exile_from_hand(player, card_name)
+
+
+###############################################################################
+def exile_from_hand(player: Player.Player, card_name: str) -> None:
+    for card in player.piles[Piles.HAND]:
+        if card.name == card_name:
+            player.exile_card(card)
+            break
 
 
 ###############################################################################
 class Test_Banish(unittest.TestCase):
     """Test Banish"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1,
             events=["Banish"],
@@ -54,7 +58,7 @@ class Test_Banish(unittest.TestCase):
         self.plr = self.g.player_list()[0]
         self.card = self.g.events["Banish"]
 
-    def test_Banish_multi(self):
+    def test_Banish_multi(self) -> None:
         """Use Banish"""
         self.plr.coins.add(4)
         self.plr.piles[Piles.HAND].set("Estate", "Estate", "Estate", "Duchy")
@@ -63,7 +67,7 @@ class Test_Banish(unittest.TestCase):
         self.assertIn("Estate", self.plr.piles[Piles.EXILE])
         self.assertIn("Estate", self.plr.piles[Piles.HAND])
 
-    def test_Banish_single(self):
+    def test_Banish_single(self) -> None:
         """Use Banish"""
         self.plr.coins.add(4)
         self.plr.piles[Piles.HAND].set("Estate", "Estate", "Estate", "Duchy")

@@ -33,22 +33,25 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 
 class Flag(StrEnum):
-    ALLOW_SHELTERS = auto()
-    LOADED_TRAVELLERS = auto()
-    LOADED_PRIZES = auto()
+    """Flags to control game setup behaviour"""
+
     ALLOW_POTIONS = auto()
-    USE_PROSPERITY = auto()
+    ALLOW_SHELTERS = auto()
+    BOT = auto()
+    LOADED_PRIZES = auto()
+    LOADED_TRAVELLERS = auto()
+    NUM_STACKS = auto()
+    RANDOBOT = auto()
     USE_OLD_CARDS = auto()
+    USE_PROSPERITY = auto()
 
 
 BASE_CARDS = ["Copper", "Silver", "Gold", "Estate", "Duchy", "Province"]
 PATHS: dict[Keys, str] = {}
 INIT_NUMBERS: dict[Keys, int] = {}
 INIT_CARDS: dict[Keys, list[Any]] = {}
+INIT_OPTIONS: dict[Flag, Any] = {Flag.NUM_STACKS: 10, Flag.RANDOBOT: 0, Flag.BOT: False}
 FLAGS: dict[Flag, bool] = {}
-NUM_STACKS: int = 10
-RANDOBOT: int = 0
-BOT: bool = False
 
 
 ###########################################################################
@@ -61,7 +64,7 @@ def use_shelters_in_game(game: "Game", allow_shelters: bool, specified: list[str
 
     # Pick a card to see if it is a dark ages card
     halfway = len(game.card_piles) // 2
-    name, card_pile = list(game.card_piles.items())[halfway]
+    name, _ = list(game.card_piles.items())[halfway]
     card = game.card_instances[name]
     if card.base == CardExpansion.DARKAGES:
         return True
@@ -71,6 +74,7 @@ def use_shelters_in_game(game: "Game", allow_shelters: bool, specified: list[str
 
 ###########################################################################
 def setup_shelters(game: "Game") -> None:
+    """Setup Shelters"""
     game.card_piles["Shelters"] = CardPile(game)
     for _ in range(game.numplayers):
         shelters = ["Overgrown Estate", "Hovel", "Necropolis"]
@@ -241,7 +245,7 @@ def load_boons(game: "Game") -> None:
 
 
 ###########################################################################
-def load_ally(game: "Game", specified: list[str]) -> Card:
+def load_ally(game: "Game", specified: str | list[str]) -> Card:
     """Load the ally"""
     if isinstance(specified, str):
         specified = [specified]
@@ -292,7 +296,7 @@ def use_ruins(game: "Game") -> None:
 
 ###########################################################################
 def check_card_requirement(game: "Game", card: Card) -> None:
-    """Ensure all the requirements (e.g Curses) for a card are also loaded"""
+    """Ensure all the requirements (e.g. Curses) for a card are also loaded"""
     for x in card.required_cards:
         if x == "Loot":
             load_loot(game)
@@ -342,11 +346,12 @@ def check_card_requirement(game: "Game", card: Card) -> None:
 
 ###########################################################################
 def get_num_sun_tokens(game: "Game") -> int:
+    """Return the number of sun tokens based on the number of players"""
     return {1: 3, 2: 5, 3: 8, 4: 10, 5: 12, 6: 13}[game.numplayers]
 
 
 ###########################################################################
-def get_available_card_classes(game: "Game") -> dict[str, dict[str, type[Card]]]:
+def get_available_card_classes() -> dict[str, dict[str, type[Card]]]:
     """Create a mapping between the card name and the module of that card"""
     mapping: dict[str, dict[str, type[Card]]] = {}
     for prefix in (
@@ -394,6 +399,8 @@ def load_non_kingdom_pile(game: "Game", cardtype: str, pileClass) -> dict[str, C
 
 ###########################################################################
 def instantiate_non_kingdom_card(game: "Game", cardtype: str, card_name: str) -> Card:
+    """Create an instance of a non-kingdom card so it can always be referenced for
+    details."""
     klass = game.card_mapping[cardtype][card_name]
     return klass()
 
@@ -404,7 +411,7 @@ def check_card_requirements(game: "Game") -> None:
     ensure that is loaded as well"""
 
     check_cards = (
-        list(game._cards.values())
+        list(game.cards.values())
         + list(game.events.values())
         + list(game.traits.values())
         + list(game.hexes)
@@ -530,16 +537,23 @@ def use_card_pile(
     if not force and not card.insupply:
         return 0
 
+    instantiate_card_pile(game, card_name, card_pile, card_type)
+
+    game.output(f"Playing with {card_name}")
+    return 1
+
+
+###########################################################################
+def instantiate_card_pile(game: "Game", card_name: str, card_pile: CardPile, card_type: str) -> None:
+    """Create cards in the card pile"""
     game.card_piles[card_name] = card_pile
     for card in card_pile:
         if card_name not in game.card_instances:
             game.card_instances[card_name] = game.card_mapping[card_type][card_name]()
-        game._cards[card.uuid] = card
+        game.cards[card.uuid] = card
         if not card.pile:
             card.pile = card_name
         card.location = Piles.CARDPILE
-    game.output(f"Playing with {card_name}")
-    return 1
 
 
 ###########################################################################
@@ -547,10 +561,9 @@ def num_cards_in_pile(game: "Game", card: Card) -> int:
     """Return the number of cards that should be in a card pile"""
     if hasattr(card, "calc_numcards"):
         return card.calc_numcards(game)
-    elif hasattr(card, "numcards"):
+    if hasattr(card, "numcards"):
         return card.numcards
-    else:
-        return 10
+    return 10
 
 
 ###########################################################################
@@ -645,9 +658,9 @@ def setup_players(
     playernames: Optional[list[str]] = None,
     plr_class: type[Player] = TextPlayer,
 ) -> None:
+    """Setup the players"""
     if use_shelters := use_shelters_in_game(game, FLAGS[Flag.ALLOW_SHELTERS], INIT_CARDS[Keys.CARDS]):
         setup_shelters(game)
-    global RANDOBOT, BOT
 
     names = playerNames[:]
     if playernames is None:
@@ -660,7 +673,7 @@ def setup_players(
             name = random.choice(names)
             names.remove(name)
         the_uuid = uuid.uuid4().hex
-        if BOT:
+        if INIT_OPTIONS[Flag.BOT]:
             game.players[the_uuid] = BotPlayer(
                 game=game,
                 quiet=game.quiet,
@@ -668,8 +681,8 @@ def setup_players(
                 heirlooms=game.heirlooms,
                 use_shelters=use_shelters,
             )
-            BOT = False
-        elif RANDOBOT:
+            INIT_OPTIONS[Flag.BOT] = False
+        elif INIT_OPTIONS[Flag.RANDOBOT]:
             game.players[the_uuid] = RandobotPlayer(
                 game=game,
                 quiet=game.quiet,
@@ -677,7 +690,7 @@ def setup_players(
                 heirlooms=game.heirlooms,
                 use_shelters=use_shelters,
             )
-            RANDOBOT -= 1
+            INIT_OPTIONS[Flag.RANDOBOT] -= 1
         else:
             game.players[the_uuid] = plr_class(
                 game=game,
@@ -693,8 +706,6 @@ def setup_players(
 ###########################################################################
 def parse_args(game: "Game", **args: Any) -> None:
     """Parse the arguments passed to the class"""
-    global RANDOBOT, BOT
-
     PATHS[Keys.ALLIES] = args.get("ally_path", "dominion/allies")
     PATHS[Keys.ARTIFACTS] = args.get("artifact_path", "dominion/artifacts")
     PATHS[Keys.BOONS] = args.get("boon_path", "dominion/boons")
@@ -727,22 +738,21 @@ def parse_args(game: "Game", **args: Any) -> None:
     INIT_CARDS[Keys.TRAITS] = args.get("traits", [])
     INIT_CARDS[Keys.WAY] = args.get("ways", [])
 
-    global NUM_STACKS
-    NUM_STACKS = args.get("num_stacks", 10)
+    INIT_OPTIONS[Flag.NUM_STACKS] = args.get("num_stacks", 10)
     FLAGS[Flag.ALLOW_POTIONS] = args.get("potions", True)
     FLAGS[Flag.USE_PROSPERITY] = args.get("prosperity", False)
     FLAGS[Flag.USE_OLD_CARDS] = args.get("oldcards", False)
     game.quiet = args.get("quiet", False)
     game.numplayers = args.get("numplayers", 2)
-    BOT = args.get("bot", False)
-    RANDOBOT = args.get("randobot", 0)
+    INIT_OPTIONS[Flag.BOT] = args.get("bot", False)
+    INIT_OPTIONS[Flag.RANDOBOT] = args.get("randobot", 0)
     FLAGS[Flag.ALLOW_SHELTERS] = args.get("shelters", True)
 
 
 ###########################################################################
 def card_setup(game: "Game") -> None:
     """Run the setup() method for all cards"""
-    for name, card_pile in list(game.card_piles.items()):
+    for _, card_pile in list(game.card_piles.items()):
         card_pile.setup(game=game)
     for landmark in list(game.landmarks.values()):
         landmark.setup(game=game)
@@ -760,7 +770,7 @@ def start_game(
     FLAGS[Flag.LOADED_TRAVELLERS] = False
     FLAGS[Flag.LOADED_PRIZES] = False
 
-    load_decks(game, INIT_CARDS[Keys.CARDS], NUM_STACKS)
+    load_decks(game, INIT_CARDS[Keys.CARDS], INIT_OPTIONS[Flag.NUM_STACKS])
     game.events = load_events(game, INIT_CARDS[Keys.EVENT], INIT_NUMBERS[Keys.EVENT])
     game.ways = load_ways(game, INIT_CARDS[Keys.WAY], INIT_NUMBERS[Keys.WAY])
     game.landmarks = load_landmarks(game, INIT_CARDS[Keys.LANDMARK], INIT_NUMBERS[Keys.LANDMARK])
@@ -780,7 +790,7 @@ def start_game(
     if game.ally:
         for plr in game.player_list():
             plr.favors.add(1)
-    game._save_original()
+    game.save_original()
 
 
 # EOF

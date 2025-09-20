@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 """https://wiki.dominionstrategy.com/index.php/Hunter"""
 import unittest
+from typing import Optional
+
 from dominion import Card, Game, Piles, Player, NoCardException
 
 
@@ -12,50 +14,60 @@ class Card_Hunter(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ALLIES
-        self.desc = """ +1 Action; Reveal the top 3 cards of your deck. 
+        self.desc = """ +1 Action; Reveal the top 3 cards of your deck.
         From those cards, put an Action, a Treasure, and a Victory card into your hand. Discard the rest."""
         self.name = "Hunter"
         self.actions = 1
         self.cost = 5
 
-    def hunter_special(
-        self,
-        all_cards: list[Card.Card],
-        player: "Player.Player",
-        typed_cards: list[Card.Card],
-        card_description: str,
-    ) -> None:
-        """Abstract out repeat code"""
-        if typed_cards:
-            if len(typed_cards) > 1:
-                if cards := player.card_sel(
-                    num=1,
-                    force=True,
-                    prompt=f"Pick {card_description} to put in your hand",
-                    cardsrc=typed_cards,
-                ):
-                    card = cards[0]
-            else:
-                card = typed_cards[0]
-            all_cards.remove(card)
-            player.output(f"Putting {card} into hand")
-            player.add_card(card, Piles.HAND)
-
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
-        cards = []
-        for _ in range(3):
-            try:
-                cards.append(player.next_card())
-            except NoCardException:
-                break
+        cards = top_three(player)
         for card in cards:
             player.reveal_card(card)
-        self.hunter_special(cards, player, [_ for _ in cards if _.isAction()], "an action")
-        self.hunter_special(cards, player, [_ for _ in cards if _.isTreasure()], "a treasure")
-        self.hunter_special(cards, player, [_ for _ in cards if _.isVictory()], "a victory")
+        hunter_special(cards, player, [_ for _ in cards if _.isAction()], "an action")
+        hunter_special(cards, player, [_ for _ in cards if _.isTreasure()], "a treasure")
+        hunter_special(cards, player, [_ for _ in cards if _.isVictory()], "a victory")
         for card in cards:
             player.output(f"Discarding {card}")
             player.discard_card(card)
+
+
+###############################################################################
+def top_three(player: "Player.Player") -> list[Card.Card]:
+    cards: list[Card.Card] = []
+    for _ in range(3):
+        try:
+            cards.append(player.next_card())
+        except NoCardException:
+            break
+    return cards
+
+
+###############################################################################
+def hunter_special(
+    all_cards: list[Card.Card],
+    player: "Player.Player",
+    typed_cards: list[Card.Card],
+    card_description: str,
+) -> None:
+    """Abstract out repeat code"""
+    if not typed_cards:
+        return
+    card: Optional[Card.Card] = None
+    if len(typed_cards) > 1:
+        if cards := player.card_sel(
+            num=1,
+            force=True,
+            prompt=f"Pick {card_description} to put in your hand",
+            cardsrc=typed_cards,
+        ):
+            card = cards[0]
+    else:
+        card = typed_cards[0]
+    if card:
+        all_cards.remove(card)
+        player.output(f"Putting {card} into hand")
+        player.add_card(card, Piles.HAND)
 
 
 ###############################################################################
