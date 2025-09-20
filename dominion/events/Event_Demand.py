@@ -2,6 +2,7 @@
 """ https://wiki.dominionstrategy.com/index.php/Demand"""
 
 import unittest
+
 from dominion import Card, Game, Piles, Event
 
 

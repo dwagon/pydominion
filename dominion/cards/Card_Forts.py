@@ -2,6 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Fort"""
 
 import unittest
+
 from dominion import Card, Game, CardPile, Keys, game_setup
 
 

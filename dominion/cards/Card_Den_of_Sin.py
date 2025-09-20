@@ -2,7 +2,7 @@
 
 import contextlib
 import unittest
-from typing import Any, Optional
+from typing import Any
 
 from dominion import Card, Game, Piles, Player, NoCardException, Phase, OptionKeys
 
@@ -18,7 +18,9 @@ class Card_Den_of_Sin(Card.Card):
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return "At the start of your next turn, +2 Cards; This is gained to your hand (instead of your discard pile)."
+            return (
+                "At the start of your next turn, +2 Cards; This is gained to your hand (instead of your discard pile)."
+            )
         return "At the start of your next turn, +2 Cards"
 
     def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
@@ -27,9 +29,7 @@ class Card_Den_of_Sin(Card.Card):
                 player.pickup_card()
         return {}
 
-    def hook_gain_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         return {OptionKeys.DESTINATION: Piles.HAND}
 
 

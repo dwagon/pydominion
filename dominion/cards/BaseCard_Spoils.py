@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Spoils"""
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 

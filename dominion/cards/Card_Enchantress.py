@@ -2,7 +2,7 @@
 
 import contextlib
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Game, Card, Piles, NoCardException, Player, OptionKeys
 
@@ -46,9 +46,7 @@ class Card_Enchantress(Card.Card):
 ###############################################################################
 class TestEnchantress(unittest.TestCase):
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            numplayers=2, initcards=["Enchantress", "Remodel", "Moat"]
-        )
+        self.g = Game.TestGame(numplayers=2, initcards=["Enchantress", "Remodel", "Moat"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g.get_card_from_pile("Enchantress")
@@ -65,9 +63,7 @@ class TestEnchantress(unittest.TestCase):
         self.assertEqual(self.vic.actions.get(), 1)
         self.vic.add_card(self.m1, Piles.HAND)
         self.vic.play_card(self.m1)
-        self.assertEqual(
-            self.vic.piles[Piles.HAND].size(), 5 + 1 + 2
-        )  # Hand + Enchantress + Moat
+        self.assertEqual(self.vic.piles[Piles.HAND].size(), 5 + 1 + 2)  # Hand + Enchantress + Moat
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)

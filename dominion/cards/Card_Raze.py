@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import contextlib
 import unittest
+
 from dominion import Card, Game, Piles, Player, NoCardException
 
 

@@ -2,6 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Sea_Chart"""
 
 import unittest
+
 from dominion import Card, Game, Piles, Player, NoCardException
 
 

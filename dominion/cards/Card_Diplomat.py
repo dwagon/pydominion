@@ -2,6 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Diplomat"""
 
 import unittest
+
 from dominion import Card, Game, Piles, Player
 
 

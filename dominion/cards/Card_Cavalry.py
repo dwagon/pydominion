@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Card, Player, Game, Piles, Phase, OptionKeys, NoCardException
 
 

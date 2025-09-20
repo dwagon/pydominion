@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from typing import Any, Optional
+from typing import Any
 
 from dominion import Card, Game, Prophecy, Player, OptionKeys, Piles
 

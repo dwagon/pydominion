@@ -2,6 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Bargain"""
 
 import unittest
+
 from dominion import Card, Game, Piles, Event
 
 

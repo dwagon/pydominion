@@ -2,6 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Trail"""
 
 import unittest
+
 from dominion import Game, Card, Piles, OptionKeys, Phase, Player, PlayArea
 
 
@@ -13,7 +14,7 @@ class Card_Trail(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
         self.base = Card.CardExpansion.PROSPERITY
-        self.desc = """+1 Card; +1 Action; 
+        self.desc = """+1 Card; +1 Action;
         When you gain, trash, or discard this, other than in Clean-up, you may play it."""
         self.cards = 1
         self.actions = 1

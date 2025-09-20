@@ -2,6 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Gamble """
 
 import unittest
+
 from dominion import Card, Game, Piles, Event, NoCardException
 
 

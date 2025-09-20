@@ -2,6 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Peaceful_Cult """
 
 import unittest
+
 from dominion import Card, Game, Piles, Ally
 
 

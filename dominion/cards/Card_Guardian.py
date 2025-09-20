@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Guardian"""
+"""https://wiki.dominionstrategy.com/index.php/Guardian"""
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Game, Card, Piles, Player, OptionKeys
 
@@ -23,9 +23,7 @@ class Card_Guardian(Card.Card):
         player.coins.add(1)
         return {}
 
-    def hook_gain_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         return {OptionKeys.DESTINATION: Piles.HAND}
 
 

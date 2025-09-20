@@ -2,6 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Sunken_Treasure"""
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 

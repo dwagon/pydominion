@@ -2,6 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Investment"""
 
 import unittest
+
 from dominion import Card, Game, Piles, Player
 
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Quest"""
 import unittest
+
 from dominion import Card, Game, Piles, Event
 
 

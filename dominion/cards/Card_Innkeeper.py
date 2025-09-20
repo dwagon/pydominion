@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Innkeeper """
+"""http://wiki.dominionstrategy.com/index.php/Innkeeper"""
 
 import unittest
-from dominion import Card, Game, Piles, NoCardException
+
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -53,9 +54,7 @@ class Test_Innkeeper(unittest.TestCase):
     def test_play_three(self):
         """Play the card to gain three cards"""
         self.plr.piles[Piles.DECK].set("Copper", "Silver", "Gold")
-        self.plr.piles[Piles.HAND].set(
-            "Copper", "Silver", "Gold", "Estate", "Duchy", "Province"
-        )
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
         self.plr.add_card(self.card, Piles.HAND)
         hndsize = self.plr.piles[Piles.HAND].size()
         self.plr.test_input = [

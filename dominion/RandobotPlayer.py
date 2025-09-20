@@ -88,7 +88,7 @@ class RandobotPlayer(Player):
         # Do anything but quit
         try:
             avail = [_ for _ in options if _["selector"] != "-" and _.get("action") != "quit"]
-        except KeyError:
+        except KeyError:  # pragma: no coverage
             print(f"{options=}")
             raise
         if avail:
@@ -103,8 +103,7 @@ class RandobotPlayer(Player):
                 return opt
 
         # How did we get here?
-        print(f"user_input - fail. {options=}")
-        return None
+        raise NotImplementedError(f"user_input - fail. {options=}")
 
     ###########################################################################
     def card_sel(self, num: int = 1, **kwargs: Any) -> list[Card.Card]:

@@ -4,9 +4,9 @@
 import unittest
 from typing import Any
 
-from dominion.Game import Game, TestGame
-from dominion.Card import Card, CardType, CardExpansion
 from dominion import Piles, NoCardException
+from dominion.Card import Card, CardType, CardExpansion
+from dominion.Game import Game, TestGame
 from dominion.Player import Player
 
 WAR_CHEST = "war chest"

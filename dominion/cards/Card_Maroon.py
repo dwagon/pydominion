@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Maroon"""
-import random
+"""https://wiki.dominionstrategy.com/index.php/Maroon"""
 import unittest
 
 from dominion import Game, Card, Piles, Player

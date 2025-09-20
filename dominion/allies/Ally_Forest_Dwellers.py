@@ -2,6 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Forest_Dwellers"""
 
 import unittest
+
 from dominion import Card, Game, Piles, Ally, Player, NoCardException
 
 
@@ -12,7 +13,7 @@ class Ally_ForestDwellers(Ally.Ally):
     def __init__(self) -> None:
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
-        self.desc = """At the start of your turn, you may spend a Favor to look at the top 3 cards of your deck, 
+        self.desc = """At the start of your turn, you may spend a Favor to look at the top 3 cards of your deck,
         discard any number and put the rest back in any order."""
         self.name = "Forest Dwellers"
 

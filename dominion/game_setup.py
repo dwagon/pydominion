@@ -295,8 +295,8 @@ def use_ruins(game: "Game") -> None:
 
 
 ###########################################################################
-def check_card_requirement(game: "Game", card: Card) -> None:
-    """Ensure all the requirements (e.g. Curses) for a card are also loaded"""
+def handle_specified_card_requirements(game: "Game", card: Card) -> None:
+    """Look at the 'required_cards' value"""
     for x in card.required_cards:
         if x == "Loot":
             load_loot(game)
@@ -309,39 +309,103 @@ def check_card_requirement(game: "Game", card: Card) -> None:
             use_card_pile(game, None, card_name, force=True, card_type=card_type)
             game.output(f"Using {card_name} as required by {card.name}")
 
+
+###########################################################################
+def check_heirloom_requirements(game: "Game", card: Card) -> None:
+    """Check to see if heirlooms are required"""
     if card.heirloom is not None and card.heirloom not in game.heirlooms:
         use_card_pile(game, None, card.heirloom, force=True, card_type="Heirloom")
         game.heirlooms.append(card.heirloom)
         game.output(f"Using {card.heirloom} as required by {card.name}")
 
+
+###########################################################################
+def check_ruins_requirements(game: "Game", card: Card) -> None:
+    """Check to see if ruins are required"""
     if card.isLooter() and "Ruins" not in game.card_piles:
         use_ruins(game)
         game.output(f"Using Ruins as required by {card.name}")
-    if card.isFate() and not game.boons:
-        load_boons(game)
-    if card.isDoom() and not game.hexes:
-        game.hexes = load_hexes(game)
-        game.output(f"Using hexes as required by {card.name}")
-    if card.isLiaison() and not game.ally:
-        game.ally = load_ally(game, INIT_CARDS[Keys.ALLIES])
-        game.output(f"Using Allies as required by {card.name}")
-    if card.traveller and not FLAGS[Flag.LOADED_TRAVELLERS]:
-        load_travellers(game)
-        FLAGS[Flag.LOADED_TRAVELLERS] = True
+
+
+###########################################################################
+def check_prize_requirements(game: "Game", card: Card) -> None:
+    """Check to see if prizes are required"""
     if card.needs_prizes and not FLAGS[Flag.LOADED_PRIZES]:
         add_prizes(game)
         FLAGS[Flag.LOADED_PRIZES] = True
         game.output(f"Using Prizes as required by {card.name}")
+
+
+###########################################################################
+def check_artifact_requirements(game: "Game", card: Card) -> None:
+    """Check to see if artifacts are required"""
     if card.needsartifacts and not game.artifacts:
         game.artifacts = load_artifacts(game)
         game.output(f"Using artifacts as required by {card.name}")
-    if card.needsprojects and not game.projects:
-        game.projects = load_projects(game, INIT_CARDS[Keys.PROJECTS], INIT_NUMBERS[Keys.PROJECTS])
-        game.output(f"Using projects as required by {card.name}")
+
+
+###########################################################################
+def check_prophecy_requirements(game: "Game", card: Card) -> None:
+    """Check to see if prophecies are required"""
     if card.isOmen() and not game.inactive_prophecy:
         game.inactive_prophecy = load_prophecies(game, INIT_CARDS[Keys.PROPHECIES])
         game.output(f"Playing with Prophecy {game.inactive_prophecy.name}")
         game.sun_tokens = get_num_sun_tokens(game)
+
+
+###########################################################################
+def check_project_requirements(game: "Game", card: Card) -> None:
+    """Check to see if projects are required"""
+    if card.needsprojects and not game.projects:
+        game.projects = load_projects(game, INIT_CARDS[Keys.PROJECTS], INIT_NUMBERS[Keys.PROJECTS])
+        game.output(f"Using projects as required by {card.name}")
+
+
+###########################################################################
+def check_allies_requirements(game: "Game", card: Card) -> None:
+    """Check to see if allies are required"""
+    if card.isLiaison() and not game.ally:
+        game.ally = load_ally(game, INIT_CARDS[Keys.ALLIES])
+        game.output(f"Using Allies as required by {card.name}")
+
+
+###########################################################################
+def check_traveller_requirements(game: "Game", card: Card) -> None:
+    """Check to see if travellers are required"""
+    if card.traveller and not FLAGS[Flag.LOADED_TRAVELLERS]:
+        load_travellers(game)
+        FLAGS[Flag.LOADED_TRAVELLERS] = True
+
+
+###########################################################################
+def check_boon_requirements(game: "Game", card: Card) -> None:
+    """Check to see if boons are required"""
+    if card.isFate() and not game.boons:
+        load_boons(game)
+
+
+###########################################################################
+def check_hexes_requirements(game: "Game", card: Card) -> None:
+    """Check to see if hexes are required"""
+    if card.isDoom() and not game.hexes:
+        game.hexes = load_hexes(game)
+        game.output(f"Using hexes as required by {card.name}")
+
+
+###########################################################################
+def check_card_requirement(game: "Game", card: Card) -> None:
+    """Ensure all the requirements (e.g. Curses) for a card are also loaded"""
+    handle_specified_card_requirements(game, card)
+    check_heirloom_requirements(game, card)
+    check_ruins_requirements(game, card)
+    check_prize_requirements(game, card)
+    check_artifact_requirements(game, card)
+    check_prophecy_requirements(game, card)
+    check_project_requirements(game, card)
+    check_traveller_requirements(game, card)
+    check_allies_requirements(game, card)
+    check_boon_requirements(game, card)
+    check_hexes_requirements(game, card)
 
 
 ###########################################################################

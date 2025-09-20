@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 FOOL = "fool"
@@ -12,7 +13,7 @@ class Card_Fool(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.FATE]
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = """If you aren't the player with Lost in the Woods, take it, take 3 Boons, 
+        self.desc = """If you aren't the player with Lost in the Woods, take it, take 3 Boons,
         and receive the Boons in any order."""
         self.name = "Fool"
         self.cost = 3

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """ https://wiki.dominionstrategy.com/index.php/Launch"""
 import unittest
+
 from dominion import Card, Game, Event, Phase, Player, NoCardException
 
 

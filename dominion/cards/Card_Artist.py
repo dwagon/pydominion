@@ -2,6 +2,7 @@
 """https://wiki.dominionstrategy.com/index.php/Artist"""
 import unittest
 from collections import Counter
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
