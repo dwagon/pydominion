@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Animal_Fair """
+"""http://wiki.dominionstrategy.com/index.php/Animal_Fair"""
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -27,9 +28,7 @@ class Card_Animal_Fair(Card.Card):
         actions = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not actions:
             return 0
-        tc = player.plr_trash_card(
-            prompt="Trash card to get Animal Fair for free", cardsrc=actions
-        )
+        tc = player.plr_trash_card(prompt="Trash card to get Animal Fair for free", cardsrc=actions)
         if tc:
             return -7
         return 0
@@ -48,7 +47,7 @@ class TestAnimalFair(unittest.TestCase):
         """Play a supplies"""
         while True:
             try:
-                card = self.g.get_card_from_pile("Moat")
+                self.g.get_card_from_pile("Moat")
             except NoCardException:
                 break
         self.plr.play_card(self.card)

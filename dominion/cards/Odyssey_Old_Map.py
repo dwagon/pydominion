@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Old_Map"""
+"""http://wiki.dominionstrategy.com/index.php/Old_Map"""
 
 import unittest
+
 from dominion import Game, Card, Piles
 
 
@@ -21,7 +22,7 @@ class Card_Old_Map(Card.Card):
     def special(self, game, player):
         player.plr_discard_cards(num=1)
         player.pickup_cards(1)
-        if opt := player.plr_choose_options(
+        if player.plr_choose_options(
             "Do you want to rotate the Odysseys?",
             ("Don't change", False),
             ("Rotate", True),

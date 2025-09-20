@@ -34,12 +34,10 @@ class Card_CabinBoy(Card.Card):
             case "trash":
                 player.trash_card(self)
                 durations = []
-                for name, pile in game.get_card_piles():
+                for name, _ in game.get_card_piles():
                     if game.card_instances[name].isDuration():
                         durations.append((f"Get {name}", name))
-                which_duration = player.plr_choose_options(
-                    "Which duration to gain?", *durations
-                )
+                which_duration = player.plr_choose_options("Which duration to gain?", *durations)
                 try:
                     player.gain_card(which_duration)
                 except NoCardException:
@@ -64,9 +62,7 @@ class TestCabinBoy(unittest.TestCase):
         hand_size = len(self.plr.piles[Piles.HAND])
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), actions + 1 - 1)  # -1 for playing CB
-        self.assertEqual(
-            len(self.plr.piles[Piles.HAND]), hand_size + 1 - 1
-        )  # -1 for playing CB
+        self.assertEqual(len(self.plr.piles[Piles.HAND]), hand_size + 1 - 1)  # -1 for playing CB
         self.plr.end_turn()
         self.plr.test_input = ["Gain $2"]
         self.plr.start_turn()

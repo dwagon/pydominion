@@ -24,7 +24,7 @@ class Card_NightWatchman(Card.Card):
                 break
         player.output(f'Top 5 cards on the deck are: {", ".join([_.name for _ in cards])}')
         for card in cards:
-            if discard := player.plr_choose_options(
+            if player.plr_choose_options(
                 "What do you want to do?",
                 (f"Discard {card}", True),
                 (f"Return {card} to the deck", False),

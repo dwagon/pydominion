@@ -37,7 +37,7 @@ class Test_Fawning(unittest.TestCase):
         """Check gaining Fawning cards"""
         self.g.assign_trait("Fawning", "Moat")
 
-        card = self.plr.gain_card("Province")
+        self.plr.gain_card("Province")
         self.assertIn("Province", self.plr.piles[Piles.DISCARD])
         self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
 

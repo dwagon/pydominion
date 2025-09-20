@@ -27,7 +27,7 @@ class Card_SacredGrove(Card.Card):
         for pl in game.player_list():
             if pl == player:
                 continue
-            if ch := pl.plr_choose_options(
+            if pl.plr_choose_options(
                 f"Accept a boon of {b.name} from {player.name}'s Sacred Grove?",
                 (f"Accept ({b.description(pl)})", True),
                 ("Refuse", False),

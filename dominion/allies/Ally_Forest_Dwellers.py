@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Forest_Dwellers"""
+"""http://wiki.dominionstrategy.com/index.php/Forest_Dwellers"""
 
 import unittest
 
@@ -21,7 +21,7 @@ class Ally_ForestDwellers(Ally.Ally):
         """ """
         if player.favors.get() < 1:
             return
-        if do_it := player.plr_choose_options(
+        if player.plr_choose_options(
             "Forest Dwellers:",
             ("Do nothing", False),
             (
@@ -49,9 +49,7 @@ class Ally_ForestDwellers(Ally.Ally):
 
 
 ###############################################################################
-def botresponse(
-    player, kind, args=None, kwargs=None
-):  # pylint: disable=unused-argument
+def botresponse(player, kind, args=None, kwargs=None):  # pylint: disable=unused-argument
     """Bot response - just do nothing"""
     return False
 
@@ -61,9 +59,7 @@ class Test_ForestDwellers(unittest.TestCase):
     """Test Forest Dwellers"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            numplayers=1, allies="Forest Dwellers", initcards=["Underling"]
-        )
+        self.g = Game.TestGame(numplayers=1, allies="Forest Dwellers", initcards=["Underling"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

@@ -19,7 +19,7 @@ class Way_Seal(Way.Way):
 
     def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         mod = {}
-        if deck := player.plr_choose_options(
+        if player.plr_choose_options(
             f"Seal: Where to put {card}?",
             (f"Put {card} on discard", False),
             (f"Put {card} on top of deck", True),

@@ -287,7 +287,7 @@ class Game:
                     tokens += f"{plr.name}[{','.join(tkns)}]"
 
             print(f"CardPile {name}: {len(card_pile)} cards {tokens}")
-        print(f"Instances: {', '.join([_ for _ in self.card_instances])}")
+        print(f"Instances: {', '.join(self.card_instances)}")
 
         for plr in self.player_list():
             plr.print_state()
@@ -362,7 +362,7 @@ class Game:
             f"current={self.count_cards()} original={self._original['total_cards']}\n",
             file=sys.stderr,
         )
-        for name, pile in self.card_piles.items():
+        for name in self.card_piles:
             if self._original["count"][name]["total"] == now[name]["total"]:
                 continue
             print(f"{name} <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", file=sys.stderr)

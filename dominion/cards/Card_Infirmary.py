@@ -27,7 +27,7 @@ class Card_Infirmary(Card.Card):
 
     def hook_overpay(self, game: "Game.Game", player: "Player.Player", amount: int) -> None:
         """Play this once per $1 overpaid."""
-        for run in range(amount):
+        for _ in range(amount):
             player.play_card(self, cost_action=False, discard=False)
 
 

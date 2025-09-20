@@ -59,7 +59,7 @@ class TestExperiment(unittest.TestCase):
     def test_gain_none_left(self) -> None:
         """Gain an experiment when there are no more left"""
         for _ in range(9):
-            card = self.g.get_card_from_pile("Experiment")
+            self.g.get_card_from_pile("Experiment")
         try:
             self.plr.gain_card("Experiment")
         except:

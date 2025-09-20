@@ -24,7 +24,7 @@ class Event_Receive_Tribute(Event.Event):
             player.output(f"You haven't gained enough cards - only {num_gained}")
             return
         selected: set[str] = set()
-        for i in range(3):
+        for _ in range(3):
             choices: list[tuple[str, Any]] = [
                 (f"Gain {card}", card)
                 for card in game.get_action_piles(999)

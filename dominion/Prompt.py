@@ -89,7 +89,7 @@ def spendable_selection(player: "Player") -> list[Option]:
 def get_all_purchasable(player) -> PlayArea:
     """Return all potentially purchasable cards"""
     all_cards = PlayArea("all_purchasable")
-    for name, pile in player.game.get_card_piles():
+    for _, pile in player.game.get_card_piles():
         if pile.is_empty():
             continue
         card = pile.get_top_card()

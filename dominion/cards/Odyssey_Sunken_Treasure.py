@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Sunken_Treasure"""
+"""http://wiki.dominionstrategy.com/index.php/Sunken_Treasure"""
 
 import unittest
 
@@ -21,7 +21,7 @@ class Card_Sunken_Treasure(Card.Card):
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         options = []
-        for name, pile in game.get_card_piles():
+        for name, _ in game.get_card_piles():
             card = game.card_instances[name]
             if card and not card.isAction():
                 continue

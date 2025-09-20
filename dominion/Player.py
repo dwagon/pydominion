@@ -1476,7 +1476,7 @@ class Player:
         if types is None:
             types = {}
         types = self._type_selector(types)
-        for name, pile in self.game.get_card_piles():
+        for _, pile in self.game.get_card_piles():
             if not pile:
                 continue
             card = pile.get_top_card()

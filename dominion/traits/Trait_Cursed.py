@@ -47,6 +47,7 @@ class Test_Cursed(unittest.TestCase):
         buys = self.plr.buys.get()
         self.plr.gain_card("Moat")
         self.assertIn("Curse", self.plr.piles[Piles.DISCARD])
+        self.assertEqual(self.plr.buys.get(), buys + 1)
 
     def test_no_more_curses(self) -> None:
         """Check gaining a cursed card where there are no more curses"""

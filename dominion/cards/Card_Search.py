@@ -52,7 +52,7 @@ class TestSearch(unittest.TestCase):
         self.plr.play_card(self.card)
         self.plr.end_turn()
         self.plr.piles[Piles.DISCARD].set()
-        for i in range(10):
+        for _ in range(10):
             self.g.get_card_from_pile("Moat")
         self.assertIn("Search", self.g.trash_pile)
         self.assertGreaterEqual(len(self.plr.piles[Piles.DISCARD]), 1)

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Barbarian """
+"""http://wiki.dominionstrategy.com/index.php/Barbarian"""
 
 import unittest
+
 from dominion import Card, Game, Piles, Player, NoCardException
 
 
@@ -25,9 +26,7 @@ class Card_Barbarian(Card.Card):
         for plr in player.attack_victims():
             self._barbarian_attack(game, attacker=player, victim=plr)
 
-    def _barbarian_attack(
-        self, game: Game.Game, attacker: Player.Player, victim: Player.Player
-    ) -> None:
+    def _barbarian_attack(self, game: Game.Game, attacker: Player.Player, victim: Player.Player) -> None:
         """Do the barbarian attack"""
         try:
             victim_card = victim.top_card()
@@ -42,7 +41,7 @@ class Card_Barbarian(Card.Card):
                 attacker.output("No more Curses")
             return
         cards = []
-        for name, card_pile in game.get_card_piles():
+        for name, _ in game.get_card_piles():
             check_card = game.card_instances[name]
             if _card_types(check_card).intersection(_card_types(victim_card)):
                 if check_card.cost < victim_card.cost:
