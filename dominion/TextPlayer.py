@@ -1,5 +1,6 @@
+"""Dominion player using a text interface - generally a human"""
+
 import shutil
-import sys
 import textwrap
 from typing import Any, TYPE_CHECKING
 
@@ -7,15 +8,13 @@ from rich.console import Console
 
 from dominion import Piles
 from dominion.Card import Card, CardType
+from dominion.CardPile import CardPile
 from dominion.Option import Option
 from dominion.PlayArea import PlayArea
 from dominion.Player import Player
 
 if TYPE_CHECKING:
     from dominion.Game import Game
-
-if sys.version[0] == "3":
-    raw_input = input
 
 colours = [
     "red",
@@ -31,6 +30,8 @@ colours = [
 ###############################################################################
 ###############################################################################
 class TextPlayer(Player):
+    """Implementation of a text player"""
+
     def __init__(self, game: "Game", name="", quiet=False, **kwargs: Any) -> None:
         self.colour = colours[kwargs["number"]]
         self.quiet = quiet
@@ -54,14 +55,12 @@ class TextPlayer(Player):
 
     ###########################################################################
     def selector_line(self, o: Option) -> str:
+        """Print selector line"""
         output: list[str] = []
         output.append(f"{o['selector']})")
-        if o["print"]:
-            output.append(o["print"])
-        if o["verb"]:
-            output.append(o["verb"])
-        if o["name"]:
-            output.append(o["name"])
+        for key in ("print", "verb", "name"):
+            if o[key]:
+                output.append(o[key])
         if o["details"]:
             output.append(f"({o['details']})")
         if o["name"] and not o["details"] and o["desc"]:
@@ -70,16 +69,14 @@ class TextPlayer(Player):
             output.append(o["notes"])
 
         indent = len(self.name) + 5
-        try:
+        if self.currcards:
             indent += len(self.currcards[0].name) + 2
-        except IndexError:
-            pass
         desc = ""
         for line in o["desc"].splitlines():
             desc += line.strip() + " "
         output.append(desc)
         text = " ".join(output)
-        (cols, lines) = shutil.get_terminal_size((80, 24))
+        (cols, _) = shutil.get_terminal_size((80, 24))
         return textwrap.fill(text, subsequent_indent=" " * indent, width=cols - indent)
 
     ###########################################################################
@@ -93,16 +90,7 @@ class TextPlayer(Player):
             self.output(line)
         self.output(prompt, end=" ")
         while True:
-            if self.test_input:
-                inp = self.test_input.pop(0)
-                self.output(f"Using '{inp}' test input")
-            else:  # pragma: no coverage
-                try:
-                    inp = raw_input()
-                except (IOError, KeyboardInterrupt):
-                    self.game.print_state()
-                    raise
-            if inp:
+            if inp := self.get_user_input():
                 matching: list[Any] = []
                 for o in options:
                     if o["selector"] == inp:
@@ -112,6 +100,20 @@ class TextPlayer(Player):
                 if len(matching) == 1:
                     return matching[0]
             self.output(f"Invalid Option ({inp})")
+
+    ###########################################################################
+    def get_user_input(self) -> str:
+        """Get input from user (or the test data)"""
+        if self.test_input:
+            inp = self.test_input.pop(0)
+            self.output(f"Using '{inp}' test input")
+        else:  # pragma: no coverage
+            try:
+                inp = input()
+            except (IOError, KeyboardInterrupt):
+                self.game.print_state()
+                raise
+        return inp
 
     ###########################################################################
     def select_source(self, **kwargs: Any) -> PlayArea:
@@ -130,19 +132,23 @@ class TextPlayer(Player):
     ###########################################################################
     def card_pile_sel(self, num: int = 1, **kwargs: Any) -> list[Any]:
         """Select some card piles from a selection of card piles and return their names"""
-        force = kwargs.get("force", False)
-        showdesc = kwargs.get("showdesc", True)
-        verbs = kwargs.get("verbs", ("Select", "Unselect"))
+        flags: dict[str, Any] = {}
+        flags["force"] = kwargs.get("force", False)
+        flags["showdesc"] = kwargs.get("showdesc", True)
+        flags["verbs"] = kwargs.get("verbs", ("Select", "Unselect"))
+        flags["any_num"] = False
+        flags["num"] = num
 
         if "prompt" in kwargs:
             self.output(kwargs["prompt"])
 
         if kwargs.get("anynum", False):
-            any_num = True
-            num = 0
-        else:
-            any_num = False
+            flags["any_num"] = True
+            flags["num"] = 0
 
+        flags["exclude"] = kwargs.get("exclude", [])
+        flags["print_cost"] = kwargs.get("printcost", False)
+        flags["print_types"] = kwargs.get("printtypes", False)
         if kwargs.get("cardsrc"):
             piles = [(key, value) for key, value in self.game.get_card_piles() if key in kwargs["cardsrc"]]
         else:
@@ -150,25 +156,7 @@ class TextPlayer(Player):
 
         selected: list[Any] = []
         while True:
-            options: list[Option] = []
-            if any_num or (force and num == len(selected)) or (not force and num >= len(selected)):
-                o = Option(selector="0", verb="Finish Selecting", card=None)
-                options.append(o)
-            index = 1
-            for name, card_pile in piles:
-                card = self.game.card_instances[name]
-                if "exclude" in kwargs and card.name in kwargs["exclude"]:
-                    continue
-                verb = verbs[0] if card_pile not in selected else verbs[1]
-                o = Option(selector=f"{index}", verb=verb, card=name, name=name)
-                index += 1
-                if showdesc:
-                    o["desc"] = card.description(self) if card else "Empty card pile"
-                if kwargs.get("printcost"):
-                    o["details"] = str(self.card_cost(card))
-                if kwargs.get("printtypes"):
-                    o["details"] = card.get_cardtype_repr()
-                options.append(o)
+            options = self.card_pile_sel_options(selected, piles, flags)
             ui = self.user_input(options, "Select which card pile?")
             if not ui["card"]:
                 break
@@ -179,6 +167,32 @@ class TextPlayer(Player):
             if num == 1 and len(selected) == 1:
                 break
         return selected
+
+    ###########################################################################
+    def card_pile_sel_options(
+        self, selected: list[Any], piles: list[tuple[str, CardPile]], flags: dict[str, Any]
+    ) -> list[Option]:
+        """Generate the options for card_pile_sel"""
+        options: list[Option] = []
+        if self.can_finish(flags["any_num"], flags["force"], flags["num"], len(selected)):
+            o = Option(selector="0", verb="Finish Selecting", card=None)
+            options.append(o)
+        index = 1
+        for name, card_pile in piles:
+            card = self.game.card_instances[name]
+            if card.name in flags["exclude"]:
+                continue
+            verb = flags["verbs"][0] if card_pile not in selected else flags["verbs"][1]
+            o = Option(selector=f"{index}", verb=verb, card=name, name=name)
+            index += 1
+            if flags["showdesc"]:
+                o["desc"] = card.description(self) if card else "Empty card pile"
+            if flags["print_cost"]:
+                o["details"] = str(self.card_cost(card))
+            if flags["print_types"]:
+                o["details"] = card.get_cardtype_repr()
+            options.append(o)
+        return options
 
     ###########################################################################
     def card_sel(
@@ -216,24 +230,18 @@ class TextPlayer(Player):
             self.output(kwargs["prompt"])
 
         if "anynum" in kwargs and kwargs["anynum"]:
-            anynum = True
+            any_num = True
             num = 0
         else:
-            anynum = False
+            any_num = False
 
         selected: list[Card] = []
         types = kwargs.get("types", {})
         types = self._type_selector(types)
         while True:
             options = []
-            if (
-                anynum
-                or (force and num == len(selected))
-                or (not force and num >= len(selected))
-                or (len(select_from) < num)
-            ):
-                o = Option(selector="0", verb="Finish Selecting", card=None)
-                options.append(o)
+            if self.can_finish(any_num, force, num, num_selected=len(selected)):
+                options.append(Option(selector="0", verb="Finish Selecting", card=None))
             index = 1
             options.extend(self._card_sel_options(index, show_desc, selected, types, select_from, kwargs, verbs))
             ui = self.user_input(options, "Select which card?")
@@ -246,6 +254,21 @@ class TextPlayer(Player):
             if num == 1 and len(selected) == 1:
                 break
         return selected
+
+    ###########################################################################
+    def can_finish(self, any_num: bool, force: bool, num: int, num_selected: int) -> bool:
+        """Can we finish selecting
+        any_num - don't care how many
+        force - need to be exact
+        num - number requested
+        num_selected - number that has been selected by the user"""
+        if any_num:
+            return True
+        if force and num == num_selected:
+            return True
+        if not force and num >= num_selected:
+            return True
+        return False
 
     ###########################################################################
     def _card_sel_options(

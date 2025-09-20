@@ -129,22 +129,28 @@ def parse_cli_args(args: Optional[list[str]] = None) -> argparse.Namespace:
 
 
 ###############################################################################
+def load_cardset(args: dict[str, Any]) -> list[str]:
+    """Load list of cards from a file"""
+    cards = []
+    for line in args["cardset"]:
+        if line.startswith("#"):
+            continue
+        if line.startswith("--prosperity"):
+            args["prosperity"] = True
+            continue
+        if line.startswith("--oldcards"):
+            args["oldcards"] = True
+            continue
+        cards.append(line.strip())
+    return cards
+
+
+###############################################################################
 def run_game(args: dict[str, Any]) -> None:  # pragma: no cover
     """TODO"""
-    cards = args["initcards"]
     turn = 0
     if args["cardset"]:
-        for line in args["cardset"]:
-            if line.startswith("#"):
-                continue
-            if line.startswith("--prosperity"):
-                args["prosperity"] = True
-                continue
-            if line.startswith("--oldcards"):
-                args["oldcards"] = True
-                continue
-            cards.append(line.strip())
-    args["initcards"] = cards
+        args["initcards"] = load_cardset(args)
     g = Game.Game(**args)
     g.start_game()
     if args["validate_only"]:
