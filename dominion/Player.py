@@ -6,27 +6,26 @@ from __future__ import annotations
 import contextlib
 import json
 import operator
-import sys
 from collections import defaultdict
 from types import NoneType
 from typing import Any, Optional, TYPE_CHECKING, Callable, cast
 
-if TYPE_CHECKING:
-    from dominion.Game import Game
-
 from dominion import Piles, Phase, Limits, NoCardException, Whens, OptionKeys, Prompt, Token
+from dominion.Artifact import Artifact
+from dominion.Boon import Boon
 from dominion.Card import Card, CardType
 from dominion.CardPile import CardPile
 from dominion.Counter import Counter
 from dominion.Event import Event
+from dominion.Hex import Hex
 from dominion.Option import Option
 from dominion.PlayArea import PlayArea
-from dominion.Way import Way
-from dominion.Hex import Hex
-from dominion.Boon import Boon
-from dominion.Artifact import Artifact
 from dominion.Project import Project
 from dominion.State import State
+from dominion.Way import Way
+
+if TYPE_CHECKING:
+    from dominion.Game import Game
 
 
 ###############################################################################
@@ -662,6 +661,7 @@ class Player:
 
     ###########################################################################
     def payback(self) -> None:
+        """Payback debt"""
         payback = min(self.coins.get(), self.debt.get())
         self.output(f"Paying back {payback} debt")
         self.coins -= payback
@@ -669,35 +669,35 @@ class Player:
 
     ###########################################################################
     def _perform_action(self, opt: Option) -> None:
-        if opt["action"] == "buy":
-            self.buy_card(cast(str, opt["name"]))
-        elif opt["action"] == "event":
-            self.perform_event(cast(Event, opt["card"]))
-        elif opt["action"] == "project":
-            self.buy_project(cast(Project, opt["card"]))
-        elif opt["action"] == "reserve":
-            self.call_reserve(cast(Card, opt["card"]))
-        elif opt["action"] == "coffer":
-            self.spend_coffer()
-        elif opt["action"] == "villager":
-            self.spend_villager()
-        elif opt["action"] == "play":
-            self.play_card(cast(Card, opt["card"]))
-        elif opt["action"] == "spend":
-            self.play_card(cast(Card, opt["card"]))
-        elif opt["action"] == "payback":
-            self.payback()
-        elif opt["action"] == "spendall":
-            self._spend_all_cards()
-        elif opt["action"] == "quit":
-            return
-        elif opt["action"] == "way":
-            self.perform_way(cast(Way, opt["way"]), cast(Card, opt["card"]))
-        elif opt["action"] is None:
-            return
-        else:  # pragma: no cover
-            print(f"ERROR: Unhandled action {opt['action']}", file=sys.stderr)
-            sys.exit(1)
+        """Perform the action selected"""
+        match opt["action"]:
+            case "buy":
+                self.buy_card(cast(str, opt["name"]))
+            case "event":
+                self.perform_event(cast(Event, opt["card"]))
+            case "project":
+                self.buy_project(cast(Project, opt["card"]))
+            case "reserve":
+                self.call_reserve(cast(Card, opt["card"]))
+            case "coffer":
+                self.spend_coffer()
+            case "villager":
+                self.spend_villager()
+            case "play":
+                self.play_card(cast(Card, opt["card"]))
+            case "spend":
+                self.play_card(cast(Card, opt["card"]))
+            case "payback":
+                self.payback()
+            case "spendall":
+                self._spend_all_cards()
+            case "quit":
+                return
+            case "way":
+                self.perform_way(cast(Way, opt["way"]), cast(Card, opt["card"]))
+            case None:
+                return
+
         self.misc["is_start"] = False
 
     ###########################################################################
@@ -1178,8 +1178,7 @@ class Player:
         except NoCardException:
             self.output(f"No more {new_card_name}")
             raise
-        else:
-            new_card.player = self
+        new_card.player = self
         return new_card
 
     ###########################################################################
