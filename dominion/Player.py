@@ -353,8 +353,7 @@ class Player:
                 self.add_card(card, Piles.TOPDECK)
 
         for card in self.relevant_cards():
-            if hasattr(card, "hook_post_shuffle"):
-                card.hook_post_shuffle(game=self.game, player=self)
+            card.hook_post_shuffle(game=self.game, player=self)
 
     ###########################################################################
     def pickup_cards(self, num: int, verbose: bool = True, verb: str = "Picked up") -> list[Card]:
@@ -389,9 +388,8 @@ class Player:
             self.output("No more cards to use")
             raise NoCardException
         self.output(f"Shuffling Pile of {num_cards} cards")
-        for project in self.projects:
-            if hasattr(project, "hook_pre_shuffle"):
-                project.hook_pre_shuffle(game=self.game, player=self)
+        for card in self.relevant_cards():
+            card.hook_pre_shuffle(game=self.game, player=self)
         self.piles[Piles.DISCARD].shuffle()
 
     ###########################################################################
