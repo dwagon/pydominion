@@ -174,7 +174,7 @@ hook_under_attack
 ----------------
 Called if you get under attack
 
-hook_pre_shuffle
+hook_pre_shuffle(game, player)
 ---------------
 Called just before the deck gets shuffled
 
