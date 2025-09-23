@@ -4,7 +4,7 @@
 
 import unittest
 
-from dominion import Game, Phase, Piles, Prompt, Token
+from dominion import Game, Phase, Piles, Prompt, Token, Action
 from dominion.Counter import Counter
 
 
@@ -135,7 +135,7 @@ class TestBuyableSelection(unittest.TestCase):
         for i in opts:
             if i["name"] == "Moat":
                 self.assertEqual(i["verb"], "Buy")
-                self.assertEqual(i["action"], "buy")
+                self.assertEqual(i["action"], Action.BUY)
                 self.assertTrue(isinstance(i["card"], self.game.get_card_from_pile("Moat").__class__))
                 break
         else:  # pragma: no coverage
@@ -148,7 +148,7 @@ class TestBuyableSelection(unittest.TestCase):
         for i in opts:
             if i["name"].startswith("Copper"):
                 try:
-                    self.assertEqual(i["action"], "buy")
+                    self.assertEqual(i["action"], Action.BUY)
                     self.assertTrue(isinstance(i["card"], self.game.get_card_from_pile("Copper").__class__))
                 except AssertionError:  # pragma: no cover
                     print(f"Buy Copper {i}")
@@ -187,7 +187,7 @@ class TestWaySelection(unittest.TestCase):
         self.assertEqual(opts[0]["selector"], "b")  # "a" is for Moat
         self.assertEqual(opts[0]["name"], "Way of the Camel")
         self.assertEqual(opts[0]["desc"], "Moat: Exile a Gold from the Supply.")
-        self.assertEqual(opts[0]["action"], "way")
+        self.assertEqual(opts[0]["action"], Action.WAY)
 
     def test_no_ways(self) -> None:
         """No way should return emptiness"""
@@ -240,7 +240,7 @@ class TestPlayableSelection(unittest.TestCase):
         self.assertEqual(len(opts), 1)
         self.assertEqual(opts[0]["selector"], "1")
         self.assertIsNone(opts[0]["card"])
-        self.assertEqual(opts[0]["action"], "villager")
+        self.assertEqual(opts[0]["action"], Action.VILLAGER)
         self.assertEqual(ind, 1)
 
     def test_shadow(self) -> None:
@@ -271,13 +271,13 @@ class TestChoiceSelection(unittest.TestCase):
         opts = Prompt.choice_selection(self.plr)
 
         self.assertEqual(opts[0]["verb"], "End Phase")
-        self.assertEqual(opts[0]["action"], "quit")
+        self.assertEqual(opts[0]["action"], Action.QUIT)
         self.assertEqual(opts[0]["selector"], "0")
         self.assertIsNone(opts[0]["card"])
 
         self.assertEqual(opts[1]["verb"], "Play")
         self.assertEqual(opts[1]["name"], "Moat")
-        self.assertEqual(opts[1]["action"], "play")
+        self.assertEqual(opts[1]["action"], Action.PLAY)
         self.assertEqual(opts[1]["selector"], "a")
 
         self.assertEqual(len(opts), 2)
@@ -289,12 +289,12 @@ class TestChoiceSelection(unittest.TestCase):
         opts = Prompt.choice_selection(self.plr)
 
         self.assertEqual(opts[0]["verb"], "End Phase")
-        self.assertEqual(opts[0]["action"], "quit")
+        self.assertEqual(opts[0]["action"], Action.QUIT)
         self.assertEqual(opts[0]["selector"], "0")
         self.assertIsNone(opts[0]["card"])
 
-        self.assertEqual(opts[1]["action"], "spendall")
-        self.assertEqual(opts[2]["action"], "spend")
+        self.assertEqual(opts[1]["action"], Action.SPENDALL)
+        self.assertEqual(opts[2]["action"], Action.SPEND)
 
     def test_night_phase(self) -> None:
         self.plr.piles[Piles.HAND].set("Copper", "Guardian")
@@ -303,11 +303,11 @@ class TestChoiceSelection(unittest.TestCase):
         opts = Prompt.choice_selection(self.plr)
 
         self.assertEqual(opts[0]["verb"], "End Phase")
-        self.assertEqual(opts[0]["action"], "quit")
+        self.assertEqual(opts[0]["action"], Action.QUIT)
         self.assertEqual(opts[0]["selector"], "0")
         self.assertIsNone(opts[0]["card"])
 
-        self.assertEqual(opts[1]["action"], "play")
+        self.assertEqual(opts[1]["action"], Action.PLAY)
         self.assertEqual(opts[1]["name"], "Guardian")
         self.assertEqual(opts[1]["selector"], "a")
 
@@ -360,7 +360,7 @@ class TestNightSelection(unittest.TestCase):
         self.assertEqual(idx, 2)
         self.assertEqual(opts[0]["selector"], "b")
         self.assertEqual(opts[0]["verb"], "Play")
-        self.assertEqual(opts[0]["action"], "play")
+        self.assertEqual(opts[0]["action"], Action.PLAY)
         self.assertEqual(opts[0]["card"].name, "Monastery")
 
     def test_no_night(self) -> None:
@@ -386,7 +386,7 @@ class TestProjectSelection(unittest.TestCase):
         opts, idx = Prompt.project_selection(self.plr, 0)
         self.assertEqual(idx, 1)
         self.assertEqual(opts[0]["selector"], "-")
-        self.assertIsNone(opts[0]["action"])
+        self.assertEqual(opts[0]["action"], Action.NONE)
         self.assertEqual(opts[0]["card"].name, "ProjectA")
 
     def test_projects_buy(self) -> None:
@@ -394,7 +394,7 @@ class TestProjectSelection(unittest.TestCase):
         opts, idx = Prompt.project_selection(self.plr, 0)
         self.assertEqual(idx, 1)
         self.assertEqual(opts[0]["selector"], "b")
-        self.assertEqual(opts[0]["action"], "project")
+        self.assertEqual(opts[0]["action"], Action.PROJECT)
         self.assertEqual(opts[0]["card"].name, "ProjectA")
 
 
@@ -489,24 +489,24 @@ class TestSpendableSelection(unittest.TestCase):
         self.plr.villagers.add(1)
         opts = Prompt.spendable_selection(self.plr)
         self.assertEqual(opts[0]["selector"], "1")
-        self.assertEqual(opts[0]["action"], "spendall")
+        self.assertEqual(opts[0]["action"], Action.SPENDALL)
         self.assertIn("Spend all treasures", opts[0]["verb"])
         self.assertIsNone(opts[0]["card"])
 
         self.assertEqual(opts[1]["selector"], "2")
         self.assertEqual(opts[1]["verb"], "Spend Coffer (+1 coin)")
-        self.assertEqual(opts[1]["action"], "coffer")
+        self.assertEqual(opts[1]["action"], Action.COFFER)
         self.assertIsNone(opts[1]["card"])
 
         self.assertEqual(opts[2]["selector"], "4")
         self.assertEqual(opts[2]["verb"], "Spend")
         self.assertEqual(opts[2]["name"], "Copper")
-        self.assertEqual(opts[2]["action"], "spend")
+        self.assertEqual(opts[2]["action"], Action.SPEND)
         self.assertEqual(opts[2]["card"].name, "Copper")
 
         self.assertEqual(opts[3]["verb"], "Spend")
         self.assertEqual(opts[3]["selector"], "5")
-        self.assertEqual(opts[3]["action"], "spend")
+        self.assertEqual(opts[3]["action"], Action.SPEND)
         self.assertEqual(opts[3]["card"].name, "Potion")
 
     def test_debt(self) -> None:
@@ -517,7 +517,7 @@ class TestSpendableSelection(unittest.TestCase):
         try:
             opts = Prompt.spendable_selection(self.plr)
             self.assertEqual(opts[1]["selector"], "3")
-            self.assertEqual(opts[1]["action"], "payback")
+            self.assertEqual(opts[1]["action"], Action.PAYBACK)
             self.assertEqual(opts[1]["verb"], "Payback Debt")
             self.assertIsNone(opts[1]["card"])
         except AssertionError:  # pragma: no cover

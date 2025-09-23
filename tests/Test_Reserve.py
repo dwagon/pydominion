@@ -2,7 +2,7 @@
 
 import unittest
 
-from dominion import Game, Piles, Whens, Phase, Prompt
+from dominion import Game, Piles, Whens, Phase, Prompt, Action
 
 
 ###############################################################################
@@ -19,7 +19,7 @@ class TestGetWhens(unittest.TestCase):
 
     def test_not_start(self) -> None:
         self.plr.start_turn()
-        self.plr._perform_action({"action": "spendall"})
+        self.plr._perform_action({"action": Action.SPENDALL})
         whens = self.plr._get_whens()
         self.assertNotIn(Whens.START, whens)
 
@@ -40,7 +40,7 @@ class TestGetWhens(unittest.TestCase):
         self.plr.phase = Phase.ACTION
         whens = self.plr._get_whens()
         self.assertNotIn(Whens.POSTACTION, whens)
-        self.plr._perform_action({"action": "spendall"})
+        self.plr._perform_action({"action": Action.SPENDALL})
         whens = self.plr._get_whens()
         self.assertNotIn(Whens.POSTACTION, whens)
 
@@ -107,7 +107,7 @@ class Test_reserveSelection(unittest.TestCase):
         self.plr.add_card(gold, Piles.RESERVE)
         output, index = Prompt.reserve_selection(self.plr, 1)
         self.assertEqual(len(output), 1)
-        self.assertEqual(output[0]["action"], "reserve")
+        self.assertEqual(output[0]["action"], Action.RESERVE)
         self.assertEqual(output[0]["card"], gold)
         self.assertEqual(output[0]["selector"], "c")
         self.assertEqual(index, 2)

@@ -10,7 +10,7 @@ from collections import defaultdict
 from types import NoneType
 from typing import Any, Optional, TYPE_CHECKING, Callable, cast
 
-from dominion import Piles, Phase, Limits, NoCardException, Whens, OptionKeys, Prompt, Token
+from dominion import Piles, Phase, Limits, NoCardException, Whens, OptionKeys, Prompt, Token, Action
 from dominion.Artifact import Artifact
 from dominion.Boon import Boon
 from dominion.Card import Card, CardType
@@ -577,7 +577,7 @@ class Player:
 
             opt = self.user_input(options, prompt)
             self._perform_action(opt)
-            if opt["action"] == "quit":
+            if opt["action"] == Action.QUIT:
                 return
 
     ###########################################################################
@@ -590,7 +590,7 @@ class Player:
 
             opt = self.user_input(options, prompt)
             self._perform_action(opt)
-            if opt["action"] == "quit":
+            if opt["action"] == Action.QUIT:
                 return
 
     ###########################################################################
@@ -604,7 +604,7 @@ class Player:
 
             opt = self.user_input(options, prompt)
             self._perform_action(opt)
-            if opt["action"] == "quit":
+            if opt["action"] == Action.QUIT:
                 break
         self.hook_end_buy_phase()
 
@@ -669,31 +669,31 @@ class Player:
     def _perform_action(self, opt: Option) -> None:
         """Perform the action selected"""
         match opt["action"]:
-            case "buy":
+            case Action.BUY:
                 self.buy_card(cast(str, opt["name"]))
-            case "event":
+            case Action.EVENT:
                 self.perform_event(cast(Event, opt["card"]))
-            case "project":
+            case Action.PROJECT:
                 self.buy_project(cast(Project, opt["card"]))
-            case "reserve":
+            case Action.RESERVE:
                 self.call_reserve(cast(Card, opt["card"]))
-            case "coffer":
+            case Action.COFFER:
                 self.spend_coffer()
-            case "villager":
+            case Action.VILLAGER:
                 self.spend_villager()
-            case "play":
+            case Action.PLAY:
                 self.play_card(cast(Card, opt["card"]))
-            case "spend":
+            case Action.SPEND:
                 self.play_card(cast(Card, opt["card"]))
-            case "payback":
+            case Action.PAYBACK:
                 self.payback()
-            case "spendall":
+            case Action.SPENDALL:
                 self._spend_all_cards()
-            case "quit":
+            case Action.QUIT:
                 return
-            case "way":
+            case Action.WAY:
                 self.perform_way(cast(Way, opt["way"]), cast(Card, opt["card"]))
-            case None:
+            case Action.NONE:
                 return
 
         self.misc["is_start"] = False

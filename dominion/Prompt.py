@@ -3,7 +3,7 @@
 import os
 from typing import Optional, TYPE_CHECKING
 
-from dominion import Limits, Piles, Phase, Card
+from dominion import Limits, Piles, Phase, Card, Action
 from dominion.Option import Option
 from dominion.PlayArea import PlayArea
 
@@ -55,16 +55,16 @@ def spendable_selection(player: "Player") -> list[Option]:
             verb="Spend all treasures",
             details=details,
             card=None,
-            action="spendall",
+            action=Action.SPENDALL,
         )
         options.append(o)
 
     if player.coffers:
-        o = Option(selector="2", verb="Spend Coffer (+1 coin)", card=None, action="coffer")
+        o = Option(selector="2", verb="Spend Coffer (+1 coin)", card=None, action=Action.COFFER)
         options.append(o)
 
     if player.debt and player.coins:
-        o = Option(selector="3", verb="Payback Debt", card=None, action="payback")
+        o = Option(selector="3", verb="Payback Debt", card=None, action=Action.PAYBACK)
         options.append(o)
 
     index = 4
@@ -76,7 +76,7 @@ def spendable_selection(player: "Player") -> list[Option]:
             details=tp,
             verb="Spend",
             card=card,
-            action="spend",
+            action=Action.SPEND,
             desc=card.description(player),
         )
         options.append(o)
@@ -128,12 +128,12 @@ def buyable_selection(player: "Player", index: int) -> tuple[list[Option], int]:
                 buyable.remove(card)
         sel = chr(ord("a") + index)
         if can_buy(player, card, buyable):
-            action = "buy"
+            action = Action.BUY
             verb = "Buy"
         else:
             sel = "-"
             verb = ""
-            action = None
+            action = Action.NONE
         details = [player._cost_string(card)]
         if player.game.card_piles[card.pile].embargo_level:
             details.append(f"Embargo {player.game.card_piles[card.pile].embargo_level}")
@@ -165,10 +165,10 @@ def event_selection(player: "Player", index: int) -> tuple[list[Option], int]:
         index += 1
         if op.cost <= player.coins.get() and player.buys and not player.debt:
             sel = chr(ord("a") + index)
-            action = "event"
+            action = Action.EVENT
         else:
             sel = "-"
-            action = None
+            action = Action.NONE
         details = f"Event; {player._cost_string(op)}"
         o = Option(
             selector=sel,
@@ -197,10 +197,10 @@ def project_selection(player: "Player", index: int) -> tuple[Optional[list[Optio
         index += 1
         if (op.cost <= player.coins.get() and player.buys) and (op not in player.projects):
             sel = chr(ord("a") + index)
-            action = "project"
+            action = Action.PROJECT
         else:
             sel = "-"
-            action = None
+            action = Action.NONE
         details = f"Project; {player._cost_string(op)}"
         o = Option(
             selector=sel,
@@ -235,7 +235,7 @@ def reserve_selection(player: "Player", index: int) -> tuple[list[Option], int]:
             verb="Call",
             details=details,
             card=card,
-            action="reserve",
+            action=Action.RESERVE,
             desc=card.description(player),
         )
         options.append(o)
@@ -258,7 +258,7 @@ def night_selection(player: "Player", index: int) -> tuple[list[Option], int]:
                 name=n.name,
                 details=details,
                 card=n,
-                action="play",
+                action=Action.PLAY,
                 desc=n.description(player),
             )
             options.append(o)
@@ -276,7 +276,7 @@ def playable_selection(player: "Player", index: int) -> tuple[list[Option], int]
             selector="1",
             verb="Spend Villager (+1 action)",
             card=None,
-            action="villager",
+            action=Action.VILLAGER,
         )
         options.append(o)
 
@@ -301,7 +301,7 @@ def way_selection(player: "Player", card: "Card.Card", index: int) -> tuple[list
             selector=sel,
             name=way.name,
             desc=f"{card.name}: {way.description(player)}",
-            action="way",
+            action=Action.WAY,
             card=card,
             way=way,
         )
@@ -330,7 +330,7 @@ def card_option(card: Card.Card, player: "Player", selector: str) -> Option:
         selector=selector,
         name=card.name,
         desc=card.description(player).strip(),
-        action="play",
+        action=Action.PLAY,
         card=card,
         details=details,
     )
@@ -344,7 +344,7 @@ def card_option(card: Card.Card, player: "Player", selector: str) -> Option:
 ###########################################################################
 def choice_selection(player: "Player") -> list[Option]:
     index = 0
-    o = Option(selector="0", verb="End Phase", card=None, action="quit")
+    o = Option(selector="0", verb="End Phase", card=None, action=Action.QUIT)
     options: list[Option] = [o]
 
     if player.phase == Phase.ACTION:
