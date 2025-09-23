@@ -3,7 +3,7 @@
 
 import unittest
 
-from dominion import Game, Prompt
+from dominion import Game, Prompt, Action
 
 
 ###############################################################################
@@ -59,9 +59,9 @@ class TestEventSelection(unittest.TestCase):
         num_affordable = 0
         num_not_affordable = 0
         for i in output:
-            if i["action"] == "event":
+            if i["action"] == Action.EVENT:
                 num_affordable += 1
-            elif i["action"] is None:
+            elif i["action"] == Action.NONE:
                 num_not_affordable += 1
             else:  # pragma: no coverage
                 self.fail(f"Unexpected action {i['action']} in {i}")

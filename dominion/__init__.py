@@ -112,4 +112,23 @@ class Token(StrEnum):
     ESTATE = "Estate"
 
 
+###############################################################################
+class Action(StrEnum):
+    """Types of actions that can be taken"""
+
+    BUY = "b"
+    EVENT = "e"
+    PROJECT = "p"
+    RESERVE = "r"
+    COFFER = "c"
+    VILLAGER = "v"
+    PLAY = "pl"
+    SPEND = "s"
+    PAYBACK = "pb"
+    SPENDALL = "sa"
+    QUIT = "q"
+    WAY = "w"
+    NONE = "n"
+
+
 # EOF
