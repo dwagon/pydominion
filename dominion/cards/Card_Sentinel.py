@@ -3,7 +3,7 @@
 
 import unittest
 
-from dominion import Game, Card, Piles, Player, NoCardException
+from dominion import Game, Card, Piles, Player, NoCardException, PlayArea
 
 
 ###############################################################################
@@ -18,10 +18,10 @@ class Card_Sentinel(Card.Card):
         self.cost = 3
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
-        cards: list[Card.Card] = []
+        cards = PlayArea.PlayArea("Sentinel", initial=[])
         for _ in range(5):
             try:
-                cards.append(player.next_card())
+                cards.add(player.next_card())
             except NoCardException:
                 break
         if not cards:

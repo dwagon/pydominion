@@ -1612,7 +1612,7 @@ class Player:
         self,
         num: int = 1,
         anynum: bool = False,
-        cardsrc: Piles = Piles.HAND,
+        cardsrc: Piles | PlayArea = Piles.HAND,
         **kwargs: Any,
     ) -> list[Card]:
         """Ask player to trash num cards"""
