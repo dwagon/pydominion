@@ -389,7 +389,10 @@ class Player:
             raise NoCardException
         self.output(f"Shuffling Pile of {num_cards} cards")
         for card in self.relevant_cards():
+            self.currcards.append(card)
             card.hook_pre_shuffle(game=self.game, player=self)
+            self.currcards.pop()
+
         self.piles[Piles.DISCARD].shuffle()
 
     ###########################################################################
