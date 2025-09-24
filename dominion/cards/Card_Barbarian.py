@@ -24,43 +24,50 @@ class Card_Barbarian(Card.Card):
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         for plr in player.attack_victims():
-            self._barbarian_attack(game, attacker=player, victim=plr)
+            _barbarian_attack(game, attacker=player, victim=plr)
 
-    def _barbarian_attack(self, game: Game.Game, attacker: Player.Player, victim: Player.Player) -> None:
-        """Do the barbarian attack"""
+
+###############################################################################
+def _barbarian_attack(game: Game.Game, attacker: Player.Player, victim: Player.Player) -> None:
+    """Do the barbarian attack"""
+    try:
+        victim_card = victim.top_card()
+    except NoCardException:
+        return
+    victim.output(f"{attacker}'s Barbarian: Trashes your {victim_card}")
+    victim.trash_card(victim_card)
+    if victim_card.cost < 3:
         try:
-            victim_card = victim.top_card()
+            victim.gain_card("Curse")
         except NoCardException:
-            return
-        victim.output(f"{attacker}'s Barbarian: Trashes your {victim_card}")
-        victim.trash_card(victim_card)
-        if victim_card.cost < 3:
+            attacker.output("No more Curses")
+        return
+    cards = []
+    for name, _ in game.get_card_piles():
+        check_card = game.card_instances[name]
+        if _card_types(check_card).intersection(_card_types(victim_card)):
+            if check_card.cost < victim_card.cost:
+                cards.append(check_card)
+    if cards:
+        if gained := victim.card_sel(prompt="Gain a cheaper card", cardsrc=cards):
+            if isinstance(gained[0], str):
+                card_name = gained[0]
+            else:
+                card_name = gained[0].name
             try:
-                victim.gain_card("Curse")
+                victim.gain_card(card_name, Piles.DISCARD)
             except NoCardException:
-                attacker.output("No more Curses")
-            return
-        cards = []
-        for name, _ in game.get_card_piles():
-            check_card = game.card_instances[name]
-            if _card_types(check_card).intersection(_card_types(victim_card)):
-                if check_card.cost < victim_card.cost:
-                    cards.append(check_card)
-        if cards:
-            if gained := victim.card_sel(prompt="Gain a cheaper card", cardsrc=cards):
-                try:
-                    victim.gain_card(gained[0].name, Piles.DISCARD)
-                except NoCardException:
-                    victim.output(f"No more {gained[0]}")
-        else:
-            victim.output("No suitable cards")
+                victim.output(f"No more {gained[0]}")
+    else:
+        victim.output("No suitable cards")
 
 
-def _card_types(card: Card.Card) -> set[str]:
+###############################################################################
+def _card_types(card: Card.Card) -> set[Card.CardType]:
     """Return a set of the cards card types"""
     if isinstance(card.cardtype, list):
         return set(card.cardtype)
-    return set([card.cardtype])
+    return {card.cardtype}
 
 
 ###############################################################################

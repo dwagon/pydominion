@@ -1,3 +1,5 @@
+"""Constants used in many places"""
+
 from enum import auto, Enum, StrEnum
 
 from dominion.Option import Option
@@ -100,6 +102,8 @@ class OptionKeys(StrEnum):
 
 ###############################################################################
 class Token(StrEnum):
+    """Tokens"""
+
     PLUS_1_ACTION = "+1 Action"
     PLUS_1_BUY = "+1 Buy"
     PLUS_1_COIN = "+1 Coin"
@@ -116,19 +120,19 @@ class Token(StrEnum):
 class Action(StrEnum):
     """Types of actions that can be taken"""
 
-    BUY = "b"
-    EVENT = "e"
-    PROJECT = "p"
-    RESERVE = "r"
-    COFFER = "c"
-    VILLAGER = "v"
-    PLAY = "pl"
-    SPEND = "s"
-    PAYBACK = "pb"
-    SPENDALL = "sa"
-    QUIT = "q"
-    WAY = "w"
-    NONE = "n"
+    BUY = auto()
+    EVENT = auto()
+    PROJECT = auto()
+    RESERVE = auto()
+    COFFER = auto()
+    VILLAGER = auto()
+    PLAY = auto()
+    SPEND = auto()
+    PAYBACK = auto()
+    SPENDALL = auto()
+    QUIT = auto()
+    WAY = auto()
+    NONE = auto()
 
 
 # EOF
