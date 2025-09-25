@@ -40,7 +40,6 @@ class Player:
         name: str,
         heirlooms: None | list[str] = None,
         use_shelters: bool = False,
-        **kwargs: Any,
     ) -> None:
         self.game = game
         self.name = name
@@ -486,6 +485,7 @@ class Player:
 
     ###########################################################################
     def discard_hand(self, options: dict[OptionKeys, Any]) -> None:
+        """Discard the players hand"""
         # Activate hooks first, so they can still access contents of the
         # players hand etc. before they get discarded
         for card in self.piles[Piles.HAND]:
@@ -531,6 +531,7 @@ class Player:
 
     ###########################################################################
     def turn(self) -> None:
+        """Have a player turn"""
         self.start_turn()
         self.do_turn()
         self.end_turn()
@@ -632,6 +633,7 @@ class Player:
 
     ###########################################################################
     def cleanup_phase(self) -> None:
+        """Cleanup Phase"""
         # Save the cards we had so that the hook_end_turn has something to apply against
         options: dict[OptionKeys, Any] = {}
         self.had_cards = (
@@ -657,6 +659,10 @@ class Player:
         for event in self.played_events:
             self.currcards.append(event)
             options |= event.hook_cleanup(self.game, self)
+            self.currcards.pop()
+        if self.game.ally:
+            self.currcards.append(self.game.ally)
+            options |= self.game.ally.hook_cleanup(self.game, self)
             self.currcards.pop()
         self.discard_hand(options)
         self.pick_up_hand()
