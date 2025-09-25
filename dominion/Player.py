@@ -353,7 +353,9 @@ class Player:
                 self.add_card(card, Piles.TOPDECK)
 
         for card in self.relevant_cards():
+            self.currcards.append(card)
             card.hook_post_shuffle(game=self.game, player=self)
+            self.currcards.pop()
 
     ###########################################################################
     def pickup_cards(self, num: int, verbose: bool = True, verb: str = "Picked up") -> list[Card]:
