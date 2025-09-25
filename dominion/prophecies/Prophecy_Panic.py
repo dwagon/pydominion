@@ -50,7 +50,6 @@ class Test_Panic(unittest.TestCase):
         num_gold = len(self.g.card_piles["Gold"])
         self.plr.piles[Piles.HAND].set("Copper", "Estate", "Duchy")
         self.plr.gain_card("Gold", destination=Piles.HAND)
-        print(f"DBG {self.plr.piles[Piles.HAND]}")
         self.plr.end_turn()
         self.g.print_state()
         self.assertEqual(len(self.g.card_piles["Gold"]), num_gold)
