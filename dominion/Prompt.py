@@ -15,8 +15,6 @@ if TYPE_CHECKING:
 def generate_prompt(player: "Player") -> str:
     """Return the prompt to give to the user"""
     status = f"Actions={player.actions.get()} Buys={player.buys.get()}"
-    if player.coins:
-        status += f" Coins={player.coins.get()}"
     if player.debt:
         status += f" Debt={player.debt.get()}"
     if player.potions:
@@ -29,6 +27,8 @@ def generate_prompt(player: "Player") -> str:
         status += f" Villager={player.villagers.get()}"
     if player.limits[Limits.PLAY] is not None:
         status += f" Play Limit={player.limits[Limits.PLAY]}"
+    if player.coins:
+        status += f" Coins={player.coins.get()}"
     prompt = f"What to do ({status})?"
     return prompt
 
@@ -394,6 +394,7 @@ def display_tokens(player: "Player") -> str:
 
 ###########################################################################
 def display_prophecy_overview(player: "Player") -> None:
+    """Display prophecy details"""
     if player.game.inactive_prophecy and not player.game.prophecy:
         player.output(
             f"| Inactive Prophecy: {player.game.inactive_prophecy.name} ({player.game.sun_tokens} Sun Tokens)"
