@@ -820,6 +820,8 @@ def card_setup(game: "Game") -> None:
         card_pile.setup(game=game)
     for landmark in list(game.landmarks.values()):
         landmark.setup(game=game)
+    for event in game.events.values():
+        event.setup(game=game)
     if game.inactive_prophecy:
         game.inactive_prophecy.setup(game=game)
 
