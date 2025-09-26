@@ -1,11 +1,16 @@
 #!/usr/bin/env python
+"""https://wiki.dominionstrategy.com/index.php/Capital"""
 
 import unittest
-from dominion import Game, Card, Piles
+from typing import Optional, Union
+
+from dominion import Game, Card, Piles, PlayArea, Player
 
 
 ###############################################################################
 class Card_Capital(Card.Card):
+    """Captial"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
@@ -16,21 +21,25 @@ class Card_Capital(Card.Card):
         self.buys = 1
         self.cost = 5
 
-    def hook_discard_this_card(self, game, player, source):
-        if source == "played":
+    def hook_discard_this_card(
+        self, game: "Game.Game", player: "Player.Player", source: Optional[Union[Piles, "PlayArea.PlayArea"]]
+    ) -> None:
+        if source == Piles.PLAYED:
             player.debt += 6
             player.payback()
 
 
 ###############################################################################
 class Test_Capital(unittest.TestCase):
-    def setUp(self):
+    """Test Capital"""
+
+    def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Capital"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Capital")
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Play a Capital"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
@@ -41,7 +50,7 @@ class Test_Capital(unittest.TestCase):
         self.assertEqual(self.plr.debt.get(), 3)
         self.assertEqual(self.plr.coins.get(), 0)
 
-    def test_dontplay(self):
+    def test_dontplay(self) -> None:
         """Dont play a Capital"""
         self.plr.add_card(self.card, Piles.HAND)
         self.assertEqual(self.plr.buys.get(), 1)
