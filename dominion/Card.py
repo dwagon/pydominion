@@ -209,10 +209,19 @@ class Card:
         for card in player.relevant_cards():
             if additional := card.hook_card_description(player.game, player, self):
                 ans += f" {additional}"
+        for card in player.game.events.values():
+            if additional := card.hook_all_card_description(player.game, player, self):
+                ans += f" {additional}"
         return ans
 
     ##########################################################################
     def hook_card_description(self, game: "Game.Game", player: "Player.Player", card: "Card") -> str:
+        """Hook to return additional details for a card"""
+        return ""
+
+    ##########################################################################
+    def hook_all_card_description(self, game: "Game.Game", player: "Player.Player", card: "Card") -> str:
+        """Hook to return additional details for a card based on all cards in the game"""
         return ""
 
     ##########################################################################

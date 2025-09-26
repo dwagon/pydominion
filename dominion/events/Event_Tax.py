@@ -43,6 +43,11 @@ class Event_Tax(Event.Event):
             player.debt.add(1)
         return {}
 
+    def hook_all_card_description(self, game: "Game.Game", player: "Player.Player", card: "Card.Card") -> str:
+        if tax := game.specials[TAX].get(card.name) and player.phase == Phase.BUY:
+            return f"[Tax: {tax} Debt]"
+        return ""
+
 
 ###############################################################################
 class TestTax(unittest.TestCase):
