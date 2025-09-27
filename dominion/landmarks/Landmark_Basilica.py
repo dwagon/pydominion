@@ -8,6 +8,8 @@ from dominion import Card, Game, Landmark, Player, OptionKeys, Phase
 
 ###############################################################################
 class Landmark_Basilica(Landmark.Landmark):
+    """Basilica"""
+
     def __init__(self) -> None:
         Landmark.Landmark.__init__(self)
         self.base = Card.CardExpansion.EMPIRES
@@ -15,16 +17,17 @@ class Landmark_Basilica(Landmark.Landmark):
         self.vp = 0
 
     def setup(self, game: Game.Game) -> None:
+        """Setup: Put 6VP here per player."""
         self.vp = 6 * game.numplayers
 
     def dynamic_description(self, player: Player.Player) -> str:
         if self.vp <= 0:
             return "No effect"
-        return (
-            f"When you gain a card in your Buy phase, if you have $2 or more, take 2VP from here. ({self.vp} VP left)"
-        )
+        return f"""When you gain a card in your Buy phase, if you have $2 or more,
+            take 2VP from here. ({self.vp} VP left)"""
 
     def hook_gain_card(self, game: "Game.Game", player: "Player.Player", card: "Card.Card") -> dict[OptionKeys, Any]:
+        """When you gain a card in your Buy phase, if you have $2 or more, take 2VP from here."""
         if self.vp <= 0 or player.phase != Phase.BUY:
             return {}
         if player.coins.get() >= 2:
@@ -36,6 +39,8 @@ class Landmark_Basilica(Landmark.Landmark):
 
 ###############################################################################
 class TestBasilica(unittest.TestCase):
+    """Test Basilica"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, landmarks=["Basilica"])
         self.g.start_game()

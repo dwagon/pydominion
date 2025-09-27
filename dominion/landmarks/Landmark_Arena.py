@@ -1,41 +1,44 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Arena"""
 import unittest
 
-from dominion import Card, Game, Piles, Landmark
+from dominion import Card, Game, Piles, Landmark, Player
+
+ARENA = "arena"
 
 
 ###############################################################################
 class Landmark_Arena(Landmark.Landmark):
+    """Arena"""
+
     def __init__(self):
         Landmark.Landmark.__init__(self)
         self.base = Card.CardExpansion.EMPIRES
         self.name = "Arena"
 
-    def dynamic_description(self, player):
-        return f"At the start of your Buy phase, you may discard an Action card. If you do, take 2VP from here. ({self._vp} left)"
+    def dynamic_description(self, player: "Player.Player") -> str:
+        return f"""At the start of your Buy phase, you may discard an Action card.
+                If you do, take 2VP from here. ({player.game.specials[ARENA]} left)"""
 
-    def setup(self, game):
-        self._vp = 6 * game.numplayers
+    def setup(self, game: "Game.Game") -> None:
+        game.specials[ARENA] = 6 * game.numplayers
 
-    def hook_pre_buy(self, game, player):
-        if self._vp <= 0:
+    def hook_pre_buy(self, game: "Game.Game", player: "Player.Player") -> None:
+        if game.specials[ARENA] <= 0:
             return
-        actions = []
-        for card in player.piles[Piles.HAND]:
-            if card.isAction():
-                actions.append(card)
+        actions = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not actions:
             return
-        disc = player.plr_discard_cards(prompt="Arena: Discard an action to gain 2VP", cardsrc=actions)
-        if disc:
+        if player.plr_discard_cards(prompt="Arena: Discard an action to gain 2VP", cardsrc=actions):
             player.output("Gained 2 VP from Arena")
-            self._vp -= 2
+            game.specials[ARENA] -= 2
             player.add_score("Arena", 2)
 
 
 ###############################################################################
 class Test_Arena(unittest.TestCase):
+    """Test Arena"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, landmarks=["Arena"], initcards=["Moat"])
         self.g.start_game()

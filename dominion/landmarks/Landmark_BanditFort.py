@@ -1,19 +1,22 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Bandit_Fort"""
 import unittest
 
-from dominion import Card, Game, Piles, Landmark
+from dominion import Card, Game, Piles, Landmark, Player
 
 
 ###############################################################################
-class Landmark_BanditFort(Landmark.Landmark):
+class Landmark_Bandit_Fort(Landmark.Landmark):
+    """Bandit Fort"""
+
     def __init__(self):
         Landmark.Landmark.__init__(self)
         self.base = Card.CardExpansion.EMPIRES
         self.desc = """When scoring, -2VP for each Silver and each Gold you have."""
         self.name = "Bandit Fort"
 
-    def hook_end_of_game(self, game, player):
+    def hook_end_of_game(self, game: "Game.Game", player: "Player.Player") -> None:
+        """Scoring"""
         score = 0
         for card in player.all_cards():
             if card.name in ("Silver", "Gold"):
@@ -22,7 +25,9 @@ class Landmark_BanditFort(Landmark.Landmark):
 
 
 ###############################################################################
-class Test_BanditFort(unittest.TestCase):
+class Test_Bandit_Fort(unittest.TestCase):
+    """Test Bandit Fort"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, landmarks=["Bandit Fort"])
         self.g.start_game()

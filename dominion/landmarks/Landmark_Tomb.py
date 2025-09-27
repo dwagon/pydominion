@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Tomb"""
 import unittest
 from typing import Any
 
@@ -8,6 +8,8 @@ from dominion import Card, Game, Piles, Landmark, Player, OptionKeys
 
 ###############################################################################
 class Landmark_Tomb(Landmark.Landmark):
+    """Tomb"""
+
     def __init__(self) -> None:
         Landmark.Landmark.__init__(self)
         self.base = Card.CardExpansion.EMPIRES
@@ -22,6 +24,8 @@ class Landmark_Tomb(Landmark.Landmark):
 
 ###############################################################################
 class Test_Tomb(unittest.TestCase):
+    """Test Tomb"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, landmarks=["Tomb"])
         self.g.start_game()
@@ -30,6 +34,7 @@ class Test_Tomb(unittest.TestCase):
     def test_trash(self) -> None:
         """Test Tomb"""
         cu = self.plr.piles[Piles.HAND]["Copper"]
+        assert cu is not None
         self.plr.trash_card(cu)
         self.assertEqual(self.plr.get_score_details()["Tomb"], 1)
 

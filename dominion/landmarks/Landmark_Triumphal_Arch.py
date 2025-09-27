@@ -1,13 +1,16 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Triumphal_Arch"""
 import unittest
 from collections import defaultdict
+from typing import DefaultDict
 
-from dominion import Card, Game, Piles, Landmark
+from dominion import Card, Game, Piles, Landmark, Player
 
 
 ###############################################################################
-class Landmark_TriumphalArch(Landmark.Landmark):
+class Landmark_Triumphal_Arch(Landmark.Landmark):
+    """Triumphal Arch"""
+
     def __init__(self):
         Landmark.Landmark.__init__(self)
         self.base = Card.CardExpansion.EMPIRES
@@ -15,8 +18,8 @@ class Landmark_TriumphalArch(Landmark.Landmark):
         Action card among your cards (if it's a tie, count either)."""
         self.name = "Triumphal Arch"
 
-    def hook_end_of_game(self, game, player):
-        cards = defaultdict(int)
+    def hook_end_of_game(self, game: "Game.Game", player: "Player.Player") -> None:
+        cards: DefaultDict[str, int] = defaultdict(int)
         for card in player.all_cards():
             if card.isAction():
                 cards[card.name] += 1
@@ -28,8 +31,10 @@ class Landmark_TriumphalArch(Landmark.Landmark):
 
 
 ###############################################################################
-class Test_TriumphalArch(unittest.TestCase):
-    def setUp(self):
+class Test_Triumphal_Arch(unittest.TestCase):
+    """Test Triumphal Arch"""
+
+    def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1,
             landmarks=["Triumphal Arch"],
@@ -38,14 +43,14 @@ class Test_TriumphalArch(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_play(self):
+    def test_play(self) -> None:
         """Test Triumphal Arch"""
         self.plr.piles[Piles.HAND].set("Moat", "Moat", "Moat")
         self.plr.piles[Piles.DECK].set("Militia", "Militia", "Militia", "Militia")
         self.plr.game_over()
         self.assertEqual(self.plr.get_score_details()["Triumphal Arch"], 3 * 3)
 
-    def test_noactions(self):
+    def test_no_actions(self) -> None:
         """Test Triumphal Arch"""
         self.plr.piles[Piles.HAND].set("Copper", "Copper", "Copper")
         self.plr.piles[Piles.DECK].set("Duchy", "Duchy", "Duchy", "Duchy")
