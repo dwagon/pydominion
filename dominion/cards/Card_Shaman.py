@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Shaman"""
+"""https://wiki.dominionstrategy.com/index.php/Shaman"""
 import random
 import unittest
 
@@ -8,14 +8,14 @@ from dominion import Game, Card, Piles, Player
 
 ###############################################################################
 class Card_Shaman(Card.Card):
-    """Secluded Shrine"""
+    """Shaman"""
 
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.PLUNDER
         self.desc = """+1 Action; +$1; You may trash a card from your hand.
-        In games using this, at the start of your turn, gain a card from the trash costing up to $6."""
+            In games using this, at the start of your turn, gain a card from the trash costing up to $6."""
         self.name = "Shaman"
         self.cost = 2
         self.actions = 1
@@ -36,15 +36,14 @@ class Card_Shaman(Card.Card):
         if not options:
             player.output("No suitable cards in trash")
             return
-        from_trash = player.plr_choose_options(
-            "Shaman: Pick a card to gain from the trash", *options
-        )
+        from_trash = player.plr_choose_options("Shaman: Pick a card to gain from the trash", *options)
         player.move_card(from_trash, Piles.DISCARD)
         player.output(f"Gained {from_trash} from the trash pile")
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
+    """Try and get a treasure"""
     for _, card in args:
         if card.isTreasure():
             return card
@@ -70,9 +69,7 @@ class TestShaman(unittest.TestCase):
         self.plr.test_input = ["Trash Duchy"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), coins + 1)
-        self.assertEqual(
-            self.plr.actions.get(), actions
-        )  # +1 for the Shaman, -1 for playing the Shaman
+        self.assertEqual(self.plr.actions.get(), actions)  # +1 for the Shaman, -1 for playing the Shaman
         self.assertIn("Duchy", self.g.trash_pile)
 
     def test_start_turn(self) -> None:

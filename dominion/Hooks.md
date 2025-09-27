@@ -200,6 +200,9 @@ Dump anything interesting for debugging purposes
 
 hook_card_description(game, player, card) -> str
 ---------------------
-Add string to a cards description
+Add string to a cards description. Called on relevant cards.
 
+hook_all_card_description(game, player, card) -> str
+---------------------
+Add string to a cards description. Called for all cards.
 #EOF
