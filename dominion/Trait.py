@@ -1,6 +1,6 @@
 """http://wiki.dominionstrategy.com/index.php/Trait"""
 
-from dominion import Card, Game
+from dominion import Game, Player, Card
 
 
 ###############################################################################
@@ -15,7 +15,13 @@ class Trait(Card.Card):
         return game.card_piles[card.pile].trait == self.name
 
     ###########################################################################
-    def __repr__(self) -> str:
+    def hook_all_card_description(self, game: "Game.Game", player: "Player.Player", card: "Card.Card") -> str:
+        if self.isTraitCard(game, card):
+            return f"[Trait: {self.name}]"
+        return ""
+
+    ###########################################################################
+    def __repr__(self) -> str:  # pragma: no coverage
         return f"Trait {self.name}"
 
 

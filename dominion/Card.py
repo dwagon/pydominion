@@ -201,7 +201,6 @@ class Card:
 
     ##########################################################################
     def description(self, player: "Player.Player") -> str:
-        ans = ""
         if desc := self.dynamic_description(player):
             ans = desc
         else:
@@ -209,7 +208,7 @@ class Card:
         for card in player.relevant_cards():
             if additional := card.hook_card_description(player.game, player, self):
                 ans += f" {additional}"
-        for card in player.game.events.values():
+        for card in list(player.game.events.values()) + list(player.game.traits.values()):
             if additional := card.hook_all_card_description(player.game, player, self):
                 ans += f" {additional}"
         return ans

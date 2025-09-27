@@ -8,6 +8,8 @@ from dominion import Card, Game, Piles, Event, Player, NoCardException
 
 ###############################################################################
 class Event_Invasion(Event.Event):
+    """Invasion"""
+
     def __init__(self) -> None:
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.PLUNDER
@@ -42,16 +44,22 @@ class Event_Invasion(Event.Event):
         except NoCardException:  # pragma: no coverage
             player.output("No more Loot")
             return
-        else:  # Play it
-            player.reveal_card(loot)
-            player.play_card(loot, cost_action=False)
+        # Play it
+        player.reveal_card(loot)
+        player.play_card(loot, cost_action=False)
 
 
 ###############################################################################
 class TestInvasion(unittest.TestCase):
+    """Test Invasion"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(
-            numplayers=2, events=["Invasion"], initcards=["Witch", "Village"], loot_path="tests/loot"
+            numplayers=2,
+            events=["Invasion"],
+            initcards=["Witch", "Village"],
+            loot_path="tests/loot",
+            badcards=["Village Green"],
         )
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
@@ -68,7 +76,7 @@ class TestInvasion(unittest.TestCase):
         self.assertIn("Witch", self.plr.piles[Piles.PLAYED])
         self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
         self.assertIn("Village", self.plr.piles[Piles.DECK])
-        found = any([True for _ in self.plr.all_cards() if _.isLoot()])
+        found = any(True for _ in self.plr.all_cards() if _.isLoot())
         self.assertTrue(found)
 
 
