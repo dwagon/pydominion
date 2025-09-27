@@ -4,7 +4,7 @@
 import unittest
 from typing import Any
 
-from dominion import Card, Game, Event, OptionKeys, Player
+from dominion import Card, Game, Event, OptionKeys, Player, Phase
 
 TAX = "tax"
 
@@ -29,23 +29,24 @@ class Event_Tax(Event.Event):
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Add 2 debt to a supply pile."""
         options: list[tuple[str, str]] = []
-        for card in game.specials[TAX]:
-            options.append((f"Select {card}", card))
-        card_name = player.plr_choose_options("Pick a Supply pile to add 2 debt to", *options)
-        game.specials[TAX][card_name] += 2
+        for pile in game.specials[TAX]:
+            options.append((f"Select {pile}", pile))
+        pile_name = player.plr_choose_options("Pick a Supply pile to add 2 debt to", *options)
+        game.specials[TAX][pile_name] += 2
 
     def hook_any_gain_card(
         self, game: "Game.Game", player: "Player.Player", card: "Card.Card"
     ) -> dict[OptionKeys, Any]:
         """When a player gains a card in their Buy phase, they take the D from its pile."""
-        if game.specials[TAX].get(card.name):
-            game.specials[TAX][card.name] -= 1
+        if game.specials[TAX].get(card.pile):
+            game.specials[TAX][card.pile] -= 1
             player.debt.add(1)
         return {}
 
     def hook_all_card_description(self, game: "Game.Game", player: "Player.Player", card: "Card.Card") -> str:
-        if tax := game.specials[TAX].get(card.name) and player.phase == Phase.BUY:
-            return f"[Tax: {tax} Debt]"
+        if tax := game.specials[TAX].get(card.pile):
+            if player.phase == Phase.BUY:
+                return f"[Tax: {tax} Debt]"
         return ""
 
 
