@@ -2,6 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Barbarian"""
 
 import unittest
+from typing import Optional
 
 from dominion import Card, Game, Piles, Player, NoCardException
 
@@ -30,25 +31,10 @@ class Card_Barbarian(Card.Card):
 ###############################################################################
 def _barbarian_attack(game: Game.Game, attacker: Player.Player, victim: Player.Player) -> None:
     """Do the barbarian attack"""
-    try:
-        victim_card = victim.top_card()
-    except NoCardException:
+    victim_card = _barbarian_trash(victim, attacker)
+    if victim_card is None:
         return
-    victim.output(f"{attacker}'s Barbarian: Trashes your {victim_card}")
-    victim.trash_card(victim_card)
-    if victim_card.cost < 3:
-        try:
-            victim.gain_card("Curse")
-        except NoCardException:
-            attacker.output("No more Curses")
-        return
-    cards = []
-    for name, _ in game.get_card_piles():
-        check_card = game.card_instances[name]
-        if _card_types(check_card).intersection(_card_types(victim_card)):
-            if check_card.cost < victim_card.cost:
-                cards.append(check_card)
-    if cards:
+    if cards := _available_cards(game, victim_card):
         if gained := victim.card_sel(prompt="Gain a cheaper card", cardsrc=cards):
             if isinstance(gained[0], str):
                 card_name = gained[0]
@@ -63,6 +49,35 @@ def _barbarian_attack(game: Game.Game, attacker: Player.Player, victim: Player.P
 
 
 ###############################################################################
+def _available_cards(game: Game.Game, victim_card: Card.Card) -> list[Card.Card]:
+    """Return all cheaper cards sharing a type with the victims card"""
+    cards = []
+    for name, _ in game.get_card_piles():
+        check_card = game.card_instances[name]
+        if _card_types(check_card).intersection(_card_types(victim_card)):
+            if check_card.cost < victim_card.cost:
+                cards.append(check_card)
+    return cards
+
+
+###############################################################################
+def _barbarian_trash(victim: Player.Player, attacker: Player.Player) -> Optional[Card.Card]:
+    try:
+        victim_card = victim.top_card()
+    except NoCardException:
+        return None
+    victim.output(f"{attacker}'s Barbarian: Trashes your {victim_card}")
+    victim.trash_card(victim_card)
+    if victim_card.cost < 3:
+        try:
+            victim.gain_card("Curse")
+        except NoCardException:
+            attacker.output("No more Curses")
+        return None
+    return victim_card
+
+
+###############################################################################
 def _card_types(card: Card.Card) -> set[Card.CardType]:
     """Return a set of the cards card types"""
     if isinstance(card.cardtype, list):
@@ -71,7 +86,7 @@ def _card_types(card: Card.Card) -> set[Card.CardType]:
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover pylint: disable=unused-argument
     """If we need to pick up cards - pick up the best"""
     picked = []
     for card in kwargs["cardsrc"]:
