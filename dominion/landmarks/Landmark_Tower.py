@@ -34,12 +34,13 @@ class TestTower(unittest.TestCase):
         self.plr = self.g.player_list()[0]
 
     def test_none(self) -> None:
-        """Use Tower"""
+        """Test with no empty piles"""
         self.plr.piles[Piles.HAND].set("Moat", "Moat")
         self.plr.game_over()
         self.assertEqual(self.plr.get_score_details()["Tower"], 0)
 
     def test_one(self) -> None:
+        """Test with one empty pile"""
         self.plr.piles[Piles.HAND].set("Moat", "Moat")
         while True:
             try:

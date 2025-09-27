@@ -5,25 +5,31 @@ from typing import Any
 
 from dominion import Card, Game, Landmark, Player, OptionKeys, Phase
 
+DEFILED = "defiled shrine"
+
 
 ###############################################################################
-class Landmark_DefiledShrine(Landmark.Landmark):
+class Landmark_Defiled_Shrine(Landmark.Landmark):
+    """Defiled Shrine"""
+
     def __init__(self) -> None:
         Landmark.Landmark.__init__(self)
         self.base = Card.CardExpansion.EMPIRES
         self.name = "Defiled Shrine"
         self.required_cards = ["Curse"]
         self.stored_vp = 0
-        self.desc = f"""When you gain an Action, move 1 VP from its pile to this.
-                When you gain a Curse in your Buy phase, take the VP from this."""
 
-    @classmethod
-    def setup(cls, game: "Game.Game") -> None:
-        cls.vp: dict[str, int] = {}  # type: ignore
+    def dynamic_description(self, player: "Player.Player") -> str:
+        return f"""When you gain an Action, move 1 VP from its pile to this.
+                When you gain a Curse in your Buy phase, take the {self.stored_vp} VP from this."""
+
+    def setup(self, game: "Game.Game") -> None:
+        """Setup: Put 2VP on each non-Gathering Action Supply pile."""
+        game.specials[DEFILED] = {}
         for name, _ in game.get_card_piles():
             card = game.card_instances[name]
             if card and not card.isGathering() and card.isAction():
-                cls.vp[name] = 2  # type: ignore
+                game.specials[DEFILED][name] = 2
 
     def hook_all_players_gain_card(
         self,
@@ -32,17 +38,19 @@ class Landmark_DefiledShrine(Landmark.Landmark):
         owner: "Player.Player",
         card: "Card.Card",
     ) -> dict[OptionKeys, Any]:
+        """When you gain an Action, move 1VP from its pile to this."""
         if player != owner:
             return {}
-        if card.name not in game.landmarks["Defiled Shrine"].vp:
+        if card.name not in game.specials[DEFILED]:
             return {}
-        if game.landmarks["Defiled Shrine"].vp[card.name]:  # type: ignore
-            game.landmarks["Defiled Shrine"].vp[card.name] -= 1  # type: ignore
+        if game.specials[DEFILED][card.name]:
+            game.specials[DEFILED][card.name] -= 1
             self.stored_vp += 1
 
         return {}
 
     def hook_gain_card(self, game: "Game.Game", player: "Player.Player", card: "Card.Card") -> dict[OptionKeys, Any]:
+        """When you gain a Curse in your Buy phase, take the VP from this."""
         if card.name == "Curse" and player.phase == Phase.BUY:
             player.add_score("Defiled Shrine", self.stored_vp)
             self.stored_vp = 0
@@ -50,7 +58,9 @@ class Landmark_DefiledShrine(Landmark.Landmark):
 
 
 ###############################################################################
-class TestDefiledShrine(unittest.TestCase):
+class TestDefiled_Shrine(unittest.TestCase):
+    """Test Defiled Shrine"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=2,
@@ -65,9 +75,9 @@ class TestDefiledShrine(unittest.TestCase):
         self.plr.buys.set(2)
         self.plr.phase = Phase.BUY
         self.plr.coins.set(5)
-        self.assertEqual(self.g.landmarks["Defiled Shrine"].vp["Moat"], 2)  # type: ignore
+        self.assertEqual(self.g.specials[DEFILED]["Moat"], 2)
         self.plr.buy_card("Moat")
-        self.assertEqual(self.g.landmarks["Defiled Shrine"].vp["Moat"], 1)  # type: ignore
+        self.assertEqual(self.g.specials[DEFILED]["Moat"], 1)
         self.plr.buy_card("Curse")
         self.assertEqual(self.plr.score["Defiled Shrine"], 1)
 
