@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Mountain_Pass"""
 import unittest
 from typing import Any, Optional
 
@@ -7,7 +7,9 @@ from dominion import Card, Game, Landmark, Player, OptionKeys
 
 
 ###############################################################################
-class Landmark_MountainPass(Landmark.Landmark):
+class Landmark_Mountain_Pass(Landmark.Landmark):
+    "Mountain Pass"
+
     def __init__(self) -> None:
         Landmark.Landmark.__init__(self)
         self.base = Card.CardExpansion.EMPIRES
@@ -49,7 +51,9 @@ class Landmark_MountainPass(Landmark.Landmark):
         return {}
 
 
+###############################################################################
 def generate_bids(minbid: int) -> list[tuple[str, int]]:
+    """Generate the bid options"""
     options = [("Don't bid", -1)]
     for i in range(minbid + 1, 41):
         options.append((f"Bid {i}", i))
@@ -57,12 +61,15 @@ def generate_bids(minbid: int) -> list[tuple[str, int]]:
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
+    """Never bid"""
     return 0
 
 
 ###############################################################################
-class TestMountainPass(unittest.TestCase):
+class TestMountain_Pass(unittest.TestCase):
+    """Test Mountain Pass"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, landmarks=["Mountain Pass"])
         self.g.start_game()

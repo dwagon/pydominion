@@ -1,38 +1,42 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Obelisk"""
 import random
 import unittest
-from typing import Optional
 
 from dominion import Card, Game, Landmark, Player
+
+OBELISK = "obelisk"
 
 
 ###############################################################################
 class Landmark_Obelisk(Landmark.Landmark):
+    """Obelisk"""
+
     def __init__(self) -> None:
         Landmark.Landmark.__init__(self)
         self.base = Card.CardExpansion.EMPIRES
         self.name = "Obelisk"
-        self._chosen: Optional[str] = None
 
     def dynamic_description(self, player: "Player.Player") -> str:  # pragma: no coverage
-        if self._chosen:
-            return f"When scoring, 2VP per card you have from the {self._chosen} pile."
-        else:
-            return "When scoring, 2VP per card you have from the chosen pile."
+        if player.game.specials[OBELISK]:
+            return f"When scoring, 2VP per card you have from the {player.game.specials[OBELISK]} pile."
+        return "When scoring, 2VP per card you have from the chosen pile."
 
     def hook_end_of_game(self, game: Game.Game, player: Player.Player) -> None:
         for card in player.all_cards():
-            if card.name == self._chosen:
+            if card.name == game.specials[OBELISK]:
                 player.add_score("Obelisk", 2)
 
     def setup(self, game: Game.Game) -> None:
+        """Setup: Choose a random Action Supply pile."""
         card_pile = random.choice(game.get_action_piles())
-        self._chosen = card_pile
+        game.specials[OBELISK] = card_pile
 
 
 ###############################################################################
 class Test_Obelisk(unittest.TestCase):
+    """Test Obelisk"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1,
@@ -43,7 +47,7 @@ class Test_Obelisk(unittest.TestCase):
 
     def test_play(self) -> None:
         """Use Obelisk"""
-        chosen = self.g.landmarks["Obelisk"]._chosen  # type: ignore
+        chosen = self.g.specials[OBELISK]
         card = self.g.get_card_from_pile(chosen)
         self.plr.pickup_card(card)
         self.plr.pickup_card(card)
