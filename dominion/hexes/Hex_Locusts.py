@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Locusts"""
 import unittest
 
 from dominion import Card, Game, Piles, Hex, Player, NoCardException
@@ -7,6 +7,8 @@ from dominion import Card, Game, Piles, Hex, Player, NoCardException
 
 ###############################################################################
 class Hex_Locusts(Hex.Hex):
+    """Locusts"""
+
     def __init__(self) -> None:
         Hex.Hex.__init__(self)
         self.cardtype = Card.CardType.HEX
@@ -18,20 +20,20 @@ class Hex_Locusts(Hex.Hex):
         self.required_cards = ["Curse"]
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
+        """Trash the top card of your deck. If it's Copper or Estate, gain a Curse.
+        Otherwise, gain a cheaper card that shares a type with it."""
         try:
             nxt = player.top_card()
-        except NoCardException:
+        except NoCardException:  # pragma: no coverage
             return
         if nxt.name in ("Copper", "Estate"):
             player.output(f"Gaining a curse because your next card is {nxt}")
             try:
                 player.gain_card("Curse")
-            except NoCardException:
+            except NoCardException:  # pragma: no coverage
                 player.output("No more Curses")
         else:
-            player.output(
-                f"Gain a card costing {nxt.cost - 1} because your next card is {nxt}"
-            )
+            player.output(f"Gain a card costing {nxt.cost - 1} because your next card is {nxt}")
             types = {
                 Card.CardType.VICTORY: nxt.isVictory(),
                 Card.CardType.TREASURE: nxt.isTreasure(),
@@ -43,7 +45,8 @@ class Hex_Locusts(Hex.Hex):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
+    """Gain the best treasure"""
     if "Silver" in [_.name for _ in kwargs["cardsrc"]]:
         return ["Silver"]
     if "Duchy" in [_.name for _ in kwargs["cardsrc"]]:
@@ -57,6 +60,8 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 ###############################################################################
 class TestLocusts(unittest.TestCase):
+    """Test Locusts"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()

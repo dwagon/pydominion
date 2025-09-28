@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Greed"""
 import unittest
 
 from dominion import Card, Game, Piles, Hex, Player, NoCardException
@@ -7,6 +7,8 @@ from dominion import Card, Game, Piles, Hex, Player, NoCardException
 
 ###############################################################################
 class Hex_Greed(Hex.Hex):
+    """Greed"""
+
     def __init__(self) -> None:
         Hex.Hex.__init__(self)
         self.cardtype = Card.CardType.HEX
@@ -16,14 +18,17 @@ class Hex_Greed(Hex.Hex):
         self.purchasable = False
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
+        "Gain a Copper onto your deck."
         try:
             player.gain_card("Copper", Piles.DECK)
-        except NoCardException:
+        except NoCardException:  # pragma: no coverage
             player.output("No more Copper")
 
 
 ###############################################################################
 class TestGreed(unittest.TestCase):
+    """Greed"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
@@ -33,7 +38,8 @@ class TestGreed(unittest.TestCase):
                 self.g.discarded_hexes.append(h)
                 self.g.hexes.remove(h)
 
-    def test_famine(self) -> None:
+    def test_greed(self) -> None:
+        """Gain a Copper onto your deck."""
         self.plr.piles[Piles.DECK].set("Duchy", "Cursed Village", "Gold")
         self.plr.gain_card("Cursed Village")
         self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Cursed Village"])

@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Haunting"""
 import unittest
 
-from dominion import Card, Game, Piles, Hex
+from dominion import Card, Game, Piles, Hex, Player
 
 
 ###############################################################################
 class Hex_Haunting(Hex.Hex):
+    """Haunting"""
+
     def __init__(self):
         Hex.Hex.__init__(self)
         self.cardtype = Card.CardType.HEX
@@ -15,7 +17,8 @@ class Hex_Haunting(Hex.Hex):
         self.name = "Haunting"
         self.purchasable = False
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+        """If you have at least 4 cards in hand, put one of them onto your deck."""
         if player.piles[Piles.HAND].size() >= 4:
             card = player.card_sel(force=True)
             player.add_card(card[0], Piles.TOPDECK)
@@ -23,12 +26,15 @@ class Hex_Haunting(Hex.Hex):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
+    """Just discard one"""
     return player.pick_to_discard(1)
 
 
 ###############################################################################
 class Test_Haunting(unittest.TestCase):
+    """Test Haunting"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
@@ -39,10 +45,12 @@ class Test_Haunting(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_none(self):
+        """Not really a test - but don't have at least four cards"""
         self.plr.piles[Piles.HAND].set("Duchy", "Gold", "Silver")
         self.plr.gain_card("Cursed Village")
 
     def test_activate(self):
+        """Have four cards"""
         self.plr.piles[Piles.HAND].set("Duchy", "Gold", "Silver", "Province")
         self.plr.test_input = ["Gold"]
         self.plr.gain_card("Cursed Village")

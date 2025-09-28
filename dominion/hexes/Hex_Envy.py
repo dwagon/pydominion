@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Envy"""
 import unittest
 
-from dominion import Card, Game, Hex
+from dominion import Card, Game, Hex, Player
 
 
 ###############################################################################
 class Hex_Envy(Hex.Hex):
+    """Envy"""
+
     def __init__(self):
         Hex.Hex.__init__(self)
         self.cardtype = Card.CardType.HEX
@@ -15,7 +17,8 @@ class Hex_Envy(Hex.Hex):
         self.name = "Envy"
         self.purchasable = False
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+        """If you don't have Deluded or Envious, take Envious."""
         if player.has_state("Deluded") or player.has_state("Envious"):
             return
         player.assign_state("Envious")
@@ -23,6 +26,8 @@ class Hex_Envy(Hex.Hex):
 
 ###############################################################################
 class Test_Envy(unittest.TestCase):
+    """Tet Envy"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
@@ -33,11 +38,13 @@ class Test_Envy(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_preexisting(self):
+        """We are deluded"""
         self.plr.assign_state("Deluded")
         self.plr.gain_card("Cursed Village")
         self.assertTrue(self.plr.has_state("Deluded"))
 
     def test_normal(self):
+        """Not deluded"""
         self.plr.gain_card("Cursed Village")
         self.assertTrue(self.plr.has_state("Envious"))
 

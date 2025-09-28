@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Delusion"""
 import unittest
 
-from dominion import Card, Game, Hex
+from dominion import Card, Game, Hex, Player
 
 
 ###############################################################################
 class Hex_Delusion(Hex.Hex):
+    """Delusion"""
+
     def __init__(self):
         Hex.Hex.__init__(self)
         self.cardtype = Card.CardType.HEX
@@ -15,7 +17,8 @@ class Hex_Delusion(Hex.Hex):
         self.name = "Delusion"
         self.purchasable = False
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+        """If you don't have Deluded or Envious, take Deluded."""
         if player.has_state("Deluded") or player.has_state("Envious"):
             return
         player.assign_state("Deluded")
@@ -23,6 +26,8 @@ class Hex_Delusion(Hex.Hex):
 
 ###############################################################################
 class Test_Delusion(unittest.TestCase):
+    """Test Delusion"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
@@ -33,11 +38,13 @@ class Test_Delusion(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_preexisting(self):
+        """Already envious"""
         self.plr.assign_state("Envious")
         self.plr.gain_card("Cursed Village")
         self.assertTrue(self.plr.has_state("Envious"))
 
     def test_normal(self):
+        """No preexisting condition"""
         self.plr.gain_card("Cursed Village")
         self.assertTrue(self.plr.has_state("Deluded"))
 

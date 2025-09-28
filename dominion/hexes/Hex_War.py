@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/War"""
 import unittest
 
-from dominion import Card, Game, Piles, Hex, NoCardException
+from dominion import Card, Game, Piles, Hex, NoCardException, Player
 
 
 ###############################################################################
@@ -17,12 +17,13 @@ class Hex_War(Hex.Hex):
         self.name = "War"
         self.purchasable = False
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+        """Reveal cards from your deck until revealing one costing 3 or 4. Trash it and discard the rest."""
         count = player.piles[Piles.DISCARD].size() + player.piles[Piles.DECK].size()
         while count:
             try:
                 card = player.next_card()
-            except NoCardException:
+            except NoCardException:  # pragma: no coverage
                 break
             player.reveal_card(card)
             if card.cost in (3, 4):
@@ -50,11 +51,13 @@ class Test_War(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_war(self):
+        """Test playing"""
         trash_size = self.g.trash_pile.size()
-        self.plr.piles[Piles.DECK].set("Duchy", "Cursed Village", "Silver")
+        self.plr.piles[Piles.DECK].set("Cursed Village", "Silver", "Copper")
         self.plr.gain_card("Cursed Village")
         self.assertEqual(self.g.trash_pile.size(), trash_size + 1)
         self.assertIn("Silver", self.g.trash_pile)
+        self.assertIn("Copper", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################
