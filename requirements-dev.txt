@@ -2,7 +2,6 @@
 
 black
 flake8
-icecream
 mypy
 pre_commit
 pylint
