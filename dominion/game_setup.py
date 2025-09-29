@@ -12,7 +12,7 @@ from typing import TYPE_CHECKING, cast, Optional, Any, Callable
 from dominion import Keys
 from dominion import Piles
 from dominion.Artifact import Artifact
-from dominion.Boon import BoonPile
+from dominion.Boon import BoonPile, Boon
 from dominion.BotPlayer import BotPlayer
 from dominion.Card import CardExpansion, Card
 from dominion.CardPile import CardPile
@@ -258,7 +258,7 @@ def load_boons(game: "Game") -> None:
     if game.boons:
         return
     game.output("Using boons")
-    d = load_non_kingdom_pile(game, "Boon", BoonPile)
+    d = cast(dict[str, Boon], load_non_kingdom_pile(game, "Boon", BoonPile))
     game.boons = list(d.values())
     random.shuffle(game.boons)
 
@@ -301,19 +301,6 @@ def get_card_classes(prefix: str, path: str, class_prefix: str = "Card_") -> dic
 
 
 ###########################################################################
-def add_prizes(game: "Game") -> None:
-    """TODO"""
-    for prize in game.getAvailableCards("PrizeCard"):
-        use_card_pile(game, None, prize, False, "PrizeCard")
-
-
-###########################################################################
-def use_ruins(game: "Game") -> None:
-    """Use Ruins"""
-    use_card_pile(game, None, "Ruins", True)
-
-
-###########################################################################
 def handle_specified_card_requirements(game: "Game", card: Card) -> None:
     """Look at the 'required_cards' value"""
     for x in card.required_cards:
@@ -342,7 +329,7 @@ def check_heirloom_requirements(game: "Game", card: Card) -> None:
 def check_ruins_requirements(game: "Game", card: Card) -> None:
     """Check to see if ruins are required"""
     if card.isLooter() and "Ruins" not in game.card_piles:
-        use_ruins(game)
+        use_card_pile(game, None, "Ruins", True)
         game.output(f"Using Ruins as required by {card.name}")
 
 
@@ -350,7 +337,8 @@ def check_ruins_requirements(game: "Game", card: Card) -> None:
 def check_prize_requirements(game: "Game", card: Card) -> None:
     """Check to see if prizes are required"""
     if card.needs_prizes and not FLAGS[Flag.LOADED_PRIZES]:
-        add_prizes(game)
+        for prize in game.getAvailableCards("PrizeCard"):
+            use_card_pile(game, None, prize, False, "PrizeCard")
         FLAGS[Flag.LOADED_PRIZES] = True
         game.output(f"Using Prizes as required by {card.name}")
 
