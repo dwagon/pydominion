@@ -7,6 +7,10 @@ from dominion import Game, Player, Card
 class Trait(Card.Card):
     """Class representing traits - mostly just card code"""
 
+    def __init__(self):
+        self.card_pile = ""
+        super().__init__()
+
     ###########################################################################
     def isTraitCard(self, game: "Game.Game", card: Card.Card) -> bool:
         """Return if this card is the trait"""

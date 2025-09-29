@@ -16,8 +16,7 @@ class RandobotPlayer(Player):
     """The Bot"""
 
     def __init__(self, game, name="", quiet=False, **kwargs):
-        self.quiet = quiet
-        Player.__init__(self, game, name, **kwargs)
+        Player.__init__(self, game, name, quiet, **kwargs)
 
     ###########################################################################
     def output(self, msg, end="\n") -> None:

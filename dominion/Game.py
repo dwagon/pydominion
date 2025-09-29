@@ -21,7 +21,6 @@ from dominion.Player import Player
 from dominion.Project import Project
 from dominion.Prophecy import Prophecy
 from dominion.State import State
-from dominion.TextPlayer import TextPlayer
 from dominion.Trait import Trait
 from dominion.Way import Way
 
@@ -67,8 +66,8 @@ class Game:
         self.card_instances: dict[str, Card] = {}
 
     ###########################################################################
-    def start_game(self, player_names: Optional[list[str]] = None, plr_class: type[Player] = TextPlayer) -> None:
-        game_setup.start_game(self, player_names, plr_class)
+    def start_game(self, player_names: Optional[list[str]] = None) -> None:
+        game_setup.start_game(self, player_names)
 
     ###########################################################################
     def save_original(self) -> None:

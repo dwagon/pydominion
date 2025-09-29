@@ -1,12 +1,14 @@
-from dominion import State
+from dominion import State, Card
 
 
 ###############################################################################
-class State_Lost_in_woods(State.State):
+class State_Unique(State.State):
+    """Test State"""
+
     def __init__(self):
         State.State.__init__(self)
         self.desc = "Unique Test State"
-        self.base = "TEST"
+        self.base = Card.CardExpansion.TEST
         self.name = "Unique"
         self.unique_state = True
 

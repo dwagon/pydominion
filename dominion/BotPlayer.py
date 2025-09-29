@@ -23,9 +23,8 @@ class BotPlayer(Player):
 
     def __init__(self, game: "Game", name: str = "", quiet: bool = False, **kwargs: Any):
         self.colour = "red on black"
-        self.quiet = quiet
         self.console = Console()
-        Player.__init__(self, game, name, **kwargs)
+        Player.__init__(self, game, name, quiet, **kwargs)
 
     ###########################################################################
     def output(self, msg: str, end: str = "\n") -> None:
