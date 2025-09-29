@@ -38,11 +38,12 @@ class Player:
         self,
         game: "Game",
         name: str,
-        heirlooms: None | list[str] = None,
-        use_shelters: bool = False,
+        quiet: bool = False,
+        **kwargs: Any,
     ) -> None:
         self.game = game
         self.name = name
+        self.quiet = quiet
         self.currcards: list[Card] = []
         self.score: dict[str, int] = {}
         self.had_cards: list[Card] = []
@@ -88,7 +89,7 @@ class Player:
         self.misc = {"is_start": False, "cleaned": False}
         self.skip_turn: bool = False
         self.uuid: str = ""
-        self._initial_deck(heirlooms, use_shelters)
+        self._initial_deck(kwargs.get("heirlooms", None), kwargs.get("use_shelters", False))
         self._initial_tokens()
         self.pick_up_hand()
         game.output(f"Player {name} is at the table")

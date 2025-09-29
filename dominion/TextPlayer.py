@@ -34,10 +34,9 @@ class TextPlayer(Player):
 
     def __init__(self, game: "Game", name="", quiet=False, **kwargs: Any) -> None:
         self.colour = colours[kwargs["number"]]
-        self.quiet = quiet
         self.console = Console()
         del kwargs["number"]
-        Player.__init__(self, game, name, **kwargs)
+        Player.__init__(self, game, name, quiet=quiet, **kwargs)
 
     ###########################################################################
     def output(self, msg: str, end: str = "\n") -> None:

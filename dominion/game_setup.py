@@ -7,7 +7,7 @@ import random
 import sys
 import uuid
 from enum import StrEnum, auto
-from typing import TYPE_CHECKING, cast, Optional, Any
+from typing import TYPE_CHECKING, cast, Optional, Any, Callable
 
 from dominion import Keys
 from dominion import Piles
@@ -26,12 +26,14 @@ from dominion.Project import Project
 from dominion.Prophecy import Prophecy
 from dominion.RandobotPlayer import RandobotPlayer
 from dominion.TextPlayer import TextPlayer
+from dominion.Trait import Trait
 from dominion.Way import Way
 
 if TYPE_CHECKING:  # pragma: no coverage
     from dominion.Game import Game
 
 
+###########################################################################
 class Flag(StrEnum):
     """Flags to control game setup behaviour"""
 
@@ -63,9 +65,8 @@ def use_shelters_in_game(game: "Game", allow_shelters: bool, specified: list[str
         return False
 
     # Pick a card to see if it is a dark ages card
-    halfway = len(game.card_piles) // 2
-    name, _ = list(game.card_piles.items())[halfway]
-    card = game.card_instances[name]
+    non_base_cards = [_ for _ in game.card_piles.keys() if not game.card_instances[_].basecard]
+    card = game.card_instances[random.choice(non_base_cards)]
     if card.base == CardExpansion.DARKAGES:
         return True
 
@@ -146,7 +147,7 @@ def load_hexes(game: "Game") -> list[Hex]:
 
 ###########################################################################
 def load_projects(game: "Game", specified: list[str], num_required: int) -> dict[str, Project]:
-    """TODO"""
+    """Load and return Projects"""
     projects = load_non_kingdom_cards(
         game,
         "Project",
@@ -174,7 +175,7 @@ def load_prophecies(game: "Game", specified: list[str]) -> Prophecy:
 
 ###########################################################################
 def load_artifacts(game: "Game") -> dict[str, Artifact]:
-    """TODO"""
+    """Load and return artifacts"""
     artifacts = load_non_kingdom_cards(game, "Artifact", [], None)
     game.output("Playing with Artifacts")
     return cast(dict[str, Artifact], artifacts)
@@ -183,43 +184,61 @@ def load_artifacts(game: "Game") -> dict[str, Artifact]:
 ###########################################################################
 def load_landmarks(game: "Game", specified: list[str], num_required: int) -> dict[str, Landmark]:
     """Load required landmarks"""
-    landmarks = load_non_kingdom_cards(
+    if landmarks := load_non_kingdom_cards(
         game,
         "Landmark",
         specified,
         num_required,
-    )
-    if landmarks:
+    ):
         for landmark in landmarks:
             game.output(f"Playing with Landmark: {landmark}")
     return cast(dict[str, Landmark], landmarks)
 
 
 ###########################################################################
-def load_traits(game: "Game", specified: list[str], num_required: int) -> None:
+def card_piles_for_trait(game: "Game") -> list[str]:
+    """Return piles that are suitable for traits"""
+    card_piles = []
+    for pile in game.card_piles:
+        if game.card_piles[pile].trait:
+            continue
+        if pile in BASE_CARDS:
+            continue
+        if pile in ("Loot",):
+            continue
+        card = game.card_instances[pile]
+        if not card.purchasable:
+            continue
+        if not card.isAction() and not card.isTreasure():
+            continue
+        card_piles.append(pile)
+    return card_piles
+
+
+###########################################################################
+def card_pile_for_trait(game: "Game", pile_selector: Callable[["Game"], list[str]] = card_piles_for_trait) -> str:
+    """Return a card pile that is suitable for traits"""
+    card_piles = pile_selector(game)
+    card_pile = random.choice(card_piles)
+    return card_pile
+
+
+###########################################################################
+def load_traits(
+    game: "Game", specified: list[str], num_required: int, pile_picker: Callable[["Game"], str] = card_pile_for_trait
+) -> None:
     """Load required Traits"""
-    game.traits = load_non_kingdom_cards(
-        game,
-        cardtype="Trait",
-        specified=specified,
-        num_required=num_required,
+    game.traits = cast(
+        dict[str, Trait],
+        load_non_kingdom_cards(
+            game,
+            cardtype="Trait",
+            specified=specified,
+            num_required=num_required,
+        ),
     )
     for trait in game.traits:
-        card_piles = []
-        for pile in game.card_piles:
-            if game.card_piles[pile].trait:
-                continue
-            if pile in BASE_CARDS:
-                continue
-            if pile in ("Loot",):
-                continue
-            card = game.card_instances[pile]
-            if not card.purchasable:
-                continue
-            if not card.isAction() and not card.isTreasure():
-                continue
-            card_piles.append(pile)
-        card_pile = random.choice(card_piles)
+        card_pile = pile_picker(game)
         game.assign_trait(trait, card_pile)
         game.output(f"Playing with Trait: {trait}")
 
@@ -576,7 +595,7 @@ def load_non_kingdom_cards(
 ###########################################################################
 def use_card_pile(
     game: "Game",
-    available: list[str] | None,
+    available: Optional[list[str]],
     card_name: str,
     force: bool = False,
     card_type: str = "Card",
@@ -717,14 +736,38 @@ def place_init_card(game: "Game", card: str, available: list[str]) -> Optional[i
 
 
 ###########################################################################
+def instantiate_player_class(game: "Game", name: str, use_shelters: bool, player_num: int, the_uuid: str) -> Player:
+    """Create the player instances"""
+    if INIT_OPTIONS[Flag.BOT]:
+        plr_class: type[Player] = BotPlayer
+        name = f"{name}Bot"
+        INIT_OPTIONS[Flag.BOT] = False
+    elif INIT_OPTIONS[Flag.RANDOBOT]:
+        plr_class = RandobotPlayer
+        name = f"{name}RandoBot"
+        INIT_OPTIONS[Flag.RANDOBOT] -= 1
+    else:
+        plr_class = TextPlayer
+
+    player = plr_class(
+        game=game,
+        quiet=game.quiet,
+        name=name,
+        heirlooms=game.heirlooms,
+        use_shelters=use_shelters,
+        number=player_num,
+    )
+    player.uuid = the_uuid
+    return player
+
+
+###########################################################################
 def setup_players(
     game: "Game",
+    use_shelters: bool,
     playernames: Optional[list[str]] = None,
-    plr_class: type[Player] = TextPlayer,
 ) -> None:
-    """Setup the players"""
-    if use_shelters := use_shelters_in_game(game, FLAGS[Flag.ALLOW_SHELTERS], INIT_CARDS[Keys.CARDS]):
-        setup_shelters(game)
+    """Set up the players"""
 
     names = playerNames[:]
     if playernames is None:
@@ -737,34 +780,7 @@ def setup_players(
             name = random.choice(names)
             names.remove(name)
         the_uuid = uuid.uuid4().hex
-        if INIT_OPTIONS[Flag.BOT]:
-            game.players[the_uuid] = BotPlayer(
-                game=game,
-                quiet=game.quiet,
-                name=f"{name}Bot",
-                heirlooms=game.heirlooms,
-                use_shelters=use_shelters,
-            )
-            INIT_OPTIONS[Flag.BOT] = False
-        elif INIT_OPTIONS[Flag.RANDOBOT]:
-            game.players[the_uuid] = RandobotPlayer(
-                game=game,
-                quiet=game.quiet,
-                name=f"{name}RandoBot",
-                heirlooms=game.heirlooms,
-                use_shelters=use_shelters,
-            )
-            INIT_OPTIONS[Flag.RANDOBOT] -= 1
-        else:
-            game.players[the_uuid] = plr_class(
-                game=game,
-                quiet=game.quiet,
-                name=name,
-                number=player_num,
-                heirlooms=game.heirlooms,
-                use_shelters=use_shelters,
-            )
-        game.players[the_uuid].uuid = the_uuid
+        game.players[the_uuid] = instantiate_player_class(game, name, use_shelters, player_num, the_uuid)
 
 
 ###########################################################################
@@ -830,7 +846,6 @@ def card_setup(game: "Game") -> None:
 def start_game(
     game: "Game",
     player_names: Optional[list[str]] = None,
-    plr_class: type[Player] = TextPlayer,
 ) -> None:
     """Initialise game bits"""
     FLAGS[Flag.LOADED_TRAVELLERS] = False
@@ -847,7 +862,9 @@ def start_game(
     if game.hexes or game.boons:
         load_states(game)
     check_card_requirements(game)
-    setup_players(game, player_names, plr_class)
+    if use_shelters := use_shelters_in_game(game, FLAGS[Flag.ALLOW_SHELTERS], INIT_CARDS[Keys.CARDS]):
+        setup_shelters(game)
+    setup_players(game, use_shelters, player_names)
     card_setup(game)  # Has to be after players have been created
     check_card_requirements(game)  # Again as setup can add requirements
     if game.hexes or game.boons:
