@@ -254,6 +254,50 @@ class TestLoadStates(unittest.TestCase):
 
 
 ###############################################################################
+class TestLoadBoons(unittest.TestCase):
+    """Test load_boons()"""
+
+    def test_load_boons(self):
+        """Ensure boons are loaded"""
+        g = Game.TestGame(boon_path="tests/boons")
+        self.assertEqual(g.boons, [])
+        game_setup.load_boons(g)
+        self.assertNotEqual(g.boons, [])
+        self.assertEqual(g.boons[0].name, "TestBoon")
+        game_setup.load_boons(g)
+        self.assertNotEqual(g.boons, [])
+
+
+###############################################################################
+class TestLoadAlly(unittest.TestCase):
+    """Test load_ally()"""
+
+    def test_load_ally_by_name(self):
+        """Ensure allies are loaded"""
+        g = Game.TestGame(ally_path="tests/allies")
+        self.assertEqual(g.boons, [])
+        ally = game_setup.load_ally(g, "Noop")
+        self.assertEqual(ally.name, "noop")
+
+    def test_load_ally_by_list(self):
+        """Ensure allies are loaded"""
+        g = Game.TestGame(ally_path="tests/allies")
+        self.assertEqual(g.boons, [])
+        ally = game_setup.load_ally(g, ["Noop"])
+        self.assertEqual(ally.name, "noop")
+
+
+###############################################################################
+class TestGetCardClasses(unittest.TestCase):
+    """Test get_card_classes()"""
+
+    def test_get_card_classes(self):
+        """Test get_card_classes()"""
+        card_classes = game_setup.get_card_classes("Ally", "tests/allies", "Ally_")
+        self.assertEqual(list(card_classes.keys()), ["noop"])
+
+
+###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
