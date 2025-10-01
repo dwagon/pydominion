@@ -67,10 +67,12 @@ class Game:
 
     ###########################################################################
     def start_game(self, player_names: Optional[list[str]] = None) -> None:
+        """Start the game - pass everything though to game_setup"""
         game_setup.start_game(self, player_names)
+        self._save_original()
 
     ###########################################################################
-    def save_original(self) -> None:
+    def _save_original(self) -> None:
         """Save original card state for debugging purposes"""
         self._original["count"] = self._count_all_cards()
         self._original["total_cards"] = self.count_cards()
@@ -121,8 +123,8 @@ class Game:
         self.traits[trait].card_pile = card_pile
 
     ###########################################################################
-    def getPrizes(self) -> list[str]:
-        """TODO"""
+    def get_prizes(self) -> list[str]:
+        """Return a list of prizes"""
         return list(self.card_mapping["PrizeCard"].keys())
 
     ###########################################################################
@@ -155,8 +157,8 @@ class Game:
         return [(key, value) for key, value in piles if key not in ("Loot", "Shelters")]
 
     ###########################################################################
-    def getAvailableCards(self, prefix: str = "Card") -> List[str]:
-        """TODO"""
+    def get_available_cards(self, prefix: str = "Card") -> list[str]:
+        """return a list of all available cards"""
         return list(self.card_mapping[prefix].keys())
 
     ###########################################################################

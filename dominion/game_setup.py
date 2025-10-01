@@ -88,7 +88,7 @@ def setup_shelters(game: "Game") -> None:
 ###########################################################################
 def load_travellers(game: "Game") -> None:
     """TODO"""
-    travellers = game.getAvailableCards("Traveller")
+    travellers = game.get_available_cards("Traveller")
     for trav in travellers:
         use_card_pile(game, None, trav, True, "Traveller")
 
@@ -337,7 +337,7 @@ def check_ruins_requirements(game: "Game", card: Card) -> None:
 def check_prize_requirements(game: "Game", card: Card) -> None:
     """Check to see if prizes are required"""
     if card.needs_prizes and not FLAGS[Flag.LOADED_PRIZES]:
-        for prize in game.getAvailableCards("PrizeCard"):
+        for prize in game.get_available_cards("PrizeCard"):
             use_card_pile(game, None, prize, False, "PrizeCard")
         FLAGS[Flag.LOADED_PRIZES] = True
         game.output(f"Using Prizes as required by {card.name}")
@@ -460,7 +460,7 @@ def load_non_kingdom_pile(game: "Game", cardtype: str, pileClass) -> dict[str, C
     Returns a dictionary; key is the name, value is the instance
     """
     dest: dict[str, CardPile] = {}
-    available = game.getAvailableCards(cardtype)
+    available = game.get_available_cards(cardtype)
     # To make up the numbers
     for nkc in available:
         klass = game.card_mapping[cardtype][nkc]
@@ -507,7 +507,7 @@ def check_card_requirements(game: "Game") -> None:
 def guess_card_name(game: "Game", name: str, prefix: str = "Card") -> Optional[str]:
     """Don't force the user to give the exact card name on the command
     line - maybe we can guess it"""
-    available = game.getAvailableCards(prefix)
+    available = game.get_available_cards(prefix)
     if name in available:
         return name
     lower_name = name.lower()
@@ -559,7 +559,7 @@ def load_non_kingdom_cards(
     Returns a dictionary; key is the name, value is the instance
     """
     dest: dict[str, Card] = {}
-    available = game.getAvailableCards(cardtype)
+    available = game.get_available_cards(cardtype)
     # Specified cards
     if specified is not None:
         names = good_names(game, specified, cardtype)

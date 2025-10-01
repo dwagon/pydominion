@@ -2,8 +2,9 @@
 """http://wiki.dominionstrategy.com/index.php/Young_Witch"""
 # pylint: disable=no-member, protected-access
 
-import unittest
 import random
+import unittest
+
 from dominion import Card, Game, Piles, Keys, Player, NoCardException, game_setup
 
 BANE = "young witch bane"
@@ -42,7 +43,7 @@ class Card_YoungWitch(Card.Card):
             banes.append(card.name)
         bane = random.choice(banes)
         game.specials[BANE] = bane
-        game_setup.use_card_pile(game, game.getAvailableCards(), game.specials[BANE])
+        game_setup.use_card_pile(game, game.get_available_cards(), game.specials[BANE])
         game_setup.check_card_requirement(game, game.card_instances[bane])
         game.card_piles[bane].setup(game=game)
         if game.hexes or game.boons:
