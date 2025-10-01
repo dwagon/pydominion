@@ -640,12 +640,13 @@ def num_cards_in_pile(game: "Game", card: Card) -> int:
 ###########################################################################
 def load_decks(game: "Game", initcards: list[str], numstacks: int) -> None:
     """Determine what cards we are using this game"""
+    base_cards = BASE_CARDS[:]
     if FLAGS[Flag.USE_PROSPERITY]:
-        BASE_CARDS.append("Colony")
-        BASE_CARDS.append("Platinum")
-    for card in BASE_CARDS:
-        use_card_pile(game, BASE_CARDS[:], card, force=True, card_type="BaseCard")
-    available = game.getAvailableCards()
+        base_cards.append("Colony")
+        base_cards.append("Platinum")
+    for card in base_cards:
+        use_card_pile(game, base_cards[:], card, force=True, card_type="BaseCard")
+    available = game.get_available_cards()
     unfilled = numstacks
     found_all = True
     for crd in initcards:
