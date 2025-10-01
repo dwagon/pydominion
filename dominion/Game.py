@@ -204,16 +204,22 @@ class Game:
 
     ###########################################################################
     def isGameOver(self) -> bool:
-        """is the game over"""
+        """is the game over:
+        3 piles are empty
+        or the Colony pile is in use and empty
+        or if the Colony pile isn't in use - then the Province pile is empty"""
         empties = []
-        for cpile in self.card_piles:
-            if self.card_piles[cpile].is_empty():
-                empties.append(cpile)
+        for pile_name, pile in self.card_piles.items():
+            if pile.is_empty():
+                empties.append(pile_name)
         if len(empties) >= 3:
             self.output(f"Game Over: {', '.join(empties)} piles are empty")
             return True
-
-        if self.card_piles["Province"].is_empty():
+        if "Colony" in self.card_piles:
+            if self.card_piles["Colony"].is_empty():
+                self.output("Game Over: Colony pile is empty")
+                return True
+        elif self.card_piles["Province"].is_empty():
             self.output("Game Over: Province pile is empty")
             return True
         return False

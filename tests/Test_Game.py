@@ -84,21 +84,32 @@ class TestGameOver(unittest.TestCase):
     """Test detecting when the game is over"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=2)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
     def test_not_over(self) -> None:
-        """The game isn't over yet"""
-        over = self.g.isGameOver()
-        self.assertFalse(over)
+        """The game isn't over yet - its barely begun"""
+        self.assertFalse(self.g.isGameOver())
 
     def test_provinces(self) -> None:
         """Someone took the last province"""
+        assert "Colony" not in self.g.card_piles
         while self.g.card_piles["Province"]:
-            card = self.plr.gain_card("Province")
-        over = self.g.isGameOver()
-        self.assertTrue(over)
+            self.plr.gain_card("Province")
+        self.assertTrue(self.g.isGameOver())
+
+    def test_colonies(self) -> None:
+        """Someone took the last colony"""
+        g = Game.TestGame(numplayers=2, prosperity=True)
+        g.start_game()
+        plr = g.player_list()[0]
+        while g.card_piles["Province"]:
+            plr.gain_card("Province")
+        self.assertFalse(g.isGameOver())
+        while g.card_piles["Colony"]:
+            plr.gain_card("Colony")
+        self.assertTrue(g.isGameOver())
 
     def test_three_stacks(self) -> None:
         """Three stacks are empty"""
@@ -108,8 +119,7 @@ class TestGameOver(unittest.TestCase):
             self.plr.gain_card("Copper")
         while self.g.card_piles["Silver"]:
             self.plr.gain_card("Silver")
-        over = self.g.isGameOver()
-        self.assertTrue(over)
+        self.assertTrue(self.g.isGameOver())
 
     def test_two_stacks(self) -> None:
         """Two stacks are empty"""
@@ -117,8 +127,7 @@ class TestGameOver(unittest.TestCase):
             self.plr.gain_card("Estate")
         while self.g.card_piles["Silver"]:
             self.plr.gain_card("Silver")
-        over = self.g.isGameOver()
-        self.assertFalse(over)
+        self.assertFalse(self.g.isGameOver())
 
 
 ###############################################################################
