@@ -65,7 +65,9 @@ def use_shelters_in_game(game: "Game", allow_shelters: bool, specified: list[str
         return False
 
     # Pick a card to see if it is a dark ages card
-    non_base_cards = [_ for _ in game.card_piles.keys() if not game.card_instances[_].basecard]
+    non_base_cards = [
+        _ for _ in game.card_piles.keys() if _ in game.card_instances and not game.card_instances[_].basecard
+    ]
     card = game.card_instances[random.choice(non_base_cards)]
     if card.base == CardExpansion.DARKAGES:
         return True
@@ -854,7 +856,6 @@ def start_game(
     if game.ally:
         for plr in game.player_list():
             plr.favors.add(1)
-    game.save_original()
 
 
 # EOF

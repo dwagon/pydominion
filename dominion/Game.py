@@ -4,11 +4,11 @@
 import json
 import random
 import sys
-from typing import List, Optional, Any
+from typing import Optional, Any
 from uuid import UUID
 
-import dominion.game_setup as game_setup
 from dominion import NoCardException
+from dominion import game_setup
 from dominion.Artifact import Artifact
 from dominion.Boon import Boon
 from dominion.Card import Card
@@ -147,8 +147,8 @@ class Game:
     def emptied_pile(self, card: Card) -> None:
         """A Card pile has been emptied"""
         for player in self.players.values():
-            for card in player.relevant_cards():
-                card.hook_emptied_pile(self, player, card)
+            for hook_card in player.relevant_cards():
+                hook_card.hook_emptied_pile(self, player, card)
 
     ###########################################################################
     def get_card_piles(self) -> list[tuple[str, CardPile]]:
