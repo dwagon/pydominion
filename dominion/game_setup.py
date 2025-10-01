@@ -99,7 +99,7 @@ def load_loot(game: "Game") -> None:
     if "Loot" in game.card_piles:
         return
     game.output("Using Loot cards")
-    game.card_piles["Loot"] = LootPile(game)
+    game.card_piles["Loot"] = LootPile(game, get_card_classes("Loot", PATHS[Keys.LOOT], "Loot_"))
     game.card_piles["Loot"].init_cards()
 
 
