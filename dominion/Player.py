@@ -1385,7 +1385,7 @@ class Player:
     ###########################################################################
     def gain_prize(self) -> None:
         """Pickup a Prize"""
-        prizes = [self.game.card_piles[_] for _ in self.game.getPrizes()]
+        prizes = [self.game.card_piles[_] for _ in self.game.get_prizes()]
         options = []
         for prize_pile in prizes:
             if prize_pile.is_empty():

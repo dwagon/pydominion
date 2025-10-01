@@ -39,7 +39,7 @@ class Prophecy_Approaching_Army(Prophecy.Prophecy):
             attacks.append(card.name)
         attack = random.choice(attacks)
         game.specials[ARMY_ATTACK] = attack
-        game_setup.use_card_pile(game, game.getAvailableCards(), game.specials[ARMY_ATTACK])
+        game_setup.use_card_pile(game, game.get_available_cards(), game.specials[ARMY_ATTACK])
         game_setup.check_card_requirement(game, game.card_instances[attack])
         game.card_piles[attack].setup(game=game)
         if game.hexes or game.boons:

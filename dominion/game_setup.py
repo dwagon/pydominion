@@ -65,7 +65,9 @@ def use_shelters_in_game(game: "Game", allow_shelters: bool, specified: list[str
         return False
 
     # Pick a card to see if it is a dark ages card
-    non_base_cards = [_ for _ in game.card_piles.keys() if not game.card_instances[_].basecard]
+    non_base_cards = [
+        _ for _ in game.card_piles.keys() if _ in game.card_instances and not game.card_instances[_].basecard
+    ]
     card = game.card_instances[random.choice(non_base_cards)]
     if card.base == CardExpansion.DARKAGES:
         return True
@@ -88,7 +90,7 @@ def setup_shelters(game: "Game") -> None:
 ###########################################################################
 def load_travellers(game: "Game") -> None:
     """TODO"""
-    travellers = game.getAvailableCards("Traveller")
+    travellers = game.get_available_cards("Traveller")
     for trav in travellers:
         use_card_pile(game, None, trav, True, "Traveller")
 
@@ -99,7 +101,7 @@ def load_loot(game: "Game") -> None:
     if "Loot" in game.card_piles:
         return
     game.output("Using Loot cards")
-    game.card_piles["Loot"] = LootPile(game)
+    game.card_piles["Loot"] = LootPile(game, get_card_classes("Loot", PATHS[Keys.LOOT], "Loot_"))
     game.card_piles["Loot"].init_cards()
 
 
@@ -337,7 +339,7 @@ def check_ruins_requirements(game: "Game", card: Card) -> None:
 def check_prize_requirements(game: "Game", card: Card) -> None:
     """Check to see if prizes are required"""
     if card.needs_prizes and not FLAGS[Flag.LOADED_PRIZES]:
-        for prize in game.getAvailableCards("PrizeCard"):
+        for prize in game.get_available_cards("PrizeCard"):
             use_card_pile(game, None, prize, False, "PrizeCard")
         FLAGS[Flag.LOADED_PRIZES] = True
         game.output(f"Using Prizes as required by {card.name}")
@@ -460,7 +462,7 @@ def load_non_kingdom_pile(game: "Game", cardtype: str, pileClass) -> dict[str, C
     Returns a dictionary; key is the name, value is the instance
     """
     dest: dict[str, CardPile] = {}
-    available = game.getAvailableCards(cardtype)
+    available = game.get_available_cards(cardtype)
     # To make up the numbers
     for nkc in available:
         klass = game.card_mapping[cardtype][nkc]
@@ -507,7 +509,7 @@ def check_card_requirements(game: "Game") -> None:
 def guess_card_name(game: "Game", name: str, prefix: str = "Card") -> Optional[str]:
     """Don't force the user to give the exact card name on the command
     line - maybe we can guess it"""
-    available = game.getAvailableCards(prefix)
+    available = game.get_available_cards(prefix)
     if name in available:
         return name
     lower_name = name.lower()
@@ -559,7 +561,7 @@ def load_non_kingdom_cards(
     Returns a dictionary; key is the name, value is the instance
     """
     dest: dict[str, Card] = {}
-    available = game.getAvailableCards(cardtype)
+    available = game.get_available_cards(cardtype)
     # Specified cards
     if specified is not None:
         names = good_names(game, specified, cardtype)
@@ -640,12 +642,13 @@ def num_cards_in_pile(game: "Game", card: Card) -> int:
 ###########################################################################
 def load_decks(game: "Game", initcards: list[str], numstacks: int) -> None:
     """Determine what cards we are using this game"""
+    base_cards = BASE_CARDS[:]
     if FLAGS[Flag.USE_PROSPERITY]:
-        BASE_CARDS.append("Colony")
-        BASE_CARDS.append("Platinum")
-    for card in BASE_CARDS:
-        use_card_pile(game, BASE_CARDS[:], card, force=True, card_type="BaseCard")
-    available = game.getAvailableCards()
+        base_cards.append("Colony")
+        base_cards.append("Platinum")
+    for card in base_cards:
+        use_card_pile(game, base_cards[:], card, force=True, card_type="BaseCard")
+    available = game.get_available_cards()
     unfilled = numstacks
     found_all = True
     for crd in initcards:
@@ -684,33 +687,25 @@ def place_init_card(game: "Game", card: str, available: list[str]) -> Optional[i
         return 0
     if card_name := guess_card_name(game, card):
         return use_card_pile(game, available, card_name, force=True)
-    if event_name := guess_card_name(game, card, "Event"):
-        INIT_CARDS[Keys.EVENT].append(event_name)
-        return 0
-    if way_name := guess_card_name(game, card, "Way"):
-        INIT_CARDS[Keys.WAY].append(way_name)
-        return 0
-    if landmark_name := guess_card_name(game, card, "Landmark"):
-        INIT_CARDS[Keys.LANDMARK].append(landmark_name)
-        return 0
-    if project_name := guess_card_name(game, card, "Project"):
-        INIT_CARDS[Keys.PROJECTS].append(project_name)
-        return 0
-    if ally_name := guess_card_name(game, card, "Ally"):
-        INIT_CARDS[Keys.ALLIES].append(ally_name)
-        return 0
-    if trait_name := guess_card_name(game, card, "Trait"):
-        INIT_CARDS[Keys.TRAITS].append(trait_name)
-        return 0
+    mapping = {
+        "Event": Keys.EVENT,
+        "Way": Keys.WAY,
+        "Landmark": Keys.LANDMARK,
+        "Project": Keys.PROJECTS,
+        "Ally": Keys.ALLIES,
+        "Trait": Keys.TRAITS,
+        "Prophecies": Keys.PROPHECIES,
+    }
+    for prefix, key in mapping.items():
+        if name := guess_card_name(game, card, prefix):
+            INIT_CARDS[key].append(name)
+            return 0
     if guess_card_name(game, card, "Boon"):
         load_boons(game)
         return 0
     if guess_card_name(game, card, "Artifact"):
         # Artifacts should be loaded by the requiring card but can still be specified
         # in a card set
-        return 0
-    if prophecy_name := guess_card_name(game, card, "Prophecies"):
-        INIT_CARDS[Keys.PROPHECIES].append(prophecy_name)
         return 0
     if card.lower() == "shelters":
         # Use of shelters handled elsewhere
@@ -861,7 +856,6 @@ def start_game(
     if game.ally:
         for plr in game.player_list():
             plr.favors.add(1)
-    game.save_original()
 
 
 # EOF

@@ -4,11 +4,11 @@
 import json
 import random
 import sys
-from typing import List, Optional, Any
+from typing import Optional, Any
 from uuid import UUID
 
-import dominion.game_setup as game_setup
 from dominion import NoCardException
+from dominion import game_setup
 from dominion.Artifact import Artifact
 from dominion.Boon import Boon
 from dominion.Card import Card
@@ -67,16 +67,19 @@ class Game:
 
     ###########################################################################
     def start_game(self, player_names: Optional[list[str]] = None) -> None:
+        """Start the game - pass everything though to game_setup"""
         game_setup.start_game(self, player_names)
+        self._save_original()
 
     ###########################################################################
-    def save_original(self) -> None:
+    def _save_original(self) -> None:
         """Save original card state for debugging purposes"""
         self._original["count"] = self._count_all_cards()
         self._original["total_cards"] = self.count_cards()
 
     ###########################################################################
     def remove_sun_token(self) -> int:
+        """Remove a Sun token"""
         self.sun_tokens -= 1
         if self.sun_tokens <= 0:
             self.reveal_prophecy()
@@ -85,6 +88,7 @@ class Game:
 
     ###########################################################################
     def reveal_prophecy(self) -> None:
+        """Prophecy has been enacted - make it active"""
         if self.prophecy is not None:
             return
         self.output(f"Prophecy {self.inactive_prophecy.name} is now active")
@@ -121,8 +125,8 @@ class Game:
         self.traits[trait].card_pile = card_pile
 
     ###########################################################################
-    def getPrizes(self) -> list[str]:
-        """TODO"""
+    def get_prizes(self) -> list[str]:
+        """Return a list of prizes"""
         return list(self.card_mapping["PrizeCard"].keys())
 
     ###########################################################################
@@ -143,8 +147,8 @@ class Game:
     def emptied_pile(self, card: Card) -> None:
         """A Card pile has been emptied"""
         for player in self.players.values():
-            for card in player.relevant_cards():
-                card.hook_emptied_pile(self, player, card)
+            for hook_card in player.relevant_cards():
+                hook_card.hook_emptied_pile(self, player, card)
 
     ###########################################################################
     def get_card_piles(self) -> list[tuple[str, CardPile]]:
@@ -155,8 +159,8 @@ class Game:
         return [(key, value) for key, value in piles if key not in ("Loot", "Shelters")]
 
     ###########################################################################
-    def getAvailableCards(self, prefix: str = "Card") -> List[str]:
-        """TODO"""
+    def get_available_cards(self, prefix: str = "Card") -> list[str]:
+        """return a list of all available cards"""
         return list(self.card_mapping[prefix].keys())
 
     ###########################################################################
@@ -200,16 +204,22 @@ class Game:
 
     ###########################################################################
     def isGameOver(self) -> bool:
-        """is the game over"""
+        """is the game over:
+        3 piles are empty
+        or the Colony pile is in use and empty
+        or if the Colony pile isn't in use - then the Province pile is empty"""
         empties = []
-        for cpile in self.card_piles:
-            if self.card_piles[cpile].is_empty():
-                empties.append(cpile)
+        for pile_name, pile in self.card_piles.items():
+            if pile.is_empty():
+                empties.append(pile_name)
         if len(empties) >= 3:
             self.output(f"Game Over: {', '.join(empties)} piles are empty")
             return True
-
-        if self.card_piles["Province"].is_empty():
+        if "Colony" in self.card_piles:
+            if self.card_piles["Colony"].is_empty():
+                self.output("Game Over: Colony pile is empty")
+                return True
+        elif self.card_piles["Province"].is_empty():
             self.output("Game Over: Province pile is empty")
             return True
         return False
