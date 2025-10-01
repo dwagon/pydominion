@@ -684,33 +684,25 @@ def place_init_card(game: "Game", card: str, available: list[str]) -> Optional[i
         return 0
     if card_name := guess_card_name(game, card):
         return use_card_pile(game, available, card_name, force=True)
-    if event_name := guess_card_name(game, card, "Event"):
-        INIT_CARDS[Keys.EVENT].append(event_name)
-        return 0
-    if way_name := guess_card_name(game, card, "Way"):
-        INIT_CARDS[Keys.WAY].append(way_name)
-        return 0
-    if landmark_name := guess_card_name(game, card, "Landmark"):
-        INIT_CARDS[Keys.LANDMARK].append(landmark_name)
-        return 0
-    if project_name := guess_card_name(game, card, "Project"):
-        INIT_CARDS[Keys.PROJECTS].append(project_name)
-        return 0
-    if ally_name := guess_card_name(game, card, "Ally"):
-        INIT_CARDS[Keys.ALLIES].append(ally_name)
-        return 0
-    if trait_name := guess_card_name(game, card, "Trait"):
-        INIT_CARDS[Keys.TRAITS].append(trait_name)
-        return 0
+    mapping = {
+        "Event": Keys.EVENT,
+        "Way": Keys.WAY,
+        "Landmark": Keys.LANDMARK,
+        "Project": Keys.PROJECTS,
+        "Ally": Keys.ALLIES,
+        "Trait": Keys.TRAITS,
+        "Prophecies": Keys.PROPHECIES,
+    }
+    for prefix, key in mapping.items():
+        if name := guess_card_name(game, card, prefix):
+            INIT_CARDS[key].append(name)
+            return 0
     if guess_card_name(game, card, "Boon"):
         load_boons(game)
         return 0
     if guess_card_name(game, card, "Artifact"):
         # Artifacts should be loaded by the requiring card but can still be specified
         # in a card set
-        return 0
-    if prophecy_name := guess_card_name(game, card, "Prophecies"):
-        INIT_CARDS[Keys.PROPHECIES].append(prophecy_name)
         return 0
     if card.lower() == "shelters":
         # Use of shelters handled elsewhere

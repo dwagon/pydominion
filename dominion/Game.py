@@ -79,6 +79,7 @@ class Game:
 
     ###########################################################################
     def remove_sun_token(self) -> int:
+        """Remove a Sun token"""
         self.sun_tokens -= 1
         if self.sun_tokens <= 0:
             self.reveal_prophecy()
@@ -87,6 +88,7 @@ class Game:
 
     ###########################################################################
     def reveal_prophecy(self) -> None:
+        """Prophecy has been enacted - make it active"""
         if self.prophecy is not None:
             return
         self.output(f"Prophecy {self.inactive_prophecy.name} is now active")
