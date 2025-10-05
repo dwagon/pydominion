@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Treasure_Chest"""
 import unittest
 
 from dominion import Artifact
@@ -8,7 +8,9 @@ from dominion import Game, Piles
 
 
 ###############################################################################
-class Artifact_TreasureChest(Artifact.Artifact):
+class Artifact_Treasure_Chest(Artifact.Artifact):
+    """Treasure Chest Artifact"""
+
     def __init__(self):
         Artifact.Artifact.__init__(self)
         self.base = Card.CardExpansion.RENAISSANCE
@@ -21,13 +23,16 @@ class Artifact_TreasureChest(Artifact.Artifact):
 
 
 ###############################################################################
-class Test_TreasureChest(unittest.TestCase):
+class Test_Treasure_Chest(unittest.TestCase):
+    """Test Treasure Chest"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initartifacts=["Treasure Chest"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
-    def test_treasurechest(self):
+    def test_treasure_chest(self):
+        """Test playing a Treasure Chest"""
         self.plr.assign_artifact("Treasure Chest")
         self.plr.test_input = ["End Phase"]
         self.plr.buy_phase()
