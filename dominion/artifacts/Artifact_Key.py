@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Key"""
 import unittest
 
 from dominion import Artifact
@@ -9,6 +9,8 @@ from dominion import Game
 
 ###############################################################################
 class Artifact_Key(Artifact.Artifact):
+    """Key Artifact"""
+
     def __init__(self):
         Artifact.Artifact.__init__(self)
         self.base = Card.CardExpansion.RENAISSANCE
@@ -21,13 +23,16 @@ class Artifact_Key(Artifact.Artifact):
 
 ###############################################################################
 class Test_Key(unittest.TestCase):
+    """Test Key"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initartifacts=["Key"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.artifact = self.g.artifacts["Key"]
 
-    def test_flag(self):
+    def test_key(self):
+        """Test Key"""
         self.plr.assign_artifact("Key")
         self.plr.start_turn()
         self.assertEqual(self.plr.coins.get(), 1)

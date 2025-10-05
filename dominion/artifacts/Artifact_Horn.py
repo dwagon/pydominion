@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Horn"""
 import unittest
 
 from dominion import Artifact
@@ -9,6 +9,8 @@ from dominion import Game, Piles
 
 ###############################################################################
 class Artifact_Horn(Artifact.Artifact):
+    """Horn Artifact"""
+
     def __init__(self):
         Artifact.Artifact.__init__(self)
         self.base = Card.CardExpansion.RENAISSANCE
@@ -18,6 +20,8 @@ class Artifact_Horn(Artifact.Artifact):
 
 ###############################################################################
 class Test_Horn(unittest.TestCase):
+    """Test Horn"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initartifacts=["Horn"], initcards=["Border Guard"])
         self.g.start_game()
@@ -26,6 +30,7 @@ class Test_Horn(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Border Guard")
 
     def test_horn(self):
+        """Test Horn"""
         self.plr.assign_artifact("Horn")
         self.plr.test_input = ["Put onto deck"]
         self.plr.discard_card(self.card)

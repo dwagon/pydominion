@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Lantern"""
 import unittest
 
 from dominion import Artifact
@@ -9,6 +9,8 @@ from dominion import Game, Piles
 
 ###############################################################################
 class Artifact_Lantern(Artifact.Artifact):
+    """Lantern artifact"""
+
     def __init__(self):
         Artifact.Artifact.__init__(self)
         self.base = Card.CardExpansion.RENAISSANCE
@@ -18,6 +20,8 @@ class Artifact_Lantern(Artifact.Artifact):
 
 ###############################################################################
 class Test_Lantern(unittest.TestCase):
+    """Test Lantern"""
+
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
@@ -31,6 +35,7 @@ class Test_Lantern(unittest.TestCase):
         self.plr.assign_artifact("Lantern")
 
     def test_play(self):
+        """Test Play"""
         self.plr.piles[Piles.DECK].set("Province", "Silver", "Gold")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Select Gold"]
@@ -41,6 +46,7 @@ class Test_Lantern(unittest.TestCase):
         self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Province"])
 
     def test_play_actions(self):
+        """Test gaining a horn"""
         self.plr.piles[Piles.DECK].set("Guide", "Moat", "Guide")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Select Moat", "Take Horn"]

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Flag"""
 import unittest
 from typing import Any
 
@@ -8,6 +8,8 @@ from dominion import Artifact, Card, Game, Player, OptionKeys
 
 ###############################################################################
 class Artifact_Flag(Artifact.Artifact):
+    """Flag Artifact"""
+
     def __init__(self):
         Artifact.Artifact.__init__(self)
         self.base = Card.CardExpansion.RENAISSANCE
@@ -21,6 +23,8 @@ class Artifact_Flag(Artifact.Artifact):
 
 ###############################################################################
 class Test_Flag(unittest.TestCase):
+    """Test Flag"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initartifacts=["Flag"])
         self.g.start_game()
@@ -28,6 +32,7 @@ class Test_Flag(unittest.TestCase):
         self.artifact = self.g.artifacts["Flag"]
 
     def test_flag(self) -> None:
+        """Test Flag"""
         self.plr.assign_artifact("Flag")
         self.plr.end_turn()
 
