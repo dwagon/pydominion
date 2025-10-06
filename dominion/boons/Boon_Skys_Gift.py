@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/The_Sky%27s_Gift"""
 import unittest
 
 from dominion import Boon, Card, Game, Piles
@@ -7,6 +7,8 @@ from dominion import Boon, Card, Game, Piles
 
 ###############################################################################
 class Boon_Skys_Gift(Boon.Boon):
+    """Sky's Gift"""
+
     def __init__(self):
         Boon.Boon.__init__(self)
         self.cardtype = Card.CardType.BOON
@@ -27,6 +29,8 @@ class Boon_Skys_Gift(Boon.Boon):
 
 ###############################################################################
 class TestSkysGift(unittest.TestCase):
+    """Test Sky's Gift"""
+
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"])
         self.g.start_game()

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/The_Wind%27s_Gift"""
 import unittest
 
 from dominion import Boon
@@ -9,6 +9,8 @@ from dominion import Game, Piles
 
 ###############################################################################
 class Boon_Winds_Gift(Boon.Boon):
+    """Wind's Gift"""
+
     def __init__(self):
         Boon.Boon.__init__(self)
         self.cardtype = Card.CardType.BOON
@@ -24,6 +26,8 @@ class Boon_Winds_Gift(Boon.Boon):
 
 ###############################################################################
 class Test_Winds_Gift(unittest.TestCase):
+    """Test Wind's Gift"""
+
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"])
         self.g.start_game()
@@ -36,6 +40,7 @@ class Test_Winds_Gift(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Bard")
 
     def test_winds_gift(self):
+        """Test boon"""
         self.plr.piles[Piles.HAND].set("Duchy", "Gold", "Silver")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Discard Duchy", "Discard Gold", "Finish Selecting"]
