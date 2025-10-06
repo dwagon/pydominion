@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/The_Forest%27s_Gift"""
 import unittest
 
 from dominion import Boon
@@ -9,6 +9,8 @@ from dominion import Game, Piles
 
 ###############################################################################
 class Boon_Forest_Gift(Boon.Boon):
+    """Forest's Gift"""
+
     def __init__(self):
         Boon.Boon.__init__(self)
         self.cardtype = Card.CardType.BOON
@@ -23,6 +25,8 @@ class Boon_Forest_Gift(Boon.Boon):
 
 ###############################################################################
 class Test_Forest_Gift(unittest.TestCase):
+    """Test Forest's Gift"""
+
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"])
         self.g.start_game()
@@ -35,6 +39,7 @@ class Test_Forest_Gift(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Bard")
 
     def test_fields_gift(self):
+        """Test boon"""
         self.plr.coin = 0
         self.plr.buys.set(0)
         self.plr.add_card(self.card, Piles.HAND)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/The_Sun%27s_Gift"""
 import unittest
 
 from dominion import Boon, Card, Game, Piles, Player, NoCardException
@@ -7,6 +7,8 @@ from dominion import Boon, Card, Game, Piles, Player, NoCardException
 
 ###############################################################################
 class Boon_Suns_Gift(Boon.Boon):
+    """Sun's Gift"""
+
     def __init__(self) -> None:
         Boon.Boon.__init__(self)
         self.cardtype = Card.CardType.BOON
@@ -35,6 +37,8 @@ class Boon_Suns_Gift(Boon.Boon):
 
 ###############################################################################
 class TestSunsGift(unittest.TestCase):
+    """Test Sun's Gift"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"])
         self.g.start_game()
@@ -48,6 +52,7 @@ class TestSunsGift(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_suns_gift(self) -> None:
+        """Test boon"""
         self.plr.piles[Piles.DECK].set("Silver", "Gold", "Province", "Duchy", "Copper")
         self.plr.test_input = ["Province", "Duchy", "finish"]
         self.plr.play_card(self.card)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/The_Swamp%27s_Gift"""
 import unittest
 
 from dominion import Boon, Card, Game, Piles, Player, NoCardException
@@ -7,6 +7,8 @@ from dominion import Boon, Card, Game, Piles, Player, NoCardException
 
 ###############################################################################
 class Boon_Swamps_Gift(Boon.Boon):
+    """Swamp's Gift"""
+
     def __init__(self) -> None:
         Boon.Boon.__init__(self)
         self.cardtype = Card.CardType.BOON
@@ -25,10 +27,10 @@ class Boon_Swamps_Gift(Boon.Boon):
 
 ###############################################################################
 class Test_Swamps_Gift(unittest.TestCase):
+    """Test Swamp's Gift"""
+
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"]
-        )
+        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         for b in self.g.boons:
@@ -38,6 +40,7 @@ class Test_Swamps_Gift(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Bard")
 
     def test_winds_gift(self) -> None:
+        """Test boon"""
         self.plr.add_card(self.card, Piles.HAND)
         self.g.print_state()
         self.plr.play_card(self.card)
