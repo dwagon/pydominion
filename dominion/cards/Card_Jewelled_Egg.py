@@ -50,7 +50,7 @@ class TestJewelledEgg(unittest.TestCase):
         self.plr.piles[Piles.DISCARD].empty()
         self.plr.trash_card(self.card)
         self.assertIn("Jewelled Egg", self.g.trash_pile)
-        found = any([True for _ in self.plr.piles[Piles.DISCARD] if _.isLoot()])
+        found = any(True for _ in self.plr.piles[Piles.DISCARD] if _.isLoot())
         self.assertTrue(found)
 
 

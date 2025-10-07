@@ -48,7 +48,7 @@ class TestPickaxe(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIn("Gold", self.g.trash_pile)
         self.assertEqual(self.plr.coins.get(), coins + 1)
-        found = any([True for _ in self.plr.piles[Piles.DISCARD] if _.isLoot()])
+        found = any(True for _ in self.plr.piles[Piles.DISCARD] if _.isLoot())
         self.assertTrue(found)
 
 
