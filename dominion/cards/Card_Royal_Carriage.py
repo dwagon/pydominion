@@ -2,7 +2,6 @@
 """http://wiki.dominionstrategy.com/index.php/Royal_Carriage"""
 
 import unittest
-from typing import Optional
 
 from dominion import Game, Card, Piles, Player, Whens
 
@@ -70,9 +69,7 @@ class TestRoyalCarriage(unittest.TestCase):
         self.plr.add_card(moat, Piles.PLAYED)
         self.plr.call_reserve(self.card)
         self.g.print_state()
-        self.assertEqual(
-            self.plr.piles[Piles.HAND].size(), hand_size + 2
-        )  # Calling Moat
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hand_size + 2)  # Calling Moat
         self.assertIn("Royal Carriage", self.plr.piles[Piles.PLAYED])
         self.assertIn("Moat", self.plr.piles[Piles.PLAYED])
 

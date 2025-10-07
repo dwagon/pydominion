@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Monkey """
+"""http://wiki.dominionstrategy.com/index.php/Monkey"""
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Card, Game, Piles, Player, OptionKeys
 

@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 """https://wiki.dominionstrategy.com/index.php/Sauna"""
 import unittest
-from typing import Optional
 
 from dominion import Card, Game, Piles, Player, OptionKeys
 
@@ -14,7 +13,7 @@ class Card_Sauna(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.PROMO
-        self.desc = """+1 Card; +1 Action; You may play an Avanto from your hand. 
+        self.desc = """+1 Card; +1 Action; You may play an Avanto from your hand.
         This turn, when you play a Silver, you may trash a card from your hand."""
         self.name = "Sauna"
         self.cost = 4
@@ -32,9 +31,7 @@ class Card_Sauna(Card.Card):
             ):
                 player.play_card(avanto, cost_action=False)
 
-    def hook_post_play(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, str]:
+    def hook_post_play(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, str]:
         """This turn, when you play a Silver, you may trash a card from your hand."""
         if card.name != "Silver":
             return {}

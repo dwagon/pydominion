@@ -2,7 +2,6 @@
 """http://wiki.dominionstrategy.com/index.php/Landing_Party"""
 
 import unittest
-from typing import Optional
 
 from dominion import Game, Card, Piles, Player, OptionKeys
 
@@ -18,7 +17,7 @@ class Card_LandingParty(Card.Card):
             Card.CardType.DURATION,
         ]
         self.base = Card.CardExpansion.PLUNDER
-        self.desc = """+2 Cards; +2 Actions; The next time the first card you play on a turn is a Treasure, 
+        self.desc = """+2 Cards; +2 Actions; The next time the first card you play on a turn is a Treasure,
         put this onto your deck afterwards."""
         self.name = "Landing Party"
         self.cost = 4
@@ -26,9 +25,7 @@ class Card_LandingParty(Card.Card):
         self.actions = 2
         self.permanent = True
 
-    def hook_post_play(
-        self, game: "Game.Game", player: "Player.Player", card: "Card.Card"
-    ) -> dict[OptionKeys, str]:
+    def hook_post_play(self, game: "Game.Game", player: "Player.Player", card: "Card.Card") -> dict[OptionKeys, str]:
         """The next time the first card you play on a turn is a Treasure,
         put this onto your deck afterwards."""
         if not card.isTreasure() or len(player.piles[Piles.PLAYED]) != 1:

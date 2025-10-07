@@ -1,13 +1,15 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Squire"""
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Game, Card, Piles, Player, NoCardException, OptionKeys
 
 
 ###############################################################################
 class Card_Squire(Card.Card):
+    """Squire"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -55,6 +57,8 @@ class Card_Squire(Card.Card):
 
 ###############################################################################
 class TestSquire(unittest.TestCase):
+    """Test Squire"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Squire", "Militia"])
         self.g.start_game()
