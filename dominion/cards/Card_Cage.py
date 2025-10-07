@@ -17,8 +17,9 @@ class Card_Cage(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.TREASURE, Card.CardType.DURATION]
         self.base = Card.CardExpansion.PLUNDER
-        self.desc = """Set aside up to 4 cards from your hand face down. 
-        The next time you gain a Victory card, trash this, and put the set aside cards into your hand at end of turn."""
+        self.desc = """Set aside up to 4 cards from your hand face down.
+            The next time you gain a Victory card, trash this, and put the set aside cards into
+            your hand at end of turn."""
         self.name = "Cage"
         self.cost = 2
         self.permanent = True

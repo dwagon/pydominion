@@ -1,18 +1,21 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Weaver"""
+"""https://wiki.dominionstrategy.com/index.php/Weaver"""
 
 import unittest
+
 from dominion import Game, Card, Piles, Phase, Player, NoCardException, PlayArea
 
 
 ###############################################################################
 class Card_Weaver(Card.Card):
+    """Weaver"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
         self.base = Card.CardExpansion.HINTERLANDS
-        self.desc = """Gain two Silvers or a card costing up to $4. 
-        When you discard this other than in Clean-up, you may play it."""
+        self.desc = """Gain two Silvers or a card costing up to $4.
+            When you discard this other than in Clean-up, you may play it."""
         self.name = "Weaver"
         self.cost = 4
 
@@ -31,15 +34,15 @@ class Card_Weaver(Card.Card):
         else:
             player.plr_gain_card(4)
 
-    def hook_discard_this_card(
-        self, game: Game.Game, player: Player.Player, source: PlayArea.PlayArea
-    ) -> None:
+    def hook_discard_this_card(self, game: Game.Game, player: Player.Player, source: PlayArea.PlayArea) -> None:
         if player.phase != Phase.CLEANUP:
             player.play_card(self, cost_action=False, discard=False)
 
 
 ###############################################################################
 class TestWeaver(unittest.TestCase):
+    """Test Weaver"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Weaver", "Moat"])
         self.g.start_game()

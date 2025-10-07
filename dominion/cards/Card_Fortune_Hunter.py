@@ -1,17 +1,21 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Fortune_Hunter"""
+"""https://wiki.dominionstrategy.com/index.php/Fortune_Hunter"""
 import unittest
+from typing import Any
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_FortuneHunter(Card.Card):
+    """Fortune Hunter"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.PLUNDER
-        self.desc = """+$2; Look at the top 3 cards of your deck. You may play a Treasure from them. 
-        Put the rest back in any order."""
+        self.desc = """+$2; Look at the top 3 cards of your deck. You may play a Treasure from them.
+            Put the rest back in any order."""
         self.name = "Fortune Hunter"
         self.cost = 4
         self.coin = 2
@@ -29,7 +33,7 @@ class Card_FortuneHunter(Card.Card):
         treasures = [_ for _ in pickup_cards if _.isTreasure()]
         to_play = None
         if treasures:
-            options = [("Play nothing", None)]
+            options: list[tuple[str, Any]] = [("Play nothing", None)]
             for treasure in treasures:
                 options.append((f"Play {treasure}", treasure))
             to_play = player.plr_choose_options("Pick a treasure to play", *options)
@@ -45,6 +49,8 @@ class Card_FortuneHunter(Card.Card):
 
 ###############################################################################
 class TestFortuneHunter(unittest.TestCase):
+    """Test Fortune Hunter"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Fortune Hunter"])
         self.g.start_game()

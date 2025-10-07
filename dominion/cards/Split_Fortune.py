@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Fortune"""
+"""https://wiki.dominionstrategy.com/index.php/Fortune"""
 import unittest
 from typing import Any
 
@@ -14,8 +14,8 @@ class Card_Fortune(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.EMPIRES
-        self.desc = """+1 Buy; Double your $ if you haven't yet this turn. 
-        When you gain this, gain a Gold per Gladiator you have in play."""
+        self.desc = """+1 Buy; Double your $ if you haven't yet this turn.
+            When you gain this, gain a Gold per Gladiator you have in play."""
         self.name = "Fortune"
         self.cost = 8
         self.debtcost = 8
@@ -29,9 +29,7 @@ class Card_Fortune(Card.Card):
             player.output(f"Gained {coins} coins to double money")
             player.coins.add(coins)
 
-    def hook_gain_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         num_cards = sum(1 for _ in player.piles[Piles.HAND] if _.name == "Gladiator")
         for _ in range(num_cards):
             player.gain_card("Gold")
