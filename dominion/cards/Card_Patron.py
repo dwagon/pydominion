@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Patron"""
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Patron(Card.Card):
+    """Patron"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
@@ -16,15 +18,17 @@ class Card_Patron(Card.Card):
         self.cost = 4
         self.coin = 2
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         player.villagers.add(1)
 
-    def hook_reveal_this_card(self, game, player):
+    def hook_reveal_this_card(self, game: "Game.Game", player: "Player.Player") -> None:
         player.coffers.add(1)
 
 
 ###############################################################################
-class Test_Patron(unittest.TestCase):
+class TestPatron(unittest.TestCase):
+    """Test Patron"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Patron"])
         self.g.start_game()

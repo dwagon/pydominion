@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Goat(Card.Card):
+    """Goat"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.TREASURE, Card.CardType.HEIRLOOM]
@@ -22,12 +25,14 @@ class Card_Goat(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no coverage, pylint: disable=unused-argument
     return []
 
 
 ###############################################################################
-class Test_Goat(unittest.TestCase):
+class TestGoat(unittest.TestCase):
+    """Test Goat"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Pixie"])
         self.g.start_game()

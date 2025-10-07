@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Merchant_Ship"""
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+
+from dominion import Game, Card, Piles, OptionKeys, Player
 
 
 ###############################################################################
-class Card_Merchantship(Card.Card):
+class Card_Merchant_Ship(Card.Card):
+    """Merchant Ship"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
@@ -16,14 +18,17 @@ class Card_Merchantship(Card.Card):
         self.coin = 2
         self.cost = 5
 
-    def duration(self, game, player):
+    def duration(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, str]:
         """Now and at the start of your next turn +2 coins"""
         player.output("2 more coins from Merchant Ship")
         player.coins.add(2)
+        return {}
 
 
 ###############################################################################
-class Test_Merchantship(unittest.TestCase):
+class TestMerchantShip(unittest.TestCase):
+    """Test Merchant Ship"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Merchant Ship"])
         self.g.start_game()
@@ -31,7 +36,7 @@ class Test_Merchantship(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Merchant Ship")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_playcard(self):
+    def test_play_card(self):
         """Play a merchant ship"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)

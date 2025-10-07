@@ -8,13 +8,14 @@ from dominion import Card, Game, Piles, Player, OptionKeys, Phase
 
 ###############################################################################
 class Card_Footpad(Card.Card):
+    """Footpad"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.CORNUCOPIA_GUILDS
         self.name = "Footpad"
         self.cost = 5
-
         self.desc = """+2 Coffers; Each other player discards down to 3 cards in hand."""
 
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
@@ -33,13 +34,15 @@ class Card_Footpad(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    numtodiscard = len(player.piles[Piles.HAND]) - 3
-    return player.pick_to_discard(numtodiscard)
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
+    num_to_discard = len(player.piles[Piles.HAND]) - 3
+    return player.pick_to_discard(num_to_discard)
 
 
 ###############################################################################
 class Test_Footpad(unittest.TestCase):
+    """Test Footpad"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Footpad"])
         self.g.start_game()

@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Scavenger"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card, Player
 
 
 ###############################################################################
 class Card_Scavenger(Card.Card):
+    """Scavenger"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -19,34 +20,36 @@ class Card_Scavenger(Card.Card):
         self.coin = 2
         self.cost = 4
 
-    def special(self, game, player):
-        dumpdeck = player.plr_choose_options(
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+        if player.plr_choose_options(
             "Put your deck into your discard pile?",
             ("Keep it where it is", False),
             ("Put deck into discard?", True),
-        )
-        if dumpdeck:
+        ):
             for card in player.piles[Piles.DECK]:
                 player.add_card(card, Piles.DISCARD)
                 player.piles[Piles.DECK].remove(card)
+
         if player.piles[Piles.DISCARD].size():
-            cards = []
-            cardnames = set()
+            discard_cards = []
+            card_names = set()
             for c in player.piles[Piles.DISCARD]:
-                if c.name not in cardnames:
-                    cards.append(c)
-                    cardnames.add(c.name)
-            card = player.card_sel(
+                if c.name not in card_names:
+                    discard_cards.append(c)
+                    card_names.add(c.name)
+            cards = player.card_sel(
                 force=True,
-                cardsrc=cards,
+                cardsrc=discard_cards,
                 prompt="Pull card from discard and add to top of your deck",
             )
-            player.add_card(card[0], Piles.TOPDECK)
-            player.piles[Piles.DISCARD].remove(card[0])
+            player.add_card(cards[0], Piles.TOPDECK)
+            player.piles[Piles.DISCARD].remove(cards[0])
 
 
 ###############################################################################
-class Test_Scavenger(unittest.TestCase):
+class TestScavenger(unittest.TestCase):
+    """Test Scavenger"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Scavenger", "Moat", "Witch"])
         self.g.start_game()

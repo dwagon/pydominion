@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Oasis"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card, Player
 
 
 ###############################################################################
 class Card_Oasis(Card.Card):
+    """Oasis"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -19,13 +20,15 @@ class Card_Oasis(Card.Card):
         self.coin = 1
         self.cost = 3
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Discard a card"""
         player.plr_discard_cards()
 
 
 ###############################################################################
-class Test_Oasis(unittest.TestCase):
+class TestOasis(unittest.TestCase):
+    """Test Oasis"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Oasis"])
         self.g.start_game()

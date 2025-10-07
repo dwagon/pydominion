@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Steward"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card, Player
 
 
 ###############################################################################
 class Card_Steward(Card.Card):
+    """Steward"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -16,7 +17,7 @@ class Card_Steward(Card.Card):
         self.name = "Steward"
         self.cost = 3
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Choose one: +2 Cards; or +2 coin, or trash 2 cards from your hand"""
         choice = player.plr_choose_options(
             "Choose one?",
@@ -38,7 +39,9 @@ class Card_Steward(Card.Card):
 
 
 ###############################################################################
-class Test_Steward(unittest.TestCase):
+class TestSteward(unittest.TestCase):
+    """Test Steward"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Steward"])
         self.g.start_game()

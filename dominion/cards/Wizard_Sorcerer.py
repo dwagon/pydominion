@@ -56,7 +56,7 @@ class Card_Sorcerer(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
     """Possibly not the best guess, but might be good enough"""
     return "Copper"
 

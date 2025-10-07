@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Warehouse"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card, Player
 
 
 ###############################################################################
 class Card_Warehouse(Card.Card):
+    """Warehouse"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -18,13 +19,15 @@ class Card_Warehouse(Card.Card):
         self.actions = 1
         self.cost = 3
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Discard 3 cards"""
         player.plr_discard_cards(3, force=True)
 
 
 ###############################################################################
-class Test_Warehouse(unittest.TestCase):
+class TestWarehouse(unittest.TestCase):
+    """Test Warehouse"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Warehouse"])
         self.g.start_game()

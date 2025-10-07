@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Swashbuckler"""
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Swashbuckler(Card.Card):
+    """Swashbuckler"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -20,7 +22,7 @@ class Card_Swashbuckler(Card.Card):
         self.cost = 5
 
     ###########################################################################
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         if player.piles[Piles.DISCARD].size() >= 1:
             player.output("Gained a coffer")
             player.coffers.add(1)
@@ -31,7 +33,9 @@ class Card_Swashbuckler(Card.Card):
 
 
 ###############################################################################
-class Test_Swashbuckler(unittest.TestCase):
+class TestSwashbuckler(unittest.TestCase):
+    """Test Swashbuckler"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Swashbuckler"])
         self.g.start_game()

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Grand_Castle"""
 import unittest
 
 from dominion import Card, Game, Piles, Player, OptionKeys, Phase
@@ -22,27 +22,23 @@ class Card_GrandCastle(CastleCard):
             return """5VP. When you gain this, reveal your hand. 1VP per Victory card in your hand and/or in play."""
         return "5VP"
 
-    def hook_gain_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, str]:
+    def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         for card in player.piles[Piles.HAND]:
             player.reveal_card(card)
-        victory_points = sum([1 for _ in player.piles[Piles.HAND] if _.isVictory()])
+        victory_points = sum(1 for _ in player.piles[Piles.HAND] if _.isVictory())
         player.output(f"Gaining {victory_points} VPs from your Victory Cards")
         player.add_score("Grand Castle", victory_points)
         for plr in list(game.players.values()):
-            victory_points = sum(
-                [1 for card in plr.piles[Piles.DURATION] if card.isVictory()]
-            )
-            player.output(
-                f"Gaining {victory_points} VPs from {plr.name}'s Victory Cards"
-            )
+            victory_points = sum(1 for card in plr.piles[Piles.DURATION] if card.isVictory())
+            player.output(f"Gaining {victory_points} VPs from {plr.name}'s Victory Cards")
             player.add_score("Grand Castle", victory_points)
         return {}
 
 
 ###############################################################################
 class TestGrandCastle(unittest.TestCase):
+    """Test Grand Castle"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Castles"])
         self.g.start_game()

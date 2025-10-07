@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Plaza"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card, Player
 
 
 ###############################################################################
 class Card_Plaza(Card.Card):
+    """Plaza"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -18,16 +19,16 @@ class Card_Plaza(Card.Card):
         self.cards = 1
         self.cost = 4
 
-    def special(self, game, player):
-        treasures = [c for c in player.piles[Piles.HAND] if c.isTreasure()]
-        if treasures:
-            disc = player.plr_discard_cards(num=1, cardsrc=treasures, prompt="Discard a treasure to gain a Coffer")
-            if disc:
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+        if treasures := [_ for _ in player.piles[Piles.HAND] if _.isTreasure()]:
+            if player.plr_discard_cards(num=1, cardsrc=treasures, prompt="Discard a treasure to gain a Coffer"):
                 player.coffers.add(1)
 
 
 ###############################################################################
-class Test_Plaza(unittest.TestCase):
+class TestPlaza(unittest.TestCase):
+    """Test Plaza"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Plaza", "Pooka"])
         self.g.start_game()

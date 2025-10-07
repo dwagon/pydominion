@@ -7,6 +7,8 @@ from dominion import Game, Card, Piles, Player, PlayArea, NoCardException
 
 ###############################################################################
 class Card_BorderGuard(Card.Card):
+    """Border Guard"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -28,7 +30,7 @@ class Card_BorderGuard(Card.Card):
                 continue
             player.reveal_card(card)
             cards.append(card)
-        num_acts = sum([1 for _ in cards if _.isAction()])
+        num_acts = sum(1 for _ in cards if _.isAction())
         ch = player.card_sel(
             prompt="Select a card to put into your hand, other will be discarded",
             cardsrc=cards,
@@ -60,7 +62,9 @@ class Card_BorderGuard(Card.Card):
 
 
 ###############################################################################
-class Test_BorderGuard(unittest.TestCase):
+class TestBorderGuard(unittest.TestCase):
+    """Test Border Guard"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Border Guard", "Moat", "Guide"])
         self.g.start_game()
@@ -68,6 +72,7 @@ class Test_BorderGuard(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Border Guard")
 
     def test_play(self) -> None:
+        """Test Play"""
         self.plr.piles[Piles.DECK].set("Silver", "Gold")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Select Gold"]
@@ -77,6 +82,7 @@ class Test_BorderGuard(unittest.TestCase):
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
     def test_play_actions(self) -> None:
+        """Play with taking the Horn"""
         self.plr.piles[Piles.DECK].set("Moat", "Guide")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Select Moat", "Take Horn"]

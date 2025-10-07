@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Cutpurse"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles, Player
+from dominion import Game, Piles, Player, Card
 
 
 ###############################################################################
 class Card_Cutpurse(Card.Card):
+    """Cutpurse"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
@@ -33,7 +34,9 @@ class Card_Cutpurse(Card.Card):
 
 
 ###############################################################################
-class Test_Cutpurse(unittest.TestCase):
+class TestCutpurse(unittest.TestCase):
+    """Test Cutpurse"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Cutpurse"])
         self.g.start_game()

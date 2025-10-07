@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Catapult """
+"""https://wiki.dominionstrategy.com/index.php/Catapult"""
 import unittest
 from typing import Any
 
@@ -33,16 +33,14 @@ class Card_Catapult(Card.Card):
                 except NoCardException:  # pragma: no coverage
                     player.output("No more Curses")
             if card.isTreasure():
-                victim.output(
-                    f"{player}'s Catapult forces you to discard down to 3 cards"
-                )
+                victim.output(f"{player}'s Catapult forces you to discard down to 3 cards")
                 victim.plr_discard_down_to(3)
 
 
 ###############################################################################
-def botresponse(
+def botresponse(  # pragma: no cover, pylint: disable=unused-argument
     player: Player.Player, kind: Any, args: Any = None, kwargs: Any = None
-) -> Any:  # pragma: no cover
+) -> Any:
     num_to_discard = len(player.piles[Piles.HAND]) - 3
     return player.pick_to_discard(num_to_discard)
 

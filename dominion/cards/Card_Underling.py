@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Underling"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card
 
 
 ###############################################################################
 class Card_Underling(Card.Card):
+    """Underling"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.LIAISON]
@@ -21,7 +22,9 @@ class Card_Underling(Card.Card):
 
 
 ###############################################################################
-class Test_Underling(unittest.TestCase):
+class TestUnderling(unittest.TestCase):
+    """Test Underling"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Underling"])
         self.g.start_game()

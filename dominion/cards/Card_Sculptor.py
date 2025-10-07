@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Sculptor"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card, Player
 
 
 ###############################################################################
 class Card_Sculptor(Card.Card):
+    """Sculptor"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -17,15 +18,17 @@ class Card_Sculptor(Card.Card):
         self.cost = 5
 
     ###########################################################################
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         card = player.plr_gain_card(4, destination=Piles.HAND, force=True)
-        if card.isTreasure():
-            player.output("Gained  villager")
+        if card and card.isTreasure():
+            player.output("Gained villager")
             player.villagers.add(1)
 
 
 ###############################################################################
-class Test_Sculptor(unittest.TestCase):
+class TestSculptor(unittest.TestCase):
+    """Test Sculptor"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Sculptor", "Moat"])
         self.g.start_game()

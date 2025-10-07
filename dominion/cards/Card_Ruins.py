@@ -9,6 +9,8 @@ from dominion import Card, CardPile, game_setup, Keys
 
 ###############################################################################
 class Card_Ruins(Card.Card):
+    """Ruin"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.name = "Ruins"
@@ -25,12 +27,14 @@ class Card_Ruins(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
     return player.pick_to_discard(2)
 
 
 ###############################################################################
 class RuinCardPile(CardPile.CardPile):
+    """Ruin Card Pile"""
+
     def __init__(self, game):
         self.mapping = game_setup.get_card_classes("RuinCard", game_setup.PATHS[Keys.CARDS], "Card_")
         for name, class_ in self.mapping.items():

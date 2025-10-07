@@ -2,12 +2,13 @@
 
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles, Player
+from dominion import Game, Piles, Player, Card
 
 
 ###############################################################################
 class Card_SacredGrove(Card.Card):
+    """Sacred Grove"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.FATE]
@@ -36,12 +37,15 @@ class Card_SacredGrove(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    return False  # Don't accept a boon
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no coverage, pylint: disable=unused-argument
+    """Don't accept a boon"""
+    return False
 
 
 ###############################################################################
-class Test_SacredGrove(unittest.TestCase):
+class TestSacredGrove(unittest.TestCase):
+    """Test Sacred Grove"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=2,

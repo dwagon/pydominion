@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Fairgrounds"""
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Fairgrounds(Card.Card):
+    """Fairgrounds"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.VICTORY
@@ -16,14 +18,16 @@ class Card_Fairgrounds(Card.Card):
         self.playable = False
         self.cost = 6
 
-    def special_score(self, game, player):
+    def special_score(self, game: "Game.Game", player: "Player.Player") -> int:
         """Worth 2VP for every 5 differently named cards in your deck (round down)"""
         numtypes = {c.name for c in player.all_cards()}
         return 2 * int(len(numtypes) / 5)
 
 
 ###############################################################################
-class Test_Fairgrounds(unittest.TestCase):
+class TestFairgrounds(unittest.TestCase):
+    """Test Fairgrounds"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Fairgrounds"])
         self.g.start_game()

@@ -1,13 +1,12 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/City_Quarter"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles, Player
+from dominion import Game, Piles, Player, Card
 
 
 ###############################################################################
-class Card_CityQuarter(Card.Card):
+class Card_City_Quarter(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -29,7 +28,9 @@ class Card_CityQuarter(Card.Card):
 
 
 ###############################################################################
-class Test_CityQuarter(unittest.TestCase):
+class TestCityQuarter(unittest.TestCase):
+    """Test City Quarter"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["City Quarter", "Moat"])
         self.g.start_game()

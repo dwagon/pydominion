@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Wharf"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card, Player, OptionKeys
 
 
 ###############################################################################
 class Card_Wharf(Card.Card):
+    """Wharf"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
@@ -18,14 +19,17 @@ class Card_Wharf(Card.Card):
         self.buys = 1
         self.cost = 5
 
-    def duration(self, game, player):
+    def duration(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, str]:
         """+2 card, +1 buy"""
         player.pickup_cards(2)
         player.buys.add(1)
+        return {}
 
 
 ###############################################################################
-class Test_Wharf(unittest.TestCase):
+class TestWharf(unittest.TestCase):
+    """Test Wharf"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Wharf"])
         self.g.start_game()
@@ -33,7 +37,7 @@ class Test_Wharf(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Wharf")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_playcard(self):
+    def test_play_card(self):
         """Play a wharf"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.buys.get(), 2)

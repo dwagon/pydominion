@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Zombie_Mason"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles, Player, NoCardException
+from dominion import Game, Piles, Player, NoCardException, Card
 
 
 ###############################################################################
 class Card_Zombie_Mason(Card.Card):
+    """Zombie Mason"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ZOMBIE]
@@ -25,17 +26,19 @@ class Card_Zombie_Mason(Card.Card):
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         try:
-            topdeck = player.top_card()
+            top_deck_card = player.top_card()
         except NoCardException:
             player.output("No more cards in deck")
             return
-        player.trash_card(topdeck)
-        player.output(f"Trashed {topdeck} from the top of your deck")
-        player.plr_gain_card(topdeck.cost + 1)
+        player.trash_card(top_deck_card)
+        player.output(f"Trashed {top_deck_card} from the top of your deck")
+        player.plr_gain_card(top_deck_card.cost + 1)
 
 
 ###############################################################################
-class Test_Zombie_Mason(unittest.TestCase):
+class TestZombieMason(unittest.TestCase):
+    """Test Zombie Mason"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Zombie Mason", "Guide"])
         self.g.start_game()

@@ -1,14 +1,15 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Monastery"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card, Player
 from dominion.Player import Phase
 
 
 ###############################################################################
 class Card_Monastery(Card.Card):
+    """Monastery"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.NIGHT
@@ -18,16 +19,18 @@ class Card_Monastery(Card.Card):
         self.name = "Monastery"
         self.cost = 2
 
-    def night(self, game, player):
-        numgained = len(player.stats["gained"])
-        if not numgained:
+    def night(self, game: "Game.Game", player: "Player.Player") -> None:
+        num_gained = len(player.stats["gained"])
+        if not num_gained:
             return
-        selectfrom = player.piles[Piles.HAND] + [_ for _ in player.piles[Piles.PLAYED] if _.name == "Copper"]
-        player.plr_trash_card(num=numgained, cardsrc=selectfrom)
+        select_from = player.piles[Piles.HAND] + [_ for _ in player.piles[Piles.PLAYED] if _.name == "Copper"]
+        player.plr_trash_card(num=num_gained, cardsrc=select_from)
 
 
 ###############################################################################
-class Test_Monastery(unittest.TestCase):
+class TestMonastery(unittest.TestCase):
+    """Test Monastery"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Monastery"])
         self.g.start_game()

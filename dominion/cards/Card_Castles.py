@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Castles"""
 import unittest
 
-import dominion.CardPile as CardPile
-from dominion import Game, Card, Piles, game_setup, Keys
+from dominion import Game, Card, Piles, game_setup, Keys, CardPile
 
 
 ###############################################################################
 class Card_Castles(Card.Card):
+    """Castles"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.name = "Castles"
@@ -21,6 +22,8 @@ class Card_Castles(Card.Card):
 
 ###############################################################################
 class CastleCardPile(CardPile.CardPile):
+    """Pile of Castles"""
+
     def __init__(self, game):
         self.mapping = game_setup.get_card_classes("Castle", game_setup.PATHS[Keys.CARDS], "Card_")
         for name, class_ in self.mapping.items():
@@ -33,11 +36,15 @@ class CastleCardPile(CardPile.CardPile):
 
 ###############################################################################
 class CastleCard(Card.Card):
+    """Base class for Castle Cards"""
+
     pass
 
 
 ###############################################################################
 class TestCastles(unittest.TestCase):
+    """Test Castles"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Castles"])
         self.g.start_game()

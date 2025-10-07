@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Cutthroat"""
+"""https://wiki.dominionstrategy.com/index.php/Cutthroat"""
 import unittest
 from typing import Any
 
@@ -49,7 +49,7 @@ The next time anyone gains a Treasure costing $5 or more, gain a Loot."""
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
     num_to_discard = len(player.piles[Piles.HAND]) - 3
     return player.pick_to_discard(num_to_discard)
 

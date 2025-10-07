@@ -8,6 +8,8 @@ from dominion import Game, Card, Piles, Player, OptionKeys
 
 ###############################################################################
 class Card_Urchin(Card.Card):
+    """Urchin"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
@@ -40,13 +42,15 @@ class Card_Urchin(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
     num_to_discard = len(player.piles[Piles.HAND]) - 4
     return player.pick_to_discard(num_to_discard)
 
 
 ###############################################################################
 class TestUrchin(unittest.TestCase):
+    """Test Urchin"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Urchin", "Militia"])
         self.g.start_game()

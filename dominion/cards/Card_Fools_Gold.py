@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Fool%27s_Gold"""
 import unittest
 from typing import Any
 
@@ -7,7 +7,9 @@ from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
-class Card_Fools_Gold(Card.Card):
+class Card_FoolsGold(Card.Card):
+    """Fool's Gold"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.TREASURE, Card.CardType.REACTION]
@@ -19,7 +21,7 @@ class Card_Fools_Gold(Card.Card):
         self.cost = 2
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
-        count = sum([1 for c in player.piles[Piles.PLAYED] if c.name == "Fool's Gold"])
+        count = sum(1 for c in player.piles[Piles.PLAYED] if c.name == "Fool's Gold")
         if count > 1:
             player.output("Gained 4 Coin")
             player.coins.add(4)
@@ -50,6 +52,8 @@ class Card_Fools_Gold(Card.Card):
 
 ###############################################################################
 class TestFoolsGold(unittest.TestCase):
+    """Test Fool's Gold"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Fool's Gold"])
         self.g.start_game()
@@ -69,6 +73,7 @@ class TestFoolsGold(unittest.TestCase):
         self.assertEqual(self.plr.coins.get(), 4)
 
     def test_gain_province(self) -> None:
+        """Test another player gaining a Province"""
         tsize = self.g.trash_pile.size()
         self.plr.test_input = ["trash"]
         self.other.gain_card("Province")
@@ -77,6 +82,7 @@ class TestFoolsGold(unittest.TestCase):
         self.assertIn("Fool's Gold", self.g.trash_pile)
 
     def test_self_gain_province(self) -> None:
+        """Test self gaining a Province"""
         tsize = self.g.trash_pile.size()
         self.plr.gain_card("Province")
         self.assertNotEqual(self.plr.piles[Piles.DECK][-1].name, "Gold")

@@ -1,7 +1,12 @@
-import dominion.Card as Card
+"""https://wiki.dominionstrategy.com/index.php/Silver"""
+
+from dominion import Card
 
 
+###############################################################################
 class Card_Silver(Card.Card):
+    """Silver"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE

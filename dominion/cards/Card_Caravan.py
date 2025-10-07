@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Caravan"""
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+
+from dominion import Game, Card, Piles, Player, OptionKeys
 
 
 ###############################################################################
 class Card_Caravan(Card.Card):
+    """Caravan"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
@@ -17,13 +19,16 @@ class Card_Caravan(Card.Card):
         self.actions = 1
         self.cost = 4
 
-    def duration(self, game, player):
+    def duration(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, str]:
         """+1 card next turn"""
         player.pickup_cards(1, verb="Picked up from Caravan:")
+        return {}
 
 
 ###############################################################################
-class Test_Caravan(unittest.TestCase):
+class TestCaravan(unittest.TestCase):
+    """Test Caravan"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Caravan"], badcards=["Shaman"])
         self.g.start_game()

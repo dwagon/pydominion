@@ -8,6 +8,8 @@ from dominion import Card, Game, Piles, Player
 
 ###############################################################################
 class Card_Clerk(Card.Card):
+    """Clerk"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
@@ -45,7 +47,7 @@ class Card_Clerk(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
     return player.pick_to_discard(1)
 
 

@@ -1,19 +1,20 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Secret_Cave"""
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+
+from dominion import Game, Card, Piles, OptionKeys, Player
 
 
 ###############################################################################
 class Card_SecretCave(Card.Card):
+    """Secret Cave"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = (
-            "+1 Card; +1 Action; You may discard 3 cards. If you did, then at the start of your next turn, +3 Coin"
-        )
+        self.desc = """+1 Card; +1 Action; You may discard 3 cards. If you did,
+            then at the start of your next turn, +$3."""
         self.name = "Secret Cave"
         self.cost = 3
         self.actions = 1
@@ -21,19 +22,22 @@ class Card_SecretCave(Card.Card):
         self.heirloom = "Magic Lamp"
         self._discarded = False
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         dcs = player.plr_discard_cards(num=3, prompt="If you discard 3 cards next turn gain 3 Coin")
         if dcs:
             self._discarded = True
 
-    def duration(self, game, player):
+    def duration(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, str]:
         if self._discarded:
             player.output("Gained 3 Coin from Secret Cave")
             player.coins.add(3)
+        return {}
 
 
 ###############################################################################
-class Test_SecretCave(unittest.TestCase):
+class TestSecretCave(unittest.TestCase):
+    """Test Secret Cave"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Secret Cave"])
         self.g.start_game()

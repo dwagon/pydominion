@@ -7,6 +7,8 @@ from dominion import Card, Game, Piles, Player, NoCardException
 
 ###############################################################################
 class Card_Carnival(Card.Card):
+    """Carnival"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -34,7 +36,9 @@ class Card_Carnival(Card.Card):
 
 
 ###############################################################################
-class Test_Carnival(unittest.TestCase):
+class TestCarnival(unittest.TestCase):
+    """Test Carnival"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Carnival"])
         self.g.start_game()

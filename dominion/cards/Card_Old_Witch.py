@@ -7,6 +7,8 @@ from dominion import Game, Card, Piles, Player, NoCardException
 
 ###############################################################################
 class Card_OldWitch(Card.Card):
+    """Old Witch"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
@@ -32,12 +34,14 @@ class Card_OldWitch(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
     return kwargs["cardsrc"]
 
 
 ###############################################################################
 class TestOldWitch(unittest.TestCase):
+    """Test Old Witch"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Old Witch"])
         self.g.start_game()

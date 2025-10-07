@@ -7,6 +7,8 @@ from dominion import Card, Game, Piles
 
 ###############################################################################
 class Card_Militia(Card.Card):
+    """Militia"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
@@ -24,13 +26,16 @@ class Card_Militia(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
+    """Discard down to 3"""
     numtodiscard = len(player.piles[Piles.HAND]) - 3
     return player.pick_to_discard(numtodiscard)
 
 
 ###############################################################################
 class TestMilitia(unittest.TestCase):
+    """Test Militia"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Militia", "Moat"])
         self.g.start_game()

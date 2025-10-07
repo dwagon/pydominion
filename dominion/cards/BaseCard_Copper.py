@@ -7,6 +7,8 @@ from dominion import Game, Card, Piles
 
 ###############################################################################
 class Card_Copper(Card.Card):
+    """Copper"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
@@ -20,12 +22,14 @@ class Card_Copper(Card.Card):
         self.cost = 0
 
     @classmethod
-    def calc_numcards(cls, game):
+    def calc_numcards(cls, _):
         return 60
 
 
 ###############################################################################
-class Test_Copper(unittest.TestCase):
+class TestCopper(unittest.TestCase):
+    """Test Copper"""
+
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1)
         self.g.start_game()

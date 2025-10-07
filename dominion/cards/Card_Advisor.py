@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Advisor(Card.Card):
+    """Advisor"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -40,8 +43,8 @@ class Card_Advisor(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    # Discard the card that costs the most
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
+    """Discard the card that costs the most"""
     card_list = [(c.cost, c) for c in kwargs["cardsrc"] if c.isTreasure()]
     if card_list:
         most = sorted(card_list)[-1]
@@ -59,6 +62,8 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 ###############################################################################
 class TestAdvisor(unittest.TestCase):
+    """Test Advisor"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Advisor"])
         self.g.start_game()

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Frigate"""
+"""https://wiki.dominionstrategy.com/index.php/Frigate"""
 import unittest
 from typing import Any
 
@@ -18,7 +18,7 @@ class Card_Frigate(Card.Card):
             Card.CardType.ATTACK,
         ]
         self.base = Card.CardExpansion.PLUNDER
-        self.desc = """+$3; Until the start of your next turn, each time another player plays an Action card, 
+        self.desc = """+$3; Until the start of your next turn, each time another player plays an Action card,
         they discard down to 4 cards in hand afterwards."""
         self.name = "Frigate"
         self.cost = 5
@@ -39,7 +39,7 @@ class Card_Frigate(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
     num_to_discard = len(player.piles[Piles.HAND]) - 4
     return player.pick_to_discard(num_to_discard)
 

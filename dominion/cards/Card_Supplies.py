@@ -3,12 +3,13 @@
 
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles, NoCardException, Player
+from dominion import Game, Piles, NoCardException, Player, Card
 
 
 ###############################################################################
 class Card_Supplies(Card.Card):
+    """Supplies"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
@@ -27,7 +28,9 @@ class Card_Supplies(Card.Card):
 
 
 ###############################################################################
-class Test_Supplies(unittest.TestCase):
+class TestSupplies(unittest.TestCase):
+    """Test Supplies"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Supplies"])
         self.g.start_game()
@@ -35,7 +38,7 @@ class Test_Supplies(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Supplies")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_playcard(self) -> None:
+    def test_play_card(self) -> None:
         """Play a supplies"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)

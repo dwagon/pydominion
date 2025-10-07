@@ -1,13 +1,15 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Werewolf"""
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+
+from dominion import Game, Card, Piles, Player
 from dominion.Player import Phase
 
 
 ###############################################################################
 class Card_Werewolf(Card.Card):
+    """Werewolf"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [
@@ -21,17 +23,19 @@ class Card_Werewolf(Card.Card):
         self.name = "Werewolf"
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         player.pickup_cards(3)
 
-    def night(self, game, player):
+    def night(self, game: "Game.Game", player: "Player.Player") -> None:
         for plr in player.attack_victims():
-            plr.output(f"{player.name}'s werewolf hexed you")
+            plr.output(f"{player}'s werewolf hexed you")
             plr.receive_hex()
 
 
 ###############################################################################
-class Test_Werewolf(unittest.TestCase):
+class TestWerewolf(unittest.TestCase):
+    """Test Werewolf"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Werewolf"])
         self.g.start_game()

@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Treasure_Map"""
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
-class Card_Treasuremap(Card.Card):
+class Card_Treasure_Map(Card.Card):
+    """Treasure Map"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -17,9 +19,9 @@ class Card_Treasuremap(Card.Card):
         self.name = "Treasure Map"
         self.cost = 4
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         player.trash_card(self)
-        tmaps = [c for c in player.piles[Piles.HAND] if c.name == "Treasure Map"][:1]
+        tmaps = [_ for _ in player.piles[Piles.HAND] if _.name == "Treasure Map"][:1]
         if not tmaps:
             return
         t = player.plr_trash_card(
@@ -35,7 +37,9 @@ class Card_Treasuremap(Card.Card):
 
 
 ###############################################################################
-class Test_Treasuremap(unittest.TestCase):
+class TestTreasureMap(unittest.TestCase):
+    """Test Treasure Map"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Treasure Map"])
         self.g.start_game()

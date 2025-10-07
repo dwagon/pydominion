@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Mill"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card, Player
 
 
 ###############################################################################
 class Card_Mill(Card.Card):
+    """Mill"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.VICTORY]
@@ -19,14 +20,16 @@ class Card_Mill(Card.Card):
         self.victory = 1
         self.cards = 1
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         dc = player.plr_discard_cards(num=2)
         if len(dc) == 2:
             player.coins.add(2)
 
 
 ###############################################################################
-class Test_Mill(unittest.TestCase):
+class TestMill(unittest.TestCase):
+    """Test Mill"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Mill"], badcards=["Duchess"])
         self.g.start_game()
@@ -34,6 +37,7 @@ class Test_Mill(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Mill")
 
     def test_play(self):
+        """Test play"""
         self.plr.piles[Piles.HAND].set("Gold", "Silver")
         self.plr.test_input = ["Discard Gold", "Finish"]
         self.plr.add_card(self.card, Piles.HAND)
@@ -44,6 +48,7 @@ class Test_Mill(unittest.TestCase):
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
 
     def test_discard(self):
+        """Test discard"""
         self.plr.piles[Piles.HAND].set("Gold", "Silver")
         self.plr.test_input = ["Discard Gold", "Discard Silver", "Finish"]
         self.plr.add_card(self.card, Piles.HAND)

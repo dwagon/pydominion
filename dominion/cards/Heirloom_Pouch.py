@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Pouch"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card
 
 
 ###############################################################################
 class Card_Pouch(Card.Card):
+    """Pouch"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.TREASURE, Card.CardType.HEIRLOOM]
@@ -21,7 +22,9 @@ class Card_Pouch(Card.Card):
 
 
 ###############################################################################
-class Test_Pouch(unittest.TestCase):
+class TestPouch(unittest.TestCase):
+    """Test Pouch"""
+
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Tracker"])
         self.g.start_game()
@@ -29,6 +32,7 @@ class Test_Pouch(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Pouch")
 
     def test_play(self):
+        """Test Play"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.buys.set(0)
         self.plr.play_card(self.card)

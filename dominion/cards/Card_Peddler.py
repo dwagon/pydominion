@@ -1,14 +1,15 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Peddler"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game
+from dominion import Game, Card, Player
 from dominion.Player import Piles
 
 
 ###############################################################################
 class Card_Peddler(Card.Card):
+    """Peddler"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -21,7 +22,7 @@ class Card_Peddler(Card.Card):
         self.coin = 1
         self.cost = 8
 
-    def hook_this_card_cost(self, game, player):
+    def hook_this_card_cost(self, game: "Game.Game", player: "Player.Player") -> int:
         cost = 0
         for card in player.piles[Piles.PLAYED]:
             if card.isAction():
@@ -30,7 +31,9 @@ class Card_Peddler(Card.Card):
 
 
 ###############################################################################
-class Test_Peddler(unittest.TestCase):
+class TestPeddler(unittest.TestCase):
+    """Test Peddler"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Peddler", "Moat"])
         self.g.start_game()
@@ -38,6 +41,7 @@ class Test_Peddler(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Peddler")
 
     def test_play(self):
+        """test play"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
@@ -45,6 +49,7 @@ class Test_Peddler(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), 1)
 
     def test_buy(self):
+        """test buy"""
         self.plr.piles[Piles.PLAYED].set("Moat")
         cost = self.plr.card_cost(self.card)
         self.assertEqual(cost, 6)

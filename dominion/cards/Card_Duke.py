@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Duke"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card, Player
 
 
 ###############################################################################
 class Card_Duke(Card.Card):
+    """Duke"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.VICTORY
@@ -17,7 +18,7 @@ class Card_Duke(Card.Card):
         self.playable = False
         self.cost = 5
 
-    def special_score(self, game, player):
+    def special_score(self, game: "Game.Game", player: "Player.Player") -> int:
         """Worth 1VP per Duchy you have"""
         vp = 0
         for c in player.all_cards():
@@ -27,7 +28,9 @@ class Card_Duke(Card.Card):
 
 
 ###############################################################################
-class Test_Duke(unittest.TestCase):
+class TestDuke(unittest.TestCase):
+    """Test Duke"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Duke"])
         self.g.start_game()

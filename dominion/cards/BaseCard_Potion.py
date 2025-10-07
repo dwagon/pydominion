@@ -1,7 +1,12 @@
-import dominion.Card as Card
+"""https://wiki.dominionstrategy.com/index.php/Potion"""
+
+from dominion import Card
 
 
+###############################################################################
 class Card_Potion(Card.Card):
+    """Potion"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE

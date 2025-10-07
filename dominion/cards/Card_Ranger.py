@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Ranger"""
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Ranger(Card.Card):
+    """Ranger"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -16,7 +18,7 @@ class Card_Ranger(Card.Card):
         self.buys = 1
         self.cost = 4
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Turn your Journey token over. If it's face up, +5 cards"""
         if player.flip_journey_token():
             player.output("Ranger gives +5 Cards")
@@ -24,7 +26,9 @@ class Card_Ranger(Card.Card):
 
 
 ###############################################################################
-class Test_Ranger(unittest.TestCase):
+class TestRanger(unittest.TestCase):
+    """Test Ranger"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Ranger"])
         self.g.start_game()

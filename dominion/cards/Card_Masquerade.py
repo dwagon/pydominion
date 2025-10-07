@@ -7,6 +7,8 @@ from dominion import Game, Card, Piles, Player
 
 ###############################################################################
 class Card_Masquerade(Card.Card):
+    """Masquerade"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -52,13 +54,15 @@ def plr_to_left(players: list[Player.Player], plr: Player.Player) -> Player.Play
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
     c = player.pick_to_discard(1, keepvic=True)
     return c
 
 
 ###############################################################################
 class TestMasquerade(unittest.TestCase):
+    """Test Masquerade"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=3, initcards=["Masquerade"])
         self.g.start_game()
