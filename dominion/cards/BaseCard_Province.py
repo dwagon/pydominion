@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Province"""
 import unittest
 
 from dominion import Card, Game
@@ -7,6 +7,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_Province(Card.Card):
+    """Province"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.VICTORY
@@ -28,20 +30,20 @@ class Card_Province(Card.Card):
 
 
 ###############################################################################
-class Test_Province(unittest.TestCase):
-    def setUp(self):
-        pass
+class TestProvince(unittest.TestCase):
+    """Test Province"""
 
     def test_two_player(self):
-        self.g = Game.TestGame(quiet=True, numplayers=2)
-        self.g.start_game()
-        self.assertEqual(len(self.g.card_piles["Province"]), 8)
-        self.plr = self.g.player_list()[0]
+        """Two player games"""
+        g = Game.TestGame(quiet=True, numplayers=2)
+        g.start_game()
+        self.assertEqual(len(g.card_piles["Province"]), 8)
 
     def test_five(self):
-        self.g = Game.TestGame(quiet=True, numplayers=5)
-        self.g.start_game()
-        self.assertEqual(len(self.g.card_piles["Province"]), 15)
+        """Five player games"""
+        g = Game.TestGame(quiet=True, numplayers=5)
+        g.start_game()
+        self.assertEqual(len(g.card_piles["Province"]), 15)
 
 
 ###############################################################################

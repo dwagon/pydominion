@@ -2,11 +2,13 @@
 """https://wiki.dominionstrategy.com/index.php/Highway"""
 import unittest
 
-from dominion import Game, Card, Piles
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Highway(Card.Card):
+    """Highway"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -17,7 +19,7 @@ class Card_Highway(Card.Card):
         self.actions = 1
         self.cost = 5
 
-    def hook_card_cost(self, game, player, card):
+    def hook_card_cost(self, game: "Game.Game", player: "Player.Player", card: "Card") -> int:
         if self in player.piles[Piles.PLAYED]:
             return -1
         return 0
@@ -25,6 +27,8 @@ class Card_Highway(Card.Card):
 
 ###############################################################################
 class TestHighway(unittest.TestCase):
+    """Test Highway"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Highway"])
         self.g.start_game()
@@ -33,12 +37,13 @@ class TestHighway(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
+        """Test Play"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
         self.assertEqual(self.plr.actions.get(), 1)
 
     def test_cost_reduction(self):
-        self.coin = 1
+        """Test cost reduction"""
         gold = self.g.get_card_from_pile("Gold")
         self.assertEqual(self.plr.card_cost(gold), 6)
         self.plr.play_card(self.card)

@@ -8,6 +8,8 @@ from dominion.cards.Card_Castles import CastleCard
 
 ###############################################################################
 class Card_GrandCastle(CastleCard):
+    """Grand Castle"""
+
     def __init__(self) -> None:
         CastleCard.__init__(self)
         self.cardtype = [Card.CardType.VICTORY, Card.CardType.CASTLE]
@@ -46,16 +48,16 @@ class TestGrandCastle(unittest.TestCase):
 
     def test_play(self) -> None:
         """Play a sprawling castle"""
-        self.card = self.g.get_card_from_pile("Castles", "Grand Castle")
-        self.plr.add_card(self.card, Piles.HAND)
+        card = self.g.get_card_from_pile("Castles", "Grand Castle")
+        self.plr.add_card(card, Piles.HAND)
         self.assertEqual(self.plr.get_score_details()["Grand Castle"], 5)
 
     def test_gain(self) -> None:
         """Gain Grand Castle"""
         self.plr.piles[Piles.HAND].set("Duchy", "Province")
         while True:
-            self.card = self.g.get_card_from_pile("Castles")
-            if self.card.name == "Sprawling Castle":  # One before Grand
+            card = self.g.get_card_from_pile("Castles")
+            if card.name == "Sprawling Castle":  # One before Grand
                 break
         self.plr.gain_card("Castles")
         self.assertEqual(self.plr.get_score_details()["Grand Castle"], 2)

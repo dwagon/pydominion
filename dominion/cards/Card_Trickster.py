@@ -60,6 +60,7 @@ class TestTrickster(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g.get_card_from_pile("Trickster")
+        self.card2 = self.g.get_card_from_pile("Trickster")
 
     def test_play_card(self) -> None:
         """Play the card"""
@@ -75,7 +76,6 @@ class TestTrickster(unittest.TestCase):
 
     def test_play_two_tricksters(self) -> None:
         """Play two tricksters with one treasure"""
-        self.card2 = self.g.get_card_from_pile("Trickster")
         self.plr.piles[Piles.HAND].set("Gold")
         self.plr.actions.set(2)
         self.plr.add_card(self.card, Piles.HAND)

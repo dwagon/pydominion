@@ -1,12 +1,16 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Sprawling_Castle"""
 import unittest
+from typing import Optional
+
 from dominion import Game, Card, Piles, Player, OptionKeys, NoCardException
 from dominion.cards.Card_Castles import CastleCard
 
 
 ###############################################################################
 class Card_SprawlingCastle(CastleCard):
+    """Sprawling Castle"""
+
     def __init__(self) -> None:
         CastleCard.__init__(self)
         self.cardtype = [Card.CardType.VICTORY, Card.CardType.CASTLE]
@@ -17,9 +21,7 @@ class Card_SprawlingCastle(CastleCard):
         self.name = "Sprawling Castle"
         self.pile = "Castles"
 
-    def hook_gain_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, str]:
+    def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         if player.plr_choose_options(
             "Gain a Duchy or 3 Estates",
             ("Gain a Duchy", True),
@@ -38,12 +40,13 @@ class Card_SprawlingCastle(CastleCard):
 
 ###############################################################################
 class TestSprawlingCastle(unittest.TestCase):
+    """Test Sprawling Castle"""
+
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            quiet=True, numplayers=2, initcards=["Castles"], badcards=["Duchess"]
-        )
+        self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Castles"], badcards=["Duchess"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
+        self.card: Optional[Card.Card] = None
 
     def test_play(self) -> None:
         """Play a sprawling castle"""

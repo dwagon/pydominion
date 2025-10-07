@@ -34,9 +34,8 @@ class TestKingsCastle(unittest.TestCase):
 
     def test_have(self):
         """Have a kings castle"""
-        self.card = self.g.get_card_from_pile("Castles", "King's Castle")
-
-        self.plr.add_card(self.card, Piles.HAND)
+        card = self.g.get_card_from_pile("Castles", "King's Castle")
+        self.plr.add_card(card, Piles.HAND)
         self.assertEqual(self.plr.get_score_details()["King's Castle"], 2)
 
 

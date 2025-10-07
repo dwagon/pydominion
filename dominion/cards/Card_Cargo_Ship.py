@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Cargo_Ship"""
 import unittest
 from typing import Any
 
@@ -59,27 +59,29 @@ class TestCargoShip(unittest.TestCase):
         self.plr = self.g.player_list()[0]
 
     def test_play_card_yes(self) -> None:
-        self.card = self.g.get_card_from_pile("Cargo Ship")
-        self.card.hook_gain_this_card(self.g, self.plr)
-        self.plr.add_card(self.card, Piles.HAND)
-        self.plr.play_card(self.card)
+        """Play card and set it aside"""
+        card = self.g.get_card_from_pile("Cargo Ship")
+        card.hook_gain_this_card(self.g, self.plr)
+        self.plr.add_card(card, Piles.HAND)
+        self.plr.play_card(card)
         self.assertEqual(self.plr.coins.get(), 2)
         self.plr.test_input = ["Yes"]
         self.plr.buy_card("Moat")
-        self.assertEqual(self.card._cargo_ship[0].name, "Moat")
+        self.assertEqual(card._cargo_ship[0].name, "Moat")
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertIn("Moat", self.plr.piles[Piles.HAND])
 
     def test_play_card_no(self) -> None:
-        self.card = self.g.get_card_from_pile("Cargo Ship")
-        self.card.hook_gain_this_card(self.g, self.plr)
-        self.plr.add_card(self.card, Piles.HAND)
-        self.plr.play_card(self.card)
+        """Play card and don't set it aside"""
+        card = self.g.get_card_from_pile("Cargo Ship")
+        card.hook_gain_this_card(self.g, self.plr)
+        self.plr.add_card(card, Piles.HAND)
+        self.plr.play_card(card)
         self.assertEqual(self.plr.coins.get(), 2)
         self.plr.test_input = ["No"]
         self.plr.buy_card("Moat")
-        self.assertEqual(len(self.card._cargo_ship), 0)
+        self.assertEqual(len(card._cargo_ship), 0)
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertNotIn("Moat", self.plr.piles[Piles.HAND])
@@ -88,16 +90,16 @@ class TestCargoShip(unittest.TestCase):
         """If we have two cargo ships active at the same time we shouldn't be able to set aside a card twice"""
         self.plr.add_actions(2)
         self.plr.test_input = ["Yes", "Yes"]
-        self.card1 = self.g.get_card_from_pile("Cargo Ship")
-        self.plr.add_card(self.card1, Piles.HAND)
-        self.plr.play_card(self.card1)
-        self.card2 = self.g.get_card_from_pile("Cargo Ship")
-        self.plr.add_card(self.card2, Piles.HAND)
-        self.assertEqual(len(self.card1._cargo_ship) + len(self.card2._cargo_ship), 0)
-        self.plr.play_card(self.card2)
+        card1 = self.g.get_card_from_pile("Cargo Ship")
+        self.plr.add_card(card1, Piles.HAND)
+        self.plr.play_card(card1)
+        card2 = self.g.get_card_from_pile("Cargo Ship")
+        self.plr.add_card(card2, Piles.HAND)
+        self.assertEqual(len(card1._cargo_ship) + len(card2._cargo_ship), 0)
+        self.plr.play_card(card2)
         self.plr.buy_card("Moat")
         # Only one cargo ship should have the moat
-        self.assertEqual(len(self.card1._cargo_ship) + len(self.card2._cargo_ship), 1)
+        self.assertEqual(len(card1._cargo_ship) + len(card2._cargo_ship), 1)
 
 
 ###############################################################################
