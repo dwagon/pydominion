@@ -2,11 +2,14 @@
 """https://wiki.dominionstrategy.com/index.php/Encampment
 https://wiki.dominionstrategy.com/index.php/Plunder"""
 import unittest
+
 from dominion import Card, Game, CardPile, game_setup, Keys
 
 
 ###############################################################################
 class Card_EncampmentSplit(Card.Card):
+    """Encampment / Plunder Card"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.name = "Encampment"
@@ -20,6 +23,8 @@ class Card_EncampmentSplit(Card.Card):
 
 ###############################################################################
 class EncampmentCardPile(CardPile.CardPile):
+    """Encampment / Plunder Pile"""
+
     def __init__(self, game):
         mapping = game_setup.get_card_classes("Split", game_setup.PATHS[Keys.CARDS], "Card_")
         for name, class_ in mapping.items():
@@ -31,19 +36,22 @@ class EncampmentCardPile(CardPile.CardPile):
         from dominion.cards.Split_Encampment import Card_Encampment
         from dominion.cards.Split_Plunder import Card_Plunder
 
-        for card_class in (Card_Encampment, Card_Plunder):
+        for card_klass in (Card_Encampment, Card_Plunder):
             for _ in range(5):
-                self.cards.insert(0, card_class())
+                self.cards.insert(0, card_klass())
 
 
 ###############################################################################
 class TestEncampmentPile(unittest.TestCase):
+    """Test Encampment Pile"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Encampment"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
     def test_pile(self):
+        """Test Pile"""
         self.assertEqual(len(self.g.card_piles["Encampment"]), 10)
         card = self.g.get_card_from_pile("Encampment")
         self.assertEqual(card.name, "Encampment")
