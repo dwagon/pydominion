@@ -16,6 +16,7 @@ class Card_Castles(Card.Card):
 
     @classmethod
     def cardpile_setup(cls, game):
+        """Setup castle pile"""
         card_pile = CastleCardPile(game)
         return card_pile
 
@@ -38,8 +39,6 @@ class CastleCardPile(CardPile.CardPile):
 class CastleCard(Card.Card):
     """Base class for Castle Cards"""
 
-    pass
-
 
 ###############################################################################
 class TestCastles(unittest.TestCase):
@@ -54,6 +53,7 @@ class TestCastles(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_castles(self):
+        """TODO: Test"""
         self.g.print_state()
 
 
