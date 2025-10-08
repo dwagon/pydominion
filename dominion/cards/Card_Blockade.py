@@ -57,7 +57,7 @@ class Card_Blockade(Card.Card):
         try:
             player.output(f"Gained a Curse from {owner}'s Blockade")
             player.gain_card("Curse")
-        except NoCardException:
+        except NoCardException:  # pragma: no coverage
             player.output("No more Curses")
         return {}
 

@@ -9,19 +9,21 @@ from dominion import Game, Card, Piles, NoCardException, Player
 
 ###############################################################################
 class Card_Journeyman(Card.Card):
+    """Journeyman"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.GUILDS
         self.desc = """Name a card.
-        Reveal cards from the top of your deck until you reveal 3 cards that are not the named card.
-        Put those cards into your hand and discard the rest."""
+            Reveal cards from the top of your deck until you reveal 3 cards that are not the named card.
+            Put those cards into your hand and discard the rest."""
         self.name = "Journeyman"
         self.cost = 5
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         choices: list[tuple[str, Any]] = [("No guess", None)]
-        for name, card_pile in sorted(game.get_card_piles()):
+        for name, _ in sorted(game.get_card_piles()):
             choices.append((f"Guess {name}", name))
         opt = player.plr_choose_options(
             "Name a card. Reveal cards from your deck until you have 3 that aren't the named card", *choices
@@ -53,6 +55,8 @@ class Card_Journeyman(Card.Card):
 
 ###############################################################################
 class TestJourneyman(unittest.TestCase):
+    """Test Journeyman"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Journeyman"])
         self.g.start_game()
