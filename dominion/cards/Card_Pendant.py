@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Pendant"""
+"""https://wiki.dominionstrategy.com/index.php/Pendant"""
 import unittest
 
 from dominion import Card, Game, Piles
@@ -18,7 +18,7 @@ class Card_Pendant(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        treasures = set([_.name for _ in player.piles[Piles.PLAYED] if _.isTreasure()])
+        treasures = set(_.name for _ in player.piles[Piles.PLAYED] if _.isTreasure())
         player.coins += len(treasures)
         player.output(f"Gaining {len(treasures)} coins from Pendant")
 

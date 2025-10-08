@@ -23,7 +23,7 @@ class Card_WealthyVillage(Card.Card):
 
     def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         """When you gain this, if you have at least 3 differently named Treasures in play, gain a Loot."""
-        treasures = set([_ for _ in player.piles[Piles.PLAYED] if _.isTreasure()])
+        treasures = set(_ for _ in player.piles[Piles.PLAYED] if _.isTreasure())
         if len(treasures) >= 3:
             player.gain_card("Loot")
         return {}
