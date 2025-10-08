@@ -17,8 +17,7 @@ class Card_Carpenter(Card.Card):
         self.name = "Carpenter"
         self.cost = 4
 
-    @classmethod
-    def dynamic_description(cls, player: Player.Player) -> str:
+    def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
             return """If no Supply piles are empty, +1 Action and gain a card
                 costing up to $4.  Otherwise, trash a card from your hand and
