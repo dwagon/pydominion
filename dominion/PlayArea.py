@@ -95,10 +95,12 @@ class PlayArea:
 
     ###########################################################################
     def shuffle(self) -> None:
+        """Shuffle the cards"""
         random.shuffle(self._cards)
 
     ###########################################################################
     def size(self) -> int:
+        """How many cards are in the play area"""
         return len(self)
 
     ###########################################################################

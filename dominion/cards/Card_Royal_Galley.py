@@ -2,7 +2,10 @@
 """http://wiki.dominionstrategy.com/index.php/Royal_Galley"""
 
 import unittest
-from dominion import Game, Card, PlayArea, Piles
+
+from dominion import Game, Card, PlayArea, Piles, Player
+
+RG = "Royal Galley"
 
 
 ###############################################################################
@@ -18,9 +21,10 @@ class Card_Royal_Galley(Card.Card):
         self.desc = """+1 Card; You may play a non-Duration Action card from your hand.
             Set it aside; if you did, then at the start of your next turn, play it."""
         self.cost = 4
-        self._reserve = PlayArea.PlayArea(name="Royal Gallery")
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+        if RG not in player.specials:
+            player.specials[RG] = PlayArea.PlayArea(name="Royal Gallery")
         acts = [_ for _ in player.piles[Piles.HAND] if _.isAction() and not _.isDuration()]
         if not acts:
             return
@@ -28,12 +32,12 @@ class Card_Royal_Galley(Card.Card):
             prompt="Pick a card to play next turn",
             cardsrc=acts,
         ):
-            player.move_card(choice[0], self._reserve)
+            player.move_card(choice[0], player.specials[RG])
             player.secret_count += 1
 
     def duration(self, game, player):
-        for card in self._reserve:
-            self._reserve.remove(card)
+        for card in player.specials[RG]:
+            player.specials[RG].remove(card)
             player.add_card(card, Piles.HAND)
             player.play_card(card, cost_action=False)
             player.secret_count -= 1
@@ -56,8 +60,8 @@ class TestRoyalGalley(unittest.TestCase):
         self.plr.test_input = ["Select Moat"]
         self.plr.play_card(self.card)
         self.assertNotIn("Moat", self.plr.piles[Piles.HAND])
-        self.assertEqual(self.card._reserve.size(), 1)
-        self.assertIn("Moat", self.card._reserve)
+        self.assertEqual(self.plr.specials[RG].size(), 1)
+        self.assertIn("Moat", self.plr.specials[RG])
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)  # Initial = Moat

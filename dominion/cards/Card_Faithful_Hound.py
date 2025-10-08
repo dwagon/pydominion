@@ -1,11 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Faithful_Hound"""
 import unittest
+
 from dominion import Card, Game, Piles, Player, Phase, PlayArea
 
 
 ###############################################################################
 class Card_FaithfulHound(Card.Card):
+    """Faithful Hound"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
@@ -16,9 +19,7 @@ class Card_FaithfulHound(Card.Card):
         self.cards = 2
         self.cost = 2
 
-    def hook_discard_this_card(
-        self, game: Game.Game, player: Player.Player, source: PlayArea.PlayArea
-    ) -> None:
+    def hook_discard_this_card(self, game: Game.Game, player: Player.Player, source: PlayArea.PlayArea) -> None:
         if player.phase != Phase.CLEANUP:
             player.move_card(self, Piles.HAND)
             player.output("Faithful hound returns to your hand")
@@ -26,11 +27,12 @@ class Card_FaithfulHound(Card.Card):
 
 ###############################################################################
 class TestFaithfulHound(unittest.TestCase):
+    """Test Faithful Hound"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Faithful Hound"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.plr._tracker_dont_boon = True
         self.card = self.g.get_card_from_pile("Faithful Hound")
 
     def test_play(self) -> None:

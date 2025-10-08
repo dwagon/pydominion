@@ -2,9 +2,9 @@
 """http://wiki.dominionstrategy.com/index.php/Blockade"""
 
 import unittest
-from typing import Optional, Any
+from typing import Any
 
-from dominion import Game, Card, Piles, Player, NoCardException, OptionKeys
+from dominion import Game, Card, Piles, Player, NoCardException, OptionKeys, PlayArea
 
 
 ###############################################################################
@@ -20,26 +20,24 @@ class Card_Blockade(Card.Card):
         ]
         self.base = Card.CardExpansion.SEASIDE
         self.desc = """Gain a card costing up to $4, setting it aside.
-At the start of your next turn, put it into your hand. While it's set aside, when another player
-gains a copy of it on their turn, they gain a Curse."""
+            At the start of your next turn, put it into your hand. While it's set aside, when another player
+            gains a copy of it on their turn, they gain a Curse."""
         self.name = "Blockade"
         self.cost = 4
         self.required_cards = ["Curse"]
-        self._blockade: Optional[Card.Card] = None
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """Gain a card costing up to $4, setting it aside."""
-        self._blockade = player.plr_gain_card(4)
-        assert self._blockade is not None
-        player.move_card(self._blockade, Piles.DISCARD)  # In case it isn't there yet
-        player.piles[Piles.DISCARD].remove(self._blockade)
+        if self.uuid not in player.specials:
+            player.specials[self.uuid] = PlayArea.PlayArea(name="Blockade")
+        player.plr_gain_card(4, destination=player.specials[self.uuid])
         player.secret_count += 1
 
     def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         """At the start of your next turn, put it into your hand"""
-        if self._blockade:
-            player.add_card(self._blockade, Piles.HAND)
-            self._blockade = None
+        if player.specials[self.uuid]:
+            player.move_card(player.specials[self.uuid].next_card(), Piles.HAND)
+            del player.specials[self.uuid]
             player.secret_count -= 1
         return {}
 
@@ -51,9 +49,10 @@ gains a copy of it on their turn, they gain a Curse."""
         card: Card.Card,
     ) -> dict[OptionKeys, Any]:
         """While it's set aside, when another player gains a copy of it on their turn, they gain a Curse."""
-        if not self._blockade or player == owner:
+        if self.uuid not in owner.specials or not owner.specials[self.uuid] or player == owner:
             return {}
-        if card.name != self._blockade.name:
+        blockade_card = owner.specials[self.uuid].top_card()
+        if card.name != blockade_card.name:
             return {}
         try:
             player.output(f"Gained a Curse from {owner}'s Blockade")
@@ -80,13 +79,13 @@ class TestBlockade(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIn("Blockade", self.plr.piles[Piles.DURATION])
         self.assertNotIn("Silver", self.plr.piles[Piles.DISCARD])
-        self.assertIsNotNone(self.card._blockade)
+        self.assertFalse(self.plr.specials[self.card.uuid].is_empty())
         self.vic.gain_card("Silver")
         self.assertIn("Curse", self.vic.piles[Piles.DISCARD])
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertIn("Silver", self.plr.piles[Piles.HAND])
-        self.assertIsNone(self.card._blockade)
+        self.assertNotIn(self.card.uuid, self.plr.specials)
 
 
 ###############################################################################
