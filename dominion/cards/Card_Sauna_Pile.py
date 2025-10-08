@@ -2,6 +2,7 @@
 """https://wiki.dominionstrategy.com/index.php/Sauna
 https://wiki.dominionstrategy.com/index.php/Avanto"""
 import unittest
+from typing import Optional
 
 from dominion import Card, Game, CardPile, Keys, game_setup
 
@@ -30,7 +31,7 @@ class SaunaCardPile(CardPile.CardPile):
             game.card_instances[name] = class_()
         super().__init__()
 
-    def init_cards(self, num_cards: int = 0, card_class: type[Card.Card] | None = None) -> None:
+    def init_cards(self, num_cards: int = 0, card_class: Optional[Card.Card] = None) -> None:
         # pylint: disable=import-outside-toplevel
         from dominion.cards.Split_Sauna import Card_Sauna
         from dominion.cards.Split_Avanto import Card_Avanto
@@ -50,6 +51,7 @@ class TestSaunaPile(unittest.TestCase):
         self.plr = self.g.player_list()[0]
 
     def test_pile(self) -> None:
+        """Test Pile"""
         self.assertEqual(len(self.g.card_piles["Sauna"]), 10)
         card = self.g.get_card_from_pile("Sauna")
         self.assertEqual(card.name, "Sauna")

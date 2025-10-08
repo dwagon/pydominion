@@ -2,6 +2,7 @@
 """https://wiki.dominionstrategy.com/index.php/Gladiator
 https://wiki.dominionstrategy.com/index.php/Fortune"""
 import unittest
+from typing import Optional
 
 from dominion import Card, Game, CardPile, Keys, game_setup
 
@@ -30,7 +31,7 @@ class GladiatorCardPile(CardPile.CardPile):
             game.card_instances[name] = class_()
         super().__init__()
 
-    def init_cards(self, num_cards: int = 0, card_class: type[Card.Card] | None = None) -> None:
+    def init_cards(self, num_cards: int = 0, card_class: Optional[type[Card.Card]] = None) -> None:
         # pylint: disable=import-outside-toplevel
         from dominion.cards.Split_Gladiator import Card_Gladiator
         from dominion.cards.Split_Fortune import Card_Fortune
