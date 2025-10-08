@@ -1,10 +1,12 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Quartermaster """
+"""http://wiki.dominionstrategy.com/index.php/Quartermaster"""
 
 import unittest
 from typing import Any
 
 from dominion import Card, Game, Piles, Player, OptionKeys, PlayArea
+
+QM = "quartermaster"
 
 
 ###############################################################################
@@ -18,32 +20,31 @@ class Card_Quartermaster(Card.Card):
             Card.CardType.DURATION,
         ]
         self.base = Card.CardExpansion.PLUNDER
-        self.desc = """At the start of each of your turns for the rest of the game, 
-        choose one: Gain a card costing up to $4, setting it aside on this; 
-        or put a card from this into your hand."""
+        self.desc = """At the start of each of your turns for the rest of the game,
+            choose one: Gain a card costing up to $4, setting it aside on this;
+            or put a card from this into your hand."""
         self.name = "Quartermaster"
         self.cost = 5
         self.permanent = True
-        self.reserved = PlayArea.PlayArea("Quartermaster")
 
     def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         """At the start of each of your turns for the rest of the game, choose one: Gain a card costing up to $4,
         setting it aside on this; or put a card from this into your hand."""
+        if QM not in player.specials:
+            player.specials[QM] = PlayArea.PlayArea("Quartermaster")
         if self not in player.end_of_game_cards:
             player.end_of_game_cards.append(self)
-        options: list[tuple[str, Card.Card | None]] = [
-            ("Gain a card costing up to $4", None)
-        ]
-        for card in self.reserved:
+        options: list[tuple[str, Any]] = [("Gain a card costing up to $4", None)]
+        for card in player.specials[QM]:
             options.append((f"Put {card} back into your hand", card))
 
         choice = player.plr_choose_options("What to do with Quartermaster?", *options)
         if choice is None:
             if card := player.plr_gain_card(cost=4):
-                player.move_card(card, self.reserved)
+                player.move_card(card, player.specials[QM])
                 player.secret_count += 1
         else:
-            self.reserved.remove(choice)
+            player.specials[QM].remove(choice)
             player.add_card(choice, Piles.HAND)
             player.secret_count -= 1
 
@@ -51,12 +52,12 @@ class Card_Quartermaster(Card.Card):
 
     def hook_end_of_game(self, game: Game.Game, player: Player.Player) -> None:
         """So any victory cards are counted at the end"""
-        for card in self.reserved:
+        for card in player.specials[QM]:
             player.add_card(card, Piles.HAND)
 
 
 ###############################################################################
-class Test_Quartermaster(unittest.TestCase):
+class TestQuartermaster(unittest.TestCase):
     """Test Quartermaster"""
 
     def setUp(self) -> None:
@@ -73,13 +74,13 @@ class Test_Quartermaster(unittest.TestCase):
         self.plr.test_input = ["Gain a card", "Get Moat"]
         self.plr.start_turn()
         self.assertNotIn("Moat", self.plr.piles[Piles.DISCARD])
-        self.assertIn("Moat", self.card.reserved)
+        self.assertIn("Moat", self.plr.specials[QM])
         self.assertIn("Quartermaster", self.plr.piles[Piles.DURATION])
         self.plr.end_turn()
         self.plr.test_input = ["Put Moat"]
         self.plr.start_turn()
         self.assertIn("Moat", self.plr.piles[Piles.HAND])
-        self.assertNotIn("Moat", self.card.reserved)
+        self.assertNotIn("Moat", self.plr.specials[QM])
 
 
 ###############################################################################

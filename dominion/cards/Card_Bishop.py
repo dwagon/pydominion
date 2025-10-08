@@ -7,6 +7,8 @@ from dominion import Card, Game, Piles
 
 ###############################################################################
 class Card_Bishop(Card.Card):
+    """Bishop"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -31,9 +33,7 @@ class Card_Bishop(Card.Card):
 
     @classmethod
     def trashOwnCard(cls, player):
-        tc = player.plr_trash_card(
-            printcost=True, prompt="Gain VP worth half the cost of the card you trash"
-        )
+        tc = player.plr_trash_card(printcost=True, prompt="Gain VP worth half the cost of the card you trash")
         if not tc:
             return
         card = tc[0]
@@ -52,8 +52,8 @@ class Card_Bishop(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    # Trash an estate, then a copper else nothing
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
+    """Trash an estate, then a copper else nothing"""
     es = player.piles[Piles.HAND]["estate"]
     if es:
         return [es]
@@ -65,6 +65,8 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 ###############################################################################
 class TestBishop(unittest.TestCase):
+    """Test Bishop"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Bishop"])
         self.g.start_game()

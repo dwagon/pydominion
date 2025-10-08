@@ -5,9 +5,13 @@ import unittest
 from dominion import Game, Piles, Card, PlayArea, Player, OptionKeys
 from dominion.Player import Phase
 
+CRYPT = "crypt"
+
 
 ###############################################################################
 class Card_Crypt(Card.Card):
+    """Crypt"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.NIGHT, Card.CardType.DURATION]
@@ -16,9 +20,10 @@ class Card_Crypt(Card.Card):
                     While any remain, at the start of each of your turns, put one of them into your hand."""
         self.name = "Crypt"
         self.cost = 5
-        self._crypt_reserve = PlayArea.PlayArea(initial=[])
 
     def night(self, game: Game.Game, player: Player.Player) -> None:
+        if CRYPT not in player.specials:
+            player.specials[CRYPT] = PlayArea.PlayArea(initial=[])
         relevant_cards = PlayArea.PlayArea(initial=[])
         for card in player.piles[Piles.PLAYED]:
             if card.isTreasure() and not card.isDuration():
@@ -31,27 +36,29 @@ class Card_Crypt(Card.Card):
             cardsrc=relevant_cards,
         ):
             for card in cards:
-                self._crypt_reserve.add(card)
+                player.specials[CRYPT].add(card)
                 player.piles[Piles.PLAYED].remove(card)
                 player.secret_count += 1
             self.permanent = True
 
     def duration(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, str]:
-        if self._crypt_reserve.is_empty():
+        if player.specials[CRYPT].is_empty():
             return {}
 
-        choices = [(f"Bring back {card}", card) for card in self._crypt_reserve]
+        choices = [(f"Bring back {card}", card) for card in player.specials[CRYPT]]
         card = player.plr_choose_options("What card to bring back from the crypt?", *choices)
         player.add_card(card, Piles.HAND)
-        self._crypt_reserve.remove(card)
+        player.specials[CRYPT].remove(card)
         player.secret_count -= 1
-        if self._crypt_reserve.is_empty():
+        if player.specials[CRYPT].is_empty():
             self.permanent = False
         return {}
 
 
 ###############################################################################
 class TestCrypt(unittest.TestCase):
+    """Test Crypt"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Crypt"], badcards=["Duchess"])
         self.g.start_game()
@@ -60,6 +67,7 @@ class TestCrypt(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self) -> None:
+        """Play Crypt"""
         self.plr.phase = Phase.NIGHT
         self.plr.piles[Piles.PLAYED].set("Silver", "Gold", "Estate")
         self.plr.test_input = ["Set Gold", "Set Silver", "Finish"]
@@ -68,7 +76,7 @@ class TestCrypt(unittest.TestCase):
         self.plr.test_input = ["Bring back Gold"]
         self.plr.start_turn()
         self.assertIn("Gold", self.plr.piles[Piles.HAND])
-        self.assertEqual(len(self.card._crypt_reserve), 1)
+        self.assertEqual(len(self.plr.specials[CRYPT]), 1)
         self.plr.end_turn()
         self.plr.test_input = ["Bring back Silver"]
         self.plr.start_turn()

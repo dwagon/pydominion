@@ -7,6 +7,8 @@ from dominion import Game, Piles, Player, Card
 
 ###############################################################################
 class Card_Villain(Card.Card):
+    """Villain"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
@@ -41,7 +43,7 @@ class Card_Villain(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # oragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # oragma: no cover, pylint: disable=unused-argument
     # Discard a victory card first, then whichever
     for card in kwargs["cardsrc"]:
         if card.isVictory():
@@ -51,6 +53,8 @@ def botresponse(player, kind, args=None, kwargs=None):  # oragma: no cover
 
 ###############################################################################
 class Test_Villain(unittest.TestCase):
+    """Test Villain"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Villain"], numhexes=0, numboons=0)
         self.g.start_game()

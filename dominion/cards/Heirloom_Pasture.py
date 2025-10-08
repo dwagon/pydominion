@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Pasture"""
 import unittest
+
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
 class Card_Pasture(Card.Card):
+    """Pasture"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [
@@ -22,12 +24,14 @@ class Card_Pasture(Card.Card):
         self.purchasable = False
 
     def special_score(self, game, player):
-        estates = sum([1 for _ in player.all_cards() if _.name == "Estate"])
+        estates = sum(1 for _ in player.all_cards() if _.name == "Estate")
         return estates
 
 
 ###############################################################################
 class Test_Pasture(unittest.TestCase):
+    """Test Pasture"""
+
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Shepherd"])
         self.g.start_game()
@@ -35,11 +39,13 @@ class Test_Pasture(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Pasture")
 
     def test_play(self):
+        """Test play"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)
 
     def test_score(self):
+        """Test score"""
         self.plr.piles[Piles.HAND].set("Estate", "Pasture")
         self.plr.piles[Piles.DECK].set("Estate")
         score = self.plr.get_score_details()

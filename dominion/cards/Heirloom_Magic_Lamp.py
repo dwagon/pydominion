@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Magic_Lamp"""
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
-class Card_MagicLamp(Card.Card):
+class Card_Magic_Lamp(Card.Card):
+    """Magic Lamp"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.TREASURE, Card.CardType.HEIRLOOM]
@@ -20,7 +22,7 @@ class Card_MagicLamp(Card.Card):
         self.purchasable = False
         self.required_cards = [("Card", "Wish")]
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         cards = []
         for c in player.piles[Piles.PLAYED]:
             if player.piles[Piles.PLAYED].count(c) == 1:
@@ -32,7 +34,9 @@ class Card_MagicLamp(Card.Card):
 
 
 ###############################################################################
-class Test_MagicLamp(unittest.TestCase):
+class TestMagicLamp(unittest.TestCase):
+    """Test Magic Lamp"""
+
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Secret Cave"])
         self.g.start_game()

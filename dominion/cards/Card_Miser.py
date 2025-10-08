@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Miser"""
 import unittest
 
 from dominion import Card, Game, Piles
@@ -7,6 +7,8 @@ from dominion import Card, Game, Piles
 
 ###############################################################################
 class Card_Miser(Card.Card):
+    """Miser"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -18,10 +20,10 @@ class Card_Miser(Card.Card):
     def special(self, game, player):
         """Choose one: Put a Copper from your hand onto your Tavern mat;
         or +1 Coin per Copper on your Tavern mat."""
-        inhand = sum([1 for _ in player.piles[Piles.HAND] if _.name == "Copper"])
-        coins = sum([1 for _ in player.piles[Piles.RESERVE] if _.name == "Copper"])
+        in_hand = sum(1 for _ in player.piles[Piles.HAND] if _.name == "Copper")
+        coins = sum(1 for _ in player.piles[Piles.RESERVE] if _.name == "Copper")
         deposit = False
-        if inhand:
+        if in_hand:
             deposit = player.plr_choose_options(
                 "Which to do?",
                 ("Put a copper onto tavern mat?", True),
@@ -38,6 +40,8 @@ class Card_Miser(Card.Card):
 
 ###############################################################################
 class Test_Miser(unittest.TestCase):
+    """Test Miser"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Miser"])
         self.g.start_game()

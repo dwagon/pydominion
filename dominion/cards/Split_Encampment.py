@@ -5,9 +5,13 @@ from typing import Any
 
 from dominion import Card, Game, Piles, OptionKeys, Player
 
+ENCAMPMENT = "encampment"
+
 
 ###############################################################################
 class Card_Encampment(Card.Card):
+    """Encampment"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -23,10 +27,11 @@ class Card_Encampment(Card.Card):
         self.pile = "Encampment"
 
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
+        player.specials[ENCAMPMENT] = False
         gold = player.piles[Piles.HAND]["Gold"]
         plunder = player.piles[Piles.HAND]["Plunder"]
         if gold or plunder:
-            self._discard = False
+            player.specials[ENCAMPMENT] = False
             choice = player.plr_choose_options(
                 "Reveal Gold or Plunder to avoid returning this card",
                 ("Reveal card", True),
@@ -38,23 +43,25 @@ class Card_Encampment(Card.Card):
                 if plunder:
                     player.reveal_card(plunder)
             else:
-                self._discard = True
+                player.specials[ENCAMPMENT] = True
         else:
-            self._discard = True
+            player.specials[ENCAMPMENT] = True
 
     def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
-        if self._discard:
+        if player.specials[ENCAMPMENT]:
             for card in player.piles[Piles.PLAYED]:
                 if card == self:
                     player.output("Returning Encampment to Supply")
                     player.move_card(self, Piles.CARDPILE)
-                    self._discard = False
+                    player.specials[ENCAMPMENT] = False
                     return {}
         return {}
 
 
 ###############################################################################
 class TestEncampment(unittest.TestCase):
+    """Test Encampment"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Encampment"])
         self.g.start_game()
@@ -64,14 +71,14 @@ class TestEncampment(unittest.TestCase):
     def test_play_reveal(self) -> None:
         """Play an Encampment and reveal a Gold"""
         self.plr.piles[Piles.HAND].set("Gold")
-        hndsz = self.plr.piles[Piles.HAND].size()
+        hand_size = self.plr.piles[Piles.HAND].size()
         acts = self.plr.actions.get()
         self.plr.test_input = ["Reveal card"]
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsz + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hand_size + 2)
         self.assertEqual(self.plr.actions.get(), acts + 2 - 1)
-        self.assertEqual(self.card._discard, False)
+        self.assertEqual(self.plr.specials[ENCAMPMENT], False)
         self.plr.cleanup_phase()
         self.assertEqual(len(self.g.card_piles["Encampment"]), 9)
 
@@ -85,7 +92,7 @@ class TestEncampment(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), hand_size + 2)
         self.assertEqual(self.plr.actions.get(), acts + 2 - 1)
-        self.assertEqual(self.card._discard, True)
+        self.assertEqual(self.plr.specials[ENCAMPMENT], True)
         self.plr.cleanup_phase()
         self.assertEqual(len(self.g.card_piles["Encampment"]), 10)
 

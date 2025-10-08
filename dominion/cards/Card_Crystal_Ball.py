@@ -2,6 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Crystal_Ball"""
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
@@ -13,8 +14,8 @@ class Card_CrystalBall(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.PROSPERITY
-        self.desc = """$1; Look at the top card of your deck. You may trash it, discard it, or, 
-        if it's an Action or Treasure, play it."""
+        self.desc = """$1; Look at the top card of your deck. You may trash it, discard it, or,
+            if it's an Action or Treasure, play it."""
         self.coin = 1
         self.name = "Crystal Ball"
         self.cost = 5
@@ -49,9 +50,7 @@ class TestCrystalBall(unittest.TestCase):
     """Test Crystal Ball"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            numplayers=1, initcards=["Crystal Ball", "Moat", "Horse"]
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Crystal Ball", "Moat", "Horse"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Crystal Ball")
@@ -85,17 +84,13 @@ class TestCrystalBall(unittest.TestCase):
     def test_play(self) -> None:
         """Play a card and play"""
         self.plr.piles[Piles.DECK].set("Copper", "Copper", "Moat")
-        self.plr.piles[Piles.DISCARD].set(
-            "Silver", "Silver", "Silver", "Silver", "Silver", "Silver"
-        )
+        self.plr.piles[Piles.DISCARD].set("Silver", "Silver", "Silver", "Silver", "Silver", "Silver")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Play"]
         hand_size = len(self.plr.piles[Piles.HAND])
         self.plr.play_card(self.card)
         self.assertIn("Moat", self.plr.piles[Piles.PLAYED])
-        self.assertEqual(
-            len(self.plr.piles[Piles.HAND]), hand_size + 2 - 1
-        )  # 2 from Moat, -1 played Crystal Ball
+        self.assertEqual(len(self.plr.piles[Piles.HAND]), hand_size + 2 - 1)  # 2 from Moat, -1 played Crystal Ball
 
     def test_play_horse(self) -> None:
         """Play a card that moves itself (e.g. Horse)"""

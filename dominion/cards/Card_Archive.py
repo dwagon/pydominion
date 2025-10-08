@@ -4,6 +4,8 @@ import unittest
 
 from dominion import Card, Game, PlayArea, Piles, NoCardException, Player, Option
 
+ARCHIVE = "archive"
+
 
 ###############################################################################
 class Card_Archive(Card.Card):
@@ -19,35 +21,36 @@ class Card_Archive(Card.Card):
         self.name = "Archive"
         self.actions = 1
         self.cost = 5
-        self._archive_reserve = PlayArea.PlayArea(initial=[])
 
     def special(self, game: Game.Game, player: Player.Player):
+        if ARCHIVE not in player.specials:
+            player.specials[ARCHIVE] = PlayArea.PlayArea(initial=[])
         for _ in range(3):
             try:
                 card = player.next_card()
             except NoCardException:
                 continue
             player.output(f"Putting {card} in the archive")
-            self._archive_reserve.add(card)
+            player.specials[ARCHIVE].add(card)
             player.secret_count += 1
         self.permanent = True
 
     def duration(self, game: Game.Game, player: Player.Player):
         options = []
         index = 0
-        for card in self._archive_reserve:
+        for card in player.specials[ARCHIVE]:
             options.append(Option(selector=f"{index}", print=f"Bring back {card}", card=card))
             index += 1
         if o := player.user_input(options, "What card to bring back from the Archive?"):
             player.add_card(o["card"], Piles.HAND)
-            self._archive_reserve.remove(o["card"])
+            player.specials[ARCHIVE].remove(o["card"])
             player.secret_count -= 1
-        if self._archive_reserve.is_empty():
+        if player.specials[ARCHIVE].is_empty():
             self.permanent = False
 
 
 ###############################################################################
-class Test_Archive(unittest.TestCase):
+class TestArchive(unittest.TestCase):
     """Test Archive"""
 
     def setUp(self):
@@ -57,7 +60,7 @@ class Test_Archive(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Archive")
 
     def test_play(self):
-        """Play a Archive"""
+        """Play an Archive"""
         self.plr.piles[Piles.DECK].set("Gold", "Silver", "Province")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
@@ -66,7 +69,7 @@ class Test_Archive(unittest.TestCase):
         self.plr.test_input = ["Bring back Gold"]
         self.plr.start_turn()
         self.assertIn("Gold", self.plr.piles[Piles.HAND])
-        self.assertEqual(len(self.card._archive_reserve), 2)
+        self.assertEqual(len(self.plr.specials[ARCHIVE]), 2)
         self.plr.end_turn()
         self.plr.test_input = ["Bring back Silver"]
         self.plr.start_turn()

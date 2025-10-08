@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Margrave """
+"""http://wiki.dominionstrategy.com/index.php/Margrave"""
 
 import unittest
 
@@ -8,6 +8,8 @@ from dominion import Game, Card, Piles, Player
 
 ###############################################################################
 class Card_Margrave(Card.Card):
+    """Margrave"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
@@ -28,13 +30,15 @@ class Card_Margrave(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no coverage, pylint: disable=unused-argument
     numtodiscard = len(player.piles[Piles.HAND]) - 3
     return player.pick_to_discard(numtodiscard)
 
 
 ###############################################################################
 class TestMargrave(unittest.TestCase):
+    """Test Margrave"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Margrave", "Moat"])
         self.g.start_game()

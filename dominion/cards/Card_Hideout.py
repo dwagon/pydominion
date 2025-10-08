@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Hideout"""
 import unittest
 
 from dominion import Game, Card, Piles, Player, NoCardException
@@ -7,6 +7,8 @@ from dominion import Game, Card, Piles, Player, NoCardException
 
 ###############################################################################
 class Card_Hideout(Card.Card):
+    """Hideout"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -30,28 +32,32 @@ class Card_Hideout(Card.Card):
 
 ###############################################################################
 class TestHideout(unittest.TestCase):
+    """Test Hideout"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Hideout"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
     def test_play_card(self) -> None:
+        """Play Hideout"""
         self.plr.piles[Piles.DECK].set("Silver")
         self.plr.piles[Piles.HAND].set("Copper", "Estate")
-        self.card = self.g.get_card_from_pile("Hideout")
-        self.plr.add_card(self.card, Piles.HAND)
+        card = self.g.get_card_from_pile("Hideout")
+        self.plr.add_card(card, Piles.HAND)
         self.plr.test_input = ["Trash Copper"]
-        self.plr.play_card(self.card)
+        self.plr.play_card(card)
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
 
     def test_trash_victory(self) -> None:
+        """Trash a victory"""
         self.plr.piles[Piles.DECK].set("Silver")
         self.plr.piles[Piles.HAND].set("Copper", "Estate")
-        self.card = self.g.get_card_from_pile("Hideout")
-        self.plr.add_card(self.card, Piles.HAND)
+        card = self.g.get_card_from_pile("Hideout")
+        self.plr.add_card(card, Piles.HAND)
         self.plr.test_input = ["Trash Estate"]
-        self.plr.play_card(self.card)
+        self.plr.play_card(card)
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
         self.assertIn("Curse", self.plr.piles[Piles.DISCARD])

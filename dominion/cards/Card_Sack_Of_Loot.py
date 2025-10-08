@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Sack_of_Loot"""
+"""https://wiki.dominionstrategy.com/index.php/Sack_of_Loot"""
 import unittest
+
 from dominion import Card, Game, Piles, Player, NoCardException
 
 
@@ -46,7 +47,7 @@ class Test_SackOfLoot(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), coins + 1)
         self.assertEqual(self.plr.buys.get(), buys + 1)
-        found = any([True for _ in self.plr.piles[Piles.DISCARD] if _.isLoot()])
+        found = any(True for _ in self.plr.piles[Piles.DISCARD] if _.isLoot())
         self.assertTrue(found)
 
 

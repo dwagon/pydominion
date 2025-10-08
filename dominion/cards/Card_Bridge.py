@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Bridge"""
 import unittest
 
 from dominion import Game, Card, Piles
@@ -7,6 +7,8 @@ from dominion import Game, Card, Piles
 
 ###############################################################################
 class Card_Bridge(Card.Card):
+    """ "Bridge"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -28,6 +30,8 @@ class Card_Bridge(Card.Card):
 
 ###############################################################################
 class TestBridge(unittest.TestCase):
+    """Test Bridge"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Bridge"])
         self.g.start_game()
@@ -36,12 +40,13 @@ class TestBridge(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
+        """Test Play Bridge"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.coins.get(), 1)
 
     def test_cost_reduction(self):
-        self.coin = 1
+        """Test Cost Reduction"""
         self.assertEqual(self.plr.card_cost(self.g.get_card_from_pile("Gold")), 6)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.card_cost(self.g.get_card_from_pile("Gold")), 5)

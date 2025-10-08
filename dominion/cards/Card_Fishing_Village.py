@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Fishing_Village"""
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+
+from dominion import Game, Piles, OptionKeys, Player, Card
 
 
 ###############################################################################
-class Card_Fishingvillage(Card.Card):
+class Card_Fishing_Village(Card.Card):
+    """Fishing Village"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
@@ -17,14 +19,17 @@ class Card_Fishingvillage(Card.Card):
         self.actions = 2
         self.cost = 3
 
-    def duration(self, game, player):
+    def duration(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, str]:
         """+1 action, +1 coin"""
         player.coins.add(1)
         player.add_actions(1)
+        return {}
 
 
 ###############################################################################
-class Test_Fishingvillage(unittest.TestCase):
+class TestFishingvillage(unittest.TestCase):
+    """Test Fishing Village"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Fishing Village"])
         self.g.start_game()
@@ -32,7 +37,7 @@ class Test_Fishingvillage(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Fishing Village")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_playcard(self):
+    def test_play_card(self):
         """Play a fishing village"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)

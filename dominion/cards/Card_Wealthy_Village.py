@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-"""https://wiki.dominionstrategy.com/index.php/Wealthy_Village """
+"""https://wiki.dominionstrategy.com/index.php/Wealthy_Village"""
 import unittest
+
 from dominion import Game, Card, Piles, Player, OptionKeys
 
 
@@ -12,7 +13,7 @@ class Card_WealthyVillage(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.PLUNDER
-        self.desc = """+1 Card; +2 Actions; When you gain this, 
+        self.desc = """+1 Card; +2 Actions; When you gain this,
         if you have at least 3 differently named Treasures in play, gain a Loot."""
         self.name = "Wealthy Village"
         self.cost = 5
@@ -20,11 +21,9 @@ class Card_WealthyVillage(Card.Card):
         self.actions = 2
         self.required_cards = ["Loot"]
 
-    def hook_gain_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, str]:
+    def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         """When you gain this, if you have at least 3 differently named Treasures in play, gain a Loot."""
-        treasures = set([_ for _ in player.piles[Piles.PLAYED] if _.isTreasure()])
+        treasures = set(_ for _ in player.piles[Piles.PLAYED] if _.isTreasure())
         if len(treasures) >= 3:
             player.gain_card("Loot")
         return {}
@@ -46,15 +45,13 @@ class TestWealthyVillage(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         actions = self.plr.actions.get()
         self.plr.play_card(self.card)
-        self.assertEqual(
-            self.plr.actions.get(), actions + 2 - 1
-        )  # One action to play card
+        self.assertEqual(self.plr.actions.get(), actions + 2 - 1)  # One action to play card
 
     def test_gain_card(self) -> None:
         """Gain Wealthy Village"""
         self.plr.piles[Piles.PLAYED].set("Copper", "Silver", "Gold")
         self.plr.gain_card("Wealthy Village")
-        found = any([True for _ in self.plr.piles[Piles.DISCARD] if _.isLoot()])
+        found = any(True for _ in self.plr.piles[Piles.DISCARD] if _.isLoot())
         self.assertTrue(found)
 
 

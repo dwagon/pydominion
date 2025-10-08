@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
 class Card_Torturer(Card.Card):
+    """Torturer"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
@@ -24,9 +27,7 @@ class Card_Torturer(Card.Card):
             self.choice_of_doom(plr, player)
 
     def choice_of_doom(self, victim: Player.Player, player: Player.Player) -> None:
-        victim.output(
-            f'Your hand is: {", ".join([c.name for c in victim.piles[Piles.HAND]])}'
-        )
+        victim.output(f'Your hand is: {", ".join([c.name for c in victim.piles[Piles.HAND]])}')
         if victim.plr_choose_options(
             "Discard or curse",
             ("Discard 2 cards", True),
@@ -43,7 +44,7 @@ class Card_Torturer(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
     if kind == "cards":
         return player.pick_to_discard(2)
     if kind == "choices":
@@ -53,6 +54,8 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 ###############################################################################
 class Test_Torturer(unittest.TestCase):
+    """Test Torturer"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Torturer", "Moat"])
         self.g.start_game()

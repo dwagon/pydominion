@@ -33,19 +33,13 @@ class Card_WarChest(Card):
             player.specials[WAR_CHEST] = []
 
         lefty = game.player_to_left(player)
-        options = [
-            (f"Pick {card}", card.name)
-            for card in player.cards_under(5)
-            if card.purchasable
-        ]
+        options = [(f"Pick {card}", card.name) for card in player.cards_under(5) if card.purchasable]
         banned = lefty.plr_choose_options(
             f"Name a card that {player.name} can't gain from a War Chest this turn",
             *options,
         )
         player.specials[WAR_CHEST].append(banned)
-        card_name = player.plr_choose_options(
-            "Pick a card to gain", *self.generate_options(game, player)
-        )
+        card_name = player.plr_choose_options("Pick a card to gain", *self.generate_options(game, player))
         try:
             player.gain_card(card_name)
         except NoCardException:
@@ -66,7 +60,9 @@ class Card_WarChest(Card):
 
 
 ###############################################################################
-def botresponse(player: Player, kind: str, args: Any = None, kwargs: Any = None) -> Any:
+def botresponse(  # pragma: no coverage, pylint: disable=unused-argument
+    player: Player, kind: str, args: Any = None, kwargs: Any = None
+) -> Any:
     return "Silver"
 
 
@@ -75,9 +71,7 @@ class TestWarChest(unittest.TestCase):
     """Test War Chest"""
 
     def setUp(self) -> None:
-        self.g = TestGame(
-            numplayers=2, initcards=["War Chest"], badcards=["Silver Mine"]
-        )
+        self.g = TestGame(numplayers=2, initcards=["War Chest"], badcards=["Silver Mine"])
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
         self.card = self.g.get_card_from_pile("War Chest")

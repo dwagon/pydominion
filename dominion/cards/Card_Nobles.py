@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Nobles"""
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Nobles(Card.Card):
+    """Nobles"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.VICTORY]
@@ -16,17 +18,18 @@ class Card_Nobles(Card.Card):
         self.victory = 2
         self.cost = 6
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Choose one: +3 Cards; or +2 Actions"""
-        cards = player.plr_choose_options("Choose one", ("+3 Cards", True), ("+2 Actions", False))
-        if cards:
+        if player.plr_choose_options("Choose one", ("+3 Cards", True), ("+2 Actions", False)):
             player.pickup_cards(3)
         else:
             player.add_actions(2)
 
 
 ###############################################################################
-class Test_Nobles(unittest.TestCase):
+class TestNobles(unittest.TestCase):
+    """Test Nobles"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Nobles"])
         self.g.start_game()

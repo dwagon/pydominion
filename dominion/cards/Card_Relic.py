@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Relic"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card, Player
 
 
 ###############################################################################
 class Card_Relic(Card.Card):
+    """Relic"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.TREASURE, Card.CardType.ATTACK]
@@ -17,7 +18,7 @@ class Card_Relic(Card.Card):
         self.coin = 2
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """When you play this, each other player puts his -1 Card token
         on his deck."""
         for victim in player.attack_victims():
@@ -26,7 +27,9 @@ class Card_Relic(Card.Card):
 
 
 ###############################################################################
-class Test_Relic(unittest.TestCase):
+class TestRelic(unittest.TestCase):
+    """Test Relic"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Relic"])
         self.g.start_game()

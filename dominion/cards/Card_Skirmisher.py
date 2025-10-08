@@ -8,6 +8,8 @@ from dominion import Game, Card, Piles, Player, OptionKeys
 
 ###############################################################################
 class Card_Skirmisher(Card.Card):
+    """Skirmisher"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
@@ -20,9 +22,7 @@ class Card_Skirmisher(Card.Card):
             Attack card, each other player discards down to 3 cards in hand."""
         self.cost = 5
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         if not card.isAttack():
             return {}
         for plr in player.attack_victims():
@@ -32,13 +32,15 @@ class Card_Skirmisher(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
     numtodiscard = len(player.piles[Piles.HAND]) - 3
     return player.pick_to_discard(numtodiscard)
 
 
 ###############################################################################
 class TestSkirmisher(unittest.TestCase):
+    """Test Skirmisher"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Skirmisher"])
         self.g.start_game()

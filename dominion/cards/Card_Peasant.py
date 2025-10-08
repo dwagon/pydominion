@@ -1,13 +1,15 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Peasant"""
 import unittest
+from typing import Optional, Union
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card, Player, PlayArea
 
 
 ###############################################################################
 class Card_Peasant(Card.Card):
+    """Peasant"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.TRAVELLER]
@@ -19,13 +21,17 @@ class Card_Peasant(Card.Card):
         self.coin = 1
         self.cost = 2
 
-    def hook_discard_this_card(self, game, player, source):
+    def hook_discard_this_card(
+        self, game: "Game.Game", player: "Player.Player", source: Optional[Union[Piles, "PlayArea.PlayArea"]]
+    ) -> None:
         """Replace with Treasure Hunter"""
         player.replace_traveller(self, "Soldier")
 
 
 ###############################################################################
-class Test_Peasant(unittest.TestCase):
+class TestPeasant(unittest.TestCase):
+    """Test Peasant"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Peasant"])
         self.g.start_game()

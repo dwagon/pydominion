@@ -7,6 +7,8 @@ from dominion import Game, Card, Piles, Player
 
 ###############################################################################
 class Card_Vault(Card.Card):
+    """Vault"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -28,21 +30,21 @@ class Card_Vault(Card.Card):
 
         for plr in game.player_list():
             if plr != player:
-                plr.output(
-                    f"Due to {player.name}'s Vault you may discard two cards. If you do, draw one"
-                )
+                plr.output(f"Due to {player.name}'s Vault you may discard two cards. If you do, draw one")
                 if plr_discards := plr.plr_discard_cards(num=2):
                     if len(plr_discards) == 2:
                         plr.pickup_cards(1)
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no coverage, pylint: disable=unused-argument
     return player.pick_to_discard(2)
 
 
 ###############################################################################
 class TestVault(unittest.TestCase):
+    """Test Vault"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Vault"])
         self.g.start_game()

@@ -1,14 +1,15 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Vampire"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card, Player
 from dominion.Player import Phase
 
 
 ###############################################################################
 class Card_Vampire(Card.Card):
+    """Vampire"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.NIGHT, Card.CardType.ATTACK, Card.CardType.DOOM]
@@ -19,16 +20,18 @@ class Card_Vampire(Card.Card):
         self.cost = 5
         self.required_cards = [("Card", "Bat")]
 
-    def night(self, game, player):
+    def night(self, game: "Game.Game", player: "Player.Player") -> None:
         for pl in player.attack_victims():
-            pl.output(f"{player.name}'s Vampire hexed you")
+            pl.output(f"{player}'s Vampire hexed you")
             pl.receive_hex()
         player.plr_gain_card(5, exclude=["Vampire"])
         player.replace_card(self, "Bat")
 
 
 ###############################################################################
-class Test_Vampire(unittest.TestCase):
+class TestVampire(unittest.TestCase):
+    """Vampire"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Vampire"], badcards=["Duchess"])
         self.g.start_game()
@@ -41,6 +44,7 @@ class Test_Vampire(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_play(self):
+        """Test Play"""
         self.plr.test_input = ["Get Duchy"]
         self.plr.phase = Phase.NIGHT
         self.plr.play_card(self.card)

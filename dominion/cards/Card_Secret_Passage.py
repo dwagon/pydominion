@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Secret_Passage"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Player, Card
 
 
 ###############################################################################
 class Card_SecretPassage(Card.Card):
+    """Secret Passage"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -18,7 +19,7 @@ class Card_SecretPassage(Card.Card):
         self.actions = 1
         self.cards = 2
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         if card := player.card_sel(prompt="Take a card from your hand and put into your deck", cardsrc=Piles.HAND):
             dest = player.plr_choose_options(
                 f"Put {card[0].name} into top or bottom of deck",
@@ -30,7 +31,9 @@ class Card_SecretPassage(Card.Card):
 
 
 ###############################################################################
-class Test_SecretPassage(unittest.TestCase):
+class TestSecretPassage(unittest.TestCase):
+    """Test Secret Passage"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Secret Passage", "Moat"])
         self.g.start_game()
@@ -38,7 +41,7 @@ class Test_SecretPassage(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Secret Passage")
 
     def test_play(self):
-        """Play an Secret Passage"""
+        """Play a Secret Passage"""
         self.plr.piles[Piles.HAND].set("Gold", "Province", "Duchy", "Copper", "Silver")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Select Province", "Bottom"]

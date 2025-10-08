@@ -8,6 +8,8 @@ from dominion import Game, Card, Player, NoCardException, OptionKeys
 
 ###############################################################################
 class Card_Duchy(Card.Card):
+    """Duchy"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.VICTORY
@@ -23,9 +25,7 @@ class Card_Duchy(Card.Card):
     def calc_numcards(cls, game: Game.Game) -> int:
         return 8 if game.numplayers == 2 else 12
 
-    def hook_gain_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         if "Duchess" in game.card_piles:
             if player.plr_choose_options(
                 "Gain a Duchess as well?",
@@ -40,12 +40,15 @@ class Card_Duchy(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
+    """Handle having a duchess"""
     return False  # Don't gain a duchess
 
 
 ###############################################################################
-class Test_Duchy(unittest.TestCase):
+class TestDuchy(unittest.TestCase):
+    """Test Duchy"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(quiet=True, numplayers=1)
         self.g.start_game()

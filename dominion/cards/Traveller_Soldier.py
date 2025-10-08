@@ -7,6 +7,8 @@ from dominion import Game, Card, Piles, Player, PlayArea
 
 ###############################################################################
 class Card_Soldier(Card.Card):
+    """Soldier"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
@@ -45,12 +47,14 @@ class Card_Soldier(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no coverage, pylint: disable=unused-argument
     return player.pick_to_discard(1)
 
 
 ###############################################################################
 class TestSoldier(unittest.TestCase):
+    """Test Soldier"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Peasant", "Militia"])
         self.g.start_game()

@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Graverobber"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Player, Card
 
 
 ###############################################################################
 class Card_Graverobber(Card.Card):
+    """Graverobber"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -18,8 +19,8 @@ class Card_Graverobber(Card.Card):
         self.name = "Graverobber"
         self.cost = 5
 
-    def special(self, game, player):
-        trash = player.plr_choose_options(
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+        if player.plr_choose_options(
             "Pick one",
             (
                 "Gain a card from the trash costing from 3 to 6 putting it on top of your deck",
@@ -29,16 +30,15 @@ class Card_Graverobber(Card.Card):
                 "Trash an Action card from your hand and gain a card costing up to 3 more",
                 True,
             ),
-        )
-        if trash:
-            actions = [c for c in player.piles[Piles.HAND] if c.isAction()]
+        ):
+            actions = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
             if not actions:
                 player.output("No suitable action cards")
                 return
-            card = player.plr_trash_card(cardsrc=actions)
-            player.plr_gain_card(cost=card[0].cost + 3)
+            cards = player.plr_trash_card(cardsrc=actions)
+            player.plr_gain_card(cost=cards[0].cost + 3)
         else:
-            trash_cards = [c for c in game.trash_pile if 3 <= c.cost <= 6]
+            trash_cards = [_ for _ in game.trash_pile if 3 <= _.cost <= 6]
             if not trash_cards:
                 player.output("No suitable cards in trash")
                 return
@@ -49,7 +49,9 @@ class Card_Graverobber(Card.Card):
 
 
 ###############################################################################
-class Test_Graverobber(unittest.TestCase):
+class TestGraverobber(unittest.TestCase):
+    """Test graverobber"""
+
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,

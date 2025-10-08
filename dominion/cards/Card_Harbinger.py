@@ -1,13 +1,15 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Harbinger"""
 import unittest
+from typing import Any
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card, Player
 
 
 ###############################################################################
 class Card_Harbinger(Card.Card):
+    """Harbinger"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -18,8 +20,8 @@ class Card_Harbinger(Card.Card):
         self.cards = 1
         self.cost = 3
 
-    def special(self, game, player):
-        choices = [("Don't look through discard pile", None)]
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+        choices: list[tuple[str, Any]] = [("Don't look through discard pile", None)]
         already = set()
         for card in player.piles[Piles.DISCARD]:
             if card.name in already:
@@ -36,7 +38,9 @@ class Card_Harbinger(Card.Card):
 
 
 ###############################################################################
-class Test_Harbinger(unittest.TestCase):
+class TestHarbinger(unittest.TestCase):
+    """Test Harbinger"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Harbinger"])
         self.g.start_game()

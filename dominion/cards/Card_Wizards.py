@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Wizards"""
 import unittest
 
 from dominion import Card, Game, CardPile, game_setup, Keys
@@ -7,6 +7,8 @@ from dominion import Card, Game, CardPile, game_setup, Keys
 
 ###############################################################################
 class Card_Wizards(Card.Card):
+    """Wizards Card"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.name = "Wizards"
@@ -22,6 +24,8 @@ class Card_Wizards(Card.Card):
 
 ###############################################################################
 class WizardCardPile(CardPile.CardPile):
+    """Wizards Card Pile"""
+
     def __init__(self, game: Game.Game) -> None:
         mapping = game_setup.get_card_classes("Wizard", game_setup.PATHS[Keys.CARDS], "Card_")
         for name, class_ in mapping.items():
@@ -35,19 +39,22 @@ class WizardCardPile(CardPile.CardPile):
         from dominion.cards.Wizard_Sorcerer import Card_Sorcerer
         from dominion.cards.Wizard_Lich import Card_Lich
 
-        for card_class in (Card_Student, Card_Conjurer, Card_Sorcerer, Card_Lich):
+        for card_klass in (Card_Student, Card_Conjurer, Card_Sorcerer, Card_Lich):
             for _ in range(4):
-                self.cards.insert(0, card_class())
+                self.cards.insert(0, card_klass())
 
 
 ###############################################################################
 class TestWizard(unittest.TestCase):
+    """Test Wizard"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Wizards"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
     def test_wizards(self) -> None:
+        """Test Pile"""
         card = self.g.get_card_from_pile("Wizards")
         self.assertEqual(len(self.g.card_piles["Wizards"]), 15)
         self.assertEqual(card.name, "Student")

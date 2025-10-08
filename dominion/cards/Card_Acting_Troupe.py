@@ -1,11 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Acting_Troupe"""
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_ActingTroupe(Card.Card):
+    """Acting Troupe"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -22,15 +25,18 @@ class Card_ActingTroupe(Card.Card):
 
 ###############################################################################
 class TestActingTroupe(unittest.TestCase):
+    """Test Acting Troupe"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Acting Troupe"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
     def test_play_card(self) -> None:
-        self.card = self.g.get_card_from_pile("Acting Troupe")
-        self.plr.add_card(self.card, Piles.HAND)
-        self.plr.play_card(self.card)
+        """Play Acting Troupe"""
+        card = self.g.get_card_from_pile("Acting Troupe")
+        self.plr.add_card(card, Piles.HAND)
+        self.plr.play_card(card)
         self.assertLessEqual(self.plr.villagers.get(), 4)
         self.assertIn("Acting Troupe", self.g.trash_pile)
 

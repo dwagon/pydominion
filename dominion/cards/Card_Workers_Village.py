@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Worker%27s_Village"""
 import unittest
+
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
-class Card_Workersvillage(Card.Card):
+class Card_WorkersVillage(Card.Card):
+    """Worker's Village"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -20,7 +22,9 @@ class Card_Workersvillage(Card.Card):
 
 
 ###############################################################################
-class Test_Workersvillage(unittest.TestCase):
+class TestWorkersVillage(unittest.TestCase):
+    """Test Worker's Village"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Worker's Village"])
         self.g.start_game()

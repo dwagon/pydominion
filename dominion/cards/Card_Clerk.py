@@ -8,6 +8,8 @@ from dominion import Card, Game, Piles, Player
 
 ###############################################################################
 class Card_Clerk(Card.Card):
+    """Clerk"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
@@ -24,7 +26,7 @@ class Card_Clerk(Card.Card):
 
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Each other player with 5 or more cards in hand puts one onto their deck."""
-        """ TODO - play it free at the start of the turn """
+        # TODO - play it free at the start of the turn
         for victim in player.attack_victims():
             hand_size = len(victim.piles[Piles.HAND])
             if hand_size >= 5:
@@ -45,7 +47,8 @@ class Card_Clerk(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
+    """Discard 1"""
     return player.pick_to_discard(1)
 
 
@@ -61,6 +64,7 @@ class TestClerk(unittest.TestCase):
         self.player.add_card(self.clerk, Piles.HAND)
 
     def test_play(self) -> None:
+        """Test play"""
         coins = self.player.coins.get()
         self.victim.piles[Piles.HAND].set("Copper", "Copper", "Copper", "Copper", "Estate", "Duchy")
         self.victim.test_input = ["Select Duchy", "Finish"]

@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Menagerie"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card, Player
 
 
 ###############################################################################
 class Card_Menagerie(Card.Card):
+    """Menagerie"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -18,7 +19,7 @@ class Card_Menagerie(Card.Card):
         self.actions = 1
         self.cost = 3
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         hand = set()
         for card in player.piles[Piles.HAND]:
             player.reveal_card(card)
@@ -32,7 +33,9 @@ class Card_Menagerie(Card.Card):
 
 
 ###############################################################################
-class Test_Menagerie(unittest.TestCase):
+class TestMenagerie(unittest.TestCase):
+    """Test Menagerie"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Menagerie"])
         self.g.start_game()
@@ -40,6 +43,7 @@ class Test_Menagerie(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Menagerie")
 
     def test_play_unique(self):
+        """No duplicates"""
         self.plr.piles[Piles.HAND].set("Copper", "Estate", "Duchy")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
@@ -47,6 +51,7 @@ class Test_Menagerie(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
     def test_play_non_unique(self):
+        """Duplucates"""
         self.plr.piles[Piles.HAND].set("Copper", "Copper", "Duchy")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)

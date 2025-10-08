@@ -1,18 +1,19 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Forager"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card, Player
 
 
 ###############################################################################
 class Card_Forager(Card.Card):
+    """Forager"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DARKAGES
-        self.desc = """+1 Action +1 Buy;Trash a card from your hand.
+        self.desc = """+1 Action; +1 Buy; Trash a card from your hand.
             A coin per differently named Treasure in the trash."""
         self.name = "Forager"
         self.actions = 1
@@ -20,7 +21,8 @@ class Card_Forager(Card.Card):
         self.cost = 3
 
     ###########################################################################
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
+        """Trash a card from your hand. A coin per differently named Treasure in the trash."""
         player.plr_trash_card()
         treas = set()
         for card in game.trash_pile:
@@ -31,7 +33,9 @@ class Card_Forager(Card.Card):
 
 
 ###############################################################################
-class Test_Forager(unittest.TestCase):
+class TestForager(unittest.TestCase):
+    """Test Forager"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Forager"])
         self.g.start_game()

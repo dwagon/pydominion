@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Experiment"""
 import unittest
 from typing import Any
 
@@ -8,6 +8,8 @@ from dominion import Game, Card, Piles, Player, OptionKeys, NoCardException
 
 ###############################################################################
 class Card_Experiment(Card.Card):
+    """Experiment"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -39,19 +41,23 @@ class Card_Experiment(Card.Card):
 
 ###############################################################################
 class TestExperiment(unittest.TestCase):
+    """Test Experiment"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Experiment"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
     def test_play_card(self) -> None:
-        self.card = self.g.get_card_from_pile("Experiment")
-        self.plr.add_card(self.card, Piles.HAND)
-        self.plr.play_card(self.card)
+        """Play card"""
+        card = self.g.get_card_from_pile("Experiment")
+        self.plr.add_card(card, Piles.HAND)
+        self.plr.play_card(card)
         self.assertEqual(self.plr.actions.get(), 0 + 1)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
 
     def test_gain_card(self) -> None:
+        """Gain Experiment"""
         self.plr.gain_card("Experiment")
         count = sum(1 for card in self.plr.piles[Piles.DISCARD] if card.name == "Experiment")
         self.assertEqual(count, 2)

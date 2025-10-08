@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Mining_Village"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles, Player
+from dominion import Game, Piles, Player, Card
 
 
 ###############################################################################
-class Card_Miningvillage(Card.Card):
+class Card_MiningVillage(Card.Card):
+    """Mining Village"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -34,7 +35,9 @@ class Card_Miningvillage(Card.Card):
 
 
 ###############################################################################
-class Test_Miningvillage(unittest.TestCase):
+class TestMiningVillage(unittest.TestCase):
+    """Test Mining Village"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Mining Village"])
         self.g.start_game()

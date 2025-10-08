@@ -7,6 +7,8 @@ from dominion import Game, Card, Piles, Player
 
 ###############################################################################
 class Card_Mercenary(Card.Card):
+    """Mercenary"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
@@ -23,9 +25,7 @@ class Card_Mercenary(Card.Card):
         cards, +2 coin, and each other player discards down to 3
         cards in hand"""
 
-        ans = player.plr_choose_options(
-            "Trash cards?", ("Trash nothing", False), ("Trash 2 cards", True)
-        )
+        ans = player.plr_choose_options("Trash cards?", ("Trash nothing", False), ("Trash 2 cards", True))
         if not ans:
             return
         player.plr_trash_card(2, force=True)
@@ -36,13 +36,15 @@ class Card_Mercenary(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no coverage, pylint: disable=unused-argument
     numtodiscard = len(player.piles[Piles.HAND]) - 3
     return player.pick_to_discard(numtodiscard)
 
 
 ###############################################################################
-class Test_Mercenary(unittest.TestCase):
+class TestMercenary(unittest.TestCase):
+    """Test Mercenary"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Urchin", "Moat"])
         self.g.start_game()

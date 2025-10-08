@@ -2,6 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Tools"""
 
 import unittest
+from typing import Any
 
 from dominion import Game, Card, Piles, Player, NoCardException
 
@@ -20,13 +21,13 @@ class Card_Tools(Card.Card):
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """Gain a copy of a card anyone has in play."""
-        available: set[str] = set(["Tools"])
+        available: set[str] = {"Tools"}
         for plr in game.player_list():
             for card in plr.piles[Piles.PLAYED]:
                 available.add(card.name)
             for card in plr.piles[Piles.DURATION]:
                 available.add(card.name)
-        options: list[tuple[str, str | None]] = [("Gain nothing", None)]
+        options: list[tuple[str, Any]] = [("Gain nothing", None)]
         options.extend((f"Gain {card_name}", card_name) for card_name in available)
         if to_gain := player.plr_choose_options("Gain which card?", *options):
             try:

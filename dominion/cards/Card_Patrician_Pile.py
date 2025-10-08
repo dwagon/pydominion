@@ -2,11 +2,14 @@
 """https://wiki.dominionstrategy.com/index.php/Patrician
 https://wiki.dominionstrategy.com/index.php/Emporium"""
 import unittest
+
 from dominion import Card, Game, CardPile, game_setup, Keys
 
 
 ###############################################################################
 class Card_PatricianSplit(Card.Card):
+    """Card"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.name = "Patrician"
@@ -20,6 +23,8 @@ class Card_PatricianSplit(Card.Card):
 
 ###############################################################################
 class PatricianCardPile(CardPile.CardPile):
+    """Card Pile"""
+
     def __init__(self, game):
         mapping = game_setup.get_card_classes("Split", game_setup.PATHS[Keys.CARDS], "Card_")
         for name, class_ in mapping.items():
@@ -31,19 +36,22 @@ class PatricianCardPile(CardPile.CardPile):
         from dominion.cards.Split_Patrician import Card_Patrician
         from dominion.cards.Split_Emporium import Card_Emporium
 
-        for card_class in (Card_Patrician, Card_Emporium):
+        for card_klass in (Card_Patrician, Card_Emporium):
             for _ in range(5):
-                self.cards.insert(0, card_class())
+                self.cards.insert(0, card_klass())
 
 
 ###############################################################################
-class TestEncampmentPile(unittest.TestCase):
+class TestPatricianPile(unittest.TestCase):
+    """Test Patrician Pile"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Patrician"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
     def test_pile(self):
+        """Test Pile"""
         self.assertEqual(len(self.g.card_piles["Patrician"]), 10)
         card = self.g.get_card_from_pile("Patrician")
         self.assertEqual(card.name, "Patrician")

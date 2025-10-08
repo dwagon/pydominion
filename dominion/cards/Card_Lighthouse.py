@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Lighthouse"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card, Player, OptionKeys
 
 
 ###############################################################################
 class Card_Lighthouse(Card.Card):
+    """Lighthouse"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
@@ -19,15 +20,18 @@ class Card_Lighthouse(Card.Card):
         self.actions = 1
         self.cost = 2
 
-    def duration(self, game, player):
+    def duration(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, str]:
         player.coins.add(1)
+        return {}
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         player.coins.add(1)
 
 
 ###############################################################################
-class Test_Lighthouse(unittest.TestCase):
+class TestLighthouse(unittest.TestCase):
+    """Test Lighthouse"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Lighthouse"])
         self.g.start_game()
@@ -36,6 +40,7 @@ class Test_Lighthouse(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
+        """Test play"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 1)

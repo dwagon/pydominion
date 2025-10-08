@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-"""https://wiki.dominionstrategy.com/index.php/Wealthy_Village """
+"""https://wiki.dominionstrategy.com/index.php/Wealthy_Village"""
 import unittest
+
 from dominion import Game, Card, Piles
 
 
@@ -19,9 +20,7 @@ class Card_SwampShacks(Card.Card):
 
     def special(self, game, player):
         """+1 Card per 3 cards you have in play (round down)."""
-        in_play = sum([1 for _ in player.piles[Piles.PLAYED]]) + sum(
-            [1 for _ in player.piles[Piles.DURATION]]
-        )
+        in_play = sum(1 for _ in player.piles[Piles.PLAYED]) + sum(1 for _ in player.piles[Piles.DURATION])
         num_cards = int(in_play / 3)
         player.pickup_cards(num=num_cards)
 
@@ -43,9 +42,7 @@ class TestSwampShacks(unittest.TestCase):
         actions = self.plr.actions.get()
         self.plr.play_card(self.card)
         self.g.print_state()
-        self.assertEqual(
-            self.plr.actions.get(), actions + 2 - 1
-        )  # One action to play card
+        self.assertEqual(self.plr.actions.get(), actions + 2 - 1)  # One action to play card
         self.assertEqual(len(self.plr.piles[Piles.HAND]), 5 + 1)
 
 

@@ -9,6 +9,8 @@ from dominion import Card, CardPile, Game, Piles, Player, NoCardException, game_
 
 ###############################################################################
 class Card_Knight(Card.Card):
+    """Knight"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.name = "Knights"
@@ -21,7 +23,8 @@ class Card_Knight(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no coverage, pylint: disable=unused-argument
+    """Discard 2"""
     return player.pick_to_discard(2)
 
 
@@ -44,19 +47,21 @@ class KnightCardPile(CardPile.CardPile):
 
 ###############################################################################
 class KnightCard(Card.Card):
+    """Knight Card"""
+
     def __init__(self) -> None:
         self.name = "Undef Knight"
         super().__init__()
         self.pile = "Knights"
 
-    def knight_special(self, game: Game.Game, player: Player.Player) -> None:
+    def knight_special(self, _: Game.Game, player: Player.Player) -> None:
         """Each other player reveals the top 2 cards of his deck,
         trashes one of them costing from 3 to 6 and discards the
         rest. If a knight is trashed by this, trash this card"""
         for pl in player.attack_victims():
-            self.knight_attack(game, player, pl)
+            self.knight_attack(player, pl)
 
-    def knight_attack(self, game: Game.Game, player: Player.Player, victim: Player.Player) -> None:
+    def knight_attack(self, player: Player.Player, victim: Player.Player) -> None:
         cards: list[Card.Card] = []
         for _ in range(2):
             try:
@@ -95,6 +100,8 @@ class KnightCard(Card.Card):
 
 ###############################################################################
 class TestKnight(unittest.TestCase):
+    """Test Knight"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Knights"])
         self.g.start_game()

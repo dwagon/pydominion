@@ -2,12 +2,14 @@
 
 import unittest
 
-from dominion import Game, Piles, Card
+from dominion import Game, Piles, Card, Player
 from dominion.cards.Card_Knight import KnightCard
 
 
 ###############################################################################
 class Card_SirVander(KnightCard):
+    """Sir Vander"""
+
     def __init__(self):
         KnightCard.__init__(self)
         self.cardtype = [
@@ -23,15 +25,17 @@ class Card_SirVander(KnightCard):
         self.name = "Sir Vander"
         self.cost = 5
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         self.knight_special(game, player)
 
-    def hook_trashcard(self, game, player):
+    def hook_trashcard(self, _, player):
         player.gain_card("gold")
 
 
 ###############################################################################
 class TestSirVander(unittest.TestCase):
+    """Test Sir Vander"""
+
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Knights"])
         self.g.start_game()

@@ -2,11 +2,14 @@
 """https://wiki.dominionstrategy.com/index.php/Catapult
 https://wiki.dominionstrategy.com/index.php/Rocks"""
 import unittest
+
 from dominion import Card, Game, CardPile, game_setup, Keys
 
 
 ###############################################################################
 class Card_CatapultSplit(Card.Card):
+    """Catapult Split"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.name = "Catapult"
@@ -20,6 +23,8 @@ class Card_CatapultSplit(Card.Card):
 
 ###############################################################################
 class CatapultCardPile(CardPile.CardPile):
+    """Catapult/Rocks Pile"""
+
     def __init__(self, game):
         mapping = game_setup.get_card_classes("Split", game_setup.PATHS[Keys.CARDS], "Card_")
         for name, class_ in mapping.items():
@@ -31,19 +36,22 @@ class CatapultCardPile(CardPile.CardPile):
         from dominion.cards.Split_Catapult import Card_Catapult
         from dominion.cards.Split_Rocks import Card_Rocks
 
-        for card_class in (Card_Catapult, Card_Rocks):
+        for card_klass in (Card_Catapult, Card_Rocks):
             for _ in range(5):
-                self.cards.insert(0, card_class())
+                self.cards.insert(0, card_klass())
 
 
 ###############################################################################
-class TestEncampmentPile(unittest.TestCase):
+class TestCatapultPile(unittest.TestCase):
+    """Test Catapult Pile"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Catapult"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
     def test_pile(self):
+        """Test pile"""
         self.assertEqual(len(self.g.card_piles["Catapult"]), 10)
         card = self.g.get_card_from_pile("Catapult")
         self.assertEqual(card.name, "Catapult")

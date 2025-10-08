@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Cutthroat"""
+"""https://wiki.dominionstrategy.com/index.php/Cutthroat"""
 import unittest
 from typing import Any
 
@@ -8,6 +8,8 @@ from dominion import Game, Card, Piles, Player, OptionKeys
 
 ###############################################################################
 class Card_Cutthroat(Card.Card):
+    """Cutthroat"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
@@ -49,13 +51,16 @@ The next time anyone gains a Treasure costing $5 or more, gain a Loot."""
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
+    """Discard down to 3"""
     num_to_discard = len(player.piles[Piles.HAND]) - 3
     return player.pick_to_discard(num_to_discard)
 
 
 ###############################################################################
-class Test_Cutthroat(unittest.TestCase):
+class TestCutthroat(unittest.TestCase):
+    """Test Cutthroat"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Cutthroat"])
         self.g.start_game()
@@ -74,7 +79,7 @@ class Test_Cutthroat(unittest.TestCase):
         """Someone gains a treasure"""
         self.plr.add_card(self.card, Piles.DURATION)
         self.victim.gain_card("Gold")
-        found = any([True for _ in self.plr.piles[Piles.DISCARD] if _.isLoot()])
+        found = any(True for _ in self.plr.piles[Piles.DISCARD] if _.isLoot())
         self.assertTrue(found)
 
 

@@ -2,6 +2,7 @@
 """https://wiki.dominionstrategy.com/index.php/Riverboat"""
 import random
 import unittest
+from typing import Any
 
 from dominion import Game, Card, Player, OptionKeys, game_setup, Keys, Piles
 
@@ -22,7 +23,7 @@ class Card_Riverboat(Card.Card):
         desc = player.game.card_instances[card_name].description(player)
         return f"At the start of your next turn, play {card_name}, leaving it there. ({card_name}: {desc})"
 
-    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str | bool]:
+    def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         """Play the set aside card, leaving it there."""
         player.output(f"Playing {game.specials[RIVERBOAT]} from Riverboat")
         player.card_benefits(game.card_instances[game.specials[RIVERBOAT]])

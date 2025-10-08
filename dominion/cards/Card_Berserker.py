@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Berserker"""
+"""https://wiki.dominionstrategy.com/index.php/Berserker"""
 
 import unittest
 from typing import Any
@@ -9,6 +9,8 @@ from dominion import Game, Card, Piles, Player, OptionKeys
 
 ###############################################################################
 class Card_Berserker(Card.Card):
+    """Berserker"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
@@ -26,22 +28,22 @@ class Card_Berserker(Card.Card):
             victim.output(f"{player}'s Berserker causes you to discard down to 3 cards")
             victim.plr_discard_down_to(3)
 
-    def hook_gain_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         if sum(1 for _ in player.piles[Piles.PLAYED] if _.isAction()):
             player.play_card(self, cost_action=False, discard=False)
         return {}
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
     num_to_discard = len(player.piles[Piles.HAND]) - 3
     return player.pick_to_discard(num_to_discard)
 
 
 ###############################################################################
 class Test_Berserker(unittest.TestCase):
+    """Test Berserker"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Berserker"])
         self.g.start_game()

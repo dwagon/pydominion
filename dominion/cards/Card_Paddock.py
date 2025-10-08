@@ -8,6 +8,8 @@ from dominion import Game, Card, Piles, Player, NoCardException
 
 ###############################################################################
 class Card_Paddock(Card.Card):
+    """Paddock"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -24,12 +26,14 @@ class Card_Paddock(Card.Card):
             player.gain_card("Horse")
         except NoCardException:
             player.output("No more Horses")
-        empties = sum([1 for _, st in game.get_card_piles() if st.is_empty()])
+        empties = sum(1 for _, st in game.get_card_piles() if st.is_empty())
         player.add_actions(empties)
 
 
 ###############################################################################
 class TestPaddock(unittest.TestCase):
+    """Test Paddock"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Paddock", "Moat"])
         self.g.start_game()

@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Tragic_Hero"""
 import unittest
-from dominion import Game, Card, Piles
-import dominion.Card as Card
+
+from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Tragic_Hero(Card.Card):
+    """Tragic Hero"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -19,14 +21,16 @@ class Card_Tragic_Hero(Card.Card):
         self.cards = 3
         self.buys = 1
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         if player.piles[Piles.HAND].size() >= 8:
             player.trash_card(self)
             player.plr_gain_card(cost=None, types={Card.CardType.TREASURE: True})
 
 
 ###############################################################################
-class Test_Tragic_Hero(unittest.TestCase):
+class TestTragicHero(unittest.TestCase):
+    """Test Tragic Hero"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Tragic Hero"], badcards=["Fool's Gold"])
         self.g.start_game()
@@ -41,7 +45,8 @@ class Test_Tragic_Hero(unittest.TestCase):
         self.assertEqual(self.plr.buys.get(), 1 + 1)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 1 + 3)
 
-    def test_gainsomething(self):
+    def test_gain_something(self):
+        """Gain a treasure"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Get Gold"]
         self.plr.play_card(self.card)

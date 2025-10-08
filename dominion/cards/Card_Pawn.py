@@ -1,22 +1,23 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Pawn"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card, Player
 
 
 ###############################################################################
 class Card_Pawn(Card.Card):
+    """Pawn"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.INTRIGUE
-        self.desc = "Choose two: +1 card, +1 action, +1 buy, +1 coin"
+        self.desc = """Choose two: +1 Card; +1 Action; +1 Buy; +$1. The choices must be different."""
         self.name = "Pawn"
         self.cost = 2
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Choose two: +1 card; +1 action +1 buy; +1 coin. (The
         choices must be different)"""
         selectable = [
@@ -48,7 +49,9 @@ class Card_Pawn(Card.Card):
 
 
 ###############################################################################
-class Test_Pawn(unittest.TestCase):
+class TestPawn(unittest.TestCase):
+    """Test Pawn"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Pawn"])
         self.g.start_game()

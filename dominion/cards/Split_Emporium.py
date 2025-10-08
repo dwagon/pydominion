@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Emporium"""
 import unittest
 
 from dominion import Card, Game, Piles, Player, OptionKeys, Phase
@@ -7,6 +7,8 @@ from dominion import Card, Game, Piles, Player, OptionKeys, Phase
 
 ###############################################################################
 class Card_Emporium(Card.Card):
+    """Emporium"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -25,10 +27,8 @@ class Card_Emporium(Card.Card):
         return "+1 Card, +1 Action, +1 Coin. When you gain this, if you have at least 5 Action cards in play, +2VP."
 
     ###########################################################################
-    def hook_gain_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, str]:
-        count = sum([1 for _ in player.piles[Piles.PLAYED] if _.isAction()])
+    def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
+        count = sum(1 for _ in player.piles[Piles.PLAYED] if _.isAction())
         if count >= 5:
             player.add_score("Emporium", 2)
             player.output("Gained 2VP from Emporium")
@@ -39,6 +39,8 @@ class Card_Emporium(Card.Card):
 
 ###############################################################################
 class Test_Emporium(unittest.TestCase):
+    """Test Emporium"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Patrician", "Moat"])
         self.g.start_game()

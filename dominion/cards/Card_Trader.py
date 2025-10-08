@@ -1,13 +1,15 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Trader"""
+"""https://wiki.dominionstrategy.com/index.php/Trader"""
 import unittest
-from typing import Optional, Any
+from typing import Any
 
 from dominion import Card, Game, Piles, OptionKeys, Player, NoCardException
 
 
 ###############################################################################
 class Card_Trader(Card.Card):
+    """Trader"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
@@ -29,9 +31,7 @@ class Card_Trader(Card.Card):
                     player.output("No more Silver")
                     break
 
-    def hook_gain_card(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def hook_gain_card(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         if card.name == "Silver":
             return {}
         if player.plr_choose_options(
@@ -45,6 +45,8 @@ class Card_Trader(Card.Card):
 
 ###############################################################################
 class TestTrader(unittest.TestCase):
+    """Test Trader"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Trader"])
         self.g.start_game()
@@ -65,6 +67,7 @@ class TestTrader(unittest.TestCase):
         self.assertIn("Estate", self.g.trash_pile)
 
     def test_gain(self) -> None:
+        """Tet gain"""
         self.plr.test_input = ["Instead"]
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.coins.set(6)

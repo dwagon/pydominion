@@ -7,6 +7,8 @@ from dominion import Card, Game, Piles
 
 ###############################################################################
 class Card_Ninja(Card.Card):
+    """Ninja"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.SHADOW]
@@ -24,13 +26,15 @@ class Card_Ninja(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
     numtodiscard = len(player.piles[Piles.HAND]) - 3
     return player.pick_to_discard(numtodiscard)
 
 
 ###############################################################################
 class TestNinja(unittest.TestCase):
+    """Test Ninja"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Ninja"])
         self.g.start_game()

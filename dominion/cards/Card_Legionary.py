@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Legionary"""
 import unittest
 
-import dominion.Card as Card
-from dominion import Game, Piles
+from dominion import Game, Piles, Card, Player
 
 
 ###############################################################################
 class Card_Legionary(Card.Card):
+    """Legionary"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
@@ -18,7 +19,7 @@ class Card_Legionary(Card.Card):
         self.cost = 5
         self.coin = 3
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         if au := player.piles[Piles.HAND]["Gold"]:
             player.reveal_card(au)
             for plr in player.attack_victims():
@@ -28,13 +29,16 @@ class Card_Legionary(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    numtodiscard = len(player.piles[Piles.HAND]) - 2
-    return player.pick_to_discard(numtodiscard)
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
+    """Discard down to 2"""
+    num_to_discard = len(player.piles[Piles.HAND]) - 2
+    return player.pick_to_discard(num_to_discard)
 
 
 ###############################################################################
-class Test_Legionary(unittest.TestCase):
+class TestLegionary(unittest.TestCase):
+    """Test Legionary"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Legionary"])
         self.g.start_game()

@@ -7,6 +7,8 @@ from dominion import Game, Card, Piles, Player
 
 ###############################################################################
 class Card_Rice(Card.Card):
+    """Rice"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
@@ -25,12 +27,13 @@ class Card_Rice(Card.Card):
             if isinstance(card.cardtype, list):
                 for cardtype in card.cardtype:
                     types.add(cardtype)
-            pass
         player.coins.add(len(types))
 
 
 ###############################################################################
-class Test_Rice(unittest.TestCase):
+class TestRice(unittest.TestCase):
+    """Test Rice"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Rice"])
         self.g.start_game()

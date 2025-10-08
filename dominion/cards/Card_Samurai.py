@@ -8,6 +8,8 @@ from dominion import Game, Card, Piles, Player, OptionKeys
 
 ###############################################################################
 class Card_Samurai(Card.Card):
+    """Samurai"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION, Card.CardType.ATTACK]
@@ -31,13 +33,15 @@ class Card_Samurai(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
     numtodiscard = len(player.piles[Piles.HAND]) - 3
     return player.pick_to_discard(numtodiscard)
 
 
 ###############################################################################
-class Test_Samurai(unittest.TestCase):
+class TestSamurai(unittest.TestCase):
+    """Test Samurai"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Samurai"])
         self.g.start_game()

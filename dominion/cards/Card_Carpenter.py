@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Carpenter """
+"""http://wiki.dominionstrategy.com/index.php/Carpenter"""
 
 import unittest
 
@@ -8,6 +8,8 @@ from dominion import Card, Game, Piles, Player, NoCardException, Phase
 
 ###############################################################################
 class Card_Carpenter(Card.Card):
+    """Carpenter"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -15,13 +17,12 @@ class Card_Carpenter(Card.Card):
         self.name = "Carpenter"
         self.cost = 4
 
-    @classmethod
-    def dynamic_description(cls, player: Player.Player) -> str:
+    def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
             return """If no Supply piles are empty, +1 Action and gain a card
                 costing up to $4.  Otherwise, trash a card from your hand and
                 gain a card costing up to $2 more than it."""
-        empties = sum([1 for _, st in player.game.get_card_piles() if st.is_empty()])
+        empties = sum(1 for _, st in player.game.get_card_piles() if st.is_empty())
         if empties:
             return """Trash a card from your hand and gain
                 a card costing up to $2 more than it."""
@@ -39,6 +40,8 @@ class Card_Carpenter(Card.Card):
 
 ###############################################################################
 class TestCarpenter(unittest.TestCase):
+    """Test Carpenter"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Carpenter", "Moat"])
         self.g.start_game()

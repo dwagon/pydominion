@@ -7,6 +7,8 @@ from dominion import Game, Card, Piles, Player
 
 ###############################################################################
 class Card_Minion(Card.Card):
+    """Minion"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
@@ -23,33 +25,36 @@ class Card_Minion(Card.Card):
         discard your hand, +4 cards and each other player with
         at least 5 card in hand discards his hand and draws 4
         cards"""
-        attack = player.plr_choose_options(
+        if player.plr_choose_options(
             "What do you want to do?",
             ("+2 coin", False),
             (
                 "Discard your hand, +4 cards and each other player with 5 cards discards and draws 4",
                 True,
             ),
-        )
-        if attack:
-            self.attack(game, player)
+        ):
+            attack(player)
         else:
             player.coins.add(2)
 
-    def attack(self, game, player):
-        self.dropAndDraw(player)
-        for victim in player.attack_victims():
-            if victim.piles[Piles.HAND].size() >= 5:
-                self.dropAndDraw(victim)
 
-    def dropAndDraw(self, plr: "Player.Player"):
-        # TODO: Do you discard the minion as well?
-        plr.discard_hand({})
-        plr.pickup_cards(4)
+def attack(player: Player.Player) -> None:
+    drop_and_draw(player)
+    for victim in player.attack_victims():
+        if victim.piles[Piles.HAND].size() >= 5:
+            drop_and_draw(victim)
+
+
+def drop_and_draw(plr: "Player.Player"):
+    # TODO: Do you discard the minion as well?
+    plr.discard_hand({})
+    plr.pickup_cards(4)
 
 
 ###############################################################################
-class Test_Minion(unittest.TestCase):
+class TestMinion(unittest.TestCase):
+    """Test Minion"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Minion", "Moat"])
         self.g.start_game()

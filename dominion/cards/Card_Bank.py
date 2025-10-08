@@ -19,12 +19,12 @@ class Card_Bank(Card.Card):
     def hook_coinvalue(self, game: "Game.Game", player: "Player.Player") -> int:
         """When you play this it is worth 1 per treasure card you
         have in play (counting this)"""
-        num_treas = sum([1 for c in player.piles[Piles.PLAYED] if c.isTreasure()])
+        num_treas = sum(1 for c in player.piles[Piles.PLAYED] if c.isTreasure())
         return num_treas
 
 
 ###############################################################################
-class Test_Bank(unittest.TestCase):
+class TestBank(unittest.TestCase):
     """Test Bank"""
 
     def setUp(self) -> None:
