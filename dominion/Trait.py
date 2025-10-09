@@ -26,7 +26,7 @@ class Trait(Card.Card):
 
     ###########################################################################
     def __repr__(self) -> str:  # pragma: no coverage
-        return f"Trait {self.name}"
+        return f"Trait {self.name} on {self.card_pile}"
 
 
 # EOF
