@@ -230,7 +230,7 @@ class Card:
 
     ##########################################################################
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
-        """Hook - overwritten in subclasses"""
+        """Any special card effects"""
 
     ##########################################################################
     def hook_overpay(self, game: "Game.Game", player: "Player.Player", amount: int) -> None:
@@ -279,6 +279,7 @@ class Card:
 
     ##########################################################################
     def isDebt(self) -> bool:
+        """Does this card have a debt cost"""
         return self.debtcost != 0
 
     ##########################################################################
