@@ -639,6 +639,43 @@ class TestDefer(unittest.TestCase):
 
 
 ###############################################################################
+class TestPreBuyChecks(unittest.TestCase):
+    """Test pre_buy_checks()"""
+
+    def setUp(self) -> None:
+        self.game = Game.TestGame(numplayers=1, oldcards=True, initcards=["Embargo"])
+        self.game.start_game()
+        self.plr = self.game.player_list()[0]
+
+    def test_buys(self) -> None:
+        """Check if we have enough buys"""
+        self.plr.buys.set(0)
+        self.assertFalse(self.plr.pre_buy_checks(self.game.card_instances["Copper"]))
+        self.plr.buys.set(1)
+        self.assertTrue(self.plr.pre_buy_checks(self.game.card_instances["Copper"]))
+
+    def test_debt(self) -> None:
+        """Test buying a card when the player has a debt"""
+        self.plr.debt = Counter("Debt", 1)
+        self.assertFalse(self.plr.pre_buy_checks(self.game.card_instances["Copper"]))
+        self.assertIn("Must pay off debt first", self.plr.messages)
+
+    def test_buy_limit(self) -> None:
+        """Test setting a buy limit"""
+        self.plr.limits[Limits.BUY] = 0
+        self.assertFalse(self.plr.pre_buy_checks(self.game.card_instances["Copper"]))
+        self.plr.limits[Limits.BUY] = 1
+        self.assertTrue(self.plr.pre_buy_checks(self.game.card_instances["Copper"]))
+
+    def test_cost(self) -> None:
+        """Can we afford the card"""
+        self.plr.coins.set(0)
+        self.assertFalse(self.plr.pre_buy_checks(self.game.card_instances["Silver"]))
+        self.plr.coins.set(5)
+        self.assertTrue(self.plr.pre_buy_checks(self.game.card_instances["Silver"]))
+
+
+###############################################################################
 class TestBuyCard(unittest.TestCase):
     """Test buy_card()"""
 
@@ -647,11 +684,15 @@ class TestBuyCard(unittest.TestCase):
         self.game.start_game()
         self.plr = self.game.player_list()[0]
 
-    def test_debt(self) -> None:
-        """Test buying a card when the player has a debt"""
-        self.plr.debt = Counter("Debt", 1)
-        self.plr.buy_card("Copper")
-        self.assertIn("Must pay off debt first", self.plr.messages)
+    def test_buy_card(self) -> None:
+        """Buy a card"""
+        coins = self.plr.coins.set(7)
+        buys = self.plr.buys.set(1)
+        self.plr.buy_card("Gold")
+        self.assertEqual(self.plr.coins.get(), coins - 6)
+        self.assertEqual(self.plr.buys.get(), buys - 1)
+        self.assertEqual(self.plr.stats["bought"][0].name, "Gold")
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
 
     def test_embargo(self) -> None:
         """Test buying an embargoed card"""

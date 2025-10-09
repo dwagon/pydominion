@@ -881,6 +881,8 @@ class Player:
 
     ###########################################################################
     def end_turn_hooks(self):
+        """Call all the various ent_turn related hooks"""
+        """Call all the various end_turn related hooks"""
         for card in self.had_cards:
             self.currcards.append(card)
             card.hook_end_turn(game=self.game, player=self)
@@ -954,6 +956,7 @@ class Player:
 
     ###########################################################################
     def hook_all_players_pre_play(self, card: Card) -> dict[OptionKeys, str]:
+        """Call the hook_all_players_pre_play() hook for all relevant cards"""
         options: dict[OptionKeys, str] = {}
         for player in self.game.player_list():
             for crd in player.piles[Piles.DURATION]:
@@ -962,6 +965,7 @@ class Player:
 
     ###########################################################################
     def hook_all_players_post_play(self, card: Card) -> dict[OptionKeys, Any]:
+        """Call the hook_all_players_post_play() hook for all relevant cards"""
         options: dict[OptionKeys, Any] = {}
         for player in self.game.player_list():
             for crd in player.piles[Piles.DURATION]:
@@ -1098,6 +1102,7 @@ class Player:
 
     ###########################################################################
     def card_cost(self, card: Card) -> int:
+        """Return cost of a card with all modifiers"""
         assert isinstance(card, (Card, Project, Event)), f"Card{card=} {type(card)=}"
         cost = card.cost
         if Token.MINUS_2_COST in self.which_token(card.name):
@@ -1128,12 +1133,6 @@ class Player:
         callhook: bool = True,
     ) -> Card:
         """Add a new card to the players set of cards from a card pile, return the card gained"""
-        # Options:
-        #   dontadd: True - adding card handled elsewhere
-        #   replace: <new_card> - Replace the gained card with <new_card>
-        #   destination: <dest> - Move the new card to <dest> rather than discard pile
-        #   trash: True - trash the new card
-        #   shuffle: True - shuffle the deck after gaining new card
 
         options: dict[OptionKeys, Any] = {}
         if new_card is None:
@@ -1145,8 +1144,7 @@ class Player:
         if callhook:
             options |= self._gain_card_hooks(new_card)
 
-        # Replace is to gain a different card
-        if options.get(OptionKeys.REPLACE):
+        if options.get(OptionKeys.REPLACE):  # Replace is to gain a different card
             new_card = self._gain_card_replace(new_card, options[OptionKeys.REPLACE])
 
         if new_card is None:
@@ -1227,34 +1225,45 @@ class Player:
             self.coins -= ans
 
     ###########################################################################
+    def pre_buy_checks(self, card: Card) -> bool:
+        """Pre buy checks - make sure we can buy the card"""
+        if not self.buys:
+            return False
+        if not self.limits[Limits.BUY]:
+            self.output("Buy limit stops buying")
+            return False
+        if self.debt:
+            self.output("Must pay off debt first")
+            return False
+        if not card.always_buyable and self.coins.get() < self.card_cost(card):
+            self.output("You can't afford this")
+            return False
+        return True
+
+    ###########################################################################
     def buy_card(self, card_name: str) -> None:
         """Buy a card"""
         assert isinstance(card_name, str), f"buy_card({card_name=}) {type(card_name)=}"
-        if not self.buys:  # pragma: no cover
-            return
-        if not self.limits[Limits.BUY]:
-            self.output("Buy limit stops buying")
-            return
-        if self.debt:
-            self.output("Must pay off debt first")
-            return
-        self.buys -= 1
-        self.limits[Limits.BUY] -= 1
         card = self.game.card_instances[card_name]
         cost = self.card_cost(card)
-        if card.isDebt():
-            self.debt += card.debtcost
-        if self.coins.get() < cost:
-            self.output("You can't afford this")
+
+        if not self.pre_buy_checks(card):
             return
-        self.coins -= cost
-        if card.overpay and self.coins.get():
-            self.overpay(card)
+
         try:
             new_card = self.gain_card(card.name)
         except NoCardException:
             self.output(f"Couldn't buy card - no more {card.name}s available")
             return
+
+        self.coins -= cost
+        self.buys -= 1
+        self.limits[Limits.BUY] -= 1
+        if card.isDebt():
+            self.debt += card.debtcost
+
+        if card.overpay and self.coins.get():
+            self.overpay(card)
         if self.game.card_piles[new_card.pile].embargo_level:
             self._buy_card_embargo(new_card)
 
@@ -1409,33 +1418,28 @@ class Player:
         return self.name
 
     ###########################################################################
-    def buy_project(self, project: Project) -> bool:
+    def buy_project(self, project: Project) -> None:
+        """Buy a project"""
         assert issubclass(project.__class__, Project)
         if not self.buys:
             self.output("Need a buy to buy a project")
-            return False
+            return
         if self.debt:
             self.output("Must pay off debt first")
-            return False
+            return
         if self.coins.get() < project.cost:
             self.output(f"Need {project.cost} coins to buy this project")
-            return False
+            return
         self.buys -= 1
         self.coins -= project.cost
         self.debt += project.debtcost
         self.buys += project.buys
         self.assign_project(project.name)
-        return True
 
     ###########################################################################
     def perform_event(self, event: Event) -> bool:
         """Perform an event"""
-        try:
-            assert isinstance(event, Event)
-        except AssertionError:
-            print(f"Event={event} ({type(event)})")
-            raise
-
+        assert isinstance(event, Event), f"Event={event} ({type(event)})"
         if not self.buys:
             self.output("Need a buy to perform an event")
             return False
@@ -1459,6 +1463,7 @@ class Player:
     ###########################################################################
     @classmethod
     def select_by_type(cls, card: Card, types: dict[CardType, bool]) -> bool:
+        """Return if a card is of the specified type"""
         assert isinstance(card, Card), f"select_by_type {card=} {type(card)=}"
         if card.isAction() and not types[CardType.ACTION]:
             return False
@@ -1814,7 +1819,7 @@ class Player:
 
     ###########################################################################
     def plr_discard_down_to(self, num: int) -> None:
-        """Get the player to discard down to num cards in their hand"""
+        """Get the player to discard down to {num} cards in their hand"""
         num_to_go = len(self.piles[Piles.HAND]) - num
         if num_to_go <= 0:
             return
@@ -1830,6 +1835,7 @@ class Player:
 
     ###########################################################################
     def output(self, msg: str, end: str = "") -> None:
+        """Output to a players device"""
         raise NotImplementedError
 
     ###########################################################################
