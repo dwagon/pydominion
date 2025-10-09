@@ -27,15 +27,15 @@ class Card_Flagship(Card):
         self.cost = 4
         self.permanent = True
 
-    def hook_post_play(
-        self, game: Game, player: Player, card: Card
-    ) -> dict[OptionKeys, str]:
+    def hook_post_play(self, game: Game, player: Player, card: Card) -> dict[OptionKeys, str]:
         """The next time you play a non-Command Action card, replay it."""
         if not card.isAction() or card.isCommand():
             return {}
+        if self.location != Piles.DURATION:
+            return {}
         player.output(f"Flagship plays {card} again")
         player.play_card(card, cost_action=False, discard=False, post_action_hook=False)
-        player.move_card(self, Piles.DISCARD)
+        player.move_card(self, Piles.PLAYED)
         return {}
 
 
@@ -77,6 +77,23 @@ class TestFlagship(unittest.TestCase):
         self.plr.add_card(horse, Piles.HAND)
         self.plr.play_card(horse)
         self.assertEqual(horse.location, Piles.CARDPILE)
+
+    def test_play_two_flagships(self):
+        """Play with two flagships deployed"""
+        self.plr.piles[Piles.DISCARD].set("Silver", "Silver", "Silver", "Silver", "Silver")
+        moat = self.g.get_card_from_pile("Moat")
+        card1 = self.g.get_card_from_pile("Flagship")
+        card2 = self.g.get_card_from_pile("Flagship")
+        self.plr.move_card(card1, Piles.DURATION)
+        self.plr.move_card(card2, Piles.DURATION)
+        self.plr.end_turn()
+        self.plr.start_turn()
+        self.plr.add_card(moat, Piles.HAND)
+        hand_size = self.plr.piles[Piles.HAND].size()
+        self.plr.play_card(moat)
+        self.assertNotIn("Flagship", self.plr.piles[Piles.DURATION])
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hand_size + 2 + 2 + 2 - 1)  # Moat *3, -1 for playing
+        self.assertIn("Moat", self.plr.piles[Piles.PLAYED])
 
 
 ###############################################################################
