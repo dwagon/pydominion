@@ -2,7 +2,7 @@
 """https://wiki.dominionstrategy.com/index.php/Archive"""
 import unittest
 
-from dominion import Card, Game, PlayArea, Piles, NoCardException, Player, Option
+from dominion import Card, Game, PlayArea, Piles, NoCardException, Player
 
 ARCHIVE = "archive"
 
@@ -32,18 +32,15 @@ class Card_Archive(Card.Card):
                 continue
             player.output(f"Putting {card} in the archive")
             player.specials[ARCHIVE].add(card)
+            card.location = Piles.SPECIAL
             player.secret_count += 1
         self.permanent = True
 
     def duration(self, game: Game.Game, player: Player.Player):
-        options = []
-        index = 0
-        for card in player.specials[ARCHIVE]:
-            options.append(Option(selector=f"{index}", print=f"Bring back {card}", card=card))
-            index += 1
-        if o := player.user_input(options, "What card to bring back from the Archive?"):
-            player.add_card(o["card"], Piles.HAND)
-            player.specials[ARCHIVE].remove(o["card"])
+        options = [(f"Bring back {_}", _) for _ in player.specials[ARCHIVE]]
+        if card := player.plr_choose_options("What card to bring back from the Archive?", *options):
+            player.add_card(card, Piles.HAND)
+            player.specials[ARCHIVE].remove(card)
             player.secret_count -= 1
         if player.specials[ARCHIVE].is_empty():
             self.permanent = False
