@@ -23,7 +23,6 @@ class Card_Encampment(Card.Card):
         self.cards = 2
         self.actions = 2
         self.cost = 2
-        self._discard = False
         self.pile = "Encampment"
 
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
@@ -48,7 +47,7 @@ class Card_Encampment(Card.Card):
             player.specials[ENCAMPMENT] = True
 
     def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
-        if player.specials[ENCAMPMENT]:
+        if ENCAMPMENT in player.specials and player.specials[ENCAMPMENT]:
             for card in player.piles[Piles.PLAYED]:
                 if card == self:
                     player.output("Returning Encampment to Supply")
