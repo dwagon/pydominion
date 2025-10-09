@@ -1098,6 +1098,7 @@ class Player:
 
     ###########################################################################
     def card_cost(self, card: Card) -> int:
+        """Return cost of a card with all modifiers"""
         assert isinstance(card, (Card, Project, Event)), f"Card{card=} {type(card)=}"
         cost = card.cost
         if Token.MINUS_2_COST in self.which_token(card.name):
@@ -1128,12 +1129,6 @@ class Player:
         callhook: bool = True,
     ) -> Card:
         """Add a new card to the players set of cards from a card pile, return the card gained"""
-        # Options:
-        #   dontadd: True - adding card handled elsewhere
-        #   replace: <new_card> - Replace the gained card with <new_card>
-        #   destination: <dest> - Move the new card to <dest> rather than discard pile
-        #   trash: True - trash the new card
-        #   shuffle: True - shuffle the deck after gaining new card
 
         options: dict[OptionKeys, Any] = {}
         if new_card is None:
@@ -1145,8 +1140,7 @@ class Player:
         if callhook:
             options |= self._gain_card_hooks(new_card)
 
-        # Replace is to gain a different card
-        if options.get(OptionKeys.REPLACE):
+        if options.get(OptionKeys.REPLACE):  # Replace is to gain a different card
             new_card = self._gain_card_replace(new_card, options[OptionKeys.REPLACE])
 
         if new_card is None:
@@ -1227,34 +1221,45 @@ class Player:
             self.coins -= ans
 
     ###########################################################################
+    def pre_buy_checks(self, card: Card) -> bool:
+        """Pre buy checks - make sure we can buy the card"""
+        if not self.buys:
+            return False
+        if not self.limits[Limits.BUY]:
+            self.output("Buy limit stops buying")
+            return False
+        if self.debt:
+            self.output("Must pay off debt first")
+            return False
+        if self.coins.get() < self.card_cost(card):
+            self.output("You can't afford this")
+            return False
+        return True
+
+    ###########################################################################
     def buy_card(self, card_name: str) -> None:
         """Buy a card"""
         assert isinstance(card_name, str), f"buy_card({card_name=}) {type(card_name)=}"
-        if not self.buys:  # pragma: no cover
-            return
-        if not self.limits[Limits.BUY]:
-            self.output("Buy limit stops buying")
-            return
-        if self.debt:
-            self.output("Must pay off debt first")
-            return
-        self.buys -= 1
-        self.limits[Limits.BUY] -= 1
         card = self.game.card_instances[card_name]
         cost = self.card_cost(card)
-        if card.isDebt():
-            self.debt += card.debtcost
-        if self.coins.get() < cost:
-            self.output("You can't afford this")
+
+        if not self.pre_buy_checks(card):
             return
-        self.coins -= cost
-        if card.overpay and self.coins.get():
-            self.overpay(card)
+
         try:
             new_card = self.gain_card(card.name)
         except NoCardException:
             self.output(f"Couldn't buy card - no more {card.name}s available")
             return
+
+        self.coins -= cost
+        self.buys -= 1
+        self.limits[Limits.BUY] -= 1
+        if card.isDebt():
+            self.debt += card.debtcost
+
+        if card.overpay and self.coins.get():
+            self.overpay(card)
         if self.game.card_piles[new_card.pile].embargo_level:
             self._buy_card_embargo(new_card)
 
