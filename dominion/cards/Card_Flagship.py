@@ -27,15 +27,15 @@ class Card_Flagship(Card):
         self.cost = 4
         self.permanent = True
 
-    def hook_post_play(
-        self, game: Game, player: Player, card: Card
-    ) -> dict[OptionKeys, str]:
+    def hook_post_play(self, game: Game, player: Player, card: Card) -> dict[OptionKeys, str]:
         """The next time you play a non-Command Action card, replay it."""
         if not card.isAction() or card.isCommand():
             return {}
+        if self.location != Piles.DURATION:
+            return {}
         player.output(f"Flagship plays {card} again")
         player.play_card(card, cost_action=False, discard=False, post_action_hook=False)
-        player.move_card(self, Piles.DISCARD)
+        player.move_card(self, Piles.PLAYED)
         return {}
 
 
