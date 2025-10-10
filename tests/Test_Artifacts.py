@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""Test Artifacts"""
 import unittest
 
 from dominion import Game
@@ -7,8 +7,10 @@ from dominion import Game
 
 ###############################################################################
 class TestArtifact(unittest.TestCase):
+    """Test Artifacts"""
+
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2)
+        self.g = Game.TestGame(numplayers=2, initcards=["Flag Bearer"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
 

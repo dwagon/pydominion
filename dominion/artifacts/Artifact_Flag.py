@@ -26,7 +26,7 @@ class Test_Flag(unittest.TestCase):
     """Test Flag"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=1, initartifacts=["Flag"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Flag Bearer"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.artifact = self.g.artifacts["Flag"]

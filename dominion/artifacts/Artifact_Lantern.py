@@ -25,7 +25,6 @@ class Test_Lantern(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            initartifacts=["Lantern"],
             initcards=["Border Guard", "Moat", "Guide"],
         )
         self.g.start_game()

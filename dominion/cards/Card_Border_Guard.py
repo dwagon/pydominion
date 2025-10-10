@@ -19,6 +19,7 @@ class Card_BorderGuard(Card.Card):
         self.name = "Border Guard"
         self.cost = 2
         self.actions = 1
+        self.needsartifacts = True
 
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
         num_cards = 3 if player.has_artifact("Lantern") else 2

@@ -179,7 +179,6 @@ def load_prophecies(game: "Game", specified: list[str]) -> Prophecy:
 def load_artifacts(game: "Game") -> dict[str, Artifact]:
     """Load and return artifacts"""
     artifacts = load_non_kingdom_cards(game, "Artifact", [], None)
-    game.output("Playing with Artifacts")
     return cast(dict[str, Artifact], artifacts)
 
 
@@ -838,7 +837,7 @@ def start_game(
     game.events = load_events(game, INIT_CARDS[Keys.EVENT], INIT_NUMBERS[Keys.EVENT])
     game.ways = load_ways(game, INIT_CARDS[Keys.WAY], INIT_NUMBERS[Keys.WAY])
     game.landmarks = load_landmarks(game, INIT_CARDS[Keys.LANDMARK], INIT_NUMBERS[Keys.LANDMARK])
-    game.artifacts = load_artifacts(game)
+    game.artifacts = {}
     game.projects = load_projects(game, INIT_CARDS[Keys.PROJECTS], INIT_NUMBERS[Keys.PROJECTS])
     load_traits(game, INIT_CARDS[Keys.TRAITS], INIT_NUMBERS[Keys.TRAITS])
 
