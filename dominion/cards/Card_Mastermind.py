@@ -9,6 +9,8 @@ from dominion import Card, Game, Piles, Player, OptionKeys
 
 ###############################################################################
 class Card_Mastermind(Card.Card):
+    """Mastermind"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
@@ -30,12 +32,15 @@ class Card_Mastermind(Card.Card):
             for i in range(1, 4):
                 player.output(f"Number {i} play of {card}")
                 player.play_card(card, discard=False, cost_action=False)
-            player.move_card(card, Piles.PLAYED)
+            if card.location == Piles.HAND:
+                player.move_card(card, Piles.PLAYED)
         return {}
 
 
 ###############################################################################
 class TestMastermind(unittest.TestCase):
+    """Test Mastermind"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Mastermind", "Moat"])
         self.g.start_game()

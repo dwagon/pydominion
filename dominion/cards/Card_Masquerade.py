@@ -45,18 +45,20 @@ class Card_Masquerade(Card.Card):
 
 ###############################################################################
 def suitable_players(game: Game.Game) -> list[Player.Player]:
+    """List of players that are in the Masquerade"""
     return [_ for _ in game.player_list() if len(_.piles[Piles.HAND]) > 0]
 
 
 ###############################################################################
 def plr_to_left(players: list[Player.Player], plr: Player.Player) -> Player.Player:
+    """Player to the left of {plr} that are in the Masquerade"""
     return players[(players.index(plr) - 1) % len(players)]
 
 
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
-    c = player.pick_to_discard(1, keepvic=True)
-    return c
+    """Just discard a card"""
+    return player.pick_to_discard(1, keepvic=True)
 
 
 ###############################################################################
@@ -70,12 +72,14 @@ class TestMasquerade(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Masquerade")
 
     def test_suitable(self) -> None:
+        """Test suitable_players()"""
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
         self.other.piles[Piles.HAND].set("Estate", "Duchy", "Province")
         self.third.piles[Piles.HAND].set()
         self.assertEqual(suitable_players(self.g), [self.plr, self.other])
 
     def test_plr_to_left(self) -> None:
+        """Test plr_to_left()"""
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
         self.other.piles[Piles.HAND].set("Estate", "Duchy", "Province")
         self.third.piles[Piles.HAND].set()
