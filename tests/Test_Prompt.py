@@ -15,7 +15,7 @@ class TestDisplayOverview(unittest.TestCase):
     def setUp(self) -> None:
         self.game = Game.TestGame(
             numplayers=1,
-            initcards=["Moat"],
+            initcards=["Moat", "Border Guard"],
             projects=["Cathedral"],
             landmarks=["Baths"],
         )

@@ -26,7 +26,7 @@ class Test_Key(unittest.TestCase):
     """Test Key"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initartifacts=["Key"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Treasurer"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.artifact = self.g.artifacts["Key"]

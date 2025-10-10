@@ -383,7 +383,7 @@ class Card:
 
     ##########################################################################
     def hook_cleanup(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
-        """Hook - overwritten in subclasses"""
+        """Triggered for every played card at the start of the cleanup phase"""
         return {}
 
     ##########################################################################

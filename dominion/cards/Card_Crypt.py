@@ -42,7 +42,7 @@ class Card_Crypt(Card.Card):
             self.permanent = True
 
     def duration(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, str]:
-        if player.specials[CRYPT].is_empty():
+        if CRYPT not in player.specials or player.specials[CRYPT].is_empty():
             return {}
 
         choices = [(f"Bring back {card}", card) for card in player.specials[CRYPT]]

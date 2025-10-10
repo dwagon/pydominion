@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+
 from dominion import Game, Card, Piles, Player, OptionKeys
 
 
@@ -12,21 +13,16 @@ class Card_FlagBearer(Card.Card):
         self.base = Card.CardExpansion.RENAISSANCE
         self.desc = """When you gain or trash this, take the Flag."""
         self.name = "Flag Bearer"
-        # self.required_cards = [('Artifact', 'Flag')]
         self.needsartifacts = True
         self.cost = 4
 
     ###########################################################################
-    def hook_gain_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, str]:
+    def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         player.assign_artifact("Flag")
         return {}
 
     ###########################################################################
-    def hook_trash_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, str]:
+    def hook_trash_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         player.assign_artifact("Flag")
         return {}
 

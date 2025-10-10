@@ -27,7 +27,7 @@ class Test_Treasure_Chest(unittest.TestCase):
     """Test Treasure Chest"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initartifacts=["Treasure Chest"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Swashbuckler"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
