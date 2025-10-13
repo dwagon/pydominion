@@ -50,24 +50,24 @@ class Test_Sailor(unittest.TestCase):
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Sailor", "Raider"])
         self.g.start_game()
+        self.g.card_piles["Raider"].set_debug()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.get_card_from_pile("Sailor")
+        self.card = self.plr.get_card_from_pile("Sailor")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_card(self) -> None:
         """Play a sailor"""
         self.plr.play_card(self.card)
         self.plr.test_input = ["Play now"]
-        num_Raiders = len(self.g.card_piles["Raider"])
+        num_raiders = len(self.g.card_piles["Raider"])
         self.plr.gain_card("Raider")
         self.assertIn("Raider", self.plr.piles[Piles.DURATION])
         self.assertIn("Sailor", self.plr.piles[Piles.DURATION])
-        self.assertEqual(len(self.g.card_piles["Raider"]), num_Raiders - 1)
+        self.assertEqual(len(self.g.card_piles["Raider"]), num_raiders - 1)
         self.plr.end_turn()
         self.plr.piles[Piles.HAND].set("Gold", "Silver", "Copper")
         self.plr.test_input = ["Trash Copper"]
         self.plr.start_turn()
-        self.g.print_state()
         self.plr.piles[Piles.HAND].set("Gold", "Silver", "Copper")
         self.plr.piles[Piles.DECK].set("Province")
         self.assertEqual(self.plr.coins.get(), 2 + 3)  # 2 for sailor, 3 for Raider

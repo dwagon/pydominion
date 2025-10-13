@@ -1,3 +1,5 @@
+"""https://wiki.dominionstrategy.com/index.php/Pile"""
+
 from typing import Optional, TYPE_CHECKING, Self
 
 from dominion import NoCardException
@@ -9,6 +11,8 @@ if TYPE_CHECKING:
 
 ###############################################################################
 class CardPile:
+    """Card Pile"""
+
     def __init__(self, game: Optional["Game.Game"] = None) -> None:
         self.cards: list[Card] = []
         self.game = game
@@ -22,7 +26,14 @@ class CardPile:
         if num_cards == 0 or not card_class:
             return
         for _ in range(num_cards):
-            self.cards.append(card_class())
+            card = card_class()
+            self.cards.append(card)
+
+    ##########################################################################
+    def set_debug(self):
+        """Set debug for all cards in a pile"""
+        for card in self.cards:
+            card.debug = True
 
     ##########################################################################
     def addVP(self, num: int = 1) -> None:
@@ -152,6 +163,8 @@ class CardPile:
 
 ###############################################################################
 class CardPileIterator:
+    """Iterate across the Card Pile"""
+
     def __init__(self, card_pile: CardPile) -> None:
         self.card_pile = card_pile
         self.index = 0

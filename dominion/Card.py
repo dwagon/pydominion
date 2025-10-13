@@ -104,6 +104,7 @@ class Card:
         self.playable = True
         self.callable = True
         self.defense = False
+        self.debug = False
         self.needs_prizes = False
         self.needsartifacts = False
         self.needsprojects = False
@@ -168,6 +169,8 @@ class Card:
 
     @location.setter
     def location(self, val: Optional[Piles]) -> None:
+        if self.debug:
+            print(f"# DBG Card {self} moving from {self._location} to {val}")
         self._location = val
 
     ##########################################################################
