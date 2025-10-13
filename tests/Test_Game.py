@@ -245,6 +245,7 @@ class TestGetCardFromPile(unittest.TestCase):
         self.g.start_game()
 
     def test_get_card(self) -> None:
+        """Get a card from the pile"""
         pile_size = len(self.g.card_piles["Copper"])
         card = self.g.get_card_from_pile("Copper")
         self.assertEqual(card.name, "Copper")

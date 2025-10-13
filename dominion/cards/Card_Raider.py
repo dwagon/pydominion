@@ -1,11 +1,14 @@
 #!/usr/bin/env python
-""" https://wiki.dominionstrategy.com/index.php/Raider"""
+"""https://wiki.dominionstrategy.com/index.php/Raider"""
 import unittest
+
 from dominion import Game, Card, Piles, Phase, Player, OptionKeys
 
 
 ###############################################################################
 class Card_Raider(Card.Card):
+    """Raider"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
@@ -44,6 +47,8 @@ class Card_Raider(Card.Card):
 
 ###############################################################################
 class TestRaider(unittest.TestCase):
+    """Test Raider"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=2, initcards=["Raider"])
         self.g.start_game()
@@ -55,9 +60,7 @@ class TestRaider(unittest.TestCase):
         """Play a Raider"""
         self.plr.phase = Phase.NIGHT
         self.plr.piles[Piles.PLAYED].set("Gold", "Silver")
-        self.victim.piles[Piles.HAND].set(
-            "Silver", "Gold", "Estate", "Copper", "Copper"
-        )
+        self.victim.piles[Piles.HAND].set("Silver", "Gold", "Estate", "Copper", "Copper")
         self.plr.play_card(self.card)
         try:
             self.assertIn("Gold", self.victim.piles[Piles.DISCARD])

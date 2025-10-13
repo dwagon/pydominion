@@ -21,6 +21,7 @@ class Piles(StrEnum):
     DURATION = auto()
     EXILE = auto()
     HAND = auto()
+    LIMBO = auto()  # Not a real location but after we draw a card but before we play it
     PLAYED = auto()
     RESERVE = auto()
     SPECIAL = auto()

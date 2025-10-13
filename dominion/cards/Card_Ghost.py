@@ -39,7 +39,7 @@ class Card_Ghost(Card.Card):
                 break
             player.reveal_card(card)
             if card.isAction():
-                player.specials[GHOST].add(card)
+                player.add_card(card, player.specials[GHOST])
                 player.secret_count += 1
                 break
             player.add_card(card, Piles.DISCARD)
@@ -55,8 +55,8 @@ class Card_Ghost(Card.Card):
                 player.play_card(card, discard=False, cost_action=False)
             player.specials[GHOST].remove(card)
             player.secret_count -= 1
-            player.add_card(card, Piles.PLAYED)
-            return {}
+            player.move_card(card, Piles.PLAYED)
+        return {}
 
 
 ###############################################################################

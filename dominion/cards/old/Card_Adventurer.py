@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Adventurer"""
 import unittest
 
 from dominion import Card, Game, Piles, Player, NoCardException
@@ -7,11 +7,14 @@ from dominion import Card, Game, Piles, Player, NoCardException
 
 ###############################################################################
 class Card_Adventurer(Card.Card):
+    """Adventurer"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DOMINION
-        self.desc = "Dig through deck for two treasures"
+        self.desc = """Reveal cards from your deck until you reveal 2 Treasure cards.
+            Put those Treasure cards into your hand and discard the other revealed cards."""
         self.name = "Adventurer"
         self.cost = 6
 
@@ -37,16 +40,22 @@ class Card_Adventurer(Card.Card):
 
 
 ###############################################################################
-class Test_Adventurer(unittest.TestCase):
+class TestAdventurer(unittest.TestCase):
+    """Test Adventurer"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Adventurer"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
+        self.card = self.g.get_card_from_pile("Adventurer")
 
     def test_treasures(self) -> None:
+        """Play card"""
         self.plr.piles[Piles.DECK].set("Copper", "Silver", "Gold", "Estate")
-        self.plr.piles[Piles.HAND].set("Adventurer")
-        self.plr.play_card(self.plr.piles[Piles.HAND].top_card())
+        self.plr.piles[Piles.HAND].set()
+        self.plr.add_card(self.card, Piles.HAND)
+        self.plr.play_card(self.card)
+        self.g.print_state()
         self.assertEqual(
             sorted(["Silver", "Gold"]),
             sorted([_.name for _ in self.plr.piles[Piles.HAND]]),

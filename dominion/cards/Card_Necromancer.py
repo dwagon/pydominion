@@ -11,6 +11,8 @@ NECROMANCER = "necromancer"
 
 ###############################################################################
 class Card_Necromancer(Card.Card):
+    """Necromancer"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION]
@@ -29,9 +31,10 @@ class Card_Necromancer(Card.Card):
         action_cards = [
             _ for _ in game.trash_pile if _.isAction() and not _.isDuration() and _ not in game.specials[NECROMANCER]
         ]
-        if card := player.card_sel(cardsrc=action_cards, prompt="Select Action card from Trash"):
-            game.specials[NECROMANCER].add(card[0])
-            player.play_card(card[0], discard=False, cost_action=False)
+        if cards := player.card_sel(cardsrc=action_cards, prompt="Select Action card from Trash"):
+            game.specials[NECROMANCER].add(cards[0])
+            player.play_card(cards[0], discard=False, cost_action=False)
+            player.move_card(cards[0], Piles.TRASH)
 
     def setup(self, game: Game.Game) -> None:
         """Use a play area to keep track of what has been played by Necromancer this turn"""
@@ -45,6 +48,8 @@ class Card_Necromancer(Card.Card):
 
 ###############################################################################
 class TestNecromancer(unittest.TestCase):
+    """Test Necromancer"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Necromancer", "Moat"])
         self.g.start_game()

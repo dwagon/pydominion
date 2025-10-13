@@ -422,7 +422,7 @@ class Player:
             self.game.card_piles[card.pile].remove()
         elif card.location == Piles.TRASH:
             self.game.trash_pile.remove(card)
-        elif card.location == Piles.SPECIAL:  # Ignore location
+        elif card.location in (Piles.SPECIAL, Piles.LIMBO):  # Ignore location
             pass
         else:
             raise AssertionError(f"Trying to remove_card {card} from unknown location: {card.location}")
@@ -431,6 +431,7 @@ class Player:
     def move_card(self, card: Card, dest: Piles | PlayArea) -> Card:
         """Move a card to {dest} card pile"""
         assert isinstance(card, Card), f"move_card({card=}) {type(card)}"
+        print(f"DBG move_card({card=}, {dest=}) ({card.location=}")
         self.remove_card(card)
         return self.add_card(card, dest)
 
@@ -451,6 +452,10 @@ class Player:
         if dest == Piles.CARDPILE or isinstance(dest, CardPile):
             self.game.card_piles[card.pile].add(card)
             card.location = Piles.CARDPILE
+            return card
+
+        if dest == Piles.TRASH:
+            self.game.trash_pile.add(card)
             return card
 
         if dest in self.piles:
@@ -641,9 +646,10 @@ class Player:
             self.piles[Piles.PLAYED]
             + self.piles[Piles.RESERVE]
             + self.played_events
-            + self.game.landmarks
+            + PlayArea(initial=list(self.game.landmarks.values()))
             + self.piles[Piles.DURATION]
         )
+
         self.game.cleanup_boons()
         if self.game.prophecy:
             self.currcards.append(self.game.prophecy)
@@ -774,6 +780,7 @@ class Player:
 
     ###########################################################################
     def start_turn(self) -> None:
+        """Start the players turn"""
         self.phase = Phase.START
         self.buys.set(1)
         self.actions.set(1)
@@ -813,6 +820,7 @@ class Player:
                 # Handle case where cards move themselves elsewhere
                 if card.location != Piles.DURATION:
                     continue
+                print(f"DBG _duration_start_turn(): {card}")
                 self.move_card(card, options[OptionKeys.DESTINATION])
         for event in self.game.events.values():
             event.duration(game=self.game, player=self)
@@ -881,7 +889,6 @@ class Player:
 
     ###########################################################################
     def end_turn_hooks(self):
-        """Call all the various ent_turn related hooks"""
         """Call all the various end_turn related hooks"""
         for card in self.had_cards:
             self.currcards.append(card)
@@ -929,6 +936,7 @@ class Player:
 
     ###########################################################################
     def _play_card_tokens(self, card: Card) -> None:
+        """Play any tokens on a card"""
         tkns = self.which_token(card.name)
         if Token.PLUS_1_ACTION in tkns:
             self.output("Gaining action from +1 Action token")
@@ -1023,19 +1031,20 @@ class Player:
         if not self._play_limit():
             self.output(f"Can't play {card} due to limits in number of plays")
             return
+        if not self._play_enough_actions(card, cost_action):
+            self.output("Not enough actions")
+            return
+
         self.output(f"Playing {card}")
         self.currcards.append(card)
         options |= self._hook_pre_play(card)
         options |= self.hook_all_players_pre_play(card)
 
+        # Card is now "in play"
+        self.move_card(card, Piles.PLAYED)
         self._play_card_tokens(card)
         if card.isOmen():
             self.game.remove_sun_token()
-
-        if not self._play_enough_actions(card, cost_action):
-            self.currcards.pop()
-            self.output("Not enough actions")
-            return
 
         if options[OptionKeys.DISCARD]:
             self.move_after_play(card, options[OptionKeys.SKIP_CARD])
@@ -1145,6 +1154,7 @@ class Player:
             options |= self._gain_card_hooks(new_card)
 
         if options.get(OptionKeys.REPLACE):  # Replace is to gain a different card
+            new_card.location = Piles.CARDPILE
             new_card = self._gain_card_replace(new_card, options[OptionKeys.REPLACE])
 
         if new_card is None:
@@ -1259,11 +1269,11 @@ class Player:
         self.coins -= cost
         self.buys -= 1
         self.limits[Limits.BUY] -= 1
-        if card.isDebt():
-            self.debt += card.debtcost
+        if new_card.isDebt():
+            self.debt += new_card.debtcost
 
-        if card.overpay and self.coins.get():
-            self.overpay(card)
+        if new_card.overpay and self.coins.get():
+            self.overpay(new_card)
         if self.game.card_piles[new_card.pile].embargo_level:
             self._buy_card_embargo(new_card)
 

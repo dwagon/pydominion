@@ -7,7 +7,7 @@ import sys
 from typing import Optional, Any
 from uuid import UUID
 
-from dominion import NoCardException
+from dominion import NoCardException, Piles
 from dominion import game_setup
 from dominion.Artifact import Artifact
 from dominion.Boon import Boon
@@ -141,6 +141,7 @@ class Game:
         new_num_cards = len(self.card_piles[pile])
         if num_cards > 0 and new_num_cards == 0:
             self.emptied_pile(card)
+        card.location = Piles.LIMBO
         return card
 
     ###########################################################################
