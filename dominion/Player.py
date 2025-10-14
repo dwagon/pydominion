@@ -1022,8 +1022,7 @@ class Player:
             self.move_card(card, Piles.DURATION)
         elif not force and card.isReserve():
             self.move_card(card, Piles.RESERVE)
-        else:
-            self.move_card(card, Piles.PLAYED)
+        # Cards should already be in Played so no need to move the there
 
     ###########################################################################
     def _play_limit(self) -> bool:
@@ -1208,7 +1207,7 @@ class Player:
             self.check_unexile(new_card.name)
 
         if not options.get(OptionKeys.DONTADD):
-            self.add_card(new_card, destination)
+            self.move_card(new_card, destination)
 
         if options.get(OptionKeys.EXILE):
             self.exile_card(new_card)
