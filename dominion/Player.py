@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import contextlib
+import inspect
 import json
 import operator
 from collections import defaultdict
@@ -117,6 +118,13 @@ class Player:
             print(f"\t{msg}")
 
     ###########################################################################
+    def get_card_from_pile(self, pile: str, name: str = "") -> Card:
+        """Get a card from a card pile"""
+        card = self.game.get_card_from_pile(pile, name)
+        self.debug(card, f"Got {card} from pile")
+        return card
+
+    ###########################################################################
     def _initial_deck(self, heirlooms: Optional[list[str]] = None, use_shelters: bool = False) -> None:
         """Provide the initial deck"""
         if heirlooms is None:
@@ -125,18 +133,18 @@ class Player:
         self.piles[Piles.DECK].empty()
 
         for _ in range(7 - len(heirlooms)):
-            card = self.game.get_card_from_pile("Copper")
+            card = self.get_card_from_pile("Copper")
             self.add_card(card, Piles.DECK)
 
         for heirloom in heirlooms:
-            card = self.game.get_card_from_pile(heirloom)
+            card = self.get_card_from_pile(heirloom)
             self.add_card(card, Piles.DECK)
 
         if use_shelters:
             self._use_shelters()
         else:
             for _ in range(3):
-                card = self.game.get_card_from_pile("Estate")
+                card = self.get_card_from_pile("Estate")
                 self.add_card(card, Piles.DECK)
 
         for card in self.piles[Piles.DECK]:
@@ -149,7 +157,7 @@ class Player:
         """Pick shelters out of the pile until we have one of each type"""
         shelters = ["Overgrown Estate", "Hovel", "Necropolis"]
         for shelter in shelters:
-            card = self.game.get_card_from_pile("Shelters", shelter)
+            card = self.get_card_from_pile("Shelters", shelter)
             self.add_card(card, Piles.DECK)
 
     ###########################################################################
@@ -303,6 +311,7 @@ class Player:
     def trash_card(self, card: Card, **kwargs: Any) -> None:
         """Take a card out of the game"""
         assert isinstance(card, Card)
+        self.debug(card, f"trash_card({card=})")
         if card.location == Piles.TRASH:
             self.output(f"{card} already in trash")
             return
@@ -378,6 +387,7 @@ class Player:
                 self.output("No more cards to pickup")
                 raise NoCardException
         assert isinstance(card, Card)
+        self.debug(card, f"pickup_card({card=})")
         self.add_card(card, Piles.HAND)
         if verbose:
             self.output(f"{verb} {card}")
@@ -416,6 +426,7 @@ class Player:
     ###########################################################################
     def remove_card(self, card: Card) -> None:
         """Remove a card from wherever it is"""
+        self.debug(card, f"remove_card({card=}) {card.location=}")
         if card.location in self.piles:
             self.piles[card.location].remove(card)
         elif card.location == Piles.CARDPILE:
@@ -431,13 +442,28 @@ class Player:
     def move_card(self, card: Card, dest: Piles | PlayArea) -> Card:
         """Move a card to {dest} card pile"""
         assert isinstance(card, Card), f"move_card({card=}) {type(card)}"
-        print(f"DBG move_card({card=}, {dest=}) ({card.location=}")
+        self.debug(card, f"move_card({card=}, {dest=})")
         self.remove_card(card)
         return self.add_card(card, dest)
 
     ###########################################################################
+    def debug(self, card: Card, msg: str) -> None:  # pragma: no coverage
+        """Debug card messages"""
+        if card.debug:
+            func_calls = []
+            stack = inspect.stack()
+            for rec in stack:
+                if "pydominion" not in rec.filename:
+                    continue
+                if rec.function == "<module>":
+                    break
+                func_calls.append(f"{rec.function}: {rec.lineno}")
+            print(f"# DBG {msg} {func_calls[1:]}")
+
+    ###########################################################################
     def add_card(self, card: Card, dest: Piles | PlayArea = Piles.DISCARD) -> Card:
         """Add an existing card to a new location"""
+        self.debug(card, f"add_card({card=},{dest=}")
         assert isinstance(card, Card), f"{card=} {type(card)=}"
         assert isinstance(dest, (Piles, PlayArea)), f"{dest=} {type(dest)=}"
         card.player = self
@@ -473,6 +499,7 @@ class Player:
     def discard_card(self, card: Card, source: Optional[Piles] = None, hook: bool = True) -> None:
         """Discard a card"""
         assert isinstance(card, Card)
+        self.debug(card, f"discard_card({card=}, {source=}, {hook=})")
         if card in self.piles[Piles.HAND]:
             self.piles[Piles.HAND].remove(card)
         self.add_card(card, Piles.DISCARD)
@@ -531,8 +558,9 @@ class Player:
 
     ###########################################################################
     def _card_check(self) -> None:
-        for pile in self.piles:
-            for card in self.piles[pile]:
+        """Check card locations match those locations"""
+        for pile, contents in self.piles.items():
+            for card in contents:
                 assert card.location == pile, f"{self.name} {card=} {pile=} {card.location=}"
 
     ###########################################################################
@@ -594,6 +622,7 @@ class Player:
 
     ###########################################################################
     def action_phase(self) -> None:
+        """Do the Action phase"""
         self.output("************ Action Phase ************")
         while True:
             Prompt.display_overview(self)
@@ -607,6 +636,7 @@ class Player:
 
     ###########################################################################
     def buy_phase(self) -> None:
+        """Do the Buy phase"""
         self.output("************ Buy Phase ************")
         self.hook_pre_buy()
         while True:
@@ -780,7 +810,7 @@ class Player:
 
     ###########################################################################
     def start_turn(self) -> None:
-        """Start the players turn"""
+        """Start of a players turn - reset everything"""
         self.phase = Phase.START
         self.buys.set(1)
         self.actions.set(1)
@@ -820,7 +850,6 @@ class Player:
                 # Handle case where cards move themselves elsewhere
                 if card.location != Piles.DURATION:
                     continue
-                print(f"DBG _duration_start_turn(): {card}")
                 self.move_card(card, options[OptionKeys.DESTINATION])
         for event in self.game.events.values():
             event.duration(game=self.game, player=self)
@@ -860,7 +889,7 @@ class Player:
     def exile_card_from_supply(self, card_name: str) -> None:
         """Exile a card from supply"""
         try:
-            card = self.game.get_card_from_pile(card_name)
+            card = self.get_card_from_pile(card_name)
         except NoCardException:
             self.output(f"No more {card_name} in supply")
             return
@@ -869,6 +898,7 @@ class Player:
     ###########################################################################
     def exile_card(self, card: Card) -> None:
         """Send a card to the exile pile"""
+        self.debug(card, f"exile_card({card=})")
         self.move_card(card, Piles.EXILE)
 
     ###########################################################################
@@ -1031,6 +1061,7 @@ class Player:
         if not self._play_limit():
             self.output(f"Can't play {card} due to limits in number of plays")
             return
+        self.debug(card, f"play_card({card=}, {discard=}, {cost_action=})")
         if not self._play_enough_actions(card, cost_action):
             self.output("Not enough actions")
             return
@@ -1051,9 +1082,9 @@ class Player:
 
         if not options[OptionKeys.SKIP_CARD]:
             self.card_benefits(card)
-        self.currcards.pop()
         if post_action_hook:
             self._post_play_hooks(card)
+        self.currcards.pop()
 
     ###########################################################################
     def _post_play_hooks(self, card: Card) -> None:
@@ -1130,7 +1161,7 @@ class Player:
             pile = self.game.card_instances[card_name].pile
         if not pile:
             pile = card_name
-        new_card = self.game.get_card_from_pile(pile)
+        new_card = self.get_card_from_pile(pile)
         return new_card
 
     ###########################################################################
@@ -1159,7 +1190,7 @@ class Player:
 
         if new_card is None:
             raise NoCardException
-
+        self.debug(new_card, f"gain_card({card_name=}, {destination=})")
         self.stats["gained"].append(new_card)
         destination = options.get(OptionKeys.DESTINATION, destination)
 
@@ -1192,7 +1223,7 @@ class Player:
         """Replace the card just gained"""
         self.game.card_piles[old_card.pile].add(old_card)
         try:
-            new_card = self.game.get_card_from_pile(new_card_name)
+            new_card = self.get_card_from_pile(new_card_name)
         except NoCardException:
             self.output(f"No more {new_card_name}")
             raise
@@ -1265,7 +1296,7 @@ class Player:
         except NoCardException:
             self.output(f"Couldn't buy card - no more {card.name}s available")
             return
-
+        self.debug(new_card, f"buy_card({card_name=})")
         self.coins -= cost
         self.buys -= 1
         self.limits[Limits.BUY] -= 1
@@ -1414,7 +1445,7 @@ class Player:
         if options:
             self.output("Gain a prize")
             if option := self.plr_choose_options("Gain a Prize", *options):
-                prize_card = self.game.get_card_from_pile(option)
+                prize_card = self.get_card_from_pile(option)
                 self.add_card(card=prize_card)
         else:
             self.output("No prizes available")
