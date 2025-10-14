@@ -7,6 +7,8 @@ from dominion import Game, Card, Piles, Player, NoCardException
 
 ###############################################################################
 class Card_Specialist(Card.Card):
+    """Specialist"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -26,7 +28,7 @@ class Card_Specialist(Card.Card):
                 ("Play it again?", True),
                 ("Gain a copy of it?", False),
             ):
-                player.play_card(chosen, discard=False, cost_action=False)
+                player.play_card(chosen, cost_action=False)
             else:
                 try:
                     player.gain_card(chosen.name)
@@ -36,6 +38,8 @@ class Card_Specialist(Card.Card):
 
 ###############################################################################
 class TestSpecialist(unittest.TestCase):
+    """Test Specialist"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Specialist", "Moat"])
         self.g.start_game()
@@ -48,8 +52,9 @@ class TestSpecialist(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Select Moat", "Gain a copy"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.piles[Piles.HAND].size(), 1 + 2)
-        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
+        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])  # Gained
+        self.assertIn("Moat", self.plr.piles[Piles.PLAYED])  # Played
 
     def test_play_again(self) -> None:
         """Play the card and play it again"""
@@ -57,7 +62,8 @@ class TestSpecialist(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Select Moat", "Play it again"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.piles[Piles.HAND].size(), 1 + 2 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2 + 2)
+        self.assertIn("Moat", self.plr.piles[Piles.PLAYED])
         self.assertNotIn("Moat", self.plr.piles[Piles.DISCARD])
 
 

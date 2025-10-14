@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Overlord """
+"""http://wiki.dominionstrategy.com/index.php/Overlord"""
 
 import unittest
 
@@ -21,10 +21,9 @@ class Card_Overlord(Card.Card):
     def special(self, game: Game.Game, player: Player.Player) -> None:
         cards = [_ for _ in player.cards_under(5) if _.isAction() and not _.isCommand()]
         if opts := [(f"Play {_}", _) for _ in cards]:
-            choice = player.plr_choose_options(
-                "Play which action card from supply?", *opts
-            )
+            choice = player.plr_choose_options("Play which action card from supply?", *opts)
             player.play_card(choice, discard=False, cost_action=False)
+            player.move_card(choice, Piles.CARDPILE)
 
 
 ###############################################################################

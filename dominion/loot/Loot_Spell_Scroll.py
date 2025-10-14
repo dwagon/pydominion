@@ -2,7 +2,7 @@
 """https://wiki.dominionstrategy.com/index.php/Spell_Scroll"""
 import unittest
 
-from dominion import Loot, Card, Game, Piles
+from dominion import Loot, Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -22,17 +22,16 @@ class Loot_SpellScroll(Loot.Loot):
         self.cost = 7
         self.pile = "Loot"
 
-    def special(self, game, player):
+    def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Trash this to gain a cheaper card. If it's an Action or Treasure, you may play it."""
         to_trash = player.plr_choose_options("Trash the Spell Scroll?", ("Trash it", True), ("Keep it", False))
         if not to_trash:
             return
         player.trash_card(self)
-        gained_card = player.plr_gain_card(cost=6)
-        if gained_card.isAction() or gained_card.isTreasure():
-            to_play = player.plr_choose_options(f"Play {gained_card}?", ("Play", True), ("Discard", False))
-            if to_play:
-                player.play_card(gained_card, cost_action=False, discard=False)
+        if gained_card := player.plr_gain_card(cost=6):
+            if gained_card.isAction() or gained_card.isTreasure():
+                if player.plr_choose_options(f"Play {gained_card}?", ("Play", True), ("Discard", False)):
+                    player.play_card(gained_card, cost_action=False)
 
 
 ###############################################################################
@@ -59,7 +58,7 @@ class TestSpellScroll(unittest.TestCase):
         self.plr.test_input = ["Trash", "Get Gold", "Play"]
         self.plr.play_card(spell)
         self.assertIn("Spell Scroll", self.g.trash_pile)
-        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Gold", self.plr.piles[Piles.PLAYED])
         self.assertEqual(self.plr.coins.get(), 3)
 
 

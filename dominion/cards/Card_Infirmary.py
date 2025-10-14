@@ -7,6 +7,8 @@ from dominion import Game, Card, Piles, Player, Phase
 
 ###############################################################################
 class Card_Infirmary(Card.Card):
+    """Infirmary"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -29,10 +31,13 @@ class Card_Infirmary(Card.Card):
         """Play this once per $1 overpaid."""
         for _ in range(amount):
             player.play_card(self, cost_action=False, discard=False)
+        player.move_card(self, Piles.DISCARD)
 
 
 ###############################################################################
-class Test_Infirmary(unittest.TestCase):
+class TestInfirmary(unittest.TestCase):
+    """Test Infirmary"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Infirmary"])
         self.g.start_game()

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Lich"""
 import unittest
 from typing import Any
 
@@ -8,6 +8,8 @@ from dominion import Game, Card, Piles, Player, OptionKeys
 
 ###############################################################################
 class Card_Lich(Card.Card):
+    """Lich"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [
@@ -35,32 +37,33 @@ class Card_Lich(Card.Card):
             crd = player.plr_pick_card(cardsrc=in_trash, force=True, num=1)
             if not crd:
                 return {}
-            player.gain_card(new_card=crd)
-            game.trash_pile.remove(crd)
+            player.move_card(crd, Piles.DISCARD)
         return {OptionKeys.TRASH: False}
 
 
 ###############################################################################
-class Test_Lich(unittest.TestCase):
+class TestLich(unittest.TestCase):
+    """Test Lich"""
+
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=2, initcards=["Wizards"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Wizards"])
         self.g.start_game()
-        self.plr, self.vic = self.g.player_list()
+        self.plr = self.g.player_list()[0]
 
         while True:
-            card = self.g.get_card_from_pile("Wizards")
+            card = self.plr.get_card_from_pile("Wizards")
             if card.name == "Lich":
                 break
         self.card = card
 
     def test_play(self) -> None:
         """Play a lich"""
-        hndsz = self.plr.piles[Piles.HAND].size()
+        hand_size = self.plr.piles[Piles.HAND].size()
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.piles[Piles.DISCARD].set("Estate", "Duchy", "Province", "Silver", "Gold")
         self.plr.play_card(self.card)
         self.g.print_state()
-        self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsz + 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hand_size + 6)
         self.assertEqual(self.plr.actions.get(), 2)
 
     def test_trash(self) -> None:

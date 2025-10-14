@@ -21,17 +21,14 @@ class Event_Reap(Event.Event):
     def special(self, game: Game.Game, player: Player.Player) -> None:
         gold = player.gain_card("Gold")
         player.specials[REAP] = PlayArea.PlayArea("Reap", game)
-        player.specials[REAP].add(gold)
+        player.move_card(gold, player.specials[REAP])
         player.secret_count += 1
-        player.piles[Piles.DISCARD].remove(gold)
-        gold.location = "reap_reserve"
 
     def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
         if REAP not in player.specials:
             return {}
         for card in player.specials[REAP]:
-            player.play_card(card, cost_action=False, discard=False)
-            player.add_card(card, Piles.PLAYED)
+            player.play_card(card, cost_action=False)
             player.secret_count -= 1
         player.specials[REAP].empty()
         return {}
