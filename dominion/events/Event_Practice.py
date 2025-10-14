@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Practice"""
 import unittest
 
 from dominion import Card, Game, Piles, Event
@@ -7,6 +7,8 @@ from dominion import Card, Game, Piles, Event
 
 ###############################################################################
 class Event_Practice(Event.Event):
+    """Practice"""
+
     def __init__(self):
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.RISING_SUN
@@ -28,7 +30,9 @@ class Event_Practice(Event.Event):
 
 
 ###############################################################################
-class Test_Practice(unittest.TestCase):
+class TestPractice(unittest.TestCase):
+    """Test Practice"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, events=["Practice"], initcards=["Moat"])
         self.g.start_game()
@@ -42,10 +46,10 @@ class Test_Practice(unittest.TestCase):
         self.plr.test_input = ["Moat"]
         hand_size = len(self.plr.piles[Piles.HAND])
         self.plr.perform_event(self.card)
-        self.g.print_state()
-        self.assertEqual(self.plr.piles[Piles.PLAYED].size(), 0)
         self.assertNotIn("Moat", self.plr.piles[Piles.DISCARD])
-        self.assertEqual(len(self.plr.piles[Piles.HAND]), hand_size + 4)  # Moat * 2
+        self.assertIn("Moat", self.plr.piles[Piles.PLAYED])
+
+        self.assertEqual(len(self.plr.piles[Piles.HAND]), hand_size + 4 - 1)  # Moat * 2
 
 
 ###############################################################################

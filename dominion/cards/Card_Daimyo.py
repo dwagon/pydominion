@@ -7,6 +7,8 @@ from dominion import Game, Card, Piles, Player, OptionKeys
 
 ###############################################################################
 class Card_Daimyo(Card.Card):
+    """Daimyo"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.COMMAND]
@@ -31,12 +33,15 @@ class Card_Daimyo(Card.Card):
 
 ###############################################################################
 class TestDaimyo(unittest.TestCase):
+    """Test Daimyo"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Daimyo", "Mine"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
     def test_action(self) -> None:
+        """Test action"""
         # Test by playing mine twice on a copper. Cu -> Ag -> Au
         self.plr.piles[Piles.HAND].set("Copper")
         self.plr.piles[Piles.PLAYED].set("Daimyo")
@@ -49,12 +54,14 @@ class TestDaimyo(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), 0)
 
     def test_non_action(self) -> None:
+        """Test non-action"""
         self.plr.piles[Piles.HAND].set("Copper")
         self.plr.piles[Piles.PLAYED].set("Daimyo")
         gold = self.g.get_card_from_pile("Gold")
         self.plr.play_card(gold)
 
     def test_play(self) -> None:
+        """Test play"""
         self.plr.piles[Piles.HAND].set("Copper")
         self.plr.piles[Piles.PLAYED].set("Daimyo")
         card = self.g.get_card_from_pile("Daimyo")

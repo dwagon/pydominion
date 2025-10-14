@@ -2,6 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Trail"""
 
 import unittest
+from typing import Optional, Union
 
 from dominion import Game, Card, Piles, OptionKeys, Phase, Player, PlayArea
 
@@ -15,40 +16,37 @@ class Card_Trail(Card.Card):
         self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
         self.base = Card.CardExpansion.PROSPERITY
         self.desc = """+1 Card; +1 Action;
-        When you gain, trash, or discard this, other than in Clean-up, you may play it."""
+            When you gain, trash, or discard this, other than in Clean-up, you may play it."""
         self.cards = 1
         self.actions = 1
         self.name = "Trail"
         self.cost = 4
 
-    def hook_gain_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, str]:
-        if self.want_to_play(player):
-            player.play_card(self, cost_action=False, discard=False)
+    def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
+        if want_to_play(player):
+            player.play_card(self, cost_action=False)
             return {OptionKeys.DESTINATION: Piles.PLAYED}
         return {}
 
     def hook_discard_this_card(
-        self, game: Game.Game, player: Player.Player, source: PlayArea.PlayArea
+        self, game: "Game.Game", player: "Player.Player", source: Optional[Union[Piles, "PlayArea.PlayArea"]]
     ) -> None:
         if player.phase != Phase.CLEANUP:
-            if self.want_to_play(player):
-                player.play_card(self, cost_action=False, discard=False)
+            if want_to_play(player):
+                player.play_card(self, cost_action=False)
 
-    def hook_trash_this_card(
-        self, game: Game.Game, player: Player.Player
-    ) -> dict[OptionKeys, str]:
-        if self.want_to_play(player):
-            player.play_card(self, cost_action=False, discard=False)
+    def hook_trash_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
+        if want_to_play(player):
+            player.play_card(self, cost_action=False)
         return {}
 
-    def want_to_play(self, player: Player.Player) -> bool:
-        options = [("Don't use", False), ("Use Trail", True)]
-        use_it = player.plr_choose_options(
-            "Play Trail for +1 Card, +1 Action?", *options
-        )
-        return use_it
+
+###############################################################################
+def want_to_play(player: Player.Player) -> bool:
+    """Ask player if they want to play Trail"""
+    options = [("Don't use", False), ("Use Trail", True)]
+    use_it = player.plr_choose_options("Play Trail for +1 Card, +1 Action?", *options)
+    return use_it
 
 
 ###############################################################################
@@ -99,7 +97,7 @@ class TestTrail(unittest.TestCase):
         self.plr.discard_card(self.card)
         self.assertEqual(self.plr.actions.get(), actions + 1)
         self.assertEqual(len(self.plr.piles[Piles.HAND]), hand_size + 1)
-        self.assertIn("Trail", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Trail", self.plr.piles[Piles.PLAYED])
 
 
 ###############################################################################

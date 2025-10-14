@@ -7,6 +7,8 @@ from dominion import Card, Game, Piles, Player
 
 ###############################################################################
 class Card_Wish(Card.Card):
+    """Wish"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -28,21 +30,22 @@ class Card_Wish(Card.Card):
             ("Return", True),
             ("Keep", False),
         ):
-            game.card_piles["Wish"].add(self)
-            player.piles[Piles.PLAYED].remove(self)
-            self.location = None
+            player.move_card(self, Piles.CARDPILE)
             player.plr_gain_card(cost=6)
 
 
 ###############################################################################
 class TestWish(unittest.TestCase):
+    """Test Wish"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Wish", "Daimyo"], badcards=["Gold Mine"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.get_card_from_pile("Wish")
+        self.card = self.plr.get_card_from_pile("Wish")
 
     def test_return(self) -> None:
+        """Test returning to pile"""
         num_wishes = len(self.g.card_piles["Wish"])
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Return", "Get Gold"]
@@ -53,6 +56,7 @@ class TestWish(unittest.TestCase):
         self.assertEqual(len(self.g.card_piles["Wish"]), num_wishes + 1)
 
     def test_keep(self) -> None:
+        """Test not returning to pile"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Keep"]
         self.plr.play_card(self.card)
@@ -64,9 +68,10 @@ class TestWish(unittest.TestCase):
         num_wishes = len(self.g.card_piles["Wish"])
         self.plr.piles[Piles.PLAYED].set("Daimyo")
         self.plr.add_card(self.card, Piles.HAND)
-        self.plr.test_input = ["Return", "Get Gold"]
+        self.plr.test_input = ["Return", "Get Gold", "Return", "Get Duchy"]
         self.plr.play_card(self.card)
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
         self.assertNotIn("Wish", self.plr.piles[Piles.PLAYED])
         self.assertNotIn("Wish", self.plr.piles[Piles.DISCARD])
         self.assertEqual(len(self.g.card_piles["Wish"]), num_wishes + 1)
