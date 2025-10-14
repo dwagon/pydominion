@@ -134,12 +134,14 @@ class Card:
     ##########################################################################
     @property
     def pile(self) -> str:
+        """Pile name getter"""
         if not self._pile:
             return self.name
         return self._pile
 
     @pile.setter
     def pile(self, value: str) -> None:
+        """Pile name setter"""
         self._pile = value
 
     ##########################################################################
@@ -504,22 +506,22 @@ class Card:
 
     ##########################################################################
     def hook_trash_this_card(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
-        """Hook - overwritten in subclasses"""
+        """Called just before the card is trashed"""
         return {}
 
     ##########################################################################
     def hook_trash_card(self, game: "Game.Game", player: "Player.Player", card: "Card") -> dict[OptionKeys, Any]:
-        """Hook - overwritten in subclasses"""
+        """Called for every card in your hand just before a card is trashed"""
         return {}
 
     ##########################################################################
     def hook_gain_this_card(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:
-        """Hook - overwritten in subclasses"""
+        """Called when any card is discarded"""
         return {}  # pragma: no cover
 
     ##########################################################################
     def hook_end_turn(self, game: "Game.Game", player: "Player.Player") -> None:
-        """Hook - overwritten in subclasses"""
+        """Called at the end of the players turn"""
 
     ##########################################################################
     def hook_end_of_game(self, game: "Game.Game", player: "Player.Player") -> None:
