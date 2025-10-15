@@ -201,17 +201,18 @@ class TestCardPilesForTrait(unittest.TestCase):
     """Test card_piles_for_trait()"""
 
     def setUp(self):
-        self.g = Game.TestGame(trait_path="tests/traits", initcards=["Moat", "Teacher"])
+        self.g = Game.TestGame(trait_path="tests/traits", initcards=["Moat", "Militia", "Teacher"])
         self.g.start_game()
 
     def test_with_traits(self):
         """Ensure piles with traits aren't listed"""
         game_setup.load_traits(self.g, ["TestTrait"], 1)
+        self.g.assign_trait("TestTrait", "Militia")
         self.assertIn("Moat", game_setup.card_piles_for_trait(self.g))
         self.g.assign_trait("TestTrait", "Moat")
         self.assertNotIn("Moat", game_setup.card_piles_for_trait(self.g))
 
-    def test_basecards(self):
+    def test_base_cards(self):
         """Ensure base cards aren't in the list"""
         self.assertNotIn("Silver", game_setup.card_piles_for_trait(self.g))
 

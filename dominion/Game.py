@@ -289,14 +289,15 @@ class Game:
         if self.ally:
             print(f"Ally: {self.ally.name}")
         print(f"Projects: {', '.join([_.name for _ in self.projects.values()])}")
+        print(f"Traits: {self.traits}")
         for name, card_pile in self.card_piles.items():
             tokens = ""
             for plr in self.player_list():
                 tkns = plr.which_token(name)
                 if tkns:
                     tokens += f"{plr.name}[{','.join(tkns)}]"
-
-            print(f"CardPile {name}: {len(card_pile)} cards {tokens}")
+            trait = f"Trait: {card_pile.trait}" if card_pile.trait else ""
+            print(f"CardPile {name}: {len(card_pile)} cards {tokens} {trait}")
         print(f"Instances: {', '.join(self.card_instances)}")
 
         for plr in self.player_list():
