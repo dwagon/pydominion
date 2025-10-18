@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Changeling"""
 import unittest
 from typing import Any
 
@@ -8,12 +8,13 @@ from dominion import Card, Game, Piles, Phase, OptionKeys, Player, NoCardExcepti
 
 ###############################################################################
 class Card_Changeling(Card.Card):
+    """Changeling"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.NIGHT]
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = """Trash this. Gain a copy of a card you have in play.
-In games using this, when you gain a card costing 3 or more, you may exchange it for a Changeling."""
+        self.desc = """Trash this. Gain a copy of a card you have in play."""
         self.name = "Changeling"
         self.cost = 3
 
@@ -34,6 +35,8 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
         selected = set()
         choices: list[tuple[str, Any]] = [("Keep Changeling", None)]
         for card in player.piles[Piles.PLAYED] + player.piles[Piles.HAND]:
+            if not card.insupply:
+                continue
             if card.name not in selected:
                 selected.add(card.name)
                 choices.append((f"Exchange for {card}", card.name))
@@ -48,20 +51,24 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
 
 ###############################################################################
 class TestChangeling(unittest.TestCase):
+    """Test Changeling"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Changeling"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.get_card_from_pile("Changeling")
+        self.card = self.plr.get_card_from_pile("Changeling")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_keep(self) -> None:
+        """Play and keep changeling"""
         self.plr.phase = Phase.NIGHT
         self.plr.test_input = ["Keep Changeling"]
         self.plr.play_card(self.card)
         self.assertIn("Changeling", self.plr.piles[Piles.PLAYED])
 
     def test_play_swap(self) -> None:
+        """Play and swap for something"""
         self.plr.phase = Phase.NIGHT
         self.plr.piles[Piles.PLAYED].set("Gold")
         self.plr.test_input = ["Exchange for Gold"]
@@ -70,11 +77,13 @@ class TestChangeling(unittest.TestCase):
         self.assertIn("Changeling", self.g.trash_pile)
 
     def test_gain_keep(self) -> None:
+        """Gain a card and keep the card gained"""
         self.plr.test_input = ["Keep Silver"]
         self.plr.gain_card("Silver")
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
     def test_gain_swap(self) -> None:
+        """Gain a card and swap for changeling"""
         self.plr.test_input = ["Swap Silver"]
         self.plr.gain_card("Silver")
         self.assertNotIn("Silver", self.plr.piles[Piles.DISCARD])

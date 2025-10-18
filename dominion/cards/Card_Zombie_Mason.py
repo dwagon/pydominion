@@ -43,9 +43,10 @@ class TestZombieMason(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Zombie Mason", "Guide"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.get_card_from_pile("Zombie Mason")
+        self.card = self.plr.get_card_from_pile("Zombie Mason")
 
     def test_play(self) -> None:
+        """Test Playing"""
         self.plr.piles[Piles.DECK].set("Estate")
         self.plr.test_input = ["Guide"]
         self.plr.play_card(self.card, discard=False, cost_action=False)

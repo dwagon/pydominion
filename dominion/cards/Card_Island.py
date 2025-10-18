@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Island"""
 import unittest
 
 from dominion import Card
@@ -11,13 +11,14 @@ ISLAND = "island"
 
 ###############################################################################
 class Card_Island(Card.Card):
+    """Island"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.VICTORY]
         self.base = Card.CardExpansion.SEASIDE
-        self.desc = (
-            """Set aside this and another card from your hand. Return them to your deck at the end of the game. 2VP"""
-        )
+        self.desc = """Set aside this and another card from your hand.
+            Return them to your deck at the end of the game. 2VP"""
         self.name = "Island"
         self.cost = 4
         self.victory = 2
@@ -49,12 +50,14 @@ class Card_Island(Card.Card):
 
 
 ###############################################################################
-class Test_Island(unittest.TestCase):
+class TestIsland(unittest.TestCase):
+    """Test Island"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Island"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.get_card_from_pile("Island")
+        self.card = self.plr.get_card_from_pile("Island")
 
     def test_play_province(self) -> None:
         """Play an island on a province"""
