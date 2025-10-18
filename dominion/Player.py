@@ -482,6 +482,7 @@ class Player:
 
         if dest == Piles.TRASH:
             self.game.trash_pile.add(card)
+            card.location = Piles.TRASH
             return card
 
         if dest in self.piles:
@@ -1051,6 +1052,7 @@ class Player:
         discard: bool = True,
         cost_action: bool = True,
         post_action_hook: bool = True,
+        move_card: bool = True,
     ) -> None:
         """Play the card {card}"""
         options: dict[OptionKeys, Any] = {
@@ -1071,7 +1073,8 @@ class Player:
         options |= self.hook_all_players_pre_play(card)
 
         # Card is now "in play"
-        self.move_card(card, Piles.PLAYED)
+        if move_card:
+            self.move_card(card, Piles.PLAYED)
         self._play_card_tokens(card)
         if card.isOmen():
             self.game.remove_sun_token()
@@ -1184,7 +1187,6 @@ class Player:
             options |= self._gain_card_hooks(new_card)
 
         if options.get(OptionKeys.REPLACE):  # Replace is to gain a different card
-            new_card.location = Piles.CARDPILE
             new_card = self._gain_card_replace(new_card, options[OptionKeys.REPLACE])
 
         if new_card is None:
@@ -1220,7 +1222,7 @@ class Player:
     ###########################################################################
     def _gain_card_replace(self, old_card: Card, new_card_name: str) -> Card:
         """Replace the card just gained"""
-        self.game.card_piles[old_card.pile].add(old_card)
+        self.move_card(old_card, Piles.CARDPILE)
         try:
             new_card = self.get_card_from_pile(new_card_name)
         except NoCardException:

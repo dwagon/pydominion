@@ -29,8 +29,6 @@ class Option:
         return key in self.data
 
     def __getitem__(self, key: str) -> Optional[Any]:
-        #        if key == "print":
-        #            raise Exception("print")
         return "" if key not in self.data else self.data[key]
 
     def __repr__(self) -> str:
