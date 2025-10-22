@@ -37,14 +37,17 @@ class CardPile:
 
     ##########################################################################
     def addVP(self, num: int = 1) -> None:
+        """Add VP to a pile"""
         self.gatheredvp += num
 
     ##########################################################################
     def getVP(self) -> int:
+        """Get the VP on a pile"""
         return self.gatheredvp
 
     ##########################################################################
     def drainVP(self) -> int:
+        """Remove all VP from a pile"""
         num = self.gatheredvp
         self.gatheredvp = 0
         return num
@@ -63,6 +66,7 @@ class CardPile:
 
     ###########################################################################
     def embargo(self) -> None:
+        """Embargo a pile"""
         self.embargo_level += 1
 
     ###########################################################################

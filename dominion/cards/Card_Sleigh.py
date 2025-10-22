@@ -36,12 +36,13 @@ class Card_Sleigh(Card.Card):
             (f"Put {card} into hand and discard Sleigh", Piles.HAND),
             (f"Put {card} onto your deck and discard Sleigh", Piles.TOPDECK),
         )
-        if choice != Piles.DISCARD:
-            if self in player.piles[Piles.PLAYED]:
-                player.piles[Piles.PLAYED].remove(self)
-            elif self in player.piles[Piles.HAND]:
-                player.piles[Piles.HAND].remove(self)
-            player.discard_card(self)
+        if choice == Piles.DISCARD:
+            return {}
+        if self in player.piles[Piles.PLAYED]:
+            player.piles[Piles.PLAYED].remove(self)
+        elif self in player.piles[Piles.HAND]:
+            player.piles[Piles.HAND].remove(self)
+        player.discard_card(self)
         return {OptionKeys.DESTINATION: choice}
 
 
@@ -53,7 +54,8 @@ class TestSleigh(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Sleigh"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.get_card_from_pile("Sleigh")
+        self.card = self.plr.get_card_from_pile("Sleigh")
+        self.g.card_piles["Horse"].set_debug()
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_sleigh(self) -> None:

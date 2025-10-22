@@ -30,18 +30,21 @@ class Card_Berserker(Card.Card):
 
     def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, Any]:
         if sum(1 for _ in player.piles[Piles.PLAYED] if _.isAction()):
-            player.play_card(self, cost_action=False, discard=False)
+            player.play_card(self, cost_action=False, discard=False, move_card=False)
+            if self.location == Piles.LIMBO:
+                player.move_card(self, Piles.DISCARD)
         return {}
 
 
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
+    """Discard down to 3"""
     num_to_discard = len(player.piles[Piles.HAND]) - 3
     return player.pick_to_discard(num_to_discard)
 
 
 ###############################################################################
-class Test_Berserker(unittest.TestCase):
+class TestBerserker(unittest.TestCase):
     """Test Berserker"""
 
     def setUp(self) -> None:
