@@ -11,6 +11,8 @@ RAPID_EXPANSION = "rapid_expansion"
 
 ###############################################################################
 class Prophecy_Rapid_Expansion(Prophecy.Prophecy):
+    """Rapid Expansion"""
+
     def __init__(self) -> None:
         Prophecy.Prophecy.__init__(self)
         self.base = Card.CardExpansion.RISING_SUN
@@ -22,8 +24,7 @@ class Prophecy_Rapid_Expansion(Prophecy.Prophecy):
             player.specials[RAPID_EXPANSION] = PlayArea.PlayArea("Rapid Expansion", game)
         if card.isAction() or card.isTreasure():
             player.output(f"Rapid Expansion: Setting {card} aside")
-            player.specials[RAPID_EXPANSION].add(card)
-            card.location = Piles.SPECIAL
+            player.move_card(card, player.specials[RAPID_EXPANSION])
             player.secret_count += 1
             return {OptionKeys.DONTADD: True}
         return {}
@@ -33,8 +34,11 @@ class Prophecy_Rapid_Expansion(Prophecy.Prophecy):
             return
         for card in player.specials[RAPID_EXPANSION]:
             player.output(f"Getting {card} from Rapid Expansion")
-            player.play_card(card, cost_action=False)
+            player.move_card(card, Piles.HAND)
+            player.play_card(card, cost_action=False, move_card=False)
             player.secret_count -= 1
+            if card.location == Piles.HAND:
+                player.move_card(card, Piles.PLAYED)
         player.specials[RAPID_EXPANSION].empty()
 
     def debug_dump(self, player: "Player.Player") -> None:
@@ -45,7 +49,9 @@ class Prophecy_Rapid_Expansion(Prophecy.Prophecy):
 
 
 ###############################################################################
-class Test_Rapid_Expansion(unittest.TestCase):
+class TestRapidExpansion(unittest.TestCase):
+    """Test Rapid Expansion"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, prophecies=["Rapid Expansion"], initcards=["Mountain Shrine"])
         self.g.start_game()

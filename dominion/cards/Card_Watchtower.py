@@ -33,11 +33,13 @@ class Card_Watchtower(Card.Card):
             "What to do with Watchtower?",
             ("Do nothing", "nothing"),
             (f"Trash {card}", "trash"),
-            (f"Put {card} on top of deck", "topdeck"),
+            (f"Put {card} on top of deck", "top"),
         )
+        if act != "nothing":
+            player.reveal_card(self)
         if act == "trash":
             options = {OptionKeys.TRASH: True}
-        elif act == "topdeck":
+        elif act == "top":
             options = {OptionKeys.DESTINATION: Piles.TOPDECK}
         return options
 
@@ -47,10 +49,10 @@ class TestWatchtower(unittest.TestCase):
     """Test Watchtower"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=1, initcards=["Watchtower"], badcards=["Necromancer"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Watchtower", "Militia", "Berserker"], badcards=["Necromancer"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.get_card_from_pile("Watchtower")
+        self.card = self.plr.get_card_from_pile("Watchtower")
 
     def test_play(self) -> None:
         """Play a watch tower"""
@@ -65,20 +67,20 @@ class TestWatchtower(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["nothing"]
         self.plr.gain_card("Copper")
-        self.assertEqual(self.plr.piles[Piles.DISCARD][0].name, "Copper")
+        self.assertIn("Copper", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
 
     def test_react_trash(self) -> None:
-        """React to gaining a card - discard card"""
-        tsize = self.g.trash_pile.size()
+        """React to gaining a card - trash card"""
+        trash_size = self.g.trash_pile.size()
         try:
             self.plr.test_input = ["trash"]
             self.plr.piles[Piles.HAND].set("Gold")
             self.plr.add_card(self.card, Piles.HAND)
             self.plr.gain_card("Copper")
-            self.assertEqual(self.g.trash_pile.size(), tsize + 1)
-            self.assertEqual(self.g.trash_pile[-1].name, "Copper")
+            self.assertEqual(self.g.trash_pile.size(), trash_size + 1)
+            self.assertIn("Copper", self.g.trash_pile)
             self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
             self.assertNotIn("Copper", self.plr.piles[Piles.HAND])
         except AssertionError:  # pragma: no cover
@@ -87,13 +89,13 @@ class TestWatchtower(unittest.TestCase):
 
     def test_react_top_deck(self) -> None:
         """React to gaining a card - put card on deck"""
-        tsize = self.g.trash_pile.size()
+        trash_size = self.g.trash_pile.size()
         self.plr.test_input = ["top"]
         self.plr.piles[Piles.HAND].set("Gold")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.gain_card("Silver")
         try:
-            self.assertEqual(self.g.trash_pile.size(), tsize)
+            self.assertEqual(self.g.trash_pile.size(), trash_size)
             self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
             self.assertNotIn("Silver", self.plr.piles[Piles.HAND])
             c = self.plr.next_card()
@@ -101,6 +103,16 @@ class TestWatchtower(unittest.TestCase):
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
+
+    def test_combo_berserker(self) -> None:
+        """Combo with Berserker"""
+        self.plr.add_card(self.card, Piles.HAND)
+        self.plr.piles[Piles.PLAYED].set("Militia")
+        self.plr.test_input = ["Trash Berserker", "Get Silver", "Put Silver"]
+        self.plr.gain_card("Berserker")
+        self.assertIn("Silver", self.plr.piles[Piles.DECK])
+        self.assertIn("Berserker", self.g.trash_pile)
+        self.assertNotIn("Berserker", self.plr.piles[Piles.PLAYED])
 
 
 ###############################################################################

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Horse """
+"""http://wiki.dominionstrategy.com/index.php/Horse"""
 
 import unittest
 
@@ -8,6 +8,8 @@ from dominion import Game, Card, Piles, Player
 
 ###############################################################################
 class Card_Horse(Card.Card):
+    """Horse"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -29,6 +31,8 @@ class Card_Horse(Card.Card):
 
 ###############################################################################
 class TestHorse(unittest.TestCase):
+    """Test Horse"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Horse"])
         self.g.start_game()
@@ -36,6 +40,7 @@ class TestHorse(unittest.TestCase):
         self.card = self.g.get_card_from_pile("Horse")
 
     def test_play(self) -> None:
+        """Play Horse"""
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertNotIn("Horse", self.plr.piles[Piles.PLAYED])
