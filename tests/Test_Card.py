@@ -1,12 +1,29 @@
 #!/usr/bin/env python
-
+"""Tests for Card class"""
 import unittest
 
 from dominion import Game, Piles
 
 
 ###############################################################################
-class Test_is_card(unittest.TestCase):
+class TestCard(unittest.TestCase):
+    """Test Card functions"""
+
+    def test_description(self):
+        """Test description changing"""
+        g = Game.TestGame(numplayers=1, initcards=["Description"], card_path="tests/cards")
+        g.start_game()
+        plr = g.player_list()[0]
+        g.start_game()
+        card = g.get_card_from_pile("Description")
+        plr.add_card(card, Piles.HAND)
+        self.assertEqual(card.description(plr), "Foo Bar")
+
+
+###############################################################################
+class TestIsCard(unittest.TestCase):
+    """Test is_types() of cards"""
+
     def test_isDuration(self) -> None:
         """Test isDuration"""
         g = Game.TestGame(numplayers=1, initcards=["Caravan", "Moat"])
@@ -16,14 +33,17 @@ class Test_is_card(unittest.TestCase):
         self.assertTrue(caravan.isDuration())
         self.assertFalse(moat.isDuration())
 
-    def test_description(self):
-        g = Game.TestGame(numplayers=1, initcards=["Description"], card_path="tests/cards")
+    def test_dynamic_card_type(self) -> None:
+        """Test dynamic card type"""
+        g = Game.TestGame(numplayers=1, initcards=["Dyna Type"], card_path="tests/cards")
         g.start_game()
         plr = g.player_list()[0]
-        g.start_game()
-        card = g.get_card_from_pile("Description")
-        plr.add_card(card, Piles.HAND)
-        self.assertEqual(card.description(plr), "Foo Bar")
+        copper = g.get_card_from_pile("Copper")
+        dyna = g.get_card_from_pile("Dyna Type")
+        plr.add_card(copper, Piles.HAND)
+        self.assertFalse(copper.isNight())
+        plr.add_card(dyna, Piles.HAND)
+        self.assertTrue(copper.isNight())
 
     def test_isTreasure(self) -> None:
         """Test isTreasure"""
