@@ -280,6 +280,7 @@ class Card:
 
     ##########################################################################
     def isDuration(self) -> bool:
+        """Is this a Duration card"""
         return self._is_type(CardType.DURATION)
 
     ##########################################################################
@@ -289,10 +290,31 @@ class Card:
 
     ##########################################################################
     def isTreasure(self) -> bool:
+        """https://wiki.dominionstrategy.com/index.php/Treasure"""
         return self._is_type(CardType.TREASURE)
 
     ##########################################################################
+    def hook_add_dynamic_card_type(self, card: "Card") -> CardType:
+        """Hook to add card types based on existing card"""
+        return CardType.UNDEFINED
+
+    ##########################################################################
+    def dynamic_card_type(self) -> list[CardType]:
+        """Changeable card type"""
+        types = set[CardType]()
+        if isinstance(self.cardtype, list):
+            types.update(self.cardtype)
+        else:
+            types.add(self.cardtype)
+
+        if self.player:
+            for card in self.player.relevant_cards():
+                types.add(card.hook_add_dynamic_card_type(self))
+        return list(types)
+
+    ##########################################################################
     def isNight(self) -> bool:
+        """https://wiki.dominionstrategy.com/index.php/Night"""
         return self._is_type(CardType.NIGHT)
 
     ##########################################################################
@@ -313,13 +335,7 @@ class Card:
     ##########################################################################
     def _is_type(self, ctype: CardType) -> bool:
         """Is the card a specific type"""
-        if isinstance(self.cardtype, list):
-            if ctype in self.cardtype:
-                return True
-        else:
-            if ctype == self.cardtype:
-                return True
-        return False
+        return ctype in self.dynamic_card_type()
 
     ##########################################################################
     def isAction(self) -> bool:
