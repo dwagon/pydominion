@@ -1,6 +1,6 @@
 """The master class for all cards"""
 
-# pylint: disable=no-member
+# pylint: disable=too-many-instance-attributes, too-many-public-methods
 
 import os
 import uuid
@@ -98,7 +98,7 @@ class Card:
         self.debtcost = 0
         self.always_buyable = False
         self.potcost = False
-        self.cardtype: CardType | list[CardType] = CardType.UNDEFINED
+        self._cardtypes: list[CardType] = []
         self.purchasable = True
         self.permanent = False
         self.playable = True
@@ -167,6 +167,7 @@ class Card:
     ##########################################################################
     @property
     def location(self) -> Optional[Piles]:
+        """Location (hopefully) of card"""
         return self._location
 
     @location.setter
@@ -178,6 +179,7 @@ class Card:
     ##########################################################################
     @property
     def player(self) -> Optional["Player.Player"]:
+        """Owner of card"""
         return self._player
 
     @player.setter
@@ -185,13 +187,27 @@ class Card:
         self._player = val
 
     ##########################################################################
-    def get_cardtype_repr(self) -> str:
-        if isinstance(self.cardtype, list):
-            ct = self.cardtype[:]
-        else:
-            ct = [self.cardtype]
+    @property
+    def cardtype(self) -> list[CardType]:
+        """The types of the card"""
+        types = set[CardType](self._cardtypes)
 
-        return ", ".join([_.name.title() for _ in ct])
+        if self.player:
+            for card in self.player.relevant_cards():
+                types.add(card.hook_add_dynamic_card_type(self))
+        return list(types)
+
+    @cardtype.setter
+    def cardtype(self, card_types: Union[CardType, list[CardType]]):
+        if isinstance(card_types, list):
+            self._cardtypes = card_types
+        else:
+            self._cardtypes = [card_types]
+
+    ##########################################################################
+    def get_cardtype_repr(self) -> str:
+        """Return string rep of card types"""
+        return ", ".join([_.name.title() for _ in self.cardtype])
 
     ##########################################################################
     def __repr__(self) -> str:
@@ -206,6 +222,7 @@ class Card:
 
     ##########################################################################
     def description(self, player: "Player.Player") -> str:
+        """Card description"""
         if desc := self.dynamic_description(player):
             ans = desc
         else:
@@ -267,10 +284,12 @@ class Card:
 
     ##########################################################################
     def isGathering(self) -> bool:
+        """https://wiki.dominionstrategy.com/index.php/Gathering"""
         return self._is_type(CardType.GATHERING)
 
     ##########################################################################
     def isOmen(self) -> bool:
+        """https://wiki.dominionstrategy.com/index.php/Omen"""
         return self._is_type(CardType.OMEN)
 
     ##########################################################################
@@ -299,20 +318,6 @@ class Card:
         return CardType.UNDEFINED
 
     ##########################################################################
-    def dynamic_card_type(self) -> list[CardType]:
-        """Changeable card type"""
-        types = set[CardType]()
-        if isinstance(self.cardtype, list):
-            types.update(self.cardtype)
-        else:
-            types.add(self.cardtype)
-
-        if self.player:
-            for card in self.player.relevant_cards():
-                types.add(card.hook_add_dynamic_card_type(self))
-        return list(types)
-
-    ##########################################################################
     def isNight(self) -> bool:
         """https://wiki.dominionstrategy.com/index.php/Night"""
         return self._is_type(CardType.NIGHT)
@@ -335,7 +340,7 @@ class Card:
     ##########################################################################
     def _is_type(self, ctype: CardType) -> bool:
         """Is the card a specific type"""
-        return ctype in self.dynamic_card_type()
+        return ctype in self.cardtype
 
     ##########################################################################
     def isAction(self) -> bool:

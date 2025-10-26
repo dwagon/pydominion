@@ -20,14 +20,7 @@ class Card_Rice(Card.Card):
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """+$1 per different type among cards you have in play."""
-        types = set()
-        for card in player.piles[Piles.PLAYED]:
-            if isinstance(card.cardtype, Card.CardType):
-                types.add(card.cardtype)
-            if isinstance(card.cardtype, list):
-                for cardtype in card.cardtype:
-                    types.add(cardtype)
-        player.coins.add(len(types))
+        player.coins.add(len(self.cardtype))
 
 
 ###############################################################################
