@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Village_Green """
+"""http://wiki.dominionstrategy.com/index.php/Village_Green"""
 
 import unittest
+
 from dominion import Card, Game, Piles, Player
 
 
@@ -48,18 +49,17 @@ class Card_Village_Green(Card.Card):
         """When you discard this other than during Clean-up, you may reveal it to play it."""
         if player.phase == Player.Phase.CLEANUP:
             return
-        play = player.plr_choose_options(
+        if player.plr_choose_options(
             "Reveal this card to play it?",
             ("Reveal and play", True),
             ("Keep concealed", False),
-        )
-        if play:
+        ):
             player.move_card(self, Piles.HAND)
-            player.play_card(self)
+            player.play_card(self, cost_action=False)
 
 
 ###############################################################################
-class Test_Village_Green(unittest.TestCase):
+class TestVillageGreen(unittest.TestCase):
     """Test Village Green"""
 
     def setUp(self):
