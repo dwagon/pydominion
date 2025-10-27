@@ -98,7 +98,7 @@ class Card:
         self.debtcost = 0
         self.always_buyable = False
         self.potcost = False
-        self._cardtypes: list[CardType] = []
+        self._card_types: list[CardType] = []
         self.purchasable = True
         self.permanent = False
         self.playable = True
@@ -190,19 +190,26 @@ class Card:
     @property
     def cardtype(self) -> list[CardType]:
         """The types of the card"""
-        types = set[CardType](self._cardtypes)
+        types = set[CardType](self._card_types)
 
         if self.player:
             for card in self.player.relevant_cards():
-                types.add(card.hook_add_dynamic_card_type(self))
+                dt = card.hook_add_dynamic_card_type(self)
+                if dt != CardType.UNDEFINED:
+                    types.add(dt)
         return list(types)
 
     @cardtype.setter
     def cardtype(self, card_types: Union[CardType, list[CardType]]):
         if isinstance(card_types, list):
-            self._cardtypes = card_types
+            self._card_types = card_types
         else:
-            self._cardtypes = [card_types]
+            self._card_types = [card_types]
+
+    def get_raw_card_type(self) -> list[CardType]:
+        """Return card type specified on card, without calling hooks
+        Can prevent recursion"""
+        return self._card_types
 
     ##########################################################################
     def get_cardtype_repr(self) -> str:
@@ -435,12 +442,12 @@ class Card:
         return {}
 
     ##########################################################################
-    def hook_pre_play(self, game: "Game.Game", player: "Player.Player", card: "Card") -> dict[OptionKeys, str]:
+    def hook_pre_play(self, game: "Game.Game", player: "Player.Player", card: "Card") -> dict[OptionKeys, Any]:
         """Hook - overwritten in subclasses if required"""
         return {}
 
     ##########################################################################
-    def hook_post_play(self, game: "Game.Game", player: "Player.Player", card: "Card") -> dict[OptionKeys, str]:
+    def hook_post_play(self, game: "Game.Game", player: "Player.Player", card: "Card") -> dict[OptionKeys, Any]:
         """Called after a card is played"""
         return {}
 

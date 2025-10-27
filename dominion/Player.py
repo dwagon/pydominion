@@ -73,7 +73,7 @@ class Player:
         self.favors = Counter("Favors", 0)
         self.newhandsize = 5
         self.specials: dict[str, Any] = {}  # Used by cards for special reasons
-        self.limits: dict[Limits, Optional[int]] = {Limits.PLAY: None, Limits.BUY: 999}
+        self.limits: dict[Limits, Any] = {Limits.PLAY: None, Limits.BUY: 999}
         self.card_token: bool = False
         self.coin_token: bool = False
         self.journey_token: bool = True
@@ -121,6 +121,7 @@ class Player:
     def get_card_from_pile(self, pile: str, name: str = "") -> Card:
         """Get a card from a card pile"""
         card = self.game.get_card_from_pile(pile, name)
+        card.player = self
         self.debug(card, f"Got {card} from pile")
         return card
 
@@ -989,7 +990,7 @@ class Player:
     def _hook_pre_play(self, card: Card) -> dict[OptionKeys, str]:
         """Hook before an action card is played"""
         options: dict[OptionKeys, str] = {}
-        for crd in self.piles[Piles.DURATION] + self.piles[Piles.PLAYED]:
+        for crd in self.piles[Piles.DURATION] + self.piles[Piles.PLAYED] + self.game.prophecy:
             options |= crd.hook_pre_play(game=self.game, player=self, card=card)
         return options
 
@@ -1037,12 +1038,11 @@ class Player:
     ###########################################################################
     def _play_enough_actions(self, card: Card, cost_action: bool) -> bool:
         """Do we have enough actions to play this card"""
-        if not card.isTreasure() and self.phase != Phase.BUY:
-            if card.isAction() and cost_action and self.phase != Phase.NIGHT:
-                self.actions -= 1
-            if self.actions.get() < 0:  # pragma: no cover
-                self.actions.set(0)
-                return False
+        if card.isAction() and cost_action and self.phase not in (Phase.NIGHT, Phase.BUY):
+            self.actions -= 1
+        if self.actions.get() < 0:  # pragma: no cover
+            self.actions.set(0)
+            return False
         return True
 
     ###########################################################################
@@ -1228,7 +1228,6 @@ class Player:
         except NoCardException:
             self.output(f"No more {new_card_name}")
             raise
-        new_card.player = self
         return new_card
 
     ###########################################################################
