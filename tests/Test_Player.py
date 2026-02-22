@@ -551,7 +551,7 @@ class TestMisc(unittest.TestCase):
         self.assertEqual(self.plr._cost_string(eng), "0 Coins, 4 Debt")
 
     def test_durationpile_size(self) -> None:
-        """Test size of duration pile """
+        """Test size of duration pile"""
         copper = self.game.get_card_from_pile("Copper")
         self.assertEqual(self.plr.piles[Piles.DURATION].size(), 0)
         self.plr.piles[Piles.DURATION].add(copper)
