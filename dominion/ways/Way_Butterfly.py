@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" http://wiki.dominionstrategy.com/index.php/Way_of_the_Butterfly """
+"""http://wiki.dominionstrategy.com/index.php/Way_of_the_Butterfly"""
 
 import unittest
 from typing import Any
@@ -9,15 +9,15 @@ from dominion import Card, Game, Way, Piles, Player, OptionKeys
 
 ###############################################################################
 class Way_Butterfly(Way.Way):
+    """Butterfly"""
+
     def __init__(self) -> None:
         Way.Way.__init__(self)
         self.base = Card.CardExpansion.MENAGERIE
         self.desc = "You may return this to its pile to gain a card costing exactly $1 more than it."
         self.name = "Way of the Butterfly"
 
-    def special_way(
-        self, game: Game.Game, player: Player.Player, card: Card.Card
-    ) -> dict[OptionKeys, Any]:
+    def special_way(self, game: Game.Game, player: Player.Player, card: Card.Card) -> dict[OptionKeys, Any]:
         player.move_card(card, Piles.CARDPILE)
         cst = player.card_cost(card)
         player.plr_gain_card(cst + 1, "equal")
@@ -26,11 +26,13 @@ class Way_Butterfly(Way.Way):
 
 ###############################################################################
 class TestButterfly(unittest.TestCase):
+    """Test Butterfly"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1,
             ways=["Way of the Butterfly"],
-            initcards=["Moat", "Witch"],
+            initcards=["Moat", "Hermit"],
             badcards=["Duchess"],
         )
         self.g.start_game()
@@ -41,9 +43,9 @@ class TestButterfly(unittest.TestCase):
     def test_play(self) -> None:
         """Perform a Butterfly"""
         self.plr.add_card(self.card, Piles.HAND)
-        self.plr.test_input = ["Get Witch"]
+        self.plr.test_input = ["Get Hermit"]
         self.plr.perform_way(self.way, self.card)
-        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Witch"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Hermit"])
         self.assertEqual(len(self.g.card_piles["Moat"]), 10)
         self.assertNotIn("Moat", self.plr.piles[Piles.HAND])
 
