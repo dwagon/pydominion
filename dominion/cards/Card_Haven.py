@@ -17,7 +17,7 @@ class Card_Haven(Card.Card):
         self.name = "Haven"
         self.cards = 1
         self.actions = 1
-        self.cost = 4
+        self.cost = 2
         self.savedHavenCard: Optional[Card.Card] = None
 
     def special(self, game: Game.Game, player: Player.Player) -> None:

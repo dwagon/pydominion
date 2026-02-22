@@ -17,7 +17,7 @@ class Card_JewelledEgg(Card.Card):
         self.desc = "$1; +1 Buy; When you trash this, gain a Loot."
         self.name = "Jewelled Egg"
         self.required_cards = ["Loot"]
-        self.cost = 3
+        self.cost = 2
         self.coin = 1
         self.buys = 1
 

@@ -14,7 +14,7 @@ class Card_Den_of_Sin(Card.Card):
         self.cardtype = [Card.CardType.NIGHT, Card.CardType.DURATION]
         self.base = Card.CardExpansion.NOCTURNE
         self.name = "Den of Sin"
-        self.cost = 2
+        self.cost = 5
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:

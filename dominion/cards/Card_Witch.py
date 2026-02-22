@@ -15,7 +15,7 @@ class Card_Witch(Card.Card):
         self.required_cards = ["Curse"]
         self.name = "Witch"
         self.cards = 2
-        self.cost = 3
+        self.cost = 5
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """All other players gain a curse"""

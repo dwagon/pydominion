@@ -16,7 +16,7 @@ class Card_JunkDealer(Card.Card):
         self.cards = 1
         self.actions = 1
         self.coin = 1
-        self.cost = 2
+        self.cost = 5
 
     def special(self, game: "Game.Game", player: "Player.Player") -> None:
         """Trash a card from your hand."""

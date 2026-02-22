@@ -16,7 +16,7 @@ class Card_Shepherd(Card.Card):
             "+1 action; Discard any number of victory cards +2 cards per card discarded"
         )
         self.name = "Shepherd"
-        self.cost = 2
+        self.cost = 4
         self.actions = 1
         self.heirloom = "Pasture"
 

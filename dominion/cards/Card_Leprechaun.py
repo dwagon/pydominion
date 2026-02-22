@@ -15,7 +15,7 @@ class Card_Leprechaun(Card.Card):
             Otherwise, receive a Hex."""
         self.name = "Leprechaun"
         self.required_cards = [("Card", "Wish")]
-        self.cost = 5
+        self.cost = 3
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         try:

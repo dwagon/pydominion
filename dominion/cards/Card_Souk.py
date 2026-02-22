@@ -19,7 +19,7 @@ class Card_Souk(Card.Card):
         When you gain this, trash up to 2 cards from your hand."""
         self.buys = 1
         self.name = "Souk"
-        self.cost = 7
+        self.cost = 5
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """+$7; –$1 per card in your hand (you can't go below $0)"""
