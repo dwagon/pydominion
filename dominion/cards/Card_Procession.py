@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Procession"""
 import unittest
 
 from dominion import Game, Card, Piles, Player
@@ -7,6 +7,8 @@ from dominion import Game, Card, Piles, Player
 
 ###############################################################################
 class Card_Procession(Card.Card):
+    """Procession"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -18,15 +20,11 @@ class Card_Procession(Card.Card):
         self.cost = 4
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
-        action_cards = [
-            _ for _ in player.piles[Piles.HAND] if _.isAction() and not _.isDuration()
-        ]
+        action_cards = [_ for _ in player.piles[Piles.HAND] if _.isAction() and not _.isDuration()]
         if not action_cards:
             player.output("No suitable action cards")
             return
-        cards = player.card_sel(
-            prompt="Select a card to play twice, then trash", cardsrc=action_cards
-        )
+        cards = player.card_sel(prompt="Select a card to play twice, then trash", cardsrc=action_cards)
         if not cards:
             return
         card = cards[0]
@@ -42,8 +40,10 @@ class Card_Procession(Card.Card):
 
 ###############################################################################
 class TestProcession(unittest.TestCase):
+    """Test Procession"""
+
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=1, initcards=["Procession", "Moat", "Witch"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Procession", "Moat", "Hermit"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Procession")
@@ -52,11 +52,11 @@ class TestProcession(unittest.TestCase):
         """Play procession to trash moat and buy a witch"""
         self.plr.piles[Piles.HAND].set("Moat")
         self.plr.add_card(self.card, Piles.HAND)
-        self.plr.test_input = ["Moat", "Witch"]
+        self.plr.test_input = ["Moat", "Hermit"]
         self.plr.play_card(self.card)
         self.assertIn("Moat", self.g.trash_pile)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 4)
-        self.assertIn("Witch", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Hermit", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

@@ -517,7 +517,7 @@ class Test_pickup_card(unittest.TestCase):
         self.plr.piles[Piles.DISCARD].set()
         self.plr.piles[Piles.HAND].set()
         with self.assertRaises(NoCardException):
-            card = self.plr.pickup_card()
+            self.plr.pickup_card()
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 0)
 
     def test_pickups(self) -> None:
@@ -546,11 +546,12 @@ class TestMisc(unittest.TestCase):
         witch = self.game.get_card_from_pile("Witch")
         golem = self.game.get_card_from_pile("Golem")
         eng = self.game.get_card_from_pile("Engineer")
-        self.assertEqual(self.plr._cost_string(witch), "3 Coins")
+        self.assertEqual(self.plr._cost_string(witch), "5 Coins")
         self.assertEqual(self.plr._cost_string(golem), "4 Coins, Potion")
         self.assertEqual(self.plr._cost_string(eng), "0 Coins, 4 Debt")
 
     def test_durationpile_size(self) -> None:
+        """Test size of duration pile"""
         copper = self.game.get_card_from_pile("Copper")
         self.assertEqual(self.plr.piles[Piles.DURATION].size(), 0)
         self.plr.piles[Piles.DURATION].add(copper)
