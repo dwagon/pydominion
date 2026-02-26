@@ -49,6 +49,11 @@ class Test_parse_args(unittest.TestCase):
         g.start_game()
         self.assertIn("Aqueduct", g.landmarks)
 
+    def test_naivebot_arg(self):
+        """Test parsing naive bot count"""
+        args = rungame.parse_cli_args(["--naivebot", "2"])
+        self.assertEqual(args.naivebot, 2)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

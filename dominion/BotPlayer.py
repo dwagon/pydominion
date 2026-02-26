@@ -13,6 +13,7 @@ from dominion.Player import Player
 if TYPE_CHECKING:
     from dominion.Game import Game
     from dominion.Card import Card
+from dominion import Action
 
 
 ###############################################################################
@@ -46,7 +47,7 @@ class BotPlayer(Player):
         try:
             opts = {}
             for opt in options:
-                if opt["action"] == "buy":
+                if opt["action"] == Action.BUY:
                     if opt["card"].name == "Colony":
                         opts["colony"] = opt
                     if opt["card"].name == "Province":
@@ -59,11 +60,11 @@ class BotPlayer(Player):
                         opts["duchy"] = opt
                     if opt["card"].name == "Silver":
                         opts["silver"] = opt
-                if opt["action"] == "quit":
+                if opt["action"] == Action.QUIT:
                     opts["quit"] = opt
-                if opt["action"] == "spendall":
+                if opt["action"] == Action.SPENDALL:
                     opts["spendall"] = opt
-                if opt["action"] == "payback":
+                if opt["action"] == Action.PAYBACK:
                     opts["payback"] = opt
 
             return opts

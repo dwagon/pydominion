@@ -19,7 +19,7 @@ Text interface
 usage: rungame.py [-h] [--numplayers NUMPLAYERS] [--card INITCARDS] [--bad BADCARDS] [--shelters SHELTERS] [--num_events NUM_EVENTS] [--events EVENTS]
                   [--num_ways NUM_WAYS] [--ways WAYS] [--num_landmarks NUM_LANDMARKS] [--landmark LANDMARKS] [--num_projects NUM_PROJECTS]
                   [--num_traits NUM_TRAITS] [--oldcards] [--project INIT_PROJECTS] [--ally ALLIES] [--trait TRAITS] [--cardset CARDSET] [--cardbase CARDBASE]
-                  [--card_path CARD_PATH] [--prosperity] [--bot] [--randobot RANDOBOT] [--quiet]
+                  [--card_path CARD_PATH] [--prosperity] [--bot] [--randobot RANDOBOT] [--naivebot NAIVEBOT] [--quiet]
 
 Play dominion
 
@@ -53,6 +53,7 @@ options:
   --prosperity          Use colonies and platinum coins
   --bot                 Bot Player
   --randobot RANDOBOT   Number of Rando Bot Players
+  --naivebot NAIVEBOT   Number of Naive Bot Players
   --quiet               Supress a lot of output
 ```
 

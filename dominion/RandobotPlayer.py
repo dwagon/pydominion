@@ -71,17 +71,20 @@ class RandobotPlayer(Player):
     ###########################################################################
     def user_input(self, options: list[Option], prompt: str) -> Option:
         """Handle user input"""
-        print(Prompt.generate_prompt(self))
-        for opt in options:
-            print(self.selectorLine(opt))
+        if not self.quiet:
+            print(Prompt.generate_prompt(self))
+            for opt in options:
+                print(self.selectorLine(opt))
         for opt in options:
             if "action" not in opt:
                 break
             if opt["action"] == "spendall" and random.randint(1, 10) < 7:
-                print(f"Default spendall {opt=}")
+                if not self.quiet:
+                    print(f"Default spendall {opt=}")
                 return opt
             if opt["action"] == "payback":
-                print(f"Mandatory payback {opt=}")
+                if not self.quiet:
+                    print(f"Mandatory payback {opt=}")
                 return opt
 
         # Do anything but quit
@@ -92,13 +95,15 @@ class RandobotPlayer(Player):
             raise
         if avail:
             opt = random.choice(avail)
-            print(f"Random: {opt=}")
+            if not self.quiet:
+                print(f"Random: {opt=}")
             return opt
 
         # If only quit is available then quit
         for opt in options:
             if opt["action"] == "quit":
-                print(f"Quit {opt=}")
+                if not self.quiet:
+                    print(f"Quit {opt=}")
                 return opt
 
         # How did we get here?
@@ -107,18 +112,21 @@ class RandobotPlayer(Player):
     ###########################################################################
     def card_sel(self, num: int = 1, **kwargs: Any) -> list[Card.Card]:
         """Select a card at random"""
-        print(f"card_sel {self.currcards} {kwargs=}")
+        if not self.quiet:
+            print(f"card_sel {self.currcards} {kwargs=}")
         cards = self.card_selSource(**kwargs)
         if not cards:
             return []
         card = random.choice(cards)
-        print(f"Random: card_sel chose: {card=}")
+        if not self.quiet:
+            print(f"Random: card_sel chose: {card=}")
         return [card]
 
     ###########################################################################
     def card_pile_sel(self, num: int = 1, **kwargs: Any) -> list[str] | None:
         """Select a card pile at random"""
-        print(f"card_pile_sel {kwargs=}")
+        if not self.quiet:
+            print(f"card_pile_sel {kwargs=}")
 
         if kwargs.get("cardsrc"):
             piles = [(key, value) for key, value in self.game.get_card_piles() if key in kwargs["cardsrc"]]
@@ -127,16 +135,20 @@ class RandobotPlayer(Player):
 
         if not piles:
             return None
-        print(f"card_pile_sel {piles=}")
+        if not self.quiet:
+            print(f"card_pile_sel {piles=}")
         pile = random.choice(piles)
-        print(f"Random: card_pile_sel {pile=}")
+        if not self.quiet:
+            print(f"Random: card_pile_sel {pile=}")
         return [pile[0]]
 
     ###########################################################################
     def plr_choose_options(self, prompt, *choices):
-        print(f"plr_choose_options {self.currcards} {prompt=} {choices=}")
+        if not self.quiet:
+            print(f"plr_choose_options {self.currcards} {prompt=} {choices=}")
         choice = random.choice(choices)
-        print(f"Random: plr_choose_options {self.currcards} {choice=}")
+        if not self.quiet:
+            print(f"Random: plr_choose_options {self.currcards} {choice=}")
         return choice[1]
 
     ###########################################################################

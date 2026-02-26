@@ -118,6 +118,13 @@ def parse_cli_args(args: Optional[list[str]] = None) -> argparse.Namespace:
         help="Number of Rando Bot Players",
     )
     parser.add_argument(
+        "--naivebot",
+        type=int,
+        dest="naivebot",
+        default=0,
+        help="Number of Naive Bot Players",
+    )
+    parser.add_argument(
         "--quiet",
         action="store_true",
         dest="quiet",

@@ -1,6 +1,12 @@
 """Constants used in many places"""
 
-from enum import auto, Enum, StrEnum
+from enum import auto, Enum
+try:
+    from enum import StrEnum
+except ImportError:
+    # Python < 3.11 fallback
+    class StrEnum(str, Enum):
+        pass
 
 from dominion.Option import Option
 

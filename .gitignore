@@ -3,3 +3,9 @@ dist/*
 .cache
 .pytest_cache
 *.pyc
+
+.env
+
+logs/
+gamelogs/
+runs/

@@ -1,6 +1,11 @@
 """https://wiki.dominionstrategy.com/index.php/Pile"""
 
-from typing import Optional, TYPE_CHECKING, Self
+import sys
+from typing import Optional, TYPE_CHECKING
+if sys.version_info >= (3, 11):
+    from typing import Self
+else:
+    from typing_extensions import Self
 
 from dominion import NoCardException
 

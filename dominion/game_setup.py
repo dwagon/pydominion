@@ -6,7 +6,13 @@ import os
 import random
 import sys
 import uuid
-from enum import StrEnum, auto
+from enum import auto, Enum
+try:
+    from enum import StrEnum
+except ImportError:
+    # Python < 3.11 fallback
+    class StrEnum(str, Enum):
+        pass
 from typing import TYPE_CHECKING, cast, Optional, Any, Callable
 
 from dominion import Keys
@@ -20,6 +26,7 @@ from dominion.Event import Event
 from dominion.Hex import HexPile, Hex
 from dominion.Landmark import Landmark
 from dominion.Loot import LootPile
+from dominion.NaiveBotPlayer import NaiveBotPlayer
 from dominion.Names import playerNames
 from dominion.Player import Player
 from dominion.Project import Project
@@ -42,6 +49,7 @@ class Flag(StrEnum):
     BOT = auto()
     LOADED_PRIZES = auto()
     LOADED_TRAVELLERS = auto()
+    NAIVEBOT = auto()
     NUM_STACKS = auto()
     RANDOBOT = auto()
     USE_OLD_CARDS = auto()
@@ -52,7 +60,12 @@ BASE_CARDS = ["Copper", "Silver", "Gold", "Estate", "Duchy", "Province"]
 PATHS: dict[Keys, str] = {}
 INIT_NUMBERS: dict[Keys, int] = {}
 INIT_CARDS: dict[Keys, list[Any]] = {}
-INIT_OPTIONS: dict[Flag, Any] = {Flag.NUM_STACKS: 10, Flag.RANDOBOT: 0, Flag.BOT: False}
+INIT_OPTIONS: dict[Flag, Any] = {
+    Flag.NUM_STACKS: 10,
+    Flag.RANDOBOT: 0,
+    Flag.NAIVEBOT: 0,
+    Flag.BOT: False,
+}
 FLAGS: dict[Flag, bool] = {}
 
 
@@ -720,14 +733,21 @@ def place_init_card(game: "Game", card: str, available: list[str]) -> Optional[i
 ###########################################################################
 def instantiate_player_class(game: "Game", name: str, use_shelters: bool, player_num: int, the_uuid: str) -> Player:
     """Create the player instances"""
-    if INIT_OPTIONS[Flag.BOT]:
-        plr_class: type[Player] = BotPlayer
+    player_classes = getattr(game, '_player_classes', None)
+    if player_classes and player_num < len(player_classes):
+        plr_class: type[Player] = player_classes[player_num]
+    elif INIT_OPTIONS[Flag.BOT]:
+        plr_class = BotPlayer
         name = f"{name}Bot"
         INIT_OPTIONS[Flag.BOT] = False
     elif INIT_OPTIONS[Flag.RANDOBOT]:
         plr_class = RandobotPlayer
         name = f"{name}RandoBot"
         INIT_OPTIONS[Flag.RANDOBOT] -= 1
+    elif INIT_OPTIONS[Flag.NAIVEBOT]:
+        plr_class = NaiveBotPlayer
+        name = f"{name}NaiveBot"
+        INIT_OPTIONS[Flag.NAIVEBOT] -= 1
     else:
         plr_class = TextPlayer
 
@@ -808,7 +828,10 @@ def parse_args(game: "Game", **args: Any) -> None:
     game.numplayers = args.get("numplayers", 2)
     INIT_OPTIONS[Flag.BOT] = args.get("bot", False)
     INIT_OPTIONS[Flag.RANDOBOT] = args.get("randobot", 0)
+    INIT_OPTIONS[Flag.NAIVEBOT] = args.get("naivebot", 0)
     FLAGS[Flag.ALLOW_SHELTERS] = args.get("shelters", True)
+    
+    game._player_classes = args.get("player_classes", None)
 
 
 ###########################################################################
