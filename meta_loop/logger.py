@@ -101,6 +101,7 @@ class RunLogger:
                 "avg_vp_b": m.avg_vp_b,
                 "avg_vp_margin": m.avg_vp_margin,
                 "avg_game_length": m.avg_game_length,
+                "crashes": m.crashes,
                 "num_traces": len(m.traces),
             }
         self._write_json(os.path.join(f"iteration_{iteration:03d}", "tournament_result.json"), data)

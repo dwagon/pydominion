@@ -27,6 +27,7 @@ class MatchupResult:
     avg_vp_margin: float           # a minus b
     avg_game_length: float         # in turns
 
+    crashes: int                   # games where agent threw an exception (counted as losses)
     traces: list[GameTrace]        # sampled game traces
 
 @dataclass

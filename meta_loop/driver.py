@@ -184,6 +184,15 @@ def run_eval(
     for opp_name in opponents:
         vs_all[opp_name] = _get_win_rate(tournament_result, agent_name, opp_name)
 
+    # Collect per-opponent crash counts from matchup results
+    crashes_by_opp: dict[str, int] = {}
+    for (p1, p2), matchup in tournament_result.matchups.items():
+        if p1 == agent_name:
+            crashes_by_opp[p2] = matchup.crashes
+        elif p2 == agent_name:
+            crashes_by_opp[p1] = matchup.crashes
+    total_crashes = sum(crashes_by_opp.values())
+
     detail = tournament_result.ratings_detail.get(agent_name)
     mu = detail.rating if detail else 0.0
     sigma = detail.uncertainty if detail else 0.0
@@ -209,6 +218,7 @@ def run_eval(
         total_wall_time_seconds=total_wall,
         output_dir=output_dir,
         success=True,
+        crashes_by_opponent=crashes_by_opp if crashes_by_opp else None,
     )
     logger.write_summary(result)
 
@@ -218,13 +228,17 @@ def run_eval(
         f.write(code)
 
     # Print summary
+    crash_str = f"  [red]crashes={total_crashes}/{tournament_result.total_games}[/]" if total_crashes else ""
     console.print(
         f"  [bold]vs BigMoney: {vs_bm_wr:.1%}[/]  "
         f"margin={vs_bm_margin:+.1f}  mu={mu:.1f}"
+        + (f"  [red]crashes={total_crashes}[/]" if total_crashes else "")
     )
     for opp, wr in vs_all.items():
         if opp != "bigmoney":
-            console.print(f"  [dim]vs {opp}: {wr:.0%}[/]")
+            opp_crashes = crashes_by_opp.get(opp, 0)
+            crash_note = f" [red]({opp_crashes} crashes)[/]" if opp_crashes else ""
+            console.print(f"  [dim]vs {opp}: {wr:.0%}[/]{crash_note}")
     console.print()
 
     return result

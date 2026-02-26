@@ -269,6 +269,7 @@ def _run_matchup(
         avg_vp_b=p2_vp_total / total_matchup_games,
         avg_vp_margin=(p1_vp_total - p2_vp_total) / total_matchup_games,
         avg_game_length=turns_total / total_matchup_games,
+        crashes=crashes,
         traces=sampled_traces,
     )
 

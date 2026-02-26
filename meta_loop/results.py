@@ -24,3 +24,4 @@ class EvalResult:
     total_wall_time_seconds: float
     output_dir: str
     success: bool  # False if all validation attempts failed
+    crashes_by_opponent: dict[str, int] | None = None  # {opponent: crash_count}; None if not evaluated
