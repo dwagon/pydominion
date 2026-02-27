@@ -576,7 +576,8 @@ class Player:
     def do_turn(self) -> None:
         """Have a turn as the player"""
         self.turn_number += 1
-        print()
+        if not self.quiet:
+            print()
         self.output(f"{'#' * 30} Turn {self.turn_number} {'#' * 30}")
         stats = f"({self.get_score()} points, {self.count_cards()} cards)"
         if self.skip_turn:
