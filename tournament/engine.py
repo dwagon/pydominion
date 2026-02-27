@@ -33,30 +33,28 @@ def _run_single_game(
     game.start_game()
     
     # Run until over or max turns
-    turns = 0
-    while not game.game_over and turns < 400:
+    while not game.game_over and len(game._turns) < 400:
         game.turn()
-        turns += 1
-        
+
     # Determine winner
     scores = {}
     for p in game.player_list():
         scores[p.name] = p.get_score()
-        
+
     p1_name = game.player_list()[0].name
     p2_name = game.player_list()[1].name
-    
+
     p1_score = scores[p1_name]
     p2_score = scores[p2_name]
-    
+
     if p1_score > p2_score:
         outcome = "win_a"
     elif p2_score > p1_score:
         outcome = "win_b"
     else:
         outcome = "draw"
-        
-    return outcome, scores, turns
+
+    return outcome, scores, max(p.turn_number for p in game.player_list())
 
 def _run_traced_game(
     kingdom_cards: list[str],
@@ -93,10 +91,8 @@ def _run_traced_game(
         p.output = make_player_output(p, log_lines)
     game.output = make_game_output(log_lines)
 
-    turn = 0
-    while not game.game_over and turn < 400:
+    while not game.game_over and len(game._turns) < 400:
         game.turn()
-        turn += 1
 
     # Final scores
     for p in game.player_list():

@@ -193,6 +193,14 @@ def run_eval(
             crashes_by_opp[p1] = matchup.crashes
     total_crashes = sum(crashes_by_opp.values())
 
+    # Compute avg game length across all matchups (weighted by num_games)
+    total_matchup_games = sum(m.num_games for m in tournament_result.matchups.values())
+    avg_game_length = (
+        sum(m.avg_game_length * m.num_games for m in tournament_result.matchups.values())
+        / total_matchup_games
+        if total_matchup_games > 0 else 0.0
+    )
+
     detail = tournament_result.ratings_detail.get(agent_name)
     mu = detail.rating if detail else 0.0
     sigma = detail.uncertainty if detail else 0.0
@@ -218,6 +226,7 @@ def run_eval(
         total_wall_time_seconds=total_wall,
         output_dir=output_dir,
         success=True,
+        avg_game_length=avg_game_length,
         crashes_by_opponent=crashes_by_opp if crashes_by_opp else None,
     )
     logger.write_summary(result)
