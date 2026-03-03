@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+from unittest.mock import patch
 
 from dominion import Game, Piles, Player, Card
 
@@ -32,6 +33,7 @@ class Card_Villain(Card.Card):
                         prompt=f"{player.name}'s Villain forcing you to discard one card",
                         cardsrc=from_cards,
                         num=1,
+                        force=True,
                     )
                     player.output(f"{vic.name} discarded {disc[0].name}")
                 else:
@@ -69,6 +71,39 @@ class Test_Villain(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coffers.get(), sc + 2)
         self.assertIn("Province", self.vic.piles[Piles.DISCARD])
+
+
+###############################################################################
+class Test_Villain_ForceDiscard(unittest.TestCase):
+    """Villain must force a discard even when the victim's hand has no Victory or Curse cards.
+
+    Bug: without force=True in plr_discard_cards, player types that score cards for
+    discard (e.g. NaiveBotPlayer) return [] when all scores are negative, causing
+    disc[0] to raise IndexError.
+    Fix: pass force=True so the discard is treated as mandatory.
+    """
+
+    def setUp(self):
+        self.g = Game.TestGame(numplayers=2, initcards=["Villain"], numhexes=0, numboons=0)
+        self.g.start_game()
+        self.plr, self.vic = self.g.player_list()
+        self.card = self.g.get_card_from_pile("Villain")
+        self.plr.add_card(self.card, Piles.HAND)
+
+    def test_force_discard_no_victory_cards(self):
+        """Victim hand is all Gold/Silver — no Victory or Curse cards.
+        A bot that scores cards returns [] when all scores are negative and
+        force is not set, causing disc[0] to raise IndexError."""
+        self.vic.piles[Piles.HAND].set("Gold", "Gold", "Silver", "Silver", "Gold")
+
+        def stubborn_discard(prompt=None, cardsrc=None, num=1, force=False, **kwargs):
+            """Simulates a NaiveBotPlayer that refuses to discard cards."""
+            if not force:
+                return []
+            return [cardsrc[0]]
+
+        with patch.object(self.vic, "plr_discard_cards", side_effect=stubborn_discard):
+            self.plr.play_card(self.card)  # raises IndexError if force=True is missing
 
 
 ###############################################################################
