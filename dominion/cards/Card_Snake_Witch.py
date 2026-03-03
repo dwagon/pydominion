@@ -34,8 +34,7 @@ class Card_Snake_Witch(Card.Card):
 
         # Return to its pile
         if self in player.piles[Piles.PLAYED]:
-            game.card_piles["Snake Witch"].add(self)
-            player.piles[Piles.PLAYED].remove(self)
+            player.move_card(self, Piles.CARDPILE)
 
         # Curse others
         for victim in player.attack_victims():
@@ -91,6 +90,56 @@ class Test_Snake_Witch(unittest.TestCase):
         self.assertIn("Province", self.attacker.piles[Piles.HAND])
         self.assertNotIn("Curse", self.victim.piles[Piles.DISCARD])
         self.assertIn("Snake Witch", self.attacker.piles[Piles.PLAYED])
+
+
+###############################################################################
+class Test_Snake_Witch_BandOfMisfitsInteraction(unittest.TestCase):
+    """Band of Misfits copying Snake Witch after it was returned to the supply pile
+    must not crash with a ValueError.
+
+    Bug: the old return-to-pile code used CardPile.add(self) which never updated
+    self.location, leaving it as PLAYED.  When Band of Misfits later did its cleanup
+    (move_card(sw, CARDPILE)), remove_card tried to pull the card from the already-empty
+    PLAYED pile → ValueError.
+    Fix: player.move_card(self, Piles.CARDPILE) atomically removes the card from PLAYED
+    and sets location = CARDPILE, so Band of Misfits' cleanup path is a no-op.
+    """
+
+    def setUp(self) -> None:
+        self.g = Game.TestGame(
+            numplayers=2,
+            initcards=["Snake Witch", "Band of Misfits"],
+            badcards=["Village Green"],
+        )
+        self.g.start_game()
+        self.plr, self.vic = self.g.player_list()
+
+    def test_no_stale_location_after_return_to_pile(self) -> None:
+        """Step 1: plr plays Snake Witch with a unique hand and chooses Reveal,
+        returning the witch to the supply via move_card (location updated to CARDPILE).
+        Step 2: vic plays Band of Misfits and copies Snake Witch; vic's hand has
+        duplicates so Snake Witch's special short-circuits. The stale-location path
+        in BoM's cleanup must not raise ValueError."""
+        # Step 1 — attacker returns Snake Witch to supply
+        witch = self.g.get_card_from_pile("Snake Witch")
+        self.plr.piles[Piles.DECK].set("Province")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
+        self.plr.add_card(witch, Piles.HAND)
+        self.plr.test_input = ["Reveal"]
+        self.plr.play_card(witch)
+        self.assertEqual(witch.location, Piles.CARDPILE)
+        pile_size = len(self.g.card_piles["Snake Witch"])
+        self.assertGreater(pile_size, 0)
+
+        # Step 2 — victim plays Band of Misfits, copies Snake Witch
+        # vic's hand has duplicate Coppers so Snake Witch's special returns immediately
+        bom = self.g.get_card_from_pile("Band of Misfits")
+        self.vic.piles[Piles.DECK].set("Estate")
+        self.vic.piles[Piles.HAND].set("Copper", "Copper", "Gold")
+        self.vic.add_card(bom, Piles.HAND)
+        self.vic.test_input = ["Select Snake Witch"]
+        self.vic.play_card(bom)  # must not raise ValueError
+        self.assertEqual(len(self.g.card_piles["Snake Witch"]), pile_size)
 
 
 ###############################################################################
