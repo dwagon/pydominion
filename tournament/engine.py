@@ -260,7 +260,7 @@ def _run_matchup(
         wins_b=p2_wins,
         draws=draws,
         num_games=total_matchup_games,
-        win_rate_a=p1_wins / total_matchup_games,
+        win_rate_a=(p1_wins + 0.5 * draws) / total_matchup_games,
         avg_vp_a=p1_vp_total / total_matchup_games,
         avg_vp_b=p2_vp_total / total_matchup_games,
         avg_vp_margin=(p1_vp_total - p2_vp_total) / total_matchup_games,
