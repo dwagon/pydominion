@@ -24,7 +24,7 @@ class Landmark_Obelisk(Landmark.Landmark):
 
     def hook_end_of_game(self, game: Game.Game, player: Player.Player) -> None:
         for card in player.all_cards():
-            if card.name == game.specials[OBELISK]:
+            if card.pile == game.specials[OBELISK]:
                 player.add_score("Obelisk", 2)
 
     def setup(self, game: Game.Game) -> None:
@@ -38,10 +38,7 @@ class Test_Obelisk(unittest.TestCase):
     """Test Obelisk"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(
-            numplayers=1,
-            landmarks=["Obelisk"],
-        )
+        self.g = Game.TestGame(numplayers=1, landmarks=["Obelisk"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
