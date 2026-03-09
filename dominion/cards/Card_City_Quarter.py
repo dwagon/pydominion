@@ -13,6 +13,7 @@ class Card_City_Quarter(Card.Card):
         self.base = Card.CardExpansion.EMPIRES
         self.desc = "+2 Actions. Reveal your hand. +1 Card per Action card revealed."
         self.name = "City Quarter"
+        self.cost = 0
         self.debtcost = 8
         self.actions = 2
         self.coin = 1

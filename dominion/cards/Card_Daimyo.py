@@ -17,6 +17,7 @@ class Card_Daimyo(Card.Card):
             """+1 Card; +1 Action; The next time you play a non-Command Action card this turn, replay it afterwards."""
         )
         self.name = "Daimyo"
+        self.cost = 0
         self.debtcost = 6
         self.cards = 1
         self.actions = 1

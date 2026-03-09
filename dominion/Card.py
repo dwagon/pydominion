@@ -53,6 +53,7 @@ class CardType(Enum):
     CASTLE = auto()
     CLASH = auto()
     COMMAND = auto()
+    CURSE = auto()
     DOOM = auto()
     DURATION = auto()
     FATE = auto()

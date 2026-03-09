@@ -8,7 +8,7 @@ from dominion import Game, Card, Piles, Player
 class Card_Curse(Card.Card):
     def __init__(self) -> None:
         Card.Card.__init__(self)
-        self.cardtype = Card.CardType.VICTORY
+        self.cardtype = Card.CardType.CURSE
         self.base = Card.CardExpansion.DOMINION
         self.desc = "-1 VP"
         self.basecard = True

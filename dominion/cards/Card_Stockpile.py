@@ -12,7 +12,7 @@ class Card_Stockpile(Card.Card):
 
     def __init__(self) -> None:
         Card.Card.__init__(self)
-        self.cardtype = Card.CardType.ACTION
+        self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.MENAGERIE
         self.desc = """3 Coin; +1 Buy; When you play this, Exile it."""
         self.name = "Stockpile"

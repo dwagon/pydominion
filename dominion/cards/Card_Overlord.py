@@ -16,6 +16,7 @@ class Card_Overlord(Card.Card):
         self.base = Card.CardExpansion.EMPIRES
         self.desc = "Play a non-Command Action card from the Supply costing up to $5, leaving it there."
         self.name = "Overlord"
+        self.cost = 0
         self.debtcost = 8
 
     def special(self, game: Game.Game, player: Player.Player) -> None:

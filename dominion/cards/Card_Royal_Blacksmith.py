@@ -13,6 +13,7 @@ class Card_RoyalBlacksmith(Card.Card):
         self.base = Card.CardExpansion.EMPIRES
         self.desc = """+5 Cards. Reveal your hand; discard the Coppers."""
         self.name = "Royal Blacksmith"
+        self.cost = 0
         self.debtcost = 8
         self.cards = 5
 

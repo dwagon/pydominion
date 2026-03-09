@@ -14,6 +14,7 @@ class Card_Engineer(Card.Card):
         self.desc = """Gain a card costing up to 4 Coin.
         You may trash this. If you do, gain a card costing up to 4 Coin."""
         self.name = "Engineer"
+        self.cost = 0
         self.debtcost = 4
         self.coin = 1
 

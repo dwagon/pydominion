@@ -12,7 +12,7 @@ from dominion import Game, Card, Piles, Player, NoCardException
 class Card_Sorceress(Card.Card):
     def __init__(self) -> None:
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.AUGUR]
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.AUGUR]
         self.base = Card.CardExpansion.ALLIES
         self.cost = 5
         self.actions = 1

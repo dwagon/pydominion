@@ -8,7 +8,7 @@ from dominion import Game, Card, Piles, Player, NoCardException
 class Card_Rabble(Card.Card):
     def __init__(self) -> None:
         Card.Card.__init__(self)
-        self.cardtype = Card.CardType.ACTION
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.PROSPERITY
         self.desc = """+3 cards. Each other player reveals the top 3 cards of his
             deck, discards the revealed Actions and Treasures, and puts the rest
