@@ -6,6 +6,7 @@ Usage:
     uv run python -m meta_loop --random --model anthropic/claude-sonnet-4.6
     uv run python -m meta_loop --prosperity --kingdom Mountebank ...
     uv run python -m meta_loop --events Advance Alliance --kingdom ...
+    uv run python -m meta_loop --tweak path/to/player.py --kingdom Chapel Smithy ...
 """
 
 from __future__ import annotations
@@ -65,6 +66,12 @@ def main():
     parser.add_argument(
         "--max-tokens", type=int, default=8192,
         help="LLM max output tokens (default: 8192)"
+    )
+    parser.add_argument(
+        "--tweak", default=None, metavar="FILE",
+        help="Path to a target player .py file. The LLM will try to beat it "
+             "by making small modifications to its strategy, instead of "
+             "writing a strategy from scratch."
     )
 
     # --- Game setup options (forwarded to Dominion Game constructor) ---
@@ -180,6 +187,7 @@ def main():
         temperature=args.temperature,
         max_tokens=args.max_tokens,
         game_kwargs=game_kwargs if game_kwargs else None,
+        tweak_target=args.tweak,
     )
 
     sys.exit(0 if result.success else 1)

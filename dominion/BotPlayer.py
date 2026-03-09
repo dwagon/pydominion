@@ -37,7 +37,7 @@ class BotPlayer(Player):
     def __init__(self, game: "Game", name: str = "", quiet: bool = False, **kwargs: Any):
         self.colour = "red on black"
         self.console = Console()
-        self.duchy_strategy: DuchyStrategy = kwargs.pop("duchy_strategy", DuchyStrategy.GREEDY)
+        self.duchy_strategy: DuchyStrategy = kwargs.pop("duchy_strategy", DuchyStrategy.FIVE_PROVINCE)
         self.province_strategy: ProvinceStrategy = kwargs.pop("province_strategy", ProvinceStrategy.GREEDY)
         Player.__init__(self, game, name, quiet, **kwargs)
 

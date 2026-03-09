@@ -20,7 +20,13 @@ from .code_extractor import count_lines, extract_code, validate_and_load
 from .kingdom_builder import get_kingdom_description, get_resolved_mechanics
 from .llm_client import LLMClient, LLMResponse
 from .logger import RunLogger
-from .prompts import SYSTEM_PROMPT, build_fix_prompt, build_initial_prompt
+from .prompts import (
+    SYSTEM_PROMPT,
+    build_fix_prompt,
+    build_initial_prompt,
+    build_tweak_prompt,
+    build_tweak_system_prompt,
+)
 from .results import EvalResult
 
 console = Console()
@@ -63,6 +69,7 @@ def run_eval(
     temperature: float = 0.3,
     max_tokens: int = 8192,
     game_kwargs: Optional[dict] = None,
+    tweak_target: Optional[str] = None,
 ) -> EvalResult:
     """Single-shot: LLM writes heuristic → tournament evaluates it.
 
@@ -96,18 +103,27 @@ def run_eval(
     console.print(f"\n[bold cyan]Single-Shot Eval[/]")
     console.print(f"  Kingdom: {', '.join(kingdom_cards)}")
     console.print(f"  Model: {model}")
+    if tweak_target:
+        console.print(f"  Tweak target: {tweak_target}")
     console.print(f"  Games per matchup: {games_per_eval} (×2 for side swap)")
     console.print(f"  Output: {output_dir}")
     console.print()
 
     # --- Step 1: Build prompt ---
-    user_prompt = build_initial_prompt(kingdom_desc)
-    logger.write_prompt(1, SYSTEM_PROMPT, user_prompt)
+    if tweak_target is not None:
+        with open(tweak_target, "r", encoding="utf-8") as f:
+            target_code = f.read()
+        system_prompt = build_tweak_system_prompt(target_code)
+        user_prompt = build_tweak_prompt(kingdom_desc, target_code)
+    else:
+        system_prompt = SYSTEM_PROMPT
+        user_prompt = build_initial_prompt(kingdom_desc)
+    logger.write_prompt(1, system_prompt, user_prompt)
 
     # --- Step 2: Call LLM ---
     console.print("  [dim]Calling LLM...[/]", end=" ")
     llm_resp = _call_llm_with_retry(
-        llm, SYSTEM_PROMPT, user_prompt,
+        llm, system_prompt, user_prompt,
         temperature=temperature, max_tokens=max_tokens,
     )
     cost = _estimate_cost(model, llm_resp.prompt_tokens, llm_resp.completion_tokens)
@@ -122,6 +138,7 @@ def run_eval(
     console.print("  [dim]Validating heuristic...[/]", end=" ")
     code, cls, validation_errors, validation_attempts = _extract_and_validate(
         llm, llm_resp.text, kingdom_cards, logger,
+        system_prompt=system_prompt,
         temperature=temperature, max_tokens=max_tokens,
     )
 
@@ -287,6 +304,7 @@ def _extract_and_validate(
     initial_response: str,
     kingdom_cards: list[str],
     logger: RunLogger,
+    system_prompt: str = SYSTEM_PROMPT,
     temperature: float = 0.3,
     max_tokens: int = 8192,
 ) -> tuple[Optional[str], Optional[type], list[str], int]:
@@ -307,7 +325,7 @@ def _extract_and_validate(
             if attempt < MAX_FIX_ATTEMPTS:
                 console.print(f"[yellow]no code block, asking for fix...[/]", end=" ")
                 fix_prompt = build_fix_prompt("(no code extracted)", str(e))
-                fix_resp = _call_llm_with_retry(llm, SYSTEM_PROMPT, fix_prompt,
+                fix_resp = _call_llm_with_retry(llm, system_prompt, fix_prompt,
                                                  temperature=temperature, max_tokens=max_tokens)
                 logger.write_llm_response(1, f"--- Fix attempt {attempt} ---\n{fix_resp.text}")
                 response_text = fix_resp.text
@@ -322,7 +340,7 @@ def _extract_and_validate(
             if attempt < MAX_FIX_ATTEMPTS:
                 console.print(f"[yellow]validation failed, asking for fix...[/]", end=" ")
                 fix_prompt = build_fix_prompt(code, str(e))
-                fix_resp = _call_llm_with_retry(llm, SYSTEM_PROMPT, fix_prompt,
+                fix_resp = _call_llm_with_retry(llm, system_prompt, fix_prompt,
                                                  temperature=temperature, max_tokens=max_tokens)
                 logger.write_llm_response(1, f"--- Fix attempt {attempt} ---\n{fix_resp.text}")
                 response_text = fix_resp.text

@@ -164,3 +164,97 @@ Remember:
 - Import from: `from tournament.heuristic_player import HeuristicPlayer, BuyState, ActionState, TrashState, DiscardState, GainState`
 - Do not access engine internals (self.game, self.piles, etc.)
 """
+
+
+# ---------------------------------------------------------------------------
+# "Tweak" prompt — ask the LLM to beat a target player by modifying it
+# ---------------------------------------------------------------------------
+
+
+def build_tweak_system_prompt(target_code: str) -> str:
+    """Build a system prompt that asks the LLM to beat a given target player."""
+    return f"""\
+You are an expert Dominion player and Python programmer. Your task is to
+write a heuristic player for the Dominion card game that BEATS a specific
+target player.
+
+Here is the COMPLETE source code of the target player you must beat:
+
+```python
+{target_code}
+```
+
+Study this code carefully. Understand what it buys, what actions it plays,
+and what its weaknesses are.
+
+Your job is NOT to write a completely novel strategy from scratch. Instead,
+you should make SMALL, TARGETED modifications to the target player's
+strategy that exploit its weaknesses or improve upon it using the available
+kingdom cards. Common winning approaches include:
+
+- Adding a strong action card the target doesn't buy (e.g. card draw,
+  deck thinning, attacks)
+- Adjusting buy thresholds or timing based on game state
+- Adding a trasher to thin Coppers and Estates
+- Buying an attack card to slow the opponent
+- Improving action play ordering
+
+DOMINION FUNDAMENTALS:
+- The game ends when the Province pile is empty (or Colony pile, if in play),
+  or when 3 supply piles are empty.
+- Victory cards are dead weight in your deck — they don't do anything when
+  drawn during play.
+- Deck thinning (trashing weak cards) makes your deck more consistent.
+- Action ordering matters: play cards that give +Actions before terminals
+  (cards that don't give +Actions).
+
+RULES:
+- Output ONLY the Python code, wrapped in ```python ... ``` markers.
+- Your class MUST be named `AgentHeuristic`.
+- Import from: `from tournament.heuristic_player import HeuristicPlayer, BuyState, ActionState, TrashState, DiscardState, GainState`
+- You may also import `from typing import Optional` if needed.
+- Write your strategic reasoning as code comments (docstrings and inline).
+- Do not import anything else. Do not use external libraries.
+- Do not access self.game, self.piles, or any engine internals — only use
+  the state objects passed to each method.
+- If you don't override a method, the default BigMoney-ish behavior applies.
+  You don't have to override everything — only what your strategy needs.
+- KEEP IT SIMPLE. The best modifications are often just a few targeted
+  changes. Don't over-engineer.
+"""
+
+
+def build_tweak_prompt(kingdom_description: str, target_code: str) -> str:
+    """Build the user prompt for the tweak flow."""
+    guide = _load_author_guide()
+    return f"""\
+{kingdom_description}
+
+---
+
+{guide}
+
+---
+
+You are playing AGAINST the target player whose code was shown in the system
+prompt. Study its strategy and find its weaknesses.
+
+Look at the kingdom cards above. Identify the 1-3 changes that would most
+improve upon the target player's strategy, and write a heuristic that
+exploits those opportunities.
+
+Think step by step:
+1. What does the target player do well? What does it ignore or do poorly?
+2. Which kingdom cards could exploit the target's weaknesses or improve on
+   its strategy? (Look for: card draw, +Actions, trashing, attacks, gainers)
+3. How many copies of each card should you buy? (Usually 1-2 of each)
+4. When in the game should you buy them? (Early for trashers, mid for draw)
+5. What order should you play actions? (Non-terminals before terminals)
+6. Do you need to adjust Province/Duchy buy timing?
+
+Keep your heuristic SIMPLE. Override only the methods you need to change.
+The closer you stay to the target player's proven approach, the less likely
+you are to introduce bugs.
+
+Write your reasoning as comments in the code.
+"""
