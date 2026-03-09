@@ -14,11 +14,12 @@ class Card_CamelTrain(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.MENAGERIE
         self.name = "Camel Train"
+        self.desc = "Exile a non-Victory card from the Supply. When you gain this, Exile a Gold from the Supply."
         self.cost = 3
 
     def dynamic_description(self, player: "Player.Player") -> str:
         if player.phase == Phase.BUY:
-            return """Exile a non-Victory card from the Supply. When you gain this, Exile a Gold from the Supply."""
+            return self.desc
         return "Exile a non-Victory card from the Supply."
 
     def special(self, game: "Game.Game", player: "Player.Player") -> None:

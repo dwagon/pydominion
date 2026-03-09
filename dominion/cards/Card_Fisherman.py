@@ -13,6 +13,7 @@ class Card_Fisherman(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.MENAGERIE
         self.name = "Fisherman"
+        self.desc = "+1 Card; +1 Action; +1 Coin; During your turns, if your discard pile is empty, this costs 3 Coin less."
         self.coin = 1
         self.cards = 1
         self.actions = 1
@@ -20,8 +21,7 @@ class Card_Fisherman(Card.Card):
 
     def dynamic_description(self, player: "Player.Player") -> str:
         if player.phase == Phase.BUY:
-            return """+1 Card; +1 Action; +1 Coin; During your turns, if your discard pile is empty,
-            this costs 3 Coin less."""
+            return self.desc
         return "+1 Card; +1 Action; +1 Coin"
 
     def hook_this_card_cost(self, game: "Game.Game", player: "Player.Player") -> int:

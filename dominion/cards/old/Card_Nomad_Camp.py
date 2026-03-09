@@ -12,6 +12,7 @@ class Card_NomadCamp(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.HINTERLANDS
         self.name = "Nomad Camp"
+        self.desc = "+1 Buy +2 Coins; When you gain this, put it on top of your deck."
         self.buys = 1
         self.cards = 2
         self.cost = 4
@@ -19,7 +20,7 @@ class Card_NomadCamp(Card.Card):
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.ACTION:
             return "+1 Buy +2 Coins"
-        return "+1 Buy +2 Coins; When you gain this, put it on top of your deck."
+        return self.desc
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player

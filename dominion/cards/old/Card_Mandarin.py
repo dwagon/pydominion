@@ -13,13 +13,13 @@ class Card_Mandarin(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.HINTERLANDS
         self.name = "Mandarin"
+        self.desc = "+3 Coins. Put a card from your hand on top of your deck. When you gain this, put all Treasures you have in play on top of your deck in any order."
         self.coin = 3
         self.cost = 5
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return """+3 Coins. Put a card from your hand on top of your deck.
-            When you gain this, put all Treasures you have in play on top of your deck in any order."""
+            return self.desc
         return "+3 Coins. Put a card from your hand on top of your deck."
 
     def special(self, game: Game.Game, player: Player.Player) -> None:

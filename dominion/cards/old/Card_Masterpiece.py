@@ -12,14 +12,14 @@ class Card_Masterpiece(Card.Card):
         self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.GUILDS
         self.name = "Masterpiece"
+        self.desc = "+1 Coin. When you buy this, you may overpay for it. If you do, gain a Silver per coin you overpaid."
         self.overpay = True
         self.coin = 1
         self.cost = 3
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return """+1 Coin. When you buy this, you may overpay for it.
-                If you do, gain a Silver per coin you overpaid."""
+            return self.desc
         return "+1 Coin"
 
     def hook_overpay(self, game: Game.Game, player: Player.Player, amount: int) -> None:

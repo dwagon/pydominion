@@ -12,13 +12,14 @@ class Card_Lost_City(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ADVENTURE
         self.name = "Lost City"
+        self.desc = "+2 Cards, +2 Actions; When you gain this, every other player gains a card."
         self.cards = 2
         self.actions = 2
         self.cost = 5
 
     def dynamic_description(self, player):
         if player.phase == Player.Phase.BUY:
-            return "+2 Cards, +2 Actions; When you gain this every else gains a card"
+            return self.desc
         return "+2 Cards, +2 Actions"
 
     def hook_gain_this_card(

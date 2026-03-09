@@ -14,6 +14,7 @@ class Card_Temple(Card.Card):
         self.base = Card.CardExpansion.EMPIRES
         self.name = "Temple"
         self.cost = 4
+        self.desc = "+1 VP. Trash from 1 to 3 differently named cards from your hand. Add 1 VP to the Temple Supply pile. When you gain this, take the VP from the Temple Supply pile."
 
     def dynamic_description(self, player):
         """Variable Description"""

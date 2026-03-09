@@ -14,6 +14,7 @@ class Card_Emporium(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.EMPIRES
         self.name = "Emporium"
+        self.desc = "+1 Card, +1 Action, +1 Coin. When you gain this, if you have at least 5 Action cards in play, +2VP."
         self.coin = 1
         self.actions = 1
         self.cards = 1
@@ -24,7 +25,7 @@ class Card_Emporium(Card.Card):
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.ACTION:
             return "+1 Card, +1 Action, +1 Coin"
-        return "+1 Card, +1 Action, +1 Coin. When you gain this, if you have at least 5 Action cards in play, +2VP."
+        return self.desc
 
     ###########################################################################
     def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:

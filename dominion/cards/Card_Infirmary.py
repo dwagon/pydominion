@@ -14,13 +14,14 @@ class Card_Infirmary(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.CORNUCOPIA_GUILDS
         self.name = "Infirmary"
+        self.desc = "+1 Card; You may trash a card from your hand. Overpay: Play this once per $1 overpaid."
         self.overpay = True
         self.cost = 3
         self.cards = 1
 
     def dynamic_description(self, player: "Player.Player") -> str:
         if player.phase == Phase.BUY:
-            return """+1 Card; You may trash a card from your hand. Overpay: Play this once per $1 overpaid."""
+            return self.desc
         return """+1 Card; You may trash a card from your hand."""
 
     def special(self, game: Game.Game, player: Player.Player) -> None:

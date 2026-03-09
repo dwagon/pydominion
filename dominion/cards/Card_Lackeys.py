@@ -14,13 +14,14 @@ class Card_Lackeys(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.RENAISSANCE
         self.name = "Lackeys"
+        self.desc = "+2 Cards; When you gain this, +2 Villagers."
         self.cards = 2
         self.cost = 2
 
     ###########################################################################
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return "+2 Cards; When you gain this, +2 Villagers."
+            return self.desc
         return "+2 Cards"
 
     ###########################################################################

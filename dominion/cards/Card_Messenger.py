@@ -15,6 +15,7 @@ class Card_Messenger(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ADVENTURE
         self.name = "Messenger"
+        self.desc = "+1 Buy, +2 Coin, You may put your deck into your discard pile; When this is the first card you gain in your Buy phase, gain a card costing up to $4, and each other player gains a copy of it."
         self.buys = 1
         self.coin = 2
         self.cost = 4
@@ -22,9 +23,7 @@ class Card_Messenger(Card.Card):
     def dynamic_description(self, player: Player.Player) -> str:
         """Variable description"""
         if player.phase == Phase.BUY:
-            return """+1 Buy, +2 Coin, You may put your deck into your discard pile;
-                When this is the first card you gain in your Buy phase, gain a card costing up to $4,
-                and each other player gains a copy of it."""
+            return self.desc
         return "+1 Buy, +2 Coin, You may put your deck into your discard pile"
 
     def special(self, game: Game.Game, player: Player.Player) -> None:

@@ -13,6 +13,7 @@ class Card_Port(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ADVENTURE
         self.name = "Port"
+        self.desc = "+1 Card, +2 Actions; When you gain this, gain another Port."
         self.cards = 1
         self.actions = 2
         self.cost = 4
@@ -20,7 +21,7 @@ class Card_Port(Card.Card):
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return "+1 Card, +2 Actions; When you gain this, gain another Port"
+            return self.desc
         return "+1 Card, +2 Actions"
 
     def hook_gain_this_card(self, game: "Game.Game", player: "Player.Player") -> dict[OptionKeys, Any]:

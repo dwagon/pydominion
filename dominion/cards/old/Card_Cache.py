@@ -13,12 +13,13 @@ class Card_Cache(Card.Card):
         self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.HINTERLANDS
         self.name = "Cache"
+        self.desc = "+3 coin. When you gain this, gain two Coppers."
         self.cost = 5
         self.coin = 3
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return "+3 coin. Gain two coppers when you gain this"
+            return self.desc
         return "+3 coin"
 
     def hook_gain_this_card(

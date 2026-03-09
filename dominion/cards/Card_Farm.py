@@ -12,13 +12,14 @@ class Card_Farm(Card.Card):
         self.cardtype = [Card.CardType.ACTION, Card.CardType.VICTORY]
         self.base = Card.CardExpansion.INTRIGUE
         self.name = "Farm"
+        self.desc = "+2 coin; 2 VPs"
         self.coin = 2
         self.victory = 2
         self.cost = 6
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return "+2 coin; 2 VPs"
+            return self.desc
         return "+2 coin"
 
 

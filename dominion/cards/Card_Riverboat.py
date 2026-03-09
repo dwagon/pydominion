@@ -17,6 +17,7 @@ class Card_Riverboat(Card.Card):
         self.base = Card.CardExpansion.RISING_SUN
         self.name = "Riverboat"
         self.cost = 3
+        self.desc = "At the start of your next turn, play the set aside card, leaving it there. Setup: Set aside an unused non-Duration Action card costing $5."
 
     def dynamic_description(self, player: "Player.Player") -> str:
         card_name = player.game.specials[RIVERBOAT]

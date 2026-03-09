@@ -14,6 +14,7 @@ class Card_Farrier(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.CORNUCOPIA_GUILDS
         self.name = "Farrier"
+        self.desc = "+1 Card; +1 Action; +1 Buy. Overpay: +1 Card at the end of this turn per $1 overpaid."
         self.overpay = True
         self.cards = 1
         self.actions = 1
@@ -23,7 +24,7 @@ class Card_Farrier(Card.Card):
     def dynamic_description(self, player: Player.Player) -> str:
         """Variable description"""
         if player.phase == Phase.BUY:
-            return """+1 Card; +1 Action; +1 Buy. Overpay: +1 Card at the end of this turn per $1 overpaid."""
+            return self.desc
         return """+1 Card; +1 Action; +1 Buy."""
 
     def hook_overpay(self, game: "Game.Game", player: "Player.Player", amount: int) -> None:

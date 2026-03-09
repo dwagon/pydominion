@@ -14,14 +14,13 @@ class Card_IGG(Card.Card):
         self.base = Card.CardExpansion.HINTERLANDS
         self.required_cards = ["Curse"]
         self.name = "Ill-Gotten Gains"
+        self.desc = "+1 Coin. When you play this, you may gain a Copper, putting it into your hand. When you gain this, each other player gains a Curse."
         self.cost = 5
         self.coin = 1
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return """+1 Coin. When you play this, you may gain a Copper, putting
-                it into your hand. When you gain this, each other player gains
-                a Curse."""
+            return self.desc
         return "+1 Coin. When you play this, you may gain a Copper, putting it into your hand."
 
     def special(self, game: Game.Game, player: Player.Player) -> None:

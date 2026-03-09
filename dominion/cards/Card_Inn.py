@@ -13,16 +13,14 @@ class Card_Inn(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.HINTERLANDS
         self.name = "Inn"
+        self.desc = "+2 Cards, +2 Actions, Discard 2 cards. When you gain this, look through your discard pile (including this), reveal any number of Action cards from it, and shuffle them into your deck."
         self.cards = 2
         self.actions = 2
         self.cost = 5
 
     def dynamic_description(self, player):
         if player.phase == Phase.BUY:
-            return """+2 Cards, +2 Actions, Discard 2 cards.
-            When you gain this, look through your discard pile
-            (including this), reveal any number of Action cards
-            from it, and shuffle them into your deck."""
+            return self.desc
         return "+2 Cards, +2 Actions, Discard 2 cards"
 
     def special(self, game: Game.Game, player: Player.Player) -> None:

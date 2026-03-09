@@ -11,13 +11,14 @@ class Card_Bordervillage(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.HINTERLANDS
         self.name = "Border Village"
+        self.desc = "+1 card, +2 action. When you gain this, gain a card costing less than this."
         self.cost = 6
         self.cards = 1
         self.actions = 2
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return "+1 card, +2 action. When you gain this, gain a card costing less than this"
+            return self.desc
         return "+1 card, +2 action"
 
     def hook_gain_this_card(

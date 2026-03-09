@@ -17,11 +17,12 @@ class Card_GrandCastle(CastleCard):
         self.cost = 9
         self.victory = 5
         self.name = "Grand Castle"
+        self.desc = "5VP. When you gain this, reveal your hand. 1VP per Victory card in your hand and/or in play."
         self.pile = "Castles"
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return """5VP. When you gain this, reveal your hand. 1VP per Victory card in your hand and/or in play."""
+            return self.desc
         return "5VP"
 
     def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:

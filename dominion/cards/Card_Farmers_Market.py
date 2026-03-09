@@ -13,6 +13,7 @@ class Card_FarmersMarket(Card.Card):
         self.name = "Farmers' Market"
         self.buys = 1
         self.cost = 3
+        self.desc = "+1 Buy; If there are 4VP or more on the Farmers' Market pile, take them and trash this. Otherwise, add 1VP to the pile and then +$1 per 1VP on the pile."
 
     def dynamic_description(self, player: Player.Player) -> str:
         """If there are 4VP or more on the Farmers' Market pile, take them and trash this.

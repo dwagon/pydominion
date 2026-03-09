@@ -14,6 +14,7 @@ class Card_Spices(Card.Card):
         self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.RENAISSANCE
         self.name = "Spices"
+        self.desc = "+2 Coin; +1 Buy; When you gain this, +2 Coffers."
         self.coin = 2
         self.buys = 1
         self.cost = 5
@@ -21,7 +22,7 @@ class Card_Spices(Card.Card):
     ###########################################################################
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return "+2 Coin; +1 Buy; When you gain this, +2 Coffers."
+            return self.desc
         return "+2 Coin; +1 Buy"
 
     ###########################################################################

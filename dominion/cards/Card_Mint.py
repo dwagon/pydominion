@@ -13,12 +13,12 @@ class Card_Mint(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.PROSPERITY
         self.name = "Mint"
+        self.desc = "You may reveal a Treasure card from your hand. Gain a copy of it. When you gain this, trash all non-Duration Treasures you have in play."
         self.cost = 5
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return """You may reveal a Treasure card from your hand. Gain a copy of it.
-            When you gain this, trash all non-Duration Treasures you have in play."""
+            return self.desc
         return "You may reveal a Treasure card from your hand. Gain a copy of it."
 
     def special(self, game: Game.Game, player: Player.Player) -> None:

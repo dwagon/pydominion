@@ -13,6 +13,7 @@ class Card_Hostelry(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.MENAGERIE
         self.name = "Hostelry"
+        self.desc = "+1 Card; +2 Actions; When you gain this, you may discard any number of Treasures, revealed, to gain that many Horses."
         self.cards = 1
         self.actions = 2
         self.cost = 4
@@ -20,8 +21,7 @@ class Card_Hostelry(Card.Card):
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return """+1 Card; +2 Actions;
-                When you gain this, you may discard any number of Treasures, revealed, to gain that many Horses."""
+            return self.desc
         return "+1 Card; +2 Actions"
 
     def hook_gain_this_card(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:

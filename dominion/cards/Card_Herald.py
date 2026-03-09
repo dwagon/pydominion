@@ -15,6 +15,7 @@ class Card_Herald(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.GUILDS
         self.name = "Herald"
+        self.desc = "+1 Card +1 Action. Reveal the top card of your deck. If it is an Action, play it. Overpay: Per $1 overpaid, put any card from your discard pile onto your deck."
         self.overpay = True
         self.cards = 1
         self.actions = 1
@@ -23,9 +24,7 @@ class Card_Herald(Card.Card):
     def dynamic_description(self, player: Player.Player) -> str:
         """Variable description"""
         if player.phase == Phase.BUY:
-            return """+1 Card +1 Action. Reveal the top card of your deck.
-                If it is an Action, play it.
-                Overpay: Per $1 overpaid, put any card from your discard pile onto your deck."""
+            return self.desc
         return "+1 Card +1 Action. Reveal the top card of your deck. If it is an Action, play it."
 
     def special(self, game: Game.Game, player: Player.Player) -> None:

@@ -12,12 +12,13 @@ class Card_Skulk(Card.Card):
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.DOOM]
         self.base = Card.CardExpansion.NOCTURNE
         self.name = "Skulk"
+        self.desc = "+1 Buy; Each other player receives the next Hex; When you gain this, gain a Gold."
         self.buys = 1
         self.cost = 4
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return "+1 Buy; Each other player receives the next Hex; When you gain this, gain a Gold."
+            return self.desc
         return "+1 Buy; Each other player receives the next Hex."
 
     def hook_gain_this_card(

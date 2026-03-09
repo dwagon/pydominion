@@ -15,13 +15,12 @@ class Card_Carpenter(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ALLIES
         self.name = "Carpenter"
+        self.desc = "If no Supply piles are empty, +1 Action and gain a card costing up to $4. Otherwise, trash a card from your hand and gain a card costing up to $2 more than it."
         self.cost = 4
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return """If no Supply piles are empty, +1 Action and gain a card
-                costing up to $4.  Otherwise, trash a card from your hand and
-                gain a card costing up to $2 more than it."""
+            return self.desc
         empties = sum(1 for _, st in player.game.get_card_piles() if st.is_empty())
         if empties:
             return """Trash a card from your hand and gain

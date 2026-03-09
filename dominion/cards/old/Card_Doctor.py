@@ -14,17 +14,14 @@ class Card_Doctor(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.GUILDS
         self.name = "Doctor"
+        self.desc = "Name a card. Reveal the top 3 cards of your deck. Trash the matches. Put the rest back on top in any order. When you buy this, you may overpay for it. For each $1 you overpaid, look at the top card of your deck; trash it, discard it, or put it back."
         self.overpay = True
         self.cost = 3
 
     def dynamic_description(self, player: Player.Player) -> str:
         """Variable description"""
         if player.phase == Phase.BUY:
-            return """Name a card. Reveal the top 3 cards of your deck.
-                Trash the matches. Put the rest back on top in any order.
-                When you buy this, you may overpay for it. For each 1 you overpaid,
-                look at the top card of your deck; trash it, discard it,
-                or put it back."""
+            return self.desc
         return """Name a card. Reveal the top 3 cards of your deck.
             Trash the matches. Put the rest back on top in any order."""
 

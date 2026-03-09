@@ -13,12 +13,13 @@ class Card_Ducat(Card.Card):
         self.base = Card.CardExpansion.RENAISSANCE
         self.buys = 1
         self.name = "Ducat"
+        self.desc = "+1 Coffers; +1 Buy; When you gain this, you may trash a Copper from your hand."
         self.cost = 2
 
     ###########################################################################
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return "+1 Coffers; +1 Buy; When you gain this, you may trash a Copper from your hand."
+            return self.desc
         return "+1 Coffers; +1 Buy"
 
     ###########################################################################

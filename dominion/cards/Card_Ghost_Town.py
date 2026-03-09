@@ -13,12 +13,12 @@ class Card_Ghost_Town(Card.Card):
         self.cardtype = [Card.CardType.NIGHT, Card.CardType.DURATION]
         self.base = Card.CardExpansion.NOCTURNE
         self.name = "Ghost Town"
+        self.desc = "At the start of your next turn, +1 Card and +1 Action. This is gained to your hand (instead of your discard pile)."
         self.cost = 3
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return """At the start of your next turn, +1 Card and +1 Action. This
-                is gained to your hand (instead of your discard pile)."""
+            return self.desc
         return "At the start of your next turn, +1 Card and +1 Action."
 
     def hook_gain_this_card(

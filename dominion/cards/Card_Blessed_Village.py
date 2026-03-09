@@ -11,14 +11,14 @@ class Card_BlessedVillage(Card.Card):
         self.cardtype = [Card.CardType.ACTION, Card.CardType.FATE]
         self.base = Card.CardExpansion.NOCTURNE
         self.name = "Blessed Village"
+        self.desc = "+1 Card; +2 Actions; When you gain this, take a Boon. Receive it now or at the start of your next turn."
         self.actions = 2
         self.cards = 1
         self.cost = 4
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return """+1 Card; +2 Actions; When you gain this, take a Boon.
-                Receive it now or at the start of your next turn."""
+            return self.desc
         return "+1 Card; +2 Actions"
 
     def hook_gain_this_card(

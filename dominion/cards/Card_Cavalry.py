@@ -12,14 +12,14 @@ class Card_Cavalry(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.MENAGERIE
         self.name = "Cavalry"
+        self.desc = "Gain 2 Horses. When you gain this, +2 Cards, +1 Buy, and if it's your Buy phase return to your Action phase."
         self.cost = 4
         self.required_cards = [("Card", "Horse")]
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.ACTION:
             return "Gain 2 Horses."
-        return """Gain 2 Horses. When you gain this, +2 Cards, +1 Buy,
-            and if it's your Buy phase return to your Action phase."""
+        return self.desc
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         try:

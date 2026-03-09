@@ -14,13 +14,14 @@ class Card_Forum(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.EMPIRES
         self.name = "Forum"
+        self.desc = "+3 Cards, +1 Action, Discard 2 cards. When you gain this, +1 Buy."
         self.cards = 3
         self.actions = 1
         self.cost = 5
 
     def dynamic_description(self, player):
         if player.phase == Player.Phase.BUY:
-            return "+3 Cards, +1 Action, Discard 2 cards. When you gain this, +1 Buy."
+            return self.desc
         return "+3 Cards, +1 Action, Discard 2 cards."
 
     def special(self, game, player):

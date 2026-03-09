@@ -15,15 +15,14 @@ class Card_Animal_Fair(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.MENAGERIE
         self.name = "Animal Fair"
+        self.desc = "+4 Coin; +1 Buy per empty supply pile. Instead of paying this card's cost, you may trash an Action card from your hand."
         self.coin = 4
         self.always_buyable = True
         self.cost = 7
 
     def dynamic_description(self, player: "Player.Player") -> str:
         if player.phase == Phase.BUY:
-            return """+4 Coin; +1 Buy per empty supply pile.
-            Instead of paying this card's cost, you may trash an Action card
-            from your hand."""
+            return self.desc
         return """+4 Coin; +1 Buy per empty supply pile."""
 
     def special(self, game: Game.Game, player: Player.Player) -> None:

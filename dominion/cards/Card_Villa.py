@@ -16,6 +16,7 @@ class Card_Villa(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.EMPIRES
         self.name = "Villa"
+        self.desc = "+2 Actions; +1 Buy; +1 Coin; When you gain this, put it into your hand, +1 Action, and if it's your Buy phase return to your Action phase."
         self.cost = 4
         self.actions = 2
         self.buys = 1
@@ -25,9 +26,7 @@ class Card_Villa(Card.Card):
         """Variable desc"""
         if player.phase == Phase.ACTION:
             return "+2 Actions; +1 Buy; +1 Coin"
-        return """+2 Actions; +1 Buy; +1 Coin; When you gain this, put it into
-            your hand, +1 Action, and if it's your Buy phase return to your
-            Action phase."""
+        return self.desc
 
     def hook_gain_this_card(
         self, game: Game.Game, player: Player.Player

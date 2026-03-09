@@ -20,14 +20,13 @@ class Card_Siren(Card.Card):
         ]
         self.base = Card.CardExpansion.PLUNDER
         self.name = "Siren"
+        self.desc = "Each other player gains a Curse. At the start of your next turn, draw until you have 8 cards in hand. When you gain this, trash it unless you trash an Action from your hand."
         self.cost = 3
         self.required_cards = ["Curse"]
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return """Each other player gains a Curse.
-            At the start of your next turn, draw until you have 8 cards in hand.
-            When you gain this, trash it unless you trash an Action from your hand."""
+            return self.desc
         return """Each other player gains a Curse.
         At the start of your next turn, draw until you have 8 cards in hand."""
 

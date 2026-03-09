@@ -14,12 +14,12 @@ class Card_Den_of_Sin(Card.Card):
         self.cardtype = [Card.CardType.NIGHT, Card.CardType.DURATION]
         self.base = Card.CardExpansion.NOCTURNE
         self.name = "Den of Sin"
+        self.desc = "At the start of your next turn, +2 Cards; This is gained to your hand (instead of your discard pile)."
         self.cost = 5
 
     def dynamic_description(self, player: Player.Player) -> str:
         if player.phase == Phase.BUY:
-            return """At the start of your next turn, +2 Cards;
-                    This is gained to your hand (instead of your discard pile)."""
+            return self.desc
         return "At the start of your next turn, +2 Cards"
 
     def duration(self, game: Game.Game, player: Player.Player) -> dict[OptionKeys, str]:
