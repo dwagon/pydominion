@@ -9,7 +9,7 @@ from dominion import Game, Card, Piles, Player
 class Card_Poorhouse(Card.Card):
     def __init__(self) -> None:
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DARKAGES
         self.desc = """+4 Coin. Reveal your hand. -1 Coin per Treasure card in your hand, to a minimum of 0."""
         self.name = "Poor House"

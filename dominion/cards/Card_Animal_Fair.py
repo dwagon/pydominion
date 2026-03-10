@@ -12,7 +12,7 @@ class Card_Animal_Fair(Card.Card):
 
     def __init__(self) -> None:
         Card.Card.__init__(self)
-        self.cardtype = Card.CardType.TREASURE
+        self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.MENAGERIE
         self.name = "Animal Fair"
         self.coin = 4

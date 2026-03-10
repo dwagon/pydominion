@@ -14,6 +14,7 @@ class Card_Artist(Card.Card):
         self.base = Card.CardExpansion.RISING_SUN
         self.desc = """+1 Action; +1 Card per card you have exactly one copy of in play."""
         self.name = "Artist"
+        self.cost = 0
         self.debtcost = 8
         self.actions = 1
 

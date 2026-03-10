@@ -14,6 +14,7 @@ class Card_Mountain_Shrine(Card.Card):
         self.desc = """+1 Sun; +$2; You may trash a card from your hand.
                 Then if there are any Action cards in the trash, +2 Cards."""
         self.name = "Mountain Shrine"
+        self.cost = 0
         self.coin = 2
         self.debtcost = 5
 

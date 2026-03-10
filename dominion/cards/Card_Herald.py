@@ -12,7 +12,7 @@ class Card_Herald(Card.Card):
 
     def __init__(self) -> None:
         Card.Card.__init__(self)
-        self.cardtype = Card.CardType.TREASURE
+        self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.GUILDS
         self.name = "Herald"
         self.overpay = True
@@ -69,7 +69,7 @@ class TestHerald(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1 + 2)  # 5 for hand, 1 for herald, 2 for moat
-        self.assertEqual(self.plr.actions.get(), 1 + 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertIn("Duchy", self.plr.piles[Piles.HAND])
         self.assertIn("Moat", self.plr.piles[Piles.PLAYED])
 
@@ -79,7 +79,7 @@ class TestHerald(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
-        self.assertEqual(self.plr.actions.get(), 1 + 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertIn("Gold", self.plr.piles[Piles.DECK])
 
     def test_buy(self) -> None:

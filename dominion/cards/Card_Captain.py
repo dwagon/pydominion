@@ -12,7 +12,7 @@ class Card_Captain(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [
             Card.CardType.ACTION,
-            Card.CardType.REACTION,
+            Card.CardType.DURATION,
             Card.CardType.COMMAND,
         ]
         self.base = Card.CardExpansion.PROMO
