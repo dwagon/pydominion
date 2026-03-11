@@ -54,6 +54,15 @@ class TestIsCard(unittest.TestCase):
         self.assertTrue(counterfeit.isTreasure())
         self.assertFalse(moat.isTreasure())
 
+    def test_isCurse(self) -> None:
+        """Test isTreasure"""
+        g = Game.TestGame(numplayers=1, initcards=["Curse", "Moat"])
+        g.start_game()
+        curse = g.get_card_from_pile("Curse")
+        moat = g.get_card_from_pile("Moat")
+        self.assertTrue(curse.isCurse())
+        self.assertFalse(moat.isCurse())
+
     def test_isLooter(self) -> None:
         """Test isLooter"""
         g = Game.TestGame(numplayers=1, initcards=["Cultist", "Moat"])

@@ -1,10 +1,13 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/University"""
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 
 class Card_University(Card.Card):
+    """Uniersity"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -17,13 +20,14 @@ class Card_University(Card.Card):
 
     def special(self, game: Game.Game, player: Player.Player) -> None:
         """Gain an action card costing up to 5"""
-        card = player.plr_gain_card(5, types={Card.CardType.ACTION: True})
-        if card:
+        if card := player.plr_gain_card(5, types={Card.CardType.ACTION: True}):
             player.output(f"Gained {card} from university")
 
 
 ###############################################################################
 class TestUniversity(unittest.TestCase):
+    """Test University"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(
             numplayers=1,

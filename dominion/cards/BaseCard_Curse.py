@@ -1,11 +1,14 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Curse"""
 import unittest
+
 from dominion import Game, Card, Piles, Player
 
 
 ###############################################################################
 class Card_Curse(Card.Card):
+    """Curse"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.CURSE
@@ -36,6 +39,8 @@ class Card_Curse(Card.Card):
 
 ###############################################################################
 class TestCurse(unittest.TestCase):
+    """Test Curse"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Witch"])
         self.g.start_game()

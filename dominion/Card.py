@@ -356,6 +356,11 @@ class Card:
         return self._is_type(CardType.ACTION)
 
     ##########################################################################
+    def isCurse(self) -> bool:
+        """http://wiki.dominionstrategy.com/index.php/Curse"""
+        return self._is_type(CardType.CURSE)
+
+    ##########################################################################
     def isLoot(self) -> bool:
         """http://wiki.dominionstrategy.com/index.php/Loot"""
         return self._is_type(CardType.LOOT)
