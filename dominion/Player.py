@@ -1514,6 +1514,8 @@ class Player:
             return False
         if card.isNight() and not types[CardType.NIGHT]:
             return False
+        if card.isCurse() and not types[CardType.CURSE]:
+            return False
         return True
 
     ###########################################################################
@@ -1617,6 +1619,7 @@ class Player:
             CardType.VICTORY,
             CardType.TREASURE,
             CardType.NIGHT,
+            CardType.CURSE,
         }
         if not types:
             return {
@@ -1624,12 +1627,14 @@ class Player:
                 CardType.VICTORY: True,
                 CardType.TREASURE: True,
                 CardType.NIGHT: True,
+                CardType.CURSE: True,
             }
         _types = {
             CardType.ACTION: False,
             CardType.VICTORY: False,
             CardType.TREASURE: False,
             CardType.NIGHT: False,
+            CardType.CURSE: False,
         }
         _types.update(types)
         return _types

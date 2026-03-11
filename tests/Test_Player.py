@@ -281,6 +281,7 @@ class TestTypeSelector(unittest.TestCase):
         self.assertTrue(x[Card.CardType.ACTION])
         self.assertTrue(x[Card.CardType.TREASURE])
         self.assertTrue(x[Card.CardType.VICTORY])
+        self.assertTrue(x[Card.CardType.CURSE])
 
     def test_select_one(self) -> None:
         """Test selecting one type"""
@@ -288,6 +289,7 @@ class TestTypeSelector(unittest.TestCase):
         self.assertTrue(x[Card.CardType.ACTION])
         self.assertFalse(x[Card.CardType.TREASURE])
         self.assertFalse(x[Card.CardType.VICTORY])
+        self.assertFalse(x[Card.CardType.CURSE])
 
     def test_select_two(self) -> None:
         """Test selecting two types"""
@@ -295,6 +297,7 @@ class TestTypeSelector(unittest.TestCase):
         self.assertTrue(x[Card.CardType.ACTION])
         self.assertFalse(x[Card.CardType.TREASURE])
         self.assertTrue(x[Card.CardType.VICTORY])
+        self.assertFalse(x[Card.CardType.CURSE])
 
 
 ###############################################################################
