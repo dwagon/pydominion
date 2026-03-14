@@ -7,6 +7,8 @@ from dominion import Card, Game, Prophecy, Player, Piles
 
 ###############################################################################
 class Prophecy_Kind_Emperor(Prophecy.Prophecy):
+    """Kind Emperor"""
+
     def __init__(self) -> None:
         Prophecy.Prophecy.__init__(self)
         self.base = Card.CardExpansion.RISING_SUN
@@ -37,6 +39,8 @@ class Prophecy_Kind_Emperor(Prophecy.Prophecy):
 
 ###############################################################################
 class Test_Kind_Emperor(unittest.TestCase):
+    """Test Kind Emperor"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, prophecies=["Kind Emperor"], initcards=["Mountain Shrine", "Moat"])
         self.g.start_game()
