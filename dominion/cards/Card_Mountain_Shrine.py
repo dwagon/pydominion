@@ -7,6 +7,8 @@ from dominion import Game, Card, Piles, Player
 
 ###############################################################################
 class Card_Mountain_Shrine(Card.Card):
+    """Mountain Shrine"""
+
     def __init__(self) -> None:
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.OMEN]
@@ -29,6 +31,8 @@ class Card_Mountain_Shrine(Card.Card):
 
 ###############################################################################
 class Test_Mountain_Shrine(unittest.TestCase):
+    """Test Mountain Shrine"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, initcards=["Mountain Shrine"])
         self.g.start_game()

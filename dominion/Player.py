@@ -1525,6 +1525,7 @@ class Player:
         coin: Optional[int],
         num_potions: int,
         types: Optional[dict[CardType, bool]],
+        debt_ok: bool = False,
     ) -> list[Card]:
         """Return the list of cards for under|equal|over cost
         {coin} {num_potions} are the resources constraints we have
@@ -1543,6 +1544,8 @@ class Player:
             if not self.select_by_type(card, types):
                 continue
             if not card.purchasable:
+                continue
+            if not debt_ok and card.debtcost > 0:
                 continue
             if card.always_buyable:
                 affordable.add(card)
@@ -1568,9 +1571,10 @@ class Player:
         coin: int,
         num_potions: int = 0,
         types: Optional[dict[CardType, bool]] = None,
+        debt_ok: bool = False,
     ) -> list[Card]:
         """Return the list of cards for under cost"""
-        return self.cards_affordable(operator.le, coin, num_potions, types)
+        return self.cards_affordable(operator.le, coin, num_potions, types, debt_ok)
 
     ###########################################################################
     def cards_worth(
@@ -1578,9 +1582,10 @@ class Player:
         coin: int,
         num_potions: int = 0,
         types: Optional[dict[CardType, bool]] = None,
+        debt_ok: bool = False,
     ) -> list[Card]:
         """Return the list of cards that are exactly cost"""
-        return self.cards_affordable(operator.eq, coin, num_potions, types)
+        return self.cards_affordable(operator.eq, coin, num_potions, types, debt_ok)
 
     ###########################################################################
     def cards_over(
@@ -1588,9 +1593,10 @@ class Player:
         coin: int,
         num_potions: int = 0,
         types: Optional[dict[CardType, bool]] = None,
+        debt_ok: bool = False,
     ) -> list[Card]:
         """Return the list of cards that cost more than"""
-        return self.cards_affordable(operator.gt, coin, num_potions, types)
+        return self.cards_affordable(operator.gt, coin, num_potions, types, debt_ok)
 
     ###########################################################################
     def get_cards(self) -> dict[str, int]:

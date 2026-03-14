@@ -8,6 +8,8 @@ from dominion import Card, Game, Prophecy, Player, OptionKeys, Piles
 
 ###############################################################################
 class Prophecy_Panic(Prophecy.Prophecy):
+    """Panic"""
+
     def __init__(self) -> None:
         Prophecy.Prophecy.__init__(self)
         self.base = Card.CardExpansion.RISING_SUN
@@ -32,6 +34,8 @@ class Prophecy_Panic(Prophecy.Prophecy):
 
 ###############################################################################
 class Test_Panic(unittest.TestCase):
+    """Test Panic"""
+
     def setUp(self) -> None:
         self.g = Game.TestGame(numplayers=1, prophecies=["Panic"], initcards=["Mountain Shrine"])
         self.g.start_game()

@@ -121,7 +121,7 @@ def buyable_selection(player: "Player", index: int) -> tuple[list[Option], int]:
     """Handle selection of what to buy"""
     options: list[Option] = []
     all_cards = get_all_purchasable(player)
-    buyable = player.cards_under(coin=player.coins.get(), num_potions=player.potions.get())
+    buyable = player.cards_under(coin=player.coins.get(), num_potions=player.potions.get(), debt_ok=True)
     for card in all_cards:
         if not player.hook_allowed_to_buy(card):
             if card in buyable:
