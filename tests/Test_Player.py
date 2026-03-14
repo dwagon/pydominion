@@ -217,13 +217,13 @@ class TestCardsAffordable(unittest.TestCase):
     def test_under(self) -> None:
         """Test cards under a cost"""
         price = 4
-        ans = self.plr.cards_under(price, types={Card.CardType.ACTION: True})
+        ans = self.plr.cards_under(price, types={Card.CardType.ACTION: True}, debt_ok=False)
         for a in ans:
             try:
                 self.assertLessEqual(a.cost, price)
                 self.assertTrue(a.isAction())
             except AssertionError:  # pragma: no cover
-                print(f"Failed on card: {a}")
+                print(f"Failed on card: {a} {a.name}")
                 self.game.print_state()
                 raise
 
@@ -238,10 +238,14 @@ class TestCardsAffordable(unittest.TestCase):
     def test_over(self) -> None:
         """Test cards over a cost"""
         price = 4
-        ans = self.plr.cards_over(price)
-        for a in ans:
-            self.assertGreater(a.cost, price)
-        self.assertIn("Gold", [_.name for _ in ans])
+        try:
+            ans = self.plr.cards_over(price)
+            for a in ans:
+                self.assertGreater(a.cost, price, f"{a} {a.cost}")
+            self.assertIn("Gold", [_.name for _ in ans])
+        except AssertionError:  # pragma: no coverage
+            self.game.print_state()
+            raise
 
     def test_no_cost(self) -> None:
         """Test with no cost"""

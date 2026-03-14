@@ -42,22 +42,26 @@ class Test_Kind_Emperor(unittest.TestCase):
     """Test Kind Emperor"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=1, prophecies=["Kind Emperor"], initcards=["Mountain Shrine", "Moat"])
+        self.g = Game.TestGame(
+            numplayers=1, prophecies=["Kind Emperor"], initcards=["Militia", "Moat", "Mountain Shrine"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
     def test_play(self) -> None:
-        """Play when prophecy active"""
-        self.plr.test_input = ["Get Moat", "Get Mountain Shrine"]
+        """Start turn when prophecy active"""
+        self.plr.test_input = ["Get Moat", "Get Militia"]
         self.g.reveal_prophecy()
         self.plr.piles[Piles.HAND].set()
         self.plr.start_turn()
-        self.assertIn("Mountain Shrine", self.plr.piles[Piles.HAND])
+        self.assertIn("Militia", self.plr.piles[Piles.HAND])
 
     def test_reveal(self) -> None:
-        self.plr.test_input = ["Get Mountain Shrine"]
+        """Reveal the prophecy"""
+        self.plr.test_input = ["Get Militia"]
+        self.assertNotIn("Militia", self.plr.piles[Piles.HAND])
         self.g.reveal_prophecy()
-        self.assertIn("Mountain Shrine", self.plr.piles[Piles.HAND])
+        self.assertIn("Militia", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################
