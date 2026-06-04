@@ -7,7 +7,7 @@ from dominion import Game, Card, Piles, Player, NoCardException
 
 
 ###############################################################################
-class Card_FortuneHunter(Card.Card):
+class Card_Fortune_Hunter(Card.Card):
     """Fortune Hunter"""
 
     def __init__(self) -> None:
@@ -48,11 +48,11 @@ class Card_FortuneHunter(Card.Card):
 
 
 ###############################################################################
-class TestFortuneHunter(unittest.TestCase):
+class TestFortune_Hunter(unittest.TestCase):
     """Test Fortune Hunter"""
 
     def setUp(self) -> None:
-        self.g = Game.TestGame(numplayers=1, initcards=["Fortune Hunter"])
+        self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Fortune Hunter"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.get_card_from_pile("Fortune Hunter")
