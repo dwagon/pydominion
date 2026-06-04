@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+"""https://wiki.dominionstrategy.com/index.php/Horse_Traders"""
 
 import unittest
 
@@ -7,7 +8,7 @@ from dominion import Game, Piles
 
 
 ###############################################################################
-class Card_Horsetraders(Card.Card):
+class Card_Horse_Traders(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
@@ -30,7 +31,7 @@ class Card_Horsetraders(Card.Card):
 
 
 ###############################################################################
-class Test_Horsetraders(unittest.TestCase):
+class Test_HorseTraders(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Horse Traders"])
         self.g.start_game()
